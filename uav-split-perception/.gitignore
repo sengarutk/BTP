@@ -1,0 +1,86 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.class
+
+# C extensions
+*.so
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.env
+.venv
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Model weights & checkpoint binaries
+*.pt
+*.pth
+*.onnx
+*.engine
+*.torchscript
+runs/
+
+# Large Datasets
+datasets/
+coco128/
+val2017/
+VisDrone/
+
+# LaTeX build artifacts (keep .tex, .bib, .sh, .png, Makefile)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+paper/claims_to_evidence.md
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build deliverables
+paper/main.pdf
+paper/*.zip
+paper/claims_to_evidence.md
+
+# Caches and run artefacts
+experiments/cache/
+experiments/logs/
+experiments/checkpoints/
+.pytest_cache/
+runs/
+paper/*.pdf
+!paper/figures/*.pdf

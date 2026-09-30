@@ -1,0 +1,11 @@
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Configuration} & \textbf{$E_{\text{edge}}$ (mJ)} & \textbf{$E_{\text{tx}}$ (mJ)} & \textbf{Total $E_{\text{uav}}$} & \textbf{Frame Energy Ratio} & \textbf{Flight Lifetime} \\ \midrule
+Monolithic Onboard (Full Edge FP32) & 75.2 mJ & 0.0 mJ & 75.2 mJ & $1.00\times$ (Ref) & 21.2 min (0.35 h) \\
+Split $k_4$-FP32 @ 100 Mbps & 6.9 mJ & 996.2 mJ & 1003.7 mJ & $13.35\times$ & 21.2 min (0.35 h) \\
+Split $k_4$-INT8 @ 100 Mbps & 6.4 mJ & 249.0 mJ & 256.5 mJ & $3.41\times$ & 21.2 min (0.35 h) \\
+Split $k_4$-INT8 @ 20 Mbps & 6.4 mJ & 1245.2 mJ & 1252.6 mJ & $16.67\times$ & 21.2 min (0.35 h) \\
+Split $k_9$-INT8 @ 100 Mbps & 27.1 mJ & 435.8 mJ & 466.7 mJ & $6.21\times$ & 21.1 min (0.35 h) \\
+Split $k_9$-INT8 @ 20 Mbps & 27.1 mJ & 2179.2 mJ & 2210.0 mJ & $29.40\times$ & 21.2 min (0.35 h) \\
+\bottomrule
+\end{tabular}

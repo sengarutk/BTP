@@ -1,0 +1,62 @@
+{
+ "analytic/frame": {
+  "relay_gain_fps_max": 0.41,
+  "relay_gain_at": [
+   "blackout",
+   "jpeg_q90",
+   5
+  ],
+  "relay_loss_fps_max": 0.39,
+  "relayed_on_time_fraction": {
+   "split_k4_int8_zstd": 0.0158,
+   "jpeg_q90": 0.2742,
+   "adaptive_split": null,
+   "adaptive_all": 0.8564
+  }
+ },
+ "ns3/frame": {
+  "relay_gain_fps_max": 0.41,
+  "relay_gain_at": [
+   "blackout",
+   "jpeg_q90",
+   5
+  ],
+  "relay_loss_fps_max": 0.42,
+  "relayed_on_time_fraction": {
+   "split_k4_int8_zstd": 0.0216,
+   "jpeg_q90": 0.2874,
+   "adaptive_split": null,
+   "adaptive_all": 0.9185
+  }
+ },
+ "analytic/packet": {
+  "relay_gain_fps_max": 0.43,
+  "relay_gain_at": [
+   "blackout",
+   "jpeg_q90",
+   5
+  ],
+  "relay_loss_fps_max": 0.3,
+  "relayed_on_time_fraction": {
+   "split_k4_int8_zstd": 0.026,
+   "jpeg_q90": 0.2624,
+   "adaptive_split": null,
+   "adaptive_all": 0.7927
+  }
+ },
+ "ns3/packet": {
+  "relay_gain_fps_max": 0.43,
+  "relay_gain_at": [
+   "blackout",
+   "jpeg_q90",
+   5
+  ],
+  "relay_loss_fps_max": 0.35,
+  "relayed_on_time_fraction": {
+   "split_k4_int8_zstd": 0.026,
+   "jpeg_q90": 0.2677,
+   "adaptive_split": null,
+   "adaptive_all": 0.7927
+  }
+ }
+}

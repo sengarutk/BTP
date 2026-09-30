@@ -1,0 +1,1552 @@
+{
+  "timestamp": "2026-09-26 01:00:09",
+  "fidelities": [
+    "L1",
+    "L2",
+    "L3",
+    "L4"
+  ],
+  "uav_counts": [
+    1,
+    3,
+    5,
+    10,
+    20
+  ],
+  "duration_s": 30.0,
+  "trace_file": "trace_5g_moderate.csv",
+  "summaries": [
+    {
+      "fidelity": "L1",
+      "num_uavs": 1,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 900,
+      "total_tasks_delivered": 900,
+      "total_tasks_dropped": 0,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 0,
+      "effective_delivery_rate": 100.0,
+      "delivery_rate_pct": 100.0,
+      "mean_e2e_ms": 362.64,
+      "p50_e2e_ms": 349.22,
+      "p95_e2e_ms": 530.92,
+      "p99_e2e_ms": 587.64,
+      "mean_tx_ms": 350.58,
+      "mean_energy_mj": 1410.91,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 900,
+          "dropped": 0,
+          "stale_dropped": 0,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1269820.37
+        }
+      ]
+    },
+    {
+      "fidelity": "L2",
+      "num_uavs": 1,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 900,
+      "total_tasks_delivered": 797,
+      "total_tasks_dropped": 103,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 103,
+      "effective_delivery_rate": 88.56,
+      "delivery_rate_pct": 88.56,
+      "mean_e2e_ms": 182.54,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.2,
+      "mean_tx_ms": 5.44,
+      "mean_energy_mj": 1828.92,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        }
+      ]
+    },
+    {
+      "fidelity": "L2",
+      "num_uavs": 3,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 2700,
+      "total_tasks_delivered": 2396,
+      "total_tasks_dropped": 304,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 304,
+      "effective_delivery_rate": 88.74,
+      "delivery_rate_pct": 88.74,
+      "mean_e2e_ms": 182.19,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.68,
+      "mean_energy_mj": 1833.46,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641894.12
+        }
+      ]
+    },
+    {
+      "fidelity": "L2",
+      "num_uavs": 5,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 4500,
+      "total_tasks_delivered": 3986,
+      "total_tasks_dropped": 514,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 514,
+      "effective_delivery_rate": 88.58,
+      "delivery_rate_pct": 88.58,
+      "mean_e2e_ms": 182.18,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.67,
+      "mean_energy_mj": 1830.92,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641894.12
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641886.27
+        }
+      ]
+    },
+    {
+      "fidelity": "L2",
+      "num_uavs": 10,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 9000,
+      "total_tasks_delivered": 8021,
+      "total_tasks_dropped": 979,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 979,
+      "effective_delivery_rate": 89.12,
+      "delivery_rate_pct": 89.12,
+      "mean_e2e_ms": 181.96,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 298.88,
+      "mean_tx_ms": 4.19,
+      "mean_energy_mj": 1840.5,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652020.5
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652007.56
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1608621.27
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665306.99
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1634234.31
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731425.95
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665568.4
+        }
+      ]
+    },
+    {
+      "fidelity": "L2",
+      "num_uavs": 20,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 18000,
+      "total_tasks_delivered": 16599,
+      "total_tasks_dropped": 1401,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 1401,
+      "effective_delivery_rate": 92.22,
+      "delivery_rate_pct": 92.22,
+      "mean_e2e_ms": 181.32,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 297.61,
+      "mean_tx_ms": 2.82,
+      "mean_energy_mj": 1892.29,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652020.5
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652007.56
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1608621.27
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665306.99
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1634234.31
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731425.95
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665568.4
+        },
+        {
+          "uav_id": 10,
+          "generated": 900,
+          "delivered": 848,
+          "dropped": 52,
+          "stale_dropped": 52,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1732402.2
+        },
+        {
+          "uav_id": 11,
+          "generated": 900,
+          "delivered": 855,
+          "dropped": 45,
+          "stale_dropped": 45,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1744725.16
+        },
+        {
+          "uav_id": 12,
+          "generated": 900,
+          "delivered": 858,
+          "dropped": 42,
+          "stale_dropped": 42,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1750104.07
+        },
+        {
+          "uav_id": 13,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1732066.77
+        },
+        {
+          "uav_id": 14,
+          "generated": 900,
+          "delivered": 851,
+          "dropped": 49,
+          "stale_dropped": 49,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1739005.51
+        },
+        {
+          "uav_id": 15,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1748522.07
+        },
+        {
+          "uav_id": 16,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1748498.2
+        },
+        {
+          "uav_id": 17,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731437.21
+        },
+        {
+          "uav_id": 18,
+          "generated": 900,
+          "delivered": 876,
+          "dropped": 24,
+          "stale_dropped": 24,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1779865.55
+        },
+        {
+          "uav_id": 19,
+          "generated": 900,
+          "delivered": 882,
+          "dropped": 18,
+          "stale_dropped": 18,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1789988.85
+        }
+      ]
+    },
+    {
+      "fidelity": "L3",
+      "num_uavs": 1,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "rwp",
+      "total_tasks_generated": 900,
+      "total_tasks_delivered": 797,
+      "total_tasks_dropped": 103,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 103,
+      "effective_delivery_rate": 88.56,
+      "delivery_rate_pct": 88.56,
+      "mean_e2e_ms": 182.54,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.2,
+      "mean_tx_ms": 5.44,
+      "mean_energy_mj": 1828.92,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        }
+      ]
+    },
+    {
+      "fidelity": "L3",
+      "num_uavs": 3,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "rwp",
+      "total_tasks_generated": 2700,
+      "total_tasks_delivered": 2396,
+      "total_tasks_dropped": 304,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 304,
+      "effective_delivery_rate": 88.74,
+      "delivery_rate_pct": 88.74,
+      "mean_e2e_ms": 182.19,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.68,
+      "mean_energy_mj": 1833.46,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641894.12
+        }
+      ]
+    },
+    {
+      "fidelity": "L3",
+      "num_uavs": 5,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "rwp",
+      "total_tasks_generated": 4500,
+      "total_tasks_delivered": 3986,
+      "total_tasks_dropped": 514,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 514,
+      "effective_delivery_rate": 88.58,
+      "delivery_rate_pct": 88.58,
+      "mean_e2e_ms": 182.18,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.67,
+      "mean_energy_mj": 1830.92,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641894.12
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1641886.27
+        }
+      ]
+    },
+    {
+      "fidelity": "L3",
+      "num_uavs": 10,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "rwp",
+      "total_tasks_generated": 9000,
+      "total_tasks_delivered": 8021,
+      "total_tasks_dropped": 979,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 979,
+      "effective_delivery_rate": 89.12,
+      "delivery_rate_pct": 89.12,
+      "mean_e2e_ms": 181.96,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 298.88,
+      "mean_tx_ms": 4.19,
+      "mean_energy_mj": 1840.5,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652020.5
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652007.56
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1608621.27
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665306.99
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1634234.31
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731425.95
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665568.4
+        }
+      ]
+    },
+    {
+      "fidelity": "L3",
+      "num_uavs": 20,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "rwp",
+      "total_tasks_generated": 18000,
+      "total_tasks_delivered": 16599,
+      "total_tasks_dropped": 1401,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 1401,
+      "effective_delivery_rate": 92.22,
+      "delivery_rate_pct": 92.22,
+      "mean_e2e_ms": 181.32,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 297.61,
+      "mean_tx_ms": 2.82,
+      "mean_energy_mj": 1892.29,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1662409.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652020.5
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646919.12
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1652007.56
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1608621.27
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665306.99
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1634234.31
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731425.95
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1665568.4
+        },
+        {
+          "uav_id": 10,
+          "generated": 900,
+          "delivered": 848,
+          "dropped": 52,
+          "stale_dropped": 52,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1732402.2
+        },
+        {
+          "uav_id": 11,
+          "generated": 900,
+          "delivered": 855,
+          "dropped": 45,
+          "stale_dropped": 45,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1744725.16
+        },
+        {
+          "uav_id": 12,
+          "generated": 900,
+          "delivered": 858,
+          "dropped": 42,
+          "stale_dropped": 42,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1750104.07
+        },
+        {
+          "uav_id": 13,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1732066.77
+        },
+        {
+          "uav_id": 14,
+          "generated": 900,
+          "delivered": 851,
+          "dropped": 49,
+          "stale_dropped": 49,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1739005.51
+        },
+        {
+          "uav_id": 15,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1748522.07
+        },
+        {
+          "uav_id": 16,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1748498.2
+        },
+        {
+          "uav_id": 17,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1731437.21
+        },
+        {
+          "uav_id": 18,
+          "generated": 900,
+          "delivered": 876,
+          "dropped": 24,
+          "stale_dropped": 24,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1779865.55
+        },
+        {
+          "uav_id": 19,
+          "generated": 900,
+          "delivered": 882,
+          "dropped": 18,
+          "stale_dropped": 18,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1789988.85
+        }
+      ]
+    },
+    {
+      "fidelity": "L4",
+      "num_uavs": 1,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 900,
+      "total_tasks_delivered": 797,
+      "total_tasks_dropped": 103,
+      "total_tasks_relayed": 0,
+      "stale_frames_dropped": 103,
+      "effective_delivery_rate": 88.56,
+      "delivery_rate_pct": 88.56,
+      "mean_e2e_ms": 182.54,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.2,
+      "mean_tx_ms": 5.44,
+      "mean_energy_mj": 1828.92,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 0,
+          "relayed_in": 0,
+          "total_energy_mj": 1646029.58
+        }
+      ]
+    },
+    {
+      "fidelity": "L4",
+      "num_uavs": 3,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 2700,
+      "total_tasks_delivered": 2396,
+      "total_tasks_dropped": 304,
+      "total_tasks_relayed": 45,
+      "stale_frames_dropped": 304,
+      "effective_delivery_rate": 88.74,
+      "delivery_rate_pct": 88.74,
+      "mean_e2e_ms": 182.19,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.68,
+      "mean_energy_mj": 1836.38,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 13,
+          "relayed_in": 32,
+          "total_energy_mj": 1648392.23
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 20,
+          "relayed_in": 6,
+          "total_energy_mj": 1665868.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 12,
+          "relayed_in": 7,
+          "total_energy_mj": 1643969.52
+        }
+      ]
+    },
+    {
+      "fidelity": "L4",
+      "num_uavs": 5,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 4500,
+      "total_tasks_delivered": 3986,
+      "total_tasks_dropped": 514,
+      "total_tasks_relayed": 74,
+      "stale_frames_dropped": 514,
+      "effective_delivery_rate": 88.58,
+      "delivery_rate_pct": 88.58,
+      "mean_e2e_ms": 182.18,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 299.14,
+      "mean_tx_ms": 4.67,
+      "mean_energy_mj": 1833.79,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 13,
+          "relayed_in": 20,
+          "total_energy_mj": 1648392.23
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 20,
+          "relayed_in": 26,
+          "total_energy_mj": 1665868.55
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 12,
+          "relayed_in": 7,
+          "total_energy_mj": 1643969.52
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 19,
+          "relayed_in": 9,
+          "total_energy_mj": 1650205.17
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 794,
+          "dropped": 106,
+          "stale_dropped": 106,
+          "relayed_out": 10,
+          "relayed_in": 12,
+          "total_energy_mj": 1643615.77
+        }
+      ]
+    },
+    {
+      "fidelity": "L4",
+      "num_uavs": 10,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 9000,
+      "total_tasks_delivered": 8021,
+      "total_tasks_dropped": 979,
+      "total_tasks_relayed": 166,
+      "stale_frames_dropped": 978,
+      "effective_delivery_rate": 89.12,
+      "delivery_rate_pct": 89.12,
+      "mean_e2e_ms": 181.96,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 298.88,
+      "mean_tx_ms": 4.19,
+      "mean_energy_mj": 1843.76,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 16,
+          "relayed_in": 20,
+          "total_energy_mj": 1648796.78
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 94,
+          "relayed_out": 22,
+          "relayed_in": 16,
+          "total_energy_mj": 1666443.05
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 17,
+          "relayed_in": 19,
+          "total_energy_mj": 1655074.95
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 19,
+          "relayed_in": 15,
+          "total_energy_mj": 1650205.17
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 11,
+          "relayed_in": 26,
+          "total_energy_mj": 1654024.31
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 18,
+          "relayed_in": 21,
+          "total_energy_mj": 1611734.36
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 17,
+          "relayed_in": 17,
+          "total_energy_mj": 1668247.13
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 16,
+          "relayed_in": 16,
+          "total_energy_mj": 1637001.51
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 16,
+          "relayed_in": 7,
+          "total_energy_mj": 1734193.15
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 14,
+          "relayed_in": 9,
+          "total_energy_mj": 1668104.0
+        }
+      ]
+    },
+    {
+      "fidelity": "L4",
+      "num_uavs": 20,
+      "duration_s": 30.0,
+      "cell_capacity_mbps": 200.0,
+      "mobility_model": "formation",
+      "total_tasks_generated": 18000,
+      "total_tasks_delivered": 16599,
+      "total_tasks_dropped": 1401,
+      "total_tasks_relayed": 285,
+      "stale_frames_dropped": 1400,
+      "effective_delivery_rate": 92.22,
+      "delivery_rate_pct": 92.22,
+      "mean_e2e_ms": 181.32,
+      "p50_e2e_ms": 180.0,
+      "p95_e2e_ms": 180.0,
+      "p99_e2e_ms": 297.61,
+      "mean_tx_ms": 2.82,
+      "mean_energy_mj": 1895.11,
+      "uav_stats": [
+        {
+          "uav_id": 0,
+          "generated": 900,
+          "delivered": 797,
+          "dropped": 103,
+          "stale_dropped": 103,
+          "relayed_out": 16,
+          "relayed_in": 21,
+          "total_energy_mj": 1648796.78
+        },
+        {
+          "uav_id": 1,
+          "generated": 900,
+          "delivered": 805,
+          "dropped": 95,
+          "stale_dropped": 95,
+          "relayed_out": 22,
+          "relayed_in": 22,
+          "total_energy_mj": 1666328.75
+        },
+        {
+          "uav_id": 2,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 100,
+          "relayed_out": 17,
+          "relayed_in": 12,
+          "total_energy_mj": 1654960.65
+        },
+        {
+          "uav_id": 3,
+          "generated": 900,
+          "delivered": 796,
+          "dropped": 104,
+          "stale_dropped": 104,
+          "relayed_out": 19,
+          "relayed_in": 25,
+          "total_energy_mj": 1650319.47
+        },
+        {
+          "uav_id": 4,
+          "generated": 900,
+          "delivered": 800,
+          "dropped": 100,
+          "stale_dropped": 99,
+          "relayed_out": 11,
+          "relayed_in": 30,
+          "total_energy_mj": 1653910.01
+        },
+        {
+          "uav_id": 5,
+          "generated": 900,
+          "delivered": 773,
+          "dropped": 127,
+          "stale_dropped": 127,
+          "relayed_out": 18,
+          "relayed_in": 15,
+          "total_energy_mj": 1611962.97
+        },
+        {
+          "uav_id": 6,
+          "generated": 900,
+          "delivered": 808,
+          "dropped": 92,
+          "stale_dropped": 92,
+          "relayed_out": 17,
+          "relayed_in": 28,
+          "total_energy_mj": 1668590.04
+        },
+        {
+          "uav_id": 7,
+          "generated": 900,
+          "delivered": 788,
+          "dropped": 112,
+          "stale_dropped": 112,
+          "relayed_out": 16,
+          "relayed_in": 15,
+          "total_energy_mj": 1637230.11
+        },
+        {
+          "uav_id": 8,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 16,
+          "relayed_in": 14,
+          "total_energy_mj": 1734193.15
+        },
+        {
+          "uav_id": 9,
+          "generated": 900,
+          "delivered": 807,
+          "dropped": 93,
+          "stale_dropped": 93,
+          "relayed_out": 14,
+          "relayed_in": 12,
+          "total_energy_mj": 1667989.7
+        },
+        {
+          "uav_id": 10,
+          "generated": 900,
+          "delivered": 848,
+          "dropped": 52,
+          "stale_dropped": 52,
+          "relayed_out": 14,
+          "relayed_in": 10,
+          "total_energy_mj": 1734823.5
+        },
+        {
+          "uav_id": 11,
+          "generated": 900,
+          "delivered": 855,
+          "dropped": 45,
+          "stale_dropped": 45,
+          "relayed_out": 9,
+          "relayed_in": 18,
+          "total_energy_mj": 1746396.02
+        },
+        {
+          "uav_id": 12,
+          "generated": 900,
+          "delivered": 858,
+          "dropped": 42,
+          "stale_dropped": 42,
+          "relayed_out": 12,
+          "relayed_in": 11,
+          "total_energy_mj": 1752179.47
+        },
+        {
+          "uav_id": 13,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 19,
+          "relayed_in": 18,
+          "total_energy_mj": 1735581.43
+        },
+        {
+          "uav_id": 14,
+          "generated": 900,
+          "delivered": 851,
+          "dropped": 49,
+          "stale_dropped": 49,
+          "relayed_out": 12,
+          "relayed_in": 15,
+          "total_energy_mj": 1741080.91
+        },
+        {
+          "uav_id": 15,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 10,
+          "relayed_in": 3,
+          "total_energy_mj": 1750251.57
+        },
+        {
+          "uav_id": 16,
+          "generated": 900,
+          "delivered": 857,
+          "dropped": 43,
+          "stale_dropped": 43,
+          "relayed_out": 12,
+          "relayed_in": 3,
+          "total_energy_mj": 1750573.6
+        },
+        {
+          "uav_id": 17,
+          "generated": 900,
+          "delivered": 847,
+          "dropped": 53,
+          "stale_dropped": 53,
+          "relayed_out": 12,
+          "relayed_in": 6,
+          "total_energy_mj": 1733626.91
+        },
+        {
+          "uav_id": 18,
+          "generated": 900,
+          "delivered": 876,
+          "dropped": 24,
+          "stale_dropped": 24,
+          "relayed_out": 10,
+          "relayed_in": 4,
+          "total_energy_mj": 1781595.05
+        },
+        {
+          "uav_id": 19,
+          "generated": 900,
+          "delivered": 882,
+          "dropped": 18,
+          "stale_dropped": 18,
+          "relayed_out": 9,
+          "relayed_in": 3,
+          "total_energy_mj": 1791545.4
+        }
+      ]
+    }
+  ]
+}

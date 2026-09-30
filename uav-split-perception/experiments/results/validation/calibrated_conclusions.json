@@ -1,0 +1,66 @@
+{
+  "default": {
+    "jpeg_best_fixed_cells": "16/16",
+    "split_beats_onboard_cells": "10/16",
+    "adaptive_all_over_jpeg": [
+      1.0,
+      1.26
+    ],
+    "adaptive_split_over_best_onboard_or_split": [
+      0.94,
+      1.28
+    ],
+    "relayed_split_on_time": "36/2254",
+    "relayed_adaptive_all_on_time": "463/540",
+    "relay_gain_fps_max": 0.05,
+    "relay_loss_fps_max": 0.33
+  },
+  "ns3_lte": {
+    "jpeg_best_fixed_cells": "16/16",
+    "split_beats_onboard_cells": "8/16",
+    "adaptive_all_over_jpeg": [
+      1.0,
+      1.54
+    ],
+    "adaptive_split_over_best_onboard_or_split": [
+      0.95,
+      1.18
+    ],
+    "relayed_split_on_time": "27/4384",
+    "relayed_adaptive_all_on_time": "4413/5291",
+    "relay_gain_fps_max": 0.39,
+    "relay_loss_fps_max": 0.29
+  },
+  "ns3_a2a": {
+    "jpeg_best_fixed_cells": "16/16",
+    "split_beats_onboard_cells": "10/16",
+    "adaptive_all_over_jpeg": [
+      1.0,
+      1.26
+    ],
+    "adaptive_split_over_best_onboard_or_split": [
+      0.94,
+      1.28
+    ],
+    "relayed_split_on_time": "49/2277",
+    "relayed_adaptive_all_on_time": "496/540",
+    "relay_gain_fps_max": 0.05,
+    "relay_loss_fps_max": 0.33
+  },
+  "ns3_both": {
+    "jpeg_best_fixed_cells": "16/16",
+    "split_beats_onboard_cells": "8/16",
+    "adaptive_all_over_jpeg": [
+      1.0,
+      1.54
+    ],
+    "adaptive_split_over_best_onboard_or_split": [
+      0.95,
+      1.18
+    ],
+    "relayed_split_on_time": "52/4415",
+    "relayed_adaptive_all_on_time": "4768/5251",
+    "relay_gain_fps_max": 0.4,
+    "relay_loss_fps_max": 0.3
+  }
+}

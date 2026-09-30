@@ -1,0 +1,57 @@
+{
+  "warmup_exempted_frames": 15,
+  "scenarios": [
+    {
+      "test_name": "Burst Rate Test (60 FPS - IPC)",
+      "endpoint": "ipc:///tmp/aegis_stress_60fps.ipc",
+      "target_fps": 60.0,
+      "total_frames": 300,
+      "frames_sent": 300,
+      "frames_dropped": 0,
+      "frames_received": 300,
+      "delivery_rate_pct": 100.0,
+      "actual_fps": 43.0,
+      "jitter_ms": 0.245,
+      "warmup_exempted_frames": 15,
+      "cpu_pct": 13.0,
+      "ram_mib": 509.6,
+      "vram_mib": 0.0,
+      "passed": true
+    },
+    {
+      "test_name": "Ultra-Burst Test (120 FPS - TCP)",
+      "endpoint": "tcp://127.0.0.1:5560",
+      "target_fps": 120.0,
+      "total_frames": 300,
+      "frames_sent": 300,
+      "frames_dropped": 0,
+      "frames_received": 300,
+      "delivery_rate_pct": 100.0,
+      "actual_fps": 69.9,
+      "jitter_ms": 0.219,
+      "warmup_exempted_frames": 15,
+      "cpu_pct": 7.5,
+      "ram_mib": 509.6,
+      "vram_mib": 0.0,
+      "passed": true
+    },
+    {
+      "test_name": "Backpressure & Saturation (HWM=5, 50ms Delay)",
+      "endpoint": "ipc:///tmp/aegis_stress_backpressure.ipc",
+      "target_fps": 60.0,
+      "total_frames": 300,
+      "frames_sent": 110,
+      "frames_dropped": 190,
+      "frames_received": 107,
+      "delivery_rate_pct": 35.67,
+      "actual_fps": 11.2,
+      "jitter_ms": 0.211,
+      "warmup_exempted_frames": 15,
+      "cpu_pct": 9.2,
+      "ram_mib": 509.6,
+      "vram_mib": 0.0,
+      "passed": true
+    }
+  ],
+  "notes": "Inter-frame jitter computed as std(delta t) after discarding first 15 warmup frames."
+}

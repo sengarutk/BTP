@@ -1,0 +1,21 @@
+channel_key,channel_name,config_id,config_name,total_frames,delivered_frames,dropped_frames,delivery_rate_pct,effective_fps,mean_tx_ms,mean_e2e_ms,std_e2e_ms,p50_e2e_ms,p95_e2e_ms,p99_e2e_ms,congestion_duration_s
+good,Good 5G Link (50-100 Mbps),k4_int8_per_tensor,Split k4 - INT8 (Per-Tensor),900,900,0,100.0,30.0,86.73,103.52,4.59,103.58,111.31,114.3,0.0
+good,Good 5G Link (50-100 Mbps),k4_int8_per_channel,Split k4 - INT8 (Per-Channel),900,900,0,100.0,30.0,86.78,103.65,4.59,103.69,111.44,114.43,0.0
+good,Good 5G Link (50-100 Mbps),k9_int8_per_tensor,Split k9 - INT8 (Per-Tensor),900,900,0,100.0,30.0,151.79,168.58,7.79,168.64,181.84,187.55,0.0
+good,Good 5G Link (50-100 Mbps),k9_int8_per_channel,Split k9 - INT8 (Per-Channel),900,900,0,100.0,30.0,152.17,169.03,7.81,169.09,182.32,188.04,0.0
+good,Good 5G Link (50-100 Mbps),monolithic_cloud_offload,Monolithic Cloud Offload (Raw Image),900,900,0,100.0,30.0,130.09,146.99,6.72,147.02,158.42,163.23,0.0
+moderate,Urban Mobile / Moderate (12-28 Mbps),k4_int8_per_tensor,Split k4 - INT8 (Per-Tensor),900,900,0,100.0,30.0,327.7,359.05,71.39,343.75,493.47,553.85,0.0
+moderate,Urban Mobile / Moderate (12-28 Mbps),k4_int8_per_channel,Split k4 - INT8 (Per-Channel),900,900,0,100.0,30.0,327.91,359.32,71.43,344.01,493.82,554.25,0.0
+moderate,Urban Mobile / Moderate (12-28 Mbps),k9_int8_per_tensor,Split k9 - INT8 (Per-Tensor),900,900,0,100.0,30.0,573.52,604.86,123.45,578.11,837.77,942.81,0.0
+moderate,Urban Mobile / Moderate (12-28 Mbps),k9_int8_per_channel,Split k9 - INT8 (Per-Channel),900,900,0,100.0,30.0,574.95,606.37,123.75,579.55,839.85,945.16,0.0
+moderate,Urban Mobile / Moderate (12-28 Mbps),monolithic_cloud_offload,Monolithic Cloud Offload (Raw Image),900,900,0,100.0,30.0,491.55,523.0,106.09,500.04,723.06,813.01,0.0
+blackout,Deep Fading & Blackout,k4_int8_per_tensor,Split k4 - INT8 (Per-Tensor),900,899,1,99.89,29.97,191.56,219.18,97.37,213.63,247.24,258.0,0.0
+blackout,Deep Fading & Blackout,k4_int8_per_channel,Split k4 - INT8 (Per-Channel),900,899,1,99.89,29.97,191.68,219.37,97.42,213.82,247.45,258.21,0.0
+blackout,Deep Fading & Blackout,k9_int8_per_tensor,Split k9 - INT8 (Per-Tensor),900,899,1,99.89,29.97,335.26,363.92,157.34,355.35,413.53,431.24,0.0
+blackout,Deep Fading & Blackout,k9_int8_per_channel,Split k9 - INT8 (Per-Channel),900,899,1,99.89,29.97,336.1,364.83,157.69,356.24,414.57,432.32,0.0
+blackout,Deep Fading & Blackout,monolithic_cloud_offload,Monolithic Cloud Offload (Raw Image),900,899,1,99.89,29.97,287.34,315.76,137.32,308.32,358.11,373.4,0.0
+vehicular_fading,Vehicular Fast Fading (2-45 Mbps),k4_int8_per_tensor,Split k4 - INT8 (Per-Tensor),900,900,0,100.0,30.0,345.68,379.14,147.2,356.67,633.84,891.23,0.0
+vehicular_fading,Vehicular Fast Fading (2-45 Mbps),k4_int8_per_channel,Split k4 - INT8 (Per-Channel),900,900,0,100.0,30.0,345.9,379.43,147.29,356.94,634.28,891.83,0.0
+vehicular_fading,Vehicular Fast Fading (2-45 Mbps),k9_int8_per_tensor,Split k9 - INT8 (Per-Tensor),900,900,0,100.0,30.0,604.99,638.45,254.79,598.29,1080.01,1528.85,0.0
+vehicular_fading,Vehicular Fast Fading (2-45 Mbps),k9_int8_per_channel,Split k9 - INT8 (Per-Channel),900,900,0,100.0,30.0,606.5,640.03,255.42,599.77,1082.68,1532.64,0.0
+vehicular_fading,Vehicular Fast Fading (2-45 Mbps),monolithic_cloud_offload,Monolithic Cloud Offload (Raw Image),900,900,0,100.0,30.0,518.52,552.08,218.91,517.9,931.34,1316.34,0.0

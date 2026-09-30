@@ -1,0 +1,158 @@
+{
+  "full_fp32": {
+    "wire_bytes": 0,
+    "wire_kib": 0.0,
+    "wire_mib": 0.0,
+    "wire_bits": 0
+  },
+  "k2_int8": {
+    "wire_bytes": 1638436,
+    "wire_kib": 1600.04,
+    "wire_mib": 1.563,
+    "wire_bits": 13107488
+  },
+  "k2_fp16": {
+    "wire_bytes": 3276836,
+    "wire_kib": 3200.04,
+    "wire_mib": 3.125,
+    "wire_bits": 26214688
+  },
+  "k2_fp32": {
+    "wire_bytes": 6553636,
+    "wire_kib": 6400.04,
+    "wire_mib": 6.25,
+    "wire_bits": 52429088
+  },
+  "k4_int8": {
+    "wire_bytes": 819236,
+    "wire_kib": 800.04,
+    "wire_mib": 0.781,
+    "wire_bits": 6553888
+  },
+  "k4_fp16": {
+    "wire_bytes": 1638436,
+    "wire_kib": 1600.04,
+    "wire_mib": 1.563,
+    "wire_bits": 13107488
+  },
+  "k4_fp32": {
+    "wire_bytes": 3276836,
+    "wire_kib": 3200.04,
+    "wire_mib": 3.125,
+    "wire_bits": 26214688
+  },
+  "k5_int8": {
+    "wire_bytes": 1228852,
+    "wire_kib": 1200.05,
+    "wire_mib": 1.172,
+    "wire_bits": 9830816
+  },
+  "k5_fp16": {
+    "wire_bytes": 2457652,
+    "wire_kib": 2400.05,
+    "wire_mib": 2.344,
+    "wire_bits": 19661216
+  },
+  "k5_fp32": {
+    "wire_bytes": 4915252,
+    "wire_kib": 4800.05,
+    "wire_mib": 4.688,
+    "wire_bits": 39322016
+  },
+  "k7_int8": {
+    "wire_bytes": 1433668,
+    "wire_kib": 1400.07,
+    "wire_mib": 1.367,
+    "wire_bits": 11469344
+  },
+  "k7_fp16": {
+    "wire_bytes": 2867268,
+    "wire_kib": 2800.07,
+    "wire_mib": 2.734,
+    "wire_bits": 22938144
+  },
+  "k7_fp32": {
+    "wire_bytes": 5734468,
+    "wire_kib": 5600.07,
+    "wire_mib": 5.469,
+    "wire_bits": 45875744
+  },
+  "k9_int8": {
+    "wire_bytes": 1433668,
+    "wire_kib": 1400.07,
+    "wire_mib": 1.367,
+    "wire_bits": 11469344
+  },
+  "k9_fp16": {
+    "wire_bytes": 2867268,
+    "wire_kib": 2800.07,
+    "wire_mib": 2.734,
+    "wire_bits": 22938144
+  },
+  "k9_fp32": {
+    "wire_bytes": 5734468,
+    "wire_kib": 5600.07,
+    "wire_mib": 5.469,
+    "wire_bits": 45875744
+  },
+  "k12_int8": {
+    "wire_bytes": 1433668,
+    "wire_kib": 1400.07,
+    "wire_mib": 1.367,
+    "wire_bits": 11469344
+  },
+  "k12_fp16": {
+    "wire_bytes": 2867268,
+    "wire_kib": 2800.07,
+    "wire_mib": 2.734,
+    "wire_bits": 22938144
+  },
+  "k12_fp32": {
+    "wire_bytes": 5734468,
+    "wire_kib": 5600.07,
+    "wire_mib": 5.469,
+    "wire_bits": 45875744
+  },
+  "k15_int8": {
+    "wire_bytes": 1433668,
+    "wire_kib": 1400.07,
+    "wire_mib": 1.367,
+    "wire_bits": 11469344
+  },
+  "k15_fp16": {
+    "wire_bytes": 2867268,
+    "wire_kib": 2800.07,
+    "wire_mib": 2.734,
+    "wire_bits": 22938144
+  },
+  "k15_fp32": {
+    "wire_bytes": 5734468,
+    "wire_kib": 5600.07,
+    "wire_mib": 5.469,
+    "wire_bits": 45875744
+  },
+  "k18_int8": {
+    "wire_bytes": 1433668,
+    "wire_kib": 1400.07,
+    "wire_mib": 1.367,
+    "wire_bits": 11469344
+  },
+  "k18_fp16": {
+    "wire_bytes": 2867268,
+    "wire_kib": 2800.07,
+    "wire_mib": 2.734,
+    "wire_bits": 22938144
+  },
+  "k18_fp32": {
+    "wire_bytes": 5734468,
+    "wire_kib": 5600.07,
+    "wire_mib": 5.469,
+    "wire_bits": 45875744
+  },
+  "full": {
+    "wire_bytes": 0,
+    "wire_kib": 0.0,
+    "wire_mib": 0.0,
+    "wire_bits": 0
+  }
+}

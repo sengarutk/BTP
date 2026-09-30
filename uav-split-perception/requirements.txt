@@ -1,0 +1,13 @@
+# Exact versions used to produce every result in experiments/results and the paper.
+# (Ultralytics changes model construction across releases, so pin it.)
+torch==2.13.0
+torchvision==0.28.0
+ultralytics==8.4.132
+numpy==1.26.4
+opencv-python==4.11.0.86
+pyzmq==27.2.0
+zstandard==0.25.0
+thop==0.1.1.post2209072238
+tabulate==0.10.0
+matplotlib==3.11.1
+PyYAML==6.0.3

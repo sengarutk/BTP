@@ -1,0 +1,30 @@
+{
+ "K9dB": {
+  "mean_power": 1.0,
+  "K_hat_dB": 8.99
+ },
+ "K3dB": {
+  "mean_power": 1.001,
+  "K_hat_dB": 3.03
+ },
+ "K0dB": {
+  "mean_power": 1.002,
+  "K_hat_dB": 0.1
+ },
+ "clarke_acf_max_abs_error": 0.0117,
+ "shadow_std_dB(target 4)": 4.009,
+ "shadow_acf": {
+  "6 m": [
+   0.825,
+   0.819
+  ],
+  "30 m": [
+   0.362,
+   0.368
+  ],
+  "60 m": [
+   0.13,
+   0.135
+  ]
+ }
+}

@@ -1,0 +1,11 @@
+{
+  "a_coeff_edge": 11.233,
+  "b_coeff_tx": 3.8,
+  "p_idle_w": 2.2,
+  "p_max_w": 10.0,
+  "p_tx_rf_w": 3.8,
+  "p_rx_idle_w": 0.4,
+  "battery_capacity_wh": 55.5,
+  "p_avionics_w": 15.0,
+  "notes": "Directly calibrated from Jetson Nano 10W profile and 5G C-Band transceiver empirical benchmarks."
+}

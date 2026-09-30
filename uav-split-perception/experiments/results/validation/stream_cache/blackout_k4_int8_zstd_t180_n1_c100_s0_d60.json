@@ -1,0 +1,1 @@
+{"on_time_fps_per_uav": 5.466666666666667, "delivered_fps_per_uav": 6.716666666666667, "per_uav": [{"uav": "0", "captured": "1800", "skipped": "1200", "sent": "481", "delivered": "403", "on_time": "328", "aborted": "78", "stale": "0", "superseded": "119", "lat_p50_ms": "266.071", "lat_p95_ms": "316.31"}]}

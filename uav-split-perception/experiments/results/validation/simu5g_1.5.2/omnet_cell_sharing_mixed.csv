@@ -1,0 +1,4 @@
+small_demand_mbps,small_got_mbps,saturated_got_mbps,waterfill_saturated_mbps,cell_capacity_mbps
+1.0,1.001,22.16,22.17,115.84
+2.0,2.001,21.16,21.17,115.84
+4.0,4.0,19.16,19.17,115.84

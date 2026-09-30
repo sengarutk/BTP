@@ -1,0 +1,13 @@
+distance_m,payload,b_own_flow,ns3_ms,ns3_p95_ms,python_ms,pipelined_ms,python_over_ns3,ns3_within_deadline,python_within_deadline
+100.0,split_k4_int8_zstd,False,131.34,153.77,210.39,152.16,1.602,True,True
+100.0,split_k4_int8_zstd,True,259.71,352.1,342.54,284.31,1.319,True,False
+100.0,jpeg_q90,False,41.77,58.95,75.78,58.72,1.814,True,True
+100.0,jpeg_q90,True,73.78,98.38,114.51,97.45,1.552,True,True
+300.0,split_k4_int8_zstd,False,131.42,157.78,305.87,173.71,2.327,True,False
+300.0,split_k4_int8_zstd,True,260.18,339.65,438.02,284.31,1.684,True,False
+300.0,jpeg_q90,False,41.96,59.26,103.76,65.04,2.473,True,True
+300.0,jpeg_q90,True,73.91,98.14,142.48,97.45,1.928,True,True
+500.0,split_k4_int8_zstd,False,133.0,219.34,408.11,275.95,3.068,True,False
+500.0,split_k4_int8_zstd,True,268.46,305.81,540.26,284.31,2.012,True,False
+500.0,jpeg_q90,False,43.17,63.34,133.72,94.99,3.098,True,True
+500.0,jpeg_q90,True,73.81,98.14,172.44,97.45,2.336,True,True

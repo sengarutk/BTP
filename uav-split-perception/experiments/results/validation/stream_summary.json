@@ -1,0 +1,450 @@
+{
+  "n_settings": 44,
+  "duration_s": 60.0,
+  "mean_abs_diff_fps": 2.1348181818181824,
+  "max_abs_diff_fps": 11.372333333333335,
+  "pearson_r": 0.9806335171385127,
+  "best_strategy_agrees": "8/8",
+  "rows": [
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 40.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 26.683333333333334,
+      "ns3": 15.310999999999998,
+      "diff": -11.372333333333335
+    },
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 40.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 10.450000000000001,
+      "ns3": 5.944333333333334,
+      "diff": -4.505666666666667
+    },
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 40.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 30.0,
+      "ns3": 29.983,
+      "diff": -0.01699999999999946
+    },
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 9.983,
+      "ns3": 10.0,
+      "diff": 0.01699999999999946
+    },
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 180.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 10.472333333333333,
+      "ns3": 4.783333333333332,
+      "diff": -5.689000000000001
+    },
+    {
+      "study": "single",
+      "profile": "good",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 30.0,
+      "ns3": 29.983,
+      "diff": -0.01699999999999946
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 40.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 8.844333333333333,
+      "ns3": 6.566666666666666,
+      "diff": -2.2776666666666667
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 40.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 1.6223333333333334,
+      "ns3": 0.0,
+      "diff": -1.6223333333333334
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 40.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 26.022333333333336,
+      "ns3": 23.505666666666666,
+      "diff": -2.5166666666666693
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 6.45,
+      "ns3": 3.1056666666666666,
+      "diff": -3.3443333333333336
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 0.39433333333333337,
+      "ns3": 0.0,
+      "diff": -0.39433333333333337
+    },
+    {
+      "study": "single",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 25.944333333333333,
+      "ns3": 23.505666666666666,
+      "diff": -2.4386666666666663
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 40.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 9.955666666666666,
+      "ns3": 7.333333333333333,
+      "diff": -2.6223333333333327
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 40.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 2.622333333333333,
+      "ns3": 0.05000000000000001,
+      "diff": -2.5723333333333334
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 40.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 25.861,
+      "ns3": 23.688666666666666,
+      "diff": -2.1723333333333343
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 7.922,
+      "ns3": 6.099999999999999,
+      "diff": -1.822000000000001
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 0.9723333333333333,
+      "ns3": 0.0,
+      "diff": -0.9723333333333333
+    },
+    {
+      "study": "single",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 25.844666666666665,
+      "ns3": 23.705333333333332,
+      "diff": -2.139333333333333
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 40.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 6.427666666666667,
+      "ns3": 4.1386666666666665,
+      "diff": -2.2890000000000006
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 40.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 1.1223333333333334,
+      "ns3": 0.0,
+      "diff": -1.1223333333333334
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 40.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 20.772333333333332,
+      "ns3": 15.478000000000002,
+      "diff": -5.294333333333331
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 4.439,
+      "ns3": 1.4776666666666667,
+      "diff": -2.961333333333333
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 180.0,
+      "config": "k4_int8",
+      "n_uavs": 1,
+      "py": 0.289,
+      "ns3": 0.0,
+      "diff": -0.289
+    },
+    {
+      "study": "single",
+      "profile": "vehicular_fading",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 20.672,
+      "ns3": 15.416666666666666,
+      "diff": -5.2553333333333345
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 6.641500000000001,
+      "ns3": 3.4585,
+      "diff": -3.1830000000000007
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 26.25,
+      "ns3": 23.8415,
+      "diff": -2.4085
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 2,
+      "py": 6.2875,
+      "ns3": 3.1125,
+      "diff": -3.175
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 2,
+      "py": 25.9205,
+      "ns3": 23.3545,
+      "diff": -2.565999999999999
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 5,
+      "py": 5.01,
+      "ns3": 2.9365,
+      "diff": -2.0734999999999997
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 5,
+      "py": 25.058500000000002,
+      "ns3": 22.8585,
+      "diff": -2.200000000000003
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 10,
+      "py": 0.0,
+      "ns3": 0.0,
+      "diff": 0.0
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 10,
+      "py": 13.2805,
+      "ns3": 12.878499999999999,
+      "diff": -0.402000000000001
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 20,
+      "py": 0.0,
+      "ns3": 0.0,
+      "diff": 0.0
+    },
+    {
+      "study": "swarm",
+      "profile": "moderate",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 20,
+      "py": 6.6465,
+      "ns3": 5.716,
+      "diff": -0.9304999999999994
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 1,
+      "py": 7.916499999999999,
+      "ns3": 5.917,
+      "diff": -1.9994999999999994
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 1,
+      "py": 25.9085,
+      "ns3": 23.6585,
+      "diff": -2.25
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 2,
+      "py": 8.1335,
+      "ns3": 6.3545,
+      "diff": -1.779
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 2,
+      "py": 26.0835,
+      "ns3": 23.8375,
+      "diff": -2.246000000000002
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 5,
+      "py": 5.41,
+      "ns3": 3.7365,
+      "diff": -1.6735000000000002
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 5,
+      "py": 23.8465,
+      "ns3": 22.5015,
+      "diff": -1.3449999999999989
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 10,
+      "py": 0.5095000000000001,
+      "ns3": 0.21100000000000002,
+      "diff": -0.29850000000000004
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 10,
+      "py": 13.1835,
+      "ns3": 12.424,
+      "diff": -0.759500000000001
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "k4_int8_zstd",
+      "n_uavs": 20,
+      "py": 0.0,
+      "ns3": 0.0,
+      "diff": 0.0
+    },
+    {
+      "study": "swarm",
+      "profile": "blackout",
+      "t_full_ms": 180.0,
+      "config": "jpeg_q90",
+      "n_uavs": 20,
+      "py": 6.6419999999999995,
+      "ns3": 5.7235,
+      "diff": -0.9184999999999999
+    }
+  ]
+}

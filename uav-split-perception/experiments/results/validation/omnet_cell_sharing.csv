@@ -1,0 +1,6 @@
+n_uavs,cell_goodput_mbps,per_uav_mean_mbps,per_uav_min_mbps,per_uav_max_mbps,waterfill_prediction_mbps,jain_fairness
+1,91.76,91.76,91.68,91.93,91.76,1.0
+2,115.72,57.86,57.86,57.86,57.86,1.0
+5,115.71,23.14,23.14,23.14,23.14,1.0
+10,115.7,11.57,0.0,16.53,11.57,0.7002
+20,115.7,5.79,0.0,16.52,5.79,0.3505

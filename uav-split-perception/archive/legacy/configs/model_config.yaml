@@ -1,0 +1,22 @@
+﻿# Model Configuration for UAV Split-Perception
+model:
+  name: "yolov8s"
+  weights_path: "yolov8s.pt"
+  framework: "ultralytics"
+  task: "detect"
+
+input:
+  resolution: [640, 640]  # [H, W]
+  channels: 3             # RGB
+  batch_size: 1
+  normalization:
+    mean: [0.0, 0.0, 0.0]
+    std: [1.0, 1.0, 1.0]
+    range: [0.0, 1.0]
+
+inference:
+  conf_threshold: 0.25
+  iou_threshold: 0.45
+  max_detections: 300
+  half_precision: false
+  classes: null           # null evaluates on all 80 COCO classes

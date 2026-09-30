@@ -1,0 +1,2945 @@
+version 3
+run General-55-20260930-08:11:09-74830
+attr configname General
+attr datetime 20260930-08:11:09
+attr datetimef 20260930-081109
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars "$d=200, $rate=13"
+attr iterationvarsd d=200/rate=13
+attr iterationvarsf d=200,rate=13-
+attr measurement "$d=200, $rate=13"
+attr network inetvalidation.A2A
+attr processid 74830
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 55
+attr seedset 55
+itervar d 200
+itervar rate 13
+config cmdenv-express-mode true
+config network inetvalidation.A2A
+config sim-time-limit 4s
+config warmup-period 1s
+config **.vector-recording false
+config output-scalar-file results/General-d=200,rate=13-r0.sca
+config **.constraintAreaMinX 0m
+config **.constraintAreaMinY 0m
+config **.constraintAreaMinZ 0m
+config **.constraintAreaMaxX 2000m
+config **.constraintAreaMaxY 100m
+config **.constraintAreaMaxZ 100m
+config *.uav[*].mobility.typename StationaryMobility
+config *.uav[*].mobility.initFromDisplayString false
+config *.uav[*].mobility.initialY 50m
+config *.uav[*].mobility.initialZ 80m
+config *.uav[0].mobility.initialX 0m
+config *.uav[1].mobility.initialX 200m
+config *.radioMedium.pathLoss.typename LogNormalShadowing
+config *.radioMedium.pathLoss.alpha 2.2
+config *.radioMedium.pathLoss.sigma 0
+config *.radioMedium.backgroundNoise.power -95dBm
+config *.radioMedium.backgroundNoise.bandwidth 20MHz
+config **.wlan[*].opMode "\"ac\""
+config **.wlan[*].radio.bandName "\"5 GHz\""
+config **.wlan[*].radio.channelNumber 157
+config **.wlan[*].radio.bandwidth 20MHz
+config **.wlan[*].radio.receiver.bandwidth 20MHz
+config **.wlan[*].radio.transmitter.power 100mW
+config **.wlan[*].radio.receiver.sensitivity -100dBm
+config **.wlan[*].radio.receiver.energyDetection -92dBm
+config **.wlan[*].radio.receiver.snirThreshold 4dB
+config **.wlan[*].mac.*.rateSelection.dataFrameBitrate 13Mbps
+config **.arp.typename GlobalArp
+config *.uav[0].numApps 1
+config *.uav[0].app[0].typename UdpBasicApp
+config *.uav[0].app[0].destAddresses "\"uav[1]\""
+config *.uav[0].app[0].destPort 5000
+config *.uav[0].app[0].messageLength 1472B
+config *.uav[0].app[0].sendInterval 0.05ms
+config *.uav[0].app[0].startTime 0.5s
+config *.uav[1].numApps 1
+config *.uav[1].app[0].typename UdpSink
+config *.uav[1].app[0].localPort 5000
+
+par A2A.radioMedium.propagation typename "\"inet.physicallayer.wireless.common.propagation.ConstantSpeedPropagation\""
+par A2A.radioMedium.propagation propagationSpeed 2.99792e+08mps
+attr unit mps
+par A2A.radioMedium.propagation ignoreMovementDuringTransmission true
+par A2A.radioMedium.propagation ignoreMovementDuringPropagation true
+par A2A.radioMedium.propagation ignoreMovementDuringReception true
+scalar A2A.radioMedium.propagation "Arrival computation count" 10698
+par A2A.radioMedium.analogModel typename "\"inet.physicallayer.wireless.common.analogmodel.packetlevel.ScalarAnalogModel\""
+par A2A.radioMedium.analogModel ignorePartialInterference false
+par A2A.radioMedium.backgroundNoise typename "\"inet.physicallayer.wireless.common.backgroundnoise.IsotropicScalarBackgroundNoise\""
+par A2A.radioMedium.backgroundNoise power -95dBm
+attr unit dBm
+par A2A.radioMedium.backgroundNoise bandwidth 2e+07Hz
+attr unit Hz
+par A2A.radioMedium.pathLoss typename "\"inet.physicallayer.wireless.common.pathloss.LogNormalShadowing\""
+par A2A.radioMedium.pathLoss alpha 2.2
+par A2A.radioMedium.pathLoss systemLoss 0dB
+attr unit dB
+par A2A.radioMedium.pathLoss sigma 0
+par A2A.radioMedium.mediumLimitCache typename "\"inet.physicallayer.wireless.common.medium.MediumLimitCache\""
+par A2A.radioMedium.mediumLimitCache centerFrequency 2.4e+09Hz
+attr unit Hz
+par A2A.radioMedium.mediumLimitCache maxSpeed "nan mps"
+attr unit mps
+par A2A.radioMedium.mediumLimitCache maxTransmissionPower "nan W"
+attr unit W
+par A2A.radioMedium.mediumLimitCache minInterferencePower -110dBm
+attr unit dBm
+par A2A.radioMedium.mediumLimitCache minReceptionPower -85dBm
+attr unit dBm
+par A2A.radioMedium.mediumLimitCache maxAntennaGain 0dB
+attr unit dB
+par A2A.radioMedium.mediumLimitCache minInterferenceTime 1e-12s
+attr unit s
+par A2A.radioMedium.mediumLimitCache maxTransmissionDuration 0.01s
+attr unit s
+par A2A.radioMedium.mediumLimitCache maxCommunicationRange "nan m"
+attr unit m
+par A2A.radioMedium.mediumLimitCache maxInterferenceRange "nan m"
+attr unit m
+par A2A.radioMedium.communicationCache typename "\"inet.physicallayer.wireless.common.communicationcache.VectorCommunicationCache\""
+par A2A.radioMedium typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadioMedium\""
+par A2A.radioMedium physicalEnvironmentModule "\"physicalEnvironment\""
+par A2A.radioMedium signalAnalogRepresentation "\"scalar\""
+attr enum unitDisk,scalar,dimensional
+par A2A.radioMedium rangeFilter "\"\""
+par A2A.radioMedium radioModeFilter false
+par A2A.radioMedium listeningFilter false
+par A2A.radioMedium macAddressFilter false
+par A2A.radioMedium recordTransmissionLog false
+par A2A.radioMedium recordReceptionLog false
+scalar A2A.radioMedium "transmission count" 10698
+scalar A2A.radioMedium "signal send count" 10698
+scalar A2A.radioMedium "reception computation count" 10698
+scalar A2A.radioMedium "interference computation count" 42793
+scalar A2A.radioMedium "reception decision computation count" 10697
+scalar A2A.radioMedium "listening decision computation count" 21398
+scalar A2A.radioMedium "reception cache hit" 85.713522608905
+attr unit %
+scalar A2A.radioMedium "interference cache hit" 66.666666666667
+attr unit %
+scalar A2A.radioMedium "noise cache hit" 0
+attr unit %
+scalar A2A.radioMedium "snir cache hit" 50
+attr unit %
+scalar A2A.radioMedium "reception decision cache hit" 50
+attr unit %
+scalar A2A.radioMedium "reception result cache hit" 0
+attr unit %
+par A2A.configurator typename "\"inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator\""
+par A2A.configurator minLinkWeight 0.001
+par A2A.configurator configureIsolatedNetworksSeparatly false
+par A2A.configurator config "<config>...</config> at content:1"
+par A2A.configurator assignAddresses true
+par A2A.configurator assignUniqueAddresses true
+par A2A.configurator assignDisjunctSubnetAddresses true
+par A2A.configurator addStaticRoutes true
+par A2A.configurator addDefaultRoutes true
+par A2A.configurator addSubnetRoutes true
+par A2A.configurator addDirectRoutes true
+par A2A.configurator optimizeRoutes true
+par A2A.configurator dumpTopology false
+par A2A.configurator dumpLinks false
+par A2A.configurator dumpAddresses false
+par A2A.configurator dumpRoutes false
+par A2A.configurator dumpConfig "\"\""
+par A2A.uav[0].radioIn[0].channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].mobility typename "\"inet.mobility.static.StationaryMobility\""
+par A2A.uav[0].mobility subjectModule "\"^\""
+par A2A.uav[0].mobility coordinateSystemModule "\"\""
+par A2A.uav[0].mobility displayStringTextFormat "\"p: %p\\nv: %v\""
+attr mutable ""
+par A2A.uav[0].mobility updateDisplayString true
+par A2A.uav[0].mobility constraintAreaMinX 0m
+attr unit m
+par A2A.uav[0].mobility constraintAreaMinY 0m
+attr unit m
+par A2A.uav[0].mobility constraintAreaMinZ 0m
+attr unit m
+par A2A.uav[0].mobility constraintAreaMaxX 2000m
+attr unit m
+par A2A.uav[0].mobility constraintAreaMaxY 100m
+attr unit m
+par A2A.uav[0].mobility constraintAreaMaxZ 100m
+attr unit m
+par A2A.uav[0].mobility initialX 0m
+attr unit m
+par A2A.uav[0].mobility initialY 50m
+attr unit m
+par A2A.uav[0].mobility initialZ 80m
+attr unit m
+par A2A.uav[0].mobility initialLatitude "nan deg"
+attr unit deg
+par A2A.uav[0].mobility initialLongitude "nan deg"
+attr unit deg
+par A2A.uav[0].mobility initialAltitude 0m
+attr unit m
+par A2A.uav[0].mobility initialHeading 0deg
+attr unit deg
+par A2A.uav[0].mobility initialElevation 0deg
+attr unit deg
+par A2A.uav[0].mobility initialBank 0deg
+attr unit deg
+par A2A.uav[0].mobility initFromDisplayString false
+par A2A.uav[0].mobility updateFromDisplayString true
+par A2A.uav[0].interfaceTable typename "\"inet.networklayer.common.InterfaceTable\""
+par A2A.uav[0].interfaceTable displayAddresses false
+par A2A.uav[0].cb typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].cb displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].cb forwardServiceRegistration true
+par A2A.uav[0].cb forwardProtocolRegistration true
+par A2A.uav[0].bl typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].bl displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].bl forwardServiceRegistration true
+par A2A.uav[0].bl forwardProtocolRegistration true
+par A2A.uav[0].li typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].li displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].li forwardServiceRegistration true
+par A2A.uav[0].li forwardProtocolRegistration true
+par A2A.uav[0].lo[0].upperLayerIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].lo[0].lo.upperLayerOut.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].lo[0].lo typename "\"inet.linklayer.loopback.Loopback\""
+par A2A.uav[0].lo[0].lo interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].lo[0].lo mtu 4470B
+attr unit B
+scalar A2A.uav[0].lo[0].lo rcvdPkFromHl:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, count"
+scalar A2A.uav[0].lo[0].lo rcvdPkFromHl:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, sum(packetBytes)"
+scalar A2A.uav[0].lo[0].lo passedUpPk:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetSentToUpper
+attr title "packets passed to higher layer, count"
+scalar A2A.uav[0].lo[0].lo passedUpPk:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, sum(packetBytes)"
+par A2A.uav[0].lo[0] typename "\"inet.linklayer.loopback.LoopbackInterface\""
+par A2A.uav[0].lo[0] displayStringTextFormat "\"%a (%i)\\n%m\""
+par A2A.uav[0].lo[0] recordPcap false
+par A2A.uav[0].lo[0] numPcapRecorders 0
+par A2A.uav[0].lo[0] interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+scalar A2A.uav[0].lo[0] packetDropInterfaceDown:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, count"
+scalar A2A.uav[0].lo[0] packetDropInterfaceDown:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, sum(packetBytes)"
+scalar A2A.uav[0].lo[0] packetDropNoCarrier:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, count"
+scalar A2A.uav[0].lo[0] packetDropNoCarrier:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, sum(packetBytes)"
+par A2A.uav[0].wlan[0].radioIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].wlan[0].llc.upperLayerOut.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].wlan[0].upperLayerIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].wlan[0].mib typename "\"inet.linklayer.ieee80211.mib.Ieee80211Mib\""
+par A2A.uav[0].wlan[0].llc typename "\"inet.linklayer.ieee80211.llc.Ieee80211LlcLpd\""
+par A2A.uav[0].wlan[0].llc registerProtocol false
+par A2A.uav[0].wlan[0].mgmt typename "\"inet.linklayer.ieee80211.mgmt.Ieee80211MgmtAdhoc\""
+par A2A.uav[0].wlan[0].mgmt mibModule "\"A2A.uav[0].wlan[0].mib\""
+par A2A.uav[0].wlan[0].mgmt macModule "\"A2A.uav[0].wlan[0].mac\""
+par A2A.uav[0].wlan[0].mgmt interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue typename "\"inet.linklayer.ieee80211.mac.queue.PendingQueue\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue displayStringTextFormat "\"contains %p pk (%l) pushed %u\\npulled %o removed %r dropped %d\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue packetCapacity 100
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue dataCapacity -1b
+attr unit b
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue dropperClass "\"inet::queueing::PacketAtCollectionEndDropper\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue comparatorClass "\"inet::ieee80211::MgmtOverDataComparator\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue bufferModule "\"\""
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:last 100
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode last
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, last"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:max 100
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, max"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 99.980940239749
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, timeavg"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:last 1228800
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode last
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, last"
+attr unit b
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:max 1228800
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, max"
+attr unit b
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 1228565.7936659
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, timeavg"
+attr unit b
+statistic A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:histogram
+field count 2293
+field mean 0.13079167933687
+field stddev 0.00034760447162163
+field min 0.1296343908
+field max 0.131786325712
+field sum 299.90532071944
+field sqrsum 39.225397478725
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+bin	-inf	0
+bin	0.12962	1
+bin	0.12966	2
+bin	0.1297	2
+bin	0.12974	5
+bin	0.12978	3
+bin	0.12982	4
+bin	0.12986	2
+bin	0.1299	6
+bin	0.12994	6
+bin	0.12998	4
+bin	0.13002	8
+bin	0.13006	12
+bin	0.1301	12
+bin	0.13014	14
+bin	0.13018	36
+bin	0.13022	42
+bin	0.13026	35
+bin	0.1303	40
+bin	0.13034	45
+bin	0.13038	42
+bin	0.13042	43
+bin	0.13046	58
+bin	0.1305	71
+bin	0.13054	71
+bin	0.13058	102
+bin	0.13062	109
+bin	0.13066	109
+bin	0.1307	102
+bin	0.13074	115
+bin	0.13078	134
+bin	0.13082	128
+bin	0.13086	117
+bin	0.1309	118
+bin	0.13094	67
+bin	0.13098	72
+bin	0.13102	68
+bin	0.13106	70
+bin	0.1311	53
+bin	0.13114	57
+bin	0.13118	43
+bin	0.13122	39
+bin	0.13126	49
+bin	0.1313	41
+bin	0.13134	29
+bin	0.13138	28
+bin	0.13142	18
+bin	0.13146	11
+bin	0.1315	7
+bin	0.13154	11
+bin	0.13158	6
+bin	0.13162	8
+bin	0.13166	4
+bin	0.1317	8
+bin	0.13174	5
+bin	0.13178	1
+bin	0.13182	0
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 2293
+attr recordingmode count
+attr source packetPulled
+attr title "outgoing packets, count"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 28176384
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths, sum"
+attr unit b
+statistic A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:histogram
+field count 2293
+field mean 12288
+field stddev 0
+field min 12288
+field max 12288
+field sum 28176384
+field sqrsum 346231406592
+attr interpolationmode none
+attr recordingmode histogram
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+bin	-inf	0
+bin	12287	0
+bin	12288	2293
+bin	12289	0
+statistic A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(demuxFlow(packetPulled))
+attr title "flow queueing times"
+attr unit s
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 60001
+attr recordingmode count
+attr source packetPushStarted
+attr title "incoming packets, count"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 737292288
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths, sum"
+attr unit b
+statistic A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:histogram
+field count 60001
+field mean 12288
+field stddev 0
+field min 12288
+field max 12288
+field sum 737292288
+field sqrsum 9059847634944
+attr interpolationmode none
+attr recordingmode histogram
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+bin	-inf	0
+bin	12287	0
+bin	12288	60001
+bin	12289	0
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketsQueueOverflow:count 57708
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "dropped packets: queue overflow, count"
+attr unit pk
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketLengthsQueueOverflow:sum 709115904
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetDropReasonIsQueueOverflow(packetDropped))
+attr title "dropped packet lengths: queue overflow, sum"
+attr unit b
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames typename "\"inet.linklayer.ieee80211.mac.queue.InProgressFrames\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames pendingQueueModule "\"^.pendingQueue\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames originatorMacDataServiceModule "\"^.^.originatorMacDataService\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames ackHandlerModule "\"^.^.ackHandler\""
+statistic A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:histogram
+field count 4586
+field mean 0.0013928768523855
+field stddev 9.4268693205527e-05
+field min 0.001240668512
+field max 0.001545002768
+field sum 6.38773324504
+field sqrsum 0.0089380707754179
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+bin	-inf	0
+bin	0.00116	0
+bin	0.00117	0
+bin	0.00118	0
+bin	0.00119	0
+bin	0.0012	0
+bin	0.00121	0
+bin	0.00122	0
+bin	0.00123	0
+bin	0.00124	299
+bin	0.00125	134
+bin	0.00126	126
+bin	0.00127	145
+bin	0.00128	146
+bin	0.00129	136
+bin	0.0013	164
+bin	0.00131	158
+bin	0.00132	135
+bin	0.00133	268
+bin	0.00134	140
+bin	0.00135	162
+bin	0.00136	145
+bin	0.00137	135
+bin	0.00138	0
+bin	0.00139	0
+bin	0.0014	0
+bin	0.00141	299
+bin	0.00142	134
+bin	0.00143	126
+bin	0.00144	145
+bin	0.00145	146
+bin	0.00146	136
+bin	0.00147	164
+bin	0.00148	158
+bin	0.00149	135
+bin	0.0015	268
+bin	0.00151	140
+bin	0.00152	162
+bin	0.00153	145
+bin	0.00154	135
+bin	0.00155	0
+bin	0.00156	0
+bin	0.00157	0
+bin	0.00158	0
+bin	0.00159	0
+bin	0.0016	0
+bin	0.00161	0
+bin	0.00162	0
+bin	0.00163	0
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 3
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length, max"
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 2.1292337914507
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length, timeavg"
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.contention typename "\"inet.linklayer.ieee80211.mac.contention.Contention\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.contention initialChannelBusy true
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess.contention backoffOptimization true
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 2293
+attr recordingmode count
+attr title "channel access granted, count"
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 18344
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode count
+attr title "contention state changed, count"
+attr type enum
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess typename "\"inet.linklayer.ieee80211.mac.channelaccess.Dcaf\""
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess difsn -1
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess cwMin -1
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess cwMax -1
+par A2A.uav[0].wlan[0].mac.dcf.channelAccess rxModule "\"^.^.rx\""
+scalar A2A.uav[0].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 4586
+attr interpolationmode sample-hold
+attr recordingmode count
+attr title "channel ownership, count"
+par A2A.uav[0].wlan[0].mac.dcf.originatorMacDataService.fragmentationPolicy typename "\"inet.linklayer.ieee80211.mac.fragmentation.BasicFragmentationPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.originatorMacDataService.fragmentationPolicy fragmentationThreshold 1500B
+attr unit B
+par A2A.uav[0].wlan[0].mac.dcf.originatorMacDataService typename "\"inet.linklayer.ieee80211.mac.originator.OriginatorMacDataService\""
+scalar A2A.uav[0].wlan[0].mac.dcf.originatorMacDataService packetAggregated:count 0
+attr recordingmode count
+attr title "packets aggregated, count"
+scalar A2A.uav[0].wlan[0].mac.dcf.originatorMacDataService packetFragmented:count 2293
+attr recordingmode count
+attr title "packets fragmented, count"
+par A2A.uav[0].wlan[0].mac.dcf.recipientMacDataService typename "\"inet.linklayer.ieee80211.mac.recipient.RecipientMacDataService\""
+scalar A2A.uav[0].wlan[0].mac.dcf.recipientMacDataService packetDeaggregated:count 0
+attr recordingmode count
+attr title "packets deaggregated, count"
+scalar A2A.uav[0].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 0
+attr recordingmode count
+attr title "packets defragmented, count"
+scalar A2A.uav[0].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, count"
+scalar A2A.uav[0].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, sum(packetBytes)"
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection typename "\"inet.linklayer.ieee80211.mac.rateselection.RateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection rateControlModule "\"^.rateControl\""
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection multicastFrameBitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection responseAckFrameBitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection responseCtsFrameBitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection dataFrameBitrate 1.3e+07bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection dataFrameBandwidth "nan Hz"
+attr unit Hz
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection dataFrameNumSpatialStreams -1
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection mgmtFrameBitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.rateSelection controlFrameBitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure typename "\"inet.linklayer.ieee80211.mac.originator.NonQosRecoveryProcedure\""
+par A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure cwCalculatorModule "\"^.channelAccess\""
+par A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure rtsPolicyModule "\"^.rtsPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure shortRetryLimit 7
+par A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure longRetryLimit 4
+scalar A2A.uav[0].wlan[0].mac.dcf.recoveryProcedure retryLimitReached:count 0
+attr recordingmode count
+attr title "retry limit reached, count"
+par A2A.uav[0].wlan[0].mac.dcf.originatorProtectionMechanism typename "\"inet.linklayer.ieee80211.mac.protectionmechanism.OriginatorProtectionMechanism\""
+par A2A.uav[0].wlan[0].mac.dcf.originatorProtectionMechanism rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf.ackHandler typename "\"inet.linklayer.ieee80211.mac.originator.AckHandler\""
+par A2A.uav[0].wlan[0].mac.dcf.originatorAckPolicy typename "\"inet.linklayer.ieee80211.mac.originator.OriginatorAckPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.originatorAckPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf.originatorAckPolicy ackTimeout -1s
+attr unit s
+par A2A.uav[0].wlan[0].mac.dcf.recipientAckPolicy typename "\"inet.linklayer.ieee80211.mac.recipient.RecipientAckPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.recipientAckPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf.rtsPolicy typename "\"inet.linklayer.ieee80211.mac.originator.RtsPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.rtsPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf.rtsPolicy ctsTimeout -1s
+attr unit s
+par A2A.uav[0].wlan[0].mac.dcf.rtsPolicy rtsThreshold 2346B
+attr unit B
+par A2A.uav[0].wlan[0].mac.dcf.ctsPolicy typename "\"inet.linklayer.ieee80211.mac.recipient.CtsPolicy\""
+par A2A.uav[0].wlan[0].mac.dcf.ctsPolicy rxModule "\"^.^.rx\""
+par A2A.uav[0].wlan[0].mac.dcf.ctsPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[0].wlan[0].mac.dcf typename "\"inet.linklayer.ieee80211.mac.coordinationfunction.Dcf\""
+par A2A.uav[0].wlan[0].mac.dcf rxModule "\"^.rx\""
+par A2A.uav[0].wlan[0].mac.dcf txModule "\"^.tx\""
+scalar A2A.uav[0].wlan[0].mac.dcf frameSequenceFinished:count 2293
+attr recordingmode count
+attr title "finished frame sequences, count"
+statistic A2A.uav[0].wlan[0].mac.dcf frameSequenceDuration:histogram
+field count 2293
+field mean 0.001206668512
+field stddev 0
+field min 0.001206668512
+field max 0.001206668512
+field sum 2.7668908980159
+field sqrsum 0.0033387201227753
+attr recordingmode histogram
+attr source frameSequenceDuration(frameSequenceFinished)
+attr title "frame sequence durations"
+bin	-inf	0
+bin	0	2293
+bin	0.01	0
+bin	0.02	0
+bin	0.03	0
+bin	0.04	0
+bin	0.05	0
+bin	0.06	0
+bin	0.07	0
+bin	0.08	0
+bin	0.09	0
+bin	0.1	0
+bin	0.11	0
+bin	0.12	0
+bin	0.13	0
+bin	0.14	0
+bin	0.15	0
+bin	0.16	0
+bin	0.17	0
+bin	0.18	0
+bin	0.19	0
+bin	0.2	0
+bin	0.21	0
+bin	0.22	0
+bin	0.23	0
+bin	0.24	0
+bin	0.25	0
+bin	0.26	0
+bin	0.27	0
+bin	0.28	0
+bin	0.29	0
+bin	0.3	0
+bin	0.31	0
+bin	0.32	0
+bin	0.33	0
+bin	0.34	0
+bin	0.35	0
+bin	0.36	0
+bin	0.37	0
+bin	0.38	0
+bin	0.39	0
+bin	0.4	0
+bin	0.41	0
+bin	0.42	0
+bin	0.43	0
+bin	0.44	0
+bin	0.45	0
+bin	0.46	0
+bin	0.47	0
+bin	0.48	0
+bin	0.49	0
+bin	0.5	0
+bin	0.51	0
+statistic A2A.uav[0].wlan[0].mac.dcf frameSequenceNumPackets:histogram
+field count 2293
+field mean 4
+field stddev 0
+field min 4
+field max 4
+field sum 9172
+field sqrsum 36688
+attr recordingmode histogram
+attr source frameSequenceNumPackets(frameSequenceFinished)
+attr title "frame sequences: number of packets"
+bin	-inf	0
+bin	3	0
+bin	4	2293
+bin	5	0
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeer:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerWithRetry:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerWithRetry:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeer:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerUnicast:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerMulticast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerBroadcast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerWithRetry:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerWithRetry:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDrop:count 57708
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropped
+attr title "packet drops, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDrop:sum(packetBytes) 88639488
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropped
+attr title "packet drops, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropNotAddressedToUs:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropQueueOverflow:count 57708
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropQueueOverflow:sum(packetBytes) 88639488
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropRetryLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, count"
+scalar A2A.uav[0].wlan[0].mac.dcf packetDropRetryLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac.dcf linkBroken:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "link breaks, count"
+par A2A.uav[0].wlan[0].mac.ds typename "\"inet.linklayer.ieee80211.mac.Ds\""
+par A2A.uav[0].wlan[0].mac.ds mibModule "\"A2A.uav[0].wlan[0].mib\""
+par A2A.uav[0].wlan[0].mac.rx typename "\"inet.linklayer.ieee80211.mac.Rx\""
+par A2A.uav[0].wlan[0].mac.tx typename "\"inet.linklayer.ieee80211.mac.Tx\""
+par A2A.uav[0].wlan[0].mac.tx rxModule "\"^.rx\""
+par A2A.uav[0].wlan[0].mac typename "\"inet.linklayer.ieee80211.mac.Ieee80211Mac\""
+par A2A.uav[0].wlan[0].mac interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].wlan[0].mac mibModule "\"A2A.uav[0].wlan[0].mib\""
+par A2A.uav[0].wlan[0].mac modeSet "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[0].wlan[0].mac fcsMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[0].wlan[0].mac initialRadioMode "\"receiver\""
+attr enum off,sleep,receiver,transmitter,transceiver
+par A2A.uav[0].wlan[0].mac mtu 2304B
+attr unit B
+par A2A.uav[0].wlan[0].mac qosStation false
+scalar A2A.uav[0].wlan[0].mac packetReceivedFromLower:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received from lower layer, count"
+scalar A2A.uav[0].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received from lower layer, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetSentToLower:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent to lower layer, count"
+scalar A2A.uav[0].wlan[0].mac packetSentToLower:sum(packetBytes) 3586252
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent to lower layer, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetReceivedFromUpper:count 60001
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received from upper layer, count"
+scalar A2A.uav[0].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 90481508
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received from upper layer, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetSentToUpper:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent to upper layer, count"
+scalar A2A.uav[0].wlan[0].mac packetSentToUpper:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent to upper layer, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDrop:count 57708
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropped
+attr title "packet drops, count"
+scalar A2A.uav[0].wlan[0].mac packetDrop:sum(packetBytes) 88639488
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropped
+attr title "packet drops, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropIncorrectlyReceived:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, count"
+scalar A2A.uav[0].wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropNotAddressedToUs:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, count"
+scalar A2A.uav[0].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropQueueOverflow:count 57708
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, count"
+scalar A2A.uav[0].wlan[0].mac packetDropQueueOverflow:sum(packetBytes) 88639488
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropRetryLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, count"
+scalar A2A.uav[0].wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropDuplicateDetected:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, count"
+scalar A2A.uav[0].wlan[0].mac packetDropDuplicateDetected:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac packetDropOther:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, count"
+scalar A2A.uav[0].wlan[0].mac packetDropOther:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0].mac linkBroken:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "link breaks, count"
+par A2A.uav[0].wlan[0].radio.antenna typename "\"inet.physicallayer.wireless.common.antenna.IsotropicAntenna\""
+par A2A.uav[0].wlan[0].radio.antenna mobilityModule "\"^.^.^.mobility\""
+par A2A.uav[0].wlan[0].radio.antenna numAntennas 1
+par A2A.uav[0].wlan[0].radio.transmitter typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarTransmitter\""
+par A2A.uav[0].wlan[0].radio.transmitter preambleDuration -1s
+attr unit s
+par A2A.uav[0].wlan[0].radio.transmitter headerLength 192b
+attr unit b
+par A2A.uav[0].wlan[0].radio.transmitter bitrate -1bps
+attr unit bps
+par A2A.uav[0].wlan[0].radio.transmitter power 0.1W
+attr unit W
+par A2A.uav[0].wlan[0].radio.transmitter centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio.transmitter bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio.transmitter codeRate 1
+par A2A.uav[0].wlan[0].radio.transmitter modulation "\"BPSK\""
+par A2A.uav[0].wlan[0].radio.transmitter opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[0].wlan[0].radio.transmitter bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[0].wlan[0].radio.transmitter channelNumber 157
+par A2A.uav[0].wlan[0].radio.receiver.errorModel typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.errormodel.Ieee80211NistErrorModel\""
+par A2A.uav[0].wlan[0].radio.receiver.errorModel corruptionMode "\"packet\""
+attr enum packet,chunk,byte,bit
+par A2A.uav[0].wlan[0].radio.receiver.errorModel snirMode "\"min\""
+attr enum min,mean
+par A2A.uav[0].wlan[0].radio.receiver.errorModel snirOffset 0dB
+attr unit dB
+par A2A.uav[0].wlan[0].radio.receiver typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarReceiver\""
+par A2A.uav[0].wlan[0].radio.receiver snirThreshold 4dB
+attr unit dB
+par A2A.uav[0].wlan[0].radio.receiver snirThresholdMode "\"min\""
+attr enum min,mean
+par A2A.uav[0].wlan[0].radio.receiver energyDetection -92dBm
+attr unit dBm
+par A2A.uav[0].wlan[0].radio.receiver sensitivity -100dBm
+attr unit dBm
+par A2A.uav[0].wlan[0].radio.receiver centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio.receiver bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio.receiver modulation "\"BPSK\""
+par A2A.uav[0].wlan[0].radio.receiver opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[0].wlan[0].radio.receiver bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[0].wlan[0].radio.receiver channelNumber 157
+par A2A.uav[0].wlan[0].radio typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadio\""
+par A2A.uav[0].wlan[0].radio radioMediumModule "\"radioMedium\""
+par A2A.uav[0].wlan[0].radio energySourceModule "\"\""
+par A2A.uav[0].wlan[0].radio initialRadioMode "\"off\""
+attr enum off,sleep,receiver,transmitter,transceiver
+par A2A.uav[0].wlan[0].radio switchingTimes "\"ms 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\""
+par A2A.uav[0].wlan[0].radio sendRawBytes false
+par A2A.uav[0].wlan[0].radio separateTransmissionParts false
+par A2A.uav[0].wlan[0].radio separateReceptionParts false
+par A2A.uav[0].wlan[0].radio displayCommunicationRange false
+par A2A.uav[0].wlan[0].radio displayInterferenceRange false
+par A2A.uav[0].wlan[0].radio centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[0].wlan[0].radio signalAnalogRepresentation "\"scalar\""
+attr enum scalar,dimensional
+par A2A.uav[0].wlan[0].radio opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[0].wlan[0].radio bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[0].wlan[0].radio channelNumber 157
+par A2A.uav[0].wlan[0].radio crcMode "\"declared\""
+attr enum declared,computed
+statistic A2A.uav[0].wlan[0].radio radioChannel:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode sample-hold
+attr recordingmode histogram
+attr source radioChannelChanged
+attr title "Radio channel"
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[0].wlan[0].radio radioMode:count 9173
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source radioModeChanged
+attr title "Radio mode, count"
+scalar A2A.uav[0].wlan[0].radio receptionState:count 18346
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source receptionStateChanged
+attr title "Radio reception state, count"
+scalar A2A.uav[0].wlan[0].radio transmissionState:count 18346
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source transmissionStateChanged
+attr title "Radio transmission state, count"
+statistic A2A.uav[0].wlan[0].radio minSnir:histogram
+field count 4586
+field mean 46.555787722834
+field stddev 0
+field min 46.55578772283
+field max 46.55578772283
+field sum 213504.84249691
+field sqrsum 9939886.1250808
+attr recordingmode histogram
+attr source minimumSnir(packetSentToUpper)
+attr title "Min SNIR"
+bin	-inf	0
+bin	46.04	0
+bin	46.06	0
+bin	46.08	0
+bin	46.1	0
+bin	46.12	0
+bin	46.14	0
+bin	46.16	0
+bin	46.18	0
+bin	46.2	0
+bin	46.22	0
+bin	46.24	0
+bin	46.26	0
+bin	46.28	0
+bin	46.3	0
+bin	46.32	0
+bin	46.34	0
+bin	46.36	0
+bin	46.38	0
+bin	46.4	0
+bin	46.42	0
+bin	46.44	0
+bin	46.46	0
+bin	46.48	0
+bin	46.5	0
+bin	46.52	0
+bin	46.54	4586
+bin	46.56	0
+bin	46.58	0
+bin	46.6	0
+bin	46.62	0
+bin	46.64	0
+bin	46.66	0
+bin	46.68	0
+bin	46.7	0
+bin	46.72	0
+bin	46.74	0
+bin	46.76	0
+bin	46.78	0
+bin	46.8	0
+bin	46.82	0
+bin	46.84	0
+bin	46.86	0
+bin	46.88	0
+bin	46.9	0
+bin	46.92	0
+bin	46.94	0
+bin	46.96	0
+bin	46.98	0
+bin	47	0
+bin	47.02	0
+bin	47.04	0
+bin	47.06	0
+statistic A2A.uav[0].wlan[0].radio packetErrorRate:histogram
+field count 4586
+field mean 0
+field stddev 0
+field min 0
+field max 0
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source packetErrorRate(packetSentToUpper)
+attr title "Packet error rate"
+bin	-inf	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	4586
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
+statistic A2A.uav[0].wlan[0].radio bitErrorRate:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source bitErrorRate(packetSentToUpper)
+attr title "Bit error rate"
+bin	-inf	0
+bin	0	0
+bin	1	0
+statistic A2A.uav[0].wlan[0].radio symbolErrorRate:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source symbolErrorRate(packetSentToUpper)
+attr title "Symbol error rate"
+bin	-inf	0
+bin	0	0
+bin	1	0
+par A2A.uav[0].wlan[0] typename "\"inet.linklayer.ieee80211.Ieee80211Interface\""
+par A2A.uav[0].wlan[0] displayStringTextFormat "\"%a (%i)\\n%m\""
+par A2A.uav[0].wlan[0] recordPcap false
+par A2A.uav[0].wlan[0] numPcapRecorders 0
+par A2A.uav[0].wlan[0] interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].wlan[0] energySourceModule "\"\""
+par A2A.uav[0].wlan[0] opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[0].wlan[0] address "\"0A-AA-00-00-00-01\""
+attr mutable ""
+par A2A.uav[0].wlan[0] protocol "\"\""
+par A2A.uav[0].wlan[0] bitrate -1bps
+attr unit bps
+scalar A2A.uav[0].wlan[0] packetDropInterfaceDown:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, count"
+scalar A2A.uav[0].wlan[0] packetDropInterfaceDown:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, sum(packetBytes)"
+scalar A2A.uav[0].wlan[0] packetDropNoCarrier:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, count"
+scalar A2A.uav[0].wlan[0] packetDropNoCarrier:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, sum(packetBytes)"
+par A2A.uav[0].ipv4.transportIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].ipv4.up.out[0].channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].ipv4.lp.out[2].channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].ipv4.ifIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[0].ipv4.configurator typename "\"inet.networklayer.configurator.ipv4.Ipv4NodeConfigurator\""
+par A2A.uav[0].ipv4.configurator interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.configurator routingTableModule "\"A2A.uav[0].ipv4.routingTable\""
+par A2A.uav[0].ipv4.configurator networkConfiguratorModule "\"configurator\""
+par A2A.uav[0].ipv4.configurator configureRoutingTable true
+par A2A.uav[0].ipv4.routingTable typename "\"inet.networklayer.ipv4.Ipv4RoutingTable\""
+par A2A.uav[0].ipv4.routingTable interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.routingTable routerId "\"auto\""
+par A2A.uav[0].ipv4.routingTable netmaskRoutes "\"*\""
+par A2A.uav[0].ipv4.routingTable forwarding true
+par A2A.uav[0].ipv4.routingTable multicastForwarding false
+par A2A.uav[0].ipv4.routingTable useAdminDist false
+par A2A.uav[0].ipv4.routingTable routingFile "\"\""
+par A2A.uav[0].ipv4.natTable typename "\"inet.networklayer.ipv4.Ipv4NatTable\""
+par A2A.uav[0].ipv4.natTable networkProtocolModule "\"^.ip\""
+par A2A.uav[0].ipv4.natTable config "<config/> at content:1"
+par A2A.uav[0].ipv4.up typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].ipv4.up displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].ipv4.up forwardServiceRegistration true
+par A2A.uav[0].ipv4.up forwardProtocolRegistration true
+par A2A.uav[0].ipv4.igmp typename "\"inet.networklayer.ipv4.Igmpv2\""
+par A2A.uav[0].ipv4.igmp interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.igmp routingTableModule "\"A2A.uav[0].ipv4.routingTable\""
+par A2A.uav[0].ipv4.igmp crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[0].ipv4.igmp enabled true
+par A2A.uav[0].ipv4.igmp robustnessVariable 2
+par A2A.uav[0].ipv4.igmp queryInterval 125s
+attr unit s
+par A2A.uav[0].ipv4.igmp queryResponseInterval 10s
+attr unit s
+par A2A.uav[0].ipv4.igmp groupMembershipInterval 260s
+attr unit s
+par A2A.uav[0].ipv4.igmp otherQuerierPresentInterval 255s
+attr unit s
+par A2A.uav[0].ipv4.igmp startupQueryInterval 31.25s
+attr unit s
+par A2A.uav[0].ipv4.igmp startupQueryCount 2
+par A2A.uav[0].ipv4.igmp lastMemberQueryInterval 1s
+attr unit s
+par A2A.uav[0].ipv4.igmp lastMemberQueryCount 2
+par A2A.uav[0].ipv4.igmp unsolicitedReportInterval 10s
+attr unit s
+par A2A.uav[0].ipv4.icmp typename "\"inet.networklayer.ipv4.Icmp\""
+par A2A.uav[0].ipv4.icmp interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.icmp routingTableModule "\"A2A.uav[0].ipv4.routingTable\""
+par A2A.uav[0].ipv4.icmp crcMode "\"declared\""
+attr enum declared,computed
+attr mutable ""
+par A2A.uav[0].ipv4.icmp quoteLength 8B
+attr mutable ""
+attr unit B
+par A2A.uav[0].ipv4.mp typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].ipv4.mp displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].ipv4.mp forwardServiceRegistration true
+par A2A.uav[0].ipv4.mp forwardProtocolRegistration true
+par A2A.uav[0].ipv4.ip typename "\"inet.networklayer.ipv4.Ipv4\""
+par A2A.uav[0].ipv4.ip interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.ip routingTableModule "\"A2A.uav[0].ipv4.routingTable\""
+par A2A.uav[0].ipv4.ip arpModule "\"A2A.uav[0].ipv4.arp\""
+par A2A.uav[0].ipv4.ip icmpModule "\"A2A.uav[0].ipv4.icmp\""
+par A2A.uav[0].ipv4.ip crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[0].ipv4.ip timeToLive 32
+par A2A.uav[0].ipv4.ip multicastTimeToLive 32
+par A2A.uav[0].ipv4.ip fragmentTimeout 60s
+attr unit s
+par A2A.uav[0].ipv4.ip limitedBroadcast false
+par A2A.uav[0].ipv4.ip directBroadcastInterfaces "\"\""
+scalar A2A.uav[0].ipv4.ip packetDropAddressResolutionFailed:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, count"
+scalar A2A.uav[0].ipv4.ip packetDropAddressResolutionFailed:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, sum(packetBytes)"
+scalar A2A.uav[0].ipv4.ip packetDropHopLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, count"
+scalar A2A.uav[0].ipv4.ip packetDropHopLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, sum(packetBytes)"
+scalar A2A.uav[0].ipv4.ip packetDropForwardingDisabled:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, count"
+scalar A2A.uav[0].ipv4.ip packetDropForwardingDisabled:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, sum(packetBytes)"
+scalar A2A.uav[0].ipv4.ip packetDropNoInterfaceFound:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, count"
+scalar A2A.uav[0].ipv4.ip packetDropNoInterfaceFound:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, sum(packetBytes)"
+scalar A2A.uav[0].ipv4.ip packetDropNoRouteFound:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, count"
+scalar A2A.uav[0].ipv4.ip packetDropNoRouteFound:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, sum(packetBytes)"
+scalar A2A.uav[0].ipv4.ip packetDropUndefined:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, count"
+scalar A2A.uav[0].ipv4.ip packetDropUndefined:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, sum(packetBytes)"
+par A2A.uav[0].ipv4.arp typename "\"inet.networklayer.arp.ipv4.GlobalArp\""
+par A2A.uav[0].ipv4.arp interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4.arp addressType "\"ipv4\""
+attr enum ipv4,ipv6,mac,moduleid,modulepath
+par A2A.uav[0].ipv4.lp typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].ipv4.lp displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].ipv4.lp forwardServiceRegistration true
+par A2A.uav[0].ipv4.lp forwardProtocolRegistration true
+par A2A.uav[0].ipv4 typename "\"inet.networklayer.ipv4.Ipv4NetworkLayer\""
+par A2A.uav[0].ipv4 forwarding true
+par A2A.uav[0].ipv4 multicastForwarding false
+par A2A.uav[0].ipv4 interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].ipv4 displayStringTextFormat "\"%i\""
+par A2A.uav[0].nl typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].nl displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].nl forwardServiceRegistration true
+par A2A.uav[0].nl forwardProtocolRegistration true
+par A2A.uav[0].udp typename "\"inet.transportlayer.udp.Udp\""
+par A2A.uav[0].udp interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].udp icmpModule "\"^.ipv4.icmp\""
+par A2A.uav[0].udp icmpv6Module "\"^.ipv6.icmpv6\""
+par A2A.uav[0].udp crcMode "\"declared\""
+attr enum disabled,declared,computed
+par A2A.uav[0].udp defaultMulticastLoop true
+scalar A2A.uav[0].udp packetReceived:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceived
+attr title "packets received, count"
+scalar A2A.uav[0].udp packetReceived:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceived
+attr title "packets received, sum(packetBytes)"
+scalar A2A.uav[0].udp packetSent:count 60001
+attr interpolationmode none
+attr recordingmode count
+attr source packetSent
+attr title "packets sent, count"
+scalar A2A.uav[0].udp packetSent:sum(packetBytes) 88801480
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetSent
+attr title "packets sent, sum(packetBytes)"
+scalar A2A.uav[0].udp passedUpPk:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetSentToUpper
+attr title "packets passed up, count"
+scalar A2A.uav[0].udp droppedPkWrongPort:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+scalar A2A.uav[0].udp droppedPkBadChecksum:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+par A2A.uav[0].tcp typename "\"inet.transportlayer.tcp.Tcp\""
+par A2A.uav[0].tcp crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[0].tcp advertisedWindow 7504
+par A2A.uav[0].tcp delayedAcksEnabled false
+par A2A.uav[0].tcp nagleEnabled true
+par A2A.uav[0].tcp limitedTransmitEnabled false
+par A2A.uav[0].tcp increasedIWEnabled false
+par A2A.uav[0].tcp sackSupport false
+par A2A.uav[0].tcp windowScalingSupport false
+par A2A.uav[0].tcp windowScalingFactor -1
+par A2A.uav[0].tcp timestampSupport false
+par A2A.uav[0].tcp mss 536
+par A2A.uav[0].tcp msl 120s
+attr unit s
+par A2A.uav[0].tcp tcpAlgorithmClass "\"TcpReno\""
+par A2A.uav[0].tcp useDataNotification false
+par A2A.uav[0].tcp dupthresh 3
+par A2A.uav[0].tcp initialSsthresh 4294967295
+par A2A.uav[0].tcp stopOperationExtraTime 0s
+attr unit s
+par A2A.uav[0].tcp stopOperationTimeout 2s
+attr unit s
+par A2A.uav[0].tcp ecnWillingness false
+par A2A.uav[0].tcp dctcpGamma 0.0625
+par A2A.uav[0].tn typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].tn displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].tn forwardServiceRegistration true
+par A2A.uav[0].tn forwardProtocolRegistration true
+par A2A.uav[0].app[0] typename "\"inet.applications.udpapp.UdpBasicApp\""
+par A2A.uav[0].app[0] interfaceTableModule "\"A2A.uav[0].interfaceTable\""
+par A2A.uav[0].app[0] clockModule "\"\""
+par A2A.uav[0].app[0] localPort -1
+par A2A.uav[0].app[0] destAddresses "\"uav[1]\""
+par A2A.uav[0].app[0] localAddress "\"\""
+par A2A.uav[0].app[0] packetName "\"UdpBasicAppData\""
+par A2A.uav[0].app[0] destPort 5000
+par A2A.uav[0].app[0] messageLength 1472B
+attr unit B
+par A2A.uav[0].app[0] startTime 0.5s
+attr unit s
+par A2A.uav[0].app[0] stopTime -1s
+attr unit s
+par A2A.uav[0].app[0] sendInterval 5e-05s
+attr unit s
+par A2A.uav[0].app[0] timeToLive -1
+par A2A.uav[0].app[0] dontFragment false
+par A2A.uav[0].app[0] dscp -1
+par A2A.uav[0].app[0] tos -1
+par A2A.uav[0].app[0] multicastInterface "\"\""
+par A2A.uav[0].app[0] receiveBroadcast false
+par A2A.uav[0].app[0] joinLocalMulticastGroups false
+par A2A.uav[0].app[0] stopOperationExtraTime -1s
+attr unit s
+par A2A.uav[0].app[0] stopOperationTimeout 2s
+attr unit s
+scalar A2A.uav[0].app[0] "packets sent" 70001
+scalar A2A.uav[0].app[0] "packets received" 0
+scalar A2A.uav[0].app[0] packetReceived:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceived
+attr title "packets received, count"
+scalar A2A.uav[0].app[0] packetReceived:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceived
+attr title "packets received, sum(packetBytes)"
+statistic A2A.uav[0].app[0] rcvdPkLifetime:stats
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+scalar A2A.uav[0].app[0] packetSent:count 60001
+attr interpolationmode none
+attr recordingmode count
+attr source packetSent
+attr title "packets sent, count"
+scalar A2A.uav[0].app[0] packetSent:sum(packetBytes) 88321472
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetSent
+attr title "packets sent, sum(packetBytes)"
+par A2A.uav[0].at typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[0].at displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[0].at forwardServiceRegistration true
+par A2A.uav[0].at forwardProtocolRegistration true
+par A2A.uav[0] typename "\"inet.node.inet.AdhocHost\""
+par A2A.uav[0] hasStatus false
+par A2A.uav[0] osgModel "\"\""
+par A2A.uav[0] osgModelColor "\"\""
+par A2A.uav[0] canvasImage "\"\""
+par A2A.uav[0] canvasImageColor "\"\""
+par A2A.uav[0] recordPcap false
+par A2A.uav[0] numPcapRecorders 0
+par A2A.uav[0] numLoInterfaces 1
+par A2A.uav[0] numWlanInterfaces 1
+par A2A.uav[0] numEthInterfaces 0
+par A2A.uav[0] numPppInterfaces 0
+par A2A.uav[0] numTunInterfaces 0
+par A2A.uav[0] numVirtInterfaces 0
+par A2A.uav[0] fcsMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[0] hasIpv4 true
+par A2A.uav[0] hasIpv6 false
+par A2A.uav[0] hasGn false
+par A2A.uav[0] forwarding true
+par A2A.uav[0] multicastForwarding false
+par A2A.uav[0] hasUdp true
+par A2A.uav[0] hasTcp true
+par A2A.uav[0] hasSctp false
+par A2A.uav[0] numApps 1
+par A2A.uav[1].radioIn[0].channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].mobility typename "\"inet.mobility.static.StationaryMobility\""
+par A2A.uav[1].mobility subjectModule "\"^\""
+par A2A.uav[1].mobility coordinateSystemModule "\"\""
+par A2A.uav[1].mobility displayStringTextFormat "\"p: %p\\nv: %v\""
+attr mutable ""
+par A2A.uav[1].mobility updateDisplayString true
+par A2A.uav[1].mobility constraintAreaMinX 0m
+attr unit m
+par A2A.uav[1].mobility constraintAreaMinY 0m
+attr unit m
+par A2A.uav[1].mobility constraintAreaMinZ 0m
+attr unit m
+par A2A.uav[1].mobility constraintAreaMaxX 2000m
+attr unit m
+par A2A.uav[1].mobility constraintAreaMaxY 100m
+attr unit m
+par A2A.uav[1].mobility constraintAreaMaxZ 100m
+attr unit m
+par A2A.uav[1].mobility initialX 200m
+attr unit m
+par A2A.uav[1].mobility initialY 50m
+attr unit m
+par A2A.uav[1].mobility initialZ 80m
+attr unit m
+par A2A.uav[1].mobility initialLatitude "nan deg"
+attr unit deg
+par A2A.uav[1].mobility initialLongitude "nan deg"
+attr unit deg
+par A2A.uav[1].mobility initialAltitude 0m
+attr unit m
+par A2A.uav[1].mobility initialHeading 0deg
+attr unit deg
+par A2A.uav[1].mobility initialElevation 0deg
+attr unit deg
+par A2A.uav[1].mobility initialBank 0deg
+attr unit deg
+par A2A.uav[1].mobility initFromDisplayString false
+par A2A.uav[1].mobility updateFromDisplayString true
+par A2A.uav[1].interfaceTable typename "\"inet.networklayer.common.InterfaceTable\""
+par A2A.uav[1].interfaceTable displayAddresses false
+par A2A.uav[1].cb typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].cb displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].cb forwardServiceRegistration true
+par A2A.uav[1].cb forwardProtocolRegistration true
+par A2A.uav[1].bl typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].bl displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].bl forwardServiceRegistration true
+par A2A.uav[1].bl forwardProtocolRegistration true
+par A2A.uav[1].li typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].li displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].li forwardServiceRegistration true
+par A2A.uav[1].li forwardProtocolRegistration true
+par A2A.uav[1].lo[0].upperLayerIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].lo[0].lo.upperLayerOut.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].lo[0].lo typename "\"inet.linklayer.loopback.Loopback\""
+par A2A.uav[1].lo[0].lo interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].lo[0].lo mtu 4470B
+attr unit B
+scalar A2A.uav[1].lo[0].lo rcvdPkFromHl:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, count"
+scalar A2A.uav[1].lo[0].lo rcvdPkFromHl:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, sum(packetBytes)"
+scalar A2A.uav[1].lo[0].lo passedUpPk:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetSentToUpper
+attr title "packets passed to higher layer, count"
+scalar A2A.uav[1].lo[0].lo passedUpPk:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, sum(packetBytes)"
+par A2A.uav[1].lo[0] typename "\"inet.linklayer.loopback.LoopbackInterface\""
+par A2A.uav[1].lo[0] displayStringTextFormat "\"%a (%i)\\n%m\""
+par A2A.uav[1].lo[0] recordPcap false
+par A2A.uav[1].lo[0] numPcapRecorders 0
+par A2A.uav[1].lo[0] interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+scalar A2A.uav[1].lo[0] packetDropInterfaceDown:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, count"
+scalar A2A.uav[1].lo[0] packetDropInterfaceDown:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, sum(packetBytes)"
+scalar A2A.uav[1].lo[0] packetDropNoCarrier:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, count"
+scalar A2A.uav[1].lo[0] packetDropNoCarrier:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, sum(packetBytes)"
+par A2A.uav[1].wlan[0].radioIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].wlan[0].llc.upperLayerOut.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].wlan[0].upperLayerIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].wlan[0].mib typename "\"inet.linklayer.ieee80211.mib.Ieee80211Mib\""
+par A2A.uav[1].wlan[0].llc typename "\"inet.linklayer.ieee80211.llc.Ieee80211LlcLpd\""
+par A2A.uav[1].wlan[0].llc registerProtocol false
+par A2A.uav[1].wlan[0].mgmt typename "\"inet.linklayer.ieee80211.mgmt.Ieee80211MgmtAdhoc\""
+par A2A.uav[1].wlan[0].mgmt mibModule "\"A2A.uav[1].wlan[0].mib\""
+par A2A.uav[1].wlan[0].mgmt macModule "\"A2A.uav[1].wlan[0].mac\""
+par A2A.uav[1].wlan[0].mgmt interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue typename "\"inet.linklayer.ieee80211.mac.queue.PendingQueue\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue displayStringTextFormat "\"contains %p pk (%l) pushed %u\\npulled %o removed %r dropped %d\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue packetCapacity 100
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue dataCapacity -1b
+attr unit b
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue dropperClass "\"inet::queueing::PacketAtCollectionEndDropper\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue comparatorClass "\"inet::ieee80211::MgmtOverDataComparator\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue bufferModule "\"\""
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:last 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode last
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, last"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:max 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, max"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length, timeavg"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:last 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode last
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, last"
+attr unit b
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:max 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, max"
+attr unit b
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length, timeavg"
+attr unit b
+statistic A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 0
+attr recordingmode count
+attr source packetPulled
+attr title "outgoing packets, count"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 0
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths, sum"
+attr unit b
+statistic A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+bin	-inf	0
+bin	0	0
+bin	1	0
+statistic A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(demuxFlow(packetPulled))
+attr title "flow queueing times"
+attr unit s
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 0
+attr recordingmode count
+attr source packetPushStarted
+attr title "incoming packets, count"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 0
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths, sum"
+attr unit b
+statistic A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketsQueueOverflow:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "dropped packets: queue overflow, count"
+attr unit pk
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketLengthsQueueOverflow:sum 0
+attr interpolationmode none
+attr recordingmode sum
+attr source packetLength(packetDropReasonIsQueueOverflow(packetDropped))
+attr title "dropped packet lengths: queue overflow, sum"
+attr unit b
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames typename "\"inet.linklayer.ieee80211.mac.queue.InProgressFrames\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames pendingQueueModule "\"^.pendingQueue\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames originatorMacDataServiceModule "\"^.^.originatorMacDataService\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames ackHandlerModule "\"^.^.ackHandler\""
+statistic A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode histogram
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode max
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length, max"
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 0
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode timeavg
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length, timeavg"
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.contention typename "\"inet.linklayer.ieee80211.mac.contention.Contention\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.contention initialChannelBusy true
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess.contention backoffOptimization true
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 0
+attr recordingmode count
+attr title "channel access granted, count"
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 18348
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode count
+attr title "contention state changed, count"
+attr type enum
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess typename "\"inet.linklayer.ieee80211.mac.channelaccess.Dcaf\""
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess difsn -1
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess cwMin -1
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess cwMax -1
+par A2A.uav[1].wlan[0].mac.dcf.channelAccess rxModule "\"^.^.rx\""
+scalar A2A.uav[1].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 0
+attr interpolationmode sample-hold
+attr recordingmode count
+attr title "channel ownership, count"
+par A2A.uav[1].wlan[0].mac.dcf.originatorMacDataService.fragmentationPolicy typename "\"inet.linklayer.ieee80211.mac.fragmentation.BasicFragmentationPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.originatorMacDataService.fragmentationPolicy fragmentationThreshold 1500B
+attr unit B
+par A2A.uav[1].wlan[0].mac.dcf.originatorMacDataService typename "\"inet.linklayer.ieee80211.mac.originator.OriginatorMacDataService\""
+scalar A2A.uav[1].wlan[0].mac.dcf.originatorMacDataService packetAggregated:count 0
+attr recordingmode count
+attr title "packets aggregated, count"
+scalar A2A.uav[1].wlan[0].mac.dcf.originatorMacDataService packetFragmented:count 0
+attr recordingmode count
+attr title "packets fragmented, count"
+par A2A.uav[1].wlan[0].mac.dcf.recipientMacDataService typename "\"inet.linklayer.ieee80211.mac.recipient.RecipientMacDataService\""
+scalar A2A.uav[1].wlan[0].mac.dcf.recipientMacDataService packetDeaggregated:count 0
+attr recordingmode count
+attr title "packets deaggregated, count"
+scalar A2A.uav[1].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 2293
+attr recordingmode count
+attr title "packets defragmented, count"
+scalar A2A.uav[1].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, count"
+scalar A2A.uav[1].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, sum(packetBytes)"
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection typename "\"inet.linklayer.ieee80211.mac.rateselection.RateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection rateControlModule "\"^.rateControl\""
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection multicastFrameBitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection responseAckFrameBitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection responseCtsFrameBitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection dataFrameBitrate 1.3e+07bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection dataFrameBandwidth "nan Hz"
+attr unit Hz
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection dataFrameNumSpatialStreams -1
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection mgmtFrameBitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.rateSelection controlFrameBitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure typename "\"inet.linklayer.ieee80211.mac.originator.NonQosRecoveryProcedure\""
+par A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure cwCalculatorModule "\"^.channelAccess\""
+par A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure rtsPolicyModule "\"^.rtsPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure shortRetryLimit 7
+par A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure longRetryLimit 4
+scalar A2A.uav[1].wlan[0].mac.dcf.recoveryProcedure retryLimitReached:count 0
+attr recordingmode count
+attr title "retry limit reached, count"
+par A2A.uav[1].wlan[0].mac.dcf.originatorProtectionMechanism typename "\"inet.linklayer.ieee80211.mac.protectionmechanism.OriginatorProtectionMechanism\""
+par A2A.uav[1].wlan[0].mac.dcf.originatorProtectionMechanism rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf.ackHandler typename "\"inet.linklayer.ieee80211.mac.originator.AckHandler\""
+par A2A.uav[1].wlan[0].mac.dcf.originatorAckPolicy typename "\"inet.linklayer.ieee80211.mac.originator.OriginatorAckPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.originatorAckPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf.originatorAckPolicy ackTimeout -1s
+attr unit s
+par A2A.uav[1].wlan[0].mac.dcf.recipientAckPolicy typename "\"inet.linklayer.ieee80211.mac.recipient.RecipientAckPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.recipientAckPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf.rtsPolicy typename "\"inet.linklayer.ieee80211.mac.originator.RtsPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.rtsPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf.rtsPolicy ctsTimeout -1s
+attr unit s
+par A2A.uav[1].wlan[0].mac.dcf.rtsPolicy rtsThreshold 2346B
+attr unit B
+par A2A.uav[1].wlan[0].mac.dcf.ctsPolicy typename "\"inet.linklayer.ieee80211.mac.recipient.CtsPolicy\""
+par A2A.uav[1].wlan[0].mac.dcf.ctsPolicy rxModule "\"^.^.rx\""
+par A2A.uav[1].wlan[0].mac.dcf.ctsPolicy rateSelectionModule "\"^.rateSelection\""
+par A2A.uav[1].wlan[0].mac.dcf typename "\"inet.linklayer.ieee80211.mac.coordinationfunction.Dcf\""
+par A2A.uav[1].wlan[0].mac.dcf rxModule "\"^.rx\""
+par A2A.uav[1].wlan[0].mac.dcf txModule "\"^.tx\""
+scalar A2A.uav[1].wlan[0].mac.dcf frameSequenceFinished:count 0
+attr recordingmode count
+attr title "finished frame sequences, count"
+statistic A2A.uav[1].wlan[0].mac.dcf frameSequenceDuration:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source frameSequenceDuration(frameSequenceFinished)
+attr title "frame sequence durations"
+bin	-inf	0
+bin	0	0
+bin	1	0
+statistic A2A.uav[1].wlan[0].mac.dcf frameSequenceNumPackets:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source frameSequenceNumPackets(frameSequenceFinished)
+attr title "frame sequences: number of packets"
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeer:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerWithRetry:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerWithRetry:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeer:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerUnicast:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerMulticast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerBroadcast:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerWithRetry:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerWithRetry:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 4586
+attr interpolationmode none
+attr recordingmode count
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 64204
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDrop:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropped
+attr title "packet drops, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDrop:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropped
+attr title "packet drops, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropNotAddressedToUs:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropQueueOverflow:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropQueueOverflow:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropRetryLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, count"
+scalar A2A.uav[1].wlan[0].mac.dcf packetDropRetryLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac.dcf linkBroken:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "link breaks, count"
+par A2A.uav[1].wlan[0].mac.ds typename "\"inet.linklayer.ieee80211.mac.Ds\""
+par A2A.uav[1].wlan[0].mac.ds mibModule "\"A2A.uav[1].wlan[0].mib\""
+par A2A.uav[1].wlan[0].mac.rx typename "\"inet.linklayer.ieee80211.mac.Rx\""
+par A2A.uav[1].wlan[0].mac.tx typename "\"inet.linklayer.ieee80211.mac.Tx\""
+par A2A.uav[1].wlan[0].mac.tx rxModule "\"^.rx\""
+par A2A.uav[1].wlan[0].mac typename "\"inet.linklayer.ieee80211.mac.Ieee80211Mac\""
+par A2A.uav[1].wlan[0].mac interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].wlan[0].mac mibModule "\"A2A.uav[1].wlan[0].mib\""
+par A2A.uav[1].wlan[0].mac modeSet "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[1].wlan[0].mac fcsMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[1].wlan[0].mac initialRadioMode "\"receiver\""
+attr enum off,sleep,receiver,transmitter,transceiver
+par A2A.uav[1].wlan[0].mac mtu 2304B
+attr unit B
+par A2A.uav[1].wlan[0].mac qosStation false
+scalar A2A.uav[1].wlan[0].mac packetReceivedFromLower:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received from lower layer, count"
+scalar A2A.uav[1].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 3587752
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received from lower layer, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetSentToLower:count 4587
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent to lower layer, count"
+scalar A2A.uav[1].wlan[0].mac packetSentToLower:sum(packetBytes) 64218
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent to lower layer, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetReceivedFromUpper:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "packets received from upper layer, count"
+scalar A2A.uav[1].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets received from upper layer, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetSentToUpper:count 2293
+attr interpolationmode none
+attr recordingmode count
+attr title "packets sent to upper layer, count"
+scalar A2A.uav[1].wlan[0].mac packetSentToUpper:sum(packetBytes) 3457844
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr title "packets sent to upper layer, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDrop:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropped
+attr title "packet drops, count"
+scalar A2A.uav[1].wlan[0].mac packetDrop:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropped
+attr title "packet drops, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropIncorrectlyReceived:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, count"
+scalar A2A.uav[1].wlan[0].mac packetDropIncorrectlyReceived:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packet drops: incorrectly received, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropNotAddressedToUs:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, count"
+scalar A2A.uav[1].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropQueueOverflow:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, count"
+scalar A2A.uav[1].wlan[0].mac packetDropQueueOverflow:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsQueueOverflow(packetDropped)
+attr title "packet drops: queue overflow, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropRetryLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, count"
+scalar A2A.uav[1].wlan[0].mac packetDropRetryLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsRetryLimitReached(packetDropped)
+attr title "packet drops: retry limit reached, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropDuplicateDetected:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, count"
+scalar A2A.uav[1].wlan[0].mac packetDropDuplicateDetected:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac packetDropOther:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, count"
+scalar A2A.uav[1].wlan[0].mac packetDropOther:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsOther(packetDropped)
+attr title "packet drops: other, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0].mac linkBroken:count 0
+attr interpolationmode none
+attr recordingmode count
+attr title "link breaks, count"
+par A2A.uav[1].wlan[0].radio.antenna typename "\"inet.physicallayer.wireless.common.antenna.IsotropicAntenna\""
+par A2A.uav[1].wlan[0].radio.antenna mobilityModule "\"^.^.^.mobility\""
+par A2A.uav[1].wlan[0].radio.antenna numAntennas 1
+par A2A.uav[1].wlan[0].radio.transmitter typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarTransmitter\""
+par A2A.uav[1].wlan[0].radio.transmitter preambleDuration -1s
+attr unit s
+par A2A.uav[1].wlan[0].radio.transmitter headerLength 192b
+attr unit b
+par A2A.uav[1].wlan[0].radio.transmitter bitrate -1bps
+attr unit bps
+par A2A.uav[1].wlan[0].radio.transmitter power 0.1W
+attr unit W
+par A2A.uav[1].wlan[0].radio.transmitter centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio.transmitter bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio.transmitter codeRate 1
+par A2A.uav[1].wlan[0].radio.transmitter modulation "\"BPSK\""
+par A2A.uav[1].wlan[0].radio.transmitter opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[1].wlan[0].radio.transmitter bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[1].wlan[0].radio.transmitter channelNumber 157
+par A2A.uav[1].wlan[0].radio.receiver.errorModel typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.errormodel.Ieee80211NistErrorModel\""
+par A2A.uav[1].wlan[0].radio.receiver.errorModel corruptionMode "\"packet\""
+attr enum packet,chunk,byte,bit
+par A2A.uav[1].wlan[0].radio.receiver.errorModel snirMode "\"min\""
+attr enum min,mean
+par A2A.uav[1].wlan[0].radio.receiver.errorModel snirOffset 0dB
+attr unit dB
+par A2A.uav[1].wlan[0].radio.receiver typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarReceiver\""
+par A2A.uav[1].wlan[0].radio.receiver snirThreshold 4dB
+attr unit dB
+par A2A.uav[1].wlan[0].radio.receiver snirThresholdMode "\"min\""
+attr enum min,mean
+par A2A.uav[1].wlan[0].radio.receiver energyDetection -92dBm
+attr unit dBm
+par A2A.uav[1].wlan[0].radio.receiver sensitivity -100dBm
+attr unit dBm
+par A2A.uav[1].wlan[0].radio.receiver centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio.receiver bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio.receiver modulation "\"BPSK\""
+par A2A.uav[1].wlan[0].radio.receiver opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[1].wlan[0].radio.receiver bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[1].wlan[0].radio.receiver channelNumber 157
+par A2A.uav[1].wlan[0].radio typename "\"inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadio\""
+par A2A.uav[1].wlan[0].radio radioMediumModule "\"radioMedium\""
+par A2A.uav[1].wlan[0].radio energySourceModule "\"\""
+par A2A.uav[1].wlan[0].radio initialRadioMode "\"off\""
+attr enum off,sleep,receiver,transmitter,transceiver
+par A2A.uav[1].wlan[0].radio switchingTimes "\"ms 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\""
+par A2A.uav[1].wlan[0].radio sendRawBytes false
+par A2A.uav[1].wlan[0].radio separateTransmissionParts false
+par A2A.uav[1].wlan[0].radio separateReceptionParts false
+par A2A.uav[1].wlan[0].radio displayCommunicationRange false
+par A2A.uav[1].wlan[0].radio displayInterferenceRange false
+par A2A.uav[1].wlan[0].radio centerFrequency 2.412e+09Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio bandwidth 2e+07Hz
+attr unit Hz
+par A2A.uav[1].wlan[0].radio signalAnalogRepresentation "\"scalar\""
+attr enum scalar,dimensional
+par A2A.uav[1].wlan[0].radio opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[1].wlan[0].radio bandName "\"5 GHz\""
+attr enum "2.4 GHz,5 GHz,5 GHz (20 MHz),5 GHz (40 MHz),5 GHz (80 MHz),5 GHz (160 MHz),5.9 GHz"
+par A2A.uav[1].wlan[0].radio channelNumber 157
+par A2A.uav[1].wlan[0].radio crcMode "\"declared\""
+attr enum declared,computed
+statistic A2A.uav[1].wlan[0].radio radioChannel:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode sample-hold
+attr recordingmode histogram
+attr source radioChannelChanged
+attr title "Radio channel"
+bin	-inf	0
+bin	0	0
+bin	1	0
+scalar A2A.uav[1].wlan[0].radio radioMode:count 9173
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source radioModeChanged
+attr title "Radio mode, count"
+scalar A2A.uav[1].wlan[0].radio receptionState:count 18346
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source receptionStateChanged
+attr title "Radio reception state, count"
+scalar A2A.uav[1].wlan[0].radio transmissionState:count 18346
+attr interpolationmode sample-hold
+attr recordingmode count
+attr source transmissionStateChanged
+attr title "Radio transmission state, count"
+statistic A2A.uav[1].wlan[0].radio minSnir:histogram
+field count 4587
+field mean 46.555787722834
+field stddev 0
+field min 46.55578772283
+field max 46.55578772283
+field sum 213551.39828464
+field sqrsum 9942053.5664513
+attr recordingmode histogram
+attr source minimumSnir(packetSentToUpper)
+attr title "Min SNIR"
+bin	-inf	0
+bin	46.04	0
+bin	46.06	0
+bin	46.08	0
+bin	46.1	0
+bin	46.12	0
+bin	46.14	0
+bin	46.16	0
+bin	46.18	0
+bin	46.2	0
+bin	46.22	0
+bin	46.24	0
+bin	46.26	0
+bin	46.28	0
+bin	46.3	0
+bin	46.32	0
+bin	46.34	0
+bin	46.36	0
+bin	46.38	0
+bin	46.4	0
+bin	46.42	0
+bin	46.44	0
+bin	46.46	0
+bin	46.48	0
+bin	46.5	0
+bin	46.52	0
+bin	46.54	4587
+bin	46.56	0
+bin	46.58	0
+bin	46.6	0
+bin	46.62	0
+bin	46.64	0
+bin	46.66	0
+bin	46.68	0
+bin	46.7	0
+bin	46.72	0
+bin	46.74	0
+bin	46.76	0
+bin	46.78	0
+bin	46.8	0
+bin	46.82	0
+bin	46.84	0
+bin	46.86	0
+bin	46.88	0
+bin	46.9	0
+bin	46.92	0
+bin	46.94	0
+bin	46.96	0
+bin	46.98	0
+bin	47	0
+bin	47.02	0
+bin	47.04	0
+bin	47.06	0
+statistic A2A.uav[1].wlan[0].radio packetErrorRate:histogram
+field count 4587
+field mean 0
+field stddev 0
+field min 0
+field max 0
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source packetErrorRate(packetSentToUpper)
+attr title "Packet error rate"
+bin	-inf	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	4587
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
+statistic A2A.uav[1].wlan[0].radio bitErrorRate:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source bitErrorRate(packetSentToUpper)
+attr title "Bit error rate"
+bin	-inf	0
+bin	0	0
+bin	1	0
+statistic A2A.uav[1].wlan[0].radio symbolErrorRate:histogram
+field count 0
+field mean -nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr recordingmode histogram
+attr source symbolErrorRate(packetSentToUpper)
+attr title "Symbol error rate"
+bin	-inf	0
+bin	0	0
+bin	1	0
+par A2A.uav[1].wlan[0] typename "\"inet.linklayer.ieee80211.Ieee80211Interface\""
+par A2A.uav[1].wlan[0] displayStringTextFormat "\"%a (%i)\\n%m\""
+par A2A.uav[1].wlan[0] recordPcap false
+par A2A.uav[1].wlan[0] numPcapRecorders 0
+par A2A.uav[1].wlan[0] interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].wlan[0] energySourceModule "\"\""
+par A2A.uav[1].wlan[0] opMode "\"ac\""
+attr enum a,b,g(erp),g(mixed),n(mixed-2.4Ghz),p,ac
+par A2A.uav[1].wlan[0] address "\"0A-AA-00-00-00-02\""
+attr mutable ""
+par A2A.uav[1].wlan[0] protocol "\"\""
+par A2A.uav[1].wlan[0] bitrate -1bps
+attr unit bps
+scalar A2A.uav[1].wlan[0] packetDropInterfaceDown:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, count"
+scalar A2A.uav[1].wlan[0] packetDropInterfaceDown:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsInterfaceDown(packetDropped)
+attr title "packet drops: interface down, sum(packetBytes)"
+scalar A2A.uav[1].wlan[0] packetDropNoCarrier:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, count"
+scalar A2A.uav[1].wlan[0] packetDropNoCarrier:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoCarrier(packetDropped)
+attr title "packet drops: no carrier, sum(packetBytes)"
+par A2A.uav[1].ipv4.transportIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].ipv4.up.out[0].channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].ipv4.lp.out[2].channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].ipv4.ifIn.channel typename "\"ned.IdealChannel\""
+par A2A.uav[1].ipv4.configurator typename "\"inet.networklayer.configurator.ipv4.Ipv4NodeConfigurator\""
+par A2A.uav[1].ipv4.configurator interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.configurator routingTableModule "\"A2A.uav[1].ipv4.routingTable\""
+par A2A.uav[1].ipv4.configurator networkConfiguratorModule "\"configurator\""
+par A2A.uav[1].ipv4.configurator configureRoutingTable true
+par A2A.uav[1].ipv4.routingTable typename "\"inet.networklayer.ipv4.Ipv4RoutingTable\""
+par A2A.uav[1].ipv4.routingTable interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.routingTable routerId "\"auto\""
+par A2A.uav[1].ipv4.routingTable netmaskRoutes "\"*\""
+par A2A.uav[1].ipv4.routingTable forwarding true
+par A2A.uav[1].ipv4.routingTable multicastForwarding false
+par A2A.uav[1].ipv4.routingTable useAdminDist false
+par A2A.uav[1].ipv4.routingTable routingFile "\"\""
+par A2A.uav[1].ipv4.natTable typename "\"inet.networklayer.ipv4.Ipv4NatTable\""
+par A2A.uav[1].ipv4.natTable networkProtocolModule "\"^.ip\""
+par A2A.uav[1].ipv4.natTable config "<config/> at content:1"
+par A2A.uav[1].ipv4.up typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].ipv4.up displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].ipv4.up forwardServiceRegistration true
+par A2A.uav[1].ipv4.up forwardProtocolRegistration true
+par A2A.uav[1].ipv4.igmp typename "\"inet.networklayer.ipv4.Igmpv2\""
+par A2A.uav[1].ipv4.igmp interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.igmp routingTableModule "\"A2A.uav[1].ipv4.routingTable\""
+par A2A.uav[1].ipv4.igmp crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[1].ipv4.igmp enabled true
+par A2A.uav[1].ipv4.igmp robustnessVariable 2
+par A2A.uav[1].ipv4.igmp queryInterval 125s
+attr unit s
+par A2A.uav[1].ipv4.igmp queryResponseInterval 10s
+attr unit s
+par A2A.uav[1].ipv4.igmp groupMembershipInterval 260s
+attr unit s
+par A2A.uav[1].ipv4.igmp otherQuerierPresentInterval 255s
+attr unit s
+par A2A.uav[1].ipv4.igmp startupQueryInterval 31.25s
+attr unit s
+par A2A.uav[1].ipv4.igmp startupQueryCount 2
+par A2A.uav[1].ipv4.igmp lastMemberQueryInterval 1s
+attr unit s
+par A2A.uav[1].ipv4.igmp lastMemberQueryCount 2
+par A2A.uav[1].ipv4.igmp unsolicitedReportInterval 10s
+attr unit s
+par A2A.uav[1].ipv4.icmp typename "\"inet.networklayer.ipv4.Icmp\""
+par A2A.uav[1].ipv4.icmp interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.icmp routingTableModule "\"A2A.uav[1].ipv4.routingTable\""
+par A2A.uav[1].ipv4.icmp crcMode "\"declared\""
+attr enum declared,computed
+attr mutable ""
+par A2A.uav[1].ipv4.icmp quoteLength 8B
+attr mutable ""
+attr unit B
+par A2A.uav[1].ipv4.mp typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].ipv4.mp displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].ipv4.mp forwardServiceRegistration true
+par A2A.uav[1].ipv4.mp forwardProtocolRegistration true
+par A2A.uav[1].ipv4.ip typename "\"inet.networklayer.ipv4.Ipv4\""
+par A2A.uav[1].ipv4.ip interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.ip routingTableModule "\"A2A.uav[1].ipv4.routingTable\""
+par A2A.uav[1].ipv4.ip arpModule "\"A2A.uav[1].ipv4.arp\""
+par A2A.uav[1].ipv4.ip icmpModule "\"A2A.uav[1].ipv4.icmp\""
+par A2A.uav[1].ipv4.ip crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[1].ipv4.ip timeToLive 32
+par A2A.uav[1].ipv4.ip multicastTimeToLive 32
+par A2A.uav[1].ipv4.ip fragmentTimeout 60s
+attr unit s
+par A2A.uav[1].ipv4.ip limitedBroadcast false
+par A2A.uav[1].ipv4.ip directBroadcastInterfaces "\"\""
+scalar A2A.uav[1].ipv4.ip packetDropAddressResolutionFailed:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, count"
+scalar A2A.uav[1].ipv4.ip packetDropAddressResolutionFailed:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
+attr title "packet drop: address resolution failed, sum(packetBytes)"
+scalar A2A.uav[1].ipv4.ip packetDropHopLimitReached:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, count"
+scalar A2A.uav[1].ipv4.ip packetDropHopLimitReached:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsHopLimitReached(packetDropped)
+attr title "packet drop: hop limit reached, sum(packetBytes)"
+scalar A2A.uav[1].ipv4.ip packetDropForwardingDisabled:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, count"
+scalar A2A.uav[1].ipv4.ip packetDropForwardingDisabled:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsForwardingDisabled(packetDropped)
+attr title "packet drop: forwarding disabled, sum(packetBytes)"
+scalar A2A.uav[1].ipv4.ip packetDropNoInterfaceFound:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, count"
+scalar A2A.uav[1].ipv4.ip packetDropNoInterfaceFound:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoInterfaceFound(packetDropped)
+attr title "packet drop: no interface found, sum(packetBytes)"
+scalar A2A.uav[1].ipv4.ip packetDropNoRouteFound:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, count"
+scalar A2A.uav[1].ipv4.ip packetDropNoRouteFound:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsNoRouteFound(packetDropped)
+attr title "packet drop: no route found, sum(packetBytes)"
+scalar A2A.uav[1].ipv4.ip packetDropUndefined:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, count"
+scalar A2A.uav[1].ipv4.ip packetDropUndefined:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetDropReasonIsUndefined(packetDropped)
+attr title "packet drop: undefined, sum(packetBytes)"
+par A2A.uav[1].ipv4.arp typename "\"inet.networklayer.arp.ipv4.GlobalArp\""
+par A2A.uav[1].ipv4.arp interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4.arp addressType "\"ipv4\""
+attr enum ipv4,ipv6,mac,moduleid,modulepath
+par A2A.uav[1].ipv4.lp typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].ipv4.lp displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].ipv4.lp forwardServiceRegistration true
+par A2A.uav[1].ipv4.lp forwardProtocolRegistration true
+par A2A.uav[1].ipv4 typename "\"inet.networklayer.ipv4.Ipv4NetworkLayer\""
+par A2A.uav[1].ipv4 forwarding true
+par A2A.uav[1].ipv4 multicastForwarding false
+par A2A.uav[1].ipv4 interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].ipv4 displayStringTextFormat "\"%i\""
+par A2A.uav[1].nl typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].nl displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].nl forwardServiceRegistration true
+par A2A.uav[1].nl forwardProtocolRegistration true
+par A2A.uav[1].udp typename "\"inet.transportlayer.udp.Udp\""
+par A2A.uav[1].udp interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].udp icmpModule "\"^.ipv4.icmp\""
+par A2A.uav[1].udp icmpv6Module "\"^.ipv6.icmpv6\""
+par A2A.uav[1].udp crcMode "\"declared\""
+attr enum disabled,declared,computed
+par A2A.uav[1].udp defaultMulticastLoop true
+scalar A2A.uav[1].udp packetReceived:count 2293
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceived
+attr title "packets received, count"
+scalar A2A.uav[1].udp packetReceived:sum(packetBytes) 3393640
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceived
+attr title "packets received, sum(packetBytes)"
+scalar A2A.uav[1].udp packetSent:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetSent
+attr title "packets sent, count"
+scalar A2A.uav[1].udp packetSent:sum(packetBytes) 0
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetSent
+attr title "packets sent, sum(packetBytes)"
+scalar A2A.uav[1].udp passedUpPk:count 2293
+attr interpolationmode none
+attr recordingmode count
+attr source packetSentToUpper
+attr title "packets passed up, count"
+scalar A2A.uav[1].udp droppedPkWrongPort:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+scalar A2A.uav[1].udp droppedPkBadChecksum:count 0
+attr interpolationmode none
+attr recordingmode count
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+par A2A.uav[1].tcp typename "\"inet.transportlayer.tcp.Tcp\""
+par A2A.uav[1].tcp crcMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[1].tcp advertisedWindow 7504
+par A2A.uav[1].tcp delayedAcksEnabled false
+par A2A.uav[1].tcp nagleEnabled true
+par A2A.uav[1].tcp limitedTransmitEnabled false
+par A2A.uav[1].tcp increasedIWEnabled false
+par A2A.uav[1].tcp sackSupport false
+par A2A.uav[1].tcp windowScalingSupport false
+par A2A.uav[1].tcp windowScalingFactor -1
+par A2A.uav[1].tcp timestampSupport false
+par A2A.uav[1].tcp mss 536
+par A2A.uav[1].tcp msl 120s
+attr unit s
+par A2A.uav[1].tcp tcpAlgorithmClass "\"TcpReno\""
+par A2A.uav[1].tcp useDataNotification false
+par A2A.uav[1].tcp dupthresh 3
+par A2A.uav[1].tcp initialSsthresh 4294967295
+par A2A.uav[1].tcp stopOperationExtraTime 0s
+attr unit s
+par A2A.uav[1].tcp stopOperationTimeout 2s
+attr unit s
+par A2A.uav[1].tcp ecnWillingness false
+par A2A.uav[1].tcp dctcpGamma 0.0625
+par A2A.uav[1].tn typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].tn displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].tn forwardServiceRegistration true
+par A2A.uav[1].tn forwardProtocolRegistration true
+par A2A.uav[1].app[0] typename "\"inet.applications.udpapp.UdpSink\""
+par A2A.uav[1].app[0] interfaceTableModule "\"A2A.uav[1].interfaceTable\""
+par A2A.uav[1].app[0] startTime 0s
+attr unit s
+par A2A.uav[1].app[0] stopTime -1s
+attr unit s
+par A2A.uav[1].app[0] localPort 5000
+par A2A.uav[1].app[0] receiveBroadcast false
+par A2A.uav[1].app[0] multicastGroup "\"\""
+par A2A.uav[1].app[0] multicastSources "\"\""
+par A2A.uav[1].app[0] stopOperationExtraTime -1s
+attr unit s
+par A2A.uav[1].app[0] stopOperationTimeout 2s
+attr unit s
+scalar A2A.uav[1].app[0] packetReceived:count 2293
+attr interpolationmode none
+attr recordingmode count
+attr source packetReceived
+attr title "packets received, count"
+scalar A2A.uav[1].app[0] packetReceived:sum(packetBytes) 3375296
+attr interpolationmode none
+attr recordingmode sum(packetBytes)
+attr source packetReceived
+attr title "packets received, sum(packetBytes)"
+statistic A2A.uav[1].app[0] endToEndDelay:histogram
+field count 2293
+field mean 0.13220034908153
+field stddev 0.00034859406924229
+field min 0.131074052392
+field max 0.1332053354
+field sum 303.13540044394
+field sqrsum 40.074884276513
+attr interpolationmode none
+attr recordingmode histogram
+attr source dataAge(packetReceived)
+attr title "end-to-end delay"
+attr unit s
+bin	-inf	0
+bin	0.13106	4
+bin	0.1311	2
+bin	0.13114	3
+bin	0.13118	4
+bin	0.13122	3
+bin	0.13126	4
+bin	0.1313	4
+bin	0.13134	4
+bin	0.13138	5
+bin	0.13142	8
+bin	0.13146	11
+bin	0.1315	18
+bin	0.13154	13
+bin	0.13158	30
+bin	0.13162	35
+bin	0.13166	45
+bin	0.1317	33
+bin	0.13174	44
+bin	0.13178	40
+bin	0.13182	57
+bin	0.13186	47
+bin	0.1319	57
+bin	0.13194	63
+bin	0.13198	128
+bin	0.13202	86
+bin	0.13206	104
+bin	0.1321	114
+bin	0.13214	90
+bin	0.13218	142
+bin	0.13222	143
+bin	0.13226	114
+bin	0.1323	107
+bin	0.13234	94
+bin	0.13238	72
+bin	0.13242	70
+bin	0.13246	52
+bin	0.1325	78
+bin	0.13254	40
+bin	0.13258	44
+bin	0.13262	58
+bin	0.13266	40
+bin	0.1327	35
+bin	0.13274	27
+bin	0.13278	34
+bin	0.13282	19
+bin	0.13286	17
+bin	0.1329	6
+bin	0.13294	7
+bin	0.13298	10
+bin	0.13302	7
+bin	0.13306	9
+bin	0.1331	3
+bin	0.13314	6
+bin	0.13318	3
+bin	0.13322	0
+par A2A.uav[1].at typename "\"inet.common.MessageDispatcher\""
+par A2A.uav[1].at displayStringTextFormat "\"processed %p pk (%l)\""
+par A2A.uav[1].at forwardServiceRegistration true
+par A2A.uav[1].at forwardProtocolRegistration true
+par A2A.uav[1] typename "\"inet.node.inet.AdhocHost\""
+par A2A.uav[1] hasStatus false
+par A2A.uav[1] osgModel "\"\""
+par A2A.uav[1] osgModelColor "\"\""
+par A2A.uav[1] canvasImage "\"\""
+par A2A.uav[1] canvasImageColor "\"\""
+par A2A.uav[1] recordPcap false
+par A2A.uav[1] numPcapRecorders 0
+par A2A.uav[1] numLoInterfaces 1
+par A2A.uav[1] numWlanInterfaces 1
+par A2A.uav[1] numEthInterfaces 0
+par A2A.uav[1] numPppInterfaces 0
+par A2A.uav[1] numTunInterfaces 0
+par A2A.uav[1] numVirtInterfaces 0
+par A2A.uav[1] fcsMode "\"declared\""
+attr enum declared,computed
+par A2A.uav[1] hasIpv4 true
+par A2A.uav[1] hasIpv6 false
+par A2A.uav[1] hasGn false
+par A2A.uav[1] forwarding true
+par A2A.uav[1] multicastForwarding false
+par A2A.uav[1] hasUdp true
+par A2A.uav[1] hasTcp true
+par A2A.uav[1] hasSctp false
+par A2A.uav[1] numApps 1
+par A2A typename "\"inetvalidation.A2A\""
+

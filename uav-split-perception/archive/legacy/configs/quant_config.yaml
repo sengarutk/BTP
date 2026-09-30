@@ -1,0 +1,19 @@
+﻿# Quantization Configuration for Split Feature Transmission
+quantization:
+  supported_modes:
+    - "fp32"
+    - "fp16"
+    - "int8"
+  default_mode: "int8"
+
+  int8_dynamic_symmetric:
+    qmin: -128
+    qmax: 127
+    zero_point: 0
+    scale_eps: 1.0e-6
+    per_channel: false
+    rounding_mode: "round_to_nearest"
+
+  acceptance_criteria:
+    max_reconstruction_error_inf: "S/2" # L_inf error bounded by half quantization scale
+    max_allowable_map50_drop_percent: 1.0

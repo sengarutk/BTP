@@ -1,0 +1,272 @@
+{
+ "waterfill": {
+  "moderate": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    6.47,
+    6.34,
+    5.02,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    25.88,
+    25.74,
+    25.03,
+    13.28,
+    6.65
+   ],
+   "adaptive_split": [
+    7.39,
+    7.25,
+    6.66,
+    5.23,
+    4.32
+   ],
+   "adaptive_all": [
+    29.71,
+    29.66,
+    29.65,
+    29.65,
+    16.62
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    6.58,
+    6.67
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.03
+  },
+  "blackout": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    8.87,
+    8.88,
+    5.77,
+    0.13,
+    0.0
+   ],
+   "jpeg_q90": [
+    27.89,
+    27.92,
+    25.38,
+    13.32,
+    6.65
+   ],
+   "adaptive_split": [
+    9.16,
+    9.15,
+    6.23,
+    4.24,
+    4.08
+   ],
+   "adaptive_all": [
+    28.5,
+    28.5,
+    28.51,
+    28.5,
+    16.71
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    6.59,
+    6.72
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.41
+  }
+ },
+ "capped": {
+  "moderate": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    6.47,
+    6.34,
+    5.02,
+    0.37,
+    0.46
+   ],
+   "jpeg_q90": [
+    25.88,
+    25.74,
+    25.03,
+    13.05,
+    6.57
+   ],
+   "adaptive_split": [
+    7.39,
+    7.25,
+    6.66,
+    5.69,
+    4.97
+   ],
+   "adaptive_all": [
+    29.71,
+    29.66,
+    29.65,
+    24.17,
+    11.71
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    0.0,
+    19.41
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.03
+  },
+  "blackout": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    8.87,
+    8.88,
+    5.77,
+    1.32,
+    0.66
+   ],
+   "jpeg_q90": [
+    27.89,
+    27.92,
+    25.38,
+    13.22,
+    6.63
+   ],
+   "adaptive_split": [
+    9.16,
+    9.15,
+    6.23,
+    5.75,
+    4.78
+   ],
+   "adaptive_all": [
+    28.5,
+    28.5,
+    28.51,
+    23.48,
+    12.14
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    0.0,
+    17.99
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.41
+  }
+ },
+ "weighted": {
+  "moderate": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    6.47,
+    6.34,
+    4.89,
+    1.07,
+    0.3
+   ],
+   "jpeg_q90": [
+    25.88,
+    25.74,
+    23.78,
+    12.71,
+    5.56
+   ],
+   "adaptive_split": [
+    7.39,
+    7.25,
+    6.48,
+    5.4,
+    4.57
+   ],
+   "adaptive_all": [
+    29.71,
+    29.66,
+    29.54,
+    25.62,
+    14.05
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    0.0,
+    26.73
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.03
+  },
+  "blackout": {
+   "onboard": [
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+   ],
+   "split_k4_int8_zstd": [
+    8.87,
+    8.88,
+    5.76,
+    1.89,
+    0.33
+   ],
+   "jpeg_q90": [
+    27.89,
+    27.92,
+    22.21,
+    11.89,
+    5.78
+   ],
+   "adaptive_split": [
+    9.16,
+    9.15,
+    6.15,
+    5.06,
+    4.28
+   ],
+   "adaptive_all": [
+    28.5,
+    28.5,
+    27.53,
+    22.51,
+    14.11
+   ],
+   "jpeg_q90_n20_min_max_per_uav": [
+    0.0,
+    27.41
+   ],
+   "jpeg_beats_split_all_n": true,
+   "adaptive_all_best_all_n": true,
+   "relay_gain_max": 0.55
+  }
+ }
+}
