@@ -1,0 +1,8 @@
+# Python virtual environments (local compiled binaries)
+venv/
+.venv/
+
+# Files exceeding GitHub 100 MB hard limit
+uav-split-perception/weights/yolov8x.pt
+uav-split-perception/weights/yolo11x.pt
+uav-split-perception/datasets/coco_dl/val2017.zip

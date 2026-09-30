@@ -1,0 +1,26 @@
+{
+    "mcpServers": {
+        "crossref": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-crossref"
+            ]
+        },
+        "context7": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-context7"
+            ]
+        },
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "."
+            ]
+        }
+    }
+}
