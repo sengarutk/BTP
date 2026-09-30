@@ -1,0 +1,19 @@
+%description:
+Test that cOutVector doesn't crash if attrs are set before object name
+
+%file: test.msg
+enum Colors { RED=1; GREEN=2; BLUE=3; };
+
+%activity:
+
+cOutVector intVec;
+
+intVec.setType(cOutVector::TYPE_INT);
+intVec.setMin(-5);
+intVec.setMax(5);
+intVec.setInterpolationMode(cOutVector::NONE);
+intVec.setEnum("Colors");
+
+intVec.setName("intVec");
+intVec.record(1);
+

@@ -1,0 +1,62 @@
+%description:
+Tests stringutil.h functions
+
+%includes:
+#include <common/stringutil.h>
+
+%global:
+using omnetpp::common::opp_trim;
+using omnetpp::common::opp_quotestr;
+using omnetpp::common::opp_splitpath;
+
+%activity:
+#define P(x) EV << #x << " = " << opp_quotestr(x) << endl;
+#define PV(x) EV << #x << " = " << opp_join(x, " ") << " (" << x.size() << ")" << endl;
+
+P(opp_trim(""));
+P(opp_trim(" "));
+P(opp_trim("x "));
+P(opp_trim(" x"));
+P(opp_trim("hello"));
+P(opp_trim(" hello "));
+P(opp_trim("   hello   "));
+
+PV(opp_splitpath("./foo;./bar:./baz"));
+PV(opp_splitpath("c:/tmp;d:/Windows"));
+PV(opp_splitpath("c:\\tmp;d:\\Windows"));
+PV(opp_splitpath("c:/tmp:d:/Windows"));
+PV(opp_splitpath("c:\\tmp:d:\\Windows"));
+PV(opp_splitpath(""));
+PV(opp_splitpath("C"));
+PV(opp_splitpath("C:"));
+PV(opp_splitpath("C:\\"));
+PV(opp_splitpath("C:\\X"));
+PV(opp_splitpath("C:\\X:"));
+PV(opp_splitpath("a:\\:b:\\:c:\\:"));
+
+EV << ".\n";
+
+%exitcode: 0
+
+%contains: stdout
+opp_trim("") = ""
+opp_trim(" ") = ""
+opp_trim("x ") = "x"
+opp_trim(" x") = "x"
+opp_trim("hello") = "hello"
+opp_trim(" hello ") = "hello"
+opp_trim("   hello   ") = "hello"
+opp_splitpath("./foo;./bar:./baz") = ./foo ./bar ./baz (3)
+opp_splitpath("c:/tmp;d:/Windows") = c:/tmp d:/Windows (2)
+opp_splitpath("c:\\tmp;d:\\Windows") = c:\tmp d:\Windows (2)
+opp_splitpath("c:/tmp:d:/Windows") = c:/tmp d:/Windows (2)
+opp_splitpath("c:\\tmp:d:\\Windows") = c:\tmp d:\Windows (2)
+opp_splitpath("") =  (0)
+opp_splitpath("C") = C (1)
+opp_splitpath("C:") = C (1)
+opp_splitpath("C:\\") = C:\ (1)
+opp_splitpath("C:\\X") = C:\X (1)
+opp_splitpath("C:\\X:") = C:\X (1)
+opp_splitpath("a:\\:b:\\:c:\\:") = a:\ b:\ c:\ (3)
+.
+

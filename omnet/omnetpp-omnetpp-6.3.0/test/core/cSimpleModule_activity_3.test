@@ -1,0 +1,318 @@
+%description:
+Stress test for activity().
+- random delays ensure modules are activated (switched to) in random order
+- use local vars to verify that the required stack size is indeed available
+- verify that activity() modules can be created/deleted dynamically during simulation
+
+%file: test.ned
+
+simple Simple
+{
+}
+
+network Test
+{
+    submodules:
+        a[5]: Simple;
+}
+
+%file: test.cc
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Simple : public cSimpleModule
+{
+  public:
+    Simple() : cSimpleModule(32768) { }
+    virtual void activity() override;
+};
+
+Define_Module(Simple);
+
+void Simple::activity()
+{
+    char data[15000];  // slightly less than the requested stack, 16384
+    char fill = (char)getId();
+    for (int i = 0; i < (int)sizeof(data); i++)
+        data[i] = fill;
+
+    EV << "starting module\n";
+
+    cModule *offspring = nullptr;
+    ASSERT(getSimulation()->getActivityModule() == this);
+    for (int i = 0; i < 10; i++)
+    {
+        wait(exponential(1.0));
+
+        ASSERT(getSimulation()->getActivityModule() == this);
+        ASSERT(fill == (char)getId());
+        for (int j = 0; j < (int)sizeof(data); j++)
+            ASSERT(data[j] == fill);
+
+        if (i == 3)
+        {
+            EV << "creating new module\n";
+            static int counter;
+            std::string name = "x" + std::to_string(++counter);
+            offspring = getModuleType()->createScheduleInit(name.c_str(), getParentModule());
+        }
+        if (i == 8)
+        {
+            EV << "deleting new module\n";
+            offspring->deleteModule();
+        }
+    }
+}
+
+}; //namespace
+
+%contains: stdout
+Initializing module Test, stage 0
+Initializing module Test.a[0], stage 0
+Initializing module Test.a[1], stage 0
+Initializing module Test.a[2], stage 0
+Initializing module Test.a[3], stage 0
+Initializing module Test.a[4], stage 0
+
+Running simulation...
+** Event #1  t=0  on starter-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+starting module
+** Event #2  t=0  on starter-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+starting module
+** Event #3  t=0  on starter-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+starting module
+** Event #4  t=0  on starter-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+starting module
+** Event #5  t=0  on starter-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+starting module
+** Event #6  t=0.795874504566  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #7  t=0.898560388484  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #8  t=0.923223131471  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #9  t=1.255930758047  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #10  t=1.685761528466  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #11  t=1.806979244717  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #12  t=1.859604212075  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #13  t=2.344732375797  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #14  t=2.662767954859  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #15  t=2.74741984045  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #16  t=2.802187185674  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #17  t=2.845138545381  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #18  t=2.860571854767  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #19  t=2.92025157268  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #20  t=3.015927093997  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+creating new module
+Initializing module Test.x1, stage 0
+** Event #21  t=3.015927093997  on starter-7 (omnetpp::cMessage)  in Test.x1 (Simple, id=7)
+starting module
+** Event #22  t=3.178927995609  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+creating new module
+Initializing module Test.x2, stage 0
+** Event #23  t=3.178927995609  on starter-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+starting module
+** Event #24  t=3.403853677628  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+creating new module
+Initializing module Test.x3, stage 0
+** Event #25  t=3.403853677628  on starter-9 (omnetpp::cMessage)  in Test.x3 (Simple, id=9)
+starting module
+** Event #26  t=3.665373442248  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #27  t=3.931602108922  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+** Event #28  t=4.057736244849  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #29  t=4.164245451264  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #30  t=4.237930806729  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #31  t=4.243286530528  on timeout-9 (omnetpp::cMessage)  in Test.x3 (Simple, id=9)
+** Event #32  t=4.334447556652  on timeout-9 (omnetpp::cMessage)  in Test.x3 (Simple, id=9)
+** Event #33  t=4.58482321162  on timeout-7 (omnetpp::cMessage)  in Test.x1 (Simple, id=7)
+** Event #34  t=4.605248800019  on timeout-7 (omnetpp::cMessage)  in Test.x1 (Simple, id=7)
+** Event #35  t=4.649508802972  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #36  t=4.851139195934  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #37  t=4.970944262486  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #38  t=5.064496937274  on timeout-7 (omnetpp::cMessage)  in Test.x1 (Simple, id=7)
+** Event #39  t=5.215727790939  on timeout-7 (omnetpp::cMessage)  in Test.x1 (Simple, id=7)
+creating new module
+Initializing module Test.x4, stage 0
+** Event #40  t=5.215727790939  on starter-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+starting module
+** Event #41  t=5.37906006496  on timeout-9 (omnetpp::cMessage)  in Test.x3 (Simple, id=9)
+** Event #42  t=5.866105509124  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #43  t=6.160050825309  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+creating new module
+Initializing module Test.x5, stage 0
+** Event #44  t=6.160050825309  on starter-11 (omnetpp::cMessage)  in Test.x5 (Simple, id=11)
+starting module
+** Event #45  t=6.436996466411  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+deleting new module
+** Event #46  t=6.476728521123  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+creating new module
+Initializing module Test.x6, stage 0
+** Event #47  t=6.476728521123  on starter-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+starting module
+** Event #48  t=6.507814681802  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #49  t=6.529856194771  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+** Event #50  t=6.655730604209  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+** Event #51  t=7.055925926038  on timeout-3 (omnetpp::cMessage)  in Test.a[1] (Simple, id=3)
+** Event #52  t=7.211692942313  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #53  t=7.256620006851  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #54  t=7.643753623512  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #55  t=7.765290382371  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #56  t=7.774052900202  on timeout-11 (omnetpp::cMessage)  in Test.x5 (Simple, id=11)
+** Event #57  t=7.798483304012  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+deleting new module
+** Event #58  t=7.930958306433  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+creating new module
+Initializing module Test.x7, stage 0
+** Event #59  t=7.930958306433  on starter-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+starting module
+** Event #60  t=7.993264495113  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #61  t=8.00130912461  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #62  t=8.042904467066  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #63  t=8.128941201893  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #64  t=8.233124816662  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #65  t=8.335144483923  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #66  t=8.350184819219  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #67  t=8.528830215341  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #68  t=8.536125040838  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #69  t=8.643003826641  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #70  t=8.668785598189  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+** Event #71  t=8.68775416739  on timeout-8 (omnetpp::cMessage)  in Test.x2 (Simple, id=8)
+** Event #72  t=8.772878706078  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #73  t=8.788281853933  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #74  t=8.950418343379  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+deleting new module
+** Event #75  t=8.959267242402  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #76  t=9.210709174477  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+creating new module
+Initializing module Test.x8, stage 0
+** Event #77  t=9.210709174477  on starter-14 (omnetpp::cMessage)  in Test.x8 (Simple, id=14)
+starting module
+** Event #78  t=9.219847984106  on timeout-5 (omnetpp::cMessage)  in Test.a[3] (Simple, id=5)
+** Event #79  t=9.37645974645  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #80  t=9.670434668547  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+creating new module
+Initializing module Test.x9, stage 0
+** Event #81  t=9.670434668547  on starter-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+starting module
+** Event #82  t=9.699266223785  on timeout-14 (omnetpp::cMessage)  in Test.x8 (Simple, id=14)
+** Event #83  t=9.721379642414  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #84  t=9.734259645144  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+creating new module
+Initializing module Test.x10, stage 0
+** Event #85  t=9.734259645144  on starter-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+starting module
+** Event #86  t=9.897415020554  on timeout-6 (omnetpp::cMessage)  in Test.a[4] (Simple, id=6)
+** Event #87  t=10.166898137465  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #88  t=10.170257151845  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #89  t=10.297012300603  on timeout-14 (omnetpp::cMessage)  in Test.x8 (Simple, id=14)
+** Event #90  t=10.308792051885  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #91  t=10.370907342351  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #92  t=10.401573526378  on timeout-14 (omnetpp::cMessage)  in Test.x8 (Simple, id=14)
+** Event #93  t=10.668473378189  on timeout-11 (omnetpp::cMessage)  in Test.x5 (Simple, id=11)
+** Event #94  t=10.683754228641  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #95  t=10.815573623247  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #96  t=11.002999689265  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #97  t=11.239206395348  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #98  t=11.366364951302  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #99  t=11.500485993929  on timeout-14 (omnetpp::cMessage)  in Test.x8 (Simple, id=14)
+creating new module
+Initializing module Test.x11, stage 0
+** Event #100  t=11.500485993929  on starter-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+starting module
+** Event #101  t=11.50439363973  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #102  t=11.682610423969  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+creating new module
+Initializing module Test.x12, stage 0
+** Event #103  t=11.682610423969  on starter-18 (omnetpp::cMessage)  in Test.x12 (Simple, id=18)
+starting module
+** Event #104  t=11.727307509677  on timeout-11 (omnetpp::cMessage)  in Test.x5 (Simple, id=11)
+** Event #105  t=11.794351674328  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #106  t=11.833534830741  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #107  t=11.879447958212  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #108  t=11.999348042761  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #109  t=12.075722981273  on timeout-18 (omnetpp::cMessage)  in Test.x12 (Simple, id=18)
+** Event #110  t=12.134712484194  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #111  t=12.24234759235  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #112  t=12.254374767728  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #113  t=12.410859141548  on timeout-12 (omnetpp::cMessage)  in Test.x6 (Simple, id=12)
+** Event #114  t=12.440455199501  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #115  t=12.488676286504  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+deleting new module
+** Event #116  t=12.493249199159  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+deleting new module
+** Event #117  t=12.616368744927  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+deleting new module
+** Event #118  t=12.885318963379  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #119  t=13.177399496646  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #120  t=13.300174005702  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #121  t=13.488284598553  on timeout-13 (omnetpp::cMessage)  in Test.x7 (Simple, id=13)
+** Event #122  t=13.551991914253  on timeout-2 (omnetpp::cMessage)  in Test.a[0] (Simple, id=2)
+** Event #123  t=13.712464173729  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+creating new module
+Initializing module Test.x13, stage 0
+** Event #124  t=13.712464173729  on starter-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+starting module
+** Event #125  t=13.871121026806  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #126  t=13.928115586693  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #127  t=13.992741182208  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+** Event #128  t=14.101243042839  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+deleting new module
+** Event #129  t=14.218198452631  on timeout-15 (omnetpp::cMessage)  in Test.x9 (Simple, id=15)
+** Event #130  t=14.356245175332  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #131  t=14.40524241213  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+** Event #132  t=14.847985100877  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+creating new module
+Initializing module Test.x14, stage 0
+** Event #133  t=14.847985100877  on starter-20 (omnetpp::cMessage)  in Test.x14 (Simple, id=20)
+starting module
+** Event #134  t=14.996697370129  on timeout-20 (omnetpp::cMessage)  in Test.x14 (Simple, id=20)
+** Event #135  t=15.229540944251  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #136  t=15.448421540758  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #137  t=15.47331460928  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+** Event #138  t=15.479413476865  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #139  t=15.93332856702  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+creating new module
+Initializing module Test.x15, stage 0
+** Event #140  t=15.93332856702  on starter-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+starting module
+** Event #141  t=15.946993145451  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #142  t=16.049138026976  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #143  t=16.453844888937  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #144  t=16.503332703402  on timeout-20 (omnetpp::cMessage)  in Test.x14 (Simple, id=20)
+** Event #145  t=16.565682857743  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #146  t=16.666717633052  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #147  t=17.024239961132  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #148  t=17.623147069156  on timeout-20 (omnetpp::cMessage)  in Test.x14 (Simple, id=20)
+** Event #149  t=17.653660224737  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+** Event #150  t=17.848776636747  on timeout-4 (omnetpp::cMessage)  in Test.a[2] (Simple, id=4)
+** Event #151  t=18.273663808221  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #152  t=18.285996821133  on timeout-19 (omnetpp::cMessage)  in Test.x13 (Simple, id=19)
+** Event #153  t=18.43561143261  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #154  t=18.492938359034  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #155  t=18.986247401554  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #156  t=19.421416855935  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+deleting new module
+** Event #157  t=19.586194288195  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+deleting new module
+** Event #158  t=19.606384416341  on timeout-10 (omnetpp::cMessage)  in Test.x4 (Simple, id=10)
+** Event #159  t=20.240306005396  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+deleting new module
+** Event #160  t=20.280282304454  on timeout-17 (omnetpp::cMessage)  in Test.x11 (Simple, id=17)
+** Event #161  t=20.765662128087  on timeout-16 (omnetpp::cMessage)  in Test.x10 (Simple, id=16)
+** Event #162  t=20.773271420716  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+creating new module
+Initializing module Test.x16, stage 0
+** Event #163  t=20.773271420716  on starter-22 (omnetpp::cMessage)  in Test.x16 (Simple, id=22)
+starting module
+** Event #164  t=21.10568166168  on timeout-22 (omnetpp::cMessage)  in Test.x16 (Simple, id=22)
+** Event #165  t=21.356149809583  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #166  t=21.484206574894  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #167  t=21.929626036814  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #168  t=22.280802126195  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+** Event #169  t=22.936448410559  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+deleting new module
+** Event #170  t=23.062837046984  on timeout-21 (omnetpp::cMessage)  in Test.x15 (Simple, id=21)
+
+<!> No more events, simulation completed -- at t=23.062837046984s, event #170
+

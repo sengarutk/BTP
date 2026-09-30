@@ -1,0 +1,77 @@
+%description:
+This test currently demonstrates a NED parameter processing error:
+
+Both 'Area' and 'LAN' modules has 'outerBitrate' parameter with same name.
+
+The network set the Area's outerBitrate to 100Mbps,
+Area sets the LAN.outerBitrate to 10Mbps,
+LAN sets the switch.eth[1..] bitrate to LAN.outerBitrate.
+
+Before the bugfix, the switch.eth[1] bitrate value was 100Mbps (bogus).
+As of omnetpp-6.1, the switch.eth[1] bitrate value was 10Mbps, which is the correct value.
+
+%file: test.ned
+
+network Test
+{
+    parameters:
+        router.eth[*].bitrate = 100 Mbps;
+        area.outerBitrate = 100 Mbps;
+    types:
+        module Nic
+        {
+            parameters:
+                double bitrate @unit(Mbps);
+        }
+        module Node
+        {
+            submodules:
+                eth[2]: Nic;
+        }
+        module LAN
+        {
+            parameters:
+                double outerBitrate @unit(Mbps);
+                host.eth[*].bitrate = 1 Mbps;
+                switch.eth[0].bitrate = 1 Mbps;
+                switch.eth[1..].bitrate = outerBitrate;
+            submodules:
+                switch: Node;
+                host: Node;
+        }
+
+        module Area
+        {
+            parameters:
+                double outerBitrate @unit(Mbps);
+                lan.outerBitrate = 10 Mbps;
+                router.eth[0].bitrate = 10 Mbps;
+                router.eth[1..].bitrate = outerBitrate;
+            submodules:
+                lan: LAN;
+                router: Node;
+        }
+
+    submodules:
+        router: Node;
+        area: Area;
+}
+
+%inifile: test.ini
+[General]
+network = Test
+cmdenv-express-mode = false
+cmdenv-event-banners = false
+
+%postrun-command: grep " bitrate " results/General-\#0.sca > results/bitrate.sca || true
+
+%contains: results/bitrate.sca
+par Test.router.eth[0] bitrate 100Mbps
+par Test.router.eth[1] bitrate 100Mbps
+par Test.area.lan.switch.eth[0] bitrate 1Mbps
+par Test.area.lan.switch.eth[1] bitrate 10Mbps
+par Test.area.lan.host.eth[0] bitrate 1Mbps
+par Test.area.lan.host.eth[1] bitrate 1Mbps
+par Test.area.router.eth[0] bitrate 10Mbps
+par Test.area.router.eth[1] bitrate 100Mbps
+

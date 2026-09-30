@@ -1,0 +1,423 @@
+2025-11-10  ------ omnetpp-6.3.0 released ------
+
+2025-07-14  ------ omnetpp-6.2.0 released ------
+
+2025-07-10  Rudolf Hornig
+
+	* Updated test/fingerprints because log() and sin() are slightly
+	differently implemented on macOS/aarch64.
+
+2025-06-19  Rudolf Hornig
+
+	* Fix two failing test cases on Windows: cModule_deleteModule_n2.test,
+	statistic_histogram_3.test (failed due to floating point print formats,
+	nan, inf).
+
+2025-06-19  Rudolf Hornig
+
+	* Fix failing cLog_4.test on macOS because of stack overflow
+
+2025-06-13  Andras Varga
+
+	* Fix msg_struct_pointer_1.test after rename
+
+2025-06-06  Zoltan Bojthe
+
+	* Added msg_struct_pointer_1.test to demonstrate fix for: 'MSGC: fix:
+	pointer in struct was generated compiler error in _m.cc'
+
+2025-05-29  TÖRÖK Attila
+
+	* makemake2: Update expected outputs
+
+2025-06-05  ------ omnetpp-6.2.0pre1 released ------
+
+2025-05-07  Andras Varga
+
+	* core: added test for #1369 "Inifile iteration variable does not accept underscore": inifile_iteration_4.test
+
+2025-04-24  Andras Varga
+
+	* core: added test for WATCH_EXPR() and WATCH_LAMBDA(): WATCH_LAMBDA_1.test
+
+2025-04-24  Andras Varga
+
+	* featuretool: update existing tests, added new ones (oppfeatures_inconsistency_*.test, etc.)
+
+2025-04-08  Andras Varga
+
+	* core: added msg_enum_decl_1.test, a test for enum decls in msg files
+
+2025-02-10  Andras Varga
+
+	* core: added test for #1308 "Error at network deletion after simulation finished": cGate_getDisplayString_n1.test
+
+2025-01-21  Andras Varga
+
+	* core: added test for cEnum::resolveName<>() and cEnum::getNameForValue(): cEnum_access_1.test
+
+2024-12-10  Andras Varga
+
+	* core: added cModule_preDelete_1.test
+
+test/core/cModule_preDelete_1.test
+
+2024-11-27  Andras Varga
+
+	* core: update test cases that broke when logging during cleanup was turned off by default
+
+2024-11-26  Andras Varga
+
+	* core: added tests for the recently-added boolean config options and command-line switches (-S):
+	cmdenv-log-initialization, cmdenv-log-simulation, cmdenv-log-finalization,
+	cmdenv-log-cleanup, cmdenv-progress-updates, record-scalar-results, record-vector-results.
+
+	Test files: cmdenv_nonverbose_1.test cmdenv_nonverbose_2.test cmdenv_nonverbose_3.test
+	cmdenv_nonverbose_4.test cmdenv_nonverbose_5.test cmdenv_silent_1.test cmdenv_silent_2.test
+	cmdenv_silent_3.test cmdenv_silent_4.test cmdenv_silent_5.test scalar_recording_1.test
+	vector_recording_1.test
+
+2024-11-26  Andras Varga
+
+	* core: inifile_vector_1.test -> vector_recording_interval_1.test
+
+2024-09-25  Attila Torok
+
+ 	* build/test-builds: Skip build test with osgEarth if it's not installed
+
+2024-10-08  ------ omnetpp-6.1.0 released ------
+
+2024-05-28  Andras Varga
+
+	* A number of tests were updated and added during the development of omnetpp-6.1.
+	It would be pointless to provide a detailed list of all changes here. The new files
+	are listed below; otherwise, use `git log` for a more details.
+
+	- anim/deletesender/*
+	- anim/inspectorsafety/*
+	- anim/logbuffer/*
+	- common/lib/quantityformattertester.h
+	- common/lib/testutil.h
+	- common/QuantityFormatter_*.test
+	- common/unitconversion_bestUnit_bitbyte_1.test
+	- common/unitconversion_bestUnit_options_1.test
+	- core/cEnum_registration_1.test
+	- core/cEnum_registration_2.test
+	- core/envir_rng_seed_wildcards_1.test
+	- core/msg_enum_4.test
+	- core/NED_display_n7.test
+	- core/NED_inheritance_unresolved_n1.test
+	- core/NED_inheritance_unresolved_n2.test
+	- core/NED_inheritance_unresolved_n3.test
+	- core/NED_jsonparam_xml_1.test
+	- core/NED_param_index.test
+	- core/NED_param_srcloc_1.test
+	- core/NED_xml_4.test
+	- core/SimTime_6.test
+	- core/SimTime_7.test
+	- core/SimTime_ctor_2.test
+	- core/statistic_enum_1.test
+	- core/statistic_enum_n1.test
+	- core/statistic_enum_n2.test
+	- core/statistic_vector_1.test
+	- distro/*
+	- envir/qtenv_displaystringaccess_1.test
+	- makemake2/*
+
+2024-02-01  ------ omnetpp-6.0.3 released ------
+
+2024-01-05  Rudolf Hornig
+
+	* core: adjust test for cSoftOwner name change ("tmp" -> "")
+
+2023-10-06  ------ omnetpp-6.0.2 released ------
+
+2023-10-02  Attila Torok
+
+	* core: Update scavetool tests, following 7b3396f3 (stats:sum field
+	removed)
+
+2023-07-13  Attila Torok
+
+	* scave/results_api: Update Makefile for GNU Make 4.4+
+
+	This is a follow-up of: e879658e53545ce833e42ba667969caad6ee8005
+
+2022-12-21  Attila Torok
+
+	* cleanup: Remove all remaining traces of the now-removed
+	`--no-deep-includes` option of opp_makemake
+
+2023-02-06  Attila Torok
+
+	* scave/results_api: Add a zero result to check conversion from string
+
+2023-02-04  Andras Varga
+
+	* test for detecting duplicate keys in NED object literals
+
+2023-01-23  Andras Varga
+
+	* models: force explicit name for executables
+
+2023-09-05  Andras Varga
+
+	* test for fix #972 "intuniform() has broken bounds check"
+
+2023-08-01  Rudolf Hornig
+
+	* fix failing signals_static_registration_1.test when compiling in a
+	non-default mode
+
+2023-04-19  Andras Varga
+
+	* allow running tests in other than "debug" mode
+
+	Also: use all available CPUs by default
+
+	Example: MODE=release ./runtest
+
+	Also allow overriding the make program's name and number of CPUs to use
+	(via MAKEFLAGS)
+
+2023-03-30  Andras Varga
+
+	* core: c++-doubletolongconversion.test
+
+	Added one more possible outcome for casting a negative double to an
+	unsigned integer, which is apparently something that should NOT be done
+
+2022-08-31  Andras Varga
+
+	* test for fix #705 'Configuration option "cmdenv-config-name" is ignored'
+
+2022-08-28  Andras Varga
+
+	* added cProperty_value_2.test
+
+2022-08-26  Andras Varga
+
+	* signals_namespace1.test has been fixed, no longer an expected
+	failure
+
+2022-08-25  Andras Varga
+
+	* fixed up and properly added scave/multi_project [Attila]
+
+	- added to Makefile
+	- rename sh
+	- added missing .project files
+	- .metadata is not needed (although it's ok)
+
+2022-08-23  Andras Varga
+
+	* added test for the omnetpp.scave.analysis.Workspace class [with Attila]
+
+2022-08-24  Rudolf Hornig
+
+	* build test should check WITH_OSGEARTH (as osgEarth is disabled by
+	default)
+
+2022-07-27  Andras Varga
+
+	* fix incorrect expected output in inifile_eventlog_1.test
+
+	Events at t=2s and t=6s should be missing from the recorded eventlog
+	file, because the 1s..3s and 5s..7s intervals are excluded by the
+
+	  eventlog-recording-intervals = ..1, 3..5, 7..
+
+	line in the ini file.
+
+2022-06-20  Andras Varga
+
+	* misc/neddoc: backslash handling description updated. It has worked like
+	that for some time.
+
+2022-06-11  Andras Varga
+
+	* misc/neddoc: brush up test, add test cases for C++ namespaces
+
+2022-05-30  Attila Torok
+
+	* scave: Add a multi_project test - to check for PYTHONPATH including
+	(indirectly) referenced projects
+
+2022-05-18  Attila Torok
+
+	* build: Disable implicit make rules by setting .SUFFIXES to empty
+
+2022-09-01  ------ omnetpp-6.0.1 released ------
+
+2022-04-11  ------ omnetpp-6.0 released ------
+
+2022-01-29  Andras Varga
+
+	* Numerous tests were added, updated, etc. during the development of
+	OMNeT++ 6.0 in the years 2018-2022. To see the detailed log of changes,
+	see the public git repository. Hint: use the "gitk ." command after cloning
+	the repo and changing into this directory.
+
+2019-05-15  ------ omnetpp-5.5 released ------
+
+2019-03-20  Andras Varga
+
+	* update test for recently added intuniformexcl() function
+
+2019-02-08  Andras Varga
+
+	* added cSimpleModule_activity_n2.test
+
+2017-05-03  Andras Varga
+
+	* added activity-related test cases
+
+2019-02-08  Andras Varga
+
+	* additional test for preciseDiv()
+
+2019-02-06  Andras Varga
+
+	* Makefile: MAKE IT THE OFFICIAL LIST OF TESTS THAT MUST PASS
+
+2019-02-05  Andras Varga
+
+	* sqliteresultfiles: turned into automated test
+
+2018-12-20  Attila Torok
+
+	* Tests updated for collecting infinite values in histograms
+
+		- Two new test cases for ensuring that infinities are accepted and they do
+		not affect the histogram layout.
+
+		- Updated histogram save/load tests for changed file file format.
+
+		- Updated fingerprint of empty histogram test (it was out of date already).
+
+		- Also, fingerprint of SineWeightedLinear yielded two different values on
+		two different computers (Attila's laptop and Giga)
+
+2018-08-17  Zoltan Bojthe
+
+	* added NED inheritance test with two namespace for @class without namespace
+
+2018-06-25  ------ omnetpp-5.4.1 released ------
+
+2018-06-11  ------ omnetpp-5.4 released ------
+
+2018-04-11  ------ omnetpp-5.3 released ------
+
+2017-12-08  ------ omnetpp-5.2.1 released ------
+
+2017-09-18  ------ omnetpp-5.2 released ------
+
+2017-05-08  ------ omnetpp-5.1.1 released ------
+
+2017-03-31  ------ omnetpp-5.1 released ------
+
+2017-02-06  ------ omnetpp-5.1pre3 released ------
+
+2016-12-23  ------ omnetpp-5.1pre2 released ------
+
+2016-04-13  ------ omnetpp-5.0 released ------
+
+2016-03-10  ------ omnetpp-5.0rc released ------
+
+2015-12-07  ------ omnetpp-5.0b3 released ------
+
+2015-07-20  ------ omnetpp-5.0b2 released ------
+
+2015-03-04  ------ omnetpp-5.0b1 released ------
+
+2014-11-27  ------ omnetpp-4.6 released ------
+
+2014-06-30  ------ omnetpp-4.5 released ------
+
+2014-02-13  ------ omnetpp-4.4.1 released ------
+
+2013-12-20  ------ omnetpp-4.4 released ------
+
+2013-09-12  ------ omnetpp-4.3.1 released ------
+
+2013-04-02  ------ omnetpp-4.3 released ------
+
+2013-02-08  ------ omnetpp-4.3rc1 released ------
+
+2012-03-13  ------ omnetpp-4.2.2 released ------
+
+2012-01-17  ------ omnetpp-4.2.1 released ------
+
+2011-10-28  ------ omnetpp-4.2 released ------
+
+2011-09-11  ------ omnetpp-4.2rc1 released ------
+
+2011-05-05  ------ omnetpp-4.2b2 released ------
+
+2011-02-23  ------ omnetpp-4.2b1 released ------
+
+2010-06-11  ------ omnetpp-4.1 released ------
+
+2010-05-31  ------ omnetpp-4.1rc2 released ------
+
+2010-04-20  ------ omnetpp-4.1b4 released ------
+
+2010-03-14  ------ omnetpp-4.1b3 released ------
+
+2009-03-12  ------ omnetpp-4.0 released ------
+
+2009-02-27  ------ omnetpp-4.0rc2 released ------
+
+2008-12-12  ------ omnetpp-4.0rc1 released ------
+
+2006-10-21  ------ omnetpp-3.3 released ------
+
+2006-01-12  ------ omnetpp-3.2p1 released ------
+
+2005-10-19  ------ omnetpp-3.2 released ------
+
+2005-03-31  ------ omnetpp-3.1 released ------
+
+2004-12-29  ------ omnetpp-3.0 released ------
+
+2004-11-23  ------ omnetpp-3.0b1 released ------
+
+2004-11-03  ------ omnetpp-3.0a9 released ------
+
+2004-10-04  ------ omnetpp-3.0a8 released ------
+
+2004-09-24  ------ omnetpp-3.0a7 released ------
+
+2004-07-22  ------ omnetpp-3.0a6 released ------
+
+2004-06-07  ------ omnetpp-3.0a5 released ------
+
+2004-05-15  ------ omnetpp-3.0a4 released ------
+
+2004-03-22  ------ omnetpp-3.0a3 released ------
+
+2004-03-03  ------ omnetpp-3.0a2 released ------
+
+2004-02-04  ------ omnetpp-3.0pre1 released ------
+
+2003-06-16  ------ omnetpp-2.3 released ------
+
+2003-03-15  ------ omnetpp-2.3b2 released ------
+
+2003-02-15  ------ omnetpp-2.3b1 released ------
+
+2002-05-04  ------ omnetpp-2.2 released ------
+
+2002-02-24  Andras Varga
+
+	* opp_test.pl: To make it easier to create new test cases from
+	existing ones, removed %name from test file syntax; now test name
+	is derived from the file name. Cleaned up error handling.
+	Changed some command-line switches. Introduced {} as synonym for
+	@TESTNAME@. Improved reporting.
+
+	* runtest: accepts command-line args
+
+2002-02-14  Ulrich Kaage  <kaage@int.uni-karlsruhe.de>
+
+	* runtest: Create directory work if it doesn't exist.

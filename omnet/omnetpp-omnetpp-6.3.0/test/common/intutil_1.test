@@ -1,0 +1,58 @@
+%description:
+Tests the checked_int_cast function in intutil.h
+
+%includes:
+#include <limits>
+#include "common/intutil.h"
+
+%global:
+using namespace omnetpp::common;
+
+
+template<typename T>
+void checkOverflowed(double number) {
+    try {
+        T castedInt = common::checked_int_cast<T>(number, "overflow check tripped");
+        (void)castedInt; // prevent "unused variable" warning
+        std::cout << "there was no overflow" << std::endl;
+    } catch (std::runtime_error &e) {
+        std::cout << e.what() << std::endl;
+    }
+}
+
+%activity:
+
+// int64_t
+int64_t maxInt = std::numeric_limits<int64_t>::max();
+int64_t minInt = std::numeric_limits<int64_t>::min();
+
+checkOverflowed<int64_t>(maxInt + 0.0);    // overflow check tripped
+checkOverflowed<int64_t>(maxInt - 512.0);  // overflow check tripped
+checkOverflowed<int64_t>(maxInt - 513.0);  // there was no overflow
+checkOverflowed<int64_t>(minInt + 0.0);    // there was no overflow
+checkOverflowed<int64_t>(minInt - 1024.0); // there was no overflow
+checkOverflowed<int64_t>(minInt - 1025.0); // overflow check tripped
+
+// uint64_t
+uint64_t maxUint = std::numeric_limits<uint64_t>::max();
+
+checkOverflowed<uint64_t>(maxUint + 0.0);    // overflow check tripped
+checkOverflowed<uint64_t>(maxUint - 1024.0); // overflow check tripped
+checkOverflowed<uint64_t>(maxUint - 1025.0); // there was no overflow
+checkOverflowed<uint64_t>(0.0);              // there was no overflow
+checkOverflowed<uint64_t>(-1.0);             // overflow check tripped
+
+%exitcode: 0
+
+%contains: stdout
+overflow check tripped
+overflow check tripped
+there was no overflow
+there was no overflow
+there was no overflow
+overflow check tripped
+overflow check tripped
+overflow check tripped
+there was no overflow
+there was no overflow
+overflow check tripped

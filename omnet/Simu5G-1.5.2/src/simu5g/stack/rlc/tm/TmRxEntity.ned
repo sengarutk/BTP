@@ -1,0 +1,19 @@
+package simu5g.stack.rlc.tm;
+
+//
+// Implements the receiving side of the Transparent Mode (TM) of the
+// Radio Link Control (RLC) layer for a specific connection.
+// Simply forwards received PDUs to the upper layer without
+// reassembly or reordering.
+//
+simple TmRxEntity like simu5g.stack.rlc.IRlcRxEntity
+{
+    parameters:
+        @dynamic(true);
+        @display("i=block/layer");
+        bool isNR @mutable = default(false);  // set programmatically by BearerManagement
+
+    gates:
+        input in;       // PDUs from lower mux (MAC)
+        output out;     // SDUs to upper mux (PDCP)
+}

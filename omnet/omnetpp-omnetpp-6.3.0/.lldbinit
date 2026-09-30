@@ -1,0 +1,8 @@
+# do not try to download symbol files from the network
+settings set symbols.enable-external-lookup false
+
+# mandatory omnet specific initialization
+command script import omnetpp.lldb
+
+# omnet specific pretty printers
+command script import omnetpp.lldb.formatters.omnetpp

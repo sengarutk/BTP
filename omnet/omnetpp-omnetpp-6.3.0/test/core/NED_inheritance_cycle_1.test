@@ -1,0 +1,22 @@
+%description:
+Test simple module inheritance cycle.
+
+%file: test.ned
+
+simple Simple1 extends Simple2
+{
+}
+
+simple Simple2 extends Simple1
+{
+}
+
+network Test
+{
+    submodules:
+        a: Simple1;
+}
+
+%exitcode: 1
+%contains: stderr
+Cycle in the inheritance tree of simple-module type Simple1

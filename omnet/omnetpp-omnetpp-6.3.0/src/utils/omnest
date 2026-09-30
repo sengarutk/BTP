@@ -1,0 +1,3 @@
+#!/bin/bash
+PRODUCT=OMNEST
+. $(dirname $0)/opp_ide

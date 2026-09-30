@@ -1,0 +1,88 @@
+2025-11-10  ------ omnetpp-6.3.0 released ------
+
+2025-07-14  ------ omnetpp-6.2.0 released ------
+
+2025-07-10  Rudolf Hornig
+
+	* Install guide updated with OpenSuse 15.4+ information
+
+2025-06-16  Rudolf Hornig
+
+	* updated to match the current install.sh.
+
+	- added ArchLinux chapter
+	- heavily rewritten Windows chapter to include up-to-date WSL info
+	  and preferred opp_env.wsl install method
+	- updated package list on all Linux distros
+
+2025-06-05  ------ omnetpp-6.2.0pre1 released ------
+
+2024-10-08  ------ omnetpp-6.1.0 released ------
+
+2024-07-01  Rudolf Hornig
+
+	* Updated macOS install instructions
+
+2024-06-07  Rudolf Hornig
+
+	* Updated install guide: Removed redundant graphical install instructions;
+	updated packages; updated Python package install instruction.
+
+2023-05-31  Attila Torok
+
+	* Follow change: Remove posix_shm as required Python package.
+
+2024-02-01  ------ omnetpp-6.0.3 released ------
+
+2023-10-06  ------ omnetpp-6.0.2 released ------
+
+2023-01-11  greenPointCap
+
+	* ch-macos.rst: updated spctl command
+
+2022-08-23  Rudolf Hornig
+
+	* Added xdg-utils as a required package
+
+2022-09-01  ------ omnetpp-6.0.1 released ------
+
+2022-08-23  Rudolf Hornig
+
+	* Added xdg-utils as a required package in the install guide
+
+2022-04-11  ------ omnetpp-6.0 released ------
+
+2022-04-11  Rudolf Hornig
+
+	* Added notes about configuring debugging (disabling code signature checking) on macOS
+
+2022-03-22  Rudolf Hornig
+
+	* Updated Install Guide to reflect minimum GLIBC requirement for the IDE.
+
+2021-12-01  Rudolf Hornig
+
+	* Updated MPI package name in Ubuntu chapter
+
+2021-08-04  Rudolf Hornig
+
+	* Updated. Among others, added two sections to the MacOS chapter:
+	    - Enabling Development Mode in Terminal
+	    - Running OMNeT++ on Apple Silicon
+
+2021-08-04  Rudolf Hornig
+
+	* Renamed macosx.rst to macos.rst and removed unused FO XSL file.
+
+2021-06-01  Rudolf Hornig
+
+	* Updated instructions on how to source setenv from .profile
+
+2021-06-01  Rudolf Hornig
+
+	* Ubuntu 21.04 or later does not come with qt5-default, update
+	list of required packages
+
+2021-03-25  Andras Varga
+
+	* ChangeLog added

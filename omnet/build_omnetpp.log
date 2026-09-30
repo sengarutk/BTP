@@ -1,0 +1,567 @@
+***** Configuration: MODE=release, TOOLCHAIN_NAME=clang, SHARED_LIBS=yes, LIB_SUFFIX=.so ****
+===== Checking environment =====
+===== Compiling utils ====
+===== Compiling common ====
+YACC: expression.y
+LEX: expression.lex
+YACC: matchexpression.y
+sqlite3.c
+yxml.c
+lcgrandom.cc
+filelock.cc
+filereader.cc
+linetokenizer.cc
+stringpool.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/embedding...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/embedding2...
+
+pooledstring.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/queueinglib...
+
+stringtokenizer.cc
+fnamelisttokenizer.cc
+expression.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/queueinglibext...
+
+expression.lex.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/queuenet...
+
+expression.tab.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/aloha...
+
+quantityformatter.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/canvas...
+
+matchexpression.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/cqn...
+
+matchexpressionlexer.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/dyna...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/fifo...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/hypercube...
+
+matchexpression.tab.cc
+patternmatcher.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/histograms...
+
+unitconversion.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/neddemo...
+
+fileglobber.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/routing...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/tictoc...
+
+fileutil.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/sockets...
+
+stringutil.cc
+commonutil.cc
+exception.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/openstreetmap...
+
+bigdecimal.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/petrinets...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/osg-intro...
+
+enumstr.cc
+colorutil.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/osg-earth...
+
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/osg-indoor...
+
+statistics.cc
+formattedprinter.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/osg-satellites...
+
+csvwriter.cc
+Creating Makefile in /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/samples/wiredphy...
+
+jsonwriter.cc
+sqliteresultfileschema.cc
+sqlitescalarfilewriter.cc
+sqlitevectorfilewriter.cc
+omnetppscalarfilewriter.cc
+omnetppvectorfilewriter.cc
+exprnode.cc
+exprnodes.cc
+exprvalue.cc
+intutil.cc
+any_ptr.cc
+saxparser_default.cc
+saxparser_libxml.cc
+saxparser_yxml.cc
+backward.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/common/liboppcommon.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppcommon.so
+===== Compiling layout ====
+===== Compiling eventlog ====
+===== Compiling scave ====
+===== Compiling nedxml ====
+Generating eventlogentries.csv eventlogentries.h eventlogentries.cc eventlogentryfactory.cc from eventlogentries.txt
+geometry.cc
+graphcomponent.cc
+heapembedding.cc
+startreeembedding.cc
+omnetppresultfileloader.cc
+idlist.cc
+ievent.cc
+YACC: ned2.y
+LEX: ned2.lex
+YACC: msg2.y
+LEX: msg2.lex
+STRINGIFY: ../sim/sim_std.msg
+astnode.cc
+forcedirectedparametersbase.cc
+ieventlog.cc
+eventlog.cc
+forcedirectedparameters.cc
+eventlogindex.cc
+sourcedocument.cc
+forcedirectedembedding.cc
+errorstore.cc
+exception.cc
+messagedependency.cc
+graphlayouter.cc
+event.cc
+eventlogentry.cc
+sqliteresultfileloader.cc
+nedelements.cc
+eventlogentries.cc
+filteredevent.cc
+basicspringembedderlayout.cc
+filteredeventlog.cc
+nedvalidator.cc
+eventlogentryfactory.cc
+eventlogentrycache.cc
+neddtdvalidator.cc
+forcedirectedgraphlayouter.cc
+resultfilemanager.cc
+dtdvalidationutils.cc
+msgelements.cc
+msgvalidator.cc
+msgdtdvalidator.cc
+index.cc
+nedsyntaxvalidator.cc
+nedcrossvalidator.cc
+snapshot.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/layout/libopplayout.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/libopplayout.so
+nedparser.cc
+nedyyutil.cc
+msgparser.cc
+msgyyutil.cc
+yyutil.cc
+resultitems.cc
+ned2.tab.cc
+ned2.lex.cc
+nedtools.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/eventlog/liboppeventlog.so
+nedutil.cc
+nedgenerator.cc
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppeventlog.so
+Creating executable: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/eventlog/opp_eventlogtool
+msggenerator.cc
+xmlgenerator.cc
+xmlastparser.cc
+indexedvectorfilereader.cc
+astbuilder.cc
+msg2.tab.cc
+msg2.lex.cc
+msgcompiler.cc
+msgtypetable.cc
+msganalyzer.cc
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_eventlogtool
+msgcodegenerator.cc
+sim_std_msg.cc
+nedresourcecache.cc
+nedtypeinfo.cc
+vectorfileindexer.cc
+vectorfileindex.cc
+indexfileutils.cc
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_msgc
+indexfilereader.cc
+indexfilewriter.cc
+filefingerprint.cc
+scaveutils.cc
+scaveexception.cc
+enumtype.cc
+xyarray.cc
+fields.cc
+vectorutils.cc
+memoryutils.cc
+sqliteresultfileutils.cc
+sqlitevectordatareader.cc
+exporter.cc
+exportutils.cc
+csvrecexporter.cc
+csvspreadexporter.cc
+jsonexporter.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/nedxml/liboppnedxml.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppnedxml.so
+Creating executable: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/nedxml/opp_nedtool
+omnetppscalarfileexporter.cc
+sqlitescalarfileexporter.cc
+sqlitevectorfileexporter.cc
+omnetppvectorfileexporter.cc
+Creating executable: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/nedxml/opp_msgtool
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_nedtool
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/scave/liboppscave.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppscave.so
+Creating executable: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/scave/opp_scavetool
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_msgtool
+===== Compiling sim ====
+carray.cc
+cdelaychannel.cc
+cdataratechannel.cc
+cboolparimpl.cc
+cchannel.cc
+cobjectfactory.cc
+ccomponent.cc
+ccomponenttype.cc
+cconfiguration.cc
+cconfigoption.cc
+ccanvas.cc
+ccoroutine.cc
+csoftowner.cc
+cabstracthistogram.cc
+cfutureeventset.cc
+cdisplaystring.cc
+cdoubleparimpl.cc
+cdynamicexpression.cc
+cexpression.cc
+cenvir.cc
+cenum.cc
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_scavetool
+cevent.cc
+cexception.cc
+cfsm.cc
+cnedmathfunction.cc
+cgate.cc
+ccontextswitcher.cc
+chistogram.cc
+chistogramstrategy.cc
+cksplit.cc
+clcg32.cc
+clistener.cc
+clog.cc
+cintparimpl.cc
+cmersennetwister.cc
+cmessage.cc
+cpacket.cc
+cmsgpar.cc
+cmodule.cc
+ceventheap.cc
+chasher.cc
+cfingerprint.cc
+ctimestampedvalue.cc
+cmatchexpression.cc
+cpatternmatcher.cc
+cmessageprinter.cc
+cnullenvir.cc
+envirext.cc
+cnedfunction.cc
+cvalue.cc
+cvaluecontainer.cc
+cvaluearray.cc
+cvaluemap.cc
+cvalueholder.cc
+cobject.cc
+cobjectparimpl.cc
+coutvector.cc
+cnamedobject.cc
+cosgcanvas.cc
+cpar.cc
+cparimpl.cc
+cownedobject.cc
+cproperties.cc
+cproperty.cc
+crandom.cc
+cresultfilter.cc
+cresultlistener.cc
+cresultrecorder.cc
+clifecyclelistener.cc
+cprecolldensityest.cc
+cpsquare.cc
+cqueue.cc
+cpacketqueue.cc
+cscheduler.cc
+csimplemodule.cc
+csimulation.cc
+cstatistic.cc
+cstddev.cc
+cstlwatch.cc
+cstringparimpl.cc
+cstringtokenizer.cc
+cclassdescriptor.cc
+ctemporaryowner.cc
+ctopology.cc
+cvisitor.cc
+cwatch.cc
+cxmlelement.cc
+cxmlparimpl.cc
+any_ptr.cc
+distrib.cc
+nedfunctions.cc
+errmsg.cc
+globals.cc
+cregistrationlist.cc
+minixpath.cc
+onstartup.cc
+opp_pooledstring.cc
+simtime.cc
+simtimemath.cc
+task.cc
+util.cc
+gettime.cc
+nedsupport.cc
+MSGC: sim_std.msg
+cstatisticbuilder.cc
+statisticsourceparser.cc
+statisticrecorderparser.cc
+stringutil.cc
+resultfilters.cc
+resultrecorders.cc
+expressionfilter.cc
+ccommbuffer.cc
+cparsimcomm.cc
+ccommbufferbase.cc
+cmemcommbuffer.cc
+cfilecommbuffer.cc
+netbuilder/cneddeclaration.cc
+netbuilder/cnedloader.cc
+netbuilder/cdynamicchanneltype.cc
+netbuilder/cdynamicmoduletype.cc
+netbuilder/cnednetworkbuilder.cc
+sim_std_m.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/sim/liboppsim.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppsim.so
+===== Compiling envir ====
+appreg.cc
+args.cc
+startup.cc
+evmain.cc
+logformatter.cc
+fsutils.cc
+envirbase.cc
+sectionbasedconfig.cc
+inifilereader.cc
+scenario.cc
+valueiterator.cc
+filesnapshotmgr.cc
+akoutvectormgr.cc
+speedometer.cc
+stopwatch.cc
+matchableobject.cc
+matchablefield.cc
+akaroarng.cc
+xmldoccache.cc
+eventlogwriter.cc
+objectprinter.cc
+eventlogfilemgr.cc
+resultfileutils.cc
+intervals.cc
+omnetppoutscalarmgr.cc
+omnetppoutvectormgr.cc
+sqliteoutscalarmgr.cc
+sqliteoutvectormgr.cc
+visitor.cc
+envirutils.cc
+main.cc
+Creating static library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/envir/liboppmain.a
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppmain.a
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/envir/liboppenvir.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppenvir.so
+===== Compiling cmdenv ====
+cmdenv.cc
+fakegui.cc
+Creating shared library: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/cmdenv/liboppcmdenv.so
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/lib/liboppcmdenv.so
+===== Compiling opp_run ====
+Creating executable: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/out/clang-release/src/envir/opp_run
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_run
+Copying to: /home/sengar/BTP/omnet/omnetpp-omnetpp-6.3.0/bin/opp_run_release
+===== Compiling aloha ====
+===== Compiling canvas ====
+===== Compiling cqn ====
+===== Compiling dyna ====
+===== Compiling embedding ====
+===== Compiling embedding2 ====
+===== Compiling fifo ====
+===== Compiling hypercube ====
+CarAnimator.cc
+Queue.cc
+Host.cc
+MSGC: DynaPacket.msg
+main.cc
+MSGC: HCPacket.msg
+main.cc
+AbstractFifo.cc
+Client.cc
+HCGenerator.cc
+Fifo.cc
+HCRouter.cc
+model/AbstractFifo.cc
+Server.cc
+Switch.cc
+model/Host.cc
+Creating executable: out/clang-release//canvas
+Server.cc
+HCSink.cc
+ServerProcess.cc
+Sink.cc
+model/Fifo.cc
+HCPacket_m.cc
+Creating executable: out/clang-release//cqn
+model/nedfiles.cc
+model/Sink.cc
+model/Server.cc
+Source.cc
+Creating executable: out/clang-release//aloha
+===== Compiling histograms ====
+Histograms.cc
+model/Source.cc
+Switch.cc
+DynaPacket_m.cc
+Creating executable: out/clang-release//hypercube
+===== Compiling neddemo ====
+Node.cc
+===== Compiling queueinglib ====
+MSGC: Job.msg
+Allocate.cc
+Creating executable: out/clang-release//fifo
+===== Compiling routing ====
+MSGC: node/Packet.msg
+builder/netbuilder.cc
+Creating executable: out/clang-release//embedding2
+===== Compiling tictoc ====
+MSGC: tictoc13.msg
+Creating executable: out/clang-release//histograms
+MSGC: tictoc14.msg
+MSGC: tictoc15.msg
+MSGC: tictoc16.msg
+MSGC: tictoc17.msg
+MSGC: tictoc18.msg
+txc1.cc
+node/App.cc
+Creating executable: out/clang-release//embedding
+txc10.cc
+node/BurstyApp.cc
+Creating executable: out/clang-release//neddemo
+Creating executable: out/clang-release//dyna
+txc11.cc
+Classifier.cc
+txc12.cc
+node/L2Queue.cc
+txc13.cc
+node/Routing.cc
+txc14.cc
+txc15.cc
+txc16.cc
+Clone.cc
+Deallocate.cc
+txc17.cc
+txc18.cc
+node/Packet_m.cc
+Delay.cc
+Fork.cc
+txc2.cc
+Job.cc
+JobList.cc
+Join.cc
+Merge.cc
+Creating executable: out/clang-release//routing
+PassiveQueue.cc
+Queue.cc
+ResourceBasedQueue.cc
+txc3.cc
+txc4.cc
+ResourcePool.cc
+txc5.cc
+txc6.cc
+Router.cc
+SelectionStrategies.cc
+txc7.cc
+txc8.cc
+Server.cc
+Sink.cc
+txc9.cc
+tictoc13_m.cc
+Source.cc
+Job_m.cc
+tictoc14_m.cc
+tictoc15_m.cc
+tictoc16_m.cc
+tictoc17_m.cc
+tictoc18_m.cc
+===== Compiling sockets ====
+MSGC: HttpMsg.msg
+MSGC: NetPkt.msg
+MSGC: TelnetPkt.msg
+Cloud.cc
+ExtHttpClient.cc
+Creating shared library: out/clang-release//libqueueinglib.so
+ExtTelnetClient.cc
+HttpClient.cc
+HttpServer.cc
+===== Compiling openstreetmap ====
+Car.cc
+OpenStreetMap.cc
+Creating executable: out/clang-release//tictoc
+QueueBase.cc
+===== Compiling petrinets ====
+Arc.cc
+SocketRTScheduler.cc
+TelnetClient.cc
+TelnetServer.cc
+HttpMsg_m.cc
+NetPkt_m.cc
+TelnetPkt_m.cc
+PetriNetBuilder.cc
+Place.cc
+Creating executable: out/clang-release//openstreetmap
+Transition.cc
+TransitionScheduler.cc
+===== Compiling osg-intro ====
+fallback.cc
+OsgScene.cc
+===== Compiling osg-earth ====
+ChannelController.cc
+Creating executable: out/clang-release//sockets
+===== Compiling osg-indoor ====
+fallback.cc
+OsgScene.cc
+Person.cc
+===== Compiling osg-satellites ====
+ChannelController.cc
+Clock.cc
+Creating executable: out/clang-release//osg-intro
+fallback.cc
+===== Compiling wiredphy ====
+MSGC: ProgressInfo.msg
+RxAtEnd.cc
+RxAtStart.cc
+MobileNode.cc
+fallback.cc
+Creating executable: out/clang-release//osg-indoor
+GroundStation.cc
+===== Compiling queueinglibext ====
+SinkExt.cc
+OsgEarthScene.cc
+Sink.cc
+Source.cc
+Tx.cc
+OsgEarthScene.cc
+Satellite.cc
+RambleNode.cc
+Creating shared library: out/clang-release//libqueueinglibext.so
+WaypointTrackerNode.cc
+ProgressInfo_m.cc
+Creating executable: out/clang-release//petrinets
+Creating executable: out/clang-release//osg-satellites
+Creating executable: out/clang-release//osg-earth
+Creating executable: out/clang-release//wiredphy

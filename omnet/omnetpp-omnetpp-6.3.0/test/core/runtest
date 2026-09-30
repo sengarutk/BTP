@@ -1,0 +1,37 @@
+#! /bin/sh
+#
+# usage: runtest [<testfile>...]
+# without args, runs all *.test files in the current directory
+#
+
+MODE=${MODE:-"debug"}
+MAKEOPTIONS="MODE=$MODE"
+MAKE=${MAKE:-"make"}
+NUMPROC=$(command -v nproc >/dev/null && nproc || echo 8)
+export MAKEFLAGS=${MAKEFLAGS:-"-j"$NUMPROC}
+
+case "$MODE" in
+  "release") PROGSUFFIX="" ;;
+  "debug") PROGSUFFIX="_dbg" ;;
+  *) PROGSUFFIX="_$MODE" ;;
+esac
+
+TESTFILES=$*
+if [ "x$TESTFILES" = "x" ]; then TESTFILES='*.test'; fi
+if [ ! -d work ];  then mkdir work; fi
+rm -rf work/lib
+cp -pPR lib work/       # OSX dos not support cp -a
+export NEDPATH=.:../lib
+EXTRA_INCLUDES="-I../../../src"
+#OPT="--debugger-attach-on-error=true"
+
+$MAKE $MAKEOPTIONS -C signalreg
+
+opp_test gen -v --args $OPT -- $TESTFILES || exit 1
+echo
+(cd work; opp_makemake -f -o work --deep -i ../makefrag $EXTRA_INCLUDES; $MAKE $MAKEOPTIONS) || exit 1
+echo
+opp_test run -p work$PROGSUFFIX -v --args $OPT -- $TESTFILES || exit 1
+echo
+echo Results can be found in ./work
+

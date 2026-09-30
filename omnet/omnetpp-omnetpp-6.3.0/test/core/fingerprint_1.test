@@ -1,0 +1,168 @@
+%description:
+All-ingredients fingerprint test, based on a "veterinerian horse" Tictoc simulation.
+See also test/anim/vethorsetictoc
+
+%file: tictoc.ned
+
+simple Txc
+{
+    parameters:
+        @display("i=block/routing;t=sent: 0");
+        @signal[roundtripDelay](type="simtime_t");
+        @statistic[roundtripDelay](record=vector,histogram,mean);
+    gates:
+        input in;
+        output out;
+}
+
+network Tictoc
+{
+    submodules:
+        tic: Txc;
+        toc: Txc;
+    connections:
+        tic.out --> {  delay = uniform(1ms,1.01ms); datarate=1Mbps; } --> toc.in;
+        tic.in <-- {  delay = uniform(1ms,1.01ms); datarate=1Mbps;  } <-- toc.out;
+}
+
+%file: tictoc.msg
+
+packet TictocPacket
+{
+    int foo;
+    string greeting;
+}
+
+class FooInfo extends cObject
+{
+    int x = 99;
+}
+
+%file: txc.cc
+#include <omnetpp.h>
+#include "tictoc_m.h"
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+class Txc : public cSimpleModule
+{
+  private:
+    int sendCount;
+    simtime_t lastSendTime;
+    simsignal_t roundtripDelaySignal;
+    cFigure *figure;
+
+  protected:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+    void updateDisplayString();
+};
+
+Define_Module(Txc);
+
+void Txc::initialize()
+{
+    sendCount = 0;
+    roundtripDelaySignal = registerSignal("roundtripDelay");
+    updateDisplayString();
+
+    // Create a filled rounded rectangle figure
+    cCanvas *canvas = getParentModule()->getCanvas();
+    figure = new cRectangleFigure("movingRect");
+    cRectangleFigure *rectFig = static_cast<cRectangleFigure*>(figure);
+    rectFig->setBounds(cFigure::Rectangle(10, 10, 30, 20));
+    rectFig->setFilled(true);
+    rectFig->setFillColor(cFigure::BLUE);
+    rectFig->setCornerRadius(5);
+    canvas->addFigure(figure);
+
+    if (strcmp("tic", getName()) == 0) {
+        TictocPacket *msg = new TictocPacket("packet");
+        msg->setKind(8);
+        msg->setGreeting("Ahoy");
+        msg->setFoo(42);
+        msg->setByteLength(1000);
+        msg->setControlInfo(new FooInfo());
+
+        sendCount++;
+        updateDisplayString();
+        send(msg, "out");
+    }
+}
+
+void Txc::handleMessage(cMessage *msg)
+{
+    // Emit signal on message arrival
+    emit(roundtripDelaySignal, simTime() - lastSendTime);
+    lastSendTime = simTime();
+
+    // Move figure randomly on message arrival
+    if (figure) {
+        cRectangleFigure *rectFig = static_cast<cRectangleFigure*>(figure);
+        double x = uniform(0, 200);
+        double y = uniform(0, 150);
+        rectFig->setBounds(cFigure::Rectangle(x, y, 30, 20));
+    }
+
+    // Contribute to the "x" fingerprint ingredient
+    cFingerprintCalculator *fingerprint = getSimulation()->getFingerprintCalculator();
+    if (fingerprint)
+        fingerprint->addExtraData(sendCount);
+
+    // Update and display send count
+    sendCount++;
+    updateDisplayString();
+
+    // Send back
+    send(msg, "out");
+}
+
+void Txc::updateDisplayString()
+{
+    char buf[32];
+    sprintf(buf, "sent: %d", sendCount);
+    getDisplayString().setTagArg("t", 0, buf);
+}
+
+} // namespace
+
+
+%inifile: omnetpp.ini
+[General]
+network = Tictoc
+sim-time-limit = 1s
+
+cmdenv-fake-gui = true  # for the "y" and "f" ingredients
+
+# z fingerprints have multiple versions (x86_64 aarch64) because of the slightly different statistical results
+# generated on different architectures
+
+fingerprint =
+    61ce-349b/e,
+    aa84-1d2a/t,
+    20e4-f8f4/n,
+    8ce9-011d/c,
+    fffc-0007/k,
+    0000-0fa0/l,
+    f1f9-3b6d/o,
+    0010-8021/g,
+    8df9-e67f/d,
+    1e79-dd70/b,
+    aaaa-0001/i,
+    6db7-26c3/m,
+    3390-d4b6/p,
+    d6e1-5518/a,
+    c39c-6936/r,
+    1ba6-e378/s,
+    316c-854a/z d16c-c3c4/z,
+    a959-ab54/v,
+    d01e-f002/y,
+    1c76-3429/f,
+    d139-0017/x
+
+%not-contains: stdout
+Fingerprint mismatch
+
+

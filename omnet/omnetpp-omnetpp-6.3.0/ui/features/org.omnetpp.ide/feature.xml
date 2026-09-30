@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.omnetpp.ide"
+      label="OMNeT++ IDE"
+      version="6.3.0.qualifier"
+      provider-name="OpenSim Ltd."
+      os="linux,macosx,win32"
+      ws="cocoa,gtk,win32"
+      arch="x86_64,aarch64">
+
+   <requires>
+      <import feature="org.eclipse.platform"/>
+      <import feature="org.eclipse.cdt"/>
+      <import feature="org.eclipse.gef"/>
+      <import feature="org.python.pydev.feature"/>
+   </requires>
+
+   <plugin
+         id="org.omnetpp.common.core"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.common"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.eventlogtable"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.figures"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ide.nativelibs"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ide.nativelibs.linux.x86_64"
+         os="linux"
+         arch="x86_64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ide.nativelibs.linux.aarch64"
+         os="linux"
+         arch="aarch64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ide.nativelibs.macosx"
+         os="macosx"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ide.nativelibs.win32.x86_64"
+         os="win32"
+         arch="x86_64"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.inifile.editor"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.main"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ned.core"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ned.editor"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.ned.model"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.scave"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.scave.builder"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.python"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.scave.pychart"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.scave.templates"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.scave.model"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.sequencechart"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.launch"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.msg.editor"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.cdt"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.dsp"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.doc"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.omnetpp.neddoc"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.visigoths.freemarker"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.visigoths.freemarker.ide"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.swtworkbench.xswt"
+         version="0.0.0"/>
+
+</feature>

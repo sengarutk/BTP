@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xswt xmlns:x="http://sweet_swt.sf.net/xswt">
+
+  <import xmlns="http://sweet_swt.sf.net/xswt">
+    <package name="java.lang"/>
+    <package name="org.eclipse.swt.widgets" />
+    <package name="org.eclipse.swt.graphics" />
+    <package name="org.eclipse.swt.layout" />
+    <package name="org.eclipse.swt.custom" />
+    <package name="org.omnetpp.common.wizard.support" />
+    <package name="org.omnetpp.ned.editor.wizards.support" />
+    <package name="org.omnetpp.cdt.wizard.support" />
+  </import>
+  <layout x:class="GridLayout" numColumns="1" makeColumnsEqualWidth="true"/>
+
+  <x:children>
+
+    <!-- Constraints radio button -->
+    <button x:id="use_constraints" x:id.default="true" selection="true" text="Constraints" x:style="RADIO">
+      <layoutData x:class="GridData" horizontalAlignment="FILL"/>
+    </button>
+
+    <!-- Constraints composite (indented) -->
+    <composite>
+      <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true" horizontalIndent="20"/>
+      <layout x:class="GridLayout" numColumns="2"/>
+      <x:children>
+
+        <!-- Use rounded bin widths checkbox -->
+        <button x:id="round_bin_widths" text="Use rounded bin widths" x:style="CHECK" x:id.default="true" x:id.enablerButton="use_constraints">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" horizontalSpan="2"/>
+        </button>
+
+        <!-- Number of bins -->
+        <label text="Number of bins (hint):"/>
+        <text x:id="num_bins" x:style="BORDER" text="" x:id.enablerButton="use_constraints">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+        </text>
+
+        <!-- Bin width -->
+        <label text="Bin width (w/ unit):"/>
+        <text x:id="bin_width" x:style="BORDER" text="" x:id.enablerButton="use_constraints">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+        </text>
+
+        <!-- Range min -->
+        <label text="Range min (w/ unit):"/>
+        <text x:id="range_min" x:style="BORDER" text="" x:id.enablerButton="use_constraints">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+        </text>
+
+        <!-- Range max -->
+        <label text="Range max (w/ unit):"/>
+        <text x:id="range_max" x:style="BORDER" text="" x:id.enablerButton="use_constraints">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+        </text>
+
+        <label text="Leave any field empty to use a smart default based on your data. The &quot;Number of bins&quot; field is a hint: the resulting number of bins may be more or less than specified due to bin width rounding (choosing integer bin widths for integer data, and choosing &quot;nice&quot; numbers if enabled above). Values specified without units are understood in the unit of the input, NOT in the units displayed in the plot."  x:style="WRAP">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" horizontalSpan="2" grabExcessHorizontalSpace="true" widthHint="300"/>
+        </label>
+
+      </x:children>
+    </composite>
+
+    <!-- Manual Bin Edges radio button -->
+    <button x:id="use_manual" x:id.default="false" text="Manual Bin Edges" x:style="RADIO">
+      <layoutData x:class="GridData" horizontalAlignment="FILL"/>
+    </button>
+
+    <!-- Manual Bin Edges composite (indented) -->
+    <composite>
+      <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true" verticalAlignment="FILL" grabExcessVerticalSpace="true" horizontalIndent="20"/>
+      <layout x:class="GridLayout" numColumns="1"/>
+      <x:children>
+
+        <!-- Input format note -->
+        <label text="Enter bin edges (use space or comma a separator; units accepted)" x:style="NONE">
+          <layoutData x:class="GridData" horizontalAlignment="FILL"/>
+        </label>
+
+        <!-- Manual bin edges input -->
+        <text x:id="manual_edges" x:style="BORDER|MULTI|V_SCROLL|WRAP" text="" x:id.enablerButton="use_manual">
+          <layoutData x:class="GridData" horizontalAlignment="FILL" grabExcessHorizontalSpace="true" verticalAlignment="FILL" grabExcessVerticalSpace="true" heightHint="80"/>
+        </text>
+
+      </x:children>
+    </composite>
+
+  </x:children>
+</xswt>

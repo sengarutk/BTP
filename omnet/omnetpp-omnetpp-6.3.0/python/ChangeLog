@@ -1,0 +1,1036 @@
+2025-11-10  ------ omnetpp-6.3.0 released ------
+
+2025-09-25  Andras Varga
+
+	* omnetpp.scave.utils, histogram_bin_edges() was replaced with a more
+	capable implementation to support the new "Histogram Bins" page in the
+	"Histogram from vectors" chart template.
+
+2025-11-04  Attila Torok
+
+	* omnetpp.scave.vectorops: Require vectors to be in the same unit for
+	the `aggregate` and `merge` vector operations (otherwise the result is
+	likely meaningless).
+
+2025-10-31  Attila Torok
+
+	* omnetpp.scave.vectorops: Fix: Set "unit" to "s" in the `timediff`
+	vector operation. Before, the original unit was left in place, which was
+	simply wrong.
+
+2025-10-31  Andras Varga
+
+	* omnetpp.scave.utils: plot_histograms(): document missing properties
+
+2025-10-27  Attila Torok
+
+	* omnetpp.scave.utils: Fix color/marker cycles in charts not being
+	deterministic with seed != 0.
+
+2025-10-27  Rudolf Hornig
+
+	* omnetpp.lldb.formatters.omnetpp: #1453: Updated lldb pretty printer
+	summary functions to properly handle None and "" return values.
+
+2025-08-12  Rudolf Hornig
+
+	* omnetpp.lldb.formatters.omnetpp: Safer pretty printing for simtime_t.
+
+2025-08-07  Attila Torok
+
+	omnetpp.scave.utils: Follow change: Margins were reduced around data on
+	native line plots, do the same change when native is emulated with
+	Matplotlib for image export.
+
+2025-07-14  Attila Torok
+
+	* omnetpp.scave.utils: plot_boxwhiskers(), customized_box_plot(): Fix unit
+	conversion.
+
+2025-07-14  ------ omnetpp-6.2.0 released ------
+
+2025-07-14  Rudolf Hornig
+
+	* python/requirements.txt: Accept earlier versions of the `packaging` module too,
+	to allow direct installation on nixOS 25.05.
+
+2025-07-11  Rudolf Hornig
+
+	* lldb formatter: fixed some errors because of NoneTypes.
+
+2025-07-11  Rudolf Hornig
+
+	* omnetpp.scave: fixed get_chart_template_location() not working on macOS.
+	Cause: The IDE plugin folder is at a different location on macOS.
+
+2025-07-08  Attila Torok
+
+	* omnetpp.scave: Implemented unit conversion support for vector, histogram, bar
+	and box-whiskers charts. This affects the operation of plot_vectors() and
+	similar plot_*(), and postconfigure_plot() functions.
+
+2025-06-24  Attila Torok
+
+	* omnetpp.scave: Make result file loading order deterministic (sort list
+	before loading). This makes the order of rows in returned returned
+	dataframes deterministic.
+
+2025-07-03  Rudolf Hornig
+
+	* python/requirements.txt: changed to use `setuptools` on Windows and
+	`packaging` on all other platforms.
+
+2025-07-02  Rudolf Hornig
+
+	* Improved Python detection: bundle a python3-config script directly instead
+	of using the system package.
+
+2025-07-01  Rudolf Hornig
+
+	* omnetpp.scave: Rewritten dependency check - setuptools is soon
+	to be deprecated.
+
+2025-06-19  Rudolf Hornig
+
+	* opp_test: fixes for confused exit code handling on Windows for cases when
+	the test program calls abort(). (To opp_test, test program calling abort()
+	looked like the program could not be started at all).
+
+2025-06-19  Rudolf Hornig
+
+	* opp_test: added %stacksize directive (default stacksize is still 1MB)
+
+2025-06-05  ------ omnetpp-6.2.0pre1 released ------
+
+2025-04-17  Attila Torok
+
+	* omnetpp.scave: Make scrolling on enum strip axes only zoom/pan horizontally
+
+2025-04-23  Attila Torok
+
+	* omnetpp.scave: Don't show data in status message for enum strips.
+
+2025-04-23  Attila Torok
+
+	* omnetpp.scave: Fix zoom level being lost when adding delta measurement
+	markers.
+
+2025-05-07  Levente Meszaros
+
+	* omnetpp.scave: Fixed disappearing labels on enum strips in MatPlotLib charts.
+	The label was not visible when the right side of the box was outside the
+	visible area.
+
+2025-04-11  Attila Torok
+
+	* omnetpp.scave: Make the pan tool affect only the X axis on enum strips
+
+2025-03-24  Attila Torok
+
+	* omnetpp.scave: Add delta measurement feature to Matplotlib line charts
+
+2025-03-19  Attila Torok
+
+	* requirements.txt: Accept NumPy 2.x as well as 1.x as dependency
+
+2025-03-19  Attila Torok
+
+	* omnetpp.scave: Drop usage of `np.set_string_function()`, which was
+	removed in NumPy 2.0.
+
+	Based on https://github.com/omnetpp/omnetpp/pull/1273 by @a-andre.
+
+	It seems that the recommendation of passing an (element-wise) formatter
+	callable as printoption is not needed - the default
+	`str` implementation for arrays looks just like how we want it.
+
+2025-03-07  Rudolf Hornig
+
+	* requirements.txt: Added IPython as a dependency (as the IDE now has an
+	IPython console).
+
+2025-03-07  Levente Meszaros
+
+	* Added the omnetpp.repl package which starts an interactive IPython
+	interpreter with the omnetpp packages loaded.
+
+2025-03-06  Levente Meszaros
+
+	* Added the omnetpp.test package that contains the functionality of the
+	opp_test tool. This allows using the test code both as a python library
+	and as a standalone script.
+
+2025-01-29  Levente Meszaros
+
+	* omnetpp.lldb.formatters.omnetpp: Enhanced omnetpp specific lldb formatters.
+
+	Added a space between value and unit in quantities. Changed module
+	formatting to be similar to Qtenv.
+
+2025-02-10  Attila Torok
+
+	* omnetpp.scave: Fix spurious warning about failed chart image/data export.
+
+	If the chart had the target export filename set on itself as a property,
+	it was not considered by opp_charttool when checking afterwards whether
+	the file actually got created. Instead, the chart name was always used to
+	construct the expected file name for this check.
+
+2025-02-10  Attila Torok
+
+	* omnetpp.scave: Fix missing file extension on image/data exported from
+	charts.
+
+	When the provided export filename (or the chart name, as a fallback)
+	"looked like" it already ended in a file extension (e.g. "Delay in client[3].app"),
+	the extension for the selected file format was not appended to the file name.
+	This resulted in either the data or the image file overwriting the other,
+	without an appropriate file extension.
+
+2025-01-31  Attila Torok
+
+	* omnetpp.scave: Dispatch based on is_native_chart() in utils.plot_bars
+	instead of is_native_plot().
+
+	The other two plotter functions already do this, and it makes a
+	difference when exporting native (bar) charts using Matplotlib emulation.
+	(To be more concrete, this now makes the switching to the compressed
+	layout engine take place for native bar charts too upon export.)
+
+2025-01-29  Gyorgy Szaszko
+
+	* omnetpp.scave: Set compressed layout engine when exporting native charts.
+
+2024-12-18  Levente Meszaros
+
+	* omnetpp.scave: Replaced tight layout in Matplotlib charts with compressed layout.
+
+	The reason is that with tight layout, multiple renderings of the same chart
+	may produce slightly different outputs. This is likely due to the layout code
+	having some internal state that is preserved across runs.
+
+2025-01-10  Attila Torok
+
+	* omnetpp.scave: Change the default chart export DPI from 96 to 300.
+
+2024-09-20  Attila Torok
+
+	* omnetpp.scave: Silence warning from utils.to_numeric.
+
+2024-10-08  ------ omnetpp-6.1.0 released ------
+
+2024-09-27  Attila Torok
+
+	* omnetpp.scave: plot_bars(): Arrange the errors dataframe the same way as
+	the data dataframe, so that even when sorting is disabled, the values will
+	still correspond to each other as one would expect.
+
+2024-07-19  Andras Varga
+
+	* Added experimental llmtool utility
+
+2024-05-24  Andras Varga
+
+	* Added experimental package nedlinter
+
+2024-07-16  Attila Torok
+
+	* omnetpp.scave: vectorops.py: Make the expression vector operation work with NumPy 2.0
+
+2024-06-24  Attila Torok
+
+	* omnetpp.scave: Make native module loading fallback less verbose.
+
+2024-06-26  Andras Varga
+
+	* omnetpp.ned: Added support for accessing parameters, gates, properties;
+	several methods renamed for clarity.
+
+2024-06-11  Rudolf Hornig
+
+	* Added a `requirements.txt` file to hold the list of python package
+	dependencies. Install them with the following command:
+	`python3 -m pip install -r python/requirements.txt`
+
+2024-06-07  Rudolf Hornig
+
+	* omnetpp.scave: Added a dependency checker to the scave._version module.
+	The function uses the `python/requirements.txt` file to verify if supported
+	versions of the various packages are present.
+
+2023-12-22  Rudolf Hornig
+
+	* omnetpp.lldb: lldb variable formatter fixes
+
+2024-06-05  Andras Varga
+
+	* omnetpp.scave: Proofreading of docstrings.
+
+2024-05-23  Andras Varga
+
+	* omnetpp.ned: Initial revision of package that allows for loading and
+	browsing NED types from Python.
+
+2024-04-10  Attila Torok
+
+	* omnetpp.scave: Make enum strip edges on "vectors on separate axes" charts
+	opt-in, for faster rendering
+
+2024-04-10  Attila Torok
+
+	* omnetpp.scave: Fix FutureWarning in `utils.fill_missing_titles`, trying to
+	modify a column in place.
+
+	"FutureWarning: A value is trying to be set on a copy of a DataFrame or
+	Series through chained assignment using an inplace method."
+
+2024-04-10  Attila Torok
+
+	* omnetpp.scave: Fix NameError in enum strip legend click handler,
+	used in the "Vectors on separate axes" chart template
+
+2024-04-10  Attila Torok
+
+	* omnetpp.scave: nit: Simplify utils._plot_enum.compute_conversion_factor()
+
+2024-04-10  Attila Torok
+
+	* omnetpp.scave: Raise minimum required Matplotlib version to 3.5.3,
+	to fix the errors in "Plot vectors on separate axes" charts, with enums
+	and edges.
+
+2024-04-22  Andras Varga
+
+	* omnetpp.scave: Hide symbol from legend if there's only one item.
+
+	Motivation: in the "Vectors as separate plots", eacvh vector is plotted
+	in its separate strip. Then the legend often covers a significant part of
+	the plot, and the marker in the legend could be mistaken for a valid data
+	point in the plot.
+
+2024-04-22  Andras Varga
+
+	* omnetpp.scave: Added "Omit empty vectors" to input pages of charts taking
+	vectors as input.
+
+2024-04-05  Andras Varga
+
+	* omnetpp.scave: Fix last value not painted when enum vectors are plotted as
+	colored strips, in plot_vectors_separate()
+
+2024-04-04  Andras Varga
+
+	* omnetpp.scave: utils.py: Parse enum spec correctly in plot_vectors_separate().
+	Enum spec comes from "enum" result attribute of vector result.
+
+	"A, B, C" -> {'A': 0, 'B': 1, 'C': 2}
+	"A=1, B, C=5, D" -> {'A': 1, 'B': 2, 'C': 5, 'D': 6}
+
+2024-03-22  Andras Varga
+
+	* omnetpp.scave: Use logging instead of print [revised by Attila]
+
+2023-04-03  Levente Mészáros
+
+	* omnetpp.scave: Added set_verbose_export() in utils.py, for controlling
+	whether or not export_image_if_needed()/export_data_if_needed() prints the
+	the "exporting..." message. Also, changed "exporting..." to "Exported..."
+
+2024-03-22  Andras Varga
+
+	* omnetpp.scave: Refactor/fix try-except blocks in image/data export
+
+2024-03-22  Andras Varga
+
+	* omnetpp.scave: Fix: Get rid of leading "./" in export file names.
+
+2024-01-18  Attila Torok
+
+	* omnetpp.scave: Fix: Avoid "The truth value of a Series is ambiguous"
+	errors in utils._check_same_unit()
+
+2023-10-13  Attila Torok
+
+	* omnetpp.scave: Fix "AttributeError: Can only use .str accessor with string
+	values!" errors
+
+	This occurred when get_results was called with an empty DataFrame. Fixed
+	by ensuring that DataFrames returned from the results module have the
+	right columns with the right dtypes.
+
+	This is a backport of: 52fcaa2213 ("scave/python: Fix the newly added
+	results_api test cases", 2023-10-13)
+
+2023-12-13  Attila Torok
+
+	* omnetpp.scave: Consider different kinds of "non-units" as the same in
+	chart scripts
+
+2023-12-13  Attila Torok
+
+	* omnetpp.scave: Fix import error reporting in results_nativemodule
+
+2023-10-18  Attila Torok
+
+	* omnetpp.scave: Avoid another FutureWarning in utils.py when calling
+	pivot_table
+
+2023-10-18  Attila Torok
+
+	* omnetpp.scave: Make legend ordering work for bar charts as well
+
+2023-10-18  Attila Torok
+
+	* omnetpp.scave: Add a workaround for zero-dimensional NumPy arrays in
+	result DFs.
+
+	As described in: https://github.com/pandas-dev/pandas/issues/53565
+
+2023-10-18  Attila Torok
+
+	* omnetpp.scave: Delete the results_scavetool backend
+
+	It was only a fallback, and it wasn't actively tested or maintained anymore.
+	And it wasn't a particularly nice solution in the first place.
+
+2023-10-10  Attila Torok
+
+	* omnetpp.scave: Avoid FutureWarning spam from Pandas 2.1 in
+	results_nativemodule, by not concatenating into an empty DataFrame.
+
+2023-10-03  Andras Varga
+
+	* omnetpp.scave: In charts, accept "-->" in legend replacements, too.
+
+	Interpretation of the "legend_replacements" property changed.
+
+2023-10-03  Andras Varga
+
+	* omnetpp.scave: utils.py: added add_legend_labels(), sort_rows_by_legend(),
+	ordering.xswt
+
+2023-09-16  Andras Varga
+
+	* omnetpp.scave: added sort=True argument to plotting functions.
+
+	Original plotting functions sorted dataframe items before plotting, which
+	made it impossible for the user to sort them differently
+	(pre-sorting had no effect). This was BAAAAAAAAD.
+
+	Now, by passing sort=False, user can turn off internal sorting, which
+	allows sorting the dataframe rows before plotting.
+
+	The `sort=True` mode is considered obsolete; it is only the default to
+	retain backward compatibility
+
+2023-09-27  Levente Mészáros
+
+	* omnetpp.scave: utils.py: Added plot_enum. Fix for plot_vectors_separate().
+	Fixed plot_enum guard for nan values.
+
+2023-10-03  Levente Mészáros
+
+	* omnetpp.scave: utils.py: Fixed calling make_legend_label() for both named
+	tuples and series.
+
+2023-09-29  Andras Varga
+
+	* omnetpp.scave: results: allow commenting out lines in filter expressions
+	with '#'
+
+2023-09-25  Attila Torok
+
+	* omnetpp.scave: Fix loading result files from relative input patterns when
+	not invoked from next to the .anf file by changing into the .anf directory
+	for loading result files already, in analysis.py.
+
+2023-09-07  Attila Torok
+
+	* omnetpp.scave: fix: Go through the suffix fallbacks when importing
+	scave_bindings in utils.py too.
+
+	Just us in results_nativemodule already did. This avoids an ImportError
+	in the IDE when only a debug mode runtime is built.
+
+2023-09-07  Attila Torok
+
+	* omnetpp.scave: fix: Make chart scripts work again in the IDE without a
+	built runtime, by importing scave_bindings from utils.py lazily, only when
+	necessary, for converting units.
+
+2023-09-21  Attila Torok
+
+	* omnetpp.scave: fix: Non-existent files in analysis input patterns are not
+	an error.
+
+2023-09-21  Attila Torok
+
+	* omnetpp.scave: Fix result file loading when input pattern is a directory.
+	The glob matching was done relative to the directory given as input
+	pattern, but it was tried to be loaded relative to PWD.
+
+2023-09-07  Attila Torok
+
+	* omnetpp.scave: Fix: Avoid "DataFrame does not contain a 'unit' column" errors
+	when plotting results where none of them has a "unit" attribute.
+
+2023-08-17  Attila Torok
+
+	* omnetpp.scave: Update scave_bindings stub file.
+
+2023-08-17  Attila Torok
+
+	* omnetpp.scave: In result query functions, make it the default to convert
+	quantities to the base unit by default (convert_to_base_unit=True).
+
+2023-08-17  Attila Torok
+
+	* omnetpp.scave: Cleanup parameter passing in results.py to impl,
+	so it is similar to the get_scalars, get_vectors, etc. case.
+
+2023-08-16  Attila Torok
+
+	* omnetpp.scave: Add convert_to_base_unit parameter to
+	results.get_[scalars|vectors|statistics|histograms]()
+
+2023-08-16  Attila Torok
+
+	* omnetpp.scave: Add fallback from results_nativemodule to results_scavetool
+
+2023-08-16  Attila Torok
+
+	* omnetpp.scave: Performance: Use dedication function xyArrayToNumpyArrays()
+	for copyingXYArrays into numpy arrays, instead of for-loop.
+
+2023-08-15  Attila Torok
+
+	* omnetpp.scave: Add utils.convert_to_base_unit(df) and
+	UnitConversion.convertUnitArray()
+
+2023-04-06  Attila Torok
+
+	* omnetpp.scave: Rename results_standalone impl to results_scavetool
+
+2023-04-06  Attila Torok
+
+	* omnetpp.scave: Port tools from results_standalone to results_nativemodule.
+
+2023-04-06  Attila Torok
+
+	* omnetpp.scave: Added impl/results_nativemodule.py that uses scave_bindings
+
+2023-03-30  Attila Torok
+
+	* omnetpp.scave: Add Python bindings to the scave library using nanobind
+
+2023-03-14  Attila Torok
+
+	* omnetpp.scave: Set default X axis label to "Simulation Time [s]" when
+	plotting vectors.
+
+2023-03-13  Attila Torok
+
+	* omnetpp.scave: Always include the "unit" attribute (if present) in the
+	returned data frame when querying results, regardless of include_attrs.
+
+2023-03-10  Attila Torok
+
+	* omnetpp.scave: feature: Require results to be in the same unit before
+	plotting.
+
+2023-03-17  Attila Torok
+
+	* omnetpp.scave: Make loading results much faster in standalone mode
+	by switching to `df.apply(..., raw=True)` instead of `df.transform(...)`,
+	thereby avoiding string indexing into each row.
+
+2023-02-08  Attila Torok
+
+	* omnetpp.scave: Detect and warn specifically about legacy (<6.0) anf files
+	in Analysis.from_anf_file()
+
+2023-02-10  Attila Torok
+
+	* omnetpp.scave: Add filename as context to any exception in
+	Analysis.from_anf_file()
+
+2023-02-06  Attila Torok
+
+	* omnetpp.scave: Feature: Add `suppress_print` option Analysis.run_chart()
+	to discard output from chart scripts.
+
+2022-08-26  Attila Torok
+
+	* omnetpp.scave.analysis: feature: Load the newly added Chart.created_with in
+	analysis.py
+
+2024-02-01  ------ omnetpp-6.0.3 released ------
+
+2024-01-22  Attila Torok
+
+	* omnetpp/scave: doc: Fix "SyntaxWarning: invalid escape sequence" Python warnings
+
+2024-01-05  Attila Torok
+
+	* omnetpp/scave: Change automatic line chart area computation logic. Add margins
+	to avoid data points drawn too long to the border of the plot.
+
+2023-12-13  Attila Torok
+
+	* omnetpp/scave: nit: Fix an "Expression value is unused" lint by removing a stray
+	trailing comma.
+
+2023-10-06  ------ omnetpp-6.0.2 released ------
+
+2023-09-28  Andras Varga
+
+	* omnetpp/scave: utils.py: do not display an empty legend
+
+2023-04-27  Levente Meszaros
+
+	* omnetpp/scave:n Fixed division by zero warnings in timeavg. When the divisor is
+	zero the result will also be zero.
+
+2023-02-06  Attila Torok
+
+	* omnetpp/scave: Drop the now-removed second argument to random.shuffle.
+	This was deprecated in Python 3.9 and removed in Python 3.11.
+
+2023-02-06  Attila Torok
+
+	* omnetpp/scave: Use pandas.concat instead of the deprecated DataFrame.append.
+	This fixes a couple of DeprecationWarnings.
+
+	df_c = df_a.append(df_b) -> df_c = pd.concat([df_a, df_b])
+
+2023-02-06  Attila Torok
+
+	* opp_scavetool: fix: Don't turn scalars of value 0 into NaNs (or "" in CSV)
+
+	This fixes the ValueError('x and y must have same first dimension, but
+	have shapes (21,) and (20,)') in the "Throughput vs. SNIR in the case of
+	2000-byte packet size and 250-byte fragmentation threshold" chart in the
+	"inet/showcases/wireless/fragmentation/Fragmentation.anf" file.
+
+2023-03-14  Attila Torok
+
+	* omnetpp/scave: Use line_terminator or lineterminator in Dataframe.to_csv,
+	depending on Pandas version. It was renamed in in a backwards-compatible
+	way, but with an annoying FutureWarning.
+
+2022-08-25  Andras Varga
+
+	* omnetpp/scave: analysis.py: added missing docstring
+
+2022-08-25  Andras Varga
+
+	* omnetpp/scave: Workspace: fix recently introduced subtle bug.
+
+	One MUST NOT use mutable objects as default values to functions, because
+	any change the functions makes to those values inside will affect further
+	calls.
+
+	def func(d = []):
+	    print("d = ", d)
+	    d.append(7)
+
+	func()  --> [] func()  --> [7] func()  --> [7, 7] func()  --> [7, 7, 7]
+	etc.
+
+	See https://nikos7am.com/posts/mutable-default-arguments/
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: rename internal var: project_paths -> project_locations
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: cosmetics: use f-strings instead of string.format() and
+	string concatenation. Also: refine one of the "Cannot determine location..."
+	error messages.
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: fix: look for projects by real name. "Real name" being
+	the one in the .project file, not the directory name.
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: fix: better treatment of workspace_dir, more
+	resilient get_project_location()
+
+	- Workspace ctor: accept workspace_dir=None too, for "not known"
+	- find_workspace(): return None if .metadata was not found, instead if
+	  lying something
+	- get_project_location(): if there is no Eclipse workspace, look for
+	  project next to existing known project
+	- get_project_location(): improved error reporting
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: Fix error if a renamed project is not directly
+	under the Eclipse workspace directory.
+
+	"renamed project" = where name in .project differs from folder name
+
+	find_enclosing_project() changes:
+	- remember project location
+	- method no longer static (API change)
+
+2022-08-23  Andras Varga
+
+	* omnetpp/scave: Workspace: fix: better error message (more specific info on
+	why project was not found)
+
+2022-06-08  Attila Torok
+
+	* omnetpp/scave: Reload mpl and plt before exporting an image to make it
+	reproducible. While this is not an ideal solution by far, we found
+	no other way.
+
+2022-05-26  Attila Torok
+
+	* omnetpp/scave: Add "python" folder of [referenced] project[s] to python
+	path in opp_charttool as well
+
+2022-09-01  ------ omnetpp-6.0.1 released ------
+
+2022-08-23  Andras Varga
+
+	* Workspace class: Revised to have a more correct and well-defined handling
+	of Eclipse workspaces and projects of the IDE, now with tests. Changes include:
+
+	  - Improved handling of "renamed" projects, i.e. those where the name in
+	    the .project file differs from the folder name.
+
+	  - Improved handling of "moved" projects, i.e. those not under the workspace
+	    directory. When the main project references such projects, they are now
+	    found more reliably. If there is no Eclipse workspace, referenced
+	    projects are looked for next to existing known projects.
+
+	  - Better (more informative) error messages if something goes wrong.
+
+	  - Workspace class constructor now accepts workspace_dir=None, for "not known".
+
+	  - find_workspace() now returns None if a .metadata directory was not found,
+	instead of making up something.
+
+	  - find_enclosing_project() is no longer static.
+
+2022-06-08  Attila Torok
+
+	* Reload mpl and plt before exporting an image to make it reproducible
+
+2022-05-26  Attila Torok
+
+	* Add the `python/` folders of [referenced] project[s] to the Python
+	path in opp_charttool as well.
+
+2022-04-11  ------ omnetpp-6.0 released ------
+
+2022-03-31  Attila Torok
+
+	* export_image_if_needed(): Use noninteractive MPL backends when exporting
+	images, set MPI.
+
+2022-03-29  Attila Torok
+
+	* export_image_if_needed(): Make sure that constant vector data is not
+	stuck to the chart edge in case of native chart
+
+2022-03-30  Attila Torok
+
+	* get_scalars(): do not fail when the result would be empty
+
+2022-03-30  Attila Torok
+
+	* Analysis: Store/restore mpl.rcParams before/after running a chart
+
+2022-03-30  Attila Torok
+
+	* Fix check of whether image and data export was unsuccessful
+
+2022-03-26  Andras Varga
+
+	* export_image_if_needed(): save sw version info as metadata
+
+2022-01-26  Attila Torok
+
+	* Add __version__=6.0.0 into all scave submodules.
+
+2022-01-26  Attila Torok
+
+	* Delete the now-defunct pure-Python resultloader module for now.
+	It wasn't updated to newer scave file format versions.
+
+2022-01-14  Attila Torok
+
+	* Fix the "All" option (minor lines) for grid in ideplot
+
+2022-01-07  Attila Torok
+
+	* utils.py: Rename pick_two_columns() to select_best_partitioning_column_pair()
+
+2022-01-05  Attila Torok
+
+	* Hide internal and imported members of utils.py from generated docs
+
+2022-01-05  Attila Torok
+
+	* Minor tweaks to docstrings in vectorops.py.
+
+2022-01-03  Attila Torok
+
+	* Add legend customization and docstring to the box-and-whiskers plot
+
+2022-01-03  Attila Torok
+
+	* utils.py docstring updates
+
+2021-12-17  Attila Torok
+
+	* Better error reporting from vector operations
+
+2021-12-21  Attila Torok
+
+	* utils.py: export: Also allow "=" in sanitized filenames
+
+2021-12-21  Attila Torok
+
+	* results_standalone.py: Ensure result-type-specific columns
+	exist in returned df
+
+2021-12-15  Andras Varga
+
+	* omnetpp.scave: utils.py improvements:
+
+	- New functions (factored out from chart scripts): plot_lines(),
+	  plot_boxwhiskers(), pivot_for_barchart(), pivot_for_scatterchart(),
+	  get_confidence_level()
+
+	- plot_bars(): Accept meta_df, expect data df in transposed form.
+
+2021-12-17  Andras Varga
+
+	* omnetpp.scave: vectorops: timeavg: More helpful error message when wrong
+	interpolation mode is given
+
+2021-12-15  Attila Torok
+
+	* omnetpp.scave: Fix outside legend placement when exporting native charts
+
+2021-12-15  Attila Torok
+
+	* omnetpp.scave: postconfigure fix: use is_native_plot() instead of
+	is_native_chart()
+
+2021-12-08  Attila Torok
+
+	* omnetpp.scave: plot_bars() to accept a meta_df, in order to be able to
+	generate better legend and axis labels and plot titles.
+
+2021-12-11  Andras Varga
+
+	* omnetpp.scave: ChartTemplate.create_chart(): disallow adding properties
+	not defined in the chart template
+
+	Note: this uncovers bugs in the scatter chart and other templates: they
+	don't define "include_fields", but the chart needs it -> error.
+
+2021-12-11  Andras Varga
+
+	* omnetpp.scave: analysis.py: fix image export when running from a different
+	working dir
+
+2021-12-10  Attila Torok
+
+	* omnetpp.scave: results.py: Fix reading empty vectors, return empty arrays
+	instead of None.
+
+2021-12-10  Andras Varga
+
+	* omnetpp.scave: ChartTemplate: rename make_chart() to create_chart()
+
+2021-12-10  Andras Varga
+
+	* omnetpp.scave: fix chart.is_native_chart()
+
+2021-12-10  Attila Torok
+
+	* omnetpp.scave: Fix utils.extract_label_columns for the 1 row case,
+	blacklist "repetition" because "replication" is nicer.
+
+2021-12-08  Attila Torok
+
+	* omnetpp.scave: Fix pick_two_columns in utils, broken by recent
+	extract_label_columns changes
+
+2021-11-11  Andras Varga
+
+	* omnetpp.scave: added charttemplate.py. Provides functionality
+	for loading of chart templates, instantiating charts from chart
+	templates, etc.
+
+2021-12-07  Attila Torok
+
+	* omnetpp.scave: Print message of exceptions caught from within
+	set_observed_column_names.
+
+2021-12-07  Attila Torok
+
+	* omnetpp.scave: Raise chart.ChartScriptError from
+	utils.assert_columns_exist(). This automatically sets the warning text,
+	and tests expect this.
+
+2021-12-07  Attila Torok
+
+	* omnetpp.scave: Fix set_observed_column_names() in charttool impl
+	of chart module. Parameter names have to match with those in the
+	interface modules
+
+2021-12-07  Attila Torok
+
+	* omnetpp.scave: Improvements in utils.extract_label_columns(),
+	make_legend_label() and make_chart_title()
+
+2021-12-06  Attila Torok
+
+	* omnetpp.scave: Fix warnings from MPL when computing confidence
+	intervals (for bar- and scatterplots)
+
+2021-12-03  Andras Varga
+
+	* omnetpp.scave: Move call of set_observed_column_names() to export_data_if_needed()
+
+2021-12-03  Andras Varga
+
+	* omnetpp.scave: automatic legend: added "prefer module display path to module
+	path" option; dialog and code refactoring
+
+2021-12-03  Andras Varga
+
+	* omnetpp.scave: Fix and improve charttemplates tests
+
+2021-11-29  Andras Varga
+
+	* omnetpp.scave: proper error handling for legends
+
+2021-11-30  Attila Torok
+
+	* omnetpp.scave: Introduce ChartScriptError, raise it from chart scripts where
+	needed instead of manually setting the plot warning text and calling
+	(an alias to) sys.exit(1).
+
+2021-11-30  Attila Torok
+
+	* omnetpp.scave: Add the timedilation vector operation
+
+2021-11-16  Levente Meszaros
+
+	* omnetpp.scave: Change default of width and height in export_image() to
+	None, so that they don't override the properties stored in the chart itself
+	when no value is given for these parameters. And there are defaults
+	anyway on both the higher and lower levels anyway
+	(in the XSWT form, and in export_image_if_needed()).
+
+2021-11-28  Andras Varga
+
+	* omnetpp.scave: chart.py: added set_observed_column_names(). This is
+	useful for providing content assist for column names in the legend format
+	string.
+
+2021-11-29  Andras Varga
+
+	* omnetpp.scave.analysis: utils.py: no longer append the optional 'comment'
+	df column to the legend. Reason: that feature is not longer needed, because
+	we have legend format strings (user can add "$comment" to it if they want)
+
+2021-11-26  Andras Varga
+
+	* omnetpp.scave.analysis: utils.py: support for legend_format and
+	legend_replacements.
+
+2021-11-17  Andras Varga
+
+	* opp_charttool: improved 'info' command; Analysis.info() removed
+
+	- opp_charttool: 'info' command: listing format change
+	- opp_charttool: let filtering (-i, -n) apply to the 'info' command too
+	- info() moved from Analysis into opp_charttool
+
+2021-11-16  Andras Varga
+
+	* omnetpp.scave.analysis: Added Folder support to Analysis API
+
+2021-11-10  Attila Torok
+
+	* omnetpp.scave.analysis: Minor chart execution fixes.
+
+2021-10-29  Attila Torok
+
+	* omnetpp.scave.utils: Add digit grouping to tick labels in MPL-emulated
+	native charts.
+
+2021-10-26  Attila Torok
+
+	* omnetpp.scave.utils: Make MPL-emulated native widgets more similar
+	to the IDE (axis limits, number format for ticks, etc.)
+
+2021-10-15  Attila Torok
+
+	* omnetpp.scave.plot: Restore the omnetpp.scave.plot module for
+	compatibility. It falls back to the new omnetpp.scave.ideplot package
+	after issuing a warning.
+
+2021-10-11  Attila Torok
+
+	* omnetpp.scave.utils: assert_columns_exist() to raise ValueError from
+	instead of calling exit() (which a library is not supposed to do).
+
+2021-10-07  Attila Torok
+
+	* omnetpp.scave.utils: plot_bars(), plot_vectors(), plot_histograms(): Sort
+	results by legend label (or indices, for bar charts) before plotting.
+
+2021-10-07  Attila Torok
+
+	* omnetpp.scave.utils: Fix: Make legend options work again with non-native charts
+
+2021-10-05  Attila Torok
+
+	* omnetpp.scave: Rename omnetpp.scave.plot module to omnetpp.scave.ideplot,
+	because it better describes its functionality (accessing native plots in the
+	IDE).
+
+2021-10-04  Attila Torok
+
+	* omnetpp.scave: Refactoring: Rename internal package impl_charttool to
+	impl, and all modules in it appropriately
+
+2021-10-04  Attila Torok
+
+	* omnetpp.scave.results: Remove the `merge_module_and_name` parameter
+
+2021-09-27  Attila Torok
+
+	* omnetpp.scave.results: added support for direct loading of result files
+	into a dataframe (read_result_files()), and extended query functions so they
+	accept that dataframe as input.
+
+2021-07-27  Attila Torok
+
+	* omnetpp.scave.vectorops: Fix example code and docs for crop(), don't try
+	to perform movingavg() in-place
+
+2021-06-14  Levente Meszaros, Attila Torok
+
+	* omnetpp.scave: added timewinthruput vector operation
+
+2021-04-20  Attila Torok
+
+	* omnetpp.scave: Vector operations are now registered using the
+	@vector_operation decorator
+
+2021-03-25  Andras Varga
+
+	* ChangeLog added

@@ -1,0 +1,1306 @@
+\chapter{Running Simulations}
+\label{cha:run-sim}
+
+\section{Introduction}
+\label{cha:run-sim:intro}
+
+This chapter presents the process of running simulations. It includes
+information on basic usage, user interfaces, running simulation campaigns, and
+various other topics.
+
+\section{Simulation Executables vs Libraries}
+\label{sec:run-sim:running}
+
+As we have seen in the \textit{Build} chapter, simulations can be compiled into
+an executable or a shared library. When the build output is an executable,
+it can be run directly. For example, the Fifo example simulation can be
+executed with the following command:
+
+\begin{commandline}
+$ ./fifo
+\end{commandline}
+
+Simulations compiled into a shared library can be run using the \fprog{opp\_run}
+program. For example, if we compiled the Fifo simulation into a
+shared library on Linux, the build output would be a \ttt{libfifo.so} file that
+can be executed with the following command:
+
+\begin{commandline}
+$ opp_run -l fifo
+\end{commandline}
+
+The \fopt{-l} option instructs \fprog{opp\_run} to load the specified shared library.
+The \fopt{-l} option will be explained in detail in section
+\ref{sec:run-sim:loading-extra-libraries}.
+
+\begin{note}
+Normal simulation executables, like the aforementioned \ttt{fifo}, are also able to
+load additional shared libraries in the same manner. Moreover, \fprog{opp\_run} is
+essentially just a specially-named simulation executable that does not include any model
+code.
+\end{note}
+
+
+\section{Command-Line Options}
+\label{sec:run-sim:command-line-options}
+
+The above commands illustrate just the simplest case. Usually, you will
+need to add extra command-line options. For example, to specify which ini file(s)
+to use, which configuration to run, which user interface to activate, where
+to load NED files from, and so on. The rest of this chapter will cover
+these options.
+
+To get a complete list of command-line options accepted by simulations,
+run the \fprog{opp\_run} program (or any other simulation executable) with
+\fopt{-h}:
+
+\begin{commandline}
+$ opp_run -h
+\end{commandline}
+
+Or:
+\begin{commandline}
+$ ./fifo -h
+\end{commandline}
+
+
+\section{Configuration Options on the Command Line}
+\label{sec:run-sim:config-options-on-cmdline}
+
+Configuration options can also be specified on the command line, not only in
+ini files. To do so, prefix the option name with a double dash and append the
+value with an equal sign. Make sure not to have spaces around the equal sign. If
+the value contains spaces or shell metacharacters, you'll need to protect the
+value (or the whole option) with quotes or apostrophes.
+
+Example:
+
+\begin{commandline}
+$ ./fifo --debug-on-errors=true
+\end{commandline}
+
+If an option is specified both on the command line and in an ini file,
+the command line takes precedence.
+
+To get the list of all possible configuration options, use the \fopt{-h config}
+option. (The additional \fopt{-s} option below just makes the output less
+verbose.)
+
+\begin{commandline}
+$ opp_run -s -h config
+Supported configuration options:
+  **.bin-recording=<bool>, default:true; per-object setting
+  check-signals=<bool>, default:true; per-run setting
+  cmdenv-autoflush=<bool>, default:false; per-run setting
+  cmdenv-config-name=<string>; global setting
+  ...
+\end{commandline}
+
+To see the option descriptions as well, use \fopt{-h configdetails}.
+
+\begin{commandline}
+$ opp_run -h configdetails
+\end{commandline}
+
+
+\section{Specifying Ini Files}
+\label{sec:run-sim:specifying-ini-files}
+
+The default ini file is \ffilename{omnetpp.ini} and is loaded if no other ini
+file is specified on the command line.
+
+Ini files can be specified either as plain arguments or with the \fopt{-f}
+option. Therefore, the following two commands are equivalent:
+
+\begin{commandline}
+$ ./fifo experiment.ini common.ini
+$ ./fifo -f experiment.ini -f common.ini
+\end{commandline}
+
+Multiple ini files can be provided, and their contents will be merged. This
+allows for partitioning the configuration into separate files, such as
+simulation options, module parameters, and result recording options.
+
+
+\section{Specifying the NED Path}
+\label{sec:run-sim:specifying-ned-path}
+
+NED files are loaded from directories listed on the NED path. More precisely,
+they are loaded from the listed directories and their entire subdirectory trees.
+Directories are separated with a semicolon (\ttt{;}).
+
+\begin{note}
+A semicolon is used as a separator on both Unix and Windows.
+\end{note}
+
+The NED path can be specified in several ways:
+\begin{itemize}
+  \item by using the \ttt{NEDPATH} environment variable
+  \item by using the \fopt{-n} command-line option
+  \item in ini files, with the \fconfig{ned-path} configuration option
+\end{itemize}
+
+The NED path resolution rules are as follows:
+
+\begin{enumerate}
+  \item {\opp} checks for the NED path specified on the command line with the \fopt{-n} option
+  \item If not found on the command line, it checks for the \ttt{NEDPATH} environment variable
+  \item The \fconfig{ned-path} option value from the ini file is appended to the result of the above steps
+  \item If the result is still empty, it falls back to "." (the current directory)
+\end{enumerate}
+
+
+\section{Selecting a User Interface}
+\label{sec:run-sim:selecting-user-interface}
+
+{\opp} simulations can be run under different user interfaces, also known as runtime
+environments. Currently, the following user interfaces are supported:
+
+\begin{itemize}
+  \item Qtenv: Qt-based graphical user interface, available since {\opp} 5.0
+  \item Cmdenv: command-line user interface for batch execution
+\end{itemize}
+
+You would typically test and debug your simulation under Qtenv,
+then run actual simulation experiments from the command line or shell
+script, using Cmdenv. Qtenv is also better suited for
+educational and demonstration purposes.
+
+User interfaces are provided in the form of libraries that can be linked statically,
+dynamically, or loaded at runtime.\footnote{Via the \fopt{-l}
+option, see section \ref{sec:run-sim:loading-extra-libraries}} When several user
+interface libraries are available in a simulation program, the user can select
+via command-line or ini file options which one to use. In the absence of such an
+option, the one with the highest priority will be started. Currently, priorities
+are set such that Qtenv has the highest priority, then Cmdenv.
+By default, simulations are linked with all available user interfaces,
+but this can be controlled via \fprog{opp\_makemake} options or in the {\opp}
+global build configuration as well. The user interfaces available in a
+simulation program can be listed by running it with the \fopt{-h userinterfaces}
+option.
+
+You can explicitly select a user interface on the command line with the \fopt{-u}
+option (specify \ttt{Qtenv} or \ttt{Cmdenv} as its argument), or by
+adding the \fconfig{user-interface} option to the configuration. If both
+the config option and the command line option are present, the command line option
+takes precedence.
+
+Since the graphical interfaces are the default (have higher priority), the most
+common use of the \fopt{-u} option is to select Cmdenv, e.g., for batch execution.
+The following example performs all runs of the Aloha example simulation using
+Cmdenv:
+
+\begin{commandline}
+$ ./aloha -c PureAlohaExperiment -u Cmdenv
+\end{commandline}
+
+
+\section{Selecting Configurations and Runs}
+\label{sec:run-sim:selecting-configuration-and-runs}
+
+All user interfaces support the \fopt{-c <configname>} and \fopt{-r <runfilter>}
+options for selecting which simulation(s) to run.
+
+The \fopt{-c} option expects the name of an ini file configuration
+as an argument. The \fopt{-r} option may be needed when the configuration
+expands to multiple simulation runs. That is the case when the
+configuration defines a \textit{parameter study} (see section
+\ref{sec:config-sim:parameter-studies}), or when it contains
+a \fconfig{repeat} configuration option that prescribes
+multiple repetitions with different RNG seeds (see section
+\ref{sec:config-sim:repeating-runs-with-different-seeds}).
+The \fopt{-r} option can then be used to select a subset of all runs (or one
+specific run, for that matter). A missing \fopt{-r} option selects all runs in
+the given configuration.
+
+It depends on the particular user interface how it interprets the
+\fopt{-c} and \fopt{-r} options. Cmdenv performs all selected simulation runs
+(optionally stopping after the first one that finishes with an error).
+GUI interfaces like Qtenv may use this information to fill the
+run selection dialog (or to set up the simulation automatically if there is
+only one matching run.)
+
+
+\subsection{Run Filter Syntax}
+\label{sec:run-sim:selecting-configuration-and-runs:syntax}
+
+The run filter accepts two syntaxes: a comma-separated list of run numbers or
+run number ranges (for example \ttt{1,2,5-10}), or an arithmetic expression.
+The arithmetic expression is similar to constraint expressions in the
+configuration (see section \ref{sec:config-sim:constraint-expression}).
+It may refer to iteration variables and to the repeat counter with the dollar
+syntax: \ttt{\$numHosts}, \ttt{\$repetition}. An example: \ttt{\$numHosts>10
+\&\& \$mean==2}.
+
+Note that due to the presence of the dollar sign (and spaces), the expression
+should be protected against shell expansion, e.g. using apostrophes:
+
+\begin{commandline}
+$ ./aloha -c PureAlohaExperiment -r '$numHosts>10 && $mean<2'
+\end{commandline}
+
+Or, with double quotes:
+
+\begin{commandline}
+$ ./aloha -c PureAlohaExperiment -r "\$numHosts>10 && \$mean<2"
+\end{commandline}
+
+
+\subsection{The Query Option}
+\label{sec:run-sim:selecting-configuration-and-runs:queryoption}
+
+The \fopt{-q} (query) option complements \fopt{-c} and \fopt{-r}, and
+allows one to list the runs matched by the run filter.
+\fopt{-q} expects an argument that defines the format and verbosity of the
+output. Several formats are available: \ttt{numruns}, \ttt{runnumbers},
+\ttt{runs}, \ttt{rundetails}, \ttt{runconfig}. Use \ttt{opp\_run -h} to get a
+complete list.
+
+\fopt{-q runs} prints one line of information with the iteration variables
+about each run that the run filter matches. An example:
+
+\begin{commandline}
+$ ./aloha -s -c PureAlohaExperiment -r '$numHosts>10 && $mean<2' -q runs
+Run 14: $numHosts=15, $mean=1, $repetition=0
+Run 15: $numHosts=15, $mean=1, $repetition=1
+Run 28: $numHosts=20, $mean=1, $repetition=0
+Run 29: $numHosts=20, $mean=1, $repetition=1
+\end{commandline}
+
+The \fopt{-s} option just makes the output less verbose.
+
+If you need more information, use \fopt{-q rundetails} or \fopt{-q runconfig}.
+\ttt{rundetails} is like \ttt{numruns}, but it also prints the values of the
+iteration variables and a summary of the configuration (the expanded
+values of configuration entries that contain iteration variables)
+for each matching run:
+
+\begin{commandline}
+$ ./aloha -s -c PureAlohaExperiment -r '$numHosts>10 && $mean<2' -q rundetails
+Run 14: $numHosts=15, $mean=1, $repetition=0
+    Aloha.numHosts = 15
+    Aloha.host[*].iaTime = exponential(1s)
+
+Run 15: $numHosts=15, $mean=1, $repetition=1
+    Aloha.numHosts = 15
+    Aloha.host[*].iaTime = exponential(1s)
+...
+\end{commandline}
+
+The \ttt{numruns} and \ttt{runnumbers} formats are mainly intended for use in
+scripts. They just print the number of matching runs and the plain run number
+list, respectively.
+
+\begin{commandline}
+$ ./aloha -s -c PureAlohaExperiment -r '$numHosts>10 && $mean<2' -q numruns
+4
+$ ./aloha -s -c PureAlohaExperiment -r '$numHosts>10 && $mean<2' -q runnumbers
+ 14 15 28 29
+\end{commandline}
+
+The \fopt{-q} option encapsulates some unrelated functionality, as well:
+\fopt{-q sectioninheritance} ignores \fopt{-r}, and prints the inheritance chain
+of the  inifile sections (the inheritance graph after linearization) for the
+configuration denoted by \fopt{-c}.
+
+
+\section{Loading Extra Libraries}
+\label{sec:run-sim:loading-extra-libraries}
+
+{\opp} allows you to load shared libraries at runtime. These shared libraries
+may contain model code (e.g. simple module implementation classes),
+dynamically registered classes that extend the simulator's functionality (for
+example, NED functions, result filters/recorders, figure types, schedulers,
+output vector/scalar writers, Qtenv inspectors, or even custom user interfaces),
+or other code.
+
+\begin{hint}
+Building shared libraries and loading them dynamically has several
+advantages over static linking or building executables. Advantages include
+modularity, reduced build times (compared to statically linking a huge executable),
+and better reuse (being able to use the same library in several projects without
+changing it).
+\end{hint}
+
+Libraries can be specified with the \fopt{-l <libraryname>} command line option
+(there can be several \fopt{-l}'s on the command line), or with the \fconfig{load-libs}
+configuration option. The values from the command line and the config file will
+be merged.
+
+The prefix and suffix from the library name can be omitted (the extensions
+\ttt{.dll}, \ttt{.so}, \ttt{.dylib}, and also the common \ttt{lib} prefix
+on Unix systems). This means that you can specify the library name in a
+platform-independent way: if you specify \fopt{-l foo}, then {\opp} will
+look for \ttt{foo.dll}, \ttt{libfoo.dll}, \ttt{libfoo.so}, or \ttt{libfoo.dylib},
+depending on the platform.
+
+{\opp} will use the \ffunc{dlopen()} or \ffunc{LoadLibrary()} system call to
+load the library. To ensure that the system call finds the file, either
+specify the library name with a full path (pre- and postfixes of the library
+file name can still be omitted), or adjust the shared library path environment
+variable of your OS: \ttt{PATH} on Windows, \ttt{LD\_LIBRARY\_PATH} on Unix,
+and \ttt{DYLD\_LIBRARY\_PATH} on Mac OS X.
+
+\begin{note}
+  Runtime loading is not needed if your executable or shared lib was
+  already linked against the library in question. In that case,
+  the platform's dynamic loader will automatically load the library.
+\end{note}
+
+
+\section{Stopping Condition}
+\label{sec:run-sim:stopping-condition}
+
+The most common way of specifying when to finish the simulation is to set a
+time limit. There are several time limits that can be set with the following
+configuration options:
+
+\begin{itemize}
+  \item \fconfig{sim-time-limit} : Limits the duration for which the simulation should run (in simulation time).
+  \item \fconfig{cpu-time-limit} : Limits the maximum CPU time that the simulation can use.
+  \item \fconfig{real-time-limit} : Limits the actual duration of the simulation (in real time).
+\end{itemize}
+
+\begin{note}
+Although \fconfig{cpu-time-limit} and \fconfig{real-time-limit} may appear
+similar, in practice, \fconfig{cpu-time-limit} is almost always needed. Its
+alternative, \fconfig{real-time-limit}, simply measures elapsed time (wall-clock
+interval) and does not indicate how many cycles the CPU has spent running the
+simulation. On a heavily overloaded system where the CPU is shared among a
+number of computationally intensive jobs, \fconfig{real-time-limit} may
+prematurely stop your simulation.
+\end{note}
+
+Here is an example:
+
+\begin{commandline}
+$ ./fifo --sim-time-limit=500s
+\end{commandline}
+
+If multiple time limits are set simultaneously, the simulation will stop when
+the first one is reached.
+
+If necessary, the simulation can also be stopped programmatically, for example
+when the results of a steady-state simulation have reached the desired accuracy.
+This can be achieved by calling the \ffunc{endSimulation()} method.
+
+
+\section{Controlling the Output}
+\label{sec:run-sim:output-control}
+
+The following options can be used to enable/disable the creation of various
+output files during simulation.
+
+\begin{itemize}
+  \item \fconfig{record-eventlog} : Turns on the recording of simulator
+        events into an event log file. The resulting \ttt{.elog} file can be
+        analyzed later in the IDE with the Sequence Chart tool.
+
+  \item \fconfig{record-scalar-results} :  This option can be used to completely
+        disable writing output scalar files (\ttt{.sca}). This is preferable to
+        \ttt{**.scalar-recording=false} when the goal is to disable writing \ttt{.sca} files
+        entirely, as the latter may still create \ttt{.sca} files containing only metadata.
+
+  \item \fconfig{record-vector-results} : This option can be used to completely
+        disable writing output vector files (\ttt{.vec}). This is preferable to
+        \ttt{**.vector-recording=false} when the goal is to disable writing \ttt{.vec} files
+        entirely, as the latter may still create \ttt{.vec} files containing only metadata.
+
+  \item \fconfig{cmdenv-redirect-output} : This is a Cmdenv-specific option,
+        only mentioned here for completeness. It tells Cmdenv to save its
+        standard output to files, one file per run. This option is mainly
+        helpful when running simulation batches.
+
+\end{itemize}
+
+These configuration options, like any others, can be specified both in ini
+files and on the command line. An example:
+
+\begin{commandline}
+$ ./fifo --record-eventlog=true --record-vector-results=false
+\end{commandline}
+
+
+\section{Debugging}
+\label{sec:run-sim:debugging-support}
+
+Debugging is a task that arises often during model development. The following
+configuration options are related to C++ debugging:
+
+\begin{itemize}
+  \item \fconfig{debug-on-errors} : If the runtime detects any errors, it will
+    trigger a debugger trap (programmatic breakpoint) so you will be able to check
+    the location and context of the problem in your debugger. This option does not
+    start a debugger; the simulation must already have been launched under a
+    debugger.
+
+  \item \fconfig{debugger-attach-on-error} : Controls just-in-time debugging.
+    When this option is enabled and an error occurs during simulation, the
+    simulation program will launch an external debugger and have it attached to
+    the simulation process. Related configuration options are
+    \fconfig{debugger-attach-on-startup}, \fconfig{debugger-attach-command} and
+    \fconfig{debugger-attach-wait-time}.
+
+    \begin{hint}
+      Just-in-time debugging is useful when trying to debug a rarely occurring
+      crash in a large simulation batch or in cases where the simulation is
+      started from a script or another program that cannot be easily modified
+      to start the simulation in a debugger.
+    \end{hint}
+
+\end{itemize}
+
+An example that launches the simulation under the \fprog{gdb} debugger:
+
+\begin{commandline}
+$ gdb --args ./aloha --debug-on-errors=true
+\end{commandline}
+
+
+\section{Debugging Leaked Messages}
+\label{sec:run-sim:leaked-messages}
+
+The most common cause of memory leaks in {\opp} simulations is forgetting to
+delete messages. When this happens, the simulation process will continually grow
+in size as the simulation progresses, and when left to run long enough, it will
+eventually cause an out-of-memory condition.
+
+Luckily, this problem is easy to identify, as all user interfaces display the
+number of message objects currently in the system. Take a look at the following
+example Cmdenv output:
+
+\begin{commandline}
+...
+** Event #1908736   t=58914.051870113485   Elapsed: 2.000s (0m 02s)
+     Speed:     ev/sec=954368   simsec/sec=29457   ev/simsec=32.3987
+     Messages:  created: 561611   `\tbf{present:\ 21}`   in FES: 34
+** Event #3433472   t=106067.401570204991   Elapsed: 4.000s (0m 04s)
+     Speed:     ev/sec=762368   simsec/sec=23576.7   ev/simsec=32.3357
+     Messages:  created: 1010142   `\tbf{present:\ 354}`   in FES: 27
+** Event #5338880   t=165025.763387178965   Elapsed: 6.000s (0m 06s)
+     Speed:     ev/sec=952704   simsec/sec=29479.2   ev/simsec=32.3179
+     Messages:  created: 1570675   `\tbf{present:\ 596}`   in FES: 21
+** Event #6850304   t=211763.433233042017   Elapsed: 8.000s (0m 08s)
+     Speed:     ev/sec=755712   simsec/sec=23368.8   ev/simsec=32.3385
+     Messages:  created: 2015318   `\tbf{present:\ 732}`   in FES: 38
+** Event #8753920   t=270587.781554343184   Elapsed: 10.000s (0m 10s)
+     Speed:     ev/sec=951808   simsec/sec=29412.2   ev/simsec=32.361
+     Messages:  created: 2575634   `\tbf{present:\ 937}`   in FES: 32
+** Event #10270208   t=317495.244698246477   Elapsed: 12.000s (0m 12s)
+     Speed:     ev/sec=758144   simsec/sec=23453.7   ev/simsec=32.3251
+     Messages:  created: 3021646   `\tbf{present:\ 1213}`   in FES: 20
+...
+\end{commandline}
+
+The interesting parts are in bold font. The steadily increasing numbers are an
+indication that the simulation model, i.e. one or more modules in it, are
+missing some \ttt{delete msg} calls. It is best to use Qtenv to narrow
+down the issue to specific modules and/or message types.
+
+Qtenv is also able to display the number of messages currently
+in the simulation. The numbers are displayed on the status bar. If you find that
+the number of messages is steadily increasing, you need to find where the
+message objects are located. This can be done with the help of the
+\textit{Find/Inspect Objects} dialog.
+
+If the simulation is leaking objects derived from \cclass{cOwnedObject}, these
+can also be located using the \textit{Find/Inspect Objects} dialog. For other
+types of memory leaks, Qtenv cannot help in identifying the source of the issue.
+
+
+\section{Debugging Other Memory Problems}
+\label{sec:run-sim:memory-leaks-and-crashes}
+
+Technically, memory leaks are only a subset of problems associated with memory
+allocations, i.e., the usage of \ttt{new} and \ttt{delete} in C++.
+
+\begin{itemize}
+   \item \textit{Memory leaks}, which means forgetting to delete objects
+     or memory blocks no longer used, usually just prevent the user from
+     being able to run the simulation program long enough.
+   \item \textit{Dereferencing dangling pointers}, i.e., accessing
+    an already deleted object or memory block (or trying to delete one
+    for a second time), usually results in a crash.
+   \item \textit{Heap corruption}, caused by e.g., writing past the end of
+   an allocated array, usually also results in a crash.
+\end{itemize}
+
+
+There are specialized tools that can help track down memory allocation
+problems (memory leak, double-deletion, referencing deleted blocks, etc.). Some
+of these tools are listed below.
+
+\begin{itemize}
+  \item \textbf{Valgrind}: This tool continues to be a widely used tool for memory
+    debugging, profiling, and leak detection on Linux platforms. It is based on CPU emulation.
+  \item \textbf{AddressSanitizer}, \textbf{LeakSanitizer}, and several other
+    sanitizer tools are part of the LLVM/Clang project. AddressSanitizer is a
+    fast memory error detector that addresses memory leaks, out-of-bounds
+    accesses, and use-after-free bugs. LeakSanitizer specializes in memory leak
+    detection and can be used alongside AddressSanitizer or independently.
+    These tools are based on code instrumentation, meaning that to enable them,
+    the codebase must be compiled with special options. {\opp} makefiles offer a
+    compile mode (\ttt{MODE=sanitize}) that builds the {\opp} libraries and
+    simulations with a selected subset of these tools enabled.
+  \item There are several commercial offerings as well, e.g., \textit{IBM
+    Rational PurifyPlus} and \textit{Insure++}.
+\end{itemize}
+
+
+\section{Profiling}
+\label{sec:run-sim:profiling}
+
+When a simulation runs correctly but is too slow, you might want to
+\textit{profile} it. Profiling basically means collecting runtime
+information about how much time is spent at various parts of the
+program, in order to find places where optimizing the code would
+have the most impact.
+
+However, there are a few other options you can try before resorting to profiling
+and optimizing. First, verify that it is the simulation itself that is slow.
+Make sure features like eventlog recording are not accidentally turned on. Run
+the simulation under Cmdenv to eliminate any possible overhead from Qtenv.
+If you must run the simulation under Qtenv, you can still gain speed by
+disabling animation features, closing all inspectors, hiding UI elements like
+the timeline, and so on.
+
+Also, compile your code in release mode (with \ttt{make MODE=release}, see
+\ref{sec:build-sim-progs:debug-and-release-builds}) instead of debug. That
+can make a huge difference, especially with heavily templated code.
+
+\begin{hint}
+If you decide to optimize the program, we recommend that you don't skip the
+profiling step. Even for experienced programmers, a profiling session is often
+full of surprises, and CPU time is spent in other places than one would
+expect.
+\end{hint}
+
+Some profiling software:
+
+\begin{itemize}
+  \item \textbf{Debuggers}: A simple but effective method of profiling involves
+    the use of debuggers for manual statistical profiling. This technique includes
+    periodically stopping the program in a debugger to examine the stack trace and
+    identifying frequent stopping points which may indicate performance
+    bottlenecks.
+  \item \textbf{Sysprof}: An effective system profiler for Linux that captures and
+    analyzes system-wide profiles to help identify system activity and performance
+    bottlenecks. The user interface allows filtering for specific processes, such
+    as the simulation process to be profiled.
+  \item \textbf{Valgrind/KCachegrind}: KCachegrind visualizes traces generated
+    by \textit{Valgrind} and its \textit{Callgrind} tool on Linux. These tools are
+    free and open-source, commonly included in Linux distributions.
+  \item \textbf{Intel VTune Profiler}: Offers advanced profiling capabilities
+    across different platforms, aiding in application performance, system
+    performance, and configuration optimization.
+  \item \textbf{gprof}: The GNU profiler, which analyzes performance of C and
+    C++ programs by collecting and visualizing data on function call
+    frequencies and execution times.
+  \item \textbf{Commercial C/C++ Profilers}: Relevant commercial software
+    products include \textit{IBM Rational PurifyPlus} and \textit{Parasoft
+    C/C++test}.
+\end{itemize}
+
+
+
+
+\section{Checkpointing}
+\label{sec:run-sim:checkpointing}
+
+Debugging long-running simulations can be challenging as it often requires
+running the simulation for extended periods before reaching the point of failure
+and commencing debugging.
+
+Checkpointing can significantly simplify the debugging process by enabling the
+creation of snapshots of the program's state, allowing for the resumption of
+execution from these checkpoints, even multiple times. Unfortunately, {\opp}
+does not natively include checkpointing functionality. However, this capability
+is available through external tools. It should be noted that restoring GUI
+windows is typically not supported by these tools.
+
+Currently, the dominant and actively maintained checkpointing software on Linux
+is CRIU (Checkpoint/Restore In Userspace). CRIU offers a user-space
+checkpointing library, which has gained widespread adoption due to its
+reliability and continued development.\footnote{Other checkpointing packages
+include BLCR (Berkeley Lab Checkpoint/Restart) and DMTCP (Distributed
+MultiThreaded Checkpointing), but these tools have become obsolete and have not
+received updates for several years.}
+
+Furthermore, it is worth mentioning that Docker and its underlying technologies
+also incorporate a checkpoint and restore mechanism, providing additional
+options for checkpointing long-running applications.
+
+An example session with CRIU:
+
+\begin{commandline}
+$ ./aloha -u Cmdenv -c PureAloha2 --cmdenv-redirect-output=true &
+$ pid=$!  # remember process ID
+...
+...
+$ mkdir checkpoint1
+$ sudo criu --shell-job dump -t $pid -D ./checkpoint1
+...
+...
+$ sudo criu --shell-job restore -D ./checkpoint1
+\end{commandline}
+
+
+\section{Using Cmdenv}
+\label{sec:run-sim:cmdenv}
+
+Cmdenv\index{Cmdenv} is a lightweight, command line user interface that
+compiles and runs on all platforms. Cmdenv is primarily designed for batch
+execution.
+
+Cmdenv simply executes one or more simulation runs that are described
+in the configuration file. The runs to be executed can be
+passed via command-line arguments or configuration options.
+
+Cmdenv runs simulations in the same process. This means that if one
+simulation run writes to a global variable, subsequent runs will also
+see the change. This is one reason why the use of global variables in models is
+strongly discouraged.
+
+\subsection{Sample Output}
+\label{sec:run-sim:cmdenv:sample-output}
+
+When you run the Fifo example under Cmdenv, you should see
+something like this:
+
+\begin{commandline}
+$ ./fifo -u Cmdenv -c Fifo1
+
+OMNeT++ Discrete Event Simulation  (C) 1992-2017 Andras Varga, OpenSim Ltd.
+Version: 5.0, edition: Academic Public License -- NOT FOR COMMERCIAL USE
+See the license for distribution terms and warranty disclaimer
+Setting up Cmdenv...
+Loading NED files from .: 5
+
+Preparing for running configuration Fifo1, run #0...
+Scenario: $repetition=0
+Assigned runID=Fifo1-0-20090104-12:23:25-5792
+Setting up network 'FifoNet'...
+Initializing...
+Initializing module FifoNet, stage 0
+Initializing module FifoNet.gen, stage 0
+Initializing module FifoNet.fifo, stage 0
+Initializing module FifoNet.sink, stage 0
+
+Running simulation...
+** Event #1   t=0   Elapsed: 0.000s (0m 00s)  0% completed
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 2   present: 2   in FES: 1
+** Event #232448   t=11719.051014922336   Elapsed: 2.003s (0m 02s)  3% completed
+     Speed:     ev/sec=116050   simsec/sec=5850.75   ev/simsec=19.8351
+     Messages:  created: 58114   present: 3   in FES: 2
+...
+** Event #7206882   t=360000.52066583684   Elapsed: 78.282s (1m 18s)  100% completed
+     Speed:     ev/sec=118860   simsec/sec=5911.9   ev/simsec=20.1053
+     Messages:  created: 1801723   present: 3   in FES: 2
+
+<!> Simulation time limit reached -- simulation stopped.
+
+Calling finish() at the end of Run #0...
+End.
+\end{commandline}
+
+As Cmdenv runs the simulation, it periodically prints the sequence number
+of the current event, the simulation time, the elapsed (real) time,
+and the performance of the simulation (how many events are processed per
+second). The first two values are 0 because there wasn't enough data
+for them to calculate yet. At the end of the simulation, the \ffunc{finish()}
+methods of the simple modules are executed, and the outputs from them are displayed.
+
+
+\subsection{Selecting Runs, Batch Operation}
+\label{sec:run-sim:cmdenv-config-options}
+
+The most important command-line options for Cmdenv are \fopt{-c} and
+\fopt{-r}, which are used to select which simulations to perform. (These options
+were described in section \ref{sec:run-sim:selecting-configuration-and-runs}.)
+There are also equivalent configuration options that can be written in files:
+\fconfig{cmdenv-config-name} and \fconfig{cmdenv-runs-to-execute}.
+
+Another configuration option, \fconfig{cmdenv-stop-batch-on-error}, controls
+Cmdenv's behavior when performing multiple runs. It determines
+whether Cmdenv should stop after the first run that finishes with an
+error. By default, it does stop.
+
+When performing multiple runs, Cmdenv prints run statistics at the end. Example
+output:
+
+\begin{filelisting}
+$ ./aloha -c PureAlohaExperiment -u Cmdenv
+...
+Run statistics: total 42, successful 30, errors 1, skipped 11
+\end{filelisting}
+
+
+\subsection{Express Mode}
+\label{sec:run-sim:cmdenv:express-mode}
+
+Cmdenv can execute simulations in two modes:
+
+\begin{itemize}
+    \item \tbf{Normal} (non-express) mode is for debugging. Detailed information
+        will be written to the standard output (event banners, module log,
+        etc).
+    \item \tbf{Express} mode can be used for long simulation runs. Only
+        periodic status updates are displayed about the progress of the
+        simulation.
+\end{itemize}
+
+The default mode is Express. To turn off Express mode, specify \ttt{false} for
+the \fconfig{cmdenv-express-mode} configuration option:
+
+\begin{commandline}
+$ ./fifo -u Cmdenv -c Fifo1 --cmdenv-express-mode=false
+\end{commandline}
+
+There are several other options that also affect Express-mode and Normal-mode
+behavior:
+
+\begin{itemize}
+  \item For Express mode: \fconfig{cmdenv-performance-display}, \fconfig{cmdenv-status-frequency}
+  \item For Normal mode: \fconfig{cmdenv-event-banners}, \fconfig{cmdenv-event-banner-details},
+        \fconfig{cmdenv-log-level}, \fconfig{cmdenv-log-prefix}, etc.
+\end{itemize}
+
+See Appendix \ref{cha:config-options} for more information about these options.
+
+\subsubsection{Interpreting Express-Mode Output}
+\label{sec:run-sim:cmdenv:express-mode:output}
+
+When the simulation is running in Express mode with detailed
+performance display enabled (\ttt{cmdenv-performance-display=true}), Cmdenv
+periodically outputs a three-line status report about the progress of the simulation.
+The output looks like this:
+
+\begin{commandline}
+...
+** Event #250000   t=123.74354 ( 2m  3s)    Elapsed: 0m 12s
+     Speed:     ev/sec=19731.6   simsec/sec=9.80713   ev/simsec=2011.97
+     Messages:  created: 55532   present: 6553   in FES: 8
+** Event #300000   t=148.55496 ( 2m 28s)    Elapsed: 0m 15s
+     Speed:     ev/sec=19584.8   simsec/sec=9.64698   ev/simsec=2030.15
+     Messages:  created: 66605   present: 7815   in FES: 7
+...
+\end{commandline}
+
+The first line of the status display (beginning with \ttt{**})
+contains:
+
+\begin{itemize}
+   \item How many events have been processed so far
+   \item The current simulation time (t)
+   \item The elapsed time (wall clock time) since the beginning of the simulation run.
+\end{itemize}
+
+The second line displays simulation performance metrics:
+
+\begin{itemize}
+   \item \ttt{ev/sec} indicates \textit{performance}, i.e., how many events are
+     processed in one real-time second. This value depends on the hardware
+     (faster CPUs can process more events per second) and on the complexity
+     (amount of calculations) associated with processing one event. For example,
+     protocol simulations tend to require more processing per event than queueing
+     networks, thus the latter produce higher ev/sec values. This value is largely
+     independent of the size of the model, i.e., the number of modules in it.
+   \item \ttt{simsec/sec} shows the \textit{relative speed} of the simulation, i.e.,
+     how fast the simulation is progressing compared to real-time. It indicates how many
+     simulated seconds can be processed in one real-second. This value virtually depends
+     on everything: the hardware, the size of the simulation model, the complexity of events,
+     and the average simulation time between events.
+   \item \ttt{ev/simsec} is the \textit{event density}, i.e., how many events are
+     there per simulated second. Event density only depends on the simulation model,
+     regardless of the hardware used to simulate it. For example, in a high-speed
+     optical network simulation, this value will be very high ($10^9$), whereas
+     in a call center simulation this value is probably well under 1. It also
+     depends on the size of your model: if you double the number of modules in
+     your model, you can expect the event density to double.
+\end{itemize}
+
+The third line displays the number of messages, which is an important
+indicator of the ``health'' of your simulation.
+
+\begin{itemize}
+   \item{\ttt{Created}: the total number of message objects created since the
+     beginning of the simulation run. This does not mean that this many message
+     objects actually exist because some (many) of them may have been deleted
+     since then. It also does not mean that \textit{you} created all those
+     messages -- the simulation kernel also creates messages for its own use
+     (e.g. to implement \ttt{wait()} in an \ttt{activity()} simple module).}
+   \item{\ttt{Present}: the number of message objects currently present
+     in the simulation model, i.e., the number of messages created (see above)
+     minus the number of messages already deleted. This number includes
+     the messages in the Future Event Set (FES)\index{FES}.}
+   \item{\ttt{In FES}: the number of messages currently scheduled in the
+     Future Event Set.}
+\end{itemize}
+
+
+The second value, the number of messages present, is more useful than
+perhaps initially thought. It can be an indicator of the ``health'' of the simulation.
+If it is steadily growing, then either you have a memory leak and are losing
+messages (which indicates a programming error), or the network you simulate is
+overloaded and the queues are steadily filling up (which might indicate wrong input
+parameters).
+
+Of course, if the number of messages does not increase, it does not mean
+that you do \textit{not} have a memory leak (other memory leaks are also
+possible). Nevertheless, the value is still useful because the most
+common way of leaking memory in a simulation is by not deleting messages.
+
+\subsection{Other Options}
+\label{sec:run-sim:cmdenv:other-options}
+
+Cmdenv has more configuration options than mentioned in this section. See
+the options beginning with \ttt{cmdenv-} in Appendix \ref{cha:config-options}
+for the complete list.
+
+
+\section{The Qtenv Graphical User Interface}
+\label{sec:run-sim:qtenv}
+
+Qtenv\index{Qtenv} is a graphical user interface for running simulations. Qtenv
+supports interactive simulation execution, animation, tracing, and debugging.
+Qtenv is recommended in the development stage of a simulation and for
+presentation purposes, as it allows one to obtain a detailed picture of the
+simulation state at any point of execution and to follow what happens inside the
+network. Note that 3D visualization support and smooth animation support are
+only available in Qtenv.
+
+\begin{note}
+This section only covers the command-line and configuration options of Qtenv;
+the user interface is described in the Qtenv chapter of the {\opp} User Guide.
+\end{note}
+
+\subsection{Command-Line and Configuration Options}
+\label{sec:run-sim:qtenv-options}
+
+Simulations running under Qtenv accept all general command-line and
+configuration options, including \fopt{-c} and \fopt{-r}. The configuration
+options specific to Qtenv include:
+
+\begin{itemize}
+  \item \fconfig{qtenv-default-config}: Specifies which config Qtenv should
+    automatically set up on startup. The default is to ask the user. This option
+    is equivalent to the \fopt{-c} command-line option.
+
+  \item \fconfig{qtenv-default-run}: Specifies which run (of the default config,
+    see qtenv-default-config) Qtenv should automatically set up on startup. The
+    default is to ask the user. This option is equivalent to the \fopt{-r}
+    command-line option.
+
+  \item \fconfig{qtenv-extra-stack}: Specifies the additional amount of stack
+    that is reserved for each activity() simple module when the simulation is run
+    under Qtenv.
+\end{itemize}
+
+Qtenv is also affected by the following option:
+
+\begin{itemize}
+  \item \fconfig{image-path}: Specifies the path for loading module icons.
+\end{itemize}
+
+See Appendix \ref{cha:config-options} for the list of possible configuration options.
+
+
+\section{Running Simulation Campaigns}
+\label{sec:run-sim:simulation-campaigns}
+
+Once your model works reliably, you will usually want to run several
+simulations, either to explore the parameter space via a \textit{parameter
+study} (see section \ref{sec:config-sim:parameter-studies}) or to do
+multiple repetitions with different RNG seeds to increase the statistical
+accuracy of the results (see section
+\ref{sec:config-sim:repeating-runs-with-different-seeds}).
+
+In this section, we will explore several ways to run batches of
+simulations efficiently.
+
+\subsection{The Naive Approach}
+\label{sec:run-sim:campaigns-naive-approach}
+
+Assume that you want to run the parameter study in the Aloha example
+simulation for the $numHosts>15$ cases.
+
+The first idea is that Cmdenv is capable of running simulation batches.
+The following command will do the job:
+
+\begin{commandline}
+$ ./aloha -u Cmdenv -c PureAlohaExperiment -r '$numHosts>15'
+...
+Run statistics: total 14, successful 14
+End.
+\end{commandline}
+
+This works fine. However, this approach has some drawbacks which become
+apparent when running hundreds or thousands of simulation runs.
+
+\begin{enumerate}
+  \item It uses only one CPU. In the age of multi-core CPUs, this is not
+        very efficient.
+  \item It is more prone to C++ programming errors in the model. A failure in a single
+        run may abort execution (segfault) or corrupt the process
+        state, possibly invalidating the results of subsequent runs.
+\end{enumerate}
+
+To address the second drawback, we can execute each simulation run in its own
+Cmdenv instance.
+
+\begin{commandline}
+$ ./aloha -c PureAlohaExperiment -r '$numHosts>15' -s -q runnumbers
+28 29 30 31 32 33 34 35 36 37 38 39 40 41
+$ ./aloha -u Cmdenv -c PureAlohaExperiment -r 28
+$ ./aloha -u Cmdenv -c PureAlohaExperiment -r 29
+$ ./aloha -u Cmdenv -c PureAlohaExperiment -r 30
+...
+$ ./aloha -u Cmdenv -c PureAlohaExperiment -r 41
+\end{commandline}
+
+It's a lot of commands to issue manually, but luckily they can be automated with a
+shell script like this:
+
+\begin{filelisting}
+#! /bin/sh
+RUNS=$(./aloha -c PureAlohaExperiment -r '$numHosts>15' -s -q runnumbers)
+for i in $RUNS; do
+    ./aloha -u Cmdenv -c PureAlohaExperiment -r $i
+done
+\end{filelisting}
+
+Save the above into a text file called \ttt{runAloha}. Then give it
+executable permission, and run it:
+
+\begin{commandline}
+$ chmod +x runAloha
+$ ./runAloha
+\end{commandline}
+
+It will execute the simulations one-by-one, each in its own Cmdenv instance.
+
+This approach involves a process start overhead for each simulation.
+Normally, this overhead is small compared to the time spent simulating. However,
+it may become more of a problem when running a large number of very short
+simulations (<<1s in CPU time). This effect may be mitigated by letting Cmdenv
+do several (e.g. 10) simulations in one go.
+
+And then, the script still uses only one CPU. It would be better to keep
+all CPUs busy. For example, if you have 8 CPUs, there should be eight processes
+running all the time -- when one terminates, another would be launched in its place.
+You might notice that this behavior is similar to what GNU Make's
+\fopt{-j<numJobs>} option does. The \fprog{opp\_runall} utility, to be covered
+in the next section, exploits GNU Make to schedule the running of simulations on
+multiple CPUs.
+
+
+\subsection{Using opp\_runall}
+\label{sec:run-sim:batches-using-opp-runall}
+
+{\opp} has a utility program called \fprog{opp\_runall}, which allows you to
+execute simulations using multiple CPUs and multiple processes.
+
+\fprog{opp\_runall} groups simulation runs into batches. Every batch
+corresponds to a Cmdenv process, that is, runs of a batch execute sequentially
+inside the same Cmdenv process. Batches (i.e. Cmdenv instances) are scheduled
+for running so that they keep all CPUs busy. The batch size as well as the
+number of CPUs to use have sensible defaults but can be overridden.
+
+\subsubsection{Command Line}
+\label{sec:run-sim:opp-runall:comandline}
+
+\fprog{opp\_runall} expects the normal simulation command in its argument list.
+The first positional (non-option) argument and all following arguments are
+treated as the simulation command (simulation program and its arguments).
+
+Thus, to modify a normal Cmdenv simulation command to make use of multiple
+CPUs, simply prefix it with \ttt{opp\_runall}:
+
+\begin{commandline}
+$ opp_runall ./aloha -u Cmdenv -c PureAlohaExperiment -r '$numHosts>15'
+\end{commandline}
+
+Options intended for \fprog{opp\_runall} should come before the simulation
+command. These options include \fopt{-b<N>} for specifying the batch size, and
+\fopt{-j<N>} to specify the number of CPUs to use.
+
+\begin{commandline}
+$ opp_runall -j8 -b4 ./aloha -u Cmdenv -c PureAlohaExperiment -r '$numHosts>15'
+\end{commandline}
+
+
+\subsubsection{How It Works}
+\label{sec:run-sim:opp-runall:operation}
+
+First, \fprog{opp\_runall} invokes the simulation command with extra command
+arguments (\ttt{-s -q runnumbers}) to figure out the list of runs it needs to
+perform, and groups the run numbers into batches. Then it exploits GNU make and
+its \fopt{-j<N>} option to do the heavy lifting. Namely, it generates a
+temporary makefile that allows \fprog{make} to run batches in parallel, and
+invokes \fprog{make} with the appropriate \ttt{-j} option. It is also possible
+to export the makefile for inspection and/or running it manually.
+
+To illustrate the above, here is the content of such a makefile:
+
+\begin{filelisting}
+#
+# This makefile was generated with the following command:
+# opp_runall -j2 -b4 -e tmp ./aloha -u Cmdenv -c PureAlohaExperiment -r $numHosts>15
+#
+
+SIMULATIONCMD = ./aloha -u Cmdenv -c PureAlohaExperiment -s \
+                --cmdenv-redirect-output=true
+TARGETS =  batch0 batch1 batch2 batch3
+
+.PHONY: $(TARGETS)
+
+all: $(TARGETS)
+    @echo All runs completed.
+
+batch0:
+    $(SIMULATIONCMD) -r 28,29,30,31
+
+batch1:
+    $(SIMULATIONCMD) -r 32,33,34,35
+
+batch2:
+    $(SIMULATIONCMD) -r 36,37,38,39
+
+batch3:
+    $(SIMULATIONCMD) -r 40,41
+\end{filelisting}
+
+
+\subsection{Exploiting Clusters}
+\label{sec:run-sim:opp-runall:exploiting-clusters}
+
+With large scale simulations, using one's own desktop computer might not be
+enough. The solution could be to run the simulation on remote machines,
+that is, to employ a computing cluster.
+
+In simple setups, cross-mounting the file system that contains {\opp} and the
+model, and using \ttt{ssh} to run the simulations might already provide a good
+solution.
+
+In other cases, submitting simulation jobs and harvesting the results might be
+done via batch-queuing, cluster computing or grid computing middleware. The
+following list contains some pointers to such software:
+
+\begin{itemize}
+
+  \item \tbf{HTCondor}, previously called \tbf{Condor}, is an open source
+      software package that enables High Throughput Computing (HTC)
+      on large collections of distributively owned computing resources.
+      HTCondor can manage a dedicated cluster of workstations, and it can also
+      harness non-dedicated, preexisting resources under distributed ownership.
+      A user can submit jobs to HTCondor. HTCondor finds an available machine
+      on the network and begins running the job on that machine. HTCondor also
+      supports checkpointing and migrating jobs.
+
+\item \tbf{Open Grid Scheduler/Grid Engine} is a commercially supported
+      open-source batch-queuing system for distributed resource management.
+      OGS/GE is based on Sun Grid Engine (SGE), and maintained by the same group
+      of external (i.e. non-Sun) developers who started contributing code since
+      2001. There is also a commercial SGE successor, \tbf{Univa Grid Engine},
+      formerly called Oracle Grid Engine.
+
+\item \tbf{Slurm Workload Manager}, or Slurm, is a free and open-source job
+      scheduler for Linux and Unix-like kernels, used by many of the world's
+      supercomputers and computer clusters.
+
+\item \tbf{Apple's Xgrid} has unfortunately been removed from Mac OS X with the
+     release of Mountain Lion (2012). Xgrid was distributed computing for
+     the masses -- easy, plug and play, not complicated. You could network your
+     Mac computers together, and use that power on one computer to do something
+     that took a lot of computing power. Currently, Pooch is advertised
+     as software providing the easiest way to assemble and operate a
+     high-performance parallel computer from Macs.
+
+\end{itemize}
+
+
+
+\section{Akaroa Support: Multiple Replications in Parallel}
+\label{sec:run-sim:akaroa}
+\index{Akaroa}
+\index{Multiple Replications in Parallel}
+
+\subsection{Introduction}
+\label{sec:run-sim:akaroa-introduction}
+
+Typical simulations are Monte-Carlo simulations: they use
+(pseudo-)random numbers to drive the simulation model.
+For the simulation to produce statistically reliable results,
+one has to carefully consider the following:
+
+\begin{itemize}
+  \item When the initial transient is over, when can we start
+    collecting data? Usually, we do not want to include the
+    initial transient when the simulation is still ``warming up''.
+  \item When can we stop the simulation? We want to wait long enough
+    so that the statistics we are collecting can ``stabilize''
+    or reach the required sample size to be statistically trustworthy.
+\end{itemize}
+
+Neither question is trivial to answer. One might suggest
+to wait "very long" or ``long enough''. However, this is neither
+simple (how do you know what is ``long enough''?) nor practical
+(even with today's high-speed processors, simulations of modest complexity
+can take hours, and one may not afford multiplying runtimes by,
+say, 10, ``just to be safe''). If you need further convincing,
+please read \cite{Pawlikowsky02} and be horrified.
+
+A possible solution is to look at the statistics while the simulation
+is running and decide at runtime when enough data has been
+collected for the results to have reached the required accuracy.
+One possible criterion is given by the confidence level,
+more precisely, by its width relative to the mean.
+But ex ante, it is unknown how many observations have to be collected
+to achieve this level -- it must be determined at runtime.
+
+
+\subsection{What Is Akaroa}
+\label{sec:run-sim:what-is-akaroa}
+
+Akaroa \cite{Akaroa99} addresses the above problem.
+According to its authors, Akaroa (Akaroa2) is a "fully automated
+simulation tool designed for running distributed stochastic simulations
+in MRIP scenarios" in a cluster computing environment.
+
+MRIP stands for \textit{Multiple Replications in Parallel}.
+In MRIP, the computers of the cluster run independent replications
+of the whole simulation process (i.e., with the same parameters but
+a different seed for the RNGs (random number generators)),
+generating statistically equivalent streams of simulation output data.
+These data streams are fed to a global data analyzer responsible for
+analysis of the final results and for stopping the simulation
+when the results reach a satisfactory accuracy.
+
+The independent simulation processes run independently of one another
+and continuously send their observations to the central analyzer
+and control process. This process \textit{combines} the independent data streams
+and calculates from these observations an overall estimate of the mean value
+of each parameter.
+Akaroa2 decides by a given confidence level and precision
+whether it has enough observations or not. When it judges that it
+has enough observations, it halts the simulation.
+
+If \textit{n} processors are used, the needed simulation execution time
+is usually \textit{n} times smaller compared to a one-processor
+simulation (the required number of observations is produced sooner).
+Thus, the simulation would be sped up approximately in proportion
+to the number of processors used and sometimes even more.
+
+Akaroa was designed at the University of Canterbury in Christchurch, New Zealand
+and can be used free of charge for teaching and non-profit research activities.
+
+
+\subsection{Using Akaroa with {\opp}}
+\label{sec:run-sim:using-akaroa}
+
+\subsubsection{Starting Akaroa}
+\label{sec:run-sim:starting-up-akaroa}
+
+Before the simulation can be run in parallel under Akaroa, you have to
+start up the system:
+
+\begin{itemize}
+  \item Start \ttt{akmaster} running in the background on some host.
+  \item On each host where you want to run a simulation engine,
+     start \ttt{akslave} in the background.
+\end{itemize}
+
+Each \ttt{akslave} establishes a connection with the \ttt{akmaster}.
+
+Then you use \ttt{akrun} to start a simulation. \ttt{akrun} waits
+for the simulation to complete and writes a report of the results
+to the standard output. The basic usage of the \ttt{akrun} command is:
+
+\begin{commandline}
+$ akrun -n num_hosts command [argument..]
+\end{commandline}
+
+where \textit{command} is the name of the simulation you want to start.
+Parameters for Akaroa are read from the file named \ttt{Akaroa} in
+the working directory. Collected data from the processes is
+sent to the \ttt{akmaster} process, and when the required precision
+has been reached, \ttt{akmaster} tells the simulation processes to
+terminate. The results are written to the standard output.
+
+The above description is not detailed enough to help you
+set up and successfully use Akaroa -- for that, you need to read the
+Akaroa manual.
+
+\subsubsection{Configuring {\opp} for Akaroa}
+\label{sec:run-sim:configuring-akaroa}
+
+First of all, you have to compile {\opp} with Akaroa support enabled.
+
+The {\opp} simulation must be configured in \ffilename{omnetpp.ini}
+so that it passes the observations to Akaroa. The simulation model itself does
+not need to be changed -- it continues to write
+the observations into output vectors (\cclass{cOutVector} objects,
+see chapter \ref{cha:sim-lib}). You can place some of
+the output vectors under Akaroa control.
+
+You need to add the following to \ffilename{omnetpp.ini}:
+
+\begin{inifile}
+[General]
+rng-class = "cAkaroaRNG"
+outputvectormanager-class = "cAkOutputVectorManager"
+\end{inifile}
+
+These lines cause the simulation to obtain random numbers from Akaroa
+and allow data written to selected output vectors to be passed to Akaroa's
+global data analyzer.
+    \footnote{For more details on the plugin mechanism these settings make use of,
+    see \ref{cha:plugin-exts}.}
+
+Akaroa's RNG is a Combined Multiple Recursive pseudorandom
+number generator (CMRG) with a period of approximately $2^{191}$
+random numbers and provides a unique stream of random numbers
+for every simulation engine.
+
+\begin{note}
+It is vital that you obtain random numbers from Akaroa; otherwise,
+all simulation processes will run with the same RNG seeds and
+produce exactly the same results.
+\end{note}
+
+Then you need to specify which output vectors you want to
+be under Akaroa control (by default, none of them are).
+You can use the \ttt{*}, \ttt{**} wildcards (see
+section \ref{sec:config-sim:wildcards}) to
+place certain vectors under Akaroa control.
+
+\begin{inifile}
+<modulename>.<vectorname1>.with-akaroa = true
+<modulename>.<vectorname2>.with-akaroa = true
+\end{inifile}
+
+
+\subsubsection{Using Shared File Systems}
+\label{sec:run-sim:akaroa-using-shared-filesystems}
+
+It is usually practical to have the same physical disk mounted (e.g., via NFS or
+Samba) on all computers in the cluster. However, because all {\opp} simulation
+processes run with the same settings, they would overwrite each other's
+output files. You can prevent this from happening using the
+\fconfig{fname-append-host} ini file entry:
+
+\begin{inifile}
+[General]
+fname-append-host = true
+\end{inifile}
+
+When turned on, it appends the host name to the names of the output
+files (output vector, output scalar, snapshot files).
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "usman"
+%%% End:

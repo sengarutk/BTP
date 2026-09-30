@@ -1,0 +1,11 @@
+%description:
+check that unnamed cOutVector doesn't core dump.
+
+%activity:
+cOutVector vec;
+vec.record(35);
+
+%exitcode: 1
+
+%contains: stderr
+Cannot register output vector because it has no name assigned

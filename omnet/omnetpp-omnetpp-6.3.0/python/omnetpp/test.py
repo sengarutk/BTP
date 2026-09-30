@@ -1,0 +1,1027 @@
+from __future__ import print_function
+import argparse
+import os
+import re
+import subprocess
+import sys
+import difflib
+
+progname = 'opp_test'
+shouldCompressDiff = True
+maxPrintableSize = 32768
+
+use_colors = sys.stdout.isatty()
+
+def red(txt):
+    global use_colors
+    return '\033[0;31m' + txt + "\033[0;0m" if use_colors else txt
+
+def yellow(txt):
+    global use_colors
+    return '\033[0;33m' + txt + "\033[0;0m" if use_colors else txt
+
+def green(txt):
+    global use_colors
+    return '\033[0;32m' + txt + "\033[0;0m" if use_colors else txt
+
+def blue(txt):
+    global use_colors
+    return '\033[0;34m' + txt + "\033[0;0m" if use_colors else txt
+
+def fail(msg):
+    print(f"{progname}: Error: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+def addMissingNewLine(str):
+    return str if str.endswith("\n") else str + "\n"
+
+def space(s):
+    if isinstance(s, list):
+        return (" " + " ".join(s)) if s else ""
+    else:
+        return (" " + s) if s else ""
+
+def compressOneDiff(tmpDiff, maxLines):
+    if len(tmpDiff) <= 2 * maxLines + 3:
+        return tmpDiff
+    pre = tmpDiff[0][0]
+    return tmpDiff[:maxLines] \
+            + [ pre + ".\n", pre + ". <snip>\n", pre + ".\n"] \
+            + tmpDiff[-maxLines:]
+
+def compressDiff(diff):
+    maxLines = 3
+    tmpDiff = []
+    prevStart = ''
+    for line in diff:
+        if prevStart == line[0:2]:
+            tmpDiff.append(line)
+        else:
+            for l in compressOneDiff(tmpDiff, maxLines):
+                yield l
+            prevStart = line[0:2]
+            tmpDiff = [line]
+
+    for l in compressOneDiff(tmpDiff, maxLines):
+        yield l
+
+def colorDiff(diff):
+    for line in diff:
+        if line.startswith('+ '):
+            yield '\033[0;32m' + line + "\033[0;0m"     # GREEN
+        elif line.startswith('+.'):
+            yield "\033[2;32m" + line + "\033[0;0m"     # dark green
+        elif line.startswith('- '):
+            yield "\033[1;31m" + line + "\033[0;0m"     # RED
+        elif line.startswith('^ '):
+            yield "\033[1;34m" + line + "\033[0;0m"     # BLUE
+        elif line.startswith('? '):
+            yield "\033[1;33m" + line + "\033[0;0m"     # YELLOW
+        elif line.startswith(' .'):
+            yield "\033[2;37m" + line + "\033[0;0m"     # dark white
+        else:
+            yield line
+
+
+# from net: do not change order of attributes
+class OppFormatter(argparse.RawDescriptionHelpFormatter):
+    # use defined argument order to display usage
+    def _format_usage(self, usage, actions, groups, prefix):
+        if prefix is None:
+            prefix = 'usage: '
+
+        # if usage is specified, use that
+        if usage is not None:
+            usage = usage % dict(prog=self._prog)
+
+        # if no optionals or positionals are available, usage is just prog
+        elif usage is None and not actions:
+            usage = '%(prog)s' % dict(prog=self._prog)
+        elif usage is None:
+            prog = '%(prog)s' % dict(prog=self._prog)
+            # build full usage string
+            action_usage = self._format_actions_usage(actions, groups) # NEW
+            usage = ' '.join([s for s in [prog, action_usage] if s])
+            # omit the long line wrapping code
+        # prefix with 'usage:'
+        return f'{prefix}{usage}\n\n'
+
+
+class OppTest:
+    progname = 'opp_test.py'
+    # .test file possible entries. legend: 1=once, v=has value, b=has body, f=value is filename
+    entries = {
+        'description'        : '1b',
+
+        'activity'           : '1b',
+        'includes'           : '1b',
+        'global'             : '1b',
+        'module'             : '1vb',
+
+        'file'               : 'vbf',
+        'inifile'            : 'vbf',
+        'network'            : '1v',
+
+        'subst'              : 'v',
+
+        'contains'           : 'vbf',
+        'not-contains'       : 'vbf',
+        'contains-regex'     : 'vbf',
+        'not-contains-regex' : 'vbf',
+
+        'equals'             : 'vbf',
+        'not-equals'         : 'vbf',
+        'equals-regex'       : 'vbf',
+        'not-equals-regex'   : 'vbf',
+
+        'file-exists'        : 'vf',
+        'file-not-exists'    : 'vf',
+
+        'env'                : 'v',
+        'testprog'           : '1v',
+        'extraargs'          : '1v',
+        'exitcode'           : '1v',
+        'ignore-exitcode'    : '1v',
+        'expected-failure'   : '1v',
+        'no-default-inifile' : '1v',
+        'stacksize'          : '1v',
+
+        'prerun-command'     : 'v',
+        'postrun-command'    : 'v'
+    }
+
+    filenames = ()
+
+    PackageNEDTemplate = ''
+    ModuleNEDTemplate = ''
+    ActivityCPPTemplate = ''
+    ModuleCPPTemplate = ''
+    INITemplate = ''
+    taillength = 800
+
+
+    def define_templates(self):
+        self.PackageNEDTemplate = '''
+@namespace(@TESTNAME@);
+'''
+
+        self.ModuleNEDTemplate = '''
+simple @MODULE@
+{
+    @isNetwork(true);
+}
+'''
+
+        self.ActivityCPPTemplate = '''
+#include <omnetpp.h>
+
+@INCLUDES@
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+@GLOBAL@
+
+class @MODULE@ : public cSimpleModule
+{
+    public:
+        @MODULE@() : cSimpleModule(@STACKSIZE@) {}
+        virtual void activity();
+};
+
+Define_Module(@MODULE@);
+
+void @MODULE@::activity()
+{
+@ACTIVITY@
+}
+
+}; //namespace
+'''
+
+        self.ModuleCPPTemplate = '''
+#include <omnetpp.h>
+
+@INCLUDES@
+
+using namespace omnetpp;
+
+namespace @TESTNAME@ {
+
+@MODULE_SRC@
+
+}; //namespace
+'''
+
+        self.INITemplate = '''
+[General]
+network = @NETWORKNAME@
+cmdenv-express-mode = false
+cmdenv-log-prefix = ""
+'''
+
+    def lprint(self, level, *args, **kwargs):
+        if level <= self.args.verbose:
+            print(*args, **kwargs)
+
+    def writefile(self, filename, body):
+        # write file but preserve file date if it already existed with identical contents
+        # (to speed up make process)
+
+        skipwrite = False
+        if os.path.exists(filename):
+            try:
+                infile = open(filename, 'r')
+                oldbody = infile.read()
+                infile.close()
+            except (IOError, OSError) as e:
+                fail(f"Cannot read file `{filename}': ({e})")
+
+            if body == oldbody:   #FIXME check it on Windows/Mac
+                skipwrite = True
+
+        if skipwrite:
+            self.lprint(2, f"  file `{filename}' already exists with identical content")
+        else:
+            self.lprint(2, f"  writing `{filename}'")
+            directory = os.path.dirname(filename)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            try:
+                file = open(filename, 'w')
+                file.write(body)
+                file.close()
+            except (IOError, OSError) as e:
+                fail(f"I/O error while writing the `{filename}' file: ({e})")
+
+
+    # args: command, work-directory, stdout-file, stderr-file
+    # return: exit code, or -1 if program crashed
+    def exec_program(self, cmd, wdir, outfile, errfile):
+#        cmd = re.sub(r"'", "'\\''", cmd) # s|'|'\\''|g;  # quote due to potential nested apostrophes
+        do = [ self.args.shell , "-c", f"cd {wdir} && {cmd}"]
+        self.lprint(2, f"  running: {' '.join(do)}")
+        myout = open(os.path.join(wdir, outfile), "w")
+        myerr = open(os.path.join(wdir, errfile), "w")
+        status = subprocess.call(do, stdout=myout, stderr=myerr)
+
+        # convert from Python convention to bash or windows convention
+        if status < 0:
+            # https://docs.python.org/3.7/library/subprocess.html#subprocess.Popen.returncode
+            # "A negative value -N indicates that the child was terminated by signal N (POSIX only)."
+            if os.name == 'posix' or os.name == 'mac': # 'mac' is not used on python3
+                # https://stackoverflow.com/a/13410845/635587
+                # "The status value reported by bash will be 128 + <signum> for processes that terminate due to signal <signum>"
+                status = 128 + -status
+            elif os.name == 'nt':
+                # https://msdn.microsoft.com/en-us/library/xdkz3x12.aspx
+                # "By default, signal terminates the calling program with exit code 3, regardless of the value of sig."
+                status = 3
+
+        myout.close()
+        myerr.close()
+        self.lprint(2, f"  returned status = {status}")
+        return status
+
+
+    def parse_testfile(self, testfilename):
+        self.bodies = {}
+        self.values = {}
+        self.count = {}
+
+        self.lprint(2, f"  parsing `{testfilename}' file\n")
+
+        # assign a test name (filename without extension, special chars removed)
+        testname = os.path.splitext(os.path.basename(testfilename))[0]
+        testname = re.sub(r'[^A-Za-z0-9_]', '_', testname)
+        self.lprint(2, f"  testname for `{testfilename}' is {testname}\n")
+        self.testname = testname
+
+        # read test file
+        try:
+            testfile = open(testfilename, 'r')
+        except (IOError, OSError) as e:
+            fail(f"can't open `{testfilename}' file: {e}")
+
+        body = ''
+        key_index = ''
+        for line in testfile:
+            line = line.rstrip()
+            if line[:2] == '%#':
+                # ignore comments
+                pass
+            elif line[:2] == '%%':
+                # '%%' replaced to '%', added to body
+                body += line[1:] + "\n"
+            elif line[:1] == '%':
+                if re.match(r'^\s*$', body):
+                    body = ''
+                self.bodies[key_index] = body
+                body = ''
+
+                m = re.match(r"^%([^:]*):?(.*?)$", line)
+                if not m:
+                    fail(f"illegal key line: `{line}'")
+                key = m.group(1)
+                value = m.group(2)
+                key = key.strip()
+                value = value.strip()
+
+                self.count.setdefault(key, 0)
+                self.count[key] += 1
+                key_index = f"{key}({self.count[key]})"
+                self.values[key_index] = value
+            else:
+                body += line + "\n"
+
+        if re.match(r'^\s*$', body):
+            body = ''
+        self.bodies[key_index] = body
+        testfile.close()
+
+        # check entries
+        for key_index in self.values:
+            m = re.match(r'^(.*)\((\d+)\)$', key_index)
+            if not m:
+                fail(f"illegal key in values: `{key_index}'")
+            key = m.group(1)
+            index = m.group(2)
+            if key not in self.entries:
+                fail(f"error in test file `{testfilename}': invalid entry `{key}'\n")
+            desc = self.entries[key]
+            if '1' in desc and int(index) > 1:
+                fail(f"error in test file `{testfilename}': entry `%{key}' should occur only once.\n")
+            if 'v' in desc and self.values[key_index] == "":
+                fail(f"error in test file `{testfilename}': entry `%{key}' expects value after ':'\n")
+            if 'v' not in desc and self.values[key_index] != "":
+                fail(f"error in test file `{testfilename}': entry `%{key}' expects nothing after ':' ---{self.values[key_index]}---\n")
+            if 'b' in desc and self.bodies[key_index] == "":
+                if 'v' in desc:
+                    fail(f"error in test file `{testfilename}': entry `%{key}: {self.values[key_index]}' expects body\n")
+                else:
+                    fail(f"error in test file `{testfilename}': entry `%{key}' expects body\n")
+            if 'b' not in desc and self.bodies[key_index] != "":
+                fail(f"error in test file `{testfilename}': entry `%{key}' expects no body: >>>{self.bodies[key_index]}<<<\n")
+
+        # additional manual tests
+        if 'activity(1)' in self.bodies and 'module(1)' in self.bodies:
+            fail(f"error in test file `{testfilename}': %activity excludes %module\n")
+        if 'ignore-exitcode(1)' in self.values and 'exitcode(1)' in self.values:
+            fail(f"error in test file `{testfilename}': %ignore-exitcode excludes %exitcode\n")
+
+        if 'no-default-inifile(1)' not in self.values:
+            # fake a _defaults.ini after the other inifiles
+            key = "inifile"
+            self.count.setdefault(key, 0)
+            self.count[key] += 1
+            key_index = f"{key}({self.count[key]})"
+            self.values[key_index] = "_defaults.ini"
+            self.bodies[key_index] = self.INITemplate
+
+        # substitute TESTNAME and other macros, kill comments
+        for key in self.values:
+            self.bodies[key] = re.sub(r'^%#.*?$', '', self.bodies[key], flags=re.MULTILINE)      # kill comments
+            self.values[key] = self.values[key].replace('@TESTNAME@', testname)
+            self.bodies[key] = self.bodies[key].replace('@TESTNAME@', testname)
+
+        # added some empty key to bodies if missing
+        for key in ('global(1)', 'includes(1)'):
+            if key not in self.values:
+                self.values[key] = ''
+                self.bodies[key] = ''
+
+
+    def testcase_generatesources(self, testfilename):
+        self.parse_testfile(testfilename)
+
+        self.lprint(2, f"  generating files for `{testfilename}':")
+
+        # generate "package.ned"
+        ned = self.PackageNEDTemplate.replace('@TESTNAME@', self.testname)
+        nedfname = os.path.join(self.args.workdir, self.testname, "package.ned")
+        self.writefile(nedfname, ned)
+
+        # let the user specify the network explicitly
+        networkname = (self.values['network(1)'] if 'network(1)' in self.values and self.values['network(1)'] != "" else "Test")
+
+        # 'activity' template
+        if 'activity(1)' in self.bodies:
+            module = networkname
+            activity = self.bodies['activity(1)']
+            includescode = self.bodies['includes(1)']
+            globalcode = self.bodies['global(1)']
+            stacksize = self.values.get('stacksize(1)', "1024*1024")
+
+            # generate NED
+            ned = self.ModuleNEDTemplate
+            ned = ned.replace("@TESTNAME@", self.testname)
+            ned = ned.replace("@MODULE@", module)
+            nedfname = os.path.join(self.args.workdir,self.testname,"test.ned")
+            self.writefile(nedfname, ned)
+
+            # generate C++
+            cpp = self.ActivityCPPTemplate
+            cpp = cpp.replace("@TESTNAME@", self.testname)
+            cpp = cpp.replace("@MODULE@", module)
+            cpp = cpp.replace("@STACKSIZE@", stacksize)
+            cpp = cpp.replace("@INCLUDES@", includescode)
+            cpp = cpp.replace("@GLOBAL@", globalcode)
+            cpp = cpp.replace("@ACTIVITY@", activity)
+            cppfname = os.path.join(self.args.workdir, self.testname, "test.cc")
+            self.writefile(cppfname, cpp)
+
+        # 'module' template
+        if 'module(1)' in self.bodies:
+            module = self.values['module(1)']
+            module_src = self.bodies['module(1)']
+            networkname = module
+            includescode = self.bodies['includes(1)']
+            globalcode = self.bodies['global(1)']
+
+            # generate NED
+            ned = self.ModuleNEDTemplate
+            ned = ned.replace("@TESTNAME@", self.testname)
+            ned = ned.replace("@MODULE@", module)
+            nedfname = os.path.join(self.args.workdir, self.testname, "test.ned")
+            self.writefile(nedfname, ned)
+
+            # generate C++
+            cpp = self.ModuleCPPTemplate
+            cpp = cpp.replace("@TESTNAME@", self.testname)
+            cpp = cpp.replace("@INCLUDES@", includescode)
+            cpp = cpp.replace("@MODULE@", module)
+            cpp = cpp.replace("@MODULE_SRC@", module_src)
+            cppfname = os.path.join(self.args.workdir, self.testname, "test.cc")
+            self.writefile(cppfname, cpp)
+
+        # ini files
+        inifilekeys = []
+        for key  in self.values:
+            if re.match(r"^inifile\([0-9]+\)", key):
+                inifilekeys.append(key)
+
+        for key in inifilekeys:
+            inifname = os.path.join(self.args.workdir, self.testname, self.values[key])
+            inifile = self.bodies[key]
+            inifile = inifile.replace('@TESTNAME@', self.testname)
+            inifile = inifile.replace('@NETWORKNAME@', networkname)
+            self.writefile(inifname, inifile)
+
+        # source files (export them after the templated files,
+        # so that user can overwrite them if needed)
+        for key in self.values:
+            if re.match(r"^file\([0-9]+\)", key):
+                # write out file
+                fname = os.path.join(self.args.workdir, self.testname, self.values[key])
+                self.writefile(fname, self.bodies[key])
+
+#
+#  command line parser for options and files.
+#
+    def createParser(self):
+        epilog = '''
+Usage in nutshell:
+   1. create tests as *.test files
+   2. run "opp_test gen" to generate the source files from *.test
+   3. create a makefile (opp_makemake) and build the test program
+   4. run "opp_test run" to execute the tests
+
+All files will be created in the work directory.
+
+Supported .test file entry types:
+(legend: 1=may occur once, v=value expected, b=has body, f=value is filename)
+'''
+        for k in sorted(self.entries):
+                epilog += f'   %%%-20s ({self.entries[k]})\n' % (k)
+
+        self.parser = argparse.ArgumentParser(description='''opp_test - OMNeT++/OMNEST Regression Test Tool, (C) 2002-2017 OpenSim Ltd.
+        See the license for distribution terms and warranty disclaimer.
+
+        ''',
+                epilog=epilog,
+                formatter_class=OppFormatter)
+        #subparsers = parser.add_subparsers(help='sub-command help', dest='mode')
+        #parser_gen = subparsers.add_parser('gen', help='generate (export) source files from test case files')
+        #parser_run = subparsers.add_parser('run', help='run test (expects pre-built test executable)')
+        #parser_check = subparsers.add_parser('check', help='re-evaluate result files generated by previous test run')
+        self.parser.add_argument('mode', action='store',
+                            choices=['gen', 'run', 'check'],
+                            help='gen|run|check',
+                            )
+        self.parser.add_argument('-v', '--verbose', action='count', dest='verbose',
+                            default=False,
+                            help='verbose',
+                            )
+        self.parser.add_argument('-d', '--debug', action='store_const', const=2, dest='verbose',
+                            default=False,
+                            help='very verbose (debug), alias for -vv',
+                            )
+        self.parser.add_argument('-w', '--workingdir', action='store', dest='workdir',
+                            default=os.path.join('.','work'),
+                            help='working directory (defaults to "%(default)s")',
+                            )
+        self.parser.add_argument('-s', '--shell', action='store',
+                            default='sh',
+                            help='shell to use to run test program',
+                            )
+        self.parser.add_argument('-p', '--program', action='store', dest='testprogram',
+                            default='',
+                            help='name of test program (defaults to name of work directory)',
+                            )
+        self.parser.add_argument('filenames', nargs='+', metavar='TESTFILE',
+                            )
+        self.parser.add_argument('-a', '--args', nargs=argparse.REMAINDER, dest='extraargs',
+                            #FIXME hasznaljuk-e a REMAINDERT? igy beszed mindent a '-a' utan '--'-ig, utana nem lehet egyeb argumentum, csak a filenames
+                            help='extra command-line arguments for the test program. You may need to use quotes: opp_test -a "-f extrasettings.ini"'
+                            )
+
+    def print_tail(self, label, fname):
+        try:
+            f = open(fname, 'r')
+        except (IOError, OSError) as e:
+            self.lprint(0, f"cannot open {fname} file: {e}")
+            return
+
+        f.seek(0, os.SEEK_END)
+        if f.tell() > self.taillength:
+            f.seek(f.tell() - self.taillength, os.SEEK_SET) # note: SEEK_END would throw 'io.UnsupportedOperation: can't do nonzero end-relative seeks' unless file is opened as binary
+            istail = True
+            f.readline()  # skip incomplete line
+        else:
+            f.seek(0, os.SEEK_SET)
+            istail = False
+
+        txt = ''
+        for line in f:
+            txt += line
+        f.close()
+
+        if txt != '':
+            if istail:
+                self.lprint(0, f"tail of {label}:")
+            else:
+                self.lprint(0, f"{label}:")
+            self.lprint(0, f">>>>{txt}<<<<")
+
+    def testskipped(self, testname, reason):
+        self.num_skipped += 1
+        self.skipped_tests.append(testname)
+        self.result[testname] = 'SKIPPED'
+        self.reason[testname] = reason
+        self.lprint(0, f"*** {testname}: {blue('SKIPPED')} ({reason})")
+
+    def testexpectedfail(self, testname, reason):
+        self.num_expectedfail += 1
+        self.expectedfail_tests.append(testname)
+        self.result[testname] = 'EXPECTEDFAIL'
+        self.reason[testname] = reason
+        self.lprint(0, f"*** {testname}: {yellow('EXPECTEDFAIL')} ({reason})")
+
+    def testerror(self, testname, reason):
+        self.num_error += 1
+        self.error_tests.append(testname)
+        self.result[testname] = 'ERROR'
+        self.reason[testname] = reason
+        self.lprint(0, f"*** {testname}: {red('ERROR')} ({reason})")
+
+    def testfailed(self, testname, reason):
+        if 'expected-failure(1)' in self.values:
+            self.num_expectedfail += 1
+            self.expectedfail_tests.append(testname)
+            self.result[testname] = 'EXPECTEDFAIL'
+            self.reason[testname] = reason
+            self.lprint(0, f"*** {testname}: {yellow('EXPECTEDFAIL')} ({reason})")
+        else:
+            self.num_fail += 1
+            self.failed_tests.append(testname)
+            self.result[testname] = 'FAIL'
+            self.reason[testname] = reason
+            self.lprint(0, f"*** {testname}: {red('FAIL')} ({reason})")
+
+    def testpassed(self, testname):
+        self.num_pass += 1
+        self.result[testname] = 'PASS'
+        self.reason[testname] = ''
+        self.lprint(0, f"*** {testname}: {green('PASS')}")
+
+    def saveOriginalEnv(self):
+        self.savedEnv = {}
+        for envkey in os.environ:
+            self.savedEnv[envkey] = os.environ[envkey]
+
+    def restoreOriginalEnv(self):
+        for envkey in list(os.environ.keys()):
+            if envkey not in self.savedEnv:
+                del os.environ[envkey]
+        for envkey,envvar in self.savedEnv.items():
+            os.environ[envkey] = envvar
+
+    def testcase_run(self, testfilename):
+        self.parse_testfile(testfilename)
+
+        global use_colors
+
+        testworkdir = os.path.join(self.args.workdir, self.testname)
+
+        outfname = "test.out"
+        errfname = "test.err"
+
+        nedPath = os.environ['NEDPATH'] if 'NEDPATH' in os.environ else ''
+        runCommands = []
+        if nedPath:
+            runCommands.append(f'export NEDPATH="{nedPath}"')
+
+        if self.args.mode == 'run':
+            # delete temp files before running the test case
+            for key, value in self.values.items():
+                if 'contains' in key or 'equals' in key:  # any form of "%contains" and "%equals"
+                    # read file
+                    if value == 'stdout':
+                        infname = outfname
+                    elif value == 'stderr':
+                        infname = errfname
+                    else:
+                        infname = os.path.join(self.testname, value)
+                    infPath = os.path.join(self.args.workdir, infname)
+                    isgenerated = not infname.endswith(('.cc', '.h', '.msg', '.ned', '.ini'))
+                    if isgenerated and os.path.exists(infPath):
+                        self.lprint(2, f"  deleting old copy of file `{infname}'")
+                        os.remove(infPath)
+
+        # restore original env vars
+        self.restoreOriginalEnv()
+
+        # set environment variables
+        for key, value in self.values.items():
+            if key.startswith('env('):
+                tmp = value
+                m = re.match(r"(.*?)=(.*)", value)
+                if not m:
+                    fail(f"illegal value in %env: `{value}'")
+                envkey = m.group(1)
+                envvalue = m.group(2)
+                os.environ[envkey] = envvalue
+                runCommands.append(f'export {envkey}="{envvalue}"')
+                self.lprint(2, f"  setting environment variable `{envkey}' = `{envvalue}'")
+
+        # execute pre-run commands
+        if self.args.mode == 'run':
+            for key,value in sorted(self.values.items()):
+                if key.startswith('prerun-command('):
+                    # execute file
+                    runCommands.append(f"{value}>{key}.out 2>{key}.err")
+                    exitcode = self.exec_program(value, testworkdir, f"{key}.out", f"{key}.err")
+                    if exitcode != 0:
+                        self.testerror(testfilename, f"pre-run command \"{value}\" returned nonzero exit code: {exitcode}")
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        return
+
+        # run the program
+        if self.args.mode == 'run':
+            myargs = self.values['extraargs(1)'] if 'extraargs(1)' in self.values else ''
+
+            inifilenames = ''
+            for key,value in sorted(self.values.items()):
+                if key.startswith('inifile('):
+                    inifilenames += f" {value}"
+
+            if inifilenames == '':
+                fail('Not found any inifile key')   # at least the implicit _defaults.ini should be there
+
+            if 'testprog(1)' in self.values:
+                cmdline = f"{self.values['testprog(1)']} {space(myargs)} {space(self.args.extraargs)}"
+                runCommands.append(cmdline)
+                exitcode = self.exec_program(cmdline, os.path.join(self.args.workdir,self.testname), outfname, errfname)
+            else:
+                testprogwithpath = os.path.join(self.args.workdir, self.args.testprogram)
+                if not os.path.exists(testprogwithpath) and not os.path.exists(f"{testprogwithpath}.exe"):
+                    fail(f"test program '{testprogwithpath}' not found\n")
+                if not os.access(testprogwithpath, os.X_OK) and not os.access(f"{testprogwithpath}.exe", os.X_OK):
+                    fail(f"test program '{testprogwithpath}' is not executable\n")
+                cmdline = os.path.join("..",self.args.testprogram) + f" -u Cmdenv {space(myargs)} {space(self.args.extraargs)} {space(inifilenames)}"
+                runCommands.append(f"{cmdline} \"$@\"")
+                exitcode = self.exec_program(cmdline, os.path.join(self.args.workdir,self.testname), outfname, errfname)
+
+        # if stdout contains "#SKIPPED" or "#SKIPPED: some explanation", count this test as skipped;
+        # must be done BEFORE checking the exit code
+        with open(os.path.join(self.args.workdir, self.testname, outfname), 'r') as f:
+            for line in f:
+                m=re.match(r'^#SKIPPED:? *(.*)', line)
+                if m:
+                    self.testskipped(testfilename, f"test program says SKIPPED: {m.group(1)}")
+                    return
+
+        # check exitcode against expected one
+        if self.args.mode == 'run':
+            exitCodeFail = True
+            insteadOf = ''
+
+            if 'ignore-exitcode(1)' in self.values:
+                if exitcode != 0:
+                    self.lprint(2, f"  ignoring exitcode {exitcode}")
+                exitCodeFail = False
+            elif 'exitcode(1)' in self.values:
+                if str(exitcode) in self.values['exitcode(1)'].split(' '):
+                    self.lprint(2, f"  exitcode ok ({exitcode})")
+                    exitCodeFail = False
+                else:
+                    insteadOf = f" instead of {self.values['exitcode(1)']}"
+            elif exitcode == 0:
+                exitCodeFail = False
+            else:
+                pass
+
+            if exitCodeFail:
+                if exitcode == 127:
+                    self.testerror(testfilename, "could not execute test program")
+                else:
+                    self.testfailed(testfilename, f"test program returned exit code {exitcode}{insteadOf}")
+
+                if self.args.verbose > 0:
+                    self.print_tail("stdout", os.path.join(testworkdir, outfname))
+                    self.print_tail("stderr", os.path.join(testworkdir, errfname))
+                self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                return
+
+        # execute post-run commands
+        if self.args.mode == 'run':
+            for key, value in  sorted(self.values.items()):
+                if key.startswith('postrun-command('):
+                    # execute file
+                    runCommands.append(value)
+                    exitcode = self.exec_program(value, testworkdir, f"{key}.out", f"{key}.err")
+                    if exitcode != 0:
+                        self.testerror(testfilename, f"post-run command \"{value}\" returned nonzero exit code: {exitcode}")
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        return
+
+        runscript = "#!/bin/sh\n" + "\n".join(runCommands) + "\n"
+        runfile = os.path.join(self.args.workdir, self.testname,"run")
+        self.writefile(runfile, runscript)
+        os.chmod(runfile, 0o755) # make it executable
+
+        retestfile = os.path.join(self.args.workdir, self.testname,"retest")
+        self.writefile(retestfile, "#! /bin/sh\ncd ../.. && ./runtest "+testfilename+"\n")
+        os.chmod(retestfile, 0o755) # make it executable
+
+        def quote(label, txt, limit, filename):
+            if len(txt) <= limit:
+                return f"{label}:\n>>>>{txt}<<<<"
+            else:
+                return f"{label} too long to dump, see file `{filename}' in work directory"
+
+        # check output files
+        for key,value in self.values.items():
+            if 'contains' in key or 'equals' in key:  # any form of "%contains" and "%equals"
+                # read file
+                if value == 'stdout':
+                    infname = outfname
+                elif value == 'stderr':
+                    infname = errfname
+                else:
+                    infname = value
+
+                self.lprint(2, f"  checking {infname}")
+
+                try:
+                    f = open(os.path.join(self.args.workdir, self.testname, infname), 'r')
+                    txt = ''
+                    for line in f:
+                        txt += line.rstrip() + '\n'
+                    f.close()
+                except (IOError, OSError) as e:
+                    self.testerror(testfilename, f"cannot read test case output file `{infname}: {e}")
+                    self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                    return
+
+                # do substitutions on it
+                havesubst = False
+                for key2,value2 in self.values.items():
+                    if key2.startswith('subst'):
+                        havesubst = True
+                        rule = value2  # something like "/foo/bar/"
+                        sep = rule[0:1]  # typically "/"
+                        ruleSlices = rule.split(sep)
+                        if len(ruleSlices) < 3:
+                            self.testerror(testfilename, f"wrong subst rule: syntax is /search-regex/replace-string/flags")
+                            return
+                        if len(ruleSlices) > 4:
+                            self.testerror(testfilename, f"wrong subst rule: too many occurrences of separator character '{sep}', choose another separator")
+
+                        searchstring = ruleSlices[1]
+                        replacement = ruleSlices[2]
+                        replacement = re.sub(r'\$(\d)', r'\\\1', replacement)   # perl regex compatibility: perl was accept the '$<n>', python accepts only '\<n>'
+                        flags = ruleSlices[3] if len(ruleSlices) > 3 else ''
+                        if not re.match(r'^[ism]*$', flags):
+                            self.testerror(testfilename, f"wrong subst rule: invalid flags '{flags}': only 'i', 's' and 'm' supported ('g' is implicit)")
+                            return
+
+                        # do it.
+                        #
+                        # Note: this is wrong (does not recognize $1 or \1 in the replacement string): $txt =~ s/(?$flags)$searchstring/$replacement/g;
+                        # XXX: the following solution does not like curly braces in the search or replacement strings...
+                        # Note: g cannot be written as (?g)
+                        if flags != '':
+                            flags = '(?'+flags+')'
+                        try:
+                            txt = re.sub(flags+searchstring, replacement, txt)
+                        except re.error as e:
+                            self.testerror(testfilename, f"%subst: wrong pattern `{value}': {e}")
+                            return
+                realinfname = infname
+                if havesubst:
+                    # write out substitution result for debugging purposes
+                    realinfname = f"{infname}.subst"
+                    self.writefile(os.path.join(self.args.workdir, self.testname, realinfname), txt)
+
+                # get pattern
+                pattern = self.bodies[key]
+                pattern = pattern.strip()   # trim pattern
+                pattern = re.sub(r'[ \t]$', '', pattern, flags=re.MULTILINE)      # remove trailer whitespaces from all lines
+
+                patternfilename = os.path.join(self.args.workdir, self.testname,f"test-{key}.txt")
+                resultfilename = os.path.join(self.args.workdir, self.testname,f"test-{key}.out")
+                self.writefile(patternfilename, pattern)
+                self.writefile(resultfilename, txt)
+
+                # check contains or not-contains
+                if 'contains-regex(' in key:
+                    try:
+                        match = re.search(pattern, txt, re.MULTILINE|re.DOTALL)
+                        self.lprint(2, f"%{key} match: {match}")
+                    except re.error as e:
+                        self.testerror(testfilename, f"%subst: wrong pattern in `{key}': {e}")
+                        return
+
+                    if key.startswith('contains-regex(') and not match:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        self.lprint(1, quote("expected pattern", pattern, maxPrintableSize, patternfilename))
+                        self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+                    elif key.startswith('not-contains-regex(') and match:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        self.lprint(1, quote("unexpected pattern", pattern, maxPrintableSize, patternfilename))
+                        self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+                        line_number = txt.count('\n', 0, match.start())+1
+                        self.lprint(1, f"at line {line_number}\n")
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+                elif 'equals(' in key or 'not-equals(' in key: # check for equals and not-equals
+                    match = txt.strip() == pattern if 'equals(' in key else txt != pattern
+                    self.lprint(2, f"%{key} match: {match}")
+                    if key.startswith('equals(') and not match:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        self.lprint(1, quote("expected value", pattern, maxPrintableSize, patternfilename))
+                        self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+                    elif key.startswith('not-equals(') and match:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        self.lprint(1, quote("unexpected value", pattern, maxPrintableSize, patternfilename))
+                        self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+                        line_number = txt.count('\n', 0, match)+1
+                        self.lprint(1, f"at line {line_number}\n")
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+                else:
+                    match = txt.find(pattern)
+                    self.lprint(2, f"%{key} match: {match}")
+                    if key.startswith('contains(') and match == -1:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        diff = difflib.ndiff(addMissingNewLine(pattern).splitlines(True), addMissingNewLine(txt).splitlines(True))
+                        if shouldCompressDiff:
+                            diff = compressDiff(diff)
+                        if use_colors:
+                            diff = colorDiff(diff)
+                        difftxt = ''.join(diff)
+
+                        if len(difftxt) <= maxPrintableSize:
+                            self.lprint(1, "\n" + difftxt)
+                        else:
+                            self.lprint(1, quote("expected substring", pattern, maxPrintableSize, patternfilename))
+                            self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+                    elif key.startswith('not-contains(') and match != -1:
+                        self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+
+                        self.lprint(1, quote("unexpected substring", pattern, maxPrintableSize, patternfilename))
+                        self.lprint(1, quote("actual output", txt, maxPrintableSize, realinfname))
+                        line_number = txt.count('\n', 0, match)+1
+                        self.lprint(1, f"at line {line_number}\n")
+
+                        self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                        self.lprint(1, f"TRY: meld '{patternfilename}' '{resultfilename}'")
+                        self.lprint(1, f" OR: meld '{testfilename}' '{resultfilename}'\n")
+                        return
+
+            elif key.startswith('file-exists('):
+                if not os.path.exists(os.path.join(self.args.workdir, self.testname,self.values[key])):
+                    self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+                    self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                    return
+            elif key.startswith('file-not-exists('):
+                if os.path.exists(os.path.join(self.args.workdir, self.testname, self.values[key])):
+                    self.testfailed(testfilename, f"{self.values[key]} fails %{key} rule")
+                    self.lprint(1, f"CMD: (cd {testworkdir} && {' && '.join(runCommands)})")
+                    return
+
+        self.testpassed(testfilename)
+
+
+    def run(self):
+        self.createParser()
+        self.args = self.parser.parse_args()
+        self.lprint(2, self.args)
+
+        # test existence of work directory
+        if not os.path.isdir(self.args.workdir):
+            fail(f'work directory {self.args.workdir} does not exist\n')
+
+        # argument fixes
+        if self.args.extraargs is None:
+            self.args.extraargs = []
+
+        # produce name of test program (only used for tests not containing '%testprog')
+        if self.args.testprogram == '':
+            tmp = os.path.basename(self.args.workdir)
+            self.args.testprogram = os.path.join(".", tmp)
+
+        # save environment variables (tests may overwrite them)
+        self.saveOriginalEnv()
+
+        #
+        # generate test files
+        #
+        if self.args.mode == 'gen':
+            self.lprint(0, f"{self.progname}: extracting files from *.test files into {self.args.workdir}...")
+
+            self.define_templates()
+            for testfilename in self.args.filenames:
+                self.testcase_generatesources(testfilename)
+
+        return self.run_tests()
+
+    def run_tests(self):
+        self.num_pass = 0
+        self.num_fail = 0
+        self.num_expectedfail = 0
+        self.num_error = 0
+        self.num_skipped = 0
+
+        #
+        # run tests
+        #
+        if self.args.mode == 'run' or self.args.mode == 'check':
+            if self.args.mode == 'run':
+                self.lprint(0, f"{progname}: running tests using {self.args.testprogram}...")
+            if self.args.mode == 'check':
+                self.lprint(0, f"{progname}: checking existing output files...")
+
+            self.reason = {}
+            self.result = {}
+            self.failed_tests = []
+            self.expectedfail_tests = []
+            self.error_tests = []
+            self.skipped_tests = []
+
+            for testfilename in self.args.filenames:
+                self.testcase_run(testfilename)
+
+            self.lprint(0, "========================================")
+            if self.num_fail > 0:
+                self.lprint(1, red("FAILED: ") + ' '.join(self.failed_tests))
+            if self.num_error > 0:
+                self.lprint(1, red("ERROR: ") + ' '.join(self.error_tests))
+            if self.num_expectedfail > 0:
+                self.lprint(1, yellow("EXPECTEDFAIL: ") + ' '.join(self.expectedfail_tests))
+            if self.num_skipped > 0:
+                self.lprint(1, blue("SKIPPED: ") + ' '.join(self.skipped_tests))
+            self.lprint(0, "========================================")
+            self.lprint(0, f"{green('PASS:')} {self.num_pass}   {red('FAIL:')} {self.num_fail}   {red('ERROR:')} {self.num_error}   {yellow('EXPECTEDFAIL:')} {self.num_expectedfail}   {blue('SKIPPED:')} {self.num_skipped}\n")
+            self.lprint(0, f"Aggregate result: {red('ERROR') if self.num_error > 0 else red('FAIL') if self.num_fail > 0 else green('PASS')}\n")
+
+        return 0 if (self.num_fail == 0 and self.num_error == 0) else 2
+

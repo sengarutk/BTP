@@ -1,0 +1,29 @@
+//
+//                  Simu5G
+//
+// Authors: Andras Varga (OpenSim Ltd)
+//
+// This file is part of a software released under the license included in file
+// "license.pdf". Please read LICENSE and README files before using it.
+// The above files and the present reference are part of the software itself,
+// and cannot be removed from it.
+//
+
+package simu5g.stack.rlc;
+
+//
+// Module interface for the transmitting side of an RLC entity (TM/UM/AM).
+// Concrete entity types (e.g. RlcTmTxEntity, RlcUmTxEntity, RlcAmTxEntity) implement
+// this interface so that RlcTmEntity/RlcUmEntityBase/RlcAmEntityBase compound
+// modules can instantiate them via a typename parameter. Implementations
+// may declare additional gates (e.g. the AM control gates).
+//
+moduleinterface IRlcTxEntity
+{
+    parameters:
+        @display("i=block/layer");
+    gates:
+        input in;       // SDUs from the PDCP layer (direct per-DRB connection, not via a mux)
+        input macIn;    // MAC SDU requests, via the RlcMux
+        output out;     // PDUs and new-data notifications to MAC, via the RlcMux
+}

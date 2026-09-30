@@ -1,0 +1,15 @@
+%description:
+Check that type names must be unique.
+
+%file: test.ned
+
+simple Foo {}
+channel Foo {}
+
+network Test  {}
+
+%exitcode: 1
+
+%contains: stderr
+Redeclaration: channel Foo clashes with simple-module Foo defined at
+

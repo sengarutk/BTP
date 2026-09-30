@@ -1,0 +1,17 @@
+%description:
+Check that inner type names must be unique.
+
+%file: test.ned
+
+network Test
+{
+    types:
+        simple Foo {}
+        channel Foo {}
+}
+
+%exitcode: 1
+
+%contains: stderr
+Redeclaration: channel Test.Foo clashes with simple-module Foo defined at
+

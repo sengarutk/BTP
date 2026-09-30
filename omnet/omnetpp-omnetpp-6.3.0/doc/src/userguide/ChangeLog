@@ -1,0 +1,80 @@
+2025-11-10  ------ omnetpp-6.3.0 released ------
+
+2025-07-14  ------ omnetpp-6.2.0 released ------
+
+2025-06-04   Attila Torok
+
+	* Updated Qtenv chapter to recent changes.
+
+2025-06-05  ------ omnetpp-6.2.0pre1 released ------
+
+2025-04-23  Attila Torok
+
+	* Result Analysis chapter: Added a description of the delta measurement feature
+
+2025-03-10  Andras Varga
+
+	* Qtenv chapter significantly revised and expanded.
+
+2025-02-03  Attila Torok
+
+	* Result Analysis chapter: Expand the Plot Navigation section to include all
+	possible gestures in all the modes for both types of plots (native/matplotlib),
+	and also mention the function of the X and Y keys.
+
+2024-10-08  ------ omnetpp-6.1.0 released ------
+
+2024-06-21  Andras Varga
+
+	* A significant revision and expansion of the Result Analysis chapter.
+	Added many more details on how charts operate and how to work with them
+	effectively.
+
+2024-06-03  Andras Varga
+
+	* Proofreading using llm plus manual editing
+
+2024-02-01  ------ omnetpp-6.0.3 released ------
+
+2023-10-06  ------ omnetpp-6.0.2 released ------
+
+2022-09-01  ------ omnetpp-6.0.1 released ------
+
+2022-05-31  Attila Torok
+
+	* Document the addition of `python` folders to PYTHONPATH
+
+2022-04-11  ------ omnetpp-6.0 released ------
+
+2021-10-15  Andras Varga
+
+	* "Result Analysis" chapter: follow rename of Python module (plot -> ideplot)
+
+2021-03-17  Rudolf Hornig
+
+	Nits, including:
+
+	* All icons forced to 150 ppi for consistent rendering in latex
+	* Space -> SPACE for consistency
+	* No ellipsis (...) in guilabels and menuselections according to style guide
+
+2021-02-17 to 03-11  Attila Torok, Andras Varga
+
+	* "Result Analysis" chapter rewritten almost from scratch, to reflect the
+	new Analysis Tool.
+
+2021-02-24  Rudolf Hornig
+
+	* Converted from docbook to rst / sphinx.
+
+2020-04-14  Rudolf Hornig
+
+	* Updated dialog screenshot for NED Documentation Generator
+
+2018-06-27  Andras Varga
+
+	* Remove Tkenv sections, as Tkenv itself has been removed from OMNeT++
+
+2018-06-27  Andras Varga
+
+	* ChangeLog starts with first change in the 6.0 branch

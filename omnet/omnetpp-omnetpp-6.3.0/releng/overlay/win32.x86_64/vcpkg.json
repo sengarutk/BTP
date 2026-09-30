@@ -1,0 +1,26 @@
+{
+  "name": "omnetpp",
+  "version": "6.2.0",
+  "builtin-baseline": "dd3097e305afa53f7b4312371f62058d2e665320",
+  "dependencies": [
+  ],
+  "default-features": [ "gui" ],
+  "features": {
+    "gui": { 
+      "description": "Enables QT based graphical runtime interface",
+      "dependencies": [
+        { 
+          "name": "qtbase",
+          "features": [ "brotli", "jpeg", "png", "gui", "widgets", "opengl", "pcre2", "thread", "zstd" ]
+        },
+        { "name": "qtsvg" }
+      ]
+    },
+    "3d": {
+      "description": "Enabled OpenSceneGraph based views",
+      "dependencies": [
+        { "name": "osg" }
+      ]
+    }
+  }
+}

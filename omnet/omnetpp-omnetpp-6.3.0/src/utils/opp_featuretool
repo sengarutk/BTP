@@ -1,0 +1,799 @@
+#!/usr/bin/env python3
+#
+# opp_featuretool: This script manipulates omnetpp project features.
+#
+# Copyright (C) 2017 OpenSim Ltd.
+# Author: Zoltan Bojthe
+#
+
+from __future__ import print_function
+import argparse
+import csv
+import os
+import sys
+import re
+import types
+import xml.dom.minidom
+from os.path import isfile, isdir, relpath, normpath
+
+FEATURESFILE = ".oppfeatures"
+FEATURESTATEFILE = ".oppfeaturestate"
+NEDFOLDERSFILE = ".nedfolders"
+NEDEXCLUSIONSFILE = ".nedexclusions"
+
+def fail(msg, repairHint=None, prefix=None):
+    error(msg, repairHint, prefix)
+    sys.exit(1)
+
+def error(msg, repairHint=None, prefix=None):
+    print(f"opp_featuretool: {prefix or 'Error'}: {msg}", file=sys.stderr)
+    if repairHint:
+        print("Hint: " + repairHint, file=sys.stderr)
+
+def warn(msg, repairHint=None):
+    print("opp_featuretool: Warning: " + msg, file=sys.stderr)
+    if repairHint:
+        print("Hint: " + repairHint, file=sys.stderr)
+
+def queryYesNo(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError(f"invalid default answer: '{default}'")
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
+
+############################
+def readFile(filename):
+    try:
+        with open(filename, 'r') as f:
+            lines = f.readlines()
+        return lines
+    except (IOError, OSError) as e:
+        fail(f"Cannot read '{filename}': {e}")
+
+def writeFile(filename, content):
+    try:
+        f = open(filename, 'w')
+        f.write(content)
+        f.close()
+    except (IOError, OSError) as e:
+        fail(f"Cannot write '{filename}': {e}")
+
+def readXmlFile(filename, repairHint=None):
+    try:
+        f = open(filename, 'r')
+        domTree = xml.dom.minidom.parse(f)
+        f.close()
+        return domTree
+    except (IOError, OSError) as e:
+        fail(f"Cannot read '{filename}': {e}")
+    except Exception as e:
+        fail(f"Cannot parse XML file '{filename}': {e}", repairHint)
+
+
+def writeXmlFile(filename, domTree):
+    try:
+        f = open(filename, 'w')
+        domTree.writexml(f, addindent="    ", newl="\n")
+        f.close()
+    except (IOError, OSError) as e:
+        fail(f"Cannot write '{filename}': {e}")
+
+############################
+class OppParser(argparse.ArgumentParser):
+   def error(self, message):
+      sys.stderr.write(f'error: {message}\n')
+      self.print_help()
+      sys.exit(2)
+
+############################
+class Feature:
+    def __init__(self, feature, ord):
+        self.id = feature.getAttribute("id")
+        self.name = feature.getAttribute("name")
+        self.description = feature.getAttribute("description")
+        self.initiallyEnabled = True
+        if feature.hasAttribute("initiallyEnabled"):
+            self.initiallyEnabled = feature.getAttribute("initiallyEnabled") == 'true'
+        self.requires = feature.getAttribute("requires").split()
+        self.recommended = feature.getAttribute("recommended").split()
+        self.labels = feature.getAttribute("labels").split()
+        self.nedPackages = feature.getAttribute("nedPackages").split()
+        self.extraSourceFolders = feature.getAttribute("extraSourceFolders").split()
+        self.compileFlags = feature.getAttribute("compileFlags").split()
+        self.linkerFlags = feature.getAttribute("linkerFlags").split()
+        self.ord = ord
+
+############################
+class FeatureState:
+    def __init__(self, id, enabled, ord):
+        self.id = id
+        self.enabled = enabled
+        self.ord = ord
+
+    @classmethod
+    def fromXML(cls, xmlelement, ord):
+        return cls(xmlelement.getAttribute("id"), xmlelement.getAttribute("enabled").lower() == 'true', ord)
+
+    def __repr__(self):
+        return "<%s: id=%s, enabled=%s, ord=%d)" % (self.__class__.__name__, self.id, self.enabled, self.ord)
+
+############################
+class NedFolder:
+    def __init__(self, path, package, ord):
+        self.path = path
+        self.package = package
+        self.ord = ord
+
+    def isSubpackage(self, subpkg):
+        if self.package == '':
+             return True
+        return subpkg.startswith(self.package) and (len(subpkg) == len(self.package) or subpkg[len(self.package)] == '.')
+
+    def __repr__(self):
+        return "<%s: path=%s, package=%s, ord=%d>" % (self.__class__.__name__, self.path, self.package, self.ord)
+
+############################
+class FeatureTool:
+    # enforce static member list
+    __slots__ = ('args', 'parser',
+                 'features', 'sortedFeatures', 'featurestate', 'unusedFeaturestates', 'nedfolders', 'nedExclusions', 'cppSourceRoots',
+                 'featurestatesChanged', 'nedExclusionsChanged')
+
+    def __init__(self):
+        self.args = None
+        self.parser = None
+
+        self.features = None  # dict: id -> Feature
+        self.sortedFeatures = None  # list of (id,Feature) pairs (!!!)
+        self.featurestate = None  # dict: id -> FeatureState
+        self.unusedFeaturestates = [] # list of Feature items
+        self.nedfolders = [] # list of NedFolder items
+        self.nedExclusions = [] # list of excluded NED package names
+        self.cppSourceRoots = [] # list of folder path strings
+
+        self.featurestatesChanged = False
+        self.nedExclusionsChanged = False
+
+    def printIfVerbose(self, verbosity, msg):
+        if verbosity <= self.args.verbose:
+            print(msg)
+
+    def createParser(self):
+        self.parser = OppParser(description='''Turn project features on and off in an OMNeT++ model. List the enablement
+of the features. Show the command line options needed to generarate a makefile
+when using the opp_makemake command. The tool must be executed in the project
+root directory where the following files are present:
+.oppfeatures, .oppfeaturestate, .nedfolders, .nedexclusions''',
+                epilog='''Some commands have additional arguments specific to them. For more info, see:
+  opp_featuretool COMMAND -h''',
+                formatter_class=argparse.RawDescriptionHelpFormatter)
+        subparsers = self.parser.add_subparsers(help='', dest='command', metavar='COMMAND')
+
+        # list command
+        list_parser = subparsers.add_parser('list', help='List features')
+        list_group = list_parser.add_mutually_exclusive_group()
+        list_group.add_argument('-a', '--all', action='store_true', default=False, help='List all features (default)')
+        list_group.add_argument('-e', '--enabled', action='store_true', default=False, help='List enabled features')
+        list_group.add_argument('-d', '--disabled', action='store_true', default=False, help='List disabled features')
+        list_group.add_argument('-x', '--diff', action='store_true', default=False, help='List features not in default state')
+
+        # enable command
+        enable_parser = subparsers.add_parser('enable', help='Enable the specified features')
+        enable_parser.add_argument('features', nargs='+', help='Enable the specified features, use \'all\' for all features')
+        enable_parser.add_argument('-r', '--with-required', action='store_true', default=False, help='Enable all required features (but not the recommended ones) without asking for confirmation')
+        enable_parser.add_argument('-f', '--with-dependencies', action='store_true', default=False, help='Enable all required and recommended features without asking for confirmation')
+
+        # disable command
+        disable_parser = subparsers.add_parser('disable', help='Disable the specified features')
+        disable_parser.add_argument('features', nargs='+', help='Disable the specified features, use \'all\' for all features')
+        disable_parser.add_argument('-f', '--with-dependencies', action='store_true', default=False, help='Disable all dependent features without asking for confirmation')
+
+        # reset command
+        subparsers.add_parser('reset', help='Reset all feature enablements to their default')
+
+        # options command:
+        options_parser = subparsers.add_parser('options', help='Print opp_makemake command line arguments for creating a make file with the current feature enablement')
+        options_parser.add_argument('-s', '--srcpath', help='Selects the source folder to print makemake options for. (The default is the first value in the cppSourceRoots attribute of the <features> tag in \'%s\'.)' % (FEATURESFILE))
+        options_parser.add_argument('-c', '--compiler-options', action='store_true', help='Show compiler options (i.e. -D flags)')
+        options_parser.add_argument('-l', '--linker-options', action='store_true', help='Show linker options (i.e. -l and -L flags)')
+        options_parser.add_argument('-f', '--folder-options', action='store_true', help='Show excluded folders options (i.e. -X flags)')
+
+        # defines command:
+        subparsers.add_parser('defines', help='Print the compiler macros that can be used as a header file (i.e. the -DWITH_FEATURE options from the project features)')
+
+        # isenabled command
+        isenabled_parser = subparsers.add_parser('isenabled', help='Returns true if the specified feature(s) are enabled, and false otherwise.')
+        isenabled_parser.add_argument('features', nargs='+', help='feature list')
+
+        # common arguments:
+        self.parser.add_argument('-v', '--verbose', action='store_true', default=False, help='Verbose mode')
+        self.parser.add_argument('-q', '--quiet', action='store_true', default=False, dest='dummy', help='Ignored (kept for compatibility)')
+
+    ############################
+    def doResetCommand(self):
+        self.readNedFoldersFile()
+        self.readFeaturesFile()
+
+        self.printIfVerbose(1, "Enablements of all project features reset to the default")
+        self.resetFeatureStates()
+        self.writeFeatureStateFile()
+
+        self.resetNedExclusions()
+        self.writeNedExclusionsFile()
+
+
+    ############################
+    def readFeaturesFile(self):
+        domTree = readXmlFile(FEATURESFILE)
+        self.features = dict()
+        if not domTree:
+            return
+        featuresDom = domTree.documentElement
+        self.cppSourceRoots = featuresDom.getAttribute("cppSourceRoots").split()
+        featurelistDom = featuresDom.getElementsByTagName("feature")
+
+        ord = 0
+        for featureDom in featurelistDom:
+            feature = Feature(featureDom, ord)
+            if feature.id in self.features:
+                fail(f"Duplicate feature '{feature.id}'", prefix=f"Error in '{FEATURESFILE}'")
+            self.features[feature.id] = feature
+            ord += 1
+
+        # treat dangling feature references as hard errors (to prevent later errors)
+        for fid, feature in self.features.items():
+            for r in feature.requires + feature.recommended:
+                if not r in self.features:
+                    fail(f"Feature '{feature.id}' requires or recommends undefined feature '{r}'", prefix=f"Error in '{FEATURESFILE}'")
+
+        self.sortedFeatures = sorted(self.features.items(), key=lambda x:x[1].ord)
+
+
+    ############################
+    def readNedFoldersFile(self):
+        self.nedfolders = []
+
+        if not isfile(NEDFOLDERSFILE):
+            lines = ['.']  # the default is to have
+        else:
+            lines = readFile(NEDFOLDERSFILE)
+
+        ord = 0
+        for line in lines:
+            ord += 1
+            line = line.strip()
+            if line == "" or line[0] == '-':
+                continue    # ignore empty lines and OMNeT++ 4.x package exclusion lines
+            else:
+                path = line  # other lines define relative NED folder paths
+                self.nedfolders.append(NedFolder(path, self.getPackageForFolder(path), ord))
+
+    ############################
+    def getPackageForFolder(self, folder):
+        packageNedFile = folder + '/package.ned'
+        if not isfile(packageNedFile):
+            return ''  # no package.ned: default package
+        else:
+            return self.getPackageFromNedFile(packageNedFile)
+
+    ############################
+    def getPackageFromNedFile(self, nedfilename):
+        lines = readFile(nedfilename)
+        packageNameRegex = re.compile(r'^package\s+(([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+);')
+        for line in lines:
+            m = packageNameRegex.match(line)
+            if m:
+                package = m.group(1)
+                return package
+        return ''
+
+    ############################
+    def readNedExclusionsFile(self):
+        self.nedExclusions = []
+        if not isfile(NEDEXCLUSIONSFILE):
+            self.printIfVerbose(1, f"'{NEDEXCLUSIONSFILE}' file does not exist, creating it")
+            self.resetNedExclusions()
+            self.writeNedExclusionsFile()
+            return
+
+        lines = readFile(NEDEXCLUSIONSFILE)
+        dottedNameRegex = re.compile(r'^([a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+$')
+        ord = 0
+        for line in lines:
+            ord += 1
+            line = line.strip()
+            if not dottedNameRegex.match(line):
+                warn("Invalid line %s:%d: '%s'" % (NEDEXCLUSIONSFILE, ord, line))
+            self.nedExclusions.append(line)
+
+    ############################
+    def writeNedExclusionsFile(self):
+        content = "\n".join(sorted(self.nedExclusions))
+        writeFile(NEDEXCLUSIONSFILE, content)
+
+    ############################
+    def resetNedExclusions(self):
+        self.nedExclusions = []
+        for fk, feature in self.sortedFeatures:
+            if not feature.initiallyEnabled:
+                self.nedExclusions.extend(feature.nedPackages)
+
+    ############################
+    def writeFeatureStateFile(self):
+        domTree = xml.dom.minidom.parseString("<featurestates/>")
+        featurestateDom = domTree.documentElement
+        allFeaturestates = list(self.featurestate.values()) + self.unusedFeaturestates
+        for fs in sorted(allFeaturestates, key = lambda x: x.ord):
+            oneFS = domTree.createElement("feature")
+            oneFS.setAttribute("id", fs.id)
+            oneFS.setAttribute("enabled", str(fs.enabled).lower())
+            featurestateDom.appendChild(oneFS)
+        writeXmlFile(FEATURESTATEFILE, domTree)
+
+
+    ############################
+    def readFeatureStateFile(self):
+        self.featurestate = dict()
+
+        if not isfile(FEATURESTATEFILE):
+            self.printIfVerbose(1, "'" + FEATURESTATEFILE + "' does not exist, initializing with the default enablement settings")
+        else:
+            domTree = readXmlFile(FEATURESTATEFILE, "Repair the file by hand, or delete it")
+            featurestateDom = domTree.documentElement
+            featurestatelistDom = featurestateDom.getElementsByTagName("feature")
+            xord = len(self.features) + 1000
+            for featureDom in featurestatelistDom:
+                featureState = FeatureState.fromXML(featureDom, xord)
+                if featureState.id in self.features:
+                    featureState.ord = self.features[featureState.id].ord
+                    self.featurestate[featureState.id] = featureState
+                else:
+                    self.unusedFeaturestates.append(featureState)
+
+        # add missing feature states
+        for fk, feature in self.sortedFeatures:
+            if not (feature.id in self.featurestate):
+                fs = FeatureState(feature.id, feature.initiallyEnabled, feature.ord)
+                self.featurestate[fk] = fs
+                self.featurestatesChanged = True
+
+    ############################
+    def resetFeatureStates(self):
+        self.featurestate = dict()
+        for fk, feature in self.sortedFeatures:
+            fs = FeatureState(feature.id, feature.initiallyEnabled, feature.ord)
+            self.featurestate[fk] = fs
+
+    ############################
+    def isCxxSourceFolder(self, folder):
+        if len(self.cppSourceRoots) == 0:
+            return True
+        for cppSourceRoot in self.cppSourceRoots:
+            if folder.startswith(cppSourceRoot) and (len(folder) == len(cppSourceRoot) or folder[len(cppSourceRoot)] == '/'):
+                return True
+        return False
+
+
+    ############################
+    def getNedBasedCxxSourceFolders(self, feature):
+        result = []
+        for nedPackage in feature.nedPackages:
+            for nedfolder in self.nedfolders:
+                if nedfolder.isSubpackage(nedPackage):
+                    packageSuffix = nedPackage[len(nedfolder.package):]
+                    folder = nedfolder.path + '/' + packageSuffix.replace('.', '/')
+                    if (os.path.exists(folder) and self.isCxxSourceFolder(folder)):
+                        result.append(folder)
+        return result
+
+
+    ############################
+    def checkFeatureNedFoldersExist(self, feature):
+        retval = True
+        for nedPackage in feature.nedPackages:
+            nedPackageFolderFound = False
+            for nedfolder in self.nedfolders:
+                if nedfolder.isSubpackage(nedPackage):
+                    packageSuffix = nedPackage[len(nedfolder.package):]
+                    folder = nedfolder.path + '/' + packageSuffix.replace('.', '/')
+                    if os.path.exists(folder):
+                        nedPackageFolderFound = True
+            if not nedPackageFolderFound:
+                warn(f"No folder corresponds to NED package '{nedPackage}' referenced in feature '{feature.id}' (Hint: Make sure its NED root folder is listed in '{NEDFOLDERSFILE}'!)")
+                retval = False
+        return retval
+
+
+    ############################
+    def verifyFeaturesNedFolders(self):
+        for _,feature in self.sortedFeatures:
+            self.checkFeatureNedFoldersExist(feature)
+
+    ############################
+    def failUnknownFeature(self, feature):
+        def jaccard_similarity(word1, word2):
+            set1 = set(word1)
+            set2 = set(word2)
+            intersection = len(set1.intersection(set2))
+            union = len(set1) + len(set2) - intersection
+            similarity = intersection / union if union != 0 else 0
+            return similarity
+
+        most_similar =  max(self.features, key=lambda f: jaccard_similarity(feature.lower(), f.lower()))
+        more_candidates = [f for f in self.features if f!=most_similar and (f.lower() in feature.lower() or feature.lower() in f.lower())]
+        if more_candidates:
+            fail(f"Unknown feature '{feature}'. Did you mean one of {[most_similar] + more_candidates}?")
+        else:
+            fail(f"Unknown feature '{feature}'. Did you mean '{most_similar}'?")
+
+    ############################
+    def doListCommand(self):
+        self.readAllConfigFiles()
+
+        if self.args.enabled:
+            categ = "enabled "
+            self.printIfVerbose(1, "List of enabled features:")
+        elif self.args.disabled:
+            categ = "disabled "
+            self.printIfVerbose(1, "List of disabled features:")
+        elif self.args.diff:
+            categ = "changed "
+            self.printIfVerbose(1, "List of changed features:")
+        else:
+            categ = ""
+            self.printIfVerbose(1, "List of all features:")
+            self.args.all = True
+
+        cnt = 0
+        for key, fs in sorted(self.featurestate.items(), key=lambda x:x[1].ord):
+            assert fs.id in self.features
+            if self.args.all or (self.args.enabled and fs.enabled) or (self.args.disabled and not fs.enabled) or (self.args.diff and fs.enabled != self.features[fs.id].initiallyEnabled):
+                print("    %s %s" % ('+' if fs.enabled else '-', fs.id))
+                cnt += 1
+        self.printIfVerbose(1, "{} {}feature(s)".format(cnt, categ))
+        for key, _ in self.sortedFeatures:
+            assert key in self.featurestate
+
+
+    ############################
+    def collectRequiredFeatures(self, features, includeRecommended=False):
+        result = set()
+        for f in features:
+            dependencies = self.features[f].requires if not includeRecommended else self.features[f].requires + self.features[f].recommended
+            result.update(dependencies)
+            result.update(self.collectRequiredFeatures(dependencies))
+        return result
+
+    ############################
+    def updateNedExclusions(self):
+        self.nedExclusions = []
+        for _, fs in sorted(self.featurestate.items(), key=lambda x:x[1].ord):
+            if fs.id in self.features and not fs.enabled:
+                self.nedExclusions.extend(self.features[fs.id].nedPackages)
+        self.nedExclusionsChanged = True
+
+    ############################
+    def failOnUnknownFeatures(self, features):
+        for key in features:
+            if not key in self.features:
+                self.failUnknownFeature(key)
+
+    ############################
+    def doEnableCommand(self):
+        self.readAllConfigFiles()
+
+        if 'all' in self.args.features:
+            if len(self.args.features) > 1:
+                fail("'all' should not be used while individual features are mentioned on the command line")
+            else:
+                for key,_ in self.sortedFeatures:
+                    if not self.featurestate[key].enabled:
+                        self.featurestatesChanged = True
+                        self.featurestate[key].enabled = True
+        else:
+            self.failOnUnknownFeatures(self.args.features)
+            featuresToEnable = [f for f in self.args.features if not self.featurestate[f].enabled]
+            if not featuresToEnable:
+                self.printIfVerbose(1, "Feature(s) are already enabled")
+                return
+            enabledFeatures = [f for f in self.features if self.featurestate[f].enabled]
+            requiredFeaturesToEnable = self.collectRequiredFeatures(featuresToEnable).difference(enabledFeatures, featuresToEnable)
+            recommendedFeaturesToEnable = self.collectRequiredFeatures(featuresToEnable, True).difference(enabledFeatures, featuresToEnable, requiredFeaturesToEnable)
+
+            isOkToProceed = True
+            self.printIfVerbose(1, "Enabling feature(s):  " + ", ".join(sorted(featuresToEnable)))
+            if requiredFeaturesToEnable:
+                if self.args.with_dependencies or self.args.with_required:
+                    self.printIfVerbose(1, "Required features that will be enabled as well:  " + ", ".join(sorted(requiredFeaturesToEnable)))
+                else:
+                    print("Required features:  " + ", ".join(sorted(requiredFeaturesToEnable)))
+                    isOkToProceed = queryYesNo("Do you want to proceed?", default="yes")
+            if recommendedFeaturesToEnable:
+                if self.args.with_required:
+                    self.printIfVerbose(1, "Skipping recommended features: " + ", ".join(sorted(recommendedFeaturesToEnable)))
+                    enableRecommended = False
+                elif self.args.with_dependencies:
+                    self.printIfVerbose(1, "Adding recommended features: " + ", ".join(sorted(recommendedFeaturesToEnable)))
+                    enableRecommended = True
+                else:
+                    print("Recommended features:  " + ", ".join(sorted(recommendedFeaturesToEnable)))
+                    enableRecommended = queryYesNo("Also enable recommended features?", default="yes")
+            else:
+                enableRecommended = False
+            if isOkToProceed:
+                allFeaturesToEnable = featuresToEnable + list(requiredFeaturesToEnable)
+                if enableRecommended:
+                    allFeaturesToEnable += list(recommendedFeaturesToEnable)
+                for key in allFeaturesToEnable:
+                    self.featurestate[key].enabled = True
+                    self.featurestatesChanged = True
+
+    ############################
+    def collectDependentFeatures(self, features):
+        result = set()
+        for f in features:
+            requiring = [ff for ff in self.features if f in self.features[ff].requires]
+            result.update(requiring)
+            result.update(self.collectDependentFeatures(requiring))
+        return result
+
+    ############################
+    def doDisableCommand(self):
+        self.readAllConfigFiles()
+
+        if 'all' in self.args.features:
+            if len(self.args.features) > 1:
+                fail("'all' should not be used while individual features are mentioned on the command line")
+            else:
+                for key,_ in self.sortedFeatures:
+                    if self.featurestate[key].enabled:
+                        self.featurestate[key].enabled = False
+                        self.featurestatesChanged = True
+        else:
+            self.failOnUnknownFeatures(self.args.features)
+            featuresToDisable = [f for f in self.args.features if self.featurestate[f].enabled]
+            if not featuresToDisable:
+                self.printIfVerbose(1, "The requested features are already disabled")
+                return
+            disabledFeatures = [f for f in self.features if not self.featurestate[f].enabled]
+            dependentFeaturesToDisable = self.collectDependentFeatures(featuresToDisable).difference(disabledFeatures, featuresToDisable)
+
+            isOkToProceed = True
+            self.printIfVerbose(1, "Disabling feature(s):  " + ", ".join(sorted(featuresToDisable)))
+            if dependentFeaturesToDisable:
+                if self.args.with_dependencies:
+                    self.printIfVerbose(1, "Also disabling the following dependent features:  " + ", ".join(sorted(dependentFeaturesToDisable)))
+                else:
+                    print("The following features require the disabled ones and also need to be disabled:  " + ", ".join(sorted(dependentFeaturesToDisable)))
+                    isOkToProceed = queryYesNo("Do you want to proceed?", default="yes")
+            if isOkToProceed:
+                for key in (featuresToDisable + list(dependentFeaturesToDisable)):
+                    self.featurestate[key].enabled = False
+                    self.featurestatesChanged = True
+
+    ############################
+    def validateAndRepair(self):
+        errorList = []
+
+        # check C++ source folders
+        for cppSourceRoot in self.cppSourceRoots:
+            if not isdir(cppSourceRoot):
+                errorList.append(f"C++ source folder '{cppSourceRoot}' defined in '{FEATURESFILE}' does not exist")
+
+        # check NED folders
+        for nedFolder in self.nedfolders:
+            if not isdir(nedFolder.path):
+                errorList.append(f"NED source folder '{nedFolder.path}' listed in '{NEDFOLDERSFILE}' does not exist")
+
+        # fail fast if an undefined feature is referenced (already checked on feature file loading, but do it anyway again)
+        for fid, feature in self.sortedFeatures:
+            for r in feature.requires + feature.recommended:
+                if not r in self.features:
+                    fail(f"Feature '{feature.id}' requires or recommends undefined feature '{r}' in '{FEATURESFILE}'")
+
+        # check that required features are enabled)
+        for fid, feature in self.sortedFeatures:
+            if self.featurestate[fid].enabled:
+                for r in feature.requires:
+                    if not self.featurestate[r].enabled:
+                        errorList.append(f"Feature '{fid}' requires '{r}', but it is disabled")
+        for e in errorList:
+            error(e, prefix="Consistency check failed")
+
+        # check NED folder exclusions:
+        nedfolderErrorOccurred = False
+        for fid, feature in self.sortedFeatures:
+            for np in feature.nedPackages:
+                if self.featurestate[fid].enabled:
+                    if np in self.nedExclusions:
+                        warn(f"NED package '{np}' is part of the enabled feature '{fid}', but it is excluded in '{NEDEXCLUSIONSFILE}', fixing")
+                        nedfolderErrorOccurred = True
+                else:
+                    if not np in self.nedExclusions:
+                        warn(f"NED package '{np}' is part of the disabled feature '{fid}', but it is not excluded in '{NEDEXCLUSIONSFILE}', fixing")
+                        nedfolderErrorOccurred = True
+
+        # featurestates and nedexclusions will be regenerated on the way out from main()
+        if nedfolderErrorOccurred:
+            self.featurestatesChanged = True  # FIXME ?????
+
+        if errorList:
+            sys.exit(1)
+
+    ############################
+    def doOptionsCommand(self):
+        self.readAllConfigFiles()
+
+        if self.args.srcpath == None:
+            self.args.srcpath = self.cppSourceRoots[0]
+        elif self.args.srcpath not in self.cppSourceRoots:
+            fail("Source path '%s' is not specified in '%s'. Choose any of ['%s']" % (self.args.srcpath, FEATURESFILE, "','".join(self.cppSourceRoots)))
+        if (not (self.args.compiler_options or self.args.folder_options or self.args.linker_options)):
+            # enable all
+            self.args.compiler_options = True
+            self.args.folder_options = True
+            self.args.linker_options = True
+        extraSourceFolders = []
+        excludedExtraSourceFolders = []
+        excludedSourceFolders = []
+        compileFlags = []
+        linkerFlags = []
+        for fid,feature in self.sortedFeatures:
+            if self.featurestate[fid].enabled:
+                extraSourceFolders.extend(feature.extraSourceFolders)
+                compileFlags.extend(feature.compileFlags)
+                linkerFlags.extend(feature.linkerFlags)
+            else:
+                excludedExtraSourceFolders.extend(feature.extraSourceFolders)
+                excludedSourceFolders.extend(self.getNedBasedCxxSourceFolders(feature))
+
+        extraSourceFolders = ["-d"+x for x in extraSourceFolders]
+
+        allExcludedSourceFolders = []
+        srcPath = normpath(self.args.srcpath)
+        for f in excludedSourceFolders + excludedExtraSourceFolders:
+            if normpath(f).startswith(srcPath):
+                allExcludedSourceFolders.append("-X" + relpath(f,srcPath))
+
+        flags = []
+        if self.args.folder_options:
+            flags.extend(sorted(allExcludedSourceFolders))     # sort the excluded list so it will match the command line generated by the IDE
+        if self.args.compiler_options:
+            flags.extend(compileFlags)
+        if self.args.linker_options:
+            flags.extend(linkerFlags)
+
+        print(" ".join(flags))
+
+
+    ############################
+    def doDefinesCommand(self):
+        self.readAllConfigFiles()
+
+        print("//")
+        print("// Generated file, do not edit!")
+        print("//")
+        print("// This file defines symbols contributed by the currently active project features,")
+        print("// and it is regenerated every time a project feature is enabled or disabled.")
+        print("// See the Project Features dialog in the IDE, and opp_featuretool.")
+        print("//")
+        compileFlags = []
+        for fid,feature in self.sortedFeatures:
+            if self.featurestate[fid].enabled:
+                compileFlags.extend(feature.compileFlags)
+
+        defline = re.compile(r'^-D([a-zA-Z0-9_]+)$')
+        deflineeq = re.compile(r'^-D([a-zA-Z0-9_]+)=(.*)$')
+        flags = sorted(" ".join(compileFlags).split(" "))
+        for flag in flags:
+            matchObj = defline.match(flag)
+            if matchObj:
+                print("#ifndef {}\n#define {}\n#endif\n".format(matchObj.group(1), matchObj.group(1)))
+                continue
+            matchObj = deflineeq.match(flag)
+            if matchObj:
+                print("#ifndef {}\n#define {} {}\n#endif\n".format(matchObj.group(1), matchObj.group(1), matchObj.group(2)))
+                continue
+
+
+    ############################
+    def doIsEnabledCommand(self):
+        self.readAllConfigFiles()
+
+        featureOffList = set()
+        featureUnknownList = set()
+        for key in self.args.features:
+            if not key in self.features:
+                featureUnknownList.add(key)
+            elif not self.featurestate[key].enabled:
+                featureOffList.add(key)
+        if len(featureUnknownList) > 0:
+            fail("Unknown feature(s): {}".format((", ".join(sorted(featureUnknownList)))))
+        if len(featureOffList) > 0:
+            self.printIfVerbose(1, "Disabled feature(s): {}".format((", ".join(sorted(featureOffList)))))
+            return 1
+        else:
+            self.printIfVerbose(1, "Feature(s) {} are enabled".format((", ".join(self.args.features))))
+            return 0
+
+    ############################
+    def readAllConfigFiles(self):
+        self.readNedFoldersFile()
+        self.readFeaturesFile()
+        self.verifyFeaturesNedFolders()
+        self.readFeatureStateFile()
+        self.readNedExclusionsFile()
+
+    ############################
+    def run(self):
+        self.featurestatesChanged = False
+        self.features = dict()
+
+        self.createParser()
+        try:
+            self.args = self.parser.parse_args()
+        except (IOError, OSError) as e:
+            fail(f"{e}")
+
+        exitcode = 0
+        if self.args.command is None:
+            self.parser.print_help()
+        elif self.args.command == 'list':
+            self.doListCommand()
+        elif self.args.command == 'reset':
+            self.doResetCommand()
+        elif self.args.command == 'enable':
+            self.doEnableCommand()
+        elif self.args.command == 'disable':
+            self.doDisableCommand()
+        elif self.args.command == 'options':
+            self.doOptionsCommand()
+        elif self.args.command == 'defines':
+            self.doDefinesCommand()
+        elif self.args.command == 'isenabled':
+            exitcode = self.doIsEnabledCommand()
+        else:
+            fail(f"Unknown command '{self.args.command}'")
+
+        if self.featurestatesChanged:
+            self.writeFeatureStateFile()
+            self.printIfVerbose(1, f"opp_featuretool: '{FEATURESTATEFILE}' updated")
+            self.updateNedExclusions()
+
+        if self.nedExclusionsChanged:
+            self.writeNedExclusionsFile()
+            self.printIfVerbose(1, f"opp_featuretool: '{NEDEXCLUSIONSFILE}' updated")
+
+        if self.args.command:  # i.e. not Help
+            self.validateAndRepair()
+
+        sys.exit(exitcode)
+
+#####################################################
+tool = FeatureTool()
+tool.run()

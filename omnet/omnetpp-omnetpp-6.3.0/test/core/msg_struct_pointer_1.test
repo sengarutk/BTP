@@ -1,0 +1,80 @@
+%description:
+Test that pointer fields in structs are generated correctly.
+This test verifies the fix for the bug where pointer fields in structs
+caused compiler errors in the generated _m.cc file.
+
+%file: test.msg
+
+namespace @TESTNAME@;
+
+cplusplus {{ using namespace omnetpp; }}
+
+struct Foo {
+    cObject * payload;
+    cObject * payloads[3];
+};
+
+%includes:
+#include "test_m.h"
+
+%activity:
+
+#define PRINT_FIELD_TYPE(obj, fieldName, idx) \
+    do { \
+        int fieldIndex = desc->findField(fieldName); \
+        ASSERT(fieldIndex >= 0); \
+        omnetpp::cValue fieldValue = desc->getFieldValue(omnetpp::toAnyPtr(&obj), fieldIndex, idx); \
+        bool isArray = (desc->getFieldTypeFlags(fieldIndex) & omnetpp::cClassDescriptor::FD_ISARRAY) != 0; \
+        if (fieldValue.pointerValue() == nullptr) { \
+            if (isArray) { \
+                EV << "Field " << fieldName << "[" << idx << "] dynamic type: nullptr" << endl; \
+            } else { \
+                EV << "Field " << fieldName << " dynamic type: nullptr" << endl; \
+            } \
+        } else { \
+            const char *typeName = desc->getFieldDynamicTypeString(omnetpp::toAnyPtr(&obj), fieldIndex, idx); \
+            if (isArray) { \
+                EV << "Field " << fieldName << "[" << idx << "] dynamic type: " << (typeName ? typeName : "unknown") << endl; \
+            } else { \
+                EV << "Field " << fieldName << " dynamic type: " << (typeName ? typeName : "unknown") << endl; \
+            } \
+        } \
+    } while(0)
+
+// Test basic pointer fields in struct
+Foo foo;
+cObject obj;
+cMessage msg;
+
+// Get the descriptor for the problematic function: getFieldDynamicTypeString
+// This function contains the bug that was fixed
+cClassDescriptor *desc = cClassDescriptor::getDescriptorFor("@TESTNAME@::Foo");
+ASSERT(desc);
+
+// Test 1: nullptr
+foo.payload = nullptr;
+PRINT_FIELD_TYPE(foo, "payload", 0);
+
+// Test 2: cObject
+foo.payload = &obj;
+PRINT_FIELD_TYPE(foo, "payload", 0);
+
+// Test 3: cMessage (which extends cObject)
+foo.payload = &msg;
+PRINT_FIELD_TYPE(foo, "payload", 0);
+
+foo.payloads[0] = nullptr;
+foo.payloads[1] = &obj;
+foo.payloads[2] = &msg;
+PRINT_FIELD_TYPE(foo, "payloads", 0);
+PRINT_FIELD_TYPE(foo, "payloads", 1);
+PRINT_FIELD_TYPE(foo, "payloads", 2);
+
+
+%contains: stdout
+Field payload dynamic type: nullptr
+Field payload dynamic type: omnetpp::cObject
+Field payload dynamic type: omnetpp::cMessage
+Field payloads[0] dynamic type: nullptr
+Field payloads[1] dynamic type: omnetpp::cObject
+Field payloads[2] dynamic type: omnetpp::cMessage

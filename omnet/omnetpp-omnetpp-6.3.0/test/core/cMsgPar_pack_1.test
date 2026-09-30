@@ -1,0 +1,59 @@
+%description:
+Tests cMsgPar.parsimPack/parsimUnpack.
+
+%includes:
+#include <string.h>
+#include <omnetpp/cfilecommbuffer.h>
+
+%global:
+
+static void testPack(cMsgPar& par)
+{
+    EV << "testing with type " << par.getType() << "\n";
+
+    cFileCommBuffer buffer;
+    par.parsimPack(&buffer);
+
+    cMsgPar tmp("tmp");
+    tmp.parsimUnpack(&buffer);
+    ASSERT(buffer.isBufferEmpty());
+
+    ASSERT(par.getType() == tmp.getType());
+    ASSERT(par.str() == tmp.str());
+}
+
+%activity:
+cMsgPar p("par");
+testPack(p);
+
+p.setBoolValue(true);
+testPack(p);
+
+p.setLongValue(1234567890L);
+testPack(p);
+
+p.setDoubleValue(3.1415927);
+testPack(p);
+
+p.setStringValue("short string");
+testPack(p);
+
+p.setStringValue("a very very very very very very very very very very very very very very very very looooong string");
+testPack(p);
+
+p.setStringValue("");
+testPack(p);
+
+EV << "OK\n";
+
+
+%contains: stdout
+testing with type L
+testing with type B
+testing with type L
+testing with type D
+testing with type S
+testing with type S
+testing with type S
+OK
+
