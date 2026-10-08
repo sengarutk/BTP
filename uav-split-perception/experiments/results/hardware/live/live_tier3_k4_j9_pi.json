@@ -1,0 +1,30 @@
+{
+ "label": "tier3_k4_j9",
+ "role": "source",
+ "seg": "-1:4",
+ "enc": "int8_zstd",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1800,
+ "processed_at_source": 252,
+ "results": 126,
+ "fps_results": 2.1,
+ "fps_on_time": 0.0,
+ "lat_p50_ms": 1412.6063698331564,
+ "lat_p95_ms": 1981.9806406665066,
+ "lat_mean_ms": 1505.6763599788596,
+ "dropped_at_link": 109,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": 215.97130549980648,
+  "encode": 8.940038999753597,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 252,
+  "encode": 252,
+  "nms": 0
+ }
+}

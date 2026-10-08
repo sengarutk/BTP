@@ -1,0 +1,30 @@
+{
+ "label": "pi_solo_r3",
+ "role": "solo",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1787,
+ "processed_at_source": 97,
+ "results": 97,
+ "fps_results": 1.6166666666666667,
+ "fps_on_time": 0.0,
+ "lat_p50_ms": 588.817289999497,
+ "lat_p95_ms": 655.7984248000139,
+ "lat_mean_ms": 604.0468628479991,
+ "dropped_at_link": 0,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": 582.038898999599,
+  "encode": null,
+  "nms": 2.3236870001710486
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 97,
+  "encode": 0,
+  "nms": 97
+ }
+}

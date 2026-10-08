@@ -1,0 +1,13 @@
+placement,description,runs,fps_median,fps_min,fps_max,on_time_fps_median,on_time_fps_min,on_time_fps_max,lat_p50_ms_median,lat_p95_ms_median
+jetson_solo,Jetson GPU alone (camera on Jetson),3,18.45,18.45,18.45,18.45,18.45,18.45,34.6,61.1
+pi_laptop_jpeg,Pi JPEG -> laptop,4,15.16,11.57,25.85,14.74,11.13,25.83,107.1,232.4
+pi_jetson_jpeg,Pi JPEG -> Jetson,3,10.85,7.7,20.58,10.1,6.4,20.53,149.6,340.4
+jetson_laptop_jpeg,Jetson JPEG -> laptop (camera on Jetson),3,8.95,5.72,19.98,8.1,4.38,19.77,139.1,369.8
+pi_laptop_k1,Pi k1 INT8 -> laptop,1,6.98,6.98,6.98,2.47,2.47,2.47,323.6,467.4
+tier3_jpeg_relay,Pi JPEG -> Jetson relay -> laptop,3,3.4,3.25,6.32,0.47,0.37,2.52,570.4,1278.1
+pi_laptop_k4,Pi k4 INT8 -> laptop,3,4.15,4.02,4.2,0.02,0.0,0.02,418.5,643.7
+pi_jetson_k4,Pi k4 INT8 -> Jetson (detections on Jetson),3,2.72,2.7,4.17,0.0,0.0,0.0,690.7,1149.9
+pi_solo,Pi 5 CPU alone,3,1.62,1.55,1.63,0.0,0.0,0.0,588.8,655.8
+tier3_jpeg_j9,Pi JPEG -> Jetson k9 INT8 -> laptop,1,2.3,2.3,2.3,0.0,0.0,0.0,800.9,1965.4
+tier3_k4_j9,Pi k4 INT8 -> Jetson k9 INT8 -> laptop,1,2.1,2.1,2.1,0.0,0.0,0.0,1412.6,1982.0
+pi_laptop_k2,Pi k2 INT8 -> laptop,1,2.9,2.9,2.9,0.0,0.0,0.0,687.5,1098.6

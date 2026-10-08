@@ -1,0 +1,23 @@
+{
+ "label": "pi_laptop_jpeg_r3",
+ "role": "sink",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "LAPTOP-JPJH7SR6",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 694,
+ "dropped_in": 1,
+ "stage_ms_median": {
+  "decode": 3.544443505234085,
+  "compute": 16.730054499930702,
+  "encode": null,
+  "nms": 4.229563499393407
+ },
+ "stage_n": {
+  "decode": 694,
+  "compute": 694,
+  "encode": 0,
+  "nms": 694
+ }
+}

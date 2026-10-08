@@ -1,0 +1,2640 @@
+{
+ "rows": [
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 23.05,
+   "predicted": 30.05,
+   "rate_mbps": 33.07579570876466
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 21.55,
+   "predicted": 29.95,
+   "rate_mbps": 33.07579570876466
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 18.4,
+   "predicted": 30.0,
+   "rate_mbps": 33.07579570876466
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.1,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 29.95,
+   "rate_mbps": 33.07579570876466
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 11.95,
+   "predicted": 27.85,
+   "rate_mbps": 17.574945067200268
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 15.75,
+   "predicted": 27.75,
+   "rate_mbps": 17.574945067200268
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 12.6,
+   "predicted": 27.75,
+   "rate_mbps": 17.574945067200268
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 27.7,
+   "rate_mbps": 17.574945067200268
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 18.35,
+   "predicted": 30.05,
+   "rate_mbps": 23.759210878908743
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 17.85,
+   "predicted": 29.95,
+   "rate_mbps": 23.759210878908743
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 18.95,
+   "predicted": 30.0,
+   "rate_mbps": 23.759210878908743
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.1,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 29.95,
+   "rate_mbps": 23.759210878908743
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 25.5,
+   "predicted": 30.05,
+   "rate_mbps": 39.68305651737229
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.2,
+   "predicted": 4.7,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.1,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 29.95,
+   "rate_mbps": 39.68305651737229
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 8.8,
+   "predicted": 10.75,
+   "rate_mbps": 6.5228494356846625
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.2,
+   "predicted": 4.9,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 10.65,
+   "rate_mbps": 6.5228494356846625
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 17.6,
+   "predicted": 30.05,
+   "rate_mbps": 20.761418866808587
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 4.7,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.05,
+   "predicted": 29.9,
+   "rate_mbps": 20.761418866808587
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 14.2,
+   "predicted": 27.55,
+   "rate_mbps": 16.838014804574982
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.85,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 1.35,
+   "predicted": 27.45,
+   "rate_mbps": 16.838014804574982
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 12.3,
+   "predicted": 24.05,
+   "rate_mbps": 14.652314654375262
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.35,
+   "predicted": 4.9,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.95,
+   "predicted": 23.95,
+   "rate_mbps": 14.652314654375262
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 18.05,
+   "predicted": 30.05,
+   "rate_mbps": 21.758937358031247
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.3,
+   "predicted": 4.7,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.1,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 1.25,
+   "predicted": 29.95,
+   "rate_mbps": 21.758937358031247
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 12.45,
+   "predicted": 24.05,
+   "rate_mbps": 15.220568630598349
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 14.6,
+   "predicted": 23.95,
+   "rate_mbps": 15.220568630598349
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 12.95,
+   "predicted": 24.0,
+   "rate_mbps": 15.220568630598349
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 23.9,
+   "rate_mbps": 15.220568630598349
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 22.35,
+   "predicted": 30.05,
+   "rate_mbps": 21.65181541477454
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 17.9,
+   "predicted": 29.95,
+   "rate_mbps": 21.65181541477454
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 14.55,
+   "predicted": 30.0,
+   "rate_mbps": 21.65181541477454
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.1,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 29.95,
+   "rate_mbps": 21.65181541477454
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 9.85,
+   "predicted": 23.8,
+   "rate_mbps": 14.987428136186821
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 15.6,
+   "predicted": 23.7,
+   "rate_mbps": 14.987428136186821
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 11.25,
+   "predicted": 23.75,
+   "rate_mbps": 14.987428136186821
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.05,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "unimpaired_after_blackout",
+   "measured": 0.0,
+   "predicted": 23.7,
+   "rate_mbps": 14.987428136186821
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 4.25,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L0J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 4.75,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L0J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L0J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 8.5,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L2J1",
+   "kind": "rate_limited",
+   "measured": 5.25,
+   "predicted": 8.5,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J1",
+   "kind": "rate_limited",
+   "measured": 5.75,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 8.5,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.0,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L0J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.25,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L1J2",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L1J1",
+   "kind": "rate_limited",
+   "measured": 3.25,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L2J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 5.75,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L2J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 9.0,
+   "predicted": 8.5,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L4J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 6.25,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L4J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 6.25,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L4J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 6.75,
+   "predicted": 8.5,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L3J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 7.0,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L3J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 9.5,
+   "predicted": 8.75,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L3J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 8.75,
+   "predicted": 8.25,
+   "rate_mbps": 5.22060644458461
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 13.25,
+   "predicted": 26.75,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 12.75,
+   "predicted": 27.0,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 12.5,
+   "predicted": 26.25,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 13.5,
+   "predicted": 26.75,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L0J2",
+   "kind": "rate_limited",
+   "measured": 4.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L0J2",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L0J2",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 3.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.25,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L0J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 9.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L3J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L4J2",
+   "kind": "rate_limited",
+   "measured": 4.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L4J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.5,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 5.0,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 3.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 2.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L2J0",
+   "kind": "unimpaired",
+   "measured": 2.0,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L2J0",
+   "kind": "unimpaired",
+   "measured": 3.75,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L1J0",
+   "kind": "unimpaired",
+   "measured": 5.0,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L1J0",
+   "kind": "unimpaired",
+   "measured": 2.75,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L1J0",
+   "kind": "unimpaired",
+   "measured": 2.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L0J0",
+   "kind": "unimpaired",
+   "measured": 1.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L2J0",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.5,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L3J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L3J1",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L3J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 7.25,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L3J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 8.5,
+   "predicted": 4.75,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L1J0",
+   "kind": "unimpaired_after_blackout",
+   "measured": 8.75,
+   "predicted": 4.5,
+   "rate_mbps": 2.8524650544706676
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 12.0,
+   "predicted": 30.0,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J4",
+   "kind": "unimpaired",
+   "measured": 14.25,
+   "predicted": 30.25,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J2",
+   "kind": "unimpaired",
+   "measured": 13.25,
+   "predicted": 29.75,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 16.75,
+   "predicted": 30.0,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J0",
+   "kind": "unimpaired",
+   "measured": 18.0,
+   "predicted": 30.25,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J1",
+   "kind": "unimpaired",
+   "measured": 21.25,
+   "predicted": 30.0,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J1",
+   "kind": "unimpaired",
+   "measured": 20.75,
+   "predicted": 30.0,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J1",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J1",
+   "kind": "rate_limited",
+   "measured": 2.25,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L0J2",
+   "kind": "unimpaired",
+   "measured": 7.0,
+   "predicted": 30.0,
+   "rate_mbps": 19.352736933163403
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J2",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 10.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L1J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J0",
+   "kind": "rate_limited",
+   "measured": 5.5,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.5,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 8.5,
+   "predicted": 30.0,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 4.75,
+   "predicted": 30.25,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 14.0,
+   "predicted": 29.75,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 15.0,
+   "predicted": 30.0,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J2",
+   "kind": "unimpaired",
+   "measured": 18.5,
+   "predicted": 30.25,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J2",
+   "kind": "unimpaired",
+   "measured": 20.25,
+   "predicted": 30.0,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J2",
+   "kind": "unimpaired",
+   "measured": 18.0,
+   "predicted": 30.0,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L0J1",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 30.0,
+   "rate_mbps": 18.912971537217487
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J3",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 9.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L2J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L2J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 23.25,
+   "predicted": 30.0,
+   "rate_mbps": 34.98422361421066
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 25.75,
+   "predicted": 30.25,
+   "rate_mbps": 34.98422361421066
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 22.5,
+   "predicted": 29.75,
+   "rate_mbps": 34.98422361421066
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L2J0",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L1J0",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 9.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.75,
+   "predicted": 9.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L1J0",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 9.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L0J0",
+   "kind": "unimpaired",
+   "measured": 7.0,
+   "predicted": 30.0,
+   "rate_mbps": 34.98422361421066
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.5,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J4",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 9.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 9.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J4",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 5.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L0J3",
+   "kind": "unimpaired_after_blackout",
+   "measured": 5.0,
+   "predicted": 30.0,
+   "rate_mbps": 34.98422361421066
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.25,
+   "predicted": 4.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.5,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L3J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 9.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 8.75,
+   "predicted": 17.55,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 11.0,
+   "predicted": 17.45,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 8.95,
+   "predicted": 17.5,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 11.65,
+   "predicted": 17.55,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 11.4,
+   "predicted": 17.5,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 13.9,
+   "predicted": 17.4,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 12.95,
+   "predicted": 28.05,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 12.35,
+   "predicted": 28.0,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 15.75,
+   "predicted": 28.0,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 11.2,
+   "predicted": 28.0,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 16.2,
+   "predicted": 28.0,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 16.95,
+   "predicted": 27.95,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 11.15,
+   "predicted": 20.05,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 11.8,
+   "predicted": 20.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 9.85,
+   "predicted": 20.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 10.6,
+   "predicted": 20.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 12.15,
+   "predicted": 20.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 15.0,
+   "predicted": 19.95,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 14.55,
+   "predicted": 30.05,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 17.05,
+   "predicted": 29.95,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 13.75,
+   "predicted": 30.0,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 13.9,
+   "predicted": 30.05,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 17.4,
+   "predicted": 30.0,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 17.55,
+   "predicted": 29.9,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 14.45,
+   "predicted": 30.05,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 16.45,
+   "predicted": 29.95,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 14.15,
+   "predicted": 30.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 14.2,
+   "predicted": 30.05,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 16.75,
+   "predicted": 30.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 17.1,
+   "predicted": 29.9,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 16.45,
+   "predicted": 26.75,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 16.85,
+   "predicted": 26.6,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 13.45,
+   "predicted": 26.7,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 12.25,
+   "predicted": 26.7,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 11.5,
+   "predicted": 26.65,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 14.65,
+   "predicted": 26.6,
+   "rate_mbps": 16.79892709145564
+  }
+ ],
+ "summary": {
+  "unimpaired": {
+   "n": 93,
+   "measured_mean": 13.502150537634408,
+   "predicted_mean": 24.85967741935483,
+   "mae_fps": 11.362903225806452,
+   "corr": 0.7252780414897269
+  },
+  "rate_limited": {
+   "n": 124,
+   "measured_mean": 2.7,
+   "predicted_mean": 4.17741935483871,
+   "mae_fps": 1.55,
+   "corr": 0.893311645745362
+  },
+  "blackout": {
+   "n": 45,
+   "measured_mean": 0.0,
+   "predicted_mean": 0.023333333333333334,
+   "mae_fps": 0.023333333333333334,
+   "corr": null
+  },
+  "unimpaired_after_blackout": {
+   "n": 26,
+   "measured_mean": 3.898076923076923,
+   "predicted_mean": 17.21153846153846,
+   "mae_fps": 14.25576923076923,
+   "corr": -0.8350933844683284
+  },
+  "all": {
+   "n": 288,
+   "measured_mean": 5.874479166666666,
+   "predicted_mean": 11.383680555555555,
+   "mae_fps": 5.6272569444444445,
+   "corr": 0.8204420247327848
+  },
+  "all_but_recovery": {
+   "n": 262,
+   "measured_mean": 6.070610687022901,
+   "predicted_mean": 10.805343511450381,
+   "mae_fps": 4.770992366412214,
+   "corr": 0.9299704011340982
+  }
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "label": "pi_jetson_k4",
+ "role": "source",
+ "seg": "-1:4",
+ "enc": "int8_zstd",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1796,
+ "processed_at_source": 251,
+ "results": 250,
+ "fps_results": 4.166666666666667,
+ "fps_on_time": 0.0,
+ "lat_p50_ms": 385.7005678337373,
+ "lat_p95_ms": 457.4934908335308,
+ "lat_mean_ms": 394.8233872057136,
+ "dropped_at_link": 1,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": 216.11014700010855,
+  "encode": 8.904372999495536,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 251,
+  "encode": 251,
+  "nms": 0
+ }
+}

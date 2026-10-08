@@ -1,0 +1,30 @@
+{
+ "label": "pi_jetson_jpeg",
+ "role": "source",
+ "seg": "-1:-1",
+ "enc": "jpeg",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1800,
+ "processed_at_source": 1800,
+ "results": 1235,
+ "fps_results": 20.583333333333332,
+ "fps_on_time": 20.533333333333335,
+ "lat_p50_ms": 117.59504900055617,
+ "lat_p95_ms": 170.64217083361655,
+ "lat_mean_ms": 122.04209361899426,
+ "dropped_at_link": 477,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": null,
+  "encode": 3.603373000260035,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 0,
+  "encode": 1800,
+  "nms": 0
+ }
+}

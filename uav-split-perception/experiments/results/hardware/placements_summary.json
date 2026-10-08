@@ -1,0 +1,366 @@
+{
+ "devices": {
+  "pi": {
+   "full_ms": 757.588298499968,
+   "power": {
+    "sensor": "pi",
+    "idle_w": 2.0333672882705787,
+    "active_w": 4.718729174954557,
+    "samples": [
+     44,
+     67
+    ]
+   }
+  },
+  "jetson": {
+   "full_ms": 22.693572500429582,
+   "power": {
+    "sensor": "jetson",
+    "idle_w": 3.217329515789473,
+    "active_w": 10.538712306620209,
+    "samples": [
+     190,
+     287
+    ]
+   }
+  },
+  "laptop": {
+   "full_ms": 5.4638009969494306,
+   "power": {
+    "sensor": "laptop",
+    "idle_w": 2.6534653465346527,
+    "active_w": 49.17054794520548,
+    "samples": [
+     101,
+     146
+    ]
+   }
+  }
+ },
+ "links": {
+  "jetson>pi": {
+   "rtt_ms": 2.7090289995612693,
+   "mbps_fit": 10.68,
+   "bulk_mbps": 13.286981533273673
+  },
+  "pi>laptop": {
+   "rtt_ms": 4.927761500084671,
+   "mbps_fit": 30.6,
+   "bulk_mbps": 29.97659857718201
+  },
+  "laptop>pi": {
+   "rtt_ms": 4.927761500084671,
+   "mbps_fit": 30.6,
+   "bulk_mbps": 29.97659857718201
+  },
+  "jetson>laptop": {
+   "rtt_ms": 3.972550000071351,
+   "mbps_fit": 25.49,
+   "bulk_mbps": 18.452162130173956
+  }
+ },
+ "n_placements": 1150,
+ "deadline_ms": 300.0,
+ "best_per_chain": {
+  "jetson": {
+   "by_on_time_fps": {
+    "chain": "jetson",
+    "cuts": "",
+    "encs": "",
+    "latency_ms": 34.67,
+    "bottleneck_ms": 34.67,
+    "fps": 15.0,
+    "fps_on_time": 15.0,
+    "energy_uav_j": 0.2539,
+    "map50_95": 0.444,
+    "acc_source": "measured",
+    "stages_ms": "34.7"
+   },
+   "by_latency": {
+    "chain": "jetson",
+    "cuts": "",
+    "encs": "",
+    "latency_ms": 34.67,
+    "bottleneck_ms": 34.67,
+    "fps": 15.0,
+    "fps_on_time": 15.0,
+    "energy_uav_j": 0.2539,
+    "map50_95": 0.444,
+    "acc_source": "measured",
+    "stages_ms": "34.7"
+   }
+  },
+  "jetson>laptop": {
+   "by_on_time_fps": {
+    "chain": "jetson>laptop",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 130.46,
+    "bottleneck_ms": 69.36,
+    "fps": 14.42,
+    "fps_on_time": 14.42,
+    "energy_uav_j": 0.0437,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "6.0;69.4;11.4"
+   },
+   "by_latency": {
+    "chain": "jetson>laptop",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 130.46,
+    "bottleneck_ms": 69.36,
+    "fps": 14.42,
+    "fps_on_time": 14.42,
+    "energy_uav_j": 0.0437,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "6.0;69.4;11.4"
+   }
+  },
+  "pi": {
+   "by_on_time_fps": {
+    "chain": "pi",
+    "cuts": "",
+    "encs": "",
+    "latency_ms": 761.87,
+    "bottleneck_ms": 761.87,
+    "fps": 1.3,
+    "fps_on_time": 0.0,
+    "energy_uav_j": 2.0459,
+    "map50_95": 0.444,
+    "acc_source": "measured",
+    "stages_ms": "761.9"
+   },
+   "by_latency": {
+    "chain": "pi",
+    "cuts": "",
+    "encs": "",
+    "latency_ms": 761.87,
+    "bottleneck_ms": 761.87,
+    "fps": 1.3,
+    "fps_on_time": 0.0,
+    "energy_uav_j": 2.0459,
+    "map50_95": 0.444,
+    "acc_source": "measured",
+    "stages_ms": "761.9"
+   }
+  },
+  "pi>jetson": {
+   "by_on_time_fps": {
+    "chain": "pi>jetson",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 105.64,
+    "bottleneck_ms": 58.69,
+    "fps": 17.04,
+    "fps_on_time": 17.04,
+    "energy_uav_j": 0.3173,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;58.7;38.0"
+   },
+   "by_latency": {
+    "chain": "pi>jetson",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 105.64,
+    "bottleneck_ms": 58.69,
+    "fps": 17.04,
+    "fps_on_time": 17.04,
+    "energy_uav_j": 0.3173,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;58.7;38.0"
+   }
+  },
+  "pi>jetson>laptop": {
+   "by_on_time_fps": {
+    "chain": "pi>jetson>laptop",
+    "cuts": "-1,-1",
+    "encs": "jpeg,jpeg",
+    "latency_ms": 193.13,
+    "bottleneck_ms": 70.37,
+    "fps": 14.21,
+    "fps_on_time": 14.21,
+    "energy_uav_j": 0.0391,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;58.7;0.0;70.4;11.4"
+   },
+   "by_latency": {
+    "chain": "pi>jetson>laptop",
+    "cuts": "-1,-1",
+    "encs": "jpeg,jpeg",
+    "latency_ms": 193.13,
+    "bottleneck_ms": 70.37,
+    "fps": 14.21,
+    "fps_on_time": 14.21,
+    "energy_uav_j": 0.0391,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;58.7;0.0;70.4;11.4"
+   }
+  },
+  "pi>laptop": {
+   "by_on_time_fps": {
+    "chain": "pi>laptop",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 45.78,
+    "bottleneck_ms": 24.43,
+    "fps": 30.0,
+    "fps_on_time": 30.0,
+    "energy_uav_j": 0.0283,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;24.4;11.4"
+   },
+   "by_latency": {
+    "chain": "pi>laptop",
+    "cuts": "-1",
+    "encs": "jpeg",
+    "latency_ms": 45.78,
+    "bottleneck_ms": 24.43,
+    "fps": 30.0,
+    "fps_on_time": 30.0,
+    "energy_uav_j": 0.0283,
+    "map50_95": 0.4407,
+    "acc_source": "measured",
+    "stages_ms": "7.7;24.4;11.4"
+   }
+  }
+ },
+ "top10": [
+  {
+   "chain": "pi>laptop",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "latency_ms": 45.78,
+   "bottleneck_ms": 24.43,
+   "fps": 30.0,
+   "fps_on_time": 30.0,
+   "energy_uav_j": 0.0283,
+   "map50_95": 0.4407,
+   "acc_source": "measured",
+   "stages_ms": "7.7;24.4;11.4"
+  },
+  {
+   "chain": "pi>jetson",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "latency_ms": 105.64,
+   "bottleneck_ms": 58.69,
+   "fps": 17.04,
+   "fps_on_time": 17.04,
+   "energy_uav_j": 0.3173,
+   "map50_95": 0.4407,
+   "acc_source": "measured",
+   "stages_ms": "7.7;58.7;38.0"
+  },
+  {
+   "chain": "jetson",
+   "cuts": "",
+   "encs": "",
+   "latency_ms": 34.67,
+   "bottleneck_ms": 34.67,
+   "fps": 15.0,
+   "fps_on_time": 15.0,
+   "energy_uav_j": 0.2539,
+   "map50_95": 0.444,
+   "acc_source": "measured",
+   "stages_ms": "34.7"
+  },
+  {
+   "chain": "jetson>laptop",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "latency_ms": 130.46,
+   "bottleneck_ms": 69.36,
+   "fps": 14.42,
+   "fps_on_time": 14.42,
+   "energy_uav_j": 0.0437,
+   "map50_95": 0.4407,
+   "acc_source": "measured",
+   "stages_ms": "6.0;69.4;11.4"
+  },
+  {
+   "chain": "pi>jetson>laptop",
+   "cuts": "-1,-1",
+   "encs": "jpeg,jpeg",
+   "latency_ms": 193.13,
+   "bottleneck_ms": 70.37,
+   "fps": 14.21,
+   "fps_on_time": 14.21,
+   "energy_uav_j": 0.0391,
+   "map50_95": 0.4407,
+   "acc_source": "measured",
+   "stages_ms": "7.7;58.7;0.0;70.4;11.4"
+  },
+  {
+   "chain": "pi>laptop",
+   "cuts": "1",
+   "encs": "int8_zstd",
+   "latency_ms": 227.62,
+   "bottleneck_ms": 116.53,
+   "fps": 8.58,
+   "fps_on_time": 8.58,
+   "energy_uav_j": 0.2985,
+   "map50_95": 0.4439,
+   "acc_source": "nearest",
+   "stages_ms": "97.6;116.5;11.3"
+  },
+  {
+   "chain": "jetson>laptop",
+   "cuts": "4",
+   "encs": "int8_zstd",
+   "latency_ms": 208.22,
+   "bottleneck_ms": 140.66,
+   "fps": 7.11,
+   "fps_on_time": 7.11,
+   "energy_uav_j": 0.1166,
+   "map50_95": 0.4439,
+   "acc_source": "measured",
+   "stages_ms": "15.9;140.7;7.9"
+  },
+  {
+   "chain": "pi>jetson>laptop",
+   "cuts": "-1,4",
+   "encs": "jpeg,int8_zstd",
+   "latency_ms": 279.18,
+   "bottleneck_ms": 140.66,
+   "fps": 7.11,
+   "fps_on_time": 7.11,
+   "energy_uav_j": 0.1801,
+   "map50_95": 0.4407,
+   "acc_source": "measured",
+   "stages_ms": "7.7;58.7;19.3;140.7;7.9"
+  },
+  {
+   "chain": "jetson>laptop",
+   "cuts": "3",
+   "encs": "int8_zstd",
+   "latency_ms": 213.6,
+   "bottleneck_ms": 147.2,
+   "fps": 6.79,
+   "fps_on_time": 6.79,
+   "energy_uav_j": 0.1045,
+   "map50_95": 0.4439,
+   "acc_source": "nearest",
+   "stages_ms": "14.3;147.2;8.4"
+  },
+  {
+   "chain": "pi>jetson>laptop",
+   "cuts": "-1,3",
+   "encs": "jpeg,int8_zstd",
+   "latency_ms": 284.56,
+   "bottleneck_ms": 147.2,
+   "fps": 6.79,
+   "fps_on_time": 6.79,
+   "energy_uav_j": 0.168,
+   "map50_95": 0.4407,
+   "acc_source": "nearest",
+   "stages_ms": "7.7;58.7;17.6;147.2;8.4"
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "label": "jetson_solo_r3",
+ "role": "solo",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "nano",
+ "device": "cuda",
+ "half": true,
+ "captured": 1799,
+ "processed_at_source": 1107,
+ "results": 1107,
+ "fps_results": 18.45,
+ "fps_on_time": 18.45,
+ "lat_p50_ms": 34.595076333062025,
+ "lat_p95_ms": 61.12865269969916,
+ "lat_mean_ms": 37.477144244697655,
+ "dropped_at_link": 0,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": 22.705417999532074,
+  "encode": null,
+  "nms": 8.99138699969626
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 1107,
+  "encode": 0,
+  "nms": 1107
+ }
+}

@@ -1,0 +1,940 @@
+{
+ "sizes": [
+  1,
+  2,
+  3,
+  5,
+  10,
+  20
+ ],
+ "summary": {
+  "pi5|wifi_ap|waterfill|moderate": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.7,
+    14.73,
+    11.11,
+    5.47,
+    0.0,
+    0.0
+   ],
+   "adaptive_all": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.31,
+    0.0
+   ],
+   "adaptive_coord": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.32,
+    4.15
+   ],
+   "adaptive_coord_rssi": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.32,
+    4.15
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord",
+    "adaptive_coord"
+   ]
+  },
+  "pi5|wifi_ap|waterfill|blackout": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.19,
+    14.18,
+    10.8,
+    6.49,
+    0.04,
+    0.0
+   ],
+   "adaptive_all": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.29,
+    0.31
+   ],
+   "adaptive_coord": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.21,
+    4.09
+   ],
+   "adaptive_coord_rssi": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.21,
+    4.09
+   ],
+   "best_by_n": [
+    "jpeg_q90",
+    "jpeg_q90",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord"
+   ]
+  },
+  "pi5|wifi_ap|capped|moderate": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.7,
+    14.73,
+    11.11,
+    5.47,
+    0.0,
+    0.0
+   ],
+   "adaptive_all": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.31,
+    4.16
+   ],
+   "adaptive_coord": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.29,
+    4.12
+   ],
+   "adaptive_coord_rssi": [
+    14.96,
+    14.97,
+    14.98,
+    14.97,
+    8.29,
+    4.12
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all"
+   ]
+  },
+  "pi5|wifi_ap|capped|blackout": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.19,
+    14.18,
+    10.8,
+    6.49,
+    0.04,
+    0.0
+   ],
+   "adaptive_all": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.3,
+    4.15
+   ],
+   "adaptive_coord": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.19,
+    4.07
+   ],
+   "adaptive_coord_rssi": [
+    14.15,
+    14.15,
+    14.16,
+    14.15,
+    8.18,
+    4.07
+   ],
+   "best_by_n": [
+    "jpeg_q90",
+    "jpeg_q90",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all"
+   ]
+  },
+  "pi5|cell|waterfill|moderate": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.7,
+    14.74,
+    14.75,
+    14.74,
+    13.31,
+    5.49
+   ],
+   "adaptive_all": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.97,
+    14.97
+   ],
+   "adaptive_coord": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.97,
+    14.97
+   ],
+   "adaptive_coord_rssi": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.97,
+    14.97
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all"
+   ]
+  },
+  "pi5|cell|waterfill|blackout": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.19,
+    14.18,
+    14.18,
+    14.18,
+    12.93,
+    6.43
+   ],
+   "adaptive_all": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.17,
+    14.16
+   ],
+   "adaptive_coord": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.17,
+    14.16
+   ],
+   "adaptive_coord_rssi": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.17,
+    14.16
+   ],
+   "best_by_n": [
+    "jpeg_q90",
+    "jpeg_q90",
+    "jpeg_q90",
+    "jpeg_q90",
+    "adaptive_all",
+    "adaptive_all"
+   ]
+  },
+  "pi5|cell|capped|moderate": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.7,
+    14.74,
+    14.75,
+    14.74,
+    11.13,
+    5.21
+   ],
+   "adaptive_all": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.92,
+    12.56
+   ],
+   "adaptive_coord": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.92,
+    12.56
+   ],
+   "adaptive_coord_rssi": [
+    14.96,
+    14.97,
+    14.97,
+    14.97,
+    14.92,
+    12.34
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all"
+   ]
+  },
+  "pi5|cell|capped|blackout": {
+   "onboard": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "split_k4_int8_zstd": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    14.19,
+    14.18,
+    14.18,
+    14.18,
+    10.47,
+    5.25
+   ],
+   "adaptive_all": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.16,
+    10.94
+   ],
+   "adaptive_coord": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.16,
+    10.94
+   ],
+   "adaptive_coord_rssi": [
+    14.15,
+    14.16,
+    14.16,
+    14.16,
+    14.16,
+    11.38
+   ],
+   "best_by_n": [
+    "jpeg_q90",
+    "jpeg_q90",
+    "jpeg_q90",
+    "jpeg_q90",
+    "adaptive_all",
+    "adaptive_coord_rssi"
+   ]
+  },
+  "jetson|wifi_ap|waterfill|moderate": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    7.53,
+    4.56,
+    0.02,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    25.37,
+    16.42,
+    11.08,
+    6.66,
+    0.0,
+    0.0
+   ],
+   "adaptive_all": [
+    29.4,
+    29.52,
+    20.27,
+    18.33,
+    16.4,
+    13.95
+   ],
+   "adaptive_coord": [
+    29.4,
+    29.52,
+    20.27,
+    22.39,
+    18.71,
+    16.85
+   ],
+   "adaptive_coord_rssi": [
+    29.4,
+    29.52,
+    20.27,
+    22.39,
+    18.71,
+    16.85
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord",
+    "adaptive_coord",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|wifi_ap|waterfill|blackout": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    8.9,
+    4.74,
+    0.39,
+    0.03,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    28.01,
+    16.15,
+    11.0,
+    6.65,
+    0.57,
+    0.0
+   ],
+   "adaptive_all": [
+    29.07,
+    29.07,
+    19.01,
+    17.65,
+    14.56,
+    13.75
+   ],
+   "adaptive_coord": [
+    29.07,
+    29.07,
+    19.01,
+    22.07,
+    18.65,
+    16.83
+   ],
+   "adaptive_coord_rssi": [
+    29.07,
+    29.07,
+    19.01,
+    22.07,
+    18.65,
+    16.83
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord",
+    "adaptive_coord",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|wifi_ap|capped|moderate": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    7.53,
+    4.56,
+    0.02,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    25.37,
+    16.42,
+    11.08,
+    6.66,
+    3.32,
+    1.66
+   ],
+   "adaptive_all": [
+    29.4,
+    29.52,
+    20.27,
+    18.33,
+    16.82,
+    14.88
+   ],
+   "adaptive_coord": [
+    29.4,
+    29.52,
+    20.27,
+    22.39,
+    18.71,
+    16.85
+   ],
+   "adaptive_coord_rssi": [
+    29.4,
+    29.52,
+    20.27,
+    22.39,
+    18.71,
+    16.85
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord",
+    "adaptive_coord",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|wifi_ap|capped|blackout": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    8.9,
+    4.74,
+    0.39,
+    0.03,
+    0.0,
+    0.0
+   ],
+   "jpeg_q90": [
+    28.01,
+    16.15,
+    11.0,
+    6.65,
+    3.31,
+    1.66
+   ],
+   "adaptive_all": [
+    29.07,
+    29.07,
+    19.01,
+    17.65,
+    16.19,
+    14.68
+   ],
+   "adaptive_coord": [
+    29.07,
+    29.07,
+    19.01,
+    22.07,
+    18.65,
+    16.83
+   ],
+   "adaptive_coord_rssi": [
+    29.07,
+    29.07,
+    19.01,
+    22.07,
+    18.65,
+    16.83
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord",
+    "adaptive_coord",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|cell|waterfill|moderate": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    8.49,
+    8.63,
+    8.61,
+    7.38,
+    0.36,
+    0.0
+   ],
+   "jpeg_q90": [
+    25.51,
+    25.66,
+    25.67,
+    24.88,
+    13.26,
+    6.65
+   ],
+   "adaptive_all": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    29.5,
+    18.89
+   ],
+   "adaptive_coord": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    29.5,
+    22.59
+   ],
+   "adaptive_coord_rssi": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    29.5,
+    22.59
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|cell|waterfill|blackout": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    11.44,
+    11.38,
+    11.15,
+    7.7,
+    1.36,
+    0.0
+   ],
+   "jpeg_q90": [
+    28.04,
+    28.0,
+    27.97,
+    25.32,
+    13.3,
+    6.65
+   ],
+   "adaptive_all": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    29.07,
+    18.02
+   ],
+   "adaptive_coord": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    29.07,
+    22.39
+   ],
+   "adaptive_coord_rssi": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    29.07,
+    22.39
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord"
+   ]
+  },
+  "jetson|cell|capped|moderate": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    8.49,
+    8.63,
+    8.61,
+    7.38,
+    3.48,
+    1.82
+   ],
+   "jpeg_q90": [
+    25.51,
+    25.66,
+    25.67,
+    24.88,
+    13.02,
+    6.55
+   ],
+   "adaptive_all": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    23.88,
+    19.2
+   ],
+   "adaptive_coord": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    23.88,
+    17.76
+   ],
+   "adaptive_coord_rssi": [
+    29.4,
+    29.49,
+    29.47,
+    29.45,
+    23.95,
+    19.29
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord_rssi",
+    "adaptive_coord_rssi"
+   ]
+  },
+  "jetson|cell|capped|blackout": {
+   "onboard": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+   ],
+   "split_k4_int8_zstd": [
+    11.44,
+    11.38,
+    11.15,
+    7.7,
+    3.88,
+    1.94
+   ],
+   "jpeg_q90": [
+    28.04,
+    28.0,
+    27.97,
+    25.32,
+    13.16,
+    6.6
+   ],
+   "adaptive_all": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    22.93,
+    18.24
+   ],
+   "adaptive_coord": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    22.93,
+    18.07
+   ],
+   "adaptive_coord_rssi": [
+    29.07,
+    29.08,
+    29.08,
+    29.08,
+    23.05,
+    18.21
+   ],
+   "best_by_n": [
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_all",
+    "adaptive_coord_rssi",
+    "adaptive_all"
+   ]
+  }
+ }
+}

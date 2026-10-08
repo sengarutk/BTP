@@ -1,0 +1,23 @@
+{
+ "label": "tier3_k4_j9",
+ "role": "sink",
+ "seg": "9:22",
+ "enc": "int8_zstd",
+ "host": "LAPTOP-JPJH7SR6",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 126,
+ "dropped_in": 0,
+ "stage_ms_median": {
+  "decode": 4.081646497070324,
+  "compute": 19.318185004522093,
+  "encode": null,
+  "nms": 4.753277498821262
+ },
+ "stage_n": {
+  "decode": 126,
+  "compute": 126,
+  "encode": 0,
+  "nms": 126
+ }
+}

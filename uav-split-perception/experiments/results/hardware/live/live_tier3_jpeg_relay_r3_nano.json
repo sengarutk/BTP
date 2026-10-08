@@ -1,0 +1,23 @@
+{
+ "label": "tier3_jpeg_relay_r3",
+ "role": "mid",
+ "seg": "-1:-1",
+ "enc": "jpeg",
+ "host": "nano",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 204,
+ "dropped_in": 0,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": null,
+  "encode": null,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 0,
+  "encode": 0,
+  "nms": 0
+ }
+}

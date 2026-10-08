@@ -1,0 +1,23 @@
+{
+ "label": "jetson_laptop_jpeg",
+ "role": "sink",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "LAPTOP-JPJH7SR6",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 1199,
+ "dropped_in": 1,
+ "stage_ms_median": {
+  "decode": 3.2153979991562665,
+  "compute": 12.006693999865092,
+  "encode": null,
+  "nms": 4.448334002518095
+ },
+ "stage_n": {
+  "decode": 1199,
+  "compute": 1199,
+  "encode": 0,
+  "nms": 1199
+ }
+}

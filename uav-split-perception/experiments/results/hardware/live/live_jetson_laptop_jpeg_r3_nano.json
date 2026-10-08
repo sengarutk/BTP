@@ -1,0 +1,30 @@
+{
+ "label": "jetson_laptop_jpeg_r3",
+ "role": "source",
+ "seg": "-1:-1",
+ "enc": "jpeg",
+ "host": "nano",
+ "device": "cuda",
+ "half": true,
+ "captured": 1800,
+ "processed_at_source": 1800,
+ "results": 343,
+ "fps_results": 5.716666666666667,
+ "fps_on_time": 4.383333333333334,
+ "lat_p50_ms": 179.46614133325056,
+ "lat_p95_ms": 602.3124824007023,
+ "lat_mean_ms": 237.48973389652647,
+ "dropped_at_link": 1457,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": null,
+  "encode": 3.5513019993231865,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 0,
+  "encode": 1800,
+  "nms": 0
+ }
+}

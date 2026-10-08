@@ -1,0 +1,30 @@
+{
+ "label": "pi_laptop_jpeg",
+ "role": "source",
+ "seg": "-1:-1",
+ "enc": "jpeg",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1800,
+ "processed_at_source": 1800,
+ "results": 1551,
+ "fps_results": 25.85,
+ "fps_on_time": 25.833333333333332,
+ "lat_p50_ms": 72.46121533353289,
+ "lat_p95_ms": 120.56846583391234,
+ "lat_mean_ms": 76.48701710568123,
+ "dropped_at_link": 243,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": null,
+  "encode": 3.5801240001092083,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 0,
+  "encode": 1800,
+  "nms": 0
+ }
+}

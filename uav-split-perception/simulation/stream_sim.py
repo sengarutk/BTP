@@ -11,6 +11,16 @@ Per UAV:
     is sent over an 802.11ax air-to-air link (log-distance path loss, per-link log-normal shadowing,
     goodput-maximising MCS with packet errors) to the neighbour with the best estimate, and then
     competes for that neighbour's uplink.
+Optional swarm coordination (``coordination="admission"``): a coordinator that knows the shared capacity
+and every UAV's reported goodput estimate decides, once per window, how many UAVs K may offload at the same
+time (the K that maximises the swarm's expected value, each admitted UAV planning with min(own estimate,
+headroom x capacity / expected number sending at once, i.e. K x the duty cycle of its chosen configuration));
+the admitted set rotates round-robin over the UAVs whose links can carry a frame. An admitted UAV keeps
+choosing per frame (as the uncoordinated policy) among the onboard configurations and the offload
+configurations that are admissible for K (K UAVs sending them at the predicted rate fit the capacity).
+In a window without contention (every UAV that can usefully offload is admitted and each one's uncoordinated
+choice is admissible), coordination is off.
+A UAV that is not admitted runs onboard if that scores above zero, and otherwise skips the frame.
 A frame is *on time* if its result is available at the ground server within the deadline of
 its capture (latency = onboard + queueing + transmission + one-way delay + server time).
 """
@@ -162,6 +172,12 @@ class SimParams:
     release_extra_ms: float = 0.0           # hold the link this long after each frame (e.g. an ack round trip)
     relay_forwarding: str = "frame"         # "frame": the relay sends a frame once it has all of it;
                                             # "packet": forwards bytes as they arrive (hops overlap; validation O5)
+    coordination: str = "none"              # "none": every UAV decides alone; "admission": see module docstring
+    coord_window_ms: float = 1000.0         # admission decision / rotation period
+    coord_feedback: str = "none"            # learn from the last window (see _feedback): "kcap" admitted UAVs that
+                                            # got nothing through cap K; "full" also shared lateness -> AIMD capacity;
+                                            # "rssi" as "full" but link health from the radio's instantaneous capacity
+    coord_headroom: float = 1.1             # capacity multiple planned with (tuned on seeds 100-101, not the study seeds)
 
 
 def _formation(n: int, spacing: float) -> List[np.ndarray]:
@@ -281,9 +297,112 @@ class StreamSimulator:
         self.a2a_shadow_db = np.triu(sh, 1) + np.triu(sh, 1).T
 
     # ------------------------------------------------------------------ helpers
-    def _choose(self, uav: UAV, t_ms: float) -> OffloadConfig:
+    def _feedback(self, t0: float) -> None:
+        """Outcome of the window that just ended (frames captured in it that have finished): a UAV whose
+        offloaded frames were mostly late although its own link was healthy signals hidden contention (with
+        "full", when at least two UAVs show it); admitted UAVs that delivered nothing
+        while sending signal a scheduler that serves fewer UAVs than planned. K_cap: multiplicative cut to
+        the number served, then +1 per window. The planned capacity is scaled by an AIMD factor: x0.8 after a
+        window with late offloads, +0.05 (up to 1) after one without."""
+        w0, n_late, served, starved = t0 - self.p.coord_window_ms, 0, 0, 0
+        for u in self.uavs:
+            fr = [f for f in u.frames if w0 <= f.capture_ms < t0 and f.cfg is not None and f.cfg.kind != "onboard"
+                  and f.status in ("delivered", "aborted", "stale")]
+            if len(fr) < 3:
+                continue
+            ok = sum(f.status == "delivered" and f.latency_ms <= self.p.deadline_ms for f in fr)
+            # late although the UAV's own link is healthy (a blackout on its own link is not contention). "full":
+            # the smoothed goodput estimate; "rssi": the radio's own instantaneous link capacity over the window
+            # (what a modem's signal level gives), its worst slot
+            if self.p.coord_feedback == "rssi":
+                s0, s1 = int(w0 / SLOT_MS), int(t0 / SLOT_MS)
+                own = min(u.bw[u.slot(k)] * (1.0 - u.loss[u.slot(k)]) for k in range(max(0, s0), max(s0 + 1, s1)))
+            else:
+                own = u.est_mbps
+            n_late += ok < 0.7 * len(fr) and own >= self.p.cell_capacity_mbps / max(1, self.p.n_uavs)
+            if self._contended and u.idx in self._admitted:
+                got = any(f.status == "delivered" for f in fr)
+                healthy = self.p.coord_feedback != "rssi" or own >= self.p.cell_capacity_mbps / max(1, self.p.n_uavs)
+                served += got
+                starved += (not got) and healthy      # "rssi": a UAV in its own blackout is not starved
+        if self.p.coord_feedback in ("full", "rssi"):   # contention: several healthy-link UAVs late together
+            late = n_late >= 2
+            self._force = late
+            self._capf = max(0.3, self._capf * 0.8) if late else min(1.0, self._capf + 0.05)   # AIMD on capacity
+        if starved:
+            self._kcap = max(1, served)
+        else:
+            self._kcap += 1
+
+    def _coordinate(self) -> None:
+        """Admission decision for the next window (coordination == "admission")."""
+        p, cap = self.p, self.p.cell_capacity_mbps * self.p.coord_headroom * self._capf
+        pol = [u.policy for u in self.uavs]
+        on = [max(0.0, max((pl.score(c, 0.0) for c in pl.configs if c.kind == "onboard"), default=0.0)) for pl in pol]
+        off_cfgs = [c for c in pol[0].configs if c.kind != "onboard"]
+
+        def plan(u, k):
+            """(value, {admissible configuration: planning share}) of UAV u when k UAVs offload. For each
+            configuration: its duty cycle d
+            on the UAV's own link, a share of capacity / (k x d) (the expected number sending at once), and
+            it is admissible only if k UAVs sending it at the predicted rate fit within the capacity."""
+            std, best, allowed = math.sqrt(u.est_var), 0.0, {}
+            for c in off_cfgs:
+                bits = c.payload_bytes * 8e-6
+                d = min(1.0, u.policy.predict(c, u.est_mbps, std)["fps"] * bits / max(u.est_mbps, 1e-6))
+                share = min(u.est_mbps, cap / max(1.0, k * d))
+                if k * u.policy.predict(c, share, std)["fps"] * bits > cap:
+                    continue
+                allowed[c.name] = share
+                best = max(best, u.policy.score(c, share, std))
+            return best, allowed
+        elig = [u for u in self.uavs if plan(u, 1)[0] > on[u.idx]]
+        best_k, best_v, shares = 0, sum(on), {}
+        for k in range(1, min(len(elig), self._kcap) + 1):
+            pk = {u.idx: plan(u, k) for u in elig}
+            v = sum(on) + sum(k / len(elig) * (pk[u.idx][0] - on[u.idx]) for u in elig)
+            if v > best_v + 1e-9:
+                best_k, best_v, shares = k, v, {i: x[1] for i, x in pk.items()}
+        order = sorted(elig, key=lambda u: (u.idx - self._rr) % self.p.n_uavs)
+        self._admitted = {u.idx for u in order[:best_k]}
+        self._shares = shares
+        # Contention: someone is held back, or someone's uncoordinated choice would not fit. Otherwise every
+        # UAV decides alone, exactly as without coordination.
+        def alone(u):
+            sh = min(u.est_mbps, self.p.cell_capacity_mbps / max(1, len(elig)))
+            return max(u.policy.configs, key=lambda c: u.policy.score(c, sh, math.sqrt(u.est_var)))
+        self._contended = best_k < len(elig) or self._force or any(
+            alone(u).kind != "onboard" and alone(u).name not in shares.get(u.idx, {}) for u in elig)
+        self._k = max(1, best_k)
+        if order[:best_k]:
+            self._rr = (order[best_k - 1].idx + 1) % self.p.n_uavs
+        self.coord_log.append((best_k, len(elig)))
+
+    def _choose(self, uav: UAV, t_ms: float) -> Optional[OffloadConfig]:
         if uav.fixed is not None:
             return uav.fixed
+        if self.p.coordination == "admission" and self.p.cell_capacity_mbps is not None and self._contended:
+            pl = uav.policy
+            onb = [c for c in pl.configs if c.kind == "onboard"]
+            if uav.idx in self._admitted:      # per-frame choice among the admissible configurations and onboard
+                std = math.sqrt(uav.est_var)
+                cand = {c.name: (c, pl.score(c, min(uav.est_mbps, sh), std))
+                        for c in pl.configs for sh in [self._shares[uav.idx].get(c.name)] if sh is not None}
+                cand.update({c.name: (c, pl.score(c, 0.0)) for c in onb})
+                cfg, sc = max(cand.values(), key=lambda x: x[1])
+                cur = cand.get(pl.current.name) if pl.current is not None else None
+                if cur is not None and cfg is not cur[0] and sc <= cur[1] + pl.hysteresis * abs(cur[1]):
+                    cfg = cur[0]
+                elif cfg is not pl.current:
+                    pl.switches += int(pl.current is not None)
+                    pl.current = cfg
+            else:
+                cfg = max(onb, key=lambda c: pl.score(c, 0.0)) if onb else None
+                if cfg is None or pl.score(cfg, 0.0) <= 0:
+                    return None
+            if not self.decisions or self.decisions[-1][1:] != (uav.idx, cfg.name):
+                self.decisions.append((t_ms, uav.idx, cfg.name))
+            return cfg
         share = uav.est_mbps
         if self.p.cell_capacity_mbps is not None:
             share = min(share, self.p.cell_capacity_mbps / max(1, self._active_radios))
@@ -321,6 +440,9 @@ class StreamSimulator:
         next_capture = [0.0] * p.n_uavs
         alpha = 1.0 - math.exp(-SLOT_MS / p.est_tau_ms)
         self._active_radios = 1
+        self._admitted, self._k, self._rr, self._shares, self.coord_log = set(), 1, 0, {}, []
+        self._contended, self._force, self._kcap, self._capf = False, False, 10 ** 6, 1.0
+        next_window = 0.0
 
         for s in range(n_slots):
             t0, t1 = s * SLOT_MS, (s + 1) * SLOT_MS
@@ -334,6 +456,12 @@ class StreamSimulator:
                     u.est_mbps += alpha * diff
                     u.est_var = (1.0 - alpha) * (u.est_var + alpha * diff * diff)
 
+            if p.coordination == "admission" and p.mode == "adaptive" and t0 >= next_window:
+                if p.coord_feedback != "none" and t0 > 0:
+                    self._feedback(t0)
+                self._coordinate()
+                next_window += p.coord_window_ms
+
             # 1) captures and onboard processing
             for u in self.uavs:
                 while next_capture[u.idx] < t1:
@@ -343,6 +471,9 @@ class StreamSimulator:
                         u.frames.append(Frame(u.idx, tc, None, status="skipped_busy"))
                         continue
                     cfg = self._choose(u, tc)
+                    if cfg is None:
+                        u.frames.append(Frame(u.idx, tc, None, status="skipped_admission"))
+                        continue
                     f = Frame(u.idx, tc, cfg)
                     u.frames.append(f)
                     u.processing.append(f)
@@ -499,6 +630,7 @@ class StreamSimulator:
             "relayed_frames": relayed,
             "relayed_on_time": relayed_on_time,
             "policy_switches": sum(u.policy.switches for u in self.uavs if u.policy),
+            "admitted_mean": float(np.mean([k for k, _ in self.coord_log])) if self.coord_log else math.nan,
             "status_counts": totals,
             "config_usage": usage,
             "per_uav": per_uav,

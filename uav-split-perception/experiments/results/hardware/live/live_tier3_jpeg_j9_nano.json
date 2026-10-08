@@ -1,0 +1,23 @@
+{
+ "label": "tier3_jpeg_j9",
+ "role": "mid",
+ "seg": "-1:9",
+ "enc": "int8_zstd",
+ "host": "nano",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 255,
+ "dropped_in": 0,
+ "stage_ms_median": {
+  "decode": 5.630698999084416,
+  "compute": 11.840462999316514,
+  "encode": 12.895290999949793,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 255,
+  "compute": 255,
+  "encode": 255,
+  "nms": 0
+ }
+}

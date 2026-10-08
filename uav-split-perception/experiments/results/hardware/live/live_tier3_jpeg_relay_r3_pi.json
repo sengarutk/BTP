@@ -1,0 +1,30 @@
+{
+ "label": "tier3_jpeg_relay_r3",
+ "role": "source",
+ "seg": "-1:-1",
+ "enc": "jpeg",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1800,
+ "processed_at_source": 1800,
+ "results": 195,
+ "fps_results": 3.25,
+ "fps_on_time": 0.36666666666666664,
+ "lat_p50_ms": 570.3990383335622,
+ "lat_p95_ms": 1620.2086134006095,
+ "lat_mean_ms": 750.4144798773222,
+ "dropped_at_link": 1596,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": null,
+  "encode": 3.582100499443186,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 0,
+  "encode": 1800,
+  "nms": 0
+ }
+}

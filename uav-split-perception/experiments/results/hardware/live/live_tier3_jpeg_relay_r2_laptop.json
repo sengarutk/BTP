@@ -1,0 +1,23 @@
+{
+ "label": "tier3_jpeg_relay_r2",
+ "role": "sink",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "LAPTOP-JPJH7SR6",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 204,
+ "dropped_in": 0,
+ "stage_ms_median": {
+  "decode": 4.19178501033457,
+  "compute": 34.60077850468224,
+  "encode": null,
+  "nms": 5.430990997410845
+ },
+ "stage_n": {
+  "decode": 204,
+  "compute": 204,
+  "encode": 0,
+  "nms": 204
+ }
+}

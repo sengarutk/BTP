@@ -1,0 +1,23 @@
+{
+ "label": "pi_jetson_jpeg",
+ "role": "sink",
+ "seg": "-1:22",
+ "enc": "int8_zstd",
+ "host": "nano",
+ "device": "cuda",
+ "half": true,
+ "frames_in": 1235,
+ "dropped_in": 88,
+ "stage_ms_median": {
+  "decode": 5.390688998886617,
+  "compute": 22.658932000922505,
+  "encode": null,
+  "nms": 7.4355109991302015
+ },
+ "stage_n": {
+  "decode": 1235,
+  "compute": 1235,
+  "encode": 0,
+  "nms": 1235
+ }
+}

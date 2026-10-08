@@ -1,0 +1,30 @@
+{
+ "label": "pi_laptop_k1",
+ "role": "source",
+ "seg": "-1:1",
+ "enc": "int8_zstd",
+ "host": "pi-sender",
+ "device": "cpu",
+ "half": false,
+ "captured": 1800,
+ "processed_at_source": 596,
+ "results": 419,
+ "fps_results": 6.983333333333333,
+ "fps_on_time": 2.466666666666667,
+ "lat_p50_ms": 323.59866533261084,
+ "lat_p95_ms": 467.3542536336753,
+ "lat_mean_ms": 333.057396796445,
+ "dropped_at_link": 177,
+ "stage_ms_median": {
+  "decode": null,
+  "compute": 69.64652150054462,
+  "encode": 17.92925150039082,
+  "nms": null
+ },
+ "stage_n": {
+  "decode": 0,
+  "compute": 596,
+  "encode": 596,
+  "nms": 0
+ }
+}
