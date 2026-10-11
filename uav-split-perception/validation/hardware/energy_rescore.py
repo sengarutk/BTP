@@ -8,7 +8,13 @@ each drone class. Joined with the run's own task metrics:
   task-level campaigns: streaming AP without forecasting, with forecaster v2 (energy then includes the
   forecaster's power, as the drone would run it), availability
 Derived per run: accuracy per watt (sAP / camera W), mission perception (sAP x endurance, "sAP-minutes"),
-energy per on-time result (J).
+energy per on-time result (J), and three explicitly-labelled SYSTEM views of the whole drone swarm
+(camera drone + edge drone, energy_model.system_views — never mixed):
+  system_*_extra     edge drone flies anyway: camera + Jetson extra work only (infer + rx);
+  system_*_board     Jetson carried for perception: + its whole board power incl. 4.08 W idle;
+  system_*_dedicated Jetson flies only for perception: + board + 153.6 W edge flight power.
+Plus sAP per system watt for each view, per-drone flight time (camera and edge drone), and swarm
+lifetime = the first drone to land, with swarm mission perception (sAP x swarm lifetime).
 Per (campaign, scenario, policy): mean and 95 % t-interval over repetitions.
 Output: experiments/results/hardware/energy/energy_<campaign>.json and energy_all_summary.json
 """
@@ -22,7 +28,8 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from energy_model import Board, E_DIR, endurance_min, drone_classes, run_energy, run_energy_v1  # noqa: E402
+from energy_model import (Board, E_DIR, endurance_min, drone_classes, run_energy, run_energy_v1,  # noqa: E402
+                          system_views)
 from summarize_vid import tci  # noqa: E402
 
 HW = Path(__file__).resolve().parent.parent.parent / "experiments" / "results" / "hardware"
@@ -97,6 +104,33 @@ def per_run(pi, jet, campaign, d, cache_keys):
             row["sAP_fc_per_w"] = row["sAP_fc"] / e_fc["camera_w"]
             for cls in drone_classes():
                 row[f"mission_fc_{cls}"] = row["sAP_fc"] * row[f"endur_fc_{cls}"]
+        # system views (whole swarm) and sAP per system watt, per view
+        sv, sv_fc = system_views(e, jet), (system_views(e_fc, jet) if e_fc is not None else None)
+        for name in ("extra", "board", "dedicated"):
+            row[f"system_w_{name}"] = sv[f"system_w_{name}"]
+            row[f"system_j_{name}"] = sv[f"system_j_{name}"]
+            if row.get("sAP") is not None:
+                row[f"sAP_per_w_{name}"] = row["sAP"] / sv[f"system_w_{name}"] if sv[f"system_w_{name}"] else None
+            if sv_fc is not None:
+                row[f"system_w_fc_{name}"] = sv_fc[f"system_w_{name}"]
+                if row.get("sAP_fc") is not None:
+                    row[f"sAP_fc_per_w_{name}"] = (row["sAP_fc"] / sv_fc[f"system_w_{name}"]
+                                                   if sv_fc[f"system_w_{name}"] else None)
+        if cam == "pi":
+            # swarm = camera drone + edge drone: per-drone flight time and swarm lifetime (first to land)
+            # (a run that never used the edge drone has no edge drone: its swarm is the camera drone alone)
+            inf = float("inf")
+            row["edge_endur_min"] = endurance_min("edge_1.5kg", e["edge_w"]) if e["edge_used"] else None
+            row["edge_endur_fc_min"] = (endurance_min("edge_1.5kg", e_fc["edge_w"])
+                                        if e_fc is not None and e_fc["edge_used"] else None)
+            for cls in drone_classes():
+                row[f"swarm_lifetime_{cls}"] = min(row[f"endur_{cls}"], row["edge_endur_min"] or inf)
+                if e_fc is not None:
+                    row[f"swarm_lifetime_fc_{cls}"] = min(row[f"endur_fc_{cls}"], row["edge_endur_fc_min"] or inf)
+                if row.get("sAP") is not None:
+                    row[f"mission_perception_swarm_{cls}"] = row["sAP"] * row[f"swarm_lifetime_{cls}"]
+                if row.get("sAP_fc") is not None and e_fc is not None:
+                    row[f"mission_perception_swarm_fc_{cls}"] = row["sAP_fc"] * row[f"swarm_lifetime_fc_{cls}"]
         rows.append(row)
     return rows
 
@@ -132,6 +166,8 @@ def main():
              "wifi": (HW / "vid_campaign_wifi", {"sAP": "sAP_quality", "sAP_fc": "sAP_quality_fcv2"}),
              "wifi_fc": (HW / "vid_campaign_wifi_fc", {"sAP": "sAP_quality", "sAP_fc": "sAP_quality_fcv2"}),
              "wifi_fc2": (HW / "vid_campaign_wifi_fc2", {"sAP": "sAP_quality", "sAP_fc": "sAP_quality_fcv2live"}),
+             "energy": (HW / "vid_campaign_energy", {"sAP": "sAP_quality", "sAP_fc": "sAP_quality_fcv2live"}),
+             "v42": (HW / "vid_campaign_v42", {"sAP": "sAP_quality", "sAP_fc": "sAP_quality_fcv2live"}),
              "swarm_duo": (HW / "swarm_duo", {"sAP": "sAP", "sAP_fc": "sAP_fc"})}
     allsum = {}
     for name, (d, keys) in camps.items():
@@ -145,9 +181,14 @@ def main():
             print(f"  {s['scenario']:15s} {s['policy']:24s} {s['camera']:6s} n={s['reps']} "
                   f"camW={s.get('camera_w', 0):.2f} fcW={s.get('camera_w_fc', float('nan')):.2f} "
                   f"edgeW={s.get('edge_w', 0):.2f} T={s.get('steady_temp_c') or float('nan'):.0f}C "
+                  f"sysX={s.get('system_w_fc_extra', s.get('system_w_extra', 0)):.2f}W "
+                  f"sysB={s.get('system_w_fc_board', s.get('system_w_board', 0)):.2f}W "
+                  f"sysD={s.get('system_w_fc_dedicated', s.get('system_w_dedicated', 0)):.2f}W "
                   f"sAPfc={s.get('sAP_fc', float('nan')):.4f} sAPfc/W={s.get('sAP_fc_per_w', float('nan')):.4f} "
+                  f"sAPfc/sysX={s.get('sAP_fc_per_w_extra', float('nan')):.4f} "
                   f"end1.2kg={s.get('endur_fc_quad_1.2kg', s.get('endur_quad_1.2kg', 0)):.2f}min "
-                  f"endMini={s.get('endur_fc_mini_249g', s.get('endur_mini_249g', 0)):.2f}min")
+                  f"endMini={s.get('endur_fc_mini_249g', s.get('endur_mini_249g', 0)):.2f}min "
+                  f"swarmMini={s.get('swarm_lifetime_fc_mini_249g', s.get('swarm_lifetime_mini_249g', float('nan'))):.2f}min")
     json.dump(allsum, open(E_DIR / "energy_all_summary.json", "w"), indent=1, default=float)
 
 

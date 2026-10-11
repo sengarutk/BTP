@@ -12,6 +12,9 @@ Camera drone (Pi 5, or the Jetson when it is a camera), per run:
 Edge drone (the Jetson as an airborne edge server), per run:
   E_edge = P_idle(clocks locked) * T + sum over frames it served dE_infer(model, res) + dP_rx(r) * 8 b / r
 Ground station (laptop): not drone energy, not counted.
+System views (system_views): the same run priced three ways — edge drone flying anyway (count its extra
+work only), carried for perception (its whole board incl. idle), or dedicated to perception (board +
+flight power). Swarm lifetime (swarm_lifetime_min) = the first drone to land.
 Endurance of a drone class = 60 * usable battery Wh / (flight power + perception power)  [min].
 Drone classes: 249 g mini (DJI Mini 2 published: 2250 mAh x 7.7 V = 17.3 Wh, 31 min -> 33.5 W, all-in);
 1.2 kg quadcopter (hover power from simulation.system_model.hover_power_w; 4S 5000 mAh, 80 % usable);
@@ -235,7 +238,39 @@ def run_energy_v1(run, pi, jet):
     e = sum(br.values())
     return {"duration_s": dur, "camera_j": e, "camera_w": e / dur if dur else 0.0, "camera_breakdown_j": br,
             "edge_j": sum(edge.values()), "edge_w": sum(edge.values()) / dur if dur else 0.0,
-            "edge_used": edge["infer"] > 0}
+            "edge_breakdown_j": edge, "edge_used": edge["infer"] > 0}
+
+
+def system_views(re, jet, edge_class="edge_1.5kg"):
+    """Three explicitly-labelled system-level views of one run's energy (never mixed):
+      extra     — the edge drone flies anyway (its idle and flight belong to the flight mission):
+                  system = camera drone + the Jetson's extra work only (infer + rx);
+      board     — the Jetson is carried for perception: add its whole board power incl. the idle floor;
+      dedicated — the edge drone flies only for perception: add board + its flight power.
+    A run that never used the edge drone (fixed laptop / onboard: edge_used False) needs no edge drone, so
+    every view is the camera drone alone — charging such a run the Jetson's idle and flight would price a
+    drone its system does not have (and contradict its edge_w = 0 in the rescored rows).
+    re: a run_energy()/run_energy_v1() result dict. Returns joules and mean watts for each view."""
+    dur = re["duration_s"]
+    eb = re.get("edge_breakdown_j") or {"idle": jet.idle * dur, "infer": 0.0, "radio": 0.0}
+    used = re.get("edge_used", True)
+    ex = eb["infer"] + eb["radio"] if used else 0.0    # the Jetson's extra work above idle
+    board_j = eb["idle"] + ex if used else 0.0
+    flight_j = drone_classes()[edge_class]["flight_w"] * dur if used else 0.0
+    cam_j = re["camera_j"]
+    out = {}
+    for name, j in (("extra", cam_j + ex), ("board", cam_j + board_j),
+                    ("dedicated", cam_j + board_j + flight_j)):
+        out[f"system_j_{name}"] = j
+        out[f"system_w_{name}"] = j / dur if dur else 0.0
+    return out
+
+
+def swarm_lifetime_min(power_by_drone):
+    """Per-drone endurance and swarm lifetime (the first drone to land).
+    power_by_drone: {drone_name: (drone_class, mean perception power W)} from measured run data."""
+    per = {d: endurance_min(c, p) for d, (c, p) in power_by_drone.items()}
+    return {"per_drone_min": per, "swarm_lifetime_min": min(per.values()) if per else None}
 
 
 def summary_constants(pi, jet):

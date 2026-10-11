@@ -23,9 +23,35 @@ the highest value (if > 0).
 Baselines:
   static_multi        laptop s640q50, jetson s640q50, onboard n320, each idle server in turn
   fixed:<srv>:<var>   one server, one variant, always (e.g. fixed:jetson:s640q50)
+Literature baselines (re-implemented under this harness; "-style" = the paper's decision rule with a simple proxy
+for its learned estimator):
+  conf_trigger        OffloaD-style (Gomez et al., TECS 2024): onboard YOLOv8n-320 continuously; a frame is offloaded
+                      (s640q90, best live path) when the newest onboard result looks like a detection failure: mean
+                      confidence of its top-5 boxes < --trigger-conf or fewer than 3 boxes >= 0.25
+  reward_offload      Qiu-style (SEC 2024): reward of offloading a frame estimated from the newest onboard result
+                      (uncertainty mass: sum of (1 - conf) over boxes with 0.1 <= conf < 0.5); offload when it is in the
+                      top --reward-share of recent rewards (rolling 10 s), otherwise onboard
+  aoi_thr             freshness only: offload s640q90 to the best live path whenever the newest result is older than
+                      --aoi-thr-ms; onboard YOLOv8n-320 only when no path can deliver
+  jsq                 queue only: every frame to the idle server with the smallest expected latency (paths s640q90,
+                      onboard n320), no accuracy or energy term
+  LEAF-style fixed energy weight: any A_* policy with --energy-aware --mu-fixed W (no dual ascent)
 Metrics per phase: on-time results/s, accuracy-weighted on-time results/s, results within 1 s,
 mean age of information of the newest result (AoI), availability = share of time AoI <= deadline,
 Pi perception power (compute + radio, measured powers).
+
+Controllers:
+  v2    --objective rate                    accuracy-weighted on-time results/s
+  v3    --objective stream                 expected accuracy of the held result (staleness decay)
+  v4    --energy-aware                     camera-drone energy priced: value - mu * E_camera, mu by dual
+                                             ascent of the measured power against --power-budget
+  v4.1  --fresh-target                     + a freshness dual variable lam_F
+  v4.2  --edge-energy-aware                + the EDGE drone's energy priced: value(jetson,v) - mu_edge *
+        E_edge(v), mu_edge by dual ascent of the Jetson's measured extra power (worker reports it with
+        --report-power jetson) against --edge-power-budget; budgets derive from battery + flight power
+        with --mission-min. Report to the coordinator gains soc (modelled from measured power) and mu.
+  v5    --thermal-aware                    + a predictive heat price lam_T on camera joules (measured thermal model:
+        predicted temperature --thermal-horizon-s ahead vs --thermal-target-c), replacing reliance on the hard guard
 """
 
 import argparse
@@ -181,6 +207,10 @@ def main():
     ap.add_argument("--weights-dir", default=".")
     ap.add_argument("--acc", default="variant_accuracy.json", help="accuracy table (COCO, or VisDrone-DET for aerial)")
     ap.add_argument("--decay", default="", help="staleness_decay.json (VisDrone-VID train): enables --objective stream")
+    ap.add_argument("--decay-shape", default="measured", choices=["measured", "flat", "linear", "exp"],
+                    help="ablation of the value curve rho(age) with everything else unchanged: measured (the "
+                         "--decay file), flat (no staleness, rho = 1), linear (generic age-of-information decay "
+                         "to 0 at 2 x the deadline), exp (generic exponential, half-life = the deadline)")
     ap.add_argument("--objective", default="rate", choices=["rate", "stream"],
                     help="rate: accuracy-weighted on-time results/s (v2); stream: expected accuracy of the held "
                          "result, accuracy x staleness decay over its holding window (v3)")
@@ -195,15 +225,52 @@ def main():
                     "temperature and clock at 5 Hz for the whole run (results: measured energy per run)")
     ap.add_argument("--energy-aware", action="store_true", help="controller v4: value minus mu x energy per frame; mu "
                     "follows the measured power against --power-budget (dual ascent) and rises above --thermal-guard-c")
-    ap.add_argument("--power-budget", type=float, default=3.0, help="sustained camera-board power budget (W)")
+    ap.add_argument("--power-budget", type=float, default=-1.0,
+                    help="sustained camera-board power budget (W); -1: --mission-min derived, else 3.0")
     ap.add_argument("--eta", type=float, default=0.1, help="dual-ascent step for mu (1/J per W-excess per s)")
-    ap.add_argument("--thermal-guard-c", type=float, default=78.0)
+    ap.add_argument("--edge-energy-aware", action="store_true",
+                    help="controller v4.2: also price the EDGE drone's energy: value(jetson, v) -= mu_edge * "
+                         "E_edge(v) (measured Jetson J per inference + radio receive); mu_edge is its own dual "
+                         "variable with its own budget, ascending on the Jetson's measured extra power when the "
+                         "worker reports it (--report-power jetson), else on the modelled served energy")
+    ap.add_argument("--edge-power-budget", type=float, default=-1.0,
+                    help="edge-drone extra-power budget (W above its idle); -1: --mission-min derived, else 1.0. "
+                         "Must be > 0: the extra power is never negative, so with a 0 budget mu_edge can only "
+                         "rise and the edge path is priced out for the rest of the run after its first use")
+    ap.add_argument("--edge-eta", type=float, default=0.1, help="dual-ascent step for mu_edge")
+    ap.add_argument("--mission-min", type=float, default=0.0,
+                    help="derive both power budgets from battery and flight power for this mission time: "
+                         "budget = 60 * usable Wh / mission_min - flight W (clamped >= 0); 0 = use the set budgets")
+    ap.add_argument("--camera-drone-class", default="mini_249g",
+                    help="drone class of this camera (battery + flight power for --mission-min and the "
+                         "coordinator's SoC report)")
+    ap.add_argument("--edge-drone-class", default="edge_1.5kg",
+                    help="drone class of the edge drone that serves the jetson path (for --mission-min)")
+    ap.add_argument("--thermal-guard-c", type=float, default=78.0,
+                    help="hard guard: at or above this measured temperature the camera energy price is at least 1")
+    ap.add_argument("--thermal-aware", action="store_true",
+                    help="controller v5: a smooth, predictive heat price. The board's temperature --thermal-horizon-s "
+                         "ahead is predicted from the measured thermal model (steady T = intercept + c_per_w x P, "
+                         "first-order approach with the measured tau), and a dual variable lam_T rises while that "
+                         "prediction exceeds --thermal-target-c. Camera joules are priced at mu + lam_T")
+    ap.add_argument("--thermal-target-c", type=float, default=75.0, help="v5: keep the predicted temperature below this")
+    ap.add_argument("--thermal-horizon-s", type=float, default=60.0, help="v5: prediction horizon")
+    ap.add_argument("--eta-t", type=float, default=0.01, help="v5: dual-ascent step for lam_T (per degree C excess per s)")
+    ap.add_argument("--lam-t-max", type=float, default=2.0,
+                    help="v5: cap on lam_T. At 2 an onboard YOLOv8n-320 inference (0.32 J) costs 0.65 of a full-value "
+                         "result, while a JPEG offload (~0.03 J) costs 0.06, so heat can price out onboard work but "
+                         "never the cool offloads")
     ap.add_argument("--energy-constants", default="energy_constants.json", help="energy_model.py constants")
     ap.add_argument("--fresh-target", type=float, default=0.0, help="controller v4.1: target share of time the drone "
                     "holds a detection younger than the deadline (e.g. 0.95); 0 = off. A second dual variable lam_F "
                     "rises when the measured share over the last --fresh-window-s falls below the target")
     ap.add_argument("--fresh-window-s", type=float, default=5.0)
     ap.add_argument("--eta-f", type=float, default=2.0, help="dual-ascent step for lam_F (per unit shortfall per s)")
+    ap.add_argument("--mu-fixed", type=float, default=-1.0,
+                    help="LEAF-style baseline: a constant energy weight mu instead of dual ascent (-1: off)")
+    ap.add_argument("--trigger-conf", type=float, default=0.5, help="conf_trigger: failure if top-5 mean conf below")
+    ap.add_argument("--reward-share", type=float, default=0.3, help="reward_offload: share of frames worth offloading")
+    ap.add_argument("--aoi-thr-ms", type=float, default=150.0, help="aoi_thr: offload when the newest result is older")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     acc_tab = json.load(open(a.acc))
@@ -215,6 +282,12 @@ def main():
         _lag, _rat = np.array([0.0, 1e9]), np.array([1.0, 1.0])
 
     def rho(age_ms):
+        if a.decay_shape == "flat":
+            return 1.0
+        if a.decay_shape == "linear":
+            return max(0.0, 1.0 - age_ms / (2.0 * a.deadline))
+        if a.decay_shape == "exp":
+            return float(0.5 ** (age_ms / a.deadline))
         return float(np.interp(age_ms, _lag, _rat))
 
     def hold_quality(L, T):
@@ -293,12 +366,21 @@ def main():
             L = te + tx + rem + rtt
             T = busy / max(1, n_active[0])
             v_ = acc_of(model, res, q) / REF_ACC * hold_quality(L, T) * (p_late if p_late > 0 else 0.0)
-            if a.energy_aware and r_override is None:
-                v_ -= energy["mu"] * e_offload(res, q, b, r)
+            if (a.energy_aware or a.thermal_aware) and r_override is None:
+                v_ -= cam_price() * e_offload(res, q, b, r)
+            if a.edge_energy_aware and p == "jetson" and r_override is None:
+                v_ -= energy["mu_edge"] * e_edge(var, b, r)   # v4.2: the edge drone's energy has a price too
             if a.fresh_target > 0 and r_override is None and fresh["aoi_ms"] + L >= D:
                 v_ += fresh["lam"] * p_on              # restores freshness if it arrives in time
             return v_, p_on
-        return acc_of(model, res, q) / REF * qv / (busy / 1e3), p_on
+        v_ = acc_of(model, res, q) / REF * qv / (busy / 1e3)
+        # v4.2: energy priced in both objectives; the rate value is per second, so the penalty is the
+        # energy per frame times the frames per second this path takes (busy), i.e. a power
+        if (a.energy_aware or a.thermal_aware) and r_override is None:
+            v_ -= cam_price() * e_offload(res, q, b, r) / (busy / 1e3)
+        if a.edge_energy_aware and p == "jetson" and r_override is None:
+            v_ -= energy["mu_edge"] * e_edge(var, b, r) / (busy / 1e3)
+        return v_, p_on
 
     def onboard_value(var, penalize=True):
         model, res = ONBOARD_VARIANTS[var]
@@ -308,8 +390,8 @@ def main():
         busy = math.ceil(t / (1000 * period) - 1e-9) * 1000 * period
         if a.objective == "stream":
             v_ = acc_of(model, res) / REF_ACC * hold_quality(t, busy / max(1, n_active[0]))
-            if a.energy_aware and penalize:
-                v_ -= energy["mu"] * e_onboard(var)
+            if (a.energy_aware or a.thermal_aware) and penalize:
+                v_ -= cam_price() * e_onboard(var)
             if a.fresh_target > 0 and fresh["aoi_ms"] + t >= D:
                 v_ += fresh["lam"] * p_on              # the held detection will be stale before anything else lands
             return v_, p_on
@@ -345,7 +427,9 @@ def main():
             full = max(rmax["r"]) if rmax["r"] else r
             lap = lambda rate: max([path_value("laptop", v, rate)[0] for v in path_variants("laptop")] + [0.0])  # noqa
             other = sum(max(0.0, best_variant(sv)[1]) for sv in list(paths) + ["onboard"] if sv != "laptop")
-            return {"t": now, "lap_full": lap(full), "lap_half": lap(full / 2), "other": other, "r": r, "r_full": full}
+            return {"t": now, "lap_full": lap(full), "lap_half": lap(full / 2), "other": other, "r": r, "r_full": full,
+                    "soc": energy.get("soc", 1.0), "mu": energy["mu"],
+                    "edge_w": (paths["jetson"].edge_w if "jetson" in paths else None)}
 
         def coord_server():
             srv = socket.socket()
@@ -365,6 +449,8 @@ def main():
                             break
                         d = json.loads(line)
                         coord["allowed"], coord["share"] = bool(d.get("allowed", True)), d.get("share")
+                        if "t_sync" not in energy:      # SoC origin common to all cameras: first contact
+                            energy["t_sync"], energy["e_perc_j"] = time.time(), 0.0
                         coord["reports"] += 1
                         coord["decisions"].append((time.time(), coord["allowed"], coord["share"]))
                 except (OSError, ValueError):
@@ -375,9 +461,26 @@ def main():
 
     # ------------------------------------------------ energy: measured constants, live power log, price mu
     board = "jetson" if a.onboard_device == "cuda" else "pi"
-    ec = json.load(open(a.energy_constants))[board] if (a.energy_aware or a.power_log) and \
-        os.path.exists(a.energy_constants) else None
-    energy = {"mu": 0.0, "log": [], "mu_log": [], "temp": 50.0}
+    _ec_all = json.load(open(a.energy_constants)) if os.path.exists(a.energy_constants) else {}
+    dc = _ec_all.get("drone_classes", {})
+    # power budgets: hand-set values win; otherwise derive from battery + flight power for the
+    # desired mission time: budget = 60 * usable Wh / mission_min - flight W (clamped >= 0)
+    if a.power_budget < 0:
+        c = dc.get(a.camera_drone_class, {"flight_w": 33.5, "battery_wh": 17.3})
+        a.power_budget = max(0.0, 60.0 * c["battery_wh"] / a.mission_min - c["flight_w"]) \
+            if a.mission_min > 0 else 3.0
+    if a.edge_power_budget < 0:
+        c = dc.get(a.edge_drone_class, {"flight_w": 153.6, "battery_wh": 88.8})
+        a.edge_power_budget = max(0.0, 60.0 * c["battery_wh"] / a.mission_min - c["flight_w"]) \
+            if a.mission_min > 0 else 1.0
+    if a.edge_energy_aware and a.edge_power_budget <= 0:
+        print(f"warning: edge power budget {a.edge_power_budget} W <= 0: mu_edge can never fall", flush=True)
+    ec = _ec_all[board] if (a.energy_aware or a.power_log or a.thermal_aware) and board in _ec_all else None
+    th = (ec or {}).get("thermal_steady")           # v5: measured steady-state thermal model of this board
+    tau_th = (ec or {}).get("thermal", {}).get("tau_s", 150.0)
+    ec_edge = _ec_all["jetson"] if a.edge_energy_aware and "jetson" in _ec_all else None   # the jetson-path server
+    energy = {"mu": 0.0, "mu_edge": 0.0, "log": [], "mu_log": [], "mu_edge_log": [], "temp": 50.0,
+              "edge_served": [], "soc": 1.0, "lam_t": 0.0, "t_log": [], "t0w": time.time(), "e_perc_j": 0.0, "t_last": None}
     fresh = {"lam": 0.0, "aoi_ms": float("inf"), "hist": [], "log": [], "last": 0.0}
 
     def read_board():
@@ -417,19 +520,51 @@ def main():
             now = time.time()
             energy["log"].append((now, pw, tp))
             energy["temp"] = tp
-            if a.energy_aware and now - last_mu >= 1.0:          # dual ascent on the power budget
+            if pw == pw:                               # measured perception energy since the SoC origin
+                if energy["t_last"] is not None:
+                    energy["e_perc_j"] += pw * (now - energy["t_last"])
+                energy["t_last"] = now
+            c = dc.get(a.camera_drone_class)           # modelled SoC (coordinator report): flight energy
+            if c:                                      # + measured board energy since the common origin
+                t0s = energy.get("t_sync", energy["t0w"])
+                energy["soc"] = max(0.0, 1.0 - (c["flight_w"] * (now - t0s) + energy["e_perc_j"])
+                                    / 3600.0 / c["battery_wh"])
+            if (a.energy_aware or a.edge_energy_aware or a.thermal_aware) and now - last_mu >= 1.0:
                 recent = [x[1] for x in energy["log"] if now - x[0] <= 1.0 and x[1] == x[1]]
                 if recent:
                     pbar = sum(recent) / len(recent)
-                    mu = max(0.0, energy["mu"] + a.eta * (pbar - a.power_budget))
-                    if tp == tp and tp >= a.thermal_guard_c:      # thermal guard: make onboard work expensive
-                        mu = max(mu, 1.0)
-                    energy["mu"] = mu
-                    energy["mu_log"].append((now, mu, pbar, tp))
+                    if a.energy_aware:                 # camera drone: dual ascent on the power budget
+                        mu = max(0.0, energy["mu"] + a.eta * (pbar - a.power_budget)) if a.mu_fixed < 0 \
+                            else a.mu_fixed            # LEAF-style baseline: fixed weight
+                        if tp == tp and tp >= a.thermal_guard_c:  # thermal guard: make onboard work expensive
+                            mu = max(mu, 1.0)
+                        energy["mu"] = mu
+                        energy["mu_log"].append((now, mu, pbar, tp))
+                    if a.thermal_aware and th and tp == tp:   # v5: predictive heat price
+                        p10 = [x[1] for x in energy["log"] if now - x[0] <= 10.0 and x[1] == x[1]]
+                        t_ss = th["intercept_c"] + th["c_per_w"] * (sum(p10) / len(p10))
+                        t_hat = tp + (t_ss - tp) * (1.0 - math.exp(-a.thermal_horizon_s / tau_th))
+                        energy["lam_t"] = min(a.lam_t_max, max(0.0, energy["lam_t"] + a.eta_t * (t_hat - a.thermal_target_c)))
+                        energy["t_log"].append((now, energy["lam_t"], t_hat, tp))
+                    if a.edge_energy_aware:            # edge drone (v4.2): dual ascent on its EXTRA power
+                        jw = paths.get("jetson")
+                        p_extra, src = None, "model"
+                        if ec_edge is not None and jw is not None and jw.edge_w is not None \
+                                and now - jw.edge_w_t <= 2.0:
+                            p_extra, src = max(0.0, jw.edge_w - ec_edge["idle_w"]), "measured"
+                        if p_extra is None:            # between reports: modelled rate of served energy
+                            served = [(t, j) for t, j in energy["edge_served"] if now - t <= 5.0]
+                            p_extra = sum(j for _, j in served) / 5.0
+                        energy["mu_edge"] = max(0.0, energy["mu_edge"] + a.edge_eta * (p_extra - a.edge_power_budget))
+                        energy["mu_edge_log"].append((now, energy["mu_edge"], p_extra, src))
                 last_mu = now
             time.sleep(0.2)
-    if a.power_log or a.energy_aware:
+    if a.power_log or a.energy_aware or a.edge_energy_aware or a.thermal_aware:
         threading.Thread(target=power_logger, daemon=True).start()
+
+    def cam_price():
+        """Price of one camera-drone joule: energy price mu (v4) + predictive heat price lam_T (v5)."""
+        return energy["mu"] + energy["lam_t"]
 
     def e_onboard(var):
         return ec["infer_j"].get(var, 0.0) if ec else 0.0
@@ -441,6 +576,14 @@ def main():
         tx = ec.get("radio_tx_w", {"a": 0.2, "b_per_mbps": 0.0})
         r = max(r_mbps, 0.2)
         return enc + max(0.0, tx["a"] + tx["b_per_mbps"] * r) * nb * 8 / (r * 1e6)
+
+    def e_edge(var, nb, r_mbps):
+        """Energy the edge drone spends serving one frame (measured constants): J per inference of the
+        variant's model@size + radio receive. var like 's640q90' or 'm640q90'."""
+        if not ec_edge:
+            return 0.0
+        j = ec_edge["infer_j"].get(var.split("q")[0], ec_edge["infer_j"].get("s640", 0.0))
+        return j + ec_edge.get("radio_rx_w", 0.2) * nb * 8 / (max(r_mbps, 0.2) * 1e6)
 
     phases = scenario_phases(a.scenario, a.phase_s, a.seed)
     tc_setup(a.wlan)
@@ -502,6 +645,64 @@ def main():
                                  fidx_c=fk[1], fidx_t=i if fk[0] == sq else None)
                 lf["pred_ms"].append((time.perf_counter() - t2) * 1e3)
     a_single_cur = None
+    bl = {"onboard_ids": [], "rewards": []}         # literature baselines' state
+
+    def live_path():
+        """the idle path with the highest estimated goodput that can carry a frame (else None)"""
+        ok = [p for p in paths if paths[p].sock is not None and idle(p) and paths[p].est_rate()[0] >= 0.5]
+        return max(ok, key=lambda p: paths[p].est_rate()[0]) if ok else None
+
+    def newest_onboard():
+        ids = [k for k in bl["onboard_ids"][-30:] if k in dets]
+        return np.frombuffer(dets[max(ids)], np.float32).reshape(-1, 6) if ids else None
+
+    def baseline_choice(pol):
+        if pol == "jsq":
+            best, lat = None, float("inf")
+            for p in paths:
+                if paths[p].sock is not None and idle(p):
+                    r = max(paths[p].est_rate()[0], 0.05)
+                    lt = enc_ms[640] + nbytes[(640, 90)] * 8 / (r * 1e3) + remote_ms[p]["yolov8s"] + paths[p].rtt_ms
+                    if lt < lat:
+                        best, lat = (p, "s640q90"), lt
+            if idle("onboard") and onboard.ms["n320"] < lat:
+                best = ("onboard", "n320")
+            return best
+        if pol == "aoi_thr":
+            while True:                             # results is filled by other threads
+                try:
+                    ids = list(results)
+                    break
+                except RuntimeError:
+                    pass
+            aoi = (time.perf_counter() - (t_start + max(ids) * period)) * 1e3 if ids else float("inf")
+            if aoi <= a.aoi_thr_ms:
+                return None
+            p = live_path()
+            if p is not None:
+                return (p, "s640q90")
+            if not any(paths[q].sock is not None and paths[q].est_rate()[0] >= 0.5 for q in paths) and idle("onboard"):
+                return ("onboard", "n320")
+            return None
+        det = newest_onboard()                      # conf_trigger / reward_offload: decide from the local result
+        want = False
+        if det is not None:
+            cf = np.sort(det[:, 4])[::-1]
+            if pol == "conf_trigger":
+                want = (cf[:5].mean() if len(cf) else 0.0) < a.trigger_conf or int((cf >= 0.25).sum()) < 3
+            else:
+                band = cf[(cf >= 0.1) & (cf < 0.5)]
+                rw = float((1.0 - band).sum())
+                now_ = time.perf_counter()
+                bl["rewards"] = [(t_, x) for t_, x in bl["rewards"] if now_ - t_ <= 10.0] + [(now_, rw)]
+                thr = np.quantile([x for _, x in bl["rewards"]], 1.0 - a.reward_share)
+                want = rw >= thr
+        if want:
+            p = live_path()
+            if p is not None:
+                return (p, "s640q90")
+        return ("onboard", "n320") if idle("onboard") else None
+
     try:
         while True:
             el = time.perf_counter() - t_start
@@ -556,6 +757,8 @@ def main():
                 busy_any = any(not idle(p) and paths[p].sock is not None for p in paths) or not idle("onboard")
                 if idle(srv) and not busy_any:
                     choice = (srv, var)
+            elif pol in ("conf_trigger", "reward_offload", "aoi_thr", "jsq"):
+                choice = baseline_choice(pol)
             elif pol == "static_multi":
                 order = list(paths) + ["onboard"]
                 for i in range(len(order)):
@@ -595,7 +798,8 @@ def main():
                 pp = paths[p]
                 if pp.sock is not None and pp.inflight is None and pp.slot.item is None \
                         and time.perf_counter() - last_probe[p] > 0.8 and (choice is None or choice[0] != p):
-                    pp.probe(65536 if pol.startswith(("A_", "abr:", "rule_")) else 1024)
+                    pp.probe(65536 if pol.startswith(("A_", "abr:", "rule_")) or pol in ("conf_trigger", "reward_offload", "aoi_thr", "jsq")
+                             else 1024)
                     last_probe[p] = time.perf_counter()
             rec = {"id": tick, "t_cap": cap_t, "phase": phases[ph][0], "soc": phases[ph][2]}
             if frame_keys is not None:
@@ -608,6 +812,7 @@ def main():
                     model, res = ONBOARD_VARIANTS[var]
                     rec["acc"] = acc_of(model, res)
                     onboard.submit(tick, img, var)
+                    bl["onboard_ids"].append(tick)
                 else:
                     model, res, q = path_variants(srv)[var]
                     rec["acc"] = acc_of(model, res, q)
@@ -616,6 +821,10 @@ def main():
                     enc_ms[res] = 0.8 * enc_ms[res] + 0.2 * (time.perf_counter() - t0) * 1e3
                     nbytes[(res, q)] = 0.8 * nbytes[(res, q)] + 0.2 * len(buf)
                     rec["bytes"] = len(buf)
+                    if srv == "jetson" and a.edge_energy_aware:      # modelled edge-drone energy served
+                        energy["edge_served"].append((time.time(), e_edge(var, len(buf), paths[srv].est_rate()[0])))
+                        if len(energy["edge_served"]) > 600:
+                            del energy["edge_served"][:300]
                     paths[srv].slot.put(({"id": tick, "t_cap": cap_t, "cut": -1, "model": model, "conf": a.conf,
                                           "return_dets": bool(a.vid),
                                           "metas": [{"k": -1, "jpeg": True}]}, [buf.tobytes()]))
@@ -709,6 +918,17 @@ def main():
             out["measured_energy"]["mu_log"] = [(round(x[0] - t0_, 2), round(x[1], 4), round(x[2], 3), round(x[3], 2))
                                                 for x in energy["mu_log"]]
             out["measured_energy"]["power_budget_w"] = a.power_budget
+        if a.thermal_aware:                           # controller v5: heat price, predicted and measured temperature
+            out["measured_energy"]["thermal_log_t_lam_pred_meas"] = [
+                (round(x[0] - t0_, 2), round(x[1], 4), round(x[2], 2), round(x[3], 2)) for x in energy["t_log"]]
+            out["measured_energy"]["thermal_target_c"] = a.thermal_target_c
+        if a.edge_energy_aware:                       # controller v4.2: the edge drone's price and live power
+            out["measured_energy"]["mu_edge_log"] = [(round(x[0] - t0_, 2), round(x[1], 4), round(x[2], 3), x[3])
+                                                     for x in energy["mu_edge_log"]]
+            out["measured_energy"]["edge_budget_w"] = a.edge_power_budget
+            jw = paths.get("jetson")
+            out["measured_energy"]["edge_reported_w"] = jw.edge_w if jw is not None and jw.edge_w is not None else None
+            out["measured_energy"]["soc_model_end"] = energy.get("soc")
         json.dump(out, open(a.out, "w"))
     if a.coord_port:
         out["coordination"] = {"reports": coord["reports"], "decisions": coord["decisions"]}

@@ -113,6 +113,7 @@ class Path:
         self.inflight = None              # (t_start, nbytes)
         self.results, self.log_lock = results, log_lock
         self.samples, self.events = [], []
+        self.edge_w, self.edge_w_t = None, 0.0   # worker-reported board power (W) and its time (v4.2)
         self.connected = threading.Event()
         threading.Thread(target=self._acceptor, daemon=True).start()
         threading.Thread(target=self._sender, daemon=True).start()
@@ -228,6 +229,10 @@ class Path:
             m = h.get("model", "yolov8s")
             self.remote_by_model[m] = 0.8 * self.remote_by_model.get(m, h["remote_ms"]) + 0.2 * h["remote_ms"]
             self.remote_t[m] = time.time()
+            bw = h.get("board_w")          # worker-reported board power (Jetson worker, --report-power)
+            if bw is not None and bw == bw:
+                self.edge_w = bw if self.edge_w is None else 0.8 * self.edge_w + 0.2 * bw
+                self.edge_w_t = time.time()
             with self.log_lock:
                 self.results[h["id"]] = now
 
@@ -493,8 +498,10 @@ def worker(a):
         if dev.type == "cuda":
             torch.cuda.synchronize()
 
+    pw = _pw_reader(a.report_power)               # one sampler for the worker's life, not one per reconnect
+
     def serve(s):
-        return _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression)
+        return _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression, pw=pw)
     host, port = a.camera.rsplit(":", 1)
     n, connected_once, fails = 0, False, 0
     while True:                                   # reconnect until the camera says bye
@@ -525,7 +532,38 @@ _served = [0]
 _stage = []      # per frame: decode, inference, NMS, send (ms)
 
 
-def _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression):
+def _pw_reader(dev_name):
+    """None, or a callable returning this board's measured power in W (Jetson INA3221 / Pi PMIC;
+    energy_profile.read_power), averaged over the last second. Used by the edge-drone worker so the
+    camera can price its energy live (controller v4.2). A background thread samples at 5 Hz: a read
+    taken at response time would always land right after an inference and over-state the mean power
+    (the same sampling bias the 1 Hz Pi log had). Never raises: no valid sample reports None."""
+    if not dev_name:
+        return None
+    from energy_profile import read_power
+    samples = []
+
+    def sampler():
+        while True:
+            try:
+                w = float(read_power(dev_name))
+                if w == w:
+                    samples.append((time.time(), w))
+                    if len(samples) > 50:
+                        del samples[:25]
+            except Exception:
+                pass
+            time.sleep(0.2)
+    threading.Thread(target=sampler, daemon=True).start()
+
+    def pw():
+        now = time.time()
+        recent = [w for t, w in list(samples) if now - t <= 1.0]
+        return sum(recent) / len(recent) if recent else None
+    return pw
+
+
+def _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression, pw=None):
     from pipeline_node import decode
     slot, lock = Slot(), threading.Lock()
 
@@ -571,7 +609,7 @@ def _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression):
         try:
             blobs = [det.float().cpu().numpy().tobytes()] if h.get("return_dets") else []
             send_msg(s, {"id": h["id"], "remote_ms": (time.perf_counter() - t0) * 1e3, "ndet": int(det.shape[0]),
-                         "model": mname}, blobs, lock)
+                         "model": mname, "board_w": (pw() if pw else None)}, blobs, lock)
         except OSError:
             return False
         _served[0] += 1
@@ -598,6 +636,9 @@ def main():
     ap.add_argument("--camera", default="", help="HOST:PORT of the camera (worker)")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--half", action="store_true")
+    ap.add_argument("--report-power", default="", choices=["", "jetson", "pi"],
+                    help="worker: report this board's measured power in every response header "
+                         "(board_w), so the camera can price edge-drone energy live (v4.2)")
     ap.add_argument("--label", default="")
     ap.add_argument("--out", default="adaptive.json")
     a = ap.parse_args()

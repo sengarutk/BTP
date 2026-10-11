@@ -1,6 +1,8 @@
 #!/bin/bash
 # arun.sh LABEL POLICY SCENARIO PHASE_S SEED OUTDIR [extra camera args...]
 # One live run: camera = adaptive2.py on the Pi (root, for tc), workers on the Jetson and the laptop.
+# The Jetson worker reports its measured board power (INA3221) in every response header (--report-power
+# jetson), so v4.2 can price edge-drone energy live; JLOG=1 additionally runs power_logger.py on it.
 # Any worker or camera left from an earlier run is killed first. Passwords: env PI_PW / NANO_PW.
 D=$(cd "$(dirname "$0")" && pwd); REPO=$(cd "$D/../../.." && pwd)
 L=$1; POL=$2; SC=$3; PS=${4:-20}; SEED=${5:-1}; R=$6; shift 6; EXTRA="$*"
@@ -16,7 +18,7 @@ $D/rsh.sh pi "cd ~/hwbench; rm -f results/a2_$L.json results/a2_${L}_dets.npz re
 sleep 20
 # JLOG=1: live power / temperature log of the Jetson (edge drone) for the whole run
 [ -n "$JLOG" ] && $D/rsh.sh nano "cd ~/hwbench; rm -f results/pw_$L.json; nohup bash -c 'source ~/hwbench_env/bin/activate; python -W ignore power_logger.py --device jetson --duration $((TOT+20)) --out results/pw_$L.json' > /dev/null 2>&1 & echo jlog_up"
-$D/rsh.sh nano "cd ~/hwbench; nohup bash -c 'source ~/hwbench_env/bin/activate; python -W ignore adaptive.py worker --camera 192.168.0.248:48102 --device cuda --half --weights yolov8s.pt --label jetson' > results/a2w_$L.log 2>&1 & echo jet_up"
+$D/rsh.sh nano "cd ~/hwbench; nohup bash -c 'source ~/hwbench_env/bin/activate; python -W ignore adaptive.py worker --camera 192.168.0.248:48102 --device cuda --half --weights yolov8s.pt --label jetson --report-power jetson' > results/a2w_$L.log 2>&1 & echo jet_up"
 (cd $REPO/validation/hardware; source /home/sengar/BTP/venv/bin/activate; timeout $((TOT+300)) python -W ignore adaptive.py worker --camera 192.168.0.248:48101 --device cuda --half --weights ../../yolov8s.pt,../../weights/yolov8m.pt --label laptop > $R/a2w_${L}_laptop.log 2>&1)
 for i in $(seq 90); do $D/rsh.sh pi "test -f ~/hwbench/results/a2_$L.json" 2>/dev/null && break; sleep 5; done
 $D/rcp.sh pi REMOTE:hwbench/results/a2_$L.json $R/ && { $D/rcp.sh pi REMOTE:hwbench/results/a2_${L}_dets.npz $R/ 2>/dev/null; $D/rcp.sh pi REMOTE:hwbench/results/a2_${L}_livefc.npz $R/ 2>/dev/null; $D/rsh.sh pi "tail -1 ~/hwbench/results/a2_$L.log"; } || $D/rsh.sh pi "tail -20 ~/hwbench/results/a2_$L.log"
