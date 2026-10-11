@@ -83,7 +83,7 @@ dl.gl dd{margin:0}
 </style>
 
 <main>
-<div class="meta">Full project report · state on 7 Oct 2026, 20:15</div>
+<div class="meta">Full project report · state on 11 Oct 2026, 20:40</div>
 <h1>AEGIS-UAV: the complete record of what was built, tested and found</h1>
 <p class="lede">A drone has a camera and must detect objects in every frame. It can run the detector on its own small computer, send the image to a more powerful computer nearby (another drone or a ground station), or split the neural network between them. This project measures which option works best, first in simulation and then on real hardware, and builds a controller that switches between options as conditions change.</p>
 <p>Labels used throughout: <span class="tag v">Validated</span> measured, repeated and cross-checked; <span class="tag p">Pending</span> built, but the decisive run has not finished; <span class="tag x">Invalidated</span> results found to be affected by a fault and set aside; <span class="tag p">Inconclusive</span> measured, but the difference is within the confidence interval; the same color marks <span class="tag x">Not supported</span>, a claim the data did not bear out.</p>
@@ -114,6 +114,14 @@ dl.gl dd{margin:0}
 </ol></nav>
 
 <h2 id="now"><span class="num">PART 1</span>Where things stand right now</h2>
+<div class="box state"><b class="h">Update, 11 October: energy and heat are now measured on both boards, and the paper's main campaign is running</b>
+<ul>
+<li>A 120-run campaign with live power logging on the Pi <b>and</b> the Jetson replicated the energy result: pricing energy keeps the fanless camera out of throttling (time at or above 80 °C: 13 % against 67 %) and raises accuracy (+0.0056 sAP, 18 of 20 pairs). The freshness extension v4.1 recovers the freshness v4 lost (97.9 % against 87.5 %) at no energy or accuracy cost (G11).</li>
+<li>Six mistakes in the first version of the whole-swarm energy work were found and fixed, and every campaign was rescored (G10).</li>
+<li>Camera-motion alignment makes one staleness curve sufficient across contexts; AccuMO (MobiCom 2023) already does content-dependent staleness, so the paper's headline is pricing a fresh detection in accuracy, energy and heat together (see "Staleness by context" in Part 15).</li>
+<li>Controller v5 (predictive heat price) and five literature baselines are built and tested on the boards. The 240-run main campaign (decay ablations and baselines) started at 19:26 and finishes around 6:30 on 12 October.</li>
+<li>All work is committed and pushed to GitHub (sengarutk/BTP).</li>
+</ul></div>
 <div class="box state"><b class="h">Current state: the real-world Wi-Fi campaign, motion forecasting and swarm coordination are finished; the mesh campaign comes next</b>
 <ul>
 <li>The task-level test on labeled drone video ran on the current shared Wi-Fi: 9 policies × 4 scenarios × 3 repetitions, 108 runs, 01:33–06:21 on 6 October, with no outages or failed runs (Part 12).</li>
@@ -765,10 +773,10 @@ dl.gl dd{margin:0}
 <tr><td>YOLOv8s 320 onboard</td><td class="n">6.1 W, 176 ms</td><td class="n">6.8 W, 25 ms</td><td class="n">Pi 741 mJ · Jetson 67 mJ</td></tr>
 <tr><td>YOLOv8s 640 onboard</td><td class="n">5.0 W, 718 ms (throttled)</td><td class="n">9.7 W, 29 ms</td><td class="n">Pi 2,229 mJ · Jetson 163 mJ</td></tr>
 <tr><td>YOLOv8m 640</td><td class="n">—</td><td class="n">10.6 W, 57 ms</td><td class="n">Jetson 371 mJ</td></tr>
-<tr><td>Radio transmit at 2 / 5 / 10 Mbit/s; flat out</td><td class="n">+0.27 / +0.30 / +0.33 W; +1.05 W at 52 Mbit/s</td><td class="n">+0.09 W at 5 Mbit/s</td><td class="n">≈ 0.2 W + 0.016 W per Mbit/s while sending</td></tr>
+<tr><td>Radio transmit at 2 / 5 / 10 Mbit/s; flat out</td><td class="n">+0.27 / +0.30 / +0.33 W; +1.05 W at 52 Mbit/s</td><td class="n">+0.09 W at 5 Mbit/s</td><td class="n">≈ 0.2 W + 0.016 W per Mbit/s while sending (linear fit of the Pi's measured points)</td></tr>
 <tr><td>Live motion forecaster (camera tracking every frame + velocity updates)</td><td class="n">+0.29 W (6-min steady test)</td><td class="n">—</td><td class="n">—</td></tr>
 </table></div>
-<p class="small">The Pi PMIC rails exclude 5 V conversion losses, so Pi numbers are a lower bound. A short forecaster measurement taken right after a hot inference state read +0.67 W: hot silicon leaks more power. The 6-minute steady measurement (+0.29 W) is used.</p>
+<p class="small">The Pi PMIC rails exclude 5 V conversion losses, so Pi numbers are a lower bound. The Jetson's receive power was measured once, at 21 Mbit/s (+0.21 W above idle), and the model applies it at every link speed — at lower link rates that slightly over-counts the edge drone's receive energy. The Jetson profile was re-measured on 9 October after the board was reflashed (<code>energy/energy_profile_jetson_20261009.json</code>): idle and all five inference states matched the 8 October values within 0.1 W (idle 4.17 against 4.08 W), so the same constants stand. A short forecaster measurement taken right after a hot inference state read +0.67 W: hot silicon leaks more power. The 6-minute steady measurement (+0.29 W) is used.</p>
 <ul class="keys">
 <li><b>On the Pi, thinking costs far more than talking</b>One YOLOv8s-640 inference costs 2.2 J; sending the same frame as a JPEG costs about 0.03 J (encode plus radio), roughly <b>80× less</b>. Onboard inference roughly triples the Pi's power (1.9 → 5–6 W).</li>
 <li><b>The Jetson is about 14× more energy-efficient per inference than the Pi</b>0.16 J against 2.2 J for YOLOv8s-640. But it idles at 4.1 W even when doing nothing, so as a flying edge drone it is a large fixed cost.</li>
@@ -787,8 +795,9 @@ dl.gl dd{margin:0}
 <tr><td>YOLOv8n onboard all the time</td><td class="n">4.15 W</td><td class="n">85 °C</td><td class="n"><b>1,568 MHz (−35 %)</b></td></tr>
 </table></div>
 <ul class="keys">
-<li><b>+12.7 °C per extra watt; throttling from about 3.6 W sustained</b>A linear fit of the unthrottled levels gives T = 34.4 °C + 12.7 °C/W × P. The firmware starts lowering the clock at about 80 °C (about 3.6 W) and holds 85 °C at about 4 W by cutting the clock by 35 %. That is why YOLOv8s slowed from 576 to 718–758 ms in earlier tests. Heating is fast: 72 → 85 °C in 17 s under YOLOv8s. Cooling takes minutes (87 → 64 °C in 150 s).</li>
-<li><b>The Jetson does not overheat</b>With its fan it peaked at 60 °C under YOLOv8m.</li>
+<li><b>+12.7 °C per extra watt; throttling from about 3.6 W sustained</b>A linear fit of the steady levels below the throttle limit gives T = 34.4 °C + 12.7 °C/W × P (the fitted constants are stored in <code>energy_constants.json</code>). The firmware starts lowering the clock at about 80 °C (about 3.6 W) and holds 85 °C at about 4 W by cutting the clock by 35 %. That is why YOLOv8s slowed from 576 to 718–758 ms in earlier tests. Heating is fast: 72 → 85 °C in 17 s under YOLOv8s. Cooling takes minutes (87 → 64 °C in 150 s).</li>
+<li><b>The Jetson does not overheat</b>Measured with a 24-minute sustained YOLOv8m @ 640 heat run (9 October, 1 Hz power/temperature/clock log, <code>energy_profile_jetson_20261009.json</code>): 10.7 W throughout, temperature 52 → 61 °C and <b>steady over the last minute</b> (61.0–61.7 °C, mean 61.2), clock pinned at 1,510 MHz the whole time, <b>no throttling</b>; it cools back to 50 °C in 5 minutes. At its hottest sustained load the fan holds the Jetson about 19 °C below the Pi's ~80 °C throttling point. A shorter 5-minute heat run on 8 October had peaked at 60.3 °C and was still creeping — the 24-minute run shows where it settles.</li>
+<li><b>A 24-minute Pi heat run confirms the throttling onset</b>The same 7 load levels held 24 minutes each instead of 6 (<code>energy/thermal_steady_pi_24min.json</code>, 9–10 October, board clock 03:04–06:16). The four YOLOv8n duty rows measured 2.62 W / 62.3 °C (clock 2,314 MHz), 3.38 W / 71.5 °C (2,339 MHz), 3.77 W / 81.8 °C (2,347 MHz with dips to 1,600 — throttling onset), 4.46 W / 84.4 °C (1,834 MHz — throttled). Throttling again begins between the 30 % and 50 % duty levels, and the 6-minute fit above predicts the 50 %-duty row to within half a degree (82.3 predicted, 81.8 measured). The run's low-power rows are <b>not</b> a clean replication of the table, and the logs say why: the idle level started from a board still warm after setup (67.8 °C) and settled at 64 °C at 1.81 W (the run's completion poll opened an SSH connection every minute, against 1.66 W in the table); in the encode level the encoder stopped part-way (its power fell to a near-idle 1.65 W, so its 54 °C row is a near-idle temperature, not encode); and the forecaster's temperature was still creeping at 24 minutes (64 → 73 °C), though its power (2.17 W, +0.36 W over that run's idle) supports the table's +0.29 W constant. The steady temperature of this fanless board is sensitive to ambient and to the board's thermal history — the two runs bracket it (the duty rows sit 1–6 °C apart, idle 54 vs 64 °C) — but every throttling conclusion holds in both runs.</li>
 <li><b>Energy and accuracy are coupled through heat</b>More onboard work → hotter → throttled → slower inference → staler results → lower accuracy. The fanless Pi cannot sustain the onboard load the adaptive controllers put on it.</li>
 </ul>
 
@@ -805,6 +814,7 @@ dl.gl dd{margin:0}
 <tr><td>1.2 kg quadcopter</td><td class="n">110 W</td><td class="n">59 Wh</td><td>Paper's hover model; 4S 5,000 mAh, 80 % usable</td></tr>
 <tr><td>1.5 kg drone carrying the Jetson</td><td class="n">154 W</td><td class="n">89 Wh</td><td>Same hover model; 6S 5,000 mAh, 80 % usable</td></tr>
 </table></div>
+<p class="small">The flight powers and usable-battery fractions above are the only <b>estimates</b> in this part: a momentum-theory hover model with assumed 80 % usable charge, not measured on a flying drone. Everything they are divided against — the perception powers, inference energies, radio and encoding — is measured on the boards or from a campaign log.</p>
 <p><b>What this means.</b> Perception is 2–5 W against 33–154 W of flight power. On a 1.2 kg drone the choice of strategy changes flight time by only about 2–3 %; on a 249 g drone by up to about 9 %. Energy matters most through <b>heat</b> (throttling), through the <b>edge drone's</b> 4–6 W, and for <b>small drones</b>. The metric that combines everything is <b>mission perception</b> = streaming AP × flight time ("accuracy-minutes").</p>
 
 <h3>G4. Every placement with energy (Part 7 rescored)</h3>
@@ -831,6 +841,7 @@ dl.gl dd{margin:0}
 <tr><td>Fixed laptop JPEG q50 640</td><td class="n">13.7</td><td class="n">2.16 W</td><td class="n">—</td><td class="n">6.4</td><td class="n">62 °C</td></tr>
 <tr><td>Fixed onboard YOLOv8n</td><td class="n">6.2</td><td class="n">5.08 W</td><td class="n">—</td><td class="n">1.2</td><td class="n">would throttle</td></tr>
 </table></div>
+<p class="small">Pi power and edge-drone power here are the <b>model reconstruction</b> from each run's logs (these campaigns predate the power logger); the first live-measured Pi power is in G9.</p>
 <p>In v1, the adaptive controller ran at 2.95 W against 2.35–2.68 W for fixed JPEG offloading; the layer-1 split (5.6 W) and onboard-only (4.8 W) were worst. <b>In both campaigns the most energy-efficient adaptive policy is the one that does not use onboard inference.</b></p>
 
 <h3>G6. Task-level campaigns with energy (Parts 12 and 14)</h3>
@@ -841,7 +852,7 @@ dl.gl dd{margin:0}
 <tr><td>v2</td><td class="n">0.0463</td><td class="n">85 %</td><td class="n">4.38 W</td><td class="n">≈ 90 °C</td><td class="n">4.9 W</td><td class="n">0.0106</td><td class="n">31.1 / 27.4 min</td><td class="n">1.28</td></tr>
 <tr><td>Fixed laptop YOLOv8m</td><td class="n">0.0409</td><td class="n">43 %</td><td class="n"><b>2.41 W</b></td><td class="n">65 °C</td><td class="n">—</td><td class="n"><b>0.0170</b></td><td class="n"><b>31.6 / 28.9 min</b></td><td class="n">1.18</td></tr>
 </table></div>
-<p class="small">Pi power includes the forecaster. Mission perception = sAP × flight minutes of a 249 g drone. In the 108-run campaign the same pattern holds: adaptive policies 4.7–5.3 W, fixed offloading 2.4–2.6 W, onboard only 5.2 W; fixed laptop YOLOv8m and single-path rate adaptation have about 2× the accuracy per watt of the adaptive policies.</p>
+<p class="small">Pi power includes the forecaster. Pi and edge power in this table are the model reconstruction — the first live-measured Pi power is in G9; the Jetson was not power-logged live in any campaign so far, which the next campaign fixes. Mission perception = sAP × flight minutes of a 249 g drone. In the 108-run campaign the same pattern holds: adaptive policies 4.7–5.3 W, fixed offloading 2.4–2.6 W, onboard only 5.2 W; fixed laptop YOLOv8m and single-path rate adaptation have about 2× the accuracy per watt of the adaptive policies.</p>
 <ul class="keys">
 <li><b>Our best controller wins on accuracy, freshness and mission perception, but not on energy</b>It uses about 1.8 W more on the Pi than fixed offloading, would throttle in sustained flight, and keeps a 4.8 W edge drone working. On a 249 g drone its accuracy gain outweighs its 1.3 minutes shorter flight (mission perception 1.41 against 1.18).</li>
 <li><b>Onboard inference is the energy problem: about 40–54 % of the Pi's power for 3–5 % of the accuracy</b>Rescoring the adaptive runs with their onboard results removed (an offline estimate that ignores scheduling side effects) cuts Pi power from 4.2–5.3 W to about 2.4–2.5 W. Accuracy falls by only a median 2.7–5.3 %. For "all servers, no adaptation" accuracy even <b>rises</b> by 5.8 %: its low-quality onboard results displace better ones.</li>
@@ -850,7 +861,7 @@ dl.gl dd{margin:0}
 
 <h3>G7. Swarms with energy</h3>
 <ul>
-<li><b>Two real cameras (Part 13).</b> The Pi camera runs at 4.2–5.0 W in the adaptive settings, about 89–98 °C steady, so it would throttle; with fixed offloading it runs at 2.3–2.5 W. The Jetson as a camera draws about 7.4 W with adaptive control (mostly onboard GPU inference) and 4.2 W with fixed offloading. Serving the Pi adds about 1 W, so the Jetson board totals about 8.5 W.</li>
+<li><b>Two real cameras (Part 13).</b> The Pi camera runs at 4.2–5.0 W in the adaptive settings, about 89–98 °C steady, so it would throttle; with fixed offloading it runs at 2.3–2.5 W. The Jetson as a camera draws about 7.4 W with adaptive control (mostly onboard GPU inference; model reconstruction from the runs' logs — the Jetson was not power-logged live) and 4.2 W with fixed offloading. Serving the Pi adds about 1 W, so the Jetson board totals about 8.5 W (model).</li>
 <li><b>Calibrated simulation with measured board powers</b> (<code>swarm_calibrated.py --measured-power</code>):
   <ul>
   <li>In large Pi swarms the coordinator lowers per-drone power: 4.5 → 3.5 W at 10 drones and 2.7 W at 20, because drones waiting their turn skip work, while delivering more.</li>
@@ -873,13 +884,14 @@ dl.gl dd{margin:0}
 <h3 id="v4results">G9. Energy campaign: v4 against the best controllers, with measured energy</h3>
 <p><b>Setup.</b> v4 at a 3.5 W and a 2.8 W budget against v3 + forecasting v2, v2 and fixed laptop YOLOv8m. 4 scenarios × 5 repetitions = 100 runs, shuffled, on the shared Wi-Fi, 14:53–19:19 on 7 October, no outages, all 100 complete. Every run logged the Pi's measured power, temperature and (for v4) the energy price, 5 times a second, and ran the forecaster live. Accuracy is streaming AP with forecaster v2, using the live camera motion.</p>
 <div class="tbl"><table>
-<tr><th>Policy (pooled, 20 runs each)</th><th class="n">sAP</th><th class="n">Measured Pi power</th><th class="n">sAP per Pi watt</th><th class="n">Fresh-detection share</th><th class="n">Mean Pi temp</th><th class="n">Time at ≥ 80 °C</th><th class="n">Flight: 1.2 kg / 249 g</th><th class="n">Mission perception: 249 g / 1.2 kg</th></tr>
+<tr><th>Policy (pooled, 20 runs each)</th><th class="n">sAP</th><th class="n">Measured Pi power</th><th class="n">sAP per camera-drone watt</th><th class="n">Fresh-detection share</th><th class="n">Mean Pi temp</th><th class="n">Time at ≥ 80 °C</th><th class="n">Flight: 1.2 kg / 249 g</th><th class="n">Mission perception: 249 g / 1.2 kg</th></tr>
 <tr><td><b>v4, 2.8 W budget</b></td><td class="n"><b>0.0543 ± 0.0069</b></td><td class="n">3.33 ± 0.11 W</td><td class="n">0.0166</td><td class="n">87.1 %</td><td class="n">74.0 °C</td><td class="n"><b>17 %</b></td><td class="n">31.4 / 28.2 min</td><td class="n"><b>1.53 / 1.71</b></td></tr>
 <tr><td><b>v4, 3.5 W budget</b></td><td class="n">0.0525 ± 0.0072</td><td class="n">3.61 ± 0.10 W</td><td class="n">0.0147</td><td class="n">86.8 %</td><td class="n">76.7 °C</td><td class="n">19 %</td><td class="n">31.3 / 28.0 min</td><td class="n">1.47 / 1.64</td></tr>
 <tr><td>v3 + forecasting v2</td><td class="n">0.0470 ± 0.0080</td><td class="n">4.47 ± 0.17 W</td><td class="n">0.0109</td><td class="n"><b>99.3 %</b></td><td class="n">82.1 °C</td><td class="n">76 %</td><td class="n">31.1 / 27.3 min</td><td class="n">1.29 / 1.46</td></tr>
 <tr><td>v2</td><td class="n">0.0465 ± 0.0067</td><td class="n">4.24 ± 0.14 W</td><td class="n">0.0113</td><td class="n">88.7 %</td><td class="n">81.5 °C</td><td class="n">67 %</td><td class="n">31.1 / 27.5 min</td><td class="n">1.28 / 1.45</td></tr>
 <tr><td>Fixed laptop YOLOv8m</td><td class="n">0.0463 ± 0.0105</td><td class="n"><b>2.65 ± 0.07 W</b></td><td class="n"><b>0.0171</b></td><td class="n">51.1 %</td><td class="n">70.2 °C</td><td class="n">0 %</td><td class="n"><b>31.6 / 28.7 min</b></td><td class="n">1.33 / 1.46</td></tr>
 </table></div>
+<p class="small">The "sAP per camera-drone watt" column prices <b>only the Pi</b>; it is not a system-level efficiency (G10 below prices the whole swarm).</p>
 <p class="small">Mission perception = sAP × flight minutes. The adaptive policies also keep the Jetson edge drone busy at about 4.8–4.9 W (model-based; the Jetson was not power-logged live); the fixed laptop policy does not use it.</p>
 <div class="tbl"><table>
 <tr><th>Paired comparison (20 pairs)</th><th class="n">sAP difference</th><th class="n">Ahead in</th><th class="n">Measured Pi power</th><th class="n">Mission perception, 249 g</th></tr>
@@ -890,14 +902,87 @@ dl.gl dd{margin:0}
 <tr><td>v4 (2.8 W) − v4 (3.5 W)</td><td class="n">+0.0018 ± 0.0031</td><td class="n">10 / 20</td><td class="n">−0.28 ± 0.09 W</td><td class="n">+0.063 ± 0.086</td></tr>
 </table></div>
 <ul class="keys">
-<li><b>The energy-aware controller is the most accurate controller, and uses 19–25 % less Pi power</b>v4 with a 2.8 W budget beats v3 + forecasting v2 by +0.0074 ± 0.0028 sAP (median +13 %, 17 of 20) and v2 by +0.0078 ± 0.0034, both significant, while measured Pi power falls by about 1 W. It also has the highest mission perception for both drone classes. <span class="tag v">Validated</span> (Wi-Fi, 5 repetitions, measured energy)</li>
+<li><b>The energy-aware controller is the most accurate controller, and uses 19–25 % less camera-drone power</b>v4 with a 2.8 W budget beats v3 + forecasting v2 by +0.0074 ± 0.0028 sAP (median +13 %, 17 of 20) and v2 by +0.0078 ± 0.0034, both significant, while measured Pi power falls by about 1 W. It also has the highest mission perception for both drone classes. <span class="tag v">Validated</span> (Wi-Fi, 5 repetitions, measured energy) — for the camera drone. At whole-swarm level the picture reverses (G10 below).</li>
 <li><b>Why saving energy raised accuracy</b>The onboard inferences v4 cuts were mostly low-quality (YOLOv8n/s at 320 px on aerial video) and competed with better offloaded results. They also loaded the Pi's 4 CPU cores and heat: with them, the Pi spent 76 % of the run at ≥ 80 °C, in the throttling region, slowing encoding, the camera loop and the forecaster for every result. v4 cuts that to 17 %. Energy, heat and accuracy are coupled, and pricing energy properly improves all three.</li>
-<li><b>It nearly matches the most frugal strategy's accuracy per watt while being far more accurate</b>0.0166 sAP per watt against 0.0171 for fixed laptop offloading, with +0.0080 sAP (significant) and 87 % against 51 % fresh-detection share.</li>
+<li><b>It nearly matches the most frugal strategy's accuracy per camera-drone watt while being far more accurate — but that prices only the Pi</b>0.0166 sAP per camera watt against 0.0171 for fixed laptop offloading, with +0.0080 sAP (significant) and 87 % against 51 % fresh-detection share. This column leaves out the edge drone entirely; the whole-swarm comparison is the opposite (G10 below).</li>
 <li class="open"><b>The price: freshness</b>v4 keeps a detection under 300 ms old 87 % of the time against 99 % for v3 + forecasting v2. Onboard results were what filled short gaps. A mission that needs a continuous fresh detection should use v3 + forecasting v2 or a higher budget.</li>
 <li class="open"><b>The 2.8 W budget is below what v4 can reach</b>Measured 3.33 W. The Pi's fixed floor (idle, forecaster, encoding, radio and the power logger itself) is already about 2.65 W, and v4 deliberately keeps onboard inference during blackouts. The 3.5 W budget was held (3.61 W).</li>
 <li><b>The energy model matches the measurements</b>Model-predicted Pi power is within 0.1–0.4 W (about 5–10 %) of the live-measured power in all five policies.</li>
 </ul>
 <p class="small">Files: <code>experiments/results/hardware/vid_campaign_energy/</code> (runs with <code>measured_energy</code> logs), <code>vid_campaign_energy_summary.log</code>, <code>energy/energy_campaign_measured.json</code>, <code>energy/energy_campaign_summary.json</code>; profiles and constants in <code>energy/</code>.</p>
+
+<h3 id="g10">G10. The whole swarm: system-level energy (rescored, 9 Oct 2026)</h3>
+<p>Every run of every campaign has been rescored with the measured model in three <b>explicitly labelled</b> views of the whole drone swarm (camera drone + edge drone; code <code>energy_model.system_views</code>, outputs <code>energy/energy_&#60;campaign&#62;.json</code> and <code>energy/energy_all_summary.json</code>). The views are never mixed:</p>
+<ul>
+<li><b>extra</b> — the edge drone flies anyway (it is on a mission regardless): system power = camera drone + the Jetson's <b>extra work only</b> (inference + receive, above its 4.08 W idle);</li>
+<li><b>board</b> — the Jetson is carried for perception: + its <b>whole board</b> power including the 4.08 W idle;</li>
+<li><b>dedicated</b> — the edge drone flies <b>only</b> for perception: + board + its 153.6 W flight power.</li>
+</ul>
+<p>A policy that never uses the edge drone (fixed laptop offloading) needs no edge drone, so in every view its system is the camera drone alone. (A first version of this rescoring charged it the Jetson's idle and flight power anyway; that was corrected on 11 October and the table below is the corrected one.)</p>
+<p>Pooled over the 100-run energy campaign (G9; 20 runs each; camera power is the model reconstruction, within 0.1–0.4 W of the live-measured power; edge power is model-based — the Jetson was not power-logged live in that campaign, which the next campaign fixes):</p>
+<div class="tbl"><table>
+<tr><th>Policy</th><th class="n">sAP (fc v2)</th><th class="n">Camera W</th><th class="n">Edge W</th><th class="n">System W: extra / board / dedicated</th><th class="n">sAP per W: camera / extra / board</th><th class="n">Swarm lifetime: 249 g / 1.2 kg</th><th class="n">Swarm mission perception (249 g)</th></tr>
+<tr><td><b>v4, 2.8 W (A_eco_tight)</b></td><td class="n"><b>0.0543</b></td><td class="n">3.04</td><td class="n">4.94</td><td class="n">3.90 / 7.97 / 161.6</td><td class="n">0.0183 / 0.0142 / 0.0069</td><td class="n">28.4 / 31.5 min</td><td class="n"><b>1.55</b></td></tr>
+<tr><td>v4, 3.5 W (A_eco)</td><td class="n">0.0525</td><td class="n">3.22</td><td class="n">4.92</td><td class="n">4.05 / 8.13 / 161.7</td><td class="n">0.0168 / 0.0132 / 0.0065</td><td class="n">28.3 / 31.4 min</td><td class="n">1.49</td></tr>
+<tr><td>v2 (A_full)</td><td class="n">0.0465</td><td class="n">4.14</td><td class="n">4.93</td><td class="n">5.00 / 9.08 / 162.7</td><td class="n">0.0118 / 0.0097 / 0.0052</td><td class="n">27.6 / 31.1 min</td><td class="n">1.29</td></tr>
+<tr><td>v3 + forecasting v2</td><td class="n">0.0470</td><td class="n">4.31</td><td class="n">4.84</td><td class="n">5.07 / 9.15 / 162.8</td><td class="n">0.0116 / 0.0098 / 0.0053</td><td class="n">27.5 / 31.1 min</td><td class="n">1.30</td></tr>
+<tr><td>Fixed laptop YOLOv8m</td><td class="n">0.0463</td><td class="n">2.41</td><td class="n">0</td><td class="n">2.41 / 2.41 / 2.41</td><td class="n"><b>0.0189 / 0.0189</b> / <b>0.0189</b></td><td class="n"><b>28.9 / 31.6 min</b></td><td class="n">1.34</td></tr>
+</table></div>
+<p class="small">Swarm lifetime = the <b>first drone to land</b>; in every setting that is the 249 g camera drone (28–29 min against about 33.6 min for the Jetson-carried edge drone), so swarm mission perception (sAP × swarm lifetime) tracks the camera drone's. Per-drone flight time for every class is in the same files.</p>
+<ul class="keys">
+<li><b>Correcting the G9 efficiency claims at whole-swarm level</b>The G9 "sAP per Pi watt" numbers price only the camera drone. Counting the edge drone the picture changes: in the <b>extra</b> view (edge drone flies anyway) fixed offloading is 1.33× more energy-efficient than v4 at 2.8 W (0.0189 against 0.0142 sAP per watt); in the <b>board</b> view (the Jetson is carried only for perception) it is 2.7× (0.0189 against 0.0069), because v4's accuracy depends on a Jetson that idles at 4.08 W; in the <b>dedicated</b> view about 55×.</li>
+<li><b>The stronger statement is across systems, not policies</b>A deployment that offloads JPEG to the laptop needs <b>no airborne edge drone at all</b>: 2.65 W measured, 0.0175 sAP per watt. v4's accuracy depends on keeping one in the air: Pi 3.33 W measured + Jetson 4.94 W model ≈ 8.3 W, 0.0066 sAP per watt — fixed offloading is <b>≈ 2.6× more energy-efficient as a whole system</b>. The edge drone earns its place through robustness (perception continues when the ground link fails), not through energy; this is the gap controller v4.2 prices (below).</li>
+<li><b>What changes with v4.2</b>v4 priced only the camera drone's energy. v4.2 adds a second dual variable μ_edge on the <b>edge drone's extra power</b> with its own budget in watts above the Jetson’s idle (the budget must be positive: extra power is never negative, so with a 0 budget μ_edge could only rise and would price the Jetson out for the rest of the run after its first use — a flaw in the first v4.2 draft, fixed 11 October; the campaign uses a binding 0.5 W budget and a non-binding battery-derived one), derives both budgets from battery + flight power when asked, takes live Jetson power from the worker's response headers, and lets the swarm coordinator give turns preferentially to more- or less-charged drones (<code>--energy-pref low|high|off</code>, both orderings measured). Every run of the new campaign logs both boards' power live (5 Hz power logger on the Jetson, measured power log on the Pi).</li>
+</ul>
+<p class="small">Files: <code>energy/energy_&#60;campaign&#62;.json</code>, <code>energy/energy_all_summary.json</code> (system views, per-drone endurance, swarm lifetime); worklog <code>docs/phase_g_completion_log.md</code>.</p>
+
+
+<h3 id="g11">G11. Campaign with live power on BOTH boards: v4.1, v4.2 (11 Oct 2026)</h3>
+<p><b>Setup.</b> 6 policies × 4 scenarios × 5 repetitions = 120 runs, shuffled, on the shared Wi-Fi, 13:46–19:10 on 11 October, no outages, all 120 complete. For the first time <b>every watt is measured</b>: the Pi's power log (5 Hz) and the Jetson's live INA3221 log (<code>power_logger.py</code>, 5 Hz), plus the Jetson worker reporting its board power in every response. Accuracy = streaming AP with forecaster v2 running live. Reference = v4 at 2.8 W. Code <code>validation/hardware/summarize_measured.py</code>; data <code>vid_campaign_v42/</code>, <code>vid_campaign_v42_measured_summary.json</code>, <code>vid_campaign_v42_summary_v2_live.*</code>.</p>
+<table>
+<tr><th>Policy (pooled, 20 runs each)</th><th class="n">sAP</th><th class="n">Fresh-detection share</th><th class="n">Pi W (measured)</th><th class="n">Jetson W (measured, live)</th><th class="n">Time ≥ 80 °C</th><th class="n">Mean Pi temp</th><th class="n">sAP per W: camera / extra / board</th><th class="n">Mission perception, 249 g</th></tr>
+<tr><td>v4.1 (freshness target 95 %)</td><td class="n"><b>0.0566</b></td><td class="n"><b>97.9 %</b></td><td class="n">3.56</td><td class="n">5.01</td><td class="n">12 %</td><td class="n">72.6 °C</td><td class="n">0.0162 / 0.0128 / 0.0066</td><td class="n"><b>1.59</b></td></tr>
+<tr><td>v4.2 (edge drone priced, 0.5 W budget)</td><td class="n">0.0551</td><td class="n">86.1 %</td><td class="n">3.36</td><td class="n"><b>4.78</b></td><td class="n">10 %</td><td class="n">71.2 °C</td><td class="n"><b>0.0165 / 0.0135 / 0.0067</b></td><td class="n">1.55</td></tr>
+<tr><td>v4.2, budgets from battery (28-min mission)</td><td class="n">0.0536</td><td class="n">87.4 %</td><td class="n">3.84</td><td class="n">4.95</td><td class="n">16 %</td><td class="n">74.2 °C</td><td class="n">0.0142 / 0.0115 / 0.0061</td><td class="n">1.49</td></tr>
+<tr><td>v4 (2.8 W), reference</td><td class="n">0.0541</td><td class="n">87.5 %</td><td class="n">3.48</td><td class="n">4.97</td><td class="n">13 %</td><td class="n">72.0 °C</td><td class="n">0.0158 / 0.0125 / 0.0064</td><td class="n">1.52</td></tr>
+<tr><td>v3 + forecasting v2</td><td class="n">0.0485</td><td class="n">99.4 %</td><td class="n">4.73</td><td class="n">4.94</td><td class="n"><b>67 %</b></td><td class="n">80.9 °C</td><td class="n">0.0104 / 0.0088 / 0.0050</td><td class="n">1.32</td></tr>
+<tr><td>Fixed laptop YOLOv8m</td><td class="n">0.0450</td><td class="n">50.2 %</td><td class="n"><b>2.79</b></td><td class="n">0 (no edge drone)</td><td class="n">0 %</td><td class="n">68.1 °C</td><td class="n">0.0160 / 0.0160 / <b>0.0160</b></td><td class="n">1.29</td></tr>
+</table>
+<table>
+<tr><th>Paired against v4 (20 pairs)</th><th class="n">sAP</th><th class="n">Fresh-detection share</th><th class="n">Pi W</th><th class="n">Jetson W</th><th class="n">Time ≥ 80 °C</th></tr>
+<tr><td>v4.1</td><td class="n">+0.0025 ± 0.0038 (13/20)</td><td class="n"><b>+10.4 ± 3.3 points (19/20)</b></td><td class="n">+0.08 ± 0.10</td><td class="n">+0.04 ± 0.04</td><td class="n">−0.8 ± 4.3 points</td></tr>
+<tr><td>v4.2</td><td class="n">+0.0009 ± 0.0040 (10/20)</td><td class="n">−1.3 ± 4.0 points</td><td class="n">−0.12 ± 0.11</td><td class="n"><b>−0.19 ± 0.10 (lower in 19/20)</b></td><td class="n">−3.8 ± 4.1 points</td></tr>
+<tr><td>v4.2, battery-derived budgets</td><td class="n">−0.0005 ± 0.0050</td><td class="n">0.0 ± 3.6 points</td><td class="n"><b>+0.36 ± 0.09 (20/20)</b></td><td class="n">−0.02 ± 0.05</td><td class="n">+2.4 ± 2.8 points</td></tr>
+<tr><td>v3 + forecasting v2</td><td class="n"><b>−0.0056 ± 0.0034 (v4 ahead 18/20)</b></td><td class="n">+12.0 ± 3.5 points</td><td class="n"><b>+1.25 ± 0.16 (20/20)</b></td><td class="n">−0.03 ± 0.05</td><td class="n"><b>+54 ± 9 points (20/20)</b></td></tr>
+<tr><td>Fixed laptop</td><td class="n"><b>−0.0091 ± 0.0057 (v4 ahead 15/20)</b></td><td class="n">−37 ± 12 points</td><td class="n">−0.69 ± 0.16</td><td class="n">−4.97 (no edge drone)</td><td class="n">−13 ± 6 points</td></tr>
+</table>
+<ul>
+<li><b>The main energy result replicates with independent runs.</b> Pricing the camera's energy (v4) again beats v3 + forecasting v2 on accuracy (+0.0056 ± 0.0034 sAP, ahead in 18 of 20; the 7 October campaign gave +0.0074 ± 0.0028), uses 1.25 W less Pi power, and cuts the time the Pi spends at or above 80 °C from 67 % to 13 %. Two campaigns, 40 pairs: saving energy keeps the fanless camera out of throttling and raises accuracy.</li>
+<li><b>v4.1 recovers freshness at no cost.</b> The freshness price raises the share of time the drone holds a detection under 300 ms old from 87.5 % to 97.9 % (+10.4 points, 19 of 20), close to v3's 99.4 %, while Pi power (+0.08 W), heat and accuracy stay those of v4 (sAP +0.0025, not significant). It has the highest accuracy and mission perception of all six policies. v4.1 removes the one cost v4 had.</li>
+<li><b>v4.2 lowers the edge drone's power, but the effect is small.</b> Pricing the Jetson's energy cut its measured board power by 0.19 ± 0.10 W (lower in 19 of 20), about a fifth of its extra work, with unchanged accuracy, and gave the best accuracy per watt of the adaptive policies in every view. Because the Jetson's 4.1 W idle floor dominates, the whole-swarm gain is modest. At realistic battery numbers (the battery-derived budget, 36.7 W for the edge drone) the edge price never binds, and the looser camera budget (3.57 W) only burns 0.36 W more for no accuracy. <b>The edge drone's energy is decided by whether it flies at all, not by how it is used.</b></li>
+<li><b>Measured Jetson power confirms the model.</b> Live 4.8–5.0 W against the model's 4.8–4.9 W in the 100-run campaign (G9–G10). The system-level conclusions of G10 therefore stand on measured numbers.</li>
+<li><b>Whole-swarm accuracy per watt (board view): fixed offloading 0.0160, v4.x 0.0061–0.0067, about 2.5× less efficient,</b> as G10 found. Fixed offloading needs no edge drone, but it is the least accurate (−0.0091 sAP) and holds a fresh detection only half the time (50 %). The adaptive policies buy accuracy and freshness with an airborne edge drone.</li>
+</ul>
+
+
+<h3 id="context">Staleness by context, and the novelty re-check (11 Oct 2026)</h3>
+<p><b>Does the decay depend on the situation?</b> <code>validation/hardware/decay_context.py</code> splits the measured decay by what a drone can compute live at decision time: camera speed (from the camera-motion tracker), crowding and the share of small objects, plus object size. Groups are fixed on the 8 training sequences and checked on the 7 held-out ones.</p>
+<table>
+<tr><th>Share of fresh accuracy kept at 100 ms (held-out)</th><th class="n">Fast camera (&gt; 48 px/s)</th><th class="n">Slow / medium camera</th></tr>
+<tr><td>No forecasting</td><td class="n">13 %</td><td class="n">47–50 %</td></tr>
+<tr><td>Forecaster v1 (velocity only)</td><td class="n">25 %</td><td class="n">68–71 %</td></tr>
+<tr><td>Forecaster v2 (camera-motion aligned)</td><td class="n"><b>79 %</b></td><td class="n">80–86 %</td></tr>
+</table>
+<ul>
+<li>Without camera-motion alignment, staleness hurts a fast-moving camera far more. <b>With alignment the difference disappears</b>, and one decay curve predicts the held-out data better than per-context curves (error 0.046 against 0.054). The curve also transfers: 85 % / 58 % kept at 100 / 267 ms on training, 82 % / 52 % held out. So the controller needs no context-dependent model. (Only 8 of VisDrone-VID's 56 training sequences are downloaded so far.)</li>
+<li><b>Novelty re-check</b> (<code>docs/novelty_check_phase0.md</code>):
+<ul>
+<li><b>AccuMO (MobiCom 2023)</b> already predicts content-dependent accuracy drop of stale results and schedules offloading with it (AR, one edge server, phones), so "staleness-driven offloading" alone is not our claim.</li>
+<li><b>No paper found combines heat or throttling with offloading for detection.</b></li>
+<li>The paper's headline therefore becomes pricing a fresh detection in <b>accuracy, energy and heat together</b> on a three-tier drone system; G9 and G11 show that doing so changes the decision and raises accuracy.</li>
+<li>All 29 citations from the literature reports were verified against CrossRef/doi.org (<code>paper/references_verified.bib</code>).</li>
+</ul></li>
+</ul>
 
 <h2 id="argument"><span class="num">PART 16</span>What it all means: the argument for the paper</h2>
 <p>This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.</p>
@@ -964,6 +1049,7 @@ dl.gl dd{margin:0}
 <tr><td>Stuck remote-time estimates after warm-up</td><td>Servers abandoned</td><td>Warm-up at all sizes; stale estimates relax toward the measured prior</td></tr>
 <tr><td>Temp-file cleanup wiped the helper scripts</td><td>Lost tools</td><td>Helpers moved into the repo</td></tr>
 <tr><td>Network outages during campaigns</td><td>Runs failing in a loop</td><td>Outage guard pauses until both boards respond</td></tr>
+<tr><td>Heat-run completion poll matched its own SSH command line</td><td>Run finished but the watcher polled for another 90 min; fetch never ran</td><td>Character-class pgrep pattern (<code>thermal_[s]teady.py</code>) so the poll cannot match itself</td></tr>
 </table></div>
 
 <h2 id="code"><span class="num">PART 18</span>Code status and reproducibility</h2>
@@ -996,7 +1082,7 @@ dl.gl dd{margin:0}
 <div class="tbl"><table>
 <tr><th>Task</th><th>Needs</th><th>Time</th></tr>
 <tr><td>Move the three devices onto AegisSwarm; laptop internet over Ethernet; measure each mesh link</td><td>Your cable and mesh details</td><td>1–2 h</td></tr>
-<tr><td>v4 refinements: recover freshness (allow cheap onboard results only when the newest detection is about to go stale); live Jetson power logging; 20–30 min runs to show sustained heating</td><td>Code + one campaign night</td><td>1–2 days</td></tr>
+<tr><td><s>v4 refinements: recover freshness; live Jetson power logging; 20–30 min runs to show sustained heating</s> <b>Done 9 Oct 2026 in code</b>: v4.1 (<code>--fresh-target</code>), v4.2 (<code>--edge-energy-aware</code>: the edge drone priced, budgets derived from battery + flight power, live Jetson power from the worker headers, coordinator <code>--energy-pref</code>), system-view rescoring of every campaign (G10) and the 24-min heat-run tool</td><td><s>Code + one campaign night</s> Code done; still needs the campaign night itself (v4.2/v4.1/v4/v3+fc2/fixed, live logging on both boards) + the 24-min heat runs</td><td>1–2 days</td></tr>
 <tr><td>Make the live forecaster cheaper on the Pi (camera tracking every other frame or at lower resolution)</td><td>Code + short campaign</td><td>half a day</td></tr>
 <tr><td>Task-level campaign on the mesh: the 9 policies plus v3 + forecasting v1 and v2, 4 scenarios × 5 repetitions (220 runs). Settles the accuracy ranking of v2 against v3 + forecasting</td><td>Mesh set up; unattended</td><td>about 9–10 h</td></tr>
 
@@ -1023,7 +1109,8 @@ dl.gl dd{margin:0}
 <tr><td><code>experiments/results/hardware/vid_campaign_wifi_fc/</code></td><td>Paired campaign: v3 + forecasting, v2, old v3 (log: <code>vid_campaign_wifi_fc.log</code>)</td></tr>
 <tr><td><code>experiments/results/hardware/staleness_decay_forecast.json</code></td><td>Decay curve with and without forecasting (exact ages, train)</td></tr>
 <tr><td><code>experiments/results/hardware/_superseded/</code>, <code>swarm_calibrated_cache_superseded_coord_v1/</code></td><td>Files set aside, not deleted: copies wrongly pulled into a campaign folder, and simulation cells from an older coordinator</td></tr>
-<tr><td><code>experiments/results/hardware/energy/</code>, <code>vid_campaign_energy/</code></td><td>Energy profiles, thermal steady states, constants, rescoring of every campaign, the v4 energy campaign</td></tr>
+<tr><td><code>experiments/results/hardware/energy/</code>, <code>vid_campaign_energy/</code></td><td>Energy profiles, thermal steady states, constants, rescoring of every campaign (system views in <code>energy_&#60;campaign&#62;.json</code> / <code>energy_all_summary.json</code>), the v4 energy campaign</td></tr>
+<tr><td><code>experiments/results/hardware/vid_campaign_v42/</code></td><td>The v4.2 campaign (both drones priced, live power on both boards) — to be filled by <code>validation/hardware/tools/campaign_energy.sh</code></td></tr>
 <tr><td><code>validation/hardware/energy_profile.py</code>, <code>thermal_steady.py</code>, <code>energy_model.py</code>, <code>energy_rescore.py</code></td><td>Energy and heat measurement, model, rescoring</td></tr>
 <tr><td><code>experiments/results/hardware/forecast_tuning_v2.json</code>, <code>staleness_decay_forecast_v2.json</code>, <code>*_summary_v2.*</code></td><td>Forecaster v2: tuning on train, decay curve, rescored campaigns</td></tr>
 <tr><td><code>experiments/results/hardware/forecast_tuning.json</code></td><td>Forecaster tuning on train (all 128 settings) and the frozen setting</td></tr>
