@@ -15,12 +15,13 @@ noticed within one frame), RTT and remote compute time from the returned results
 once per second on each path the controller is not using (to notice recovery).
 
 Controller (--policy adaptive), every frame:
-  U(a) = fps(a) * (p_on(a) + eps) * mAP(a)/mAP_fp32 - lambda(SoC) * E(a) * fps(a)
+  U(a) = fps(a) * [p_on(a) + w_late * (p_late(a) - p_on(a))] * mAP(a)/mAP_fp32 - lambda(SoC) * E(a) * fps(a)
   offload: t = t_edge + bytes/r + t_remote + rtt;  p_on = Phi((r - B_req)/sigma),
            B_req = bytes / (D - t_edge - t_remote - rtt)   (the paper's uncertainty-aware rule)
            fps = min(camera, frame-quantised 1/t_edge, 1/(bytes/r + rtt), 1/t_remote)
   onboard: t = measured Pi time (EWMA, so thermal throttling is tracked); p_on = 1 if t <= D
-  eps = 0.05 keeps late results above none (graceful degradation when nothing meets D);
+  p_late = the same probability for --late-ms (1500 ms), w_late = --late-value (0.25): a late result is worth a
+  quarter of an on-time one, which keeps late results above none (graceful degradation when nothing meets D);
   lambda(SoC) = lambda0 * (1 + (0.15/SoC)^2); E = Pi compute and radio energy per frame (measured powers);
   switch only if the best action beats the current one by more than 5 % (hysteresis).
 Fixed policies (--policy lap_j90 etc.) always take that action.

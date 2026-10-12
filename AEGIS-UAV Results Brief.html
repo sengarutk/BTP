@@ -977,6 +977,46 @@ dl.gl dd{margin:0}
 </ul></li>
 </ul>
 
+
+<h3 id="g12">G12. Main campaign: v5, decay ablation and literature baselines (11–12 Oct 2026)</h3>
+<p><b>Setup.</b> 12 policies × 4 scenarios × 5 repetitions = 240 runs, shuffled, on the shared Wi-Fi, 11–12 October, live power on both boards and the live forecaster in every run. Two runs were invalid (one overlapped a large GitHub upload, one was hit by the laptop going to sleep); both were set aside and re-run. Every alternative differs from v5 in one thing only (ablations) or is a literature decision rule under the same harness (baselines, "-style" = the paper's rule with a simple proxy for its learned estimator). Code <code>validation/hardware/tools/campaign_main.sh</code>; data <code>vid_campaign_main/</code>, <code>vid_campaign_main_measured_summary.json</code>, <code>vid_campaign_main_summary_v2_live.*</code>.</p>
+<table>
+<tr><th>Policy (20 runs each)</th><th class="n">sAP</th><th class="n">Fresh-detection share</th><th class="n">Pi W</th><th class="n">Jetson W</th><th class="n">Time ≥ 80 °C</th><th class="n">sAP per W: camera / board</th><th class="n">Mission perception, 249 g</th></tr>
+<tr><td><b>v5</b> (reference)</td><td class="n"><b>0.0519</b></td><td class="n">87.2 %</td><td class="n">3.12</td><td class="n">4.80</td><td class="n">6 %</td><td class="n">0.0168 / 0.0066</td><td class="n"><b>1.47</b></td></tr>
+<tr><td>v4.2 (no heat price)</td><td class="n">0.0501</td><td class="n">84.2 %</td><td class="n">3.13</td><td class="n">4.77</td><td class="n">6 %</td><td class="n">0.0162 / 0.0063</td><td class="n">1.42</td></tr>
+<tr><td>v5, generic linear decay</td><td class="n">0.0523</td><td class="n">91.3 %</td><td class="n">3.09</td><td class="n">4.75</td><td class="n">5 %</td><td class="n">0.0171 / 0.0067</td><td class="n">1.49</td></tr>
+<tr><td>v5, generic exponential decay</td><td class="n">0.0517</td><td class="n">85.5 %</td><td class="n">3.12</td><td class="n">4.75</td><td class="n">6 %</td><td class="n">0.0168 / 0.0066</td><td class="n">1.47</td></tr>
+<tr><td>v5, decay without forecasting</td><td class="n">0.0459</td><td class="n">81.2 %</td><td class="n">3.20</td><td class="n">4.56</td><td class="n">11 %</td><td class="n">0.0148 / 0.0060</td><td class="n">1.30</td></tr>
+<tr><td>v5, no staleness (flat)</td><td class="n">0.0465</td><td class="n">62.0 %</td><td class="n">3.53</td><td class="n">4.79</td><td class="n">22 %</td><td class="n">0.0139 / 0.0057</td><td class="n">1.31</td></tr>
+<tr><td>LEAF-style fixed energy weight</td><td class="n">0.0515</td><td class="n">87.8 %</td><td class="n">3.10</td><td class="n">4.94</td><td class="n">7 %</td><td class="n">0.0171 / 0.0064</td><td class="n">1.46</td></tr>
+<tr><td>Fixed laptop YOLOv8m</td><td class="n">0.0443</td><td class="n">50.2 %</td><td class="n"><b>2.39</b></td><td class="n">0 (none)</td><td class="n">0 %</td><td class="n">0.0182 / <b>0.0182</b></td><td class="n">1.28</td></tr>
+<tr><td>Freshness threshold (150 ms)</td><td class="n">0.0407</td><td class="n">69.1 %</td><td class="n">2.57</td><td class="n">4.68</td><td class="n">0 %</td><td class="n">0.0159 / 0.0056</td><td class="n">1.17</td></tr>
+<tr><td>Shortest queue</td><td class="n">0.0373</td><td class="n">99.8 %</td><td class="n">4.80</td><td class="n">4.74</td><td class="n">69 %</td><td class="n">0.0078 / 0.0039</td><td class="n">1.01</td></tr>
+<tr><td>OffloaD-style confidence trigger</td><td class="n">0.0305</td><td class="n">98.7 %</td><td class="n">4.71</td><td class="n">4.79</td><td class="n">60 %</td><td class="n">0.0065 / 0.0032</td><td class="n">0.83</td></tr>
+<tr><td>Qiu-style offloading reward</td><td class="n">0.0241</td><td class="n">98.7 %</td><td class="n">4.66</td><td class="n">4.42</td><td class="n">72 %</td><td class="n">0.0052 / 0.0027</td><td class="n">0.66</td></tr>
+</table>
+<table>
+<tr><th>Paired against v5 (20 pairs)</th><th class="n">sAP</th><th class="n">Fresh-detection share</th><th class="n">Pi W</th><th class="n">Time ≥ 80 °C</th></tr>
+<tr><td>v4.2 (heat price removed)</td><td class="n">−0.0018 ± 0.0022 (v5 ahead 11/20)</td><td class="n">−3.0 ± 2.8 points</td><td class="n">+0.01 ± 0.06</td><td class="n">−0.4 ± 2.1 points</td></tr>
+<tr><td>generic linear decay</td><td class="n">+0.0005 ± 0.0014 (12/20)</td><td class="n">+4.1 ± 3.7 points</td><td class="n">−0.03 ± 0.04</td><td class="n">−0.7 ± 1.4 points</td></tr>
+<tr><td>generic exponential decay</td><td class="n">−0.0002 ± 0.0025 (8/20)</td><td class="n">−1.7 ± 2.9 points</td><td class="n">−0.00 ± 0.04</td><td class="n">−0.2 ± 1.8 points</td></tr>
+<tr><td>decay without forecasting</td><td class="n"><b>−0.0059 ± 0.0039 (v5 ahead 14/20)</b></td><td class="n">−6.0 ± 6.4 points</td><td class="n">+0.08 ± 0.09</td><td class="n">+4.5 ± 2.6 points</td></tr>
+<tr><td>no staleness (flat)</td><td class="n"><b>−0.0054 ± 0.0032 (v5 ahead 16/20)</b></td><td class="n"><b>−25 ± 8 points</b></td><td class="n"><b>+0.41 ± 0.15</b></td><td class="n"><b>+16 ± 6 points</b></td></tr>
+<tr><td>LEAF-style fixed weight</td><td class="n">−0.0004 ± 0.0015 (9/20)</td><td class="n">+0.6 ± 2.9 points</td><td class="n">−0.02 ± 0.16</td><td class="n">+0.5 ± 5.7 points</td></tr>
+<tr><td>Fixed laptop</td><td class="n"><b>−0.0076 ± 0.0053 (v5 ahead 16/20)</b></td><td class="n">−37 ± 11 points</td><td class="n">−0.74 ± 0.13</td><td class="n">−6 ± 4 points</td></tr>
+<tr><td>Freshness threshold</td><td class="n"><b>−0.0112 ± 0.0030 (20/20)</b></td><td class="n">−18 ± 6 points</td><td class="n">−0.55 ± 0.10</td><td class="n">−6 ± 4 points</td></tr>
+<tr><td>Shortest queue</td><td class="n"><b>−0.0146 ± 0.0024 (20/20)</b></td><td class="n">+13 ± 4 points</td><td class="n">+1.68 ± 0.14</td><td class="n">+63 ± 12 points</td></tr>
+<tr><td>OffloaD-style trigger</td><td class="n"><b>−0.0214 ± 0.0025 (20/20)</b></td><td class="n">+12 ± 4 points</td><td class="n">+1.59 ± 0.13</td><td class="n">+54 ± 10 points</td></tr>
+<tr><td>Qiu-style reward</td><td class="n"><b>−0.0278 ± 0.0033 (20/20)</b></td><td class="n">+12 ± 4 points</td><td class="n">+1.54 ± 0.15</td><td class="n">+66 ± 9 points</td></tr>
+</table>
+<ul>
+<li><b>v5 beats every literature baseline, significantly.</b> Against the OffloaD-style confidence trigger, the Qiu-style offloading reward, shortest-queue and freshness-threshold scheduling it is ahead in 20 of 20 pairs (+0.011 to +0.028 sAP, +29 % to +111 % median), and against fixed JPEG offloading in 16 of 20 (+0.0076 ± 0.0053). The three baselines that keep the onboard detector busy hold a fresh detection more often (99 %) but run the Pi at 4.7–4.8 W and spend 60–72 % of the time at or above 80 °C; v5 runs at 3.1 W and 6 %.</li>
+<li><b>Staleness awareness matters, and the curve must match the forecaster.</b> Removing staleness from the value (flat) costs −0.0054 sAP (v5 ahead 16/20), 25 points of freshness and +0.41 W, because the controller then values slow onboard results as much as fresh ones. Using the steep decay measured <i>without</i> forecasting costs −0.0059 (14/20): the controller over-values speed. But two generic curves (linear to zero at 600 ms, exponential with a 300 ms half-life) do as well as the measured curve. They keep 83 % / 79 % at 100 ms and 56 % / 54 % at 267 ms, close to the measured forecaster-v2 curve (85 % / 60 %), so on this data a well-chosen generic decay is as good. <b>The claim we can make is that the value curve must match the forecaster in use; the measured curve is how we found the right one, not something a generic curve cannot match.</b></li>
+<li><b>The heat price makes no measurable difference in 3-minute runs.</b> v5 against v4.2 (identical except for the heat price): +0.0018 ± 0.0022 sAP (not significant), the same power and the same 6 % time hot. The energy price already keeps the Pi cool here (mean 68.7 °C), so the heat price rarely rises (mean λ_T 0.20). Heat builds up over minutes, so the 24-minute runs are the real test of v5.</li>
+<li><b>A fixed energy weight does as well as the adaptive price in these runs.</b> The LEAF-style weight was set to 2.0, the median price v4's dual ascent itself settled at in the 100-run campaign, so it is the best fixed weight we know rather than an independent guess. It matches v5 (−0.0004 ± 0.0015). The adaptive price's advantage is that it needs no tuning and follows a changing budget or temperature; showing that needs a budget or ambient condition different from the one the weight was tuned for.</li>
+<li><b>Fixed laptop offloading is still the most energy-efficient for the whole swarm.</b> 0.0182 sAP per watt with no edge drone against 0.0066 for v5 (board view), but it is the least accurate of the good policies and holds a fresh detection only half the time (50 % against 87 %).</li>
+</ul>
+
 <h2 id="argument"><span class="num">PART 16</span>What it all means: the argument for the paper</h2>
 <p>This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.</p>
 <h3>1. Where to compute: send the image, don't split the network</h3>

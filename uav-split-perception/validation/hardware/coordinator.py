@@ -81,9 +81,13 @@ def main():
             def value(k):
                 if k == 0:
                     return sum(r["other"] for r in reps.values())
-                lap = "lap_full" if k == 1 else "lap_half"
-                # k cameras admitted on rotation: each camera is admitted k/n of the windows
-                return sum(r["other"] + k / n * max(0.0, r[lap]) for r in reps.values())
+                # k cameras admitted on rotation share the laptop link: each gets about 1/k of it (lap_frac[k-1]);
+                # older cameras report only full and half (exact for k <= 2). Each camera is admitted k/n of the windows.
+                def lapv(r):
+                    if "lap_frac" in r and k <= len(r["lap_frac"]):
+                        return r["lap_frac"][k - 1]
+                    return r["lap_full"] if k == 1 else r["lap_half"]
+                return sum(r["other"] + k / n * max(0.0, lapv(r)) for r in reps.values())
             k = max(range(0, n + 1), key=lambda kk: (value(kk), kk))
         if a.energy_pref != "off" and k < n and k:
             # energy-aware: pick WHICH k of the n cameras, by modelled state of charge

@@ -373,7 +373,7 @@ def main():
             if a.fresh_target > 0 and r_override is None and fresh["aoi_ms"] + L >= D:
                 v_ += fresh["lam"] * p_on              # restores freshness if it arrives in time
             return v_, p_on
-        v_ = acc_of(model, res, q) / REF * qv / (busy / 1e3)
+        v_ = acc_of(model, res, q) / REF_ACC * qv / (busy / 1e3)
         # v4.2: energy priced in both objectives; the rate value is per second, so the penalty is the
         # energy per frame times the frames per second this path takes (busy), i.e. a power
         if (a.energy_aware or a.thermal_aware) and r_override is None:
@@ -395,7 +395,10 @@ def main():
             if a.fresh_target > 0 and fresh["aoi_ms"] + t >= D:
                 v_ += fresh["lam"] * p_on              # the held detection will be stale before anything else lands
             return v_, p_on
-        return acc_of(model, res) / REF * qv / (busy / 1e3), p_on
+        v_ = acc_of(model, res) / REF_ACC * qv / (busy / 1e3)
+        if (a.energy_aware or a.thermal_aware) and penalize:   # a power: J per inference x inferences per s
+            v_ -= cam_price() * e_onboard(var) / (busy / 1e3)
+        return v_, p_on
 
     def idle(srv):
         if srv == "onboard":
@@ -428,6 +431,7 @@ def main():
             lap = lambda rate: max([path_value("laptop", v, rate)[0] for v in path_variants("laptop")] + [0.0])  # noqa
             other = sum(max(0.0, best_variant(sv)[1]) for sv in list(paths) + ["onboard"] if sv != "laptop")
             return {"t": now, "lap_full": lap(full), "lap_half": lap(full / 2), "other": other, "r": r, "r_full": full,
+                    "lap_frac": [lap(full / k) for k in range(1, 9)],
                     "soc": energy.get("soc", 1.0), "mu": energy["mu"],
                     "edge_w": (paths["jetson"].edge_w if "jetson" in paths else None)}
 

@@ -941,6 +941,45 @@ Swarm lifetime = the **first drone to land**; in every setting that is the 249 g
   - The paper's headline therefore becomes pricing a fresh detection in **accuracy, energy and heat together** on a three-tier drone system; G9 and G11 show that doing so changes the decision and raises accuracy.
   - All 29 citations from the literature reports were verified against CrossRef/doi.org (`paper/references_verified.bib`).
 
+### G12. Main campaign: v5, decay ablation and literature baselines (11–12 Oct 2026)
+
+**Setup.** 12 policies × 4 scenarios × 5 repetitions = 240 runs, shuffled, on the shared Wi-Fi, 11–12 October, live power on both boards and the live forecaster in every run. Two runs were invalid (one overlapped a large GitHub upload, one was hit by the laptop going to sleep); both were set aside and re-run. Every alternative differs from v5 in one thing only (ablations) or is a literature decision rule under the same harness (baselines, "-style" = the paper's rule with a simple proxy for its learned estimator). Code `validation/hardware/tools/campaign_main.sh`; data `vid_campaign_main/`, `vid_campaign_main_measured_summary.json`, `vid_campaign_main_summary_v2_live.*`.
+
+| Policy (20 runs each) | sAP | Fresh-detection share | Pi W | Jetson W | Time ≥ 80 °C | sAP per W: camera / board | Mission perception, 249 g |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **v5** (reference) | **0.0519** | 87.2 % | 3.12 | 4.80 | 6 % | 0.0168 / 0.0066 | **1.47** |
+| v4.2 (no heat price) | 0.0501 | 84.2 % | 3.13 | 4.77 | 6 % | 0.0162 / 0.0063 | 1.42 |
+| v5, generic linear decay | 0.0523 | 91.3 % | 3.09 | 4.75 | 5 % | 0.0171 / 0.0067 | 1.49 |
+| v5, generic exponential decay | 0.0517 | 85.5 % | 3.12 | 4.75 | 6 % | 0.0168 / 0.0066 | 1.47 |
+| v5, decay without forecasting | 0.0459 | 81.2 % | 3.20 | 4.56 | 11 % | 0.0148 / 0.0060 | 1.30 |
+| v5, no staleness (flat) | 0.0465 | 62.0 % | 3.53 | 4.79 | 22 % | 0.0139 / 0.0057 | 1.31 |
+| LEAF-style fixed energy weight | 0.0515 | 87.8 % | 3.10 | 4.94 | 7 % | 0.0171 / 0.0064 | 1.46 |
+| Fixed laptop YOLOv8m | 0.0443 | 50.2 % | **2.39** | 0 (none) | 0 % | 0.0182 / **0.0182** | 1.28 |
+| Freshness threshold (150 ms) | 0.0407 | 69.1 % | 2.57 | 4.68 | 0 % | 0.0159 / 0.0056 | 1.17 |
+| Shortest queue | 0.0373 | 99.8 % | 4.80 | 4.74 | 69 % | 0.0078 / 0.0039 | 1.01 |
+| OffloaD-style confidence trigger | 0.0305 | 98.7 % | 4.71 | 4.79 | 60 % | 0.0065 / 0.0032 | 0.83 |
+| Qiu-style offloading reward | 0.0241 | 98.7 % | 4.66 | 4.42 | 72 % | 0.0052 / 0.0027 | 0.66 |
+
+| Paired against v5 (20 pairs) | sAP | Fresh-detection share | Pi W | Time ≥ 80 °C |
+| --- | --- | --- | --- | --- |
+| v4.2 (heat price removed) | −0.0018 ± 0.0022 (v5 ahead 11/20) | −3.0 ± 2.8 points | +0.01 ± 0.06 | −0.4 ± 2.1 points |
+| generic linear decay | +0.0005 ± 0.0014 (12/20) | +4.1 ± 3.7 points | −0.03 ± 0.04 | −0.7 ± 1.4 points |
+| generic exponential decay | −0.0002 ± 0.0025 (8/20) | −1.7 ± 2.9 points | −0.00 ± 0.04 | −0.2 ± 1.8 points |
+| decay without forecasting | **−0.0059 ± 0.0039 (v5 ahead 14/20)** | −6.0 ± 6.4 points | +0.08 ± 0.09 | +4.5 ± 2.6 points |
+| no staleness (flat) | **−0.0054 ± 0.0032 (v5 ahead 16/20)** | **−25 ± 8 points** | **+0.41 ± 0.15** | **+16 ± 6 points** |
+| LEAF-style fixed weight | −0.0004 ± 0.0015 (9/20) | +0.6 ± 2.9 points | −0.02 ± 0.16 | +0.5 ± 5.7 points |
+| Fixed laptop | **−0.0076 ± 0.0053 (v5 ahead 16/20)** | −37 ± 11 points | −0.74 ± 0.13 | −6 ± 4 points |
+| Freshness threshold | **−0.0112 ± 0.0030 (20/20)** | −18 ± 6 points | −0.55 ± 0.10 | −6 ± 4 points |
+| Shortest queue | **−0.0146 ± 0.0024 (20/20)** | +13 ± 4 points | +1.68 ± 0.14 | +63 ± 12 points |
+| OffloaD-style trigger | **−0.0214 ± 0.0025 (20/20)** | +12 ± 4 points | +1.59 ± 0.13 | +54 ± 10 points |
+| Qiu-style reward | **−0.0278 ± 0.0033 (20/20)** | +12 ± 4 points | +1.54 ± 0.15 | +66 ± 9 points |
+
+- **v5 beats every literature baseline, significantly.**Against the OffloaD-style confidence trigger, the Qiu-style offloading reward, shortest-queue and freshness-threshold scheduling it is ahead in 20 of 20 pairs (+0.011 to +0.028 sAP, +29 % to +111 % median), and against fixed JPEG offloading in 16 of 20 (+0.0076 ± 0.0053). The three baselines that keep the onboard detector busy hold a fresh detection more often (99 %) but run the Pi at 4.7–4.8 W and spend 60–72 % of the time at or above 80 °C; v5 runs at 3.1 W and 6 %.
+- **Staleness awareness matters, and the curve must match the forecaster.**Removing staleness from the value (flat) costs −0.0054 sAP (v5 ahead 16/20), 25 points of freshness and +0.41 W, because the controller then values slow onboard results as much as fresh ones. Using the steep decay measured *without* forecasting costs −0.0059 (14/20): the controller over-values speed. But two generic curves (linear to zero at 600 ms, exponential with a 300 ms half-life) do as well as the measured curve. They keep 83 % / 79 % at 100 ms and 56 % / 54 % at 267 ms, close to the measured forecaster-v2 curve (85 % / 60 %), so on this data a well-chosen generic decay is as good. **The claim we can make is that the value curve must match the forecaster in use; the measured curve is how we found the right one, not something a generic curve cannot match.**
+- **The heat price makes no measurable difference in 3-minute runs.**v5 against v4.2 (identical except for the heat price): +0.0018 ± 0.0022 sAP (not significant), the same power and the same 6 % time hot. The energy price already keeps the Pi cool here (mean 68.7 °C), so the heat price rarely rises (mean λ_T 0.20). Heat builds up over minutes, so the 24-minute runs are the real test of v5.
+- **A fixed energy weight does as well as the adaptive price in these runs.**The LEAF-style weight was set to 2.0, the median price v4's dual ascent itself settled at in the 100-run campaign, so it is the best fixed weight we know rather than an independent guess. It matches v5 (−0.0004 ± 0.0015). The adaptive price's advantage is that it needs no tuning and follows a changing budget or temperature; showing that needs a budget or ambient condition different from the one the weight was tuned for.
+- **Fixed laptop offloading is still the most energy-efficient for the whole swarm.**0.0182 sAP per watt with no edge drone against 0.0066 for v5 (board view), but it is the least accurate of the good policies and holds a fresh detection only half the time (50 % against 87 %).
+
 ## PART 16What it all means: the argument for the paper
 
 This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.
