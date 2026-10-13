@@ -58,3 +58,14 @@ Consequences:
   Fixed: (a) policy-dependent random streams seeded with Python's hash() (randomised per process) → common
   random numbers per seed; (b) the netem persistence above. A wrong heating time constant (14.5 s from a
   transient) was replaced by the measured 148.8 s (clean heating steps fit 137–146 s).
+
+## 13 Oct: results and fixes
+- 24-minute missions (12 runs) and the same-day table (80 runs) finished without outages; written up in the
+  report (G13). v4.1 is the best controller (tied in short runs, best over a mission, 2 runs per policy).
+- Network emulation fixed: `adaptive.tc_phase` deletes and re-adds each path's netem qdisc every phase (netem
+  'change' and 'replace' both keep an earlier rate limit). Verified on the Pi: the mission's final phase runs at
+  12.5 results/s (first phase 12.8) and the live qdisc shows no leftover limit. `--netem-legacy` reproduces the
+  old behaviour; runs record `"netem"`; replay.py has `--netem reset|legacy`.
+- Report corrections (G14 and in place): scenario descriptions, retracted slow-recovery claim (Parts 1, 11, 13,
+  17), simulator r = 0.947 over all 528 phases, controller version labels (anti-windup from 12 Oct), Jetson Wi-Fi
+  power saving; eight new rows in the faults table (Part 18).
