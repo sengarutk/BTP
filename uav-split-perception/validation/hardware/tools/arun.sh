@@ -12,6 +12,10 @@ TOT=$((PS*NPH+60))
 $D/rsh.sh nano 'P=$(pgrep -f "^python -W ignore adaptive.py worker"); [ -n "$P" ] && kill $P; true'
 # Jetson clocks locked at the 15 W-mode maximum for every run (a reboot clears jetson_clocks)
 $D/rsh.sh nano "printf '%s\n' '$NANO_PW' | sudo -S -p '' jetson_clocks"
+# Wi-Fi power saving off on both boards for every run (it adds latency spikes; a reboot or a network-manager
+# reconnect turns it back on - found on the Jetson on 12 Oct)
+$D/rsh.sh nano "printf '%s\n' '$NANO_PW' | sudo -S -p '' /usr/sbin/iw dev wlP1p1s0 set power_save off" 2>/dev/null
+$D/rsh.sh pi "printf '%s\n' '$PI_PW' | sudo -S -p '' iw dev wlan0 set power_save off" 2>/dev/null
 for P in $(ps -eo pid,args | awk '/^ *[0-9]+ python -W ignore adaptive.py worker/{print $1}'); do kill $P; done
 $D/rsh.sh pi "P=\$(pgrep -f '^/home/dubey/btp_env/bin/python -W ignore adaptive2.py'); [ -n \"\$P\" ] && printf '%s\n' '$PI_PW' | sudo -S -p '' kill \$P; true"
 $D/rsh.sh pi "cd ~/hwbench; rm -f results/a2_$L.json results/a2_${L}_dets.npz results/a2_${L}_livefc.npz; printf '%s\n' '$PI_PW' | sudo -S -p '' nohup /home/dubey/btp_env/bin/python -W ignore adaptive2.py --policy '$POL' --scenario $SC --phase-s $PS --seed $SEED $EXTRA --out results/a2_$L.json > results/a2_$L.log 2>&1 & echo cam_up"

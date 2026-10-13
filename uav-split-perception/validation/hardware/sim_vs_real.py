@@ -44,6 +44,26 @@ def rate_of(imp, base):
 
 
 STOP_AND_WAIT = "--stop-and-wait" in sys.argv
+# --netem-persist: the phases' TRUE conditions. adaptive.tc_phase changes each path's netem qdisc with only the new
+# phase's arguments; netem then resets loss but KEEPS the previous rate limit (checked on the Pi, 12 Oct 2026), so a
+# phase without a "rate" keeps the last one. Without this flag the phases are taken as described (the original check).
+PERSIST = "--netem-persist" in sys.argv
+
+
+def effective_impairments(phases, path):
+    """Per phase, the netem state the path really had: (loss 100 %?, rate cap in Mbit/s or None)."""
+    out, cap = [], None
+    for _, ph in phases:
+        imp = ph["impair"].get(path) or ""
+        m = re.search(r"rate ([\d.]+)mbit", imp)
+        if m:
+            cap = float(m.group(1))
+        out.append(("loss 100%" in imp, cap if PERSIST else (float(m.group(1)) if m else None)))
+    return out
+
+
+def eff_rate(loss, cap, base):
+    return 0.0 if loss else (min(cap, base) if cap else base)
 
 
 def one(run_path):
@@ -56,8 +76,9 @@ def one(run_path):
     # unimpaired goodput of this path, measured by the camera during the run's unimpaired phases
     t0 = r["link_goodput_samples"][path][0][0] if r["link_goodput_samples"][path] else 0
     good_t, edges = [], np.cumsum([0.0] + durs)
-    for (name, ph), lo, hi in zip(phases, edges[:-1], edges[1:]):
-        if not ph["impair"].get(path):
+    eff = effective_impairments(phases, path)
+    for (loss, cap), lo, hi in zip(eff, edges[:-1], edges[1:]):
+        if not loss and cap is None:
             good_t.append((lo, hi))
     samp = [v for t, v in r["link_goodput_samples"][path] if any(lo <= t - t0 < hi for lo, hi in good_t)]
     base = float(np.median(samp)) if samp else 20.0
@@ -71,23 +92,23 @@ def one(run_path):
     sim = StreamSimulator(p)
     n = int(total * 1000 / SLOT)
     bw = np.zeros(n)
-    for (name, ph), lo, hi in zip(phases, edges[:-1], edges[1:]):
-        bw[int(lo * 100):int(hi * 100)] = rate_of(ph["impair"].get(path), base)
+    for (loss, cap), lo, hi in zip(eff, edges[:-1], edges[1:]):
+        bw[int(lo * 100):int(hi * 100)] = eff_rate(loss, cap, base)
     u = sim.uavs[0]
     u.bw, u.delay, u.loss = bw, np.full(n, RTT_MS[path] / 2), np.zeros(n)
     sim.run()
     out = []
     after_blackout = False
     t_res = sorted(f["t_res"] for f in r["frames"] if f.get("t_res") is not None and f.get("server") == path)
-    for (name, ph), lo, hi in zip(phases, edges[:-1], edges[1:]):
+    for (name, ph), (loss, cap), lo, hi in zip(phases, eff, edges[:-1], edges[1:]):
         fr = [f for f in u.frames if lo * 1e3 <= f.capture_ms < hi * 1e3]
         pred = sum(f.status == "delivered" and f.latency_ms <= 300 for f in fr) / (hi - lo)
         imp = ph["impair"].get(path)
-        kind = ("blackout" if imp and "loss 100%" in imp else "rate_limited" if imp else
+        kind = ("blackout" if loss else "rate_limited" if cap else
                 "unimpaired_after_blackout" if after_blackout else "unimpaired")
         # measured on-time frames/s of this path only (the fixed policies use one path)
         row = {"run": f"{Path(run_path).parent.name}/{Path(run_path).stem}", "policy": r["policy"], "phase": name, "kind": kind,
-               "measured": ph["on_time_fps"], "predicted": pred, "rate_mbps": rate_of(imp, base)}
+               "measured": ph["on_time_fps"], "predicted": pred, "rate_mbps": eff_rate(loss, cap, base)}
         if kind == "unimpaired_after_blackout" and after_blackout and out and out[-1]["kind"] == "blackout":
             nxt = [t for t in t_res if t >= lo]          # first result after the link came back
             row["recovery_s"] = float(nxt[0] - lo) if nxt and nxt[0] < hi else float(hi - lo)
@@ -120,7 +141,7 @@ def main(dirs):
                                              "p90": float(np.percentile(rec, 90)),
                                              "never_within_phase": int(sum(x >= 19.9 for x in rec))}
         print("recovery after blackout (s):", summ["recovery_after_blackout_s"])
-    name = "sim_vs_real_stopwait.json" if STOP_AND_WAIT else "sim_vs_real.json"
+    name = ("sim_vs_real_stopwait" if STOP_AND_WAIT else "sim_vs_real") + ("_persist" if PERSIST else "") + ".json"
     json.dump({"rows": rows, "summary": summ}, open(ROOT / "experiments/results/hardware" / name, "w"), indent=1)
     summ["runs"] = len({x["run"] for x in rows})
     print("runs:", summ["runs"], "phases:", len(rows))

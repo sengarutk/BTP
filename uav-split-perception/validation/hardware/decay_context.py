@@ -21,6 +21,8 @@ usage:
   decay_context.py dets val     YOLOv8s@640 CPU detections of the val sequences (as forecast.py dets on train)
   decay_context.py run train|val
   decay_context.py compare      does the per-stratum train curve predict val better than the global curve?
+  DECAY_MODEL=yolov8n|yolov8m   the same study for another detector (own detections, outputs *_<model>.json);
+                                the forecasters stay the ones tuned on YOLOv8s results (no retuning)
 Output: experiments/results/hardware/decay_context_{train,val}.json, decay_context_compare.json
 """
 import json
@@ -38,6 +40,12 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 OUT = ROOT / "experiments" / "results" / "hardware"
 DS = {"train": ROOT / "datasets" / "visdrone_vid_train_640", "val": ROOT / "datasets" / "visdrone_vid_640"}
 DETS = {"train": OUT / "forecast_train_dets.npz", "val": OUT / "forecast_val_dets.npz"}
+MODEL = os.environ.get("DECAY_MODEL", "yolov8s")      # detector whose results go stale (yolov8n / s / m)
+if MODEL != "yolov8s":                                # other detectors: own detection files and outputs
+    DETS = {k: OUT / f"forecast_{k}_dets_{MODEL}.npz" for k in DETS}
+SUFFIX = "" if MODEL == "yolov8s" else f"_{MODEL}"
+WEIGHT_FILES = {"yolov8n": ROOT / "weights" / "yolov8n.pt", "yolov8s": ROOT / "yolov8s.pt",
+                "yolov8m": ROOT / "weights" / "yolov8m.pt"}
 LAGS = [0, 1, 2, 3, 5, 8, 12, 18, 25, 35]
 FEATURES = ["ego", "crowd", "small"]
 SIZES = {"small": (0, 16), "medium": (16, 32), "large": (32, 1e9)}
@@ -124,7 +132,7 @@ def cmd_run(split, workers=3):
         allv = {f: [v[f] for s in ctx.values() for v in s.values()] for f in FEATURES}
         cuts = {f: [float(np.quantile(allv[f], 1 / 3)), float(np.quantile(allv[f], 2 / 3))] for f in FEATURES}
     else:                                        # the train thresholds, unchanged
-        cuts = json.load(open(OUT / "decay_context_train.json"))["cuts"]
+        cuts = json.load(open(OUT / f"decay_context_train{SUFFIX}.json"))["cuts"]
     fcs = {"none": None, "v1": json.load(open(TUNING))["best"]["params"],
            "v2": json.load(open(TUNING2))["best"]["params"]}
     jobs = [(split, fn, p, lag, ctx, cuts) for fn, p in fcs.items() for lag in LAGS]
@@ -145,7 +153,8 @@ def cmd_run(split, workers=3):
                            "small": f"share of those < {SMALL_PX} px", "sizes_px": SIZES},
            "note": "VisDrone-VID, YOLOv8s@640 CPU detections, one result every %d frames, capture-anchored; "
                    "context from the capture frame only (live-computable)" % STRIDE}
-    json.dump(out, open(OUT / f"decay_context_{split}.json", "w"), indent=1)
+    out["detector"] = MODEL
+    json.dump(out, open(OUT / f"decay_context_{split}{SUFFIX}.json", "w"), indent=1)
     for fn in fcs:
         print(fn)
         for k in strata:
@@ -154,7 +163,7 @@ def cmd_run(split, workers=3):
 
 def cmd_compare():
     """Prediction error of the val decay (ratio vs lag, per stratum) by the train curves: global vs per-stratum."""
-    tr, va = (json.load(open(OUT / f"decay_context_{s}.json")) for s in ("train", "val"))
+    tr, va = (json.load(open(OUT / f"decay_context_{s}{SUFFIX}.json")) for s in ("train", "val"))
     out = {}
     for fn in tr["ratio"]:
         g = np.array(tr["ratio"][fn]["all"], float)
@@ -171,7 +180,7 @@ def cmd_compare():
                                                                          - g)) for b in range(3)]))}
         out[fn] = rows
         print(fn, {f: {k: round(v, 3) for k, v in r.items()} for f, r in rows.items()})
-    json.dump(out, open(OUT / "decay_context_compare.json", "w"), indent=1)
+    json.dump(out, open(OUT / f"decay_context_compare{SUFFIX}.json", "w"), indent=1)
 
 
 def cmd_dets(split):
@@ -180,7 +189,7 @@ def cmd_dets(split):
     torch.set_num_threads(2)
     from ultralytics import YOLO
     seqs = json.load(open(DS[split] / "sequences.json"))
-    m = YOLO(str(ROOT / "yolov8s.pt"))
+    m = YOLO(str(WEIGHT_FILES[MODEL]))
     out = {}
     for sq, n in seqs:
         for i in range(1, min(n, MAX_FRAMES) + 1):

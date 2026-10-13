@@ -20,6 +20,8 @@
 #   aoi_thr       freshness-threshold offloading (150 ms)
 #   jsq           shortest expected latency, no accuracy/energy term
 #   fixed_laptop_m640q90  fixed JPEG offload to the ground GPU
+# Also defined (run with ONLY=...): v51 = v5 + the v4.1 freshness price, v41, stream_fc2 (v3 + forecaster v2),
+# onboard_n320 (onboard YOLOv8n-320 only). Long runs: PHASE_S=240 (6 phases x 4 min = 24 min per run).
 D=$(cd "$(dirname "$0")" && pwd); REPO=$(cd "$D/../../.." && pwd)
 R=${OUTDIR:-$REPO/experiments/results/hardware/vid_campaign_main}; mkdir -p $R
 REPS=${REPS:-5}
@@ -42,8 +44,15 @@ declare -A ARGS=(
   [aoi_thr]="aoi_thr|$COMMON"
   [jsq]="jsq|$COMMON"
   [fixed_laptop_m640q90]="fixed:laptop:m640q90|$COMMON"
+  # added 12 Oct for the 24-minute runs and the same-day comparison table (campaign A of the plan)
+  [v51]="A_full|$COMMON $DEC $V5 --fresh-target ${FRESH:-0.95}"
+  [v41]="A_full|$COMMON $DEC --energy-aware --power-budget 2.8 --fresh-target ${FRESH:-0.95}"
+  [stream_fc2]="A_full|$COMMON $DEC"
+  [onboard_n320]="fixed:onboard:n320|$COMMON"
 )
-NAMES="${ONLY:-${!ARGS[@]}}"
+# Default set = the 12 policies of the 240-run main campaign; the added ones run only when named in ONLY.
+DEFAULT_NAMES="v5 v42 v5_nofc v5_exp v5_lin v5_flat leaf conf_trigger reward_offload aoi_thr jsq fixed_laptop_m640q90"
+NAMES="${ONLY:-$DEFAULT_NAMES}"
 # a fresh campaign first archives the Pi's loose results: the recovery step below pulls any a2_*__r*.json the
 # campaign folder lacks, so leftovers from an earlier campaign with the same names must not be on the Pi
 if [ "$(ls $R/a2_*__r*.json 2>/dev/null | wc -l)" = 0 ]; then

@@ -1,0 +1,4793 @@
+{
+ "rows": [
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 23.05,
+   "predicted": 18.6,
+   "rate_mbps": 33.71793733996522
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 21.55,
+   "predicted": 18.55,
+   "rate_mbps": 33.71793733996522
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 18.4,
+   "predicted": 18.6,
+   "rate_mbps": 33.71793733996522
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 11.95,
+   "predicted": 14.35,
+   "rate_mbps": 17.947910260933583
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 15.75,
+   "predicted": 14.25,
+   "rate_mbps": 17.947910260933583
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 12.6,
+   "predicted": 14.25,
+   "rate_mbps": 17.947910260933583
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 18.35,
+   "predicted": 16.4,
+   "rate_mbps": 24.18655069224311
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_congested",
+   "kind": "unimpaired",
+   "measured": 17.85,
+   "predicted": 16.35,
+   "rate_mbps": 24.18655069224311
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "ground_blackout",
+   "kind": "unimpaired",
+   "measured": 18.95,
+   "predicted": 16.35,
+   "rate_mbps": 24.18655069224311
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 25.5,
+   "predicted": 22.55,
+   "rate_mbps": 42.12570862636002
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.2,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 8.8,
+   "predicted": 9.25,
+   "rate_mbps": 7.62537838494017
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.2,
+   "predicted": 4.3,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 17.6,
+   "predicted": 18.55,
+   "rate_mbps": 25.25273625450838
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.05,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 14.2,
+   "predicted": 14.7,
+   "rate_mbps": 18.33198279964833
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 1.35,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 12.3,
+   "predicted": 14.35,
+   "rate_mbps": 17.14725475784952
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.35,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.95,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 18.05,
+   "predicted": 16.3,
+   "rate_mbps": 23.648279204502213
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_congested",
+   "kind": "rate_limited",
+   "measured": 3.3,
+   "predicted": 4.05,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "edge_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 1.25,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 12.45,
+   "predicted": 14.5,
+   "rate_mbps": 15.795702814804814
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 14.6,
+   "predicted": 14.4,
+   "rate_mbps": 15.795702814804814
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 12.95,
+   "predicted": 14.45,
+   "rate_mbps": 15.795702814804814
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 22.35,
+   "predicted": 17.3,
+   "rate_mbps": 21.887491340618098
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 17.9,
+   "predicted": 17.25,
+   "rate_mbps": 21.887491340618098
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 14.55,
+   "predicted": 17.3,
+   "rate_mbps": 21.887491340618098
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 9.85,
+   "predicted": 14.35,
+   "rate_mbps": 15.47162117649723
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 15.6,
+   "predicted": 14.25,
+   "rate_mbps": 15.47162117649723
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 11.25,
+   "predicted": 14.25,
+   "rate_mbps": 15.47162117649723
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L0J0",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L0J0",
+   "kind": "rate_limited",
+   "measured": 4.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L0J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L0J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L2J1",
+   "kind": "rate_limited",
+   "measured": 5.25,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J1",
+   "kind": "rate_limited",
+   "measured": 5.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L0J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L1J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L1J2",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L1J1",
+   "kind": "rate_limited",
+   "measured": 3.25,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L2J0",
+   "kind": "rate_limited",
+   "measured": 5.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L2J0",
+   "kind": "rate_limited",
+   "measured": 9.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L4J0",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L4J0",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L4J0",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 9.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L3J0",
+   "kind": "rate_limited",
+   "measured": 8.75,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 13.25,
+   "predicted": 14.0,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 12.75,
+   "predicted": 14.0,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 12.5,
+   "predicted": 13.75,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 13.5,
+   "predicted": 13.75,
+   "rate_mbps": 16.811397432900463
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L0J2",
+   "kind": "rate_limited",
+   "measured": 4.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L0J2",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L0J2",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 3.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L0J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L3J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L4J2",
+   "kind": "rate_limited",
+   "measured": 4.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L4J2",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r00_L0J2",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 4.5,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r01_L0J0",
+   "kind": "rate_limited",
+   "measured": 3.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r02_L0J0",
+   "kind": "rate_limited",
+   "measured": 2.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r03_L2J0",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r04_L2J0",
+   "kind": "rate_limited",
+   "measured": 3.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r05_L1J0",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r06_L1J0",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r07_L1J0",
+   "kind": "rate_limited",
+   "measured": 2.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r08_L0J0",
+   "kind": "rate_limited",
+   "measured": 1.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r09_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r11_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r12_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r13_L1J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r14_L3J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r15_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r16_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r17_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r18_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r19_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r20_L4J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r21_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r22_L2J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r23_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r24_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r25_L2J1",
+   "kind": "rate_limited",
+   "measured": 6.25,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r26_L3J1",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "r29_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.75,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 12.0,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J4",
+   "kind": "unimpaired",
+   "measured": 14.25,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J2",
+   "kind": "unimpaired",
+   "measured": 13.25,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 16.75,
+   "predicted": 16.5,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J0",
+   "kind": "unimpaired",
+   "measured": 18.0,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J1",
+   "kind": "unimpaired",
+   "measured": 21.25,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J1",
+   "kind": "unimpaired",
+   "measured": 20.75,
+   "predicted": 16.75,
+   "rate_mbps": 20.04937256062892
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J1",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J1",
+   "kind": "rate_limited",
+   "measured": 2.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.5,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L0J2",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J2",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L1J2",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L1J1",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.75,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J0",
+   "kind": "rate_limited",
+   "measured": 5.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.5,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 8.5,
+   "predicted": 16.25,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 4.75,
+   "predicted": 16.5,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 14.0,
+   "predicted": 16.0,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 15.0,
+   "predicted": 16.25,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J2",
+   "kind": "unimpaired",
+   "measured": 18.5,
+   "predicted": 16.5,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J2",
+   "kind": "unimpaired",
+   "measured": 20.25,
+   "predicted": 16.25,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J2",
+   "kind": "unimpaired",
+   "measured": 18.0,
+   "predicted": 16.25,
+   "rate_mbps": 19.21782930214483
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L0J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J3",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L2J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L2J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 23.25,
+   "predicted": 21.75,
+   "rate_mbps": 37.29655365608629
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 25.75,
+   "predicted": 21.75,
+   "rate_mbps": 37.29655365608629
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 22.5,
+   "predicted": 21.5,
+   "rate_mbps": 37.29655365608629
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L2J0",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L1J0",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L1J0",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L0J0",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J4",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J4",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L0J3",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.25,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L3J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 8.75,
+   "predicted": 10.95,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 11.0,
+   "predicted": 10.85,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 8.95,
+   "predicted": 10.9,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 11.65,
+   "predicted": 10.9,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 11.4,
+   "predicted": 10.9,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r1",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 13.9,
+   "predicted": 10.85,
+   "rate_mbps": 10.88756224701704
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 12.95,
+   "predicted": 14.3,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 12.35,
+   "predicted": 14.25,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 15.75,
+   "predicted": 14.25,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 11.2,
+   "predicted": 14.25,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 16.2,
+   "predicted": 14.25,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r2",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 16.95,
+   "predicted": 14.2,
+   "rate_mbps": 17.61129511042507
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 11.15,
+   "predicted": 12.05,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 11.8,
+   "predicted": 11.95,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 9.85,
+   "predicted": 12.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 10.6,
+   "predicted": 12.05,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 12.15,
+   "predicted": 12.0,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_jetson_s640q90__r3",
+   "policy": "fixed:jetson:s640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 15.0,
+   "predicted": 11.95,
+   "rate_mbps": 12.881988809673773
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 14.55,
+   "predicted": 16.7,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 17.05,
+   "predicted": 16.65,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 13.75,
+   "predicted": 16.65,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 13.9,
+   "predicted": 16.7,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 17.4,
+   "predicted": 16.7,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 17.55,
+   "predicted": 16.6,
+   "rate_mbps": 19.77571609252464
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 14.45,
+   "predicted": 16.05,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 16.45,
+   "predicted": 16.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 14.15,
+   "predicted": 16.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 14.2,
+   "predicted": 16.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 16.75,
+   "predicted": 16.0,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 17.1,
+   "predicted": 15.95,
+   "rate_mbps": 19.004195833237024
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 16.45,
+   "predicted": 15.05,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 16.85,
+   "predicted": 14.95,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 13.45,
+   "predicted": 15.0,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 12.25,
+   "predicted": 15.05,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 11.5,
+   "predicted": 15.0,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 14.65,
+   "predicted": 14.95,
+   "rate_mbps": 16.79892709145564
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 20.0,
+   "predicted": 19.55,
+   "rate_mbps": 28.24189845887279
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 1.85,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 7.95,
+   "predicted": 11.45,
+   "rate_mbps": 10.327172789214659
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 0.6,
+   "predicted": 4.35,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 26.95,
+   "predicted": 23.4,
+   "rate_mbps": 46.21913411919652
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.25,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 25.25,
+   "predicted": 23.15,
+   "rate_mbps": 43.73159421094546
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.2,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 27.45,
+   "predicted": 24.0,
+   "rate_mbps": 48.96651226373804
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_congested",
+   "kind": "rate_limited",
+   "measured": 2.35,
+   "predicted": 4.15,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "ground_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 2.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 21.25,
+   "predicted": 19.15,
+   "rate_mbps": 27.227376295211062
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 19.75,
+   "predicted": 19.05,
+   "rate_mbps": 27.227376295211062
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 15.8,
+   "predicted": 19.1,
+   "rate_mbps": 27.227376295211062
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 25.25,
+   "predicted": 23.4,
+   "rate_mbps": 45.67391371024058
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 25.4,
+   "predicted": 23.3,
+   "rate_mbps": 45.67391371024058
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 26.7,
+   "predicted": 23.3,
+   "rate_mbps": 45.67391371024058
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 18.8,
+   "predicted": 22.05,
+   "rate_mbps": 39.33887263539539
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 21.1,
+   "predicted": 22.0,
+   "rate_mbps": 39.33887263539539
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 18.9,
+   "predicted": 21.95,
+   "rate_mbps": 39.33887263539539
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 19.4,
+   "predicted": 22.05,
+   "rate_mbps": 38.62353837382044
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 20.8,
+   "predicted": 21.95,
+   "rate_mbps": 38.62353837382044
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 24.6,
+   "predicted": 22.0,
+   "rate_mbps": 38.62353837382044
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good",
+   "kind": "unimpaired",
+   "measured": 26.15,
+   "predicted": 23.9,
+   "rate_mbps": 49.11740472476468
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_congested",
+   "kind": "unimpaired",
+   "measured": 26.85,
+   "predicted": 23.8,
+   "rate_mbps": 49.11740472476468
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "edge_blackout",
+   "kind": "unimpaired",
+   "measured": 27.2,
+   "predicted": 23.85,
+   "rate_mbps": 49.11740472476468
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "both_degraded",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "total_blackout",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_mission_mirror__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "recovered_low_battery",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 17.5,
+   "predicted": 15.0,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J4",
+   "kind": "unimpaired",
+   "measured": 12.5,
+   "predicted": 15.25,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J2",
+   "kind": "unimpaired",
+   "measured": 1.5,
+   "predicted": 14.75,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 15.0,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J0",
+   "kind": "unimpaired",
+   "measured": 2.0,
+   "predicted": 15.25,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J1",
+   "kind": "unimpaired",
+   "measured": 1.5,
+   "predicted": 15.0,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J1",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 15.0,
+   "rate_mbps": 18.47032526142559
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L1J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L0J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L1J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L1J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L1J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 3.75,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 21.0,
+   "predicted": 20.0,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 13.5,
+   "predicted": 20.25,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 23.25,
+   "predicted": 19.75,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L0J0",
+   "kind": "unimpaired",
+   "measured": 24.0,
+   "predicted": 20.0,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J2",
+   "kind": "unimpaired",
+   "measured": 20.0,
+   "predicted": 20.25,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L0J2",
+   "kind": "unimpaired",
+   "measured": 20.0,
+   "predicted": 20.0,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J2",
+   "kind": "unimpaired",
+   "measured": 20.0,
+   "predicted": 20.0,
+   "rate_mbps": 30.087108377645997
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 4.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L0J1",
+   "kind": "rate_limited",
+   "measured": 3.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J3",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L1J3",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L1J4",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.25,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L2J4",
+   "kind": "rate_limited",
+   "measured": 3.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L2J4",
+   "kind": "rate_limited",
+   "measured": 2.75,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J2",
+   "kind": "unimpaired",
+   "measured": 7.25,
+   "predicted": 23.5,
+   "rate_mbps": 45.754570302435326
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 22.5,
+   "predicted": 23.5,
+   "rate_mbps": 45.754570302435326
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 28.5,
+   "predicted": 23.0,
+   "rate_mbps": 45.754570302435326
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L1J0",
+   "kind": "rate_limited",
+   "measured": 9.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L1J0",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L0J0",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L2J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L2J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L1J4",
+   "kind": "rate_limited",
+   "measured": 7.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L3J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J4",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L0J3",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L2J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L2J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L3J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 25.5,
+   "predicted": 23.5,
+   "rate_mbps": 47.635806392818516
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J2",
+   "kind": "unimpaired",
+   "measured": 28.25,
+   "predicted": 23.5,
+   "rate_mbps": 47.635806392818516
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 22.25,
+   "predicted": 23.0,
+   "rate_mbps": 47.635806392818516
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L1J0",
+   "kind": "rate_limited",
+   "measured": 6.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L1J0",
+   "kind": "rate_limited",
+   "measured": 9.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L1J1",
+   "kind": "rate_limited",
+   "measured": 9.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L2J2",
+   "kind": "rate_limited",
+   "measured": 2.5,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L2J2",
+   "kind": "rate_limited",
+   "measured": 1.5,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L4J3",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L4J4",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L3J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L3J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L4J2",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L3J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L4J0",
+   "kind": "blackout",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 0.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L3J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.5
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L1J0",
+   "kind": "rate_limited",
+   "measured": 8.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L1J0",
+   "kind": "rate_limited",
+   "measured": 6.0,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L1J1",
+   "kind": "rate_limited",
+   "measured": 6.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L0J1",
+   "kind": "rate_limited",
+   "measured": 7.25,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L0J0",
+   "kind": "rate_limited",
+   "measured": 7.5,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L0J1",
+   "kind": "rate_limited",
+   "measured": 9.25,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L0J0",
+   "kind": "rate_limited",
+   "measured": 9.5,
+   "predicted": 7.0,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r00_L0J0",
+   "kind": "unimpaired",
+   "measured": 26.0,
+   "predicted": 24.0,
+   "rate_mbps": 50.43717070526345
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r01_L0J0",
+   "kind": "unimpaired",
+   "measured": 27.75,
+   "predicted": 24.25,
+   "rate_mbps": 50.43717070526345
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r02_L0J0",
+   "kind": "unimpaired",
+   "measured": 22.0,
+   "predicted": 23.75,
+   "rate_mbps": 50.43717070526345
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r03_L2J0",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r04_L0J0",
+   "kind": "rate_limited",
+   "measured": 4.75,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r05_L2J0",
+   "kind": "rate_limited",
+   "measured": 5.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r06_L0J0",
+   "kind": "rate_limited",
+   "measured": 1.75,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r07_L0J0",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r08_L0J0",
+   "kind": "rate_limited",
+   "measured": 1.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r09_L0J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r10_L0J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r11_L0J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r12_L0J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r13_L0J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r14_L0J1",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r15_L0J2",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r16_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r17_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r18_L0J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r19_L0J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r20_L2J4",
+   "kind": "rate_limited",
+   "measured": 2.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r21_L0J4",
+   "kind": "rate_limited",
+   "measured": 5.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r22_L2J4",
+   "kind": "rate_limited",
+   "measured": 5.5,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r23_L0J3",
+   "kind": "rate_limited",
+   "measured": 4.25,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r24_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r25_L0J3",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r26_L0J4",
+   "kind": "rate_limited",
+   "measured": 0.0,
+   "predicted": 4.25,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r27_L0J4",
+   "kind": "rate_limited",
+   "measured": 2.0,
+   "predicted": 4.0,
+   "rate_mbps": 3.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r28_L1J4",
+   "kind": "rate_limited",
+   "measured": 9.75,
+   "predicted": 7.5,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_random__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "r29_L0J4",
+   "kind": "rate_limited",
+   "measured": 9.5,
+   "predicted": 7.25,
+   "rate_mbps": 6.0
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 0.45,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r1",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 0.0,
+   "predicted": 0.0,
+   "rate_mbps": 1.9802609008955434
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 21.15,
+   "predicted": 21.5,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 18.95,
+   "predicted": 21.4,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 12.75,
+   "predicted": 21.4,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 26.3,
+   "predicted": 21.45,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 18.85,
+   "predicted": 21.45,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r2",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 26.85,
+   "predicted": 21.35,
+   "rate_mbps": 35.38390350123528
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 25.85,
+   "predicted": 23.3,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 27.25,
+   "predicted": 23.2,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 26.95,
+   "predicted": 23.25,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 28.35,
+   "predicted": 23.25,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 23.65,
+   "predicted": 23.25,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r3",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 25.65,
+   "predicted": 23.15,
+   "rate_mbps": 44.67173664517355
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 27.55,
+   "predicted": 23.95,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 27.5,
+   "predicted": 23.85,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 27.7,
+   "predicted": 23.9,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 28.2,
+   "predicted": 23.9,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 26.85,
+   "predicted": 23.9,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r4",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 27.1,
+   "predicted": 23.85,
+   "rate_mbps": 48.89308105197416
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good0",
+   "kind": "unimpaired",
+   "measured": 23.35,
+   "predicted": 22.9,
+   "rate_mbps": 42.62111723208727
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good1",
+   "kind": "unimpaired",
+   "measured": 24.35,
+   "predicted": 22.85,
+   "rate_mbps": 42.62111723208727
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good2",
+   "kind": "unimpaired",
+   "measured": 22.6,
+   "predicted": 22.85,
+   "rate_mbps": 42.62111723208727
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good3",
+   "kind": "unimpaired",
+   "measured": 23.45,
+   "predicted": 22.9,
+   "rate_mbps": 42.62111723208727
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good4",
+   "kind": "unimpaired",
+   "measured": 23.65,
+   "predicted": 22.85,
+   "rate_mbps": 42.62111723208727
+  },
+  {
+   "run": "vid_campaign_wifi_fc2/a2_static_good__fixed_laptop_m640q90__r5",
+   "policy": "fixed:laptop:m640q90",
+   "phase": "good5",
+   "kind": "unimpaired",
+   "measured": 25.05,
+   "predicted": 22.8,
+   "rate_mbps": 42.62111723208727
+  }
+ ],
+ "summary": {
+  "unimpaired": {
+   "n": 154,
+   "measured_mean": 17.154870129870133,
+   "predicted_mean": 17.403571428571425,
+   "mae_fps": 2.698701298701299,
+   "corr": 0.8458900009212909
+  },
+  "rate_limited": {
+   "n": 289,
+   "measured_mean": 2.6034602076124567,
+   "predicted_mean": 3.709861591695502,
+   "mae_fps": 1.430622837370242,
+   "corr": 0.7755294962067195
+  },
+  "blackout": {
+   "n": 85,
+   "measured_mean": 0.0,
+   "predicted_mean": 0.0,
+   "mae_fps": 0.0,
+   "corr": null
+  },
+  "all": {
+   "n": 528,
+   "measured_mean": 6.428503787878788,
+   "predicted_mean": 7.106628787878788,
+   "mae_fps": 1.5701704545454545,
+   "corr": 0.9474249510123045
+  },
+  "all_but_recovery": {
+   "n": 528,
+   "measured_mean": 6.428503787878788,
+   "predicted_mean": 7.106628787878788,
+   "mae_fps": 1.5701704545454545,
+   "corr": 0.9474249510123045
+  }
+ }
+}

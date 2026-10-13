@@ -85,6 +85,15 @@ PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {9
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 
 
+def write_json_atomic(obj, path):
+    """Write to a temporary file and rename: the result file appears only when complete, so a campaign that copies
+    it as soon as it exists never fetches a half-written file (a 24-minute run's file is ~10 MB)."""
+    tmp = f"{path}.tmp"
+    with open(tmp, "w") as f:
+        json.dump(obj, f)
+    os.replace(tmp, path)
+
+
 def scenario_phases(name, phase_s, seed):
     """[(name, {path: netem args}, soc, duration)] ; the same list for every policy."""
     good = {}
@@ -228,6 +237,12 @@ def main():
     ap.add_argument("--power-budget", type=float, default=-1.0,
                     help="sustained camera-board power budget (W); -1: --mission-min derived, else 3.0")
     ap.add_argument("--eta", type=float, default=0.1, help="dual-ascent step for mu (1/J per W-excess per s)")
+    ap.add_argument("--mu-max", type=float, default=5.0,
+                    help="anti-windup cap on mu (and mu_edge). At 5 an onboard YOLOv8n-320 inference (0.32 J) costs 1.6, "
+                         "more than any result is worth, while a JPEG offload (~0.03 J) costs 0.15. mu is also frozen "
+                         "while the blackout exemption runs onboard unpriced: the budget cannot be met then, and "
+                         "integrating it wound mu up to 41 in a 90-s blackout, pricing out offloading after recovery")
+    ap.add_argument("--lam-f-max", type=float, default=2.0, help="anti-windup cap on the freshness price lam_F")
     ap.add_argument("--edge-energy-aware", action="store_true",
                     help="controller v4.2: also price the EDGE drone's energy: value(jetson, v) -= mu_edge * "
                          "E_edge(v) (measured Jetson J per inference + radio receive); mu_edge is its own dual "
@@ -273,6 +288,7 @@ def main():
     ap.add_argument("--aoi-thr-ms", type=float, default=150.0, help="aoi_thr: offload when the newest result is older")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    write_out = lambda obj: write_json_atomic(obj, a.out)  # noqa: E731
     acc_tab = json.load(open(a.acc))
     REF_ACC = acc_tab["yolov8s_640_raw"]
     if a.decay:
@@ -538,8 +554,12 @@ def main():
                 if recent:
                     pbar = sum(recent) / len(recent)
                     if a.energy_aware:                 # camera drone: dual ascent on the power budget
-                        mu = max(0.0, energy["mu"] + a.eta * (pbar - a.power_budget)) if a.mu_fixed < 0 \
-                            else a.mu_fixed            # LEAF-style baseline: fixed weight
+                        if a.mu_fixed >= 0:
+                            mu = a.mu_fixed            # LEAF-style baseline: fixed weight
+                        elif now - energy.get("exempt_t", 0.0) <= 1.0:
+                            mu = energy["mu"]          # anti-windup: onboard forced and unpriced, budget not controllable
+                        else:
+                            mu = min(a.mu_max, max(0.0, energy["mu"] + a.eta * (pbar - a.power_budget)))
                         if tp == tp and tp >= a.thermal_guard_c:  # thermal guard: make onboard work expensive
                             mu = max(mu, 1.0)
                         energy["mu"] = mu
@@ -559,7 +579,8 @@ def main():
                         if p_extra is None:            # between reports: modelled rate of served energy
                             served = [(t, j) for t, j in energy["edge_served"] if now - t <= 5.0]
                             p_extra = sum(j for _, j in served) / 5.0
-                        energy["mu_edge"] = max(0.0, energy["mu_edge"] + a.edge_eta * (p_extra - a.edge_power_budget))
+                        energy["mu_edge"] = min(a.mu_max, max(0.0, energy["mu_edge"] + a.edge_eta *
+                                                              (p_extra - a.edge_power_budget)))
                         energy["mu_edge_log"].append((now, energy["mu_edge"], p_extra, src))
                 last_mu = now
             time.sleep(0.2)
@@ -730,7 +751,7 @@ def main():
                     fresh["hist"].pop(0)
                 if now_pc - fresh["last"] >= 1.0 and len(fresh["hist"]) > 10:
                     share = sum(f_ for _, f_ in fresh["hist"]) / len(fresh["hist"])
-                    fresh["lam"] = max(0.0, fresh["lam"] + a.eta_f * (a.fresh_target - share))
+                    fresh["lam"] = min(a.lam_f_max, max(0.0, fresh["lam"] + a.eta_f * (a.fresh_target - share)))
                     fresh["log"].append((round(now_pc - t_start, 2), round(fresh["lam"], 4), round(share, 3)))
                     fresh["last"] = now_pc
             cap_t = t_start + tick * period
@@ -779,6 +800,7 @@ def main():
                 if a.energy_aware and not any(props[p][2] > 0.2 for p in paths) \
                         and not (energy["temp"] == energy["temp"] and energy["temp"] >= 85.0):
                     # no link can deliver: onboard is the only source of perception, so it is not priced
+                    energy["exempt_t"] = time.time()      # (and mu is frozen meanwhile: anti-windup)
                     vals = {v: onboard_value(v, penalize=False) for v in ONBOARD_VARIANTS}
                     bv = max(vals, key=lambda k: vals[k][0])
                     props["onboard"] = (bv, vals[bv][0], vals[bv][1])
@@ -901,7 +923,9 @@ def main():
            "onboard_ms": onboard.ms, "link_events": {p: paths[p].events for p in paths},
            "link_goodput_samples": {p: paths[p].samples for p in paths},   # (unix time, Mbit/s) per frame/probe
            "frames": [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "t_cap"} for r in log]}
-    json.dump(out, open(a.out, "w"))
+    # The result JSON is written ONCE, last, after the _dets/_livefc files: the campaign copies the run's files as
+    # soon as the JSON exists, so everything else must be complete by then (write_json_atomic makes the JSON itself
+    # appear only when whole).
     if a.vid:                          # detections of every result, keyed by frame id (tick)
         np.savez_compressed(a.out[:-5] + "_dets.npz",
                             **{str(k): np.frombuffer(v, np.float32).reshape(-1, 6) for k, v in dets.items()})
@@ -933,10 +957,8 @@ def main():
             jw = paths.get("jetson")
             out["measured_energy"]["edge_reported_w"] = jw.edge_w if jw is not None and jw.edge_w is not None else None
             out["measured_energy"]["soc_model_end"] = energy.get("soc")
-        json.dump(out, open(a.out, "w"))
     if a.coord_port:
         out["coordination"] = {"reports": coord["reports"], "decisions": coord["decisions"]}
-        json.dump(out, open(a.out, "w"))
     if lf is not None:                 # live forecaster inputs and timings
         z = {f"C_{sq}": C for sq, C in lf["chains"].items()}
         z.update({f"v_{k}": v for k, v in lf["vel"].items()})
@@ -947,7 +969,7 @@ def main():
                                 "pred_ms_median": float(np.median(lf["pred_ms"])) if lf["pred_ms"] else None,
                                 "results_observed": len(lf["seen"]), "errors": lf.get("errors", [])[:5],
                                 "n_errors": len(lf.get("errors", []))}
-        json.dump(out, open(a.out, "w"))
+    write_out(out)
     print(json.dumps({"policy": pol, "scenario": a.scenario, "total": {k: round(v, 3) for k, v in tot.items()}}))
 
 

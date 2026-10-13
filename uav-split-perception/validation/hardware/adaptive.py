@@ -504,20 +504,24 @@ def worker(a):
     def serve(s):
         return _serve_conn(s, layers, dev, dtype, prep, sync, non_max_suppression, pw=pw)
     host, port = a.camera.rsplit(":", 1)
-    n, connected_once, fails = 0, False, 0
+    n, connected_once, fails, t_last_ok = 0, False, 0, time.time()
     while True:                                   # reconnect until the camera says bye
         try:
             s = socket.create_connection((host, int(port)), timeout=1)
         except OSError:
             fails += 1
-            if connected_once and fails > 60:      # ~ the camera has finished
+            # give up only after --give-up-s without a connection: a path blackout can last a whole mission phase
+            # (4 min in the 24-minute runs); the old rule (60 failed attempts, ~70 s) quit during such a phase.
+            # Runs are bounded anyway by the campaign's timeout and its stale-worker cleanup.
+            if connected_once and time.time() - t_last_ok > a.give_up_s:
                 break
             time.sleep(0.2)
             continue
-        fails, connected_once = 0, True
+        fails, connected_once, t_last_ok = 0, True, time.time()
         s.settimeout(None)
         s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         bye = serve(s)
+        t_last_ok = time.time()                   # the outage clock starts when the connection is lost
         try:
             s.close()
         except OSError:
@@ -640,6 +644,8 @@ def main():
     ap.add_argument("--report-power", default="", choices=["", "jetson", "pi"],
                     help="worker: report this board's measured power in every response header "
                          "(board_w), so the camera can price edge-drone energy live (v4.2)")
+    ap.add_argument("--give-up-s", type=float, default=1800.0,
+                    help="worker: stop reconnecting after this long without a connection (camera gone)")
     ap.add_argument("--label", default="")
     ap.add_argument("--out", default="adaptive.json")
     a = ap.parse_args()
