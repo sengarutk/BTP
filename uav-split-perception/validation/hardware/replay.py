@@ -50,6 +50,7 @@ RTT = {"laptop": 4.9, "jetson": 2.7}
 ONB_MS = {"n320": 96.0, "s320": 595.0, "s640": 700.0}
 ENC_MS = {640: 3.5, 480: 2.2, 320: 1.2}
 STALL_S, RECOVER_S, PROBE_B = 1.5, 1.2, 65536
+NETEM_LEGACY = True   # set by --netem: legacy (rate limits persist, campaigns up to 13 Oct) or reset
 T0_C = 70.0   # starting Pi temperature: campaign runs are back to back, measured run-mean temperatures 68-81 C
 TAU_HEAT, TAU_COOL, P_SD = 148.8, 148.8, 0.07   # one time constant: heating steps of the 24-min heat run fit 137-146 s
 
@@ -113,10 +114,12 @@ class Link:
         self.k += 1
         return g
 
-    def set_phase(self, imp):
+    def set_phase(self, imp, legacy=True):
         """Apply a phase as adaptive.tc_phase does: netem 'change' with the phase's arguments only, which resets the
         loss but keeps an earlier rate limit unless the phase sets a new one (verified on the Pi, 12 Oct 2026)."""
         self.imp = imp
+        if not legacy:                            # per-phase reset (adaptive.tc_phase since 13 Oct 2026)
+            self.rate_cap = None
         if imp and imp.startswith("rate"):
             self.rate_cap = float(imp.split()[1].replace("mbit", ""))
 
@@ -340,7 +343,7 @@ class Replay:
             ph = int(np.searchsorted(bounds, t, side="right") - 1)
             for p, L_ in self.links.items():          # apply the phase's impairment
                 if ph != getattr(L_, "phase_idx", None):
-                    L_.set_phase(self.phases[ph][1].get(p))
+                    L_.set_phase(self.phases[ph][1].get(p), legacy=NETEM_LEGACY)
                     L_.phase_idx = ph
                 L_.tick(t)
             while pending and pending[0][0] <= t:      # results that have arrived
@@ -480,7 +483,12 @@ def main():
     ap.add_argument("--phase-s", type=float, default=20.0)
     ap.add_argument("--seeds", default="1-5")
     ap.add_argument("--out", default=str(HW / "replay"))
+    ap.add_argument("--netem", default="reset", choices=["reset", "legacy"],
+                    help="reset: each phase replaces the previous one (adaptive.py since 13 Oct 2026); legacy: an earlier "
+                         "rate limit persists, as in every campaign up to 13 Oct (use it to validate against those)")
     a = ap.parse_args()
+    global NETEM_LEGACY
+    NETEM_LEGACY = a.netem == "legacy"
     lo, hi = (int(x) for x in a.seeds.split("-"))
     gp = load_goodput()
     c, decays, accs, vd = load_all()

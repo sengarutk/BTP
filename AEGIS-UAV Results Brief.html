@@ -144,7 +144,7 @@ dl.gl dd{margin:0}
 <li><b>A controller built for the forecaster it runs with wins, significantly</b>v3 rebuilt on the camera-aligned forecaster's decay curve, with the forecaster running live on the Pi, beats v2 by +0.0045 ± 0.0035 sAP over 20 paired runs (median +8.9 %). It is best in 3 of 4 scenarios, including the clean link where fixed laptop YOLOv8m had won before, and keeps a fresh detection 99.5–99.8 % of the time. <span class="tag v">Validated</span> (Wi-Fi, 5 repetitions)</li>
 <li><b>Swarm coordination fixes congestion collapse and starvation</b>In the calibrated simulation, a ground-side admission rule turns the collapse of 20 Pi drones into about 4.1 detections/s each, raises Jetson-class swarms on Wi-Fi by up to 27 %, and stops the router from starving drones (worst drone 0 → 7.65 frames/s at 10 drones). With each radio's own link health added, its worst loss shrinks from −7.4 % to −1.9 %. Same results on held-out seeds. <span class="tag v">Validated</span> (simulation)</li>
 <li><b>A real two-camera swarm: sharing costs, adaptation pays</b>With the Pi and the Jetson both as camera drones sharing the laptop, the Pi loses 11–19 % of its streaming accuracy to sharing (significant). Adaptive control beats fixed offloading for the swarm in 6 of 6 pairs. The live coordinator works but rarely acts with two cameras, as the simulation predicted. <span class="tag v">Validated</span> · <span class="tag p">Inconclusive</span> (coordinator)</li>
-<li><b>The simulator matches the hardware, except after blackouts</b>Rebuilt from 44 real runs (528 phases) with nothing fitted, it predicts on-time results per phase with correlation 0.91 (average error 2.0/s) once the controller's one-frame-in-flight rule is modelled. After a blackout the real link stays slow (latency 389 ms against 71 ms), which the simulator does not capture. <span class="tag v">Validated</span> (with that limit)</li>
+<li><b>The simulator matches the hardware in every phase</b>Rebuilt from 44 real runs (528 phases) with nothing fitted, it predicts on-time results per phase with correlation 0.947 (average error 1.6/s) once the controller's one-frame-in-flight rule and the conditions actually applied are modelled. (Corrected 13 Oct: the apparent slow recovery after blackouts was a bandwidth limit our emulation left in place; G14.) <span class="tag v">Validated</span> (with that limit)</li>
 <li><b>v3 rebuilt with forecasting keeps a fresh detection 99–100 % of the time</b>In a paired 36-run campaign it held a detection under 300 ms old 99.0–99.9 % of the time in every scenario, against 75–92 % for v2 under impairment. Its accuracy is level with v2: the difference is not significant, it is ahead on the mean and behind in 8 of 12 pairs. <span class="tag v">Validated</span> (availability) · <span class="tag p">Inconclusive</span> (accuracy)</li>
 <li class="open"><b>The original staleness-aware controller v3 did not win</b>v3 beat the fixed strategies, but trailed v2 by a median 14 % (10 of 12 pairs). Its objective was built on the steep decay curve measured without forecasting, which makes it over-favour fast results. Rebuilt on the forecasting curve, it became "v3 + forecasting" (above). <span class="tag x">Not supported</span> (original v3)</li>
 </ul>
@@ -316,7 +316,7 @@ dl.gl dd{margin:0}
 
 <h2 id="v1"><span class="num">PART 9</span>Adaptive controller v1</h2>
 <p><b>Design.</b> The Pi chooses one option per frame: onboard YOLOv8s, JPEG q90 or q50 to the laptop or the Jetson, or the k1 split. It scores each option by predicted frame rate × probability of meeting the deadline × relative accuracy, minus an energy cost. Link speed is estimated from every frame. Probes test unused links. A stalled link is closed and reconnected, and switches use hysteresis.</p>
-<p><b>Test.</b> A scripted six-phase mission, 30 s per phase: good link, ground link congested, ground blackout, both links degraded, total blackout, recovery at low battery. 7 policies × 3 repetitions.</p>
+<p><b>Test.</b> A scripted six-phase mission, 30 s per phase: good link, ground link congested, ground blackout, both links degraded, total blackout, recovery at low battery. 7 policies × 3 repetitions. (As applied, the recovery phase kept the previous phase's bandwidth limits; G14.)</p>
 <div class="tbl"><table>
 <tr><th>Policy</th><th class="n">On-time frames/s over the mission</th></tr>
 <tr class="hi"><td>Adaptive v1</td><td class="n">13.85</td></tr>
@@ -334,7 +334,7 @@ dl.gl dd{margin:0}
 <li><b>Laptop only:</b> YOLOv8m@640.</li>
 </ul>
 <p>Accuracy per variant comes from 5,000 COCO images, and timings are learned online.</p>
-<p><b>Test.</b> 4 scenarios (ground fails first, Jetson fails first, random link changes, no impairment) × 11 policies × 2 repetitions = 88 runs, in shuffled order.</p>
+<p><b>Test.</b> 4 scenarios (ground fails first, Jetson fails first, random link changes, no impairment) × 11 policies × 2 repetitions = 88 runs, in shuffled order. (As applied, a phase without a bandwidth limit kept the previous phase's limit; G14.)</p>
 
 <figure>
 <svg viewBox="0 0 620 250" width="100%" role="img" aria-label="Accuracy-weighted on-time detections per second by scenario">
@@ -398,7 +398,7 @@ dl.gl dd{margin:0}
 <li><b>2. Measurements of how fast aerial detections go stale, with and without correction</b>On VisDrone video a detection keeps 41 % of its accuracy at 100 ms and 7 % at 267 ms. With a velocity forecaster: 77 % and 47 %. With camera-motion alignment: 85 % and 60 %. We found no prior measurement of this decay for aerial detection. <span class="tag v">Strong</span> (measurement)</li>
 <li><b>3. Matching the offloading scheduler's objective to the forecaster in use</b>Our scheduler values each candidate result by the accuracy it will have <i>after</i> forecasting, using the measured post-forecasting decay curve. We show the choice of best policy changes with the forecaster: under strong forecasting a fixed big model won the clean link until the controller was rebuilt. The rebuilt controller then significantly beats v2 (+8.9 % median over 20 paired runs) and keeps a fresh detection 99.5–99.8 % of the time. Prior systems (Glimpse, Liu et al.) track to hide delay but do not feed the forecaster's effect back into which server and setting to choose. <span class="tag v">Most novel</span> (verify against more recent offloading work)</li>
 <li><b>4. A real three-tier drone testbed evaluated with streaming accuracy</b>Whole-frame scheduling across a drone CPU, an airborne-class edge GPU and a ground GPU, with the forecaster running live on the Pi. Live and offline scores are identical. Evaluated with task-level streaming AP on labeled aerial video, controlled impairments, 3–5 repetitions, paired tests, and controller inputs measured on data disjoint from the test videos. The method is a combination of known parts; the contribution is the measured evidence. <span class="tag v">Strong</span> (evaluation)</li>
-<li><b>5. Hardware facts that matter for practice</b>Running the forecaster live slows the Pi's onboard inference (YOLOv8s-320: 170 → 412 ms) because they share the CPU. After a blackout the real link takes about 1.2 s to deliver again and stays slow (389 ms against 71 ms). A drone-scale simulator rebuilt from 44 real runs matches the hardware with r = 0.91 except in that recovery. <span class="tag v">Useful</span> (measurement)</li>
+<li><b>5. Hardware facts that matter for practice</b>Running the forecaster live slows the Pi's onboard inference (YOLOv8s-320: 170 → 412 ms) because they share the CPU. A drone-scale simulator rebuilt from 44 real runs matches the hardware in all 528 phases (r = 0.947). (Retracted 13 Oct: "after a blackout the real link stays slow" was a bandwidth limit our network emulation kept from the previous phase; G14.) <span class="tag v">Useful</span> (measurement)</li>
 <li class="open"><b>6. Swarm admission with radio link health</b>A coordinator that decides how many drones offload at once, rotates turns, and uses each radio's own link health to tell a drone's own outage apart from congestion. In calibrated simulation it removes collapse and starvation and keeps every loss at or below 1.9 %, on held-out seeds too. On real hardware with two cameras it rarely acts. Shared-link coordination itself is known (JCAB). The specific rule and the hardware calibration are ours, but the gains are simulation-only so far. <span class="tag p">Moderate</span> (needs the 3–5-camera test)</li>
 </ul>
 <ul class="keys">
@@ -650,10 +650,11 @@ dl.gl dd{margin:0}
 <tr><td>Blackout</td><td class="n">85</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td><td class="n">0.0</td></tr>
 <tr><td>Unimpaired, right after a blackout</td><td class="n">41</td><td class="n">3.4</td><td class="n">—</td><td class="n">14.6</td><td class="n">12.2 /s</td></tr>
 <tr><td><b>All except post-blackout</b></td><td class="n"><b>487</b></td><td class="n"><b>6.7</b></td><td class="n">—</td><td class="n"><b>7.5</b></td><td class="n"><b>2.0 /s (r = 0.91)</b></td></tr>
+<tr><td><b>All phases, conditions as actually applied (13 Oct)</b></td><td class="n"><b>528</b></td><td class="n"><b>6.4</b></td><td class="n">—</td><td class="n"><b>7.1</b></td><td class="n"><b>1.6 /s (r = 0.947)</b></td></tr>
 </table></div>
 <ul>
-<li><b>Protocol matters.</b> The simulator first predicted about twice the measured rate on clean links. The cause was not the network model but the controller's protocol. On the hardware, a path gets its next frame only after the previous result has returned (one frame in flight), while the simulator pipelined. With that rule modelled through the simulator's existing link-hold parameter (server time + round trip), it matches with correlation 0.91 and an average error of 2.0 results/s.</li>
-<li><b>The one thing it misses: recovery after a blackout.</b> On the hardware, results come back a median 1.2 s after a blackout ends (90th percentile 1.5 s). The link then stays slow for the rest of the phase: median latency 389 ms against 71 ms before the blackouts, so most results miss the 300 ms deadline. The simulator assumes instant full recovery and over-predicts these phases about 3.5×. The cause is not isolated yet; TCP congestion state after heavy loss is the main candidate. It makes the simulation optimistic for strategies that depend on one link after an outage, so it does not favour the multi-server controllers.</li>
+<li><b>Protocol matters.</b> The simulator first predicted about twice the measured rate on clean links. The cause was not the network model but the controller's protocol. On the hardware, a path gets its next frame only after the previous result has returned (one frame in flight), while the simulator pipelined. With that rule modelled through the simulator's existing link-hold parameter (server time + round trip), it matches with correlation 0.91 and an average error of 2.0 results/s outside the post-blackout phases, and 0.947 / 1.6 results/s over all 528 phases once the conditions actually applied are modelled (correction below).</li>
+<li><b>Correction (13 Oct): there is no blackout-recovery gap.</b> Those 41 "unimpaired, right after a blackout" phases were not unimpaired: our emulation kept the previous phase's bandwidth limit (G14). Rebuilt with the conditions actually applied, the simulator matches all 528 phases with correlation 0.947 and an average error of 1.57 results/s (<code>sim_vs_real_stopwait_persist.json</code>). The earlier reading (slow TCP recovery, latency 389 ms) is retracted.</li>
 </ul>
 <p class="small">Files: <code>experiments/results/hardware/sim_vs_real.json</code> (pipelined), <code>sim_vs_real_stopwait.json</code> (with the protocol rule; all rows and the recovery times).</p>
 <div class="box warn"><b class="h">Limits of this simulation</b>
@@ -1019,6 +1020,54 @@ dl.gl dd{margin:0}
 <li><b>Fixed laptop offloading is still the most energy-efficient for the whole swarm.</b> 0.0182 sAP per watt with no edge drone against 0.0066 for v5 (board view), but it is the least accurate of the good policies and holds a fresh detection only half the time (50 % against 87 %).</li>
 </ul>
 
+<h3 id="g13">G13. 24-minute missions and the same-day comparison table (12–13 Oct 2026)</h3>
+<p><b>Why.</b> The 3-minute runs cannot show heat building up: the Pi's thermal time constant is about 2.5 minutes. These runs hold each of the six mission phases for 4 minutes (24 minutes per run), long enough for the board to reach its steady temperature in every phase. A second, same-day campaign compares the best candidates directly.</p>
+<p><b>Setup (missions).</b> <code>vid_campaign_long/</code>: v4.1, v4.2, v5, v5.1, v3 + forecasting v2 and fixed laptop YOLOv8m, scenario mission (good, ground congested, ground blackout, both degraded, total blackout, final phase; the final phase kept 2 / 1.5 Mbit/s limits, see G14), 2 repetitions each, 12 runs, live power on both boards, 12 October 19:03 – 00:10. Controllers include the anti-windup rule. A first launch failed (the laptop worker gave up during the 4-minute blackout) and was discarded; the three faults it exposed were fixed and verified before this launch (Part 18).</p>
+<div class="tbl"><table>
+<tr><th>Policy (2 runs each)</th><th>sAP</th><th>Pi W</th><th>Time ≥ 80 °C</th><th>Time ≥ 80 °C, first / last 6 min</th><th>Mean temp, first / last 6 min</th><th>Fresh-detection share</th></tr>
+<tr><td><b>v4.1</b></td><td><b>0.0433</b></td><td>3.27</td><td>23 %</td><td>0 % / 56 %</td><td>69.8 / 80.8 °C</td><td>96.8 %</td></tr>
+<tr><td>v4.2</td><td>0.0373</td><td>3.06</td><td>16 %</td><td>0 % / 33 %</td><td>69.2 / 76.5 °C</td><td>89.1 %</td></tr>
+<tr><td>v5</td><td>0.0317</td><td>3.16</td><td>23 %</td><td>0 % / 60 %</td><td>68.2 / 80.9 °C</td><td>85.4 %</td></tr>
+<tr><td>v5.1</td><td>0.0317</td><td>3.29</td><td>17 %</td><td>0 % / 34 %</td><td>70.9 / 78.5 °C</td><td>92.5 %</td></tr>
+<tr><td>v3 + forecasting v2</td><td>0.0264</td><td>4.31</td><td><b>92 %</b></td><td>69 % / 100 %</td><td>80.8 / 84.6 °C</td><td>97.4 %</td></tr>
+<tr><td>Fixed laptop YOLOv8m</td><td>0.0191</td><td>2.26</td><td>0 %</td><td>0 % / 0 %</td><td>67.1 / 61.2 °C</td><td>18.2 %</td></tr>
+</table></div>
+<ul>
+<li><b>Heat builds up over a mission.</b> Without an energy price, v3 + forecasting v2 sends 25–51 % of its frames to onboard inference, runs the Pi at 4.3 W and sits at the 85 °C throttling limit from about minute 4 to the end (92 % of the mission). The energy-priced controllers stay mostly below 80 °C until the total blackout, when onboard inference is the only source. <b>v4.1 is 1.6× more accurate than v3 + forecasting v2 over the mission</b>, against +0.006–0.007 sAP (about +12 %) in 3-minute runs: the energy–heat–accuracy coupling grows with mission length.</li>
+<li><b>v4.1 is the most accurate policy over a mission.</b> The difference shows in the ground blackout, when the Jetson is the only remote server: v4.1 sends it 97 % of frames at full quality (accuracy-weighted 3.59 on-time results/s, 98 % fresh). The edge price makes v4.2 and v5 choose cheaper settings there (3.36 at 85 % fresh; 2.54 at 72 %); v5.1, with every price stacked, falls back to onboard YOLOv8n for 18 % of frames (1.24). Part 16 explains why.</li>
+<li><b>The heat price did not help.</b> v5 and v5.1 rose to λ_T 0.7–1.1 on average and were the least accurate of the priced controllers: heat follows the same camera joules μ already prices, and the prediction stays high for minutes after a blackout.</li>
+<li><b>Limit.</b> Two runs per policy: the paired differences are not statistically significant on their own. Five repetitions (about 5 hours) are needed to confirm the mission ranking.</li>
+</ul>
+<p><b>Setup (same-day table).</b> <code>vid_campaign_table/</code>: v4.1, v5, v5.1 and onboard-only YOLOv8n-320, 4 scenarios × 5 repetitions = 80 runs (20-s phases), shuffled, 13 October 00:10 – 03:45, no outages. Same anti-windup controllers.</p>
+<div class="tbl"><table>
+<tr><th>Policy (20 runs each)</th><th>sAP</th><th>Fresh-detection share</th><th>Pi W</th><th>Jetson W</th><th>Time ≥ 80 °C</th><th>sAP per W (board view)</th><th>Mission perception, 249 g</th></tr>
+<tr><td><b>v4.1</b></td><td><b>0.0596</b></td><td><b>98.1 %</b></td><td>3.28</td><td>4.95</td><td>14 %</td><td>0.0073</td><td><b>1.69</b></td></tr>
+<tr><td>v5</td><td>0.0593</td><td>87.1 %</td><td>3.19</td><td>4.82</td><td>11 %</td><td>0.0074</td><td>1.68</td></tr>
+<tr><td>v5.1</td><td>0.0590</td><td>97.9 %</td><td>3.26</td><td>4.88</td><td>11 %</td><td>0.0073</td><td>1.67</td></tr>
+<tr><td>Onboard YOLOv8n only</td><td>0.0169</td><td>98.7 %</td><td>4.49</td><td>0 (none)</td><td>89 %</td><td>0.0038</td><td>0.46</td></tr>
+</table></div>
+<div class="tbl"><table>
+<tr><th>Paired against v4.1 (20 pairs)</th><th>sAP</th><th>Pi W</th></tr>
+<tr><td>v5</td><td>−0.0003 ± 0.0017 (10/20)</td><td>−0.10 ± 0.08</td></tr>
+<tr><td>v5.1</td><td>−0.0006 ± 0.0012 (10/20)</td><td>−0.03 ± 0.07</td></tr>
+<tr><td>Onboard only</td><td><b>−0.0428 ± 0.0079 (0/20)</b></td><td>+1.20 ± 0.13</td></tr>
+</table></div>
+<ul>
+<li><b>In short runs the three priced controllers tie.</b> v4.1, v5 and v5.1 reach the same accuracy (differences under 0.001 sAP, intervals across zero). v4.1 and v5.1 keep 98 % freshness, v5 87 % (it has no freshness price).</li>
+<li><b>Onboard-only is 3.5× worse</b> and spends 89 % of the time at or above 80 °C: on this board the Pi alone cannot keep up with aerial video.</li>
+<li><b>Conclusion of both campaigns.</b> v4.1 is the best controller: tied in short runs, best over a mission, and the simplest. Separate heat and edge-energy prices are unnecessary on this hardware.</li>
+</ul>
+<h3 id="g14">G14. Corrections made on 13 October 2026</h3>
+<p>The long runs and a closer look at the network emulation found four problems that change how some earlier results must be described. No run had to be repeated and no measured number changes: within every campaign all policies ran under identical conditions, so every paired comparison and ranking stands.</p>
+<ul>
+<li><b>1. Scenario conditions as actually applied.</b> Each phase was applied with <code>tc qdisc change ... netem &lt;phase&gt;</code>. Tested on the Pi: netem then resets packet loss but <b>keeps the previous phase's bandwidth limit</b> when the new phase sets none (<code>replace</code> behaves the same). So in every campaign up to 13 October: in mission, the final "recovered" phase kept the laptop at 2 Mbit/s and the Jetson at 1.5 Mbit/s; in mission_mirror it kept 1.5 / 2 Mbit/s; in random, an "unimpaired" state kept the last limit; static_good was never limited. Every per-phase result labelled "recovered" or "after a blackout" in this report means "still rate-limited". The same applies to the v1 mission (Part 9) and the v2 scenarios (Part 10).</li>
+<li><b>2. Retracted: "after a blackout the real link stays slow (389 ms)".</b> It was the leftover limit, not real link behaviour (corrected in Parts 1, 11, 13 and 17).</li>
+<li><b>3. The simulator matches the hardware in every phase.</b> Rebuilt with the conditions actually applied (<code>sim_vs_real.py --stop-and-wait --netem-persist</code>): correlation 0.947, average error 1.57 results/s over all 528 phases. The earlier figure (0.91) had to exclude the 41 "post-blackout" phases; there is no exception now.</li>
+<li><b>4. Controller versions.</b> The anti-windup rule (μ frozen while onboard is forced, μ and μ_e capped at 5, λ_F at 2) was added on 12 October. The 7 and 11–12 October campaigns (G9, G11, G12) ran v4 / v4.1 / v4.2 / v5 without it; in 20-s phases the price stayed small (about 6 at most) and those results are valid for those versions. G13 used the versions with anti-windup. The main-campaign results of G12 for v5 and the G13 table are therefore for slightly different versions, which is why G13 repeats v5 on the same day.</li>
+<li><b>5. Jetson Wi-Fi power saving.</b> It had been switched off on 11 October but was found on again on 12 October (the network manager re-enables it on reconnect; when is unknown). It affected all policies of a campaign alike; it is another reason the report compares policies only within a campaign. Every run now switches it off on both boards.</li>
+<li><b>Fixed for all future campaigns.</b> <code>adaptive.tc_phase</code> now deletes and re-adds each path's impairment every phase (verified on the Pi: the final mission phase returns to 12.5 results/s, as fast as the first). Each run records <code>"netem": "per-phase-reset"</code>; <code>--netem-legacy</code> reproduces the old behaviour exactly for re-running an earlier campaign. The replay tool has the same switch (<code>--netem reset|legacy</code>).</li>
+</ul>
+
 <h2 id="objective"><span class="num">PART 16</span>The controllers' objective functions, explained</h2>
 <p>Every adaptive controller after v1 makes the same kind of decision, and they differ only in the function they maximise. This part writes that function down exactly as the code computes it (checked line by line against <code>adaptive.py</code> and <code>adaptive2.py</code> on 12 October, units included; reference copy <code>docs/controller_formulas.md</code>), explains why each term is there and why it has that form, and shows with the measurements why each version replaced the previous one. <b>Bottom line: v4.1 is the best controller we have</b>: it prices exactly the two things that change accuracy on this system, the camera drone's energy (because on a fanless Pi energy is heat, and heat is throttling) and freshness. The later additions (an edge-drone energy price, a heat price) add nothing measurable in short runs and cost accuracy over a 24-minute mission.</p>
 <h3>16.1 The decision every controller makes</h3>
@@ -1210,10 +1259,10 @@ Every second:
 <b>Why.</b> Each drone sees only its own link and plans as if it had a fair share. Together they overload the network: frames arrive late everywhere, or the router serves some drones and starves others. Limiting how many offload at once, and rotating turns, keeps the shared link inside its capacity.<br>
 <b>Evidence.</b> Calibrated simulation over 96 cases: better in 16, tied in 74, worse in 6. Same split on held-out seeds. 20 Pi drones go from 0 to 4.15 detections/s each, and the worst-served drone from 0 to 7.65.<br>
 <b>Stronger version.</b> With each drone's radio reporting its own link health, the coordinator stops mistaking a drone's own blackout for congestion or starvation. The one real loss disappears (−7.4 % → +0.5 %), and every remaining loss is at most 1.9 %, on held-out seeds too.<br>
-<b>Credibility.</b> The simulator, rebuilt from 44 real runs, predicts on-time rates per phase with correlation 0.91.<br>
+<b>Credibility.</b> The simulator, rebuilt from 44 real runs, predicts on-time rates per phase with correlation 0.947, in every phase.<br>
 <b>Hardware.</b> With two real camera drones, sharing the ground station costs the Pi 11–19 % of its accuracy, and adaptive control beats fixed offloading in 6 of 6 pairs. The coordinator rarely acts with two cameras, as the simulation predicts for small swarms.<br>
 <b>Prior work.</b> Splitting a shared uplink among cameras with per-camera adaptation is established (JCAB, INFOCOM 2020). Ours is the admission rule with radio link health and its hardware calibration.<br>
-<b>Limit.</b> The coordinator's gains are still simulation results. The simulator misses the slow recovery after blackouts. The extra boards will allow 3–5 real cameras, where the gains should appear.</p>
+<b>Limit.</b> The coordinator's gains are still simulation results. The extra boards will allow 3–5 real cameras, where the gains should appear.</p>
 <h3>6. Energy, heat and accuracy are coupled: price energy, and accuracy rises</h3>
 <p><b>Claim.</b> On a small fanless drone computer, energy-aware scheduling is not a trade-off against accuracy; done right, it improves it.<br>
 <b>Why.</b> Onboard inference costs about 80× the energy of sending a JPEG, heats the Pi into throttling within seconds, and steals CPU from encoding, the camera loop and forecasting. Pricing energy against a measured power budget (dual ascent on live power) removes the low-value onboard work and keeps the board out of the throttling region.<br>
@@ -1245,6 +1294,14 @@ Every second:
 <tr><td>Temp-file cleanup wiped the helper scripts</td><td>Lost tools</td><td>Helpers moved into the repo</td></tr>
 <tr><td>Network outages during campaigns</td><td>Runs failing in a loop</td><td>Outage guard pauses until both boards respond</td></tr>
 <tr><td>Heat-run completion poll matched its own SSH command line</td><td>Run finished but the watcher polled for another 90 min; fetch never ran</td><td>Character-class pgrep pattern (<code>thermal_[s]teady.py</code>) so the poll cannot match itself</td></tr>
+<tr><td>Laptop worker gave up after ~70 s without a connection</td><td>First 24-minute runs lost in the 4-minute blackout</td><td>Give up only after 30 min without a connection; clock restarts when a connection ends</td></tr>
+<tr><td>Energy price kept integrating while onboard was forced (blackout)</td><td>Price reached 41, priced out offloading after the links returned</td><td>Anti-windup: price frozen while forced, capped at 5 (λ_F at 2)</td></tr>
+<tr><td>Result file copied while still being written</td><td>Truncated result of a long run</td><td>Result written once, last, via a temporary file and rename</td></tr>
+<tr><td>netem 'change' kept the previous phase's rate limit</td><td>'Recovered' phases still rate-limited in every campaign up to 13 Oct; a false 'slow recovery' finding</td><td>Each phase deletes and re-adds the impairment; --netem-legacy reproduces the old behaviour</td></tr>
+<tr><td>Jetson Wi-Fi power saving re-enabled by the network manager</td><td>Latency spikes on the Jetson link</td><td>Switched off on both boards before every run</td></tr>
+<tr><td>Laptop went to sleep overnight</td><td>One run invalid, campaign paused 2 h 47 min</td><td>Run set aside and redone; keep-awake helper during campaigns</td></tr>
+<tr><td>A 300 MB git push during a campaign</td><td>One run possibly disturbed</td><td>Run set aside and redone; no large uploads during campaigns</td></tr>
+<tr><td>Replay seeded each policy's randomness with Python's hash()</td><td>Unpaired, non-reproducible replay comparisons</td><td>Common random numbers per seed</td></tr>
 </table></div>
 
 <h2 id="code"><span class="num">PART 19</span>Code status and reproducibility</h2>

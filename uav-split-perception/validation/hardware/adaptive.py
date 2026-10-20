@@ -79,9 +79,19 @@ def tc_setup(dev):
         tc(f"filter add dev {dev} parent 1: protocol ip prio 1 u32 match ip sport {PORT[path]} 0xffff flowid 1:{band}")
 
 
-def tc_phase(dev, impair):
+def tc_phase(dev, impair, legacy=False):
+    """Apply one phase's impairment to each path, replacing the previous phase's completely.
+    netem 'change' (and 'replace') resets the loss but KEEPS an earlier rate limit when the new arguments set none
+    (checked on the Pi, 12-13 Oct 2026), so an 'unimpaired' phase after a 'rate X' phase stayed limited to X in every
+    campaign up to 13 Oct. The child qdisc is therefore deleted and re-added each phase (the u32 filters live on the
+    root qdisc and survive). legacy=True reproduces the old behaviour exactly, for re-running earlier campaigns."""
     for band, path in ((1, "laptop"), (2, "jetson")):
-        tc(f"qdisc change dev {dev} parent 1:{band} handle {band}0: netem " + (impair.get(path) or ""))
+        args = impair.get(path) or ""
+        if legacy:
+            tc(f"qdisc change dev {dev} parent 1:{band} handle {band}0: netem " + args)
+        else:
+            tc(f"qdisc del dev {dev} parent 1:{band} handle {band}0:")
+            tc(f"qdisc add dev {dev} parent 1:{band} handle {band}0: netem " + args)
 
 
 def tc_teardown(dev):

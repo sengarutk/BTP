@@ -286,6 +286,9 @@ def main():
     ap.add_argument("--trigger-conf", type=float, default=0.5, help="conf_trigger: failure if top-5 mean conf below")
     ap.add_argument("--reward-share", type=float, default=0.3, help="reward_offload: share of frames worth offloading")
     ap.add_argument("--aoi-thr-ms", type=float, default=150.0, help="aoi_thr: offload when the newest result is older")
+    ap.add_argument("--netem-legacy", action="store_true",
+                    help="apply phases with netem 'change' as all campaigns up to 13 Oct 2026 did (an earlier phase's rate "
+                         "limit persists into later phases that set none); default: each phase replaces the previous one")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     write_out = lambda obj: write_json_atomic(obj, a.out)  # noqa: E731
@@ -739,7 +742,7 @@ def main():
             ph = int(np.searchsorted(bounds, el, side="right") - 1)
             if ph != cur_phase:
                 cur_phase = ph
-                tc_phase(a.wlan, phases[ph][1])
+                tc_phase(a.wlan, phases[ph][1], legacy=a.netem_legacy)
             tick = int(el / period)
             if a.fresh_target > 0:                    # measured age of the newest held detection, and lam_F
                 now_pc = time.perf_counter()
@@ -919,7 +922,8 @@ def main():
     keys = ["on_time_fps", "acc_on_time_fps", "within_1s_fps", "aoi_mean_ms", "availability", "pi_power_w"]
     w = np.array([ph[3] for ph in phases]) / total
     tot = {k: float(sum(wi * per[ph[0]][k] for wi, ph in zip(w, phases))) for k in keys}
-    out = {"policy": pol, "objective": a.objective, "acc_table": os.path.basename(a.acc), "scenario": a.scenario, "seed": a.seed, "deadline_ms": D, "per_phase": per, "total": tot,
+    out = {"netem": "legacy-persistent-rate" if a.netem_legacy else "per-phase-reset",
+           "policy": pol, "objective": a.objective, "acc_table": os.path.basename(a.acc), "scenario": a.scenario, "seed": a.seed, "deadline_ms": D, "per_phase": per, "total": tot,
            "onboard_ms": onboard.ms, "link_events": {p: paths[p].events for p in paths},
            "link_goodput_samples": {p: paths[p].samples for p in paths},   # (unix time, Mbit/s) per frame/probe
            "frames": [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "t_cap"} for r in log]}
