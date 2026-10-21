@@ -1,0 +1,4 @@
+scenario,policy,reps,sAP_quality,sAP_quality_ci,sAP_newest,sAP_newest_ci,sAP_quality_fcv2,sAP_quality_fcv2_ci,sAP_newest_fcv2,sAP_newest_fcv2_ci,fresh_AP,fresh_AP_ci,availability,availability_ci,aoi_ms,aoi_ms_ci,on_time_fps,on_time_fps_ci,pi_w,pi_w_ci
+static_good,onboard_l640,2,0.0,0.0,0.0003,0.0001,0.0,0.0,0.0005,0.0004,0.1342,0.0233,0.0,0.0,5337.7372,5503.1705,0.0,0.0,2.8603,0.216
+static_good,onboard_m640,2,0.0,0.0,0.0022,0.0078,0.0,0.0,0.0037,0.0127,0.1144,0.1025,0.0,0.0,2788.7624,602.1318,0.0,0.0,2.8234,0.3724
+static_good,onboard_s640,2,0.0005,0.0003,0.0014,0.0002,0.0015,0.0008,0.0044,0.0006,0.089,0.0011,0.0,0.0,1251.1349,193.0234,0.0,0.0,2.68,0.3029

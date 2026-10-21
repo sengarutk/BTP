@@ -76,11 +76,13 @@ from pipeline_node import send_msg  # noqa: F401
 REF = 0.4440  # YOLOv8s@640 FP32 mAP
 
 ONBOARD_VARIANTS = {"n320": ("yolov8n", 320), "s320": ("yolov8s", 320), "s640": ("yolov8s", 640)}
+# larger onboard models, loaded only when named in --onboard-variants (the onboard-model comparison, 20 Oct 2026)
+ONBOARD_EXTRA = {"m640": ("yolov8m", 640), "l640": ("yolov8l", 640)}
 PATH_VARIANTS = {f"s{r}q{q}": ("yolov8s", r, q) for r in (640, 480, 320) for q in (90, 50)}
 LAPTOP_EXTRA = {"m640q90": ("yolov8m", 640, 90), "m640q50": ("yolov8m", 640, 50)}
 
 # priors (measured: experiments/results/hardware/raw/variant_timing_*.json); learned online
-PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0}
+PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, "l640": 4000.0}  # m/l: estimates, learned online
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 
@@ -289,8 +291,13 @@ def main():
     ap.add_argument("--netem-legacy", action="store_true",
                     help="apply phases with netem 'change' as all campaigns up to 13 Oct 2026 did (an earlier phase's rate "
                          "limit persists into later phases that set none); default: each phase replaces the previous one")
+    ap.add_argument("--onboard-variants", default="n320,s320,s640",
+                    help="onboard models to load (comma list of n320 s320 s640 m640 l640); default: the usual three")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    global ONBOARD_VARIANTS
+    _all = dict(ONBOARD_VARIANTS, **ONBOARD_EXTRA)
+    ONBOARD_VARIANTS = {k: _all[k] for k in a.onboard_variants.split(",")}
     write_out = lambda obj: write_json_atomic(obj, a.out)  # noqa: E731
     acc_tab = json.load(open(a.acc))
     REF_ACC = acc_tab["yolov8s_640_raw"]
@@ -503,7 +510,7 @@ def main():
     tau_th = (ec or {}).get("thermal", {}).get("tau_s", 150.0)
     ec_edge = _ec_all["jetson"] if a.edge_energy_aware and "jetson" in _ec_all else None   # the jetson-path server
     energy = {"mu": 0.0, "mu_edge": 0.0, "log": [], "mu_log": [], "mu_edge_log": [], "temp": 50.0,
-              "edge_served": [], "soc": 1.0, "lam_t": 0.0, "t_log": [], "t0w": time.time(), "e_perc_j": 0.0, "t_last": None}
+              "edge_served": [], "soc": 1.0, "clk_log": [], "lam_t": 0.0, "t_log": [], "t0w": time.time(), "e_perc_j": 0.0, "t_last": None}
     fresh = {"lam": 0.0, "aoi_ms": float("inf"), "hist": [], "log": [], "last": 0.0}
 
     def read_board():
@@ -533,8 +540,19 @@ def main():
                 pass
         return max(t) if t else float("nan")
 
+    def read_clock_():
+        """Actual ARM clock (MHz) and firmware throttle flags of the Pi (vcgencmd), for the throttling analysis."""
+        import subprocess as _sp
+        try:
+            hz = _sp.run(["vcgencmd", "measure_clock", "arm"], capture_output=True, text=True, timeout=2).stdout
+            th = _sp.run(["vcgencmd", "get_throttled"], capture_output=True, text=True, timeout=2).stdout
+            return float(hz.strip().split("=")[1]) / 1e6, int(th.strip().split("=")[1], 16)
+        except Exception:
+            return float("nan"), -1
+
     def power_logger():
         last_mu = time.time()
+        last_clk = 0.0
         while True:
             try:
                 pw, tp = read_board(), read_temp_()
@@ -542,6 +560,9 @@ def main():
                 pw, tp = float("nan"), float("nan")
             now = time.time()
             energy["log"].append((now, pw, tp))
+            if board == "pi" and now - last_clk >= 1.0:     # clock and throttle flags once per second
+                energy["clk_log"].append((now,) + read_clock_())
+                last_clk = now
             energy["temp"] = tp
             if pw == pw:                               # measured perception energy since the SoC origin
                 if energy["t_last"] is not None:
@@ -943,6 +964,9 @@ def main():
                                   "duration_s": dur_, "temp_max_c": max(temps) if temps else None,
                                   "temp_mean_c": sum(temps) / len(temps) if temps else None,
                                   "log_t_w_c": [(round(x[0] - t0_, 2), round(x[1], 3), round(x[2], 2)) for x in lg]}
+        if energy["clk_log"]:              # (t, ARM MHz, throttle flags) once per second (bit 2 = throttled now,
+            out["measured_energy"]["clock_log_t_mhz_flags"] = [   # bit 1 = frequency capped, bit 3 = soft temp limit)
+                (round(x[0] - t0_, 2), round(x[1], 1), x[2]) for x in energy["clk_log"]]
         if a.fresh_target > 0:
             out["measured_energy"]["fresh_log_t_lam_share"] = fresh["log"]
             out["measured_energy"]["fresh_target"] = a.fresh_target

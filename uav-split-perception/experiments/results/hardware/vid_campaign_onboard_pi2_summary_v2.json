@@ -1,0 +1,155 @@
+{
+ "scenarios": {
+  "static_good": {
+   "onboard_l640": {
+    "scenario": "static_good",
+    "policy": "onboard_l640",
+    "reps": 2,
+    "sAP_quality": 0.0,
+    "sAP_quality_ci": 0.0,
+    "sAP_newest": 0.0005,
+    "sAP_newest_ci": 0.003,
+    "sAP_quality_fcv2": 0.0,
+    "sAP_quality_fcv2_ci": 0.0,
+    "sAP_newest_fcv2": 0.0006,
+    "sAP_newest_fcv2_ci": 0.0001,
+    "fresh_AP": 0.1337,
+    "fresh_AP_ci": 0.0179,
+    "availability": 0.0,
+    "availability_ci": 0.0,
+    "aoi_ms": 4830.2609,
+    "aoi_ms_ci": 1343.6015,
+    "on_time_fps": 0.0,
+    "on_time_fps_ci": 0.0,
+    "pi_w": 2.7594,
+    "pi_w_ci": 0.5984
+   },
+   "onboard_m640": {
+    "scenario": "static_good",
+    "policy": "onboard_m640",
+    "reps": 2,
+    "sAP_quality": 0.0,
+    "sAP_quality_ci": 0.0003,
+    "sAP_newest": 0.0028,
+    "sAP_newest_ci": 0.0096,
+    "sAP_quality_fcv2": 0.0,
+    "sAP_quality_fcv2_ci": 0.0003,
+    "sAP_newest_fcv2": 0.0048,
+    "sAP_newest_fcv2_ci": 0.0149,
+    "fresh_AP": 0.1185,
+    "fresh_AP_ci": 0.0262,
+    "availability": 0.0,
+    "availability_ci": 0.0,
+    "aoi_ms": 2570.3916,
+    "aoi_ms_ci": 61.8951,
+    "on_time_fps": 0.0,
+    "on_time_fps_ci": 0.0,
+    "pi_w": 2.6908,
+    "pi_w_ci": 0.2588
+   },
+   "onboard_s640": {
+    "scenario": "static_good",
+    "policy": "onboard_s640",
+    "reps": 2,
+    "sAP_quality": 0.0006,
+    "sAP_quality_ci": 0.0011,
+    "sAP_newest": 0.0013,
+    "sAP_newest_ci": 0.0014,
+    "sAP_quality_fcv2": 0.0021,
+    "sAP_quality_fcv2_ci": 0.0027,
+    "sAP_newest_fcv2": 0.0046,
+    "sAP_newest_fcv2_ci": 0.0042,
+    "fresh_AP": 0.0875,
+    "fresh_AP_ci": 0.0109,
+    "availability": 0.0,
+    "availability_ci": 0.0,
+    "aoi_ms": 1169.3328,
+    "aoi_ms_ci": 126.1732,
+    "on_time_fps": 0.0,
+    "on_time_fps_ci": 0.0,
+    "pi_w": 2.6974,
+    "pi_w_ci": 0.0589
+   }
+  }
+ },
+ "paired_vs_ref": {
+  "sAP_quality": {
+   "onboard_l640": {
+    "pairs": 2,
+    "mean_diff": 0.0006,
+    "ci95": 0.001,
+    "wins": 2,
+    "median_rel_gain": 144.866
+   },
+   "onboard_m640": {
+    "pairs": 2,
+    "mean_diff": 0.0006,
+    "ci95": 0.0007,
+    "wins": 2,
+    "median_rel_gain": 68.534
+   }
+  },
+  "sAP_newest": {
+   "onboard_l640": {
+    "pairs": 2,
+    "mean_diff": 0.0009,
+    "ci95": 0.0043,
+    "wins": 2,
+    "median_rel_gain": 2.791
+   },
+   "onboard_m640": {
+    "pairs": 2,
+    "mean_diff": -0.0014,
+    "ci95": 0.011,
+    "wins": 0,
+    "median_rel_gain": -0.463
+   }
+  },
+  "sAP_quality_fcv2": {
+   "onboard_l640": {
+    "pairs": 2,
+    "mean_diff": 0.0021,
+    "ci95": 0.0027,
+    "wins": 2,
+    "median_rel_gain": 342.349
+   },
+   "onboard_m640": {
+    "pairs": 2,
+    "mean_diff": 0.002,
+    "ci95": 0.0024,
+    "wins": 2,
+    "median_rel_gain": 261.945
+   }
+  },
+  "sAP_newest_fcv2": {
+   "onboard_l640": {
+    "pairs": 2,
+    "mean_diff": 0.0041,
+    "ci95": 0.0044,
+    "wins": 2,
+    "median_rel_gain": 6.956
+   },
+   "onboard_m640": {
+    "pairs": 2,
+    "mean_diff": -0.0001,
+    "ci95": 0.0192,
+    "wins": 1,
+    "median_rel_gain": 0.056
+   }
+  }
+ },
+ "forecast_gain": {
+  "onboard_l640": {
+   "sAP_quality": 0.54,
+   "sAP_newest": 0.571
+  },
+  "onboard_m640": {
+   "sAP_quality": -0.023,
+   "sAP_newest": 0.736
+  },
+  "onboard_s640": {
+   "sAP_quality": 2.528,
+   "sAP_newest": 2.454
+  }
+ }
+}

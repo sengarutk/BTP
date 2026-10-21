@@ -20,7 +20,8 @@ VARIANTS = [("yolov8s", 640, None), ("yolov8s", 640, 90), ("yolov8s", 640, 50), 
             ("yolov8s", 320, None), ("yolov8s", 320, 90), ("yolov8s", 320, 50),
             ("yolov8s", 480, 90), ("yolov8s", 480, 50),
             ("yolov8n", 640, None), ("yolov8n", 320, None),
-            ("yolov8m", 640, None), ("yolov8m", 640, 90), ("yolov8m", 640, 50)]
+            ("yolov8m", 640, None), ("yolov8m", 640, 90), ("yolov8m", 640, 50),
+            ("yolov8l", 640, None)]                                     # onboard-model comparison (20 Oct)
 
 
 def cache_name(model, imgsz, q, data):

@@ -86,7 +86,8 @@ class Acc:
 def variant_key(f):
     v, srv = f["variant"], f["server"]
     if srv == "onboard":
-        return {"n320": "yolov8n_320_raw", "s320": "yolov8s_320_raw", "s640": "yolov8s_640_raw"}[v]
+        return {"n320": "yolov8n_320_raw", "s320": "yolov8s_320_raw", "s640": "yolov8s_640_raw",
+                "m640": "yolov8m_640_raw", "l640": "yolov8l_640_raw"}[v]
     model = {"s": "yolov8s", "m": "yolov8m"}[v[0]]
     res, q = v[1:].split("q")
     return f"{model}_{res}_q{q}"
