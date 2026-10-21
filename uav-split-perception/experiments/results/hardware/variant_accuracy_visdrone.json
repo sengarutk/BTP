@@ -13,5 +13,8 @@
  "yolov8m_640_raw": 0.1457,
  "yolov8m_640_q90": 0.1375,
  "yolov8m_640_q50": 0.0983,
- "yolov8l_640_raw": 0.1637
+ "yolov8l_640_raw": 0.1637,
+ "yolov8s_visdrone_640_raw": 0.266,
+ "yolov8m_visdrone_640_raw": 0.296,
+ "yolov8l_visdrone_640_raw": 0.3126
 }

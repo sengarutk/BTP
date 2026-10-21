@@ -59,6 +59,10 @@ declare -A ARGS=(
   [onboard_s640]="fixed:onboard:s640|$COMMON_NOFC --onboard-variants s640 --paths laptop"
   [onboard_m640]="fixed:onboard:m640|$COMMON_NOFC --onboard-variants m640 --paths laptop"
   [onboard_l640]="fixed:onboard:l640|$COMMON_NOFC --onboard-variants l640 --paths laptop"
+  # the same with the VisDrone fine-tuned weights (21 Oct): distinct names, so no file can mix with the COCO runs
+  [onboard_s640_vd]="fixed:onboard:s640vd|$COMMON_NOFC --onboard-variants s640vd --paths laptop"
+  [onboard_m640_vd]="fixed:onboard:m640vd|$COMMON_NOFC --onboard-variants m640vd --paths laptop"
+  [onboard_l640_vd]="fixed:onboard:l640vd|$COMMON_NOFC --onboard-variants l640vd --paths laptop"
 )
 # Default set = the 12 policies of the 240-run main campaign; the added ones run only when named in ONLY.
 DEFAULT_NAMES="v5 v42 v5_nofc v5_exp v5_lin v5_flat leaf conf_trigger reward_offload aoi_thr jsq fixed_laptop_m640q90"

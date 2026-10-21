@@ -30,7 +30,11 @@ VID = ROOT / "datasets" / "visdrone_vid_640"
 HW = ROOT / "experiments" / "results" / "hardware"
 OUT = HW / "onboard_sap"
 MODELS = {"yolov8s": ROOT / "yolov8s.pt", "yolov8m": ROOT / "weights" / "yolov8m.pt",
-          "yolov8l": ROOT / "weights" / "yolov8l.pt"}
+          "yolov8l": ROOT / "weights" / "yolov8l.pt",
+          # VisDrone fine-tuned (scripts/train_visdrone.py); only those already trained are used
+          "yolov8s_vd": ROOT / "weights" / "yolov8s_visdrone.pt", "yolov8m_vd": ROOT / "weights" / "yolov8m_visdrone.pt",
+          "yolov8l_vd": ROOT / "weights" / "yolov8l_visdrone.pt"}
+MODELS = {k: v for k, v in MODELS.items() if v.exists()}
 PERIOD = 1.0 / 30.0
 
 

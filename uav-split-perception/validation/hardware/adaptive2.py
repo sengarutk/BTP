@@ -77,12 +77,16 @@ REF = 0.4440  # YOLOv8s@640 FP32 mAP
 
 ONBOARD_VARIANTS = {"n320": ("yolov8n", 320), "s320": ("yolov8s", 320), "s640": ("yolov8s", 640)}
 # larger onboard models, loaded only when named in --onboard-variants (the onboard-model comparison, 20 Oct 2026)
-ONBOARD_EXTRA = {"m640": ("yolov8m", 640), "l640": ("yolov8l", 640)}
+ONBOARD_EXTRA = {"m640": ("yolov8m", 640), "l640": ("yolov8l", 640),
+                 # VisDrone fine-tuned weights (scripts/train_visdrone.py; files <model>_visdrone.pt)
+                 "s640vd": ("yolov8s_visdrone", 640), "m640vd": ("yolov8m_visdrone", 640),
+                 "l640vd": ("yolov8l_visdrone", 640)}
 PATH_VARIANTS = {f"s{r}q{q}": ("yolov8s", r, q) for r in (640, 480, 320) for q in (90, 50)}
 LAPTOP_EXTRA = {"m640q90": ("yolov8m", 640, 90), "m640q50": ("yolov8m", 640, 50)}
 
 # priors (measured: experiments/results/hardware/raw/variant_timing_*.json); learned online
-PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, "l640": 4000.0}  # m/l: estimates, learned online
+PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, "l640": 4000.0,
+                    "s640vd": 700.0, "m640vd": 2000.0, "l640vd": 4000.0}  # m/l: estimates, learned online
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 

@@ -87,7 +87,8 @@ def variant_key(f):
     v, srv = f["variant"], f["server"]
     if srv == "onboard":
         return {"n320": "yolov8n_320_raw", "s320": "yolov8s_320_raw", "s640": "yolov8s_640_raw",
-                "m640": "yolov8m_640_raw", "l640": "yolov8l_640_raw"}[v]
+                "m640": "yolov8m_640_raw", "l640": "yolov8l_640_raw", "s640vd": "yolov8s_visdrone_640_raw",
+                "m640vd": "yolov8m_visdrone_640_raw", "l640vd": "yolov8l_visdrone_640_raw"}[v]
     model = {"s": "yolov8s", "m": "yolov8m"}[v[0]]
     res, q = v[1:].split("q")
     return f"{model}_{res}_q{q}"
@@ -148,12 +149,15 @@ def evaluate(run_path, labels, hold="newest", acc_tab=None, decay=None, forecast
                               fidx_t=fr_t[1] if fr_t[0] == fr_c[0] else None)
         total.add(pred, gt)
         per_phase[f["phase"]].add(pred, gt)
+    fresh_phase = defaultdict(Acc)
     for fid, d in mapped.items():
         fresh.add(d, gt_of(frames[fid]))
+        fresh_phase[frames[fid]["phase"]].add(d, gt_of(frames[fid]))
     s_ap, s_ap50 = total.ap()
     return {"policy": run["policy"], "scenario": run["scenario"], "hold": hold, "forecast": forecast is not None, "sAP": s_ap, "sAP50": s_ap50,
             "fresh_AP": fresh.ap()[0], "results": len(mapped), "frames": len(frames),
-            "per_phase_sAP": {k: v.ap()[0] for k, v in per_phase.items()}}
+            "per_phase_sAP": {k: v.ap()[0] for k, v in per_phase.items()},
+            "per_phase_fresh_AP": {k: v.ap()[0] for k, v in fresh_phase.items()}}
 
 
 def main():
