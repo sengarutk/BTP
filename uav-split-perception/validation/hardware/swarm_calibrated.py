@@ -26,6 +26,9 @@ from simulation.system_model import load_offload_configs, make_hardware
 
 OUT = Path(__file__).resolve().parent.parent.parent / "experiments" / "results" / "hardware"
 CACHE = OUT / "swarm_calibrated_cache"
+# --visdrone (task R3, 25 Oct 2026): every configuration's accuracy from the VisDrone fine-tuned YOLOv8s on
+# VisDrone-DET val (experiments/results/visdrone_ft_split/, build_visdrone_configs.py); payloads and times unchanged
+VD_DIR = OUT.parent / "visdrone_ft_split"
 T_FULL = {"pi5": 758.0, "jetson": 35.0}
 CAPACITY = {"wifi_ap": 25.0, "cell": 100.0}
 SIZES = [1, 2, 3, 5, 10, 20]
@@ -52,8 +55,8 @@ def _cell(job):
         return json.loads(path.read_text())
     dev, cap, sharing, profile, name, n, seeds, duration = job[:8]
     seed0 = job[8] if len(job) > 8 and isinstance(job[8], int) else 0
-    mp = job[-1] == "mp"
-    configs = load_offload_configs()
+    mp, vd = "mp" in job[8:], "vd" in job[8:]
+    configs = load_offload_configs(VD_DIR) if vd else load_offload_configs()
     hw = make_hardware(T_FULL[dev], **(measured_power()[dev] if mp else {}))
     s = dict(strategies(configs)["adaptive_all" if name.startswith("adaptive_coord") else name])
     if name.startswith("adaptive_coord"):
@@ -73,9 +76,10 @@ def _cell(job):
     return row
 
 
-def main(seeds, duration, workers, seed0=0, measured=False):
-    tag = (f"_seeds{seed0}-{seed0 + seeds - 1}" if seed0 else "") + ("_mp" if measured else "")
-    jobs = [(d, c, sh, p, s, n, seeds, duration) + ((seed0,) if seed0 else ()) + (("mp",) if measured else ()) for d in T_FULL for c in CAPACITY for sh in ("waterfill", "capped")
+def main(seeds, duration, workers, seed0=0, measured=False, visdrone=False):
+    tag = (f"_seeds{seed0}-{seed0 + seeds - 1}" if seed0 else "") + ("_mp" if measured else "") + ("_visdrone" if visdrone else "")
+    jobs = [(d, c, sh, p, s, n, seeds, duration) + ((seed0,) if seed0 else ()) + (("mp",) if measured else ())
+            + (("vd",) if visdrone else ()) for d in T_FULL for c in CAPACITY for sh in ("waterfill", "capped")
             for p in ("moderate", "blackout") for n in SIZES for s in NAMES]
     with mp.get_context("fork").Pool(workers) as pool:
         rows = []
@@ -116,5 +120,7 @@ if __name__ == "__main__":
     ap.add_argument("--seed0", type=int, default=0, help="first seed (5: the held-out confirmation run)")
     ap.add_argument("--measured-power", action="store_true", help="board powers from energy_constants.json "
                     "instead of the paper's assumed ones (outputs *_mp*)")
+    ap.add_argument("--visdrone", action="store_true", help="accuracies of the VisDrone fine-tuned YOLOv8s on VisDrone-DET "
+                    "val (experiments/results/visdrone_ft_split/; outputs *_visdrone*)")
     a = ap.parse_args()
-    main(a.seeds, a.duration, a.workers, a.seed0, a.measured_power)
+    main(a.seeds, a.duration, a.workers, a.seed0, a.measured_power, a.visdrone)

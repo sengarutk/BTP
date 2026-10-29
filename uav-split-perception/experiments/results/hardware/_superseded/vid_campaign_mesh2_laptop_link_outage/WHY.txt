@@ -1,0 +1,4 @@
+mesh_mission__heat__r1 (24 Oct ~06:46-06:51 IST): the laptop lost its cable link to pi-sender (tunnel ssh 'server not responding', restarted 01:21:16 UTC); the laptop path was dead for ~100 s of the run - not a planned impairment. Re-run in pass 2.
+multihop__heate__r1: laptop link lost 19 pings during the run (longest outage 4 s, >5 %) - discarded, re-run in pass 2
+static_good__heate__r1: unplanned laptop-path stall at 26 s and 23 reconnects in static_good (before the ping log; laptop Ethernet idle-loss, Realtek EEE) - discarded, re-run in pass 2
+mesh_mission__noprice__r1: 9.5 % of laptop results lost (all other mission runs 0.6-2.6 %), run before the keep-awake fix (laptop Ethernet idle-loss) - rule: >5 % laptop results lost = link fault; discarded, re-run in pass 2

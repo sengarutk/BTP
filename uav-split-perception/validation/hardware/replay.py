@@ -15,7 +15,7 @@ screened (and long missions explored) before spending board time. Everything com
              running), slowed by thermal throttling: x 2400/1568 at 85 C, linearly from 80 C
   power/heat Pi: idle 1.894 W + forecaster 0.294 W + measured J per inference spread over the inference + encode
              J + radio (0.211 + 0.016 r) W while sending; temperature: first-order approach to the measured steady
-             fit T = 34.43 + 12.73 P with one time constant, 148.8 s (cool-down fit; the clean heating steps of the
+             fit over all unthrottled levels, T = 34.43 + 12.73 P (load_all), with one time constant, 148.8 s (cool-down fit; the clean heating steps of the
              24-min heat run fit 137-146 s); measured noise (sd 0.07 W). Jetson: idle 4.079 W + J per inference + receive power.
   detections the real detections of every variant on every val frame (variant_dets.py); scored by stream_ap.evaluate
              with forecaster v2, exactly as the live runs (offline camera-motion chain).
@@ -360,8 +360,9 @@ class Replay:
                 if t < until[0]:
                     p += until[1]
             p_meas = p + self.rng.gauss(0.0, P_SD)
-            th = c["pi"]["thermal_steady"]
-            t_ss = th["intercept_c"] + th["c_per_w"] * p
+            th = c["pi"]["thermal_steady"]              # the controller's model (v5's heat price, as on the Pi)
+            pl = c["pi"]["thermal_plant"]               # the board itself (full-range fit, see load_all)
+            t_ss = pl["intercept_c"] + pl["c_per_w"] * p
             tau = TAU_HEAT if t_ss > self.temp else TAU_COOL
             self.temp += (t_ss - self.temp) * (1 - math.exp(-PERIOD / tau))
             temps.append(self.temp)
@@ -460,6 +461,15 @@ class Replay:
 
 def load_all():
     c = json.load(open(HW / "energy" / "energy_constants.json"))
+    # The board's temperature in the replay: linear fit over every 6-min steady level with the clock not yet cut
+    # (< 84 C), including the hot 50 %-duty level (83.8 C). Since 28 Oct 2026 the controller's own model
+    # (thermal_steady) uses the levels below 80 C only; that is right for v5's heat price but makes the replay
+    # almost never reach 80 C (hot-share agreement with hardware r 0.96 -> 0.53, docs/laptop_additions_2026-10-29.md).
+    lv = json.load(open(HW / "energy" / "thermal_steady_pi.json"))["levels"]
+    pts = [(v["power_w"], v["temp_steady_c"]) for v in lv.values()
+           if v.get("arm_clock_mhz_last60", 0) >= 1450 and v["temp_steady_c"] < 84.0]
+    slope, icpt = np.polyfit(*np.array(pts).T, 1)
+    c["pi"]["thermal_plant"] = {"c_per_w": float(slope), "intercept_c": float(icpt), "n_levels": len(pts)}
     decays = {k: json.load(open(HW / k)) for k in ("staleness_decay_forecast_v2.json", "staleness_decay.json")}
     accs = json.load(open(HW / "variant_accuracy_visdrone.json"))
     vd = {}

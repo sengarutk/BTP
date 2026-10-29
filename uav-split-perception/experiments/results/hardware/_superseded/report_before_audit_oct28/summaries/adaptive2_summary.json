@@ -1,0 +1,482 @@
+{
+ "mission": {
+  "reps": [
+   1,
+   2
+  ],
+  "policies": {
+   "A_full": {
+    "on_time_fps": 22.35,
+    "acc_on_time_fps": 18.783463776276275,
+    "availability": 0.9986666666666666,
+    "aoi_mean_ms": 121.88652777904963,
+    "pi_power_w": 1.9173137090816974
+   },
+   "A_paths": {
+    "on_time_fps": 18.15,
+    "acc_on_time_fps": 16.36356418918919,
+    "availability": 0.9642083333333332,
+    "aoi_mean_ms": 150.10305555691667,
+    "pi_power_w": 1.2749736143320545
+   },
+   "A_single": {
+    "on_time_fps": 15.683333333333334,
+    "acc_on_time_fps": 13.84361674174174,
+    "availability": 0.9660833333333332,
+    "aoi_mean_ms": 144.60416666799807,
+    "pi_power_w": 1.030959894012462
+   },
+   "fixed:jetson:s320q50": {
+    "on_time_fps": 16.279166666666665,
+    "acc_on_time_fps": 11.608072447447444,
+    "availability": 0.8036666666666665,
+    "aoi_mean_ms": 1558.2394444450833,
+    "pi_power_w": 0.07376953749999998
+   },
+   "fixed:jetson:s640q50": {
+    "on_time_fps": 12.125,
+    "acc_on_time_fps": 11.17466216216216,
+    "availability": 0.5605,
+    "aoi_mean_ms": 1580.2868055563545,
+    "pi_power_w": 0.8214402368524505
+   },
+   "fixed:laptop:m640q90": {
+    "on_time_fps": 3.3791666666666664,
+    "acc_on_time_fps": 3.756659159159159,
+    "availability": 0.1757083333333333,
+    "aoi_mean_ms": 3096.1513888898207,
+    "pi_power_w": 0.5302389339543178
+   },
+   "fixed:laptop:s320q50": {
+    "on_time_fps": 11.491666666666667,
+    "acc_on_time_fps": 8.194283033033031,
+    "availability": 0.6572499999999999,
+    "aoi_mean_ms": 2699.284861111857,
+    "pi_power_w": 0.031067745333333334
+   },
+   "fixed:laptop:s640q50": {
+    "on_time_fps": 7.341666666666667,
+    "acc_on_time_fps": 6.766238738738738,
+    "availability": 0.4755,
+    "aoi_mean_ms": 2852.2237500009132,
+    "pi_power_w": 0.3590675695079575
+   },
+   "fixed:onboard:n320": {
+    "on_time_fps": 9.845833333333331,
+    "acc_on_time_fps": 6.231259384384385,
+    "availability": 0.9989999999999999,
+    "aoi_mean_ms": 145.50055555679978,
+    "pi_power_w": 2.314969760978518
+   },
+   "fixed:onboard:s640": {
+    "on_time_fps": 0.0,
+    "acc_on_time_fps": 0.0,
+    "availability": 0.0,
+    "aoi_mean_ms": 1102.4561111123485,
+    "pi_power_w": 2.868780006271975
+   },
+   "static_multi": {
+    "on_time_fps": 21.191666666666663,
+    "acc_on_time_fps": 16.85625563063063,
+    "availability": 0.9988333333333331,
+    "aoi_mean_ms": 133.21583333461564,
+    "pi_power_w": 3.1165748644331597
+   }
+  },
+  "phase_oracle": {
+   "on_time_fps": 19.608333333333334,
+   "acc_on_time_fps": 15.149769144144145,
+   "availability": 0.999,
+   "aoi_mean_ms": 115.9331944456624,
+   "pi_power_w": 0.03106595318888889
+  },
+  "best_fixed": {
+   "on_time_fps": "fixed:jetson:s320q50",
+   "acc_on_time_fps": "fixed:jetson:s320q50",
+   "availability": "fixed:onboard:n320",
+   "aoi_mean_ms": "fixed:onboard:n320",
+   "pi_power_w": "fixed:laptop:s320q50"
+  },
+  "A_full_vs_best_fixed": {
+   "on_time_fps": 1.3729203992833379,
+   "acc_on_time_fps": 1.6181380553329214,
+   "availability": 0.9996663329996663,
+   "aoi_mean_ms": 0.8377048961264493,
+   "pi_power_w": 61.71396374311609
+  },
+  "A_full_vs_oracle": {
+   "on_time_fps": 1.1398215044623885,
+   "acc_on_time_fps": 1.2398514853631724,
+   "availability": 0.9996663329996662,
+   "aoi_mean_ms": 1.051351412870604,
+   "pi_power_w": 61.717523921572365
+  },
+  "A_full_vs_static_multi": {
+   "on_time_fps": 1.054659850570193,
+   "acc_on_time_fps": 1.114331924472217,
+   "availability": 0.9998331386617721,
+   "aoi_mean_ms": 0.9149552626592913,
+   "pi_power_w": 0.6151989900715628
+  }
+ },
+ "mission_mirror": {
+  "reps": [
+   1,
+   2
+  ],
+  "policies": {
+   "A_full": {
+    "on_time_fps": 22.366666666666667,
+    "acc_on_time_fps": 20.506624436936935,
+    "availability": 0.9987499999999998,
+    "aoi_mean_ms": 117.89680555686434,
+    "pi_power_w": 2.377475028804597
+   },
+   "A_paths": {
+    "on_time_fps": 19.1,
+    "acc_on_time_fps": 18.54427646396396,
+    "availability": 0.97675,
+    "aoi_mean_ms": 135.82027777906706,
+    "pi_power_w": 4.05756976537576
+   },
+   "A_single": {
+    "on_time_fps": 16.3375,
+    "acc_on_time_fps": 15.981473348348349,
+    "availability": 0.9724583333333332,
+    "aoi_mean_ms": 135.3758333346551,
+    "pi_power_w": 1.3525832757633487
+   },
+   "fixed:jetson:s320q50": {
+    "on_time_fps": 10.529166666666665,
+    "acc_on_time_fps": 7.507959834834834,
+    "availability": 0.6392083333333333,
+    "aoi_mean_ms": 2742.0693055562933,
+    "pi_power_w": 0.047711920888888884
+   },
+   "fixed:jetson:s640q50": {
+    "on_time_fps": 6.491666666666667,
+    "acc_on_time_fps": 5.982860360360361,
+    "availability": 0.4853749999999999,
+    "aoi_mean_ms": 2835.6840277786077,
+    "pi_power_w": 0.34095781451123053
+   },
+   "fixed:laptop:m640q90": {
+    "on_time_fps": 11.641666666666666,
+    "acc_on_time_fps": 12.942177177177175,
+    "availability": 0.5007083333333333,
+    "aoi_mean_ms": 1767.9406944451393,
+    "pi_power_w": 1.90893489844522
+   },
+   "fixed:laptop:s320q50": {
+    "on_time_fps": 17.90833333333333,
+    "acc_on_time_fps": 12.769771021021018,
+    "availability": 0.8269583333333332,
+    "aoi_mean_ms": 1401.2556944452353,
+    "pi_power_w": 0.0485451754
+   },
+   "fixed:laptop:s640q50": {
+    "on_time_fps": 14.308333333333334,
+    "acc_on_time_fps": 13.186869369369369,
+    "availability": 0.5639583333333332,
+    "aoi_mean_ms": 1511.6980555561638,
+    "pi_power_w": 0.9406471987731627
+   },
+   "fixed:onboard:n320": {
+    "on_time_fps": 9.95,
+    "acc_on_time_fps": 6.2971846846846855,
+    "availability": 0.9989583333333332,
+    "aoi_mean_ms": 143.79000000108334,
+    "pi_power_w": 2.300707217182751
+   },
+   "fixed:onboard:s640": {
+    "on_time_fps": 0.0,
+    "acc_on_time_fps": 0.0,
+    "availability": 0.0,
+    "aoi_mean_ms": 1142.0693055567735,
+    "pi_power_w": 2.8025060083628226
+   },
+   "static_multi": {
+    "on_time_fps": 21.258333333333333,
+    "acc_on_time_fps": 16.96461711711712,
+    "availability": 0.9988333333333331,
+    "aoi_mean_ms": 129.6936111123956,
+    "pi_power_w": 3.0804601257735986
+   }
+  },
+  "phase_oracle": {
+   "on_time_fps": 19.741666666666667,
+   "acc_on_time_fps": 16.657042042042043,
+   "availability": 0.9989583333333334,
+   "aoi_mean_ms": 105.67736111231562,
+   "pi_power_w": 0.03443436841111111
+  },
+  "best_fixed": {
+   "on_time_fps": "fixed:laptop:s320q50",
+   "acc_on_time_fps": "fixed:laptop:s640q50",
+   "availability": "fixed:onboard:n320",
+   "aoi_mean_ms": "fixed:onboard:n320",
+   "pi_power_w": "fixed:jetson:s320q50"
+  },
+  "A_full_vs_best_fixed": {
+   "on_time_fps": 1.2489530013959984,
+   "acc_on_time_fps": 1.5550790610370335,
+   "availability": 0.9997914494264859,
+   "aoi_mean_ms": 0.8199235381874684,
+   "pi_power_w": 49.82979063746439
+  },
+  "A_full_vs_oracle": {
+   "on_time_fps": 1.1329674968341072,
+   "acc_on_time_fps": 1.2311084035916233,
+   "availability": 0.9997914494264857,
+   "aoi_mean_ms": 1.1156297272749052,
+   "pi_power_w": 69.04366592179008
+  },
+  "A_full_vs_static_multi": {
+   "on_time_fps": 1.0521364170913368,
+   "acc_on_time_fps": 1.2087879316914243,
+   "availability": 0.999916569330886,
+   "aoi_mean_ms": 0.9090409662099095,
+   "pi_power_w": 0.7717921777051211
+  }
+ },
+ "random": {
+  "reps": [
+   1,
+   2
+  ],
+  "policies": {
+   "A_full": {
+    "on_time_fps": 25.075000000000003,
+    "acc_on_time_fps": 20.01409722222222,
+    "availability": 0.9986666666666665,
+    "aoi_mean_ms": 109.31208333378817,
+    "pi_power_w": 3.1107029879542702
+   },
+   "A_paths": {
+    "on_time_fps": 21.724999999999998,
+    "acc_on_time_fps": 18.212851914414408,
+    "availability": 0.9890416666666666,
+    "aoi_mean_ms": 116.66305555588033,
+    "pi_power_w": 1.6226407777593903
+   },
+   "A_single": {
+    "on_time_fps": 17.983333333333334,
+    "acc_on_time_fps": 14.933673986486482,
+    "availability": 0.984875,
+    "aoi_mean_ms": 115.94583333368253,
+    "pi_power_w": 1.6734952476349023
+   },
+   "fixed:jetson:s320q50": {
+    "on_time_fps": 15.341666666666665,
+    "acc_on_time_fps": 10.939575825825823,
+    "availability": 0.8699999999999999,
+    "aoi_mean_ms": 955.4281944448563,
+    "pi_power_w": 0.0700058292222222
+   },
+   "fixed:jetson:s640q50": {
+    "on_time_fps": 7.833333333333332,
+    "acc_on_time_fps": 7.219369369369369,
+    "availability": 0.677875,
+    "aoi_mean_ms": 966.127361111374,
+    "pi_power_w": 0.19471724547248526
+   },
+   "fixed:laptop:m640q90": {
+    "on_time_fps": 7.475,
+    "acc_on_time_fps": 8.310045045045047,
+    "availability": 0.431,
+    "aoi_mean_ms": 2074.3873611113327,
+    "pi_power_w": 2.289635932780648
+   },
+   "fixed:laptop:s320q50": {
+    "on_time_fps": 17.62916666666667,
+    "acc_on_time_fps": 12.570707582582578,
+    "availability": 0.7817083333333332,
+    "aoi_mean_ms": 1846.4230555557313,
+    "pi_power_w": 0.4347324225333333
+   },
+   "fixed:laptop:s640q50": {
+    "on_time_fps": 11.191666666666663,
+    "acc_on_time_fps": 10.314481981981984,
+    "availability": 0.681375,
+    "aoi_mean_ms": 1917.585833333592,
+    "pi_power_w": 1.2752766975855023
+   },
+   "fixed:onboard:n320": {
+    "on_time_fps": 9.895833333333332,
+    "acc_on_time_fps": 6.262903528528529,
+    "availability": 0.9989999999999999,
+    "aoi_mean_ms": 144.30472222265433,
+    "pi_power_w": 2.3571213763030765
+   },
+   "fixed:onboard:s640": {
+    "on_time_fps": 0.0,
+    "acc_on_time_fps": 0.0,
+    "availability": 0.0,
+    "aoi_mean_ms": 1176.3593055560093,
+    "pi_power_w": 2.721919419668125
+   },
+   "static_multi": {
+    "on_time_fps": 22.47083333333333,
+    "acc_on_time_fps": 18.04719406906907,
+    "availability": 0.9988749999999997,
+    "aoi_mean_ms": 131.7823611115018,
+    "pi_power_w": 3.0928867924900527
+   }
+  },
+  "phase_oracle": {
+   "on_time_fps": 22.225,
+   "acc_on_time_fps": 17.184953078078074,
+   "availability": 0.999,
+   "aoi_mean_ms": 93.55055555599105,
+   "pi_power_w": 0.04428182014444444
+  },
+  "best_fixed": {
+   "on_time_fps": "fixed:laptop:s320q50",
+   "acc_on_time_fps": "fixed:laptop:s320q50",
+   "availability": "fixed:onboard:n320",
+   "aoi_mean_ms": "fixed:onboard:n320",
+   "pi_power_w": "fixed:jetson:s320q50"
+  },
+  "A_full_vs_best_fixed": {
+   "on_time_fps": 1.4223587804301583,
+   "acc_on_time_fps": 1.5921217712480142,
+   "availability": 0.9996663329996662,
+   "aoi_mean_ms": 0.7575087055372004,
+   "pi_power_w": 44.4349138138175
+  },
+  "A_full_vs_oracle": {
+   "on_time_fps": 1.128233970753656,
+   "acc_on_time_fps": 1.164629145700324,
+   "availability": 0.9996663329996661,
+   "aoi_mean_ms": 1.1684813915227223,
+   "pi_power_w": 70.24785742337053
+  },
+  "A_full_vs_static_multi": {
+   "on_time_fps": 1.1158909697756354,
+   "acc_on_time_fps": 1.1089866461027427,
+   "availability": 0.9997914320276979,
+   "aoi_mean_ms": 0.8294894886675963,
+   "pi_power_w": 1.0057603774918233
+  }
+ },
+ "static_good": {
+  "reps": [
+   1,
+   2
+  ],
+  "policies": {
+   "A_full": {
+    "on_time_fps": 29.43333333333333,
+    "acc_on_time_fps": 30.169730668168167,
+    "availability": 0.9985833333333332,
+    "aoi_mean_ms": 91.58083333461963,
+    "pi_power_w": 0.7052568538679147
+   },
+   "A_paths": {
+    "on_time_fps": 19.487499999999997,
+    "acc_on_time_fps": 19.729794481981983,
+    "availability": 0.8093333333333332,
+    "aoi_mean_ms": 225.77958333460654,
+    "pi_power_w": 0.10645007332008073
+   },
+   "A_single": {
+    "on_time_fps": 18.9,
+    "acc_on_time_fps": 20.210788288288285,
+    "availability": 0.9549999999999998,
+    "aoi_mean_ms": 123.22319444573807,
+    "pi_power_w": 0.402693512442011
+   },
+   "fixed:jetson:s320q50": {
+    "on_time_fps": 26.28333333333333,
+    "acc_on_time_fps": 18.74167417417417,
+    "availability": 0.9901666666666665,
+    "aoi_mean_ms": 97.5101388902436,
+    "pi_power_w": 0.059337237777777774
+   },
+   "fixed:jetson:s640q50": {
+    "on_time_fps": 20.641666666666666,
+    "acc_on_time_fps": 19.023806306306305,
+    "availability": 0.9414583333333333,
+    "aoi_mean_ms": 151.33500000134342,
+    "pi_power_w": 0.1216066444702004
+   },
+   "fixed:laptop:m640q90": {
+    "on_time_fps": 22.84583333333333,
+    "acc_on_time_fps": 25.397980480480477,
+    "availability": 0.993625,
+    "aoi_mean_ms": 129.5288888902519,
+    "pi_power_w": 0.11619118115099072
+   },
+   "fixed:laptop:s320q50": {
+    "on_time_fps": 28.53333333333333,
+    "acc_on_time_fps": 20.346066066066065,
+    "availability": 0.9962083333333331,
+    "aoi_mean_ms": 71.77361111240904,
+    "pi_power_w": 0.038638871199999994
+   },
+   "fixed:laptop:s640q50": {
+    "on_time_fps": 26.537499999999998,
+    "acc_on_time_fps": 24.45753378378378,
+    "availability": 0.9984999999999998,
+    "aoi_mean_ms": 74.76097222351831,
+    "pi_power_w": 0.054575886053313566
+   },
+   "fixed:onboard:n320": {
+    "on_time_fps": 9.679166666666667,
+    "acc_on_time_fps": 6.125778903903904,
+    "availability": 0.9990833333333332,
+    "aoi_mean_ms": 148.34305555670352,
+    "pi_power_w": 2.4139972333336086
+   },
+   "fixed:onboard:s640": {
+    "on_time_fps": 0.0,
+    "acc_on_time_fps": 0.0,
+    "availability": 0.0,
+    "aoi_mean_ms": 1123.2283333346395,
+    "pi_power_w": 2.8508052666134627
+   },
+   "static_multi": {
+    "on_time_fps": 29.529166666666665,
+    "acc_on_time_fps": 24.628100600600604,
+    "availability": 0.9986666666666665,
+    "aoi_mean_ms": 97.95111111240874,
+    "pi_power_w": 2.420258370297189
+   }
+  },
+  "phase_oracle": {
+   "on_time_fps": 28.554166666666667,
+   "acc_on_time_fps": 25.43217342342342,
+   "availability": 0.9990833333333334,
+   "aoi_mean_ms": 64.01097222353073,
+   "pi_power_w": 0.038261051565707506
+  },
+  "best_fixed": {
+   "on_time_fps": "fixed:laptop:s320q50",
+   "acc_on_time_fps": "fixed:laptop:m640q90",
+   "availability": "fixed:onboard:n320",
+   "aoi_mean_ms": "fixed:laptop:s320q50",
+   "pi_power_w": "fixed:laptop:s320q50"
+  },
+  "A_full_vs_best_fixed": {
+   "on_time_fps": 1.0315420560747663,
+   "acc_on_time_fps": 1.1878791186313022,
+   "availability": 0.9994995412461423,
+   "aoi_mean_ms": 1.275968032194859,
+   "pi_power_w": 18.25252218724016
+  },
+  "A_full_vs_oracle": {
+   "on_time_fps": 1.0307894352838172,
+   "acc_on_time_fps": 1.1862820438453516,
+   "availability": 0.999499541246142,
+   "aoi_mean_ms": 1.4307052393269866,
+   "pi_power_w": 18.432761908196483
+  },
+  "A_full_vs_static_multi": {
+   "on_time_fps": 0.9967546211372936,
+   "acc_on_time_fps": 1.225012482994016,
+   "availability": 0.9999165554072096,
+   "aoi_mean_ms": 0.9349647216305839,
+   "pi_power_w": 0.2913973410951636
+  }
+ }
+}

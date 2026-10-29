@@ -290,14 +290,14 @@
    "A_stream": {
     "pairs": 12,
     "mean_diff": -0.0014,
-    "ci95": 0.0026,
+    "ci95": 0.0029,
     "wins": 6,
     "median_rel_gain": 0.002
    },
    "A_stream_fc": {
     "pairs": 12,
     "mean_diff": -0.0016,
-    "ci95": 0.0041,
+    "ci95": 0.0046,
     "wins": 7,
     "median_rel_gain": 0.015
    }
@@ -306,14 +306,14 @@
    "A_stream": {
     "pairs": 12,
     "mean_diff": -0.0016,
-    "ci95": 0.0026,
+    "ci95": 0.0029,
     "wins": 6,
     "median_rel_gain": -0.019
    },
    "A_stream_fc": {
     "pairs": 12,
     "mean_diff": -0.0009,
-    "ci95": 0.0044,
+    "ci95": 0.0049,
     "wins": 6,
     "median_rel_gain": -0.0
    }
@@ -322,14 +322,14 @@
    "A_stream": {
     "pairs": 12,
     "mean_diff": -0.0048,
-    "ci95": 0.0045,
+    "ci95": 0.005,
     "wins": 4,
     "median_rel_gain": -0.055
    },
    "A_stream_fc": {
     "pairs": 12,
     "mean_diff": -0.002,
-    "ci95": 0.0076,
+    "ci95": 0.0085,
     "wins": 6,
     "median_rel_gain": 0.001
    }
@@ -338,14 +338,14 @@
    "A_stream": {
     "pairs": 12,
     "mean_diff": -0.0066,
-    "ci95": 0.004,
+    "ci95": 0.0045,
     "wins": 1,
     "median_rel_gain": -0.094
    },
    "A_stream_fc": {
     "pairs": 12,
     "mean_diff": -0.0005,
-    "ci95": 0.0076,
+    "ci95": 0.0085,
     "wins": 7,
     "median_rel_gain": 0.055
    }

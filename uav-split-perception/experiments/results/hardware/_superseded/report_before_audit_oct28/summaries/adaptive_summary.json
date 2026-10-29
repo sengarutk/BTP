@@ -1,0 +1,437 @@
+{
+ "policies": {
+  "onboard": {
+   "good": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.4,
+    "within_1s_fps": 1.4
+   },
+   "ground_congested": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.3,
+    "within_1s_fps": 1.3
+   },
+   "ground_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.3,
+    "within_1s_fps": 1.3
+   },
+   "both_degraded": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.3,
+    "within_1s_fps": 1.3
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.3,
+    "within_1s_fps": 1.3
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.2666666666666666,
+    "within_1s_fps": 1.2666666666666666
+   },
+   "mission": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.3111111111111111,
+    "within_1s_fps": 1.3111111111111111
+   },
+   "_runs": 3,
+   "_switches": 0
+  },
+  "lap_k1": {
+   "good": {
+    "on_time_fps": 0.3,
+    "acc_weighted_on_time": 0.29993243243243245,
+    "delivered_fps": 5.866666666666666,
+    "within_1s_fps": 5.866666666666666
+   },
+   "ground_congested": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.6666666666666666,
+    "within_1s_fps": 0.13333333333333333
+   },
+   "ground_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "both_degraded": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.1,
+    "within_1s_fps": 0.0
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.13333333333333333,
+    "within_1s_fps": 0.0
+   },
+   "mission": {
+    "on_time_fps": 0.049999999999999996,
+    "acc_weighted_on_time": 0.04998873873873874,
+    "delivered_fps": 1.122222222222222,
+    "within_1s_fps": 1.0
+   },
+   "_runs": 3,
+   "_switches": 0
+  },
+  "adaptive": {
+   "good": {
+    "on_time_fps": 28.866666666666667,
+    "acc_weighted_on_time": 26.60650900900901,
+    "delivered_fps": 28.866666666666667,
+    "within_1s_fps": 28.866666666666667
+   },
+   "ground_congested": {
+    "on_time_fps": 24.1,
+    "acc_weighted_on_time": 22.211081081081083,
+    "delivered_fps": 24.1,
+    "within_1s_fps": 24.1
+   },
+   "ground_blackout": {
+    "on_time_fps": 21.566666666666666,
+    "acc_weighted_on_time": 19.876306306306308,
+    "delivered_fps": 22.066666666666666,
+    "within_1s_fps": 22.066666666666666
+   },
+   "both_degraded": {
+    "on_time_fps": 3.433333333333333,
+    "acc_weighted_on_time": 3.1642342342342342,
+    "delivered_fps": 4.666666666666667,
+    "within_1s_fps": 4.666666666666667
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.5333333333333334,
+    "within_1s_fps": 1.5333333333333334
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 4.9,
+    "acc_weighted_on_time": 4.515945945945946,
+    "delivered_fps": 5.766666666666667,
+    "within_1s_fps": 5.766666666666667
+   },
+   "mission": {
+    "on_time_fps": 13.850000000000001,
+    "acc_weighted_on_time": 12.764853603603605,
+    "delivered_fps": 14.5,
+    "within_1s_fps": 14.5
+   },
+   "_runs": 3,
+   "_switches": 13
+  },
+  "jet_j90": {
+   "good": {
+    "on_time_fps": 19.166666666666668,
+    "acc_weighted_on_time": 19.02421171171171,
+    "delivered_fps": 19.3,
+    "within_1s_fps": 19.3
+   },
+   "ground_congested": {
+    "on_time_fps": 18.2,
+    "acc_weighted_on_time": 18.064729729729727,
+    "delivered_fps": 18.766666666666666,
+    "within_1s_fps": 18.766666666666666
+   },
+   "ground_blackout": {
+    "on_time_fps": 18.233333333333334,
+    "acc_weighted_on_time": 18.097815315315312,
+    "delivered_fps": 18.733333333333334,
+    "within_1s_fps": 18.733333333333334
+   },
+   "both_degraded": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 2.066666666666667,
+    "within_1s_fps": 2.033333333333333
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 1.9666666666666666,
+    "within_1s_fps": 1.9
+   },
+   "mission": {
+    "on_time_fps": 9.433333333333334,
+    "acc_weighted_on_time": 9.363220720720719,
+    "delivered_fps": 10.227777777777778,
+    "within_1s_fps": 10.21111111111111
+   },
+   "_runs": 3,
+   "_switches": 0
+  },
+  "lap_j50": {
+   "good": {
+    "on_time_fps": 27.533333333333335,
+    "acc_weighted_on_time": 25.375315315315316,
+    "delivered_fps": 27.566666666666666,
+    "within_1s_fps": 27.566666666666666
+   },
+   "ground_congested": {
+    "on_time_fps": 8.0,
+    "acc_weighted_on_time": 7.372972972972973,
+    "delivered_fps": 8.133333333333333,
+    "within_1s_fps": 8.133333333333333
+   },
+   "ground_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "both_degraded": {
+    "on_time_fps": 4.933333333333334,
+    "acc_weighted_on_time": 4.546666666666667,
+    "delivered_fps": 5.7,
+    "within_1s_fps": 5.7
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 5.466666666666667,
+    "acc_weighted_on_time": 5.038198198198199,
+    "delivered_fps": 6.066666666666666,
+    "within_1s_fps": 6.066666666666666
+   },
+   "mission": {
+    "on_time_fps": 7.711111111111111,
+    "acc_weighted_on_time": 7.106726726726727,
+    "delivered_fps": 7.966666666666666,
+    "within_1s_fps": 7.966666666666666
+   },
+   "_runs": 3,
+   "_switches": 0
+  },
+  "jet_j50": {
+   "good": {
+    "on_time_fps": 22.033333333333335,
+    "acc_weighted_on_time": 20.306396396396398,
+    "delivered_fps": 22.433333333333334,
+    "within_1s_fps": 22.433333333333334
+   },
+   "ground_congested": {
+    "on_time_fps": 24.3,
+    "acc_weighted_on_time": 22.39540540540541,
+    "delivered_fps": 24.3,
+    "within_1s_fps": 24.3
+   },
+   "ground_blackout": {
+    "on_time_fps": 24.366666666666667,
+    "acc_weighted_on_time": 22.456846846846847,
+    "delivered_fps": 24.4,
+    "within_1s_fps": 24.4
+   },
+   "both_degraded": {
+    "on_time_fps": 3.2,
+    "acc_weighted_on_time": 2.9491891891891893,
+    "delivered_fps": 4.633333333333334,
+    "within_1s_fps": 4.633333333333334
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 3.3333333333333335,
+    "acc_weighted_on_time": 3.0720720720720722,
+    "delivered_fps": 4.566666666666666,
+    "within_1s_fps": 4.566666666666666
+   },
+   "mission": {
+    "on_time_fps": 12.78888888888889,
+    "acc_weighted_on_time": 11.786516516516519,
+    "delivered_fps": 13.322222222222223,
+    "within_1s_fps": 13.322222222222223
+   },
+   "_runs": 3,
+   "_switches": 0
+  },
+  "lap_j90": {
+   "good": {
+    "on_time_fps": 22.633333333333333,
+    "acc_weighted_on_time": 22.465112612612607,
+    "delivered_fps": 22.733333333333334,
+    "within_1s_fps": 22.733333333333334
+   },
+   "ground_congested": {
+    "on_time_fps": 1.0666666666666667,
+    "acc_weighted_on_time": 1.0587387387387386,
+    "delivered_fps": 3.566666666666667,
+    "within_1s_fps": 3.566666666666667
+   },
+   "ground_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "both_degraded": {
+    "on_time_fps": 0.4,
+    "acc_weighted_on_time": 0.397027027027027,
+    "delivered_fps": 2.5,
+    "within_1s_fps": 2.5
+   },
+   "total_blackout": {
+    "on_time_fps": 0.0,
+    "acc_weighted_on_time": 0.0,
+    "delivered_fps": 0.0,
+    "within_1s_fps": 0.0
+   },
+   "recovered_low_battery": {
+    "on_time_fps": 0.26666666666666666,
+    "acc_weighted_on_time": 0.26468468468468465,
+    "delivered_fps": 2.6,
+    "within_1s_fps": 2.6
+   },
+   "mission": {
+    "on_time_fps": 4.044444444444444,
+    "acc_weighted_on_time": 4.014384384384384,
+    "delivered_fps": 5.216666666666667,
+    "within_1s_fps": 5.211111111111111
+   },
+   "_runs": 3,
+   "_switches": 0
+  }
+ },
+ "phase_oracle": {
+  "good": {
+   "on_time_fps": 27.533333333333335,
+   "acc_weighted_on_time": 25.375315315315316,
+   "delivered_fps": 27.566666666666666,
+   "within_1s_fps": 27.566666666666666
+  },
+  "ground_congested": {
+   "on_time_fps": 24.3,
+   "acc_weighted_on_time": 22.39540540540541,
+   "delivered_fps": 24.3,
+   "within_1s_fps": 24.3
+  },
+  "ground_blackout": {
+   "on_time_fps": 24.366666666666667,
+   "acc_weighted_on_time": 22.456846846846847,
+   "delivered_fps": 24.4,
+   "within_1s_fps": 24.4
+  },
+  "both_degraded": {
+   "on_time_fps": 4.933333333333334,
+   "acc_weighted_on_time": 4.546666666666667,
+   "delivered_fps": 5.7,
+   "within_1s_fps": 5.7
+  },
+  "total_blackout": {
+   "on_time_fps": 0.0,
+   "acc_weighted_on_time": 0.0,
+   "delivered_fps": 1.3,
+   "within_1s_fps": 1.3
+  },
+  "recovered_low_battery": {
+   "on_time_fps": 5.466666666666667,
+   "acc_weighted_on_time": 5.038198198198199,
+   "delivered_fps": 6.066666666666666,
+   "within_1s_fps": 6.066666666666666
+  },
+  "mission": {
+   "on_time_fps": 14.433333333333335,
+   "acc_weighted_on_time": 13.302072072072074,
+   "delivered_fps": 14.888888888888888,
+   "within_1s_fps": 14.888888888888888
+  }
+ },
+ "phase_oracle_choice": {
+  "good": "lap_j50",
+  "ground_congested": "jet_j50",
+  "ground_blackout": "jet_j50",
+  "both_degraded": "lap_j50",
+  "total_blackout": "onboard",
+  "recovered_low_battery": "lap_j50"
+ },
+ "best_fixed_overall": "jet_j50",
+ "adaptive_vs_oracle": {
+  "good": {
+   "on_time_fps": 1.0484261501210654,
+   "acc_weighted_on_time": 1.0485193456079187,
+   "delivered_fps": 1.0471584038694075,
+   "within_1s_fps": 1.0471584038694075
+  },
+  "ground_congested": {
+   "on_time_fps": 0.9917695473251029,
+   "acc_weighted_on_time": 0.9917695473251028,
+   "delivered_fps": 0.9917695473251029,
+   "within_1s_fps": 0.9917695473251029
+  },
+  "ground_blackout": {
+   "on_time_fps": 0.8850889192886456,
+   "acc_weighted_on_time": 0.8850889192886457,
+   "delivered_fps": 0.9043715846994536,
+   "within_1s_fps": 0.9043715846994536
+  },
+  "both_degraded": {
+   "on_time_fps": 0.6959459459459458,
+   "acc_weighted_on_time": 0.6959459459459459,
+   "delivered_fps": 0.8187134502923977,
+   "within_1s_fps": 0.8187134502923977
+  },
+  "total_blackout": {
+   "on_time_fps": null,
+   "acc_weighted_on_time": null,
+   "delivered_fps": 1.1794871794871795,
+   "within_1s_fps": 1.1794871794871795
+  },
+  "recovered_low_battery": {
+   "on_time_fps": 0.8963414634146342,
+   "acc_weighted_on_time": 0.896341463414634,
+   "delivered_fps": 0.9505494505494506,
+   "within_1s_fps": 0.9505494505494506
+  },
+  "mission": {
+   "on_time_fps": 0.9595842956120092,
+   "acc_weighted_on_time": 0.9596139258938186,
+   "delivered_fps": 0.9738805970149255,
+   "within_1s_fps": 0.9738805970149255
+  }
+ },
+ "adaptive_vs_best_fixed": {
+  "on_time_fps": 1.082971329278888,
+  "acc_weighted_on_time": 1.0830047695361167,
+  "delivered_fps": 1.0884070058381985,
+  "within_1s_fps": 1.0884070058381985
+ },
+ "adaptive_ge_fixed_by_phase": {
+  "good": 6,
+  "ground_congested": 6,
+  "ground_blackout": 5,
+  "both_degraded": 5,
+  "total_blackout": 6,
+  "recovered_low_battery": 5
+ }
+}

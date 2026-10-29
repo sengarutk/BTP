@@ -842,56 +842,56 @@
    "A_full_aer": {
     "pairs": 12,
     "mean_diff": 0.0028,
-    "ci95": 0.0045,
+    "ci95": 0.005,
     "wins": 11,
     "median_rel_gain": 0.16
    },
    "A_stream": {
     "pairs": 12,
     "mean_diff": 0.0042,
-    "ci95": 0.0049,
+    "ci95": 0.0055,
     "wins": 10,
     "median_rel_gain": 0.161
    },
    "abr_laptop": {
     "pairs": 12,
     "mean_diff": 0.0025,
-    "ci95": 0.0038,
+    "ci95": 0.0043,
     "wins": 10,
     "median_rel_gain": 0.142
    },
    "fixed_jetson_s640q90": {
     "pairs": 12,
     "mean_diff": 0.0098,
-    "ci95": 0.0034,
+    "ci95": 0.0038,
     "wins": 11,
     "median_rel_gain": 0.676
    },
    "fixed_laptop_m640q90": {
     "pairs": 12,
     "mean_diff": 0.0039,
-    "ci95": 0.0047,
+    "ci95": 0.0053,
     "wins": 9,
     "median_rel_gain": 0.37
    },
    "fixed_onboard_n320": {
     "pairs": 12,
     "mean_diff": 0.016,
-    "ci95": 0.0048,
+    "ci95": 0.0054,
     "wins": 11,
     "median_rel_gain": 2.01
    },
    "rule_fallback": {
     "pairs": 12,
     "mean_diff": 0.0071,
-    "ci95": 0.0039,
+    "ci95": 0.0044,
     "wins": 10,
     "median_rel_gain": 0.75
    },
    "static_multi": {
     "pairs": 12,
     "mean_diff": 0.0003,
-    "ci95": 0.003,
+    "ci95": 0.0034,
     "wins": 8,
     "median_rel_gain": 0.045
    }
@@ -900,56 +900,56 @@
    "A_full_aer": {
     "pairs": 12,
     "mean_diff": 0.0027,
-    "ci95": 0.0044,
+    "ci95": 0.005,
     "wins": 10,
     "median_rel_gain": 0.134
    },
    "A_stream": {
     "pairs": 12,
     "mean_diff": 0.0042,
-    "ci95": 0.0049,
+    "ci95": 0.0055,
     "wins": 10,
     "median_rel_gain": 0.198
    },
    "abr_laptop": {
     "pairs": 12,
     "mean_diff": 0.0023,
-    "ci95": 0.0037,
+    "ci95": 0.0042,
     "wins": 10,
     "median_rel_gain": 0.112
    },
    "fixed_jetson_s640q90": {
     "pairs": 12,
     "mean_diff": 0.0096,
-    "ci95": 0.0034,
+    "ci95": 0.0038,
     "wins": 11,
     "median_rel_gain": 0.678
    },
    "fixed_laptop_m640q90": {
     "pairs": 12,
     "mean_diff": 0.0037,
-    "ci95": 0.0046,
+    "ci95": 0.0052,
     "wins": 9,
     "median_rel_gain": 0.386
    },
    "fixed_onboard_n320": {
     "pairs": 12,
     "mean_diff": 0.016,
-    "ci95": 0.0048,
+    "ci95": 0.0054,
     "wins": 11,
     "median_rel_gain": 1.978
    },
    "rule_fallback": {
     "pairs": 12,
     "mean_diff": 0.0069,
-    "ci95": 0.0038,
+    "ci95": 0.0043,
     "wins": 10,
     "median_rel_gain": 0.751
    },
    "static_multi": {
     "pairs": 12,
     "mean_diff": 0.001,
-    "ci95": 0.003,
+    "ci95": 0.0034,
     "wins": 8,
     "median_rel_gain": 0.08
    }
@@ -958,56 +958,56 @@
    "A_full_aer": {
     "pairs": 12,
     "mean_diff": -0.0019,
-    "ci95": 0.0074,
+    "ci95": 0.0084,
     "wins": 6,
     "median_rel_gain": -0.0
    },
    "A_stream": {
     "pairs": 12,
     "mean_diff": 0.0003,
-    "ci95": 0.0086,
+    "ci95": 0.0097,
     "wins": 5,
     "median_rel_gain": -0.04
    },
    "abr_laptop": {
     "pairs": 12,
     "mean_diff": -0.0015,
-    "ci95": 0.0076,
+    "ci95": 0.0085,
     "wins": 7,
     "median_rel_gain": 0.057
    },
    "fixed_jetson_s640q90": {
     "pairs": 12,
     "mean_diff": 0.0091,
-    "ci95": 0.006,
+    "ci95": 0.0068,
     "wins": 11,
     "median_rel_gain": 0.09
    },
    "fixed_laptop_m640q90": {
     "pairs": 12,
     "mean_diff": -0.0028,
-    "ci95": 0.0102,
+    "ci95": 0.0115,
     "wins": 4,
     "median_rel_gain": -0.061
    },
    "fixed_onboard_n320": {
     "pairs": 12,
     "mean_diff": 0.0242,
-    "ci95": 0.0078,
+    "ci95": 0.0087,
     "wins": 11,
     "median_rel_gain": 1.193
    },
    "rule_fallback": {
     "pairs": 12,
     "mean_diff": 0.0041,
-    "ci95": 0.0066,
+    "ci95": 0.0074,
     "wins": 9,
     "median_rel_gain": 0.208
    },
    "static_multi": {
     "pairs": 12,
     "mean_diff": 0.0016,
-    "ci95": 0.0052,
+    "ci95": 0.0058,
     "wins": 8,
     "median_rel_gain": 0.053
    }
@@ -1016,56 +1016,56 @@
    "A_full_aer": {
     "pairs": 12,
     "mean_diff": -0.0025,
-    "ci95": 0.0073,
+    "ci95": 0.0082,
     "wins": 2,
     "median_rel_gain": -0.034
    },
    "A_stream": {
     "pairs": 12,
     "mean_diff": -0.0003,
-    "ci95": 0.0085,
+    "ci95": 0.0095,
     "wins": 5,
     "median_rel_gain": -0.039
    },
    "abr_laptop": {
     "pairs": 12,
     "mean_diff": -0.0015,
-    "ci95": 0.0075,
+    "ci95": 0.0084,
     "wins": 7,
     "median_rel_gain": 0.025
    },
    "fixed_jetson_s640q90": {
     "pairs": 12,
     "mean_diff": 0.0084,
-    "ci95": 0.0055,
+    "ci95": 0.0062,
     "wins": 10,
     "median_rel_gain": 0.096
    },
    "fixed_laptop_m640q90": {
     "pairs": 12,
     "mean_diff": -0.0035,
-    "ci95": 0.0098,
+    "ci95": 0.011,
     "wins": 4,
     "median_rel_gain": -0.054
    },
    "fixed_onboard_n320": {
     "pairs": 12,
     "mean_diff": 0.0245,
-    "ci95": 0.0073,
+    "ci95": 0.0082,
     "wins": 11,
     "median_rel_gain": 1.206
    },
    "rule_fallback": {
     "pairs": 12,
     "mean_diff": 0.0041,
-    "ci95": 0.0065,
+    "ci95": 0.0073,
     "wins": 9,
     "median_rel_gain": 0.209
    },
    "static_multi": {
     "pairs": 12,
     "mean_diff": 0.0034,
-    "ci95": 0.0049,
+    "ci95": 0.0056,
     "wins": 11,
     "median_rel_gain": 0.152
    }

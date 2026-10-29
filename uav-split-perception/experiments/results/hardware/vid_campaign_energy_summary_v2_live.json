@@ -474,28 +474,28 @@
    "A_eco": {
     "pairs": 20,
     "mean_diff": 0.0003,
-    "ci95": 0.0026,
+    "ci95": 0.0028,
     "wins": 10,
     "median_rel_gain": 0.011
    },
    "A_eco_tight": {
     "pairs": 20,
     "mean_diff": -0.0006,
-    "ci95": 0.0018,
+    "ci95": 0.002,
     "wins": 8,
     "median_rel_gain": -0.013
    },
    "A_full": {
     "pairs": 20,
     "mean_diff": -0.0023,
-    "ci95": 0.0019,
+    "ci95": 0.002,
     "wins": 7,
     "median_rel_gain": -0.129
    },
    "fixed_laptop_m640q90": {
     "pairs": 20,
     "mean_diff": 0.0028,
-    "ci95": 0.0025,
+    "ci95": 0.0027,
     "wins": 16,
     "median_rel_gain": 0.22
    }
@@ -504,28 +504,28 @@
    "A_eco": {
     "pairs": 20,
     "mean_diff": -0.0001,
-    "ci95": 0.0029,
+    "ci95": 0.0031,
     "wins": 9,
     "median_rel_gain": -0.049
    },
    "A_eco_tight": {
     "pairs": 20,
     "mean_diff": -0.0011,
-    "ci95": 0.002,
+    "ci95": 0.0021,
     "wins": 5,
     "median_rel_gain": -0.048
    },
    "A_full": {
     "pairs": 20,
     "mean_diff": -0.0028,
-    "ci95": 0.0022,
+    "ci95": 0.0023,
     "wins": 6,
     "median_rel_gain": -0.091
    },
    "fixed_laptop_m640q90": {
     "pairs": 20,
     "mean_diff": 0.002,
-    "ci95": 0.0026,
+    "ci95": 0.0028,
     "wins": 15,
     "median_rel_gain": 0.133
    }
@@ -534,28 +534,28 @@
    "A_eco": {
     "pairs": 20,
     "mean_diff": -0.0055,
-    "ci95": 0.0043,
+    "ci95": 0.0046,
     "wins": 5,
     "median_rel_gain": -0.137
    },
    "A_eco_tight": {
     "pairs": 20,
     "mean_diff": -0.0074,
-    "ci95": 0.0028,
+    "ci95": 0.003,
     "wins": 3,
     "median_rel_gain": -0.133
    },
    "A_full": {
     "pairs": 20,
     "mean_diff": 0.0005,
-    "ci95": 0.0037,
+    "ci95": 0.0039,
     "wins": 12,
     "median_rel_gain": 0.039
    },
    "fixed_laptop_m640q90": {
     "pairs": 20,
     "mean_diff": 0.0007,
-    "ci95": 0.0055,
+    "ci95": 0.0059,
     "wins": 12,
     "median_rel_gain": 0.048
    }
@@ -564,28 +564,28 @@
    "A_eco": {
     "pairs": 20,
     "mean_diff": -0.0066,
-    "ci95": 0.005,
+    "ci95": 0.0053,
     "wins": 4,
     "median_rel_gain": -0.15
    },
    "A_eco_tight": {
     "pairs": 20,
     "mean_diff": -0.0089,
-    "ci95": 0.0035,
+    "ci95": 0.0038,
     "wins": 3,
     "median_rel_gain": -0.17
    },
    "A_full": {
     "pairs": 20,
     "mean_diff": -0.0012,
-    "ci95": 0.0041,
+    "ci95": 0.0044,
     "wins": 11,
     "median_rel_gain": 0.009
    },
    "fixed_laptop_m640q90": {
     "pairs": 20,
     "mean_diff": -0.0016,
-    "ci95": 0.0056,
+    "ci95": 0.0059,
     "wins": 11,
     "median_rel_gain": 0.036
    }

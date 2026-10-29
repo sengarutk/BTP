@@ -33,7 +33,10 @@ MODELS = {"yolov8s": ROOT / "yolov8s.pt", "yolov8m": ROOT / "weights" / "yolov8m
           "yolov8l": ROOT / "weights" / "yolov8l.pt",
           # VisDrone fine-tuned (scripts/train_visdrone.py); only those already trained are used
           "yolov8s_vd": ROOT / "weights" / "yolov8s_visdrone.pt", "yolov8m_vd": ROOT / "weights" / "yolov8m_visdrone.pt",
-          "yolov8l_vd": ROOT / "weights" / "yolov8l_visdrone.pt"}
+          "yolov8l_vd": ROOT / "weights" / "yolov8l_visdrone.pt",
+          # YOLO11 n/s/m fine-tuned on VisDrone (25 Oct 2026)
+          "yolo11n_vd": ROOT / "weights" / "yolo11n_visdrone.pt", "yolo11s_vd": ROOT / "weights" / "yolo11s_visdrone.pt",
+          "yolo11m_vd": ROOT / "weights" / "yolo11m_visdrone.pt"}
 MODELS = {k: v for k, v in MODELS.items() if v.exists()}
 PERIOD = 1.0 / 30.0
 
@@ -91,15 +94,19 @@ def cmd_emulate(lats):
     for name in MODELS:
         z = np.load(OUT / f"dets_{name}.npz")
         dets = {k: z[k] for k in z.files}
-        res[name] = {"fresh_AP": None, "by_latency_ms": {}}
+        # fresh AP over every frame (a zero-latency engine takes each frame); until 28 Oct 2026 this field kept the
+        # fresh AP of the results of the last latency in the loop (6 s: every 180th frame)
+        p = tmp / f"a2_{name}_0.json"
+        synth_run(name, 0, dets, ks, p)
+        res[name] = {"fresh_AP": evaluate(p, labels, "newest")["fresh_AP"], "by_latency_ms": {}}
         for L in lats:
             p = tmp / f"a2_{name}_{L}.json"
             synth_run(name, L, dets, ks, p)
             r0 = evaluate(p, labels, "newest")
             r1 = evaluate(p, labels, "newest", forecast=fp)
-            res[name]["fresh_AP"] = r0["fresh_AP"]
             res[name]["by_latency_ms"][L] = {"sAP": r0["sAP"], "sAP50": r0["sAP50"], "sAP_fc2": r1["sAP"],
-                                             "sAP50_fc2": r1["sAP50"], "results": r0["results"]}
+                                             "sAP50_fc2": r1["sAP50"], "results": r0["results"],
+                                             "fresh_AP_results": r0["fresh_AP"]}
             print(f"{name} L={L:5d} ms  fresh AP {r0['fresh_AP']:.4f}  sAP {r0['sAP']:.4f} (AP50 {r0['sAP50']:.4f})"
                   f"  with forecaster {r1['sAP']:.4f} (AP50 {r1['sAP50']:.4f})", flush=True)
     json.dump(res, open(OUT / "onboard_sap_emulated.json", "w"), indent=1)

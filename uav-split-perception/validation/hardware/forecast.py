@@ -23,6 +23,7 @@ The frozen setting is then applied to live runs by stream_ap.py / summarize_vid.
 import itertools
 import json
 import multiprocessing as mp
+import os
 import sys
 from pathlib import Path
 
@@ -31,8 +32,13 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent.parent
 TRAIN = ROOT / "datasets" / "visdrone_vid_train_640"
 OUT = ROOT / "experiments" / "results" / "hardware"
-DETS = OUT / "forecast_train_dets.npz"
-TUNING = OUT / "forecast_tuning.json"
+# FC_DETECTOR=det (task R2, 25 Oct 2026): the YOLOv8s fine-tuned on VisDrone-DET only (it never saw a VID clip, so
+# the VID-train replay stays unbiased); every output gets the suffix _det, the default (COCO YOLOv8s) files are untouched
+_DET = os.environ.get("FC_DETECTOR", "") == "det"
+_SFX = "_det" if _DET else ""
+WEIGHTS = ROOT / "weights" / "yolov8s_visdrone_det.pt" if _DET else ROOT / "yolov8s.pt"
+DETS = OUT / f"forecast_train_dets{_SFX}.npz"
+TUNING = OUT / f"forecast_tuning{_SFX}.json"
 MAX_FRAMES = 400
 STRIDE = 2
 LAGS = [0, 3, 5, 8, 12, 18]           # frames at 30 fps: 0-600 ms, the range of live result ages
@@ -167,7 +173,7 @@ def cmd_dets():
     from ultralytics import YOLO
     torch.set_num_threads(4)
     seqs = json.load(open(TRAIN / "sequences.json"))
-    m = YOLO(str(ROOT / "yolov8s.pt"))
+    m = YOLO(str(WEIGHTS))
     out = {}
     for sq, n in seqs:
         for i in range(1, min(n, MAX_FRAMES) + 1):
@@ -279,7 +285,7 @@ def _decay_job(args):
 
 GRID2 = {"alpha": [0.3, 0.5, 0.7], "iou_thr": [0.1, 0.3], "min_conf": [0.05], "ego": [False], "max_h_s": [1.0],
          "align": [True], "scale_vel": [False, True], "obj_vel": [True, False]}
-TUNING2 = OUT / "forecast_tuning_v2.json"
+TUNING2 = OUT / f"forecast_tuning_v2{_SFX}.json"
 
 
 def cmd_tune2(workers=6):
@@ -320,9 +326,10 @@ def cmd_decay(workers=6, version=""):
     out = {"lag_frames": DECAY_LAGS, "lag_ms": [round(x * 1000 / 30, 1) for x in DECAY_LAGS], "ap": fc,
            "ratio": [a / plain[0] for a in fc], "ap_no_forecast": plain,
            "ratio_no_forecast": [a / plain[0] for a in plain], "forecaster": best,
-           "note": "VisDrone-VID train, YOLOv8s@640 CPU detections, one result every %d frames, ratio relative "
-                   "to fresh AP without forecasting" % STRIDE}
-    json.dump(out, open(OUT / f"staleness_decay_forecast{'_' + version if version else ''}.json", "w"), indent=1)
+           "note": "VisDrone-VID train, %s@640 CPU detections, one result every %d frames, ratio relative "
+                   "to fresh AP without forecasting" % ("YOLOv8s fine-tuned on VisDrone-DET only" if _DET else "YOLOv8s",
+                                                         STRIDE)}
+    json.dump(out, open(OUT / f"staleness_decay_forecast{'_' + version if version else ''}{_SFX}.json", "w"), indent=1)
     print("no forecast", [round(r, 3) for r in out["ratio_no_forecast"]])
     print("forecast   ", [round(r, 3) for r in out["ratio"]])
 

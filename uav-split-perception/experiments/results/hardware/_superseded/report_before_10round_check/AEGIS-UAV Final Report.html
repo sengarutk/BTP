@@ -1,0 +1,355 @@
+<title>AEGIS-UAV Final Report</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a technical report. One reading column, a sticky contents rail on wide screens, evidence tables full column width. */
+:root {
+  --bg: #F5F7F8; --paper: #FFFFFF; --ink: #15202B; --muted: #55616D; --rule: #D5DCE2;
+  --accent: #1F5C8B; --accent-soft: #E3EDF6; --good: #22704A; --good-soft: #E2F1E8;
+  --open: #8A5A00; --open-soft: #F7EDD9; --bad: #A0342B; --bad-soft: #F6E1DE;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171D; --paper: #18212A; --ink: #E4EAF0; --muted: #9AA7B3; --rule: #2C3946;
+  --accent: #7FB3E0; --accent-soft: #1C2D3D; --good: #6CC495; --good-soft: #17301F;
+  --open: #E3B35E; --open-soft: #33281A; --bad: #EE8A80; --bad-soft: #3A1E1B; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11171D; --paper: #18212A; --ink: #E4EAF0; --muted: #9AA7B3; --rule: #2C3946;
+  --accent: #7FB3E0; --accent-soft: #1C2D3D; --good: #6CC495; --good-soft: #17301F;
+  --open: #E3B35E; --open-soft: #33281A; --bad: #EE8A80; --bad-soft: #3A1E1B; color-scheme: dark }
+* { box-sizing: border-box }
+html { scroll-behavior: smooth }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } }
+body { background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px }
+@media (max-width: 960px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px } nav.toc { position: static } }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 14px; display: grid; gap: 4px }
+nav.toc b { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px }
+nav.toc a { color: var(--ink); text-decoration: none; padding: 3px 0 3px 10px; border-left: 2px solid var(--rule) }
+nav.toc a:hover, nav.toc a:focus-visible { border-left-color: var(--accent); color: var(--accent) }
+main { display: grid; gap: 44px; min-width: 0 }
+header { display: grid; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 24px }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 800 clamp(32px, 5vw, 48px)/1.06 var(--display); margin: 0; text-wrap: balance; letter-spacing: -.012em }
+h2 { font: 700 26px/1.2 var(--display); margin: 0 0 6px; text-wrap: balance; scroll-margin-top: 20px }
+h3 { font: 700 18px/1.3 var(--display); margin: 18px 0 4px; text-wrap: balance }
+h2 .n { font: 600 13px/1 var(--mono); color: var(--accent); margin-right: 10px; letter-spacing: .06em }
+p { margin: 0 0 12px; max-width: 70ch }
+.lede { font-size: 19px; color: var(--muted); max-width: 70ch; margin: 0 }
+.meta { font: 13px/1.55 var(--mono); color: var(--muted); margin: 0 }
+section { display: grid; gap: 4px; min-width: 0 }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule) }
+.facts div { background: var(--paper); padding: 14px 16px; display: grid; gap: 2px }
+.facts b { font: 700 26px/1.1 var(--display); font-variant-numeric: tabular-nums }
+.facts span { font-size: 14px; color: var(--muted); line-height: 1.35 }
+.tbl { overflow-x: auto; background: var(--paper); border: 1px solid var(--rule); margin: 8px 0 10px }
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top }
+th { font: 600 11.5px/1.3 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: var(--bg) }
+tr:last-child td { border-bottom: 0 }
+td.num, .num { font-family: var(--mono); font-size: 14px; white-space: nowrap }
+.chip { display: inline-block; font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 4px 7px; border-radius: 3px; white-space: nowrap }
+.chip.ok { background: var(--good-soft); color: var(--good) }
+.chip.mid { background: var(--open-soft); color: var(--open) }
+.chip.neg { background: var(--bad-soft); color: var(--bad) }
+.chip.lo { background: var(--accent-soft); color: var(--muted) }
+ol, ul { margin: 0 0 10px; padding-left: 22px; display: grid; gap: 7px; max-width: 72ch }
+li::marker { color: var(--accent); font-weight: 600 }
+.find { display: grid; gap: 10px; counter-reset: f; padding: 0; list-style: none; max-width: none }
+.find li { background: var(--paper); border: 1px solid var(--rule); padding: 12px 16px 12px 52px; position: relative; counter-increment: f }
+.find li::before { content: counter(f); position: absolute; left: 14px; top: 12px; font: 700 18px/1.4 var(--display); color: var(--accent) }
+.find b { display: block; font-family: var(--display); font-size: 17px; margin-bottom: 2px }
+.note { background: var(--paper); border: 1px solid var(--rule); border-left: 4px solid var(--accent); padding: 14px 18px; max-width: 76ch }
+.note p:last-child { margin: 0 }
+code { font: 13.5px/1.4 var(--mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere }
+a { color: var(--accent); text-underline-offset: 2px }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px }
+.card { background: var(--paper); border: 1px solid var(--rule); padding: 14px 18px; min-width: 0 }
+.card h3 { margin-top: 0 }
+.card ul { font-size: 16px; gap: 5px }
+.src { font-size: 14px; color: var(--muted) }
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <b>Contents</b>
+  <a href="#summary">Summary</a>
+  <a href="#problem">1 · Problem</a>
+  <a href="#system">2 · System and testbed</a>
+  <a href="#method">3 · How results were measured</a>
+  <a href="#results">4 · Results</a>
+  <a href="#negative">5 · Negative results</a>
+  <a href="#novelty">6 · Novelty</a>
+  <a href="#limits">7 · Limitations</a>
+  <a href="#faults">8 · Faults found and fixed</a>
+  <a href="#next">9 · What is left</a>
+  <a href="#files">10 · Where everything is</a>
+  <a href="#inventory">Appendix · Campaigns</a>
+</nav>
+
+<main>
+<header>
+  <div class="eyebrow">AEGIS-UAV · final report · 26 October 2026</div>
+  <h1>Perception for small camera drones: where to compute, how fresh, at what energy and heat</h1>
+  <p class="lede">A camera drone has to detect objects in its video, live. This project built a three-tier drone testbed, a family of adaptive controllers that decide per frame where to run detection, and measured them over shared Wi-Fi and a real drone mesh network, with the standard streaming-accuracy metric on aerial video.</p>
+  <p class="meta">Hardware: Raspberry Pi 5 camera drones · Jetson Orin Nano edge drone · laptop ground station (RTX 4050) · Wi-Fi and an ad-hoc batman-adv mesh (AegisSwarm). Data: VisDrone2019. Detailed lab record: the AEGIS-UAV Results Brief (25 parts); code: <code>uav-split-perception/</code>.</p>
+</header>
+
+<section id="summary">
+  <h2>Summary</h2>
+  <div class="facts">
+    <div><b>≈ 1,150</b><span>live hardware runs in 19 campaigns</span></div>
+    <div><b>4–12×</b><span>streaming accuracy of offloading over the best onboard detector</span></div>
+    <div><b>≈ 2×</b><span>streaming accuracy from the motion forecaster</span></div>
+    <div><b>−1.5 W</b><span>Pi power from the energy price, same accuracy, no throttling</span></div>
+    <div><b>0 of 52</b><span>earlier verdicts reversed when re-scored with drone-trained detectors</span></div>
+  </div>
+  <p style="margin-top:16px">The work answers four questions with measurements:</p>
+  <ol class="find">
+    <li><b>Where should the drone compute?</b> Off the drone. A Pi 5 needs 0.3–3 s per frame and throttles within about a minute; the best onboard detector (YOLO11n) reaches 0.047 streaming AP with the forecaster, while offloading over the mesh reaches 0.18–0.21. Sending a JPEG beats splitting the network in every placement measured (exact splits with lightweight encoding; learned feature compressors were not tested); INT8 split computing is lossless, but its payload is 2–12× a JPEG.</li>
+    <li><b>How should the drone decide?</b> Per frame, using every computer in parallel, with an objective that values a result by the accuracy it still has when it is used. Adaptive control beats fixed offloading once links fail (mesh mission: 0.186 against 0.105) and survives total blackouts on the Pi alone.</li>
+    <li><b>How fast do aerial detections go stale, and can that be undone?</b> They lose 58 % of their accuracy within 100 ms. A cheap forecaster that follows the camera's and each object's motion keeps 60 % at 267 ms (7 % without) and roughly doubles streaming accuracy. The scheduler must use the decay curve after forecasting (+0.0045 sAP, 20 pairs).</li>
+    <li><b>What do energy and heat cost?</b> Onboard inference is about 80× the energy of sending a JPEG and drives the fanless Pi into throttling. Pricing the drone's measured power (dual ascent) and the freshness of its detections keeps the same or better accuracy with about 1–1.5 W less, no throttling and 98 % freshness. A heat price adds nothing beyond that; pricing the edge drone's energy saves at most 4 % of its power.</li>
+  </ol>
+</section>
+
+<section id="problem">
+  <h2><span class="n">01</span>The problem</h2>
+  <p>A small drone carries a camera and a weak computer. It must find people and vehicles in its video while it flies, and its operators need the newest possible picture. For every frame (30 per second) it can run a detector itself, send the frame to a stronger computer on another drone (edge drone), or send it to the ground station, and it can choose the model size, image resolution and JPEG quality. Links fade, congest and break; the drone's battery and temperature are limited.</p>
+  <p><b>What "good" means.</b> A detection is useful only while it still matches the scene. The project scores what the drone <i>holds</i> at every frame: the newest detection it has, compared with the ground truth of the current frame. This is <b>streaming AP (sAP)</b>, the standard metric of streaming perception (Li et al., ECCV 2020), computed as mAP@[.5:.95] on VisDrone video. Freshness is reported as <b>P(AoI ≤ 300 ms)</b>, the share of time the drone holds a detection younger than 300 ms.</p>
+</section>
+
+<section id="system">
+  <h2><span class="n">02</span>The system and the testbed</h2>
+  <h3>Three tiers of hardware</h3>
+  <div class="tbl"><table>
+    <tr><th>Tier</th><th>Device</th><th>YOLOv8s at 640 px</th><th>Power idle → active</th><th>Notes</th></tr>
+    <tr><td>Camera drone</td><td>Raspberry Pi 5, 4 CPU threads, no fan</td><td class="num">576 ms cool, 758 ms throttled</td><td class="num">2.6 → 4.8 W</td><td>Starts throttling near 80 °C and drops from 2.4 to 1.5 GHz at 85–89 °C; sustains only about 3.6 W</td></tr>
+    <tr><td>Edge drone</td><td>Jetson Orin Nano, FP16</td><td class="num">22.7 ms</td><td class="num">4.1 W idle</td><td>About 14× more energy-efficient per inference than the Pi; never overheated (61 °C after 24 min)</td></tr>
+    <tr><td>Ground station</td><td>Laptop, RTX 4050, FP16</td><td class="num">5.5 ms (YOLOv8m 13.6 ms)</td><td class="num">—</td><td>On the ground, its power is not counted</td></tr>
+  </table></div>
+  <p><b>Networks.</b> First a shared lab Wi-Fi (Pi → laptop about 22–30 Mbit/s, Pi → Jetson 5–18 Mbit/s). Then <b>AegisSwarm</b>, an ad-hoc (IBSS) Wi-Fi mesh on channel 6 with batman-adv routing: pi-relayyy as the camera drone, the Jetson as the edge drone, pi-sender as the ground radio cabled to the laptop. Measured: Pi ↔ Pi 43–46 Mbit/s, Pi → Jetson about 15 Mbit/s, Jetson → Pi about 4 Mbit/s. Link failures are emulated with netem on the experiment ports only; "multihop" forces every packet to the ground through the Jetson with a temporary filter rule.</p>
+
+  <h3>Software built</h3>
+  <ul>
+    <li><b>Split-inference toolkit and paper</b> (phase A): exact splitting of 19 YOLO detectors at every layer, INT8/FP16 encoding of the crossing tensors, a system simulator, closed-form bounds; the simulator checked against ns-3, Simu5G, OMNeT++ and the real network stack.</li>
+    <li><b>Live pipeline and campaign harness</b>: camera loop, workers on the Jetson and the laptop, live power, temperature and clock logging, resumable campaigns with outage guards, mesh access through the ground radio.</li>
+    <li><b>Adaptive controllers v1 → v5.1</b> (below) and a <b>motion forecaster</b> (v1 object velocity; v2 adds camera-motion alignment, 2.7 ms per frame on the Pi).</li>
+    <li><b>Detectors fine-tuned on VisDrone</b>: YOLOv8 n/s/m/l and YOLO11 n/s/m (same recipe, selection on DET val, test clips never used).</li>
+  </ul>
+
+  <h3>The controllers, one step at a time</h3>
+  <div class="tbl"><table>
+    <tr><th>Controller</th><th>What it adds</th><th>Main measured result</th></tr>
+    <tr><td>v1</td><td>One option per frame, value = rate × deadline probability × accuracy − energy</td><td>96 % of the hindsight optimum, +8 % over the best fixed strategy</td></tr>
+    <tr><td>v2</td><td>All three computers in parallel, per-frame choice of server, model, resolution, JPEG quality</td><td>+59–62 % accuracy-weighted deadline-met throughput over the best fixed strategy; best policy on average in 108 Wi-Fi runs</td></tr>
+    <tr><td>v3 (+ forecasting)</td><td>Values a result by the accuracy it keeps while held (measured decay curve)</td><td>On the steep no-forecast curve it lost (−14 %); on the forecaster's curve it beat v2 by +0.0045 ± 0.0035 sAP with 99.5–99.8 % freshness</td></tr>
+    <tr><td>v4</td><td>Camera-drone energy price μ, dual ascent on live measured power (budget 2.8 W)</td><td>+0.0074 ± 0.0028 sAP over v3 + forecasting, Pi −1.14 W, time ≥ 80 °C 76 % → 17 % (replicated: +0.0056, −1.25 W)</td></tr>
+    <tr><td>v4.1</td><td>+ freshness price λ_F (target 95 % of time under 300 ms)</td><td>Freshness 87.5 % → 97.9 % at the same power and accuracy; the reference controller from then on</td></tr>
+    <tr><td>v4.2</td><td>+ edge-drone energy price μ_e</td><td>Jetson −0.19 W; at 0.5 W budget costs accuracy over long missions; at 1.2 W almost free but saves only about 4 %</td></tr>
+    <tr><td>v5, v5.1</td><td>+ predictive heat price λ_T; all prices together</td><td>No gain in short runs, behind over 24-minute missions</td></tr>
+    <tr><td>Hierarchical chain</td><td>The camera decides between onboard and the edge drone; the edge drone decides between itself and the ground</td><td>Loses to v4.1 with a direct ground link (0.146 against 0.193); wins when the ground is reachable only through the edge drone (0.151 against 0.137)</td></tr>
+  </table></div>
+</section>
+
+<section id="method">
+  <h2><span class="n">03</span>How results were measured</h2>
+  <ul>
+    <li><b>Test stream:</b> VisDrone2019-VID validation, 7 clips, 2,846 frames, about 108,000 labelled objects, played at 30 fps at 640 px. <b>Controller inputs</b> (accuracy per setting, decay curves, forecaster tuning) come only from VisDrone-DET val and VID <i>train</i>; the test clips are never used for tuning.</li>
+    <li><b>Metrics:</b> standard sAP (newest-result holding rule) with and without the forecaster; mAP of delivered results; P(AoI ≤ 300 ms), 95th-percentile age; deadline-met throughput; measured Pi and Jetson power, temperature, throttled-time ratio from the firmware flag.</li>
+    <li><b>Design:</b> strategies run in shuffled order, the same scenarios and repetitions for each, compared only within one campaign (same code, same day). Scenarios include a clean link, scripted missions (congestion, ground blackout, edge link loss, total blackout, recovery), forced multihop, out of range, and 24-minute missions.</li>
+    <li><b>Statistics:</b> paired differences over scenario × repetition, 95 % intervals, exact sign-flip permutation p-values, Holm correction within each campaign.</li>
+    <li><b>Two scorings, labelled.</b> The Wi-Fi campaigns of 6–13 October (4.3–4.6, the Wi-Fi rows of 4.6) are quoted as originally scored: COCO-trained detectors and a quality-aware holding rule. Every one was re-scored with the standard sAP and VisDrone-trained detectors (4.11): no verdict changed, and the energy-price gains grew (+0.0074 → +0.019 and +0.0056 → +0.017 sAP). The mesh campaigns and Part 17 onward use the standard sAP with VisDrone detectors throughout.</li>
+    <li><b>Checks of the measuring itself:</b> the sAP scorer reproduces the official ultralytics validator (0.0967 against 0.0976); the simulator reproduces 528 measured phases with correlation 0.947; every earlier campaign was re-scored with the standard metric and again with VisDrone-trained detectors; every run was audited for a receiver fault found in October (below).</li>
+  </ul>
+</section>
+
+<section id="results">
+  <h2><span class="n">04</span>Results</h2>
+
+  <h3>4.1 Where to compute: send the image, don't split the network</h3>
+  <p>Across 19 detectors the smallest split payload (INT8 + zstd at layer 4, 310.7 KiB for YOLOv8s) is 2.0–11.5× a JPEG frame, and the drone must also run the first layers (210–252 ms on the Pi). Of 1,150 placements over the Pi, the Jetson and the laptop, the best split delivered 7.0 frames/s against 15.2 for a JPEG to the laptop. INT8 splitting loses at most 0.04 mAP points on COCO and at most 0.0004 mAP on VisDrone; image codecs cost three to five times more on aerial images than on COCO (JPEG q50 −24 % against −8 %), because small objects lose their detail first.</p>
+
+  <h3>4.2 Onboard detection is far too slow on a Pi, and heat makes it worse</h3>
+  <div class="tbl"><table>
+    <tr><th>Detector (VisDrone weights)</th><th>DET-val mAP</th><th>Time per frame on the Pi</th><th>sAP with forecaster, onboard: short runs started cool (range over hot, cool and 24-min runs)</th></tr>
+    <tr><td>YOLO11n</td><td class="num">0.211</td><td class="num">≈ 300 ms</td><td class="num"><b>0.047</b> (0.039–0.047)</td></tr>
+    <tr><td>YOLOv8s / YOLO11s</td><td class="num">0.267 / 0.269</td><td class="num">720–750 ms</td><td class="num">0.017 / 0.018 (0.014–0.018)</td></tr>
+    <tr><td>YOLOv8m / YOLO11m</td><td class="num">0.297 / 0.314</td><td class="num">1.6–1.7 s / 1.9–2.0 s</td><td class="num">0.008 / 0.007 (0.0045–0.008)</td></tr>
+    <tr><td>YOLOv8l</td><td class="num">0.313</td><td class="num">3.2–3.5 s</td><td class="num">0.0015 (0.0011–0.0015)</td></tr>
+  </table></div>
+  <p>The Pi throttles within about a minute even from a cool start; throttling leaves mAP unchanged but roughly halves sAP. For an onboard detector, speed buys more streaming accuracy than a larger model: YOLO11n is about 2.7× YOLOv8s. Fine-tuning on VisDrone raised mAP 1.9–2.5× over the COCO weights for YOLOv8 s/m/l (YOLOv8s 0.107 → 0.267; 2.9× for YOLOv8n). Offloading reaches 0.13–0.21 sAP, 4–12× onboard.</p>
+
+  <h3>4.3 Adaptive, multi-server scheduling</h3>
+  <p>Using the Pi, the Jetson and the laptop in parallel and choosing the setting per frame (v2) gave 59–62 % more accuracy-weighted deadline-met throughput than the best fixed strategy on impaired links, best in 8 of 8 pairs, and kept about 10 detections/s through a total blackout on the Pi alone. On real streaming accuracy (108 Wi-Fi runs) it was ahead of every other policy on average (+4.5 % to +201 %), significantly against onboard, the Jetson and rule-based fallback. On a clean link a fixed strong server is as good; adaptation pays when links fail.</p>
+
+  <h3>4.4 Staleness on aerial video, and the forecaster</h3>
+  <p>A detection kept unchanged loses 58 % of its accuracy within 100 ms and 93 % at 267 ms, because the camera itself moves. Forecaster v1 (object velocity) keeps 47 % at 267 ms and raised sAP for all 9 policies (median +32 % to +67 %); v2, which first aligns the camera motion, keeps 60 %, beats v1 in all 144 runs and roughly doubles sAP (on the mesh: 0.117 → 0.206). Re-measured with a detector that never saw the training clips (trained on VisDrone-DET only), the decay curve is the same and the forecaster in use ranks 2nd of 25 settings, 0.1 % from the best.</p>
+
+  <h3>4.5 The objective must match the forecaster</h3>
+  <p>A scheduler built on the steep no-forecast curve over-values fast, low-accuracy results and lost (v3: −14 % against v2). Rebuilt on the forecaster's flatter curve it beat v2 by +0.0045 ± 0.0035 sAP over 20 pairs with 99.5–99.8 % freshness. Ablations: removing the decay entirely costs −0.0054 sAP, using the wrong curve −0.0059.</p>
+
+  <h3>4.6 Energy, freshness and heat priced together</h3>
+  <p>Onboard YOLOv8s costs 2.2 J per frame against about 0.03 J to send the frame as a JPEG. The Pi's steady temperature rises 12.7 °C per watt; it starts throttling near 3.6 W. Earlier controllers ran it at 4.2–5.3 W, with onboard inference taking 40–54 % of the power for 3–5 % of the accuracy.</p>
+  <div class="tbl"><table>
+    <tr><th>Comparison</th><th>Where</th><th>Δ sAP</th><th>Power and heat</th></tr>
+    <tr><td>Energy price (v4) − no energy price (v3 + forecasting)</td><td>Wi-Fi, 20 pairs ×2, original scoring (VisDrone re-scoring: +0.019 / +0.017)</td><td class="num">+0.0074 / +0.0056</td><td>−1.14 / −1.25 W; time ≥ 80 °C 76 % → 17 %</td></tr>
+    <tr><td>No prices − v4.1</td><td>mesh, 9 pairs</td><td class="num">−0.002 (p 0.027)</td><td>+1.47 W, +13.8 °C, 83 °C, throttled 39 %</td></tr>
+    <tr><td>Heat price − Pi energy price</td><td>mesh, 9 pairs; 24-min, 5</td><td class="num">−0.0002 / −0.0008</td><td>+0.46 W, +4.8 °C (9/9); +0.34 W, +4.0 °C (5/5)</td></tr>
+    <tr><td>+ Jetson energy price, 0.5 W budget</td><td>mesh, 9 pairs</td><td class="num">−0.016 (0/9)</td><td>Jetson saves 0–10 % of its power</td></tr>
+    <tr><td>+ Jetson energy price, 1.2 W budget</td><td>mesh, 9 pairs</td><td class="num">−0.0023</td><td>Jetson −0.23 W (−4 %) in multihop only</td></tr>
+  </table></div>
+  <p>The prices buy the same or better accuracy for far less power and heat; the camera drone's energy price is the guard that matters. A heat price only acts near its target, so below it the controller does a little more onboard work and runs warmer. The Jetson's 4.1 W idle draw dominates its power, so pricing its inference saves little.</p>
+
+  <h3>4.7 Relay and hierarchical designs on the mesh</h3>
+  <p>With the camera out of the ground station's range, a direct path delivers nothing while the relay Pi → Jetson → laptop delivers 0.161 sAP and v4.1 switches to it by itself (0.143). On the mesh with a direct camera-to-ground link, v4.1 beats the hierarchical chain in 6 of 6 pairs (0.193 against 0.146, p = 0.031); when every packet must cross the Jetson (multihop), the chain is ahead (0.151 against 0.137, 3 of 3). The better design depends on the topology.</p>
+
+  <h3>4.8 All strategies on the mesh</h3>
+  <div class="tbl"><table>
+    <tr><th>Strategy (mesh campaign 2, 3 reps)</th><th>normal</th><th>mesh mission</th><th>multihop</th><th>Pi power</th></tr>
+    <tr><td>v4.1 (Pi energy + freshness)</td><td class="num"><b>0.206</b></td><td class="num"><b>0.186</b></td><td class="num"><b>0.137</b></td><td class="num">2.83 W</td></tr>
+    <tr><td>Heat + freshness</td><td class="num">0.204</td><td class="num">0.187</td><td class="num">0.137</td><td class="num">3.29 W</td></tr>
+    <tr><td>No prices</td><td class="num">0.203</td><td class="num">0.182</td><td class="num">0.137</td><td class="num">4.29 W</td></tr>
+    <tr><td>v4.1 + Jetson price (0.5 W)</td><td class="num">0.201</td><td class="num">0.180</td><td class="num">0.100</td><td class="num">2.83 W</td></tr>
+    <tr><td>Fixed laptop, YOLOv8m q90</td><td class="num">0.210</td><td class="num">0.105</td><td class="num">0.067</td><td class="num">2.22 W</td></tr>
+    <tr><td>Freshness threshold (literature)</td><td class="num">0.148</td><td class="num">0.138</td><td class="num">0.122</td><td class="num">2.16 W</td></tr>
+  </table></div>
+  <p>sAP with the forecaster. Over 24-minute missions the ranking holds (v4.1 and heat 0.178, the Jetson-priced variants 0.008–0.011 behind, no throttling).</p>
+
+  <h3>4.9 Many drones</h3>
+  <p>In a simulator rebuilt from 44 real runs (correlation 0.947 over 528 measured phases), fixed offloading collapses as a swarm grows; adaptive control degrades gracefully, and a ground-side admission coordinator turns the collapse of 20 Pi drones into about 4.1 detections/s each and, at 10 drones, lifts the worst-served drone from 0 to 7.65 frames/s. Adding each radio's own link health removes its one real loss. On hardware with two cameras, sharing the ground station costs the Pi 11–19 % of its accuracy, and adaptive control beats fixed offloading in 6 of 6 pairs. Re-weighted with VisDrone accuracy, the simulation keeps its best strategy in 93 of 96 cells (the 3 others are ties).</p>
+
+  <h3>4.10 The trade-off: accuracy against power</h3>
+  <p>Over 633 runs with logged Pi power, a priced controller is on the accuracy-versus-power Pareto front in every campaign (in the main campaign it is v5's linear-decay variant; v5 itself trails it by 0.0003 sAP) and is the most accurate strategy in every campaign. Literature schedulers that offload or retry aggressively (shortest queue, confidence trigger, offloading reward) are both 0.026–0.050 sAP less accurate and 1.5–1.7 W more power-hungry. The cheap end of the front belongs to fixed offloading and a freshness threshold, which save about 0.6 W by giving up 17–28 % of accuracy and fail when the link fails.</p>
+
+  <h3>4.11 Robustness of the evidence</h3>
+  <ul>
+    <li><b>Detector weights.</b> All 776 earlier runs re-scored with VisDrone-trained detections: sAP about 2.4× higher, rankings nearly unchanged (rank correlation 0.90–1.00), <b>0 of 52</b> paired verdicts reversed, 4 became significant in the direction already seen.</li>
+    <li><b>Receiver fault.</b> A thread race in the camera's link code could silently drop returning results. Audited across the 824 runs made before the fix: it hit 16 (2 %), and removing them changes no verdict.</li>
+    <li><b>Laptop network.</b> The laptop's Ethernet dropped sparse packets (energy-efficient Ethernet); worked around with a keep-awake ping, and every mesh run was checked against a 1-second ping log (5 runs discarded and re-run).</li>
+  </ul>
+</section>
+
+<section id="negative">
+  <h2><span class="n">05</span>Negative results</h2>
+  <ul>
+    <li>The original staleness-aware v3 did not beat v2 (fixed by matching the objective to the forecaster).</li>
+    <li>On a clean link, a fixed strong server is as good as any adaptive policy.</li>
+    <li>A predictive heat price adds nothing beyond the energy price; stacking every price at once (v5.1) is behind over long missions.</li>
+    <li>Pricing the edge drone's energy saves at most 4 % of its power; at a too-tight budget it costs accuracy.</li>
+    <li>A fixed energy weight ties the adaptive price, but only when set to the value the price finds by itself.</li>
+    <li>Feedback learning in the swarm coordinator did not pay off; the coordinator rarely acts with only two cameras.</li>
+    <li>The design proposed in the original hardware-testing document (split at layer 4 to an edge "mothership") was the worst placement measured: 2.7 frames/s, never on time.</li>
+  </ul>
+</section>
+
+<section id="novelty">
+  <h2><span class="n">06</span>Novelty</h2>
+  <div class="tbl"><table>
+    <tr><th>Claim</th><th>Closest prior work</th><th>Novelty</th></tr>
+    <tr><td>Pricing the drone's measured energy and freshness keeps or raises streaming accuracy while removing throttling</td><td>Lyapunov energy queues (LyDROO); heat-constrained offloading on phones; AutoScale; AoPI (freshness × accuracy, TMC 2024); thermal-aware inference control (Nisha 2024)</td><td><span class="chip ok">high</span> for energy + heat; freshness alone medium</td></tr>
+    <tr><td>The scheduler's objective must use the decay curve after forecasting</td><td>Delay-decaying utility in edge computing</td><td><span class="chip ok">high</span> small effect</td></tr>
+    <tr><td>Streaming AP measured on aerial video in a distributed drone system</td><td>Streaming perception; StreamYOLO; StreamFlow (streaming perception on UAV video, TCSVT 2025)</td><td><span class="chip lo">medium–low</span></td></tr>
+    <tr><td>Topology decides direct vs hierarchical, measured on one mesh</td><td>A²-UAV multi-hop testbed; hierarchical air-ground DRL (simulated)</td><td><span class="chip mid">medium</span></td></tr>
+    <tr><td>Measured negative results on heat and edge-energy pricing</td><td>None found</td><td><span class="chip mid">medium</span></td></tr>
+    <tr><td>Admission coordination with radio link health for drone swarms</td><td>JCAB (bandwidth and configuration); DroneCOCoNet</td><td><span class="chip mid">medium</span> simulation</td></tr>
+    <tr><td>Aerial staleness curves and a cheap camera-aligned forecaster</td><td>Liu et al. MobiCom 2019; PVT++ ICCV 2023</td><td><span class="chip mid">medium–low</span></td></tr>
+    <tr><td>Parallel multi-server, per-frame adaptation</td><td>Odessa, Chameleon, Elf</td><td><span class="chip lo">low</span></td></tr>
+    <tr><td>Sending the image beats splitting the network, for the exact splits and encodings tested</td><td>Auto-Split; learned feature compression can beat image coding (Yuan 2022, 2024; BottleFit)</td><td><span class="chip lo">low</span>, bounded</td></tr>
+  </table></div>
+  <div class="note">
+    <p><b>Verdict.</b> Novel as a whole, narrowly stated: no published work found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI, TMC 2024) and streaming perception on UAV video alone (StreamFlow, TCSVT 2025) are published, as an external review with Consensus confirmed on 26 October. Ready in substance for a UAV or edge-computing workshop or an IEEE networking conference. A top venue would additionally need a learned feature-compression baseline for the split result, two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed, and ideally a flight or outdoor test. Fitting now: IEEE IoT Journal, ACM TECS, IEEE ICC/Globecom/WoWMoM, UAV and edge workshops. The closest single work is A²-UAV (Computer Networks 2024). Full analysis and sources: the AEGIS-UAV Novelty Brief.</p>
+  </div>
+</section>
+
+<section id="limits">
+  <h2><span class="n">07</span>Limitations</h2>
+  <ul>
+    <li>No flight: video is replayed and the boards sit in one room, one radio hop apart.</li>
+    <li>One camera drone on the mesh; results for larger swarms come from the calibrated simulator.</li>
+    <li>3 repetitions per mesh cell (5 for the long runs and the Wi-Fi energy campaigns); some controller variants differ only slightly.</li>
+    <li>The laptop joins the mesh through SSH port forwards on the ground radio, which acknowledges data before it reaches the laptop.</li>
+    <li>batman-adv is used as is; real flying-network studies found it can trail Babel and OLSR in throughput and loss, and its penalty here is not characterised.</li>
+    <li>Pi power is the sum of its PMIC rails (a lower bound); the Jetson's power was logged live only from 25 October and modelled before (model within 0.1 W of measurement).</li>
+    <li>The forecaster assumes constant velocity and a similarity transform for the camera; an IMU-assisted or learned forecaster may add more.</li>
+    <li>A learned feature compressor could change the split-versus-JPEG result; not tested.</li>
+  </ul>
+</section>
+
+<section id="faults">
+  <h2><span class="n">08</span>Faults found and fixed</h2>
+  <p>Each was found from the data, fixed, and the affected runs discarded or audited. The full list (21 items) is in Part 21 of the Results Brief.</p>
+  <div class="tbl"><table>
+    <tr><th>Fault</th><th>Effect</th><th>Fix</th></tr>
+    <tr><td>Ultralytics caps PyTorch at 1 thread</td><td>Pi 65 % slower</td><td>Threads reset after import</td></tr>
+    <tr><td>Jetson GPU down-clocks at low load</td><td>Remote times doubled</td><td><code>jetson_clocks</code> before every run</td></tr>
+    <tr><td>Slow NMS at confidence 0.01; warm-up frames abandoned servers</td><td>109 runs invalid</td><td>Vectorised GPU NMS; warm-up at all sizes</td></tr>
+    <tr><td>netem 'change' kept the previous phase's rate limit</td><td>False "slow recovery" finding</td><td>Each phase deletes and re-adds its impairment</td></tr>
+    <tr><td>Energy price wound up during blackouts</td><td>Offloading priced out after links returned</td><td>Anti-windup: frozen while forced, capped</td></tr>
+    <tr><td>Sender thread toggled the socket timeout while the receiver read it</td><td>Results lost until reconnect (16 of the 824 runs made before the fix)</td><td>Kernel send timeout (SO_SNDTIMEO); mesh campaign restarted</td></tr>
+    <tr><td>Laptop Ethernet energy saving dropped sparse packets</td><td>Tunnel drops, stalled laptop path</td><td>Keep-awake ping, ping-log check on every run</td></tr>
+    <tr><td>Scoring 24-minute runs with 8 workers beside training</td><td>WSL ran out of memory and restarted</td><td>3 workers, memory watch</td></tr>
+  </table></div>
+</section>
+
+<section id="next">
+  <h2><span class="n">09</span>What is left</h2>
+  <div class="cols">
+    <div class="card"><h3>Needs the boards</h3><ul>
+      <li>Two camera drones on the mesh (the third Pi), to measure contention and the coordinator.</li>
+      <li>A short outdoor or tethered flight with real distances.</li>
+      <li>One published baseline (A²-UAV-style or AccuMO-style) re-implemented on the testbed.</li>
+      <li>5 repetitions for the headline mesh comparisons; runs with a fan on the Pi.</li>
+    </ul></div>
+    <div class="card"><h3>Needs the team</h3><ul>
+      <li>Commit and push the work since <code>08bc5a28</code>.</li>
+      <li>Turn off energy-efficient Ethernet on the laptop.</li>
+      <li>Write the paper from Parts 17–20 of the Results Brief and this report; update the professor's report.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="files">
+  <h2><span class="n">10</span>Where everything is</h2>
+  <div class="tbl"><table>
+    <tr><th>What</th><th>Path (repository <code>uav-split-perception/</code> unless noted)</th></tr>
+    <tr><td>Detailed lab record</td><td><code>AEGIS-UAV Results Brief.html / .md</code> (repository root)</td></tr>
+    <tr><td>Novelty analysis</td><td><code>AEGIS-UAV Novelty Brief.html</code> (repository root)</td></tr>
+    <tr><td>Paper of the split-inference phase</td><td><code>paper/main.tex</code></td></tr>
+    <tr><td>Controllers, workers, forecaster, scorers</td><td><code>validation/hardware/</code>: <code>adaptive.py</code>, <code>adaptive2.py</code>, <code>edge_node.py</code>, <code>forecast.py</code>, <code>stream_ap.py</code></td></tr>
+    <tr><td>Campaign harness</td><td><code>validation/hardware/tools/</code> (Wi-Fi: <code>campaign_main.sh</code>; mesh: <code>arun_mesh.sh</code>, <code>campaign_mesh2.sh</code>, <code>campaign_mesh3.sh</code>, <code>campaign_onboard_y11.sh</code>)</td></tr>
+    <tr><td>Analyses</td><td><code>report_rescore.py</code>, <code>mesh2_summary.py</code>, <code>receiver_fault_audit.py</code>, <code>onboard_throttle_analysis.py</code>, <code>pareto_analysis.py</code>, <code>swarm_calibrated.py</code></td></tr>
+    <tr><td>Results</td><td><code>experiments/results/hardware/</code> (one folder per campaign, summaries <code>*_summary.json/.md</code>)</td></tr>
+    <tr><td>Fine-tuned weights</td><td><code>weights/*_visdrone.pt</code>; training runs in <code>experiments/finetune/</code></td></tr>
+  </table></div>
+</section>
+
+<section id="inventory">
+  <h2>Appendix · Campaign inventory</h2>
+  <div class="tbl"><table>
+    <tr><th>Campaign</th><th>Network</th><th>Runs</th><th>Purpose</th></tr>
+    <tr><td>Controller v1</td><td>Wi-Fi</td><td class="num">21</td><td>One option per frame against fixed strategies</td></tr>
+    <tr><td>Controller v2</td><td>Wi-Fi</td><td class="num">88</td><td>Multi-server scheduling, 11 policies</td></tr>
+    <tr><td>Task-level test (Part 12)</td><td>Wi-Fi</td><td class="num">108</td><td>9 policies scored with streaming AP on VisDrone</td></tr>
+    <tr><td>Forecasting campaigns (Part 14)</td><td>Wi-Fi</td><td class="num">116</td><td>v3 + forecasting against v2; live forecaster</td></tr>
+    <tr><td>Two-camera swarm</td><td>Wi-Fi</td><td class="num">24</td><td>Sharing cost, coordinator</td></tr>
+    <tr><td>Energy (G9), v4.2 (G11)</td><td>Wi-Fi</td><td class="num">220</td><td>Energy price, edge-drone price, measured power</td></tr>
+    <tr><td>Main campaign (G12)</td><td>Wi-Fi</td><td class="num">240</td><td>12 strategies incl. 5 literature baselines and ablations</td></tr>
+    <tr><td>Same-day table, 24-min missions (G13)</td><td>Wi-Fi</td><td class="num">92</td><td>Controllers side by side; long missions</td></tr>
+    <tr><td>Onboard YOLOv8 (COCO and VisDrone)</td><td>—</td><td class="num">61</td><td>Onboard sAP and throttling, two Pi 5s</td></tr>
+    <tr><td>Relay campaign (Part 18)</td><td>Wi-Fi</td><td class="num">36</td><td>Pi → Jetson → laptop relay path</td></tr>
+    <tr><td>Mesh campaign 1</td><td>Mesh</td><td class="num">12</td><td>v4.1 against the hierarchical chain</td></tr>
+    <tr><td>Mesh campaign 2</td><td>Mesh</td><td class="num">82</td><td>Every pricing strategy; 24-min missions</td></tr>
+    <tr><td>Mesh campaign 3</td><td>Mesh</td><td class="num">18</td><td>Jetson energy price at 1.2 W, Jetson power logged</td></tr>
+    <tr><td>Onboard YOLO11</td><td>Mesh Pis</td><td class="num">30</td><td>YOLO11 n/s/m onboard sAP and throttling</td></tr>
+    <tr><td><b>Total</b></td><td></td><td class="num"><b>≈ 1,150</b></td><td>plus the 1,150-placement hardware sweep, simulation grids and re-scoring of every run</td></tr>
+  </table></div>
+  <p class="src">Earlier-phase run counts are from the Results Brief; invalidated runs (for example 115 discarded in the task-level campaign's first attempts) are not counted.</p>
+</section>
+</main>
+</div>

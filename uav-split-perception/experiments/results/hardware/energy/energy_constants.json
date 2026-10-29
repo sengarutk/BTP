@@ -34,8 +34,8 @@
    "method": "two-point: idle anchor, heating rate at measured inference power, cool-down tau"
   },
   "thermal_steady": {
-   "c_per_w": 12.730655368216782,
-   "intercept_c": 34.432490323226915,
+   "c_per_w": 11.312856542249014,
+   "intercept_c": 37.258256766379546,
    "points": [
     [
      1.6556546233045886,
@@ -56,13 +56,9 @@
     [
      3.487849694881426,
      76.41027027027027
-    ],
-    [
-     3.688745536435244,
-     83.80497311827956
     ]
    ],
-   "p_at_85c_w": 3.97210577257628,
+   "p_at_85c_w": 4.220131587042058,
    "method": "linear fit of 6-min steady temperatures against mean power, levels below the throttle limit"
   }
  },

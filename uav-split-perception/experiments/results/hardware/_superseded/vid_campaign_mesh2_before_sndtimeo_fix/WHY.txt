@@ -1,0 +1,1 @@
+Stopped 23 Oct 2026 after 5 runs: camera receiver thread died on a settimeout/O_NONBLOCK race in adaptive.py Path._sender (results lost until reconnect). Fixed with SO_SNDTIMEO (adaptive.py md5 3f7984ee); campaign restarted from scratch.

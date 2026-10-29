@@ -382,21 +382,21 @@
    "onboard_n320": {
     "pairs": 20,
     "mean_diff": 0.0236,
-    "ci95": 0.0054,
+    "ci95": 0.0057,
     "wins": 20,
     "median_rel_gain": 3.297
    },
    "v41": {
     "pairs": 20,
     "mean_diff": -0.0012,
-    "ci95": 0.0011,
+    "ci95": 0.0012,
     "wins": 7,
     "median_rel_gain": -0.021
    },
    "v51": {
     "pairs": 20,
     "mean_diff": -0.0014,
-    "ci95": 0.0011,
+    "ci95": 0.0012,
     "wins": 8,
     "median_rel_gain": -0.027
    }
@@ -405,7 +405,7 @@
    "onboard_n320": {
     "pairs": 20,
     "mean_diff": 0.0235,
-    "ci95": 0.0054,
+    "ci95": 0.0057,
     "wins": 20,
     "median_rel_gain": 3.302
    },
@@ -419,7 +419,7 @@
    "v51": {
     "pairs": 20,
     "mean_diff": -0.0014,
-    "ci95": 0.0011,
+    "ci95": 0.0012,
     "wins": 8,
     "median_rel_gain": -0.019
    }
@@ -428,21 +428,21 @@
    "onboard_n320": {
     "pairs": 20,
     "mean_diff": 0.0424,
-    "ci95": 0.0078,
+    "ci95": 0.0084,
     "wins": 20,
     "median_rel_gain": 2.265
    },
    "v41": {
     "pairs": 20,
     "mean_diff": -0.0003,
-    "ci95": 0.0017,
+    "ci95": 0.0018,
     "wins": 10,
     "median_rel_gain": 0.006
    },
    "v51": {
     "pairs": 20,
     "mean_diff": 0.0003,
-    "ci95": 0.0016,
+    "ci95": 0.0017,
     "wins": 12,
     "median_rel_gain": 0.012
    }
@@ -451,21 +451,21 @@
    "onboard_n320": {
     "pairs": 20,
     "mean_diff": 0.0423,
-    "ci95": 0.0077,
+    "ci95": 0.0083,
     "wins": 20,
     "median_rel_gain": 2.309
    },
    "v41": {
     "pairs": 20,
     "mean_diff": -0.0008,
-    "ci95": 0.0016,
+    "ci95": 0.0017,
     "wins": 11,
     "median_rel_gain": 0.005
    },
    "v51": {
     "pairs": 20,
     "mean_diff": -0.0004,
-    "ci95": 0.0015,
+    "ci95": 0.0016,
     "wins": 13,
     "median_rel_gain": 0.006
    }

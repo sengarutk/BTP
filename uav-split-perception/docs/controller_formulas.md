@@ -52,6 +52,7 @@ server with the largest value, if it is > 0.
   value(s, v) = (A_v / A_ref) · q(s, v) / T_busy(s, v)                                [1/s]
 
   T_busy = max(t_tx + rtt, Δ) for a path;  ⌈t_onb/Δ⌉ Δ onboard   (in s in the division)
+  (an approximation: a path is held until its result returns, so the server time t_rem is left out; 28 Oct 2026)
 
 ## v3 — streaming objective (`--objective stream --decay FILE`)
 
@@ -92,7 +93,7 @@ The value of a result is the expected accuracy it provides while the drone holds
 
   value_v4.2(jetson, v) = value_v4(.1)(jetson, v) − μ_e · E_edge(v)                    [–]
 
-  E_edge(v) = J_Jetson(v) (measured 0.040–0.371 J per inference) + 0.211 W · 8b / (10⁶ r) s   [J]
+  E_edge(v) = J_Jetson(v) (measured 0.067–0.163 J per inference: YOLOv8s at 320–640 px, the Jetson path's settings) + 0.211 W · 8b / (10⁶ r) s   [J]
   μ_e ← max(0, μ_e + η_e (P_extra − B_e)) once per second, η_e = 0.1, B_e > 0 (0.5 W used)     [1/J]
   P_extra = live Jetson board power (1-s mean, reported in every reply) − 4.079 W idle;
             if no report within 2 s: modelled served energy over the last 5 s / 5 s            [W]
@@ -104,7 +105,8 @@ The camera price becomes μ + λ_T:
 
   value_v5 = value_v3 − (μ + λ_T) · E_cam(s, v) − μ_e · E_edge(v) [+ v4.1 term if enabled]  [–]
 
-  T_ss = 34.43 °C + 12.73 °C/W · P̄₁₀   (measured steady-state fit; P̄₁₀ = mean measured power, last 10 s)
+  T_ss = 34.43 °C + 12.73 °C/W · P̄₁₀   (steady-state fit used in the v5 runs; P̄₁₀ = mean measured power, last 10 s;
+  corrected 28 Oct 2026 to 37.26 + 11.31 · P̄₁₀ by fitting only the levels below 80 °C, energy_constants.json)
   T̂ = T + (T_ss − T)(1 − e^(−h/τ)),  h = 60 s, τ = 148.8 s (measured)                     [°C]
   λ_T ← min(2, max(0, λ_T + η_T (T̂ − 75 °C))) once per second, η_T = 0.01                [1/J]
   Hard guard raised to 84 °C in the campaign.

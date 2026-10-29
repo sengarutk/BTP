@@ -13,7 +13,9 @@ Counterfactual "no throttling": sAP of the same model at its cool inference time
 (onboard_sap.py emulate: same detections, same scorer) by interpolating in log-latency.
 Full-clock counterfactual per run: inference time x (mean clock / 2400 MHz) = the time at the unthrottled clock,
 read off the same emulation curve.
-usage: onboard_throttle_analysis.py [--weights visdrone|coco]
+usage: onboard_throttle_analysis.py [--weights visdrone|coco|yolo11]
+  yolo11:             YOLO11 n/s/m, VisDrone weights, on the mesh Pis (vid_campaign_onboard*_vd_y11_{b})
+                      -> onboard_sap/throttle_analysis_yolo11.json
   visdrone (default): the VisDrone fine-tuned weights (vid_campaign_onboard*_vd_{b}, *_vd_l_{b})
                       -> onboard_sap/throttle_analysis_visdrone.json
   coco:               the COCO weights (the first set of runs) -> onboard_sap/throttle_analysis.json
@@ -36,7 +38,10 @@ COND = {"short_hot": ["vid_campaign_onboard_{b}"], "short_cool": ["vid_campaign_
 # VisDrone weights: s and m ran in *_vd_{b}, l (trained last) in *_vd_l_{b}
 COND_VD = {c: [p[0].replace("_{b}", "_vd_{b}"), p[0].replace("_{b}", "_vd_l_{b}")] for c, p in COND.items()}
 EMU = {"s640": "yolov8s", "m640": "yolov8m", "l640": "yolov8l",
-       "s640vd": "yolov8s_vd", "m640vd": "yolov8m_vd", "l640vd": "yolov8l_vd"}
+       "s640vd": "yolov8s_vd", "m640vd": "yolov8m_vd", "l640vd": "yolov8l_vd",
+       "n640y11": "yolo11n_vd", "s640y11": "yolo11s_vd", "m640y11": "yolo11m_vd"}
+# YOLO11 (VisDrone weights, 25 Oct 2026, on the mesh): *_vd_y11_{b}
+COND_Y11 = {c: [p[0].replace("_{b}", "_vd_y11_{b}")] for c, p in COND.items()}
 FULL_MHZ = 2400.0
 
 
@@ -52,7 +57,7 @@ def one(args):
     lg = np.array([x for x in me["log_t_w_c"] if x[1] == x[1] and x[2] == x[2]], float)
     ck = np.array(me.get("clock_log_t_mhz_flags", []), float) if me.get("clock_log_t_mhz_flags") else None
     fr = d["frames"]
-    model = Path(f).stem.split("__")[1].replace("onboard_", "").replace("_vd", "vd")
+    model = Path(f).stem.split("__")[1].replace("onboard_", "").replace("_vd_y11", "y11").replace("_vd", "vd")
     row = {"cond": cond, "board": board, "model": model, "run": Path(f).stem[3:],
            "sAP": r0["sAP"], "sAP50": r0["sAP50"], "sAP_fc": r1["sAP"], "fresh_AP": r0["fresh_AP"],
            "lat_ms": float(np.median([x["lat_ms"] for x in fr if x.get("lat_ms")])),
@@ -97,11 +102,14 @@ def counterfactual(emu, model, lat_ms):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--weights", choices=["visdrone", "coco"], default="visdrone")
-    vd = ap.parse_args().weights == "visdrone"
-    cond_dirs = COND_VD if vd else COND
-    models = ("s640vd", "m640vd", "l640vd") if vd else ("s640", "m640", "l640")
-    out_name = "throttle_analysis_visdrone.json" if vd else "throttle_analysis.json"
+    ap.add_argument("--weights", choices=["visdrone", "coco", "yolo11"], default="visdrone")
+    w = ap.parse_args().weights
+    vd = w == "visdrone"
+    cond_dirs = {"visdrone": COND_VD, "coco": COND, "yolo11": COND_Y11}[w]
+    models = {"visdrone": ("s640vd", "m640vd", "l640vd"), "coco": ("s640", "m640", "l640"),
+              "yolo11": ("n640y11", "s640y11", "m640y11")}[w]
+    out_name = {"visdrone": "throttle_analysis_visdrone.json", "coco": "throttle_analysis.json",
+                "yolo11": "throttle_analysis_yolo11.json"}[w]
     jobs = []
     for cond, pats in cond_dirs.items():
         for b in ("pi2", "pi3"):
@@ -151,7 +159,7 @@ def main():
                     "lat_full_clock_ms": float(np.mean([r["lat_full_clock_ms"] for r in rs])),
                     **{f"{k}_{w}": float(np.mean([r[f"emulated_{w}"][k] for r in rs]))
                        for k in ("sAP", "sAP_fc") for w in ("measured", "full_clock")}}
-    json.dump({"weights": "visdrone" if vd else "coco", "rows": rows, "summary": summary, "counterfactual": cf,
+    json.dump({"weights": w, "rows": rows, "summary": summary, "counterfactual": cf,
                "counterfactual_full_clock": fc_rows},
               open(HW / "onboard_sap" / out_name, "w"), indent=1, default=float)
     for cond, ms in summary.items():

@@ -1,0 +1,5 @@
+YOLOv8n VisDrone fine-tuning stopped at epoch 77 of 80 (23 Oct 2026): the laptop GPU failed twice with
+"CUDA error: unknown error" (a driver fault under WSL; logs ../yolov8n_e80_resume_gpufault1.log and
+../yolov8n_e80_resume.log). The best epoch on VisDrone-DET val is epoch 77 (mAP50-95 0.2111); the last 10 epochs
+stayed within 0.207-0.211 (YOLOv8s changed by < 0.001 over its last 10). weights/yolov8n_visdrone.pt = best.pt of
+epochs 1-77.

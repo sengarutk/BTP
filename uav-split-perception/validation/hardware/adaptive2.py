@@ -6,6 +6,10 @@ The camera UAV (Raspberry Pi 5) has three servers that can each work on one fram
   laptop   a Wi-Fi path to the laptop GPU, variants JPEG {q90,q50} x {640,480,320} for YOLOv8s,
            and JPEG {q90,q50} @640 for YOLOv8m
   jetson   a Wi-Fi path to the Jetson GPU, variants JPEG {q90,q50} x {640,480,320} for YOLOv8s
+  relay    (optional, --paths ...,relay) the laptop GPU reached THROUGH the Jetson: relay.py on the Jetson forwards
+           the frame to a laptop worker and the result back (for a camera out of the ground station's range);
+           same variants as the laptop path. To the controller it is one more path: its rate is measured on the
+           Pi -> Jetson hop, its probe round trip includes both hops
 Every camera frame (30 fps) goes to at most one server. Accuracy of every variant is the measured
 COCO mAP@[.5:.95] (experiments/results/hardware/variant_accuracy.json); timings are learned online
 from priors measured on the devices; paths are estimated as in adaptive.py (goodput EWMA and
@@ -80,15 +84,20 @@ ONBOARD_VARIANTS = {"n320": ("yolov8n", 320), "s320": ("yolov8s", 320), "s640": 
 ONBOARD_EXTRA = {"m640": ("yolov8m", 640), "l640": ("yolov8l", 640),
                  # VisDrone fine-tuned weights (scripts/train_visdrone.py; files <model>_visdrone.pt)
                  "s640vd": ("yolov8s_visdrone", 640), "m640vd": ("yolov8m_visdrone", 640),
-                 "l640vd": ("yolov8l_visdrone", 640)}
+                 "l640vd": ("yolov8l_visdrone", 640),
+                 # YOLO11 n/s/m fine-tuned on VisDrone (25 Oct 2026; the professor's request)
+                 "n640y11": ("yolo11n_visdrone", 640), "s640y11": ("yolo11s_visdrone", 640),
+                 "m640y11": ("yolo11m_visdrone", 640)}
 PATH_VARIANTS = {f"s{r}q{q}": ("yolov8s", r, q) for r in (640, 480, 320) for q in (90, 50)}
 LAPTOP_EXTRA = {"m640q90": ("yolov8m", 640, 90), "m640q50": ("yolov8m", 640, 50)}
 
 # priors (measured: experiments/results/hardware/raw/variant_timing_*.json); learned online
 PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, "l640": 4000.0,
-                    "s640vd": 700.0, "m640vd": 2000.0, "l640vd": 4000.0}  # m/l: estimates, learned online
+                    "s640vd": 700.0, "m640vd": 2000.0, "l640vd": 4000.0,  # m/l: estimates, learned online
+                    "n640y11": 300.0, "s640y11": 750.0, "m640y11": 2000.0}  # YOLO11: estimates, learned online
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
+PRIOR_REMOTE_MS["relay"] = dict(PRIOR_REMOTE_MS["laptop"])        # the laptop computes; the extra hop is in the RTT
 
 
 def write_json_atomic(obj, path):
@@ -129,16 +138,30 @@ def scenario_phases(name, phase_s, seed):
         return out
     if name == "static_good":
         return [(f"good{i}", good, .9, phase_s) for i in range(6)]
+    if name == "out_of_range":         # the camera is beyond the ground station's range: direct Pi -> laptop link cut
+        return [(f"oor{i}", {"laptop": "loss 100%"}, .9, phase_s) for i in range(6)]
+    if name == "multihop":             # mesh test: links good, but the direct camera <-> ground-radio link is blocked
+        # at the batman-adv level during the run (arun_mesh.sh), so all traffic to the ground is relayed by the Jetson
+        return [(f"mh{i}", good, .9, phase_s) for i in range(6)]
+    if name == "mesh_mission":         # mesh test (23 Oct): "uplink" = the edge drone's own link to the ground station,
+        # applied by the hierarchical edge node on the Jetson (edge_node.py); the other keys on this camera as before
+        return [("good", good, .9, phase_s),
+                ("ground_congested", {"laptop": "rate 3mbit limit 50", "uplink": "rate 3mbit limit 50"}, .8, phase_s),
+                ("camera_out_of_range", {"laptop": "loss 100%"}, .7, phase_s),
+                ("edge_uplink_cut", {"uplink": "loss 100%"}, .6, phase_s),
+                ("edge_link_slow", {"jetson": "rate 2mbit limit 50"}, .5, phase_s),
+                ("recovered", good, .4, phase_s)]
     raise ValueError(name)
 
 
 class Onboard:
     """The Pi's own inference engine, in its own thread (3 torch threads), one frame at a time."""
 
-    def __init__(self, weights_dir, threads, results, log_lock, device="cpu"):
+    def __init__(self, weights_dir, threads, results, log_lock, device="cpu", suffix=""):
         torch.set_num_threads(threads)
         self.dev, self.half = torch.device(device), device == "cuda"
-        self.models = {k: load_model(os.path.join(weights_dir, f"{m}.pt"), self.dev, self.half)
+        wf = lambda m: m if m.endswith("_visdrone") else m + suffix  # noqa: E731   (--weight-suffix)
+        self.models = {k: load_model(os.path.join(weights_dir, f"{wf(m)}.pt"), self.dev, self.half)
                        for k, (m, _) in ONBOARD_VARIANTS.items()}
         from ultralytics.data.augment import LetterBox
         try:
@@ -297,6 +320,9 @@ def main():
                          "limit persists into later phases that set none); default: each phase replaces the previous one")
     ap.add_argument("--onboard-variants", default="n320,s320,s640",
                     help="onboard models to load (comma list of n320 s320 s640 m640 l640); default: the usual three")
+    ap.add_argument("--weight-suffix", default="", help="'_visdrone': every model is its VisDrone fine-tuned version "
+                    "(onboard files <model>_visdrone.pt; accuracy keys <model>_visdrone_<res>_<q>, so --acc must hold "
+                    "them, e.g. variant_accuracy_visdrone_ft.json; the workers must load the same weights)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     global ONBOARD_VARIANTS
@@ -304,7 +330,7 @@ def main():
     ONBOARD_VARIANTS = {k: _all[k] for k in a.onboard_variants.split(",")}
     write_out = lambda obj: write_json_atomic(obj, a.out)  # noqa: E731
     acc_tab = json.load(open(a.acc))
-    REF_ACC = acc_tab["yolov8s_640_raw"]
+    REF_ACC = acc_tab[f"yolov8s{a.weight_suffix}_640_raw"]
     if a.decay:
         _dc = json.load(open(a.decay))
         _lag, _rat = np.array(_dc["lag_ms"], float), np.array(_dc["ratio"], float)
@@ -325,6 +351,8 @@ def main():
         return float(np.mean([rho(L + T * f) for f in (0.0, 0.25, 0.5, 0.75, 1.0)]))
 
     def acc_of(model, res, q=None):
+        if not model.endswith("_visdrone"):
+            model += a.weight_suffix
         return acc_tab[f"{model}_{res}_{'raw' if q is None else 'q%d' % q}"]
 
     from ultralytics.data.augment import LetterBox
@@ -337,14 +365,14 @@ def main():
     else:
         frames = [cv2.imread(f) for f in sorted(glob.glob(os.path.join(a.images, "*.jpg")))]
     results, log_lock, dets = {}, threading.Lock(), {}
-    onboard = Onboard(a.weights_dir, a.onboard_threads, results, log_lock, a.onboard_device)
+    onboard = Onboard(a.weights_dir, a.onboard_threads, results, log_lock, a.onboard_device, a.weight_suffix)
     onboard.conf = a.conf
     if a.vid:
         onboard.dets = dets
     cv2.setNumThreads(1)
 
     servers, paths = {}, {}
-    priors = {"laptop": (20.0, 12.0), "jetson": (12.0, 32.0)}
+    priors = {"laptop": (20.0, 12.0), "jetson": (12.0, 32.0), "relay": (12.0, 20.0)}
     for p in a.paths.split(","):
         srv = socket.socket()
         srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -366,7 +394,7 @@ def main():
 
     def path_variants(p):
         v = dict(PATH_VARIANTS)
-        if p == "laptop":
+        if p in ("laptop", "relay"):
             v.update(LAPTOP_EXTRA)
         return v
 
@@ -435,6 +463,22 @@ def main():
             return not onboard.busy
         p = paths[srv]
         return p.sock is not None and p.inflight is None and p.slot.item is None
+
+    def path_pred(p, var):
+        """What the controller predicts for sending variant var on path p now: the deadline and late-window
+        probabilities and the expected latency of path_value, from the same estimates (no side effects; logged per
+        frame for the calibration check, 29 Oct 2026)."""
+        model, res, q = path_variants(p)[var]
+        r, s = paths[p].est_rate()
+        if p == "laptop" and coord["share"]:
+            r = min(r, coord["share"])
+        b = nbytes[(res, q)]
+        te, rem, rtt = enc_ms[res], remote_ms[p][model], paths[p].rtt_ms
+        p_on = phi((r - b * 8 / ((D - te - rem - rtt) * 1e3)) / s) if D - te - rem - rtt > 0 else 0.0
+        lb_ = a.late_ms - te - rem - rtt
+        p_late = phi((r - b * 8 / (lb_ * 1e3)) / s) if lb_ > 0 else 0.0
+        return {"p_on": round(p_on, 4), "p_late": round(p_late, 4), "r_mbps": round(r, 3), "s_mbps": round(s, 3),
+                "L_ms": round(te + b * 8 / (r * 1e3) + rem + rtt, 2)}
 
     def best_variant(srv):
         if srv == "onboard":
@@ -567,6 +611,11 @@ def main():
             if board == "pi" and now - last_clk >= 1.0:     # clock and throttle flags once per second
                 energy["clk_log"].append((now,) + read_clock_())
                 last_clk = now
+                # the edge drone's measured board power (Jetson worker, --report-power) in EVERY strategy, not only
+                # when it is priced, so the Jetson energy of unpriced strategies can be compared (24 Oct 2026)
+                jw_ = paths.get("jetson")
+                if jw_ is not None and getattr(jw_, "edge_w", None) is not None and now - jw_.edge_w_t <= 2.0:
+                    energy.setdefault("edge_w_log", []).append((now, jw_.edge_w))
             energy["temp"] = tp
             if pw == pw:                               # measured perception energy since the SoC origin
                 if energy["t_last"] is not None:
@@ -768,6 +817,8 @@ def main():
             if ph != cur_phase:
                 cur_phase = ph
                 tc_phase(a.wlan, phases[ph][1], legacy=a.netem_legacy)
+                if "jetson" in paths:          # the edge node applies the edge drone's own uplink condition
+                    paths["jetson"].hdr_extra = {"edge_impair": phases[ph][1].get("uplink", "")}
             tick = int(el / period)
             if a.fresh_target > 0:                    # measured age of the newest held detection, and lam_F
                 now_pc = time.perf_counter()
@@ -870,6 +921,7 @@ def main():
                 else:
                     model, res, q = path_variants(srv)[var]
                     rec["acc"] = acc_of(model, res, q)
+                    rec["pred"] = path_pred(srv, var)        # before the encode updates the size and time estimates
                     t0 = time.perf_counter()
                     ok, buf = cv2.imencode(".jpg", lbs[res](image=img), [cv2.IMWRITE_JPEG_QUALITY, q])
                     enc_ms[res] = 0.8 * enc_ms[res] + 0.2 * (time.perf_counter() - t0) * 1e3
@@ -880,6 +932,7 @@ def main():
                         if len(energy["edge_served"]) > 600:
                             del energy["edge_served"][:300]
                     paths[srv].slot.put(({"id": tick, "t_cap": cap_t, "cut": -1, "model": model, "conf": a.conf,
+                                          "res": res, "q": q,
                                           "return_dets": bool(a.vid),
                                           "metas": [{"k": -1, "jpeg": True}]}, [buf.tobytes()]))
             log.append(rec)
@@ -915,6 +968,8 @@ def main():
         if "server" in r and r["id"] in results:
             r["lat_ms"] = (results[r["id"]] - r["t_cap"]) * 1e3
             r["t_res"] = results[r["id"]] - t_start
+            if r["server"] in paths and r["id"] in paths[r["server"]].where:
+                r["where"] = paths[r["server"]].where[r["id"]]
     per = {}
     for i, (name, imp, soc, dur) in enumerate(phases):
         lo, hi = bounds[i], bounds[i + 1]
@@ -948,7 +1003,8 @@ def main():
     w = np.array([ph[3] for ph in phases]) / total
     tot = {k: float(sum(wi * per[ph[0]][k] for wi, ph in zip(w, phases))) for k in keys}
     out = {"netem": "legacy-persistent-rate" if a.netem_legacy else "per-phase-reset",
-           "policy": pol, "objective": a.objective, "acc_table": os.path.basename(a.acc), "scenario": a.scenario, "seed": a.seed, "deadline_ms": D, "per_phase": per, "total": tot,
+           "policy": pol, "objective": a.objective, "acc_table": os.path.basename(a.acc),
+           "weight_suffix": a.weight_suffix, "paths": list(paths), "scenario": a.scenario, "seed": a.seed, "deadline_ms": D, "per_phase": per, "total": tot,
            "onboard_ms": onboard.ms, "link_events": {p: paths[p].events for p in paths},
            "link_goodput_samples": {p: paths[p].samples for p in paths},   # (unix time, Mbit/s) per frame/probe
            "frames": [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "t_cap"} for r in log]}
@@ -968,6 +1024,8 @@ def main():
                                   "duration_s": dur_, "temp_max_c": max(temps) if temps else None,
                                   "temp_mean_c": sum(temps) / len(temps) if temps else None,
                                   "log_t_w_c": [(round(x[0] - t0_, 2), round(x[1], 3), round(x[2], 2)) for x in lg]}
+        if energy.get("edge_w_log"):       # (t, Jetson board W) once per second, every strategy
+            out["measured_energy"]["edge_w_log"] = [(round(x[0] - t0_, 2), round(x[1], 3)) for x in energy["edge_w_log"]]
         if energy["clk_log"]:              # (t, ARM MHz, throttle flags) once per second (bit 2 = throttled now,
             out["measured_energy"]["clock_log_t_mhz_flags"] = [   # bit 1 = frequency capped, bit 3 = soft temp limit)
                 (round(x[0] - t0_, 2), round(x[1], 1), x[2]) for x in energy["clk_log"]]

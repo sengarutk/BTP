@@ -1,0 +1,208 @@
+<title>AEGIS-UAV Novelty Brief</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column with full-width evidence tables; a margin of status chips marks what is measured vs open */
+:root {
+  --bg: #F5F7F8; --paper: #FFFFFF; --ink: #15202B; --muted: #55616D; --rule: #D5DCE2;
+  --accent: #1F5C8B; --accent-soft: #E3EDF6; --good: #22704A; --good-soft: #E2F1E8; --open: #8A5A00; --open-soft: #F7EDD9;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171D; --paper: #18212A; --ink: #E4EAF0; --muted: #9AA7B3; --rule: #2C3946;
+  --accent: #7FB3E0; --accent-soft: #1C2D3D; --good: #6CC495; --good-soft: #17301F; --open: #E3B35E; --open-soft: #33281A; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11171D; --paper: #18212A; --ink: #E4EAF0; --muted: #9AA7B3; --rule: #2C3946;
+  --accent: #7FB3E0; --accent-soft: #1C2D3D; --good: #6CC495; --good-soft: #17301F; --open: #E3B35E; --open-soft: #33281A; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px }
+main { max-width: 860px; margin: 0 auto; display: grid; gap: 40px }
+header { display: grid; gap: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 22px }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 800 clamp(30px, 5vw, 44px)/1.08 var(--display); margin: 0; text-wrap: balance; letter-spacing: -.01em }
+h2 { font: 700 23px/1.25 var(--display); margin: 0 0 12px; text-wrap: balance }
+h3 { font: 700 17px/1.3 var(--display); margin: 0 0 6px }
+p { margin: 0 0 12px; max-width: 68ch }
+.lede { font-size: 19px; color: var(--muted); max-width: 66ch; margin: 0 }
+.meta { font: 13px/1.5 var(--mono); color: var(--muted) }
+section { display: grid; gap: 6px }
+.verdict { background: var(--paper); border: 1px solid var(--rule); border-left: 5px solid var(--accent); padding: 18px 22px; display: grid; gap: 8px }
+.verdict p { margin: 0 }
+.tbl { overflow-x: auto; background: var(--paper); border: 1px solid var(--rule) }
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top }
+th { font: 600 12px/1.3 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: var(--bg) }
+tr:last-child td { border-bottom: 0 }
+td.num { font-family: var(--mono); font-size: 14px; white-space: nowrap }
+.chip { display: inline-block; font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 4px 7px; border-radius: 3px; white-space: nowrap }
+.chip.yes { background: var(--good-soft); color: var(--good) }
+.chip.part { background: var(--open-soft); color: var(--open) }
+.chip.no { background: var(--accent-soft); color: var(--muted) }
+ol, ul { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 70ch }
+li::marker { color: var(--accent); font-weight: 600 }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px }
+.card { background: var(--paper); border: 1px solid var(--rule); padding: 16px 18px; min-width: 0 }
+.card ul { gap: 6px; font-size: 16px }
+a { color: var(--accent); text-underline-offset: 2px }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.src { font-size: 14px; color: var(--muted) }
+.src li { overflow-wrap: anywhere }
+</style>
+
+<main>
+<header>
+  <div class="eyebrow">AEGIS-UAV · contribution and novelty, 26 Oct 2026</div>
+  <h1>Priced, freshness-aware offloading for a drone camera, measured on a real mesh</h1>
+  <p class="lede">What the project contributes, what the measurements show, how it compares with the closest published work, and what a reviewer will ask for.</p>
+  <p class="meta">Evidence: about 1,150 live hardware runs (Raspberry Pi 5 camera drones, Jetson Orin Nano edge drone, laptop ground station; Wi-Fi and a batman-adv mesh), VisDrone video, standard streaming accuracy (sAP). Full numbers: the AEGIS-UAV Results Brief.</p>
+</header>
+
+<div class="verdict">
+  <h2>Verdict</h2>
+  <p><b>Novel enough for a solid systems-and-measurement paper</b> at a UAV or edge-computing workshop or an IEEE networking conference: no published work we found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI) and streaming perception on UAV video alone (StreamFlow) are published, so the claim must stay this narrow.</p>
+  <p><b>Not yet enough for a top venue</b> (MobiCom, MobiSys, SenSys): that would need a learned feature-compression baseline for the split result, two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed, and ideally a flight or outdoor test.</p>
+</div>
+
+<section>
+  <h2>The problem</h2>
+  <p>A small camera drone (Raspberry Pi 5) must detect objects in its video. For every frame it chooses where to run detection: on the Pi itself (slow, always available), on an edge drone with a GPU (Jetson), or on a ground station (laptop GPU), and at what model size and image quality. Results go stale as objects move, so the target is <b>streaming accuracy</b>: the accuracy of the newest result held at every moment, not the accuracy of each result alone. The drone's battery and temperature limit how much it can compute itself.</p>
+</section>
+
+<section>
+  <h2>What was built</h2>
+  <ol>
+    <li><b>A priced controller (v4.1).</b> Per frame it picks the place, model and JPEG quality that maximise expected accuracy after the delay, minus prices. Three prices adapt online by dual ascent: camera-drone energy (power budget 2.8 W), freshness (a result younger than 300 ms at least 95 % of the time), and optionally heat or the edge drone's energy.</li>
+    <li><b>A motion forecaster</b> that moves stale boxes to where the objects probably are now, tuned on held-out training clips.</li>
+    <li><b>A three-tier testbed</b>: Pi 5 camera drones, a Jetson Orin Nano edge drone and a laptop ground station, on shared Wi-Fi and on an ad-hoc batman-adv mesh (AegisSwarm) with link impairments, forced multi-hop routing and live power, temperature and clock logging.</li>
+    <li><b>Detectors fine-tuned on VisDrone</b> (YOLOv8 n/s/m/l, YOLO11 n/s/m), and every earlier campaign re-scored with them.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>What the measurements show</h2>
+  <div class="tbl"><table>
+    <tr><th>Finding</th><th>Measured</th><th>Where</th></tr>
+    <tr><td>Offloading is essential: the best onboard detector stays far below</td><td class="num">0.047 vs 0.18–0.21 sAP</td><td>17.7, 18.9</td></tr>
+    <tr><td>The forecaster nearly doubles streaming accuracy</td><td class="num">0.117 → 0.206</td><td>18.9</td></tr>
+    <tr><td>Prices give the same accuracy for far less heat (no prices: +1.5 W, 83 °C, throttled 39 %)</td><td class="num">9/9 pairs, p = 0.004</td><td>18.9, 19.7</td></tr>
+    <tr><td>Aggressive literature schedulers are both less accurate and more power-hungry</td><td class="num">−0.026 to −0.050 sAP, +1.5–1.7 W</td><td>19.7</td></tr>
+    <tr><td>Adapting beats fixed offloading once links fail (mission / multihop)</td><td class="num">0.186 vs 0.105; 0.137 vs 0.067</td><td>18.9</td></tr>
+    <tr><td>Best architecture depends on topology: direct link favours the camera deciding, relay-only favours the edge drone deciding</td><td class="num">+0.047 / +0.013</td><td>18.8, 18.9</td></tr>
+    <tr><td>Negative results: the heat price adds nothing beyond the energy price; pricing the Jetson saves only 0–10 % of its power (idle-dominated)</td><td class="num">+0.46 W; −0.23 W</td><td>18.9, 18.10</td></tr>
+    <tr><td>INT8 split computing is lossless on aerial images, while JPEG costs 2.4–5.4× more than on COCO</td><td class="num">±0.0004 vs −24 % at q50</td><td>19.6</td></tr>
+    <tr><td>Every earlier conclusion survives the switch to VisDrone detectors</td><td class="num">0 of 52 verdicts reversed</td><td>19.5</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>Against the closest published work</h2>
+  <div class="tbl"><table>
+    <tr><th>Work</th><th>What it does</th><th>Streaming accuracy</th><th>Drone, real hardware</th><th>Energy / heat / freshness priced</th><th>Mesh, multi-hop</th></tr>
+    <tr><td><b>This project</b></td><td>Per-frame place, model and quality with dual-ascent prices and a forecaster</td><td><span class="chip yes">yes</span></td><td><span class="chip yes">yes</span></td><td><span class="chip yes">all three</span></td><td><span class="chip yes">batman-adv</span></td></tr>
+    <tr><td>A²-UAV (INFOCOM 2023; Computer Networks 2025)</td><td>Application-aware DNN offloading in multi-hop UAV networks; 4-UAV testbed (a Jetson Nano edge server in the arXiv version)</td><td><span class="chip no">no</span></td><td><span class="chip yes">yes</span></td><td><span class="chip no">no</span></td><td><span class="chip yes">yes</span></td></tr>
+    <tr><td>AccuMO (MobiCom 2023)</td><td>Balances offloading frequency of several AR tasks using content-dependent accuracy-loss models</td><td><span class="chip part">related</span></td><td><span class="chip no">phone AR</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td></tr>
+    <tr><td>Towards Streaming Perception (ECCV 2020) and adaptive follow-ups</td><td>Define sAP; adapt detector settings on the device</td><td><span class="chip yes">yes</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td></tr>
+    <tr><td>Thermal-aware offloading and scheduling on phones (DGIST, NetAISys 2024; Tan &amp; Cao, TMC 2024)</td><td>Jointly set offloading, DVFS and model size under heat limits (DGIST); thermal-aware GPU/NPU scheduling on the phone (Tan &amp; Cao)</td><td><span class="chip no">no</span></td><td><span class="chip no">phones</span></td><td><span class="chip part">heat only</span></td><td><span class="chip no">no</span></td></tr>
+    <tr><td>Energy-aware UAV video offloading (ICNC 2020; DroneCOCoNet)</td><td>Offloading decisions for drone video under energy</td><td><span class="chip no">no</span></td><td><span class="chip part">mostly simulated</span></td><td><span class="chip part">energy only</span></td><td><span class="chip no">no</span></td></tr>
+  </table></div>
+  <p class="src">The dual-ascent pricing itself is a standard technique; the contribution is what is priced together, the objective it optimises (accuracy after delay) and the measurement on hardware. A full literature search is still needed before submission.</p>
+</section>
+
+<section>
+  <h2>Claim by claim</h2>
+  <p>Each claim of the Results Brief (Part 20 and the mesh campaigns), its closest prior work and how new it is. <span class="chip yes">high</span> no close prior found; <span class="chip part">medium</span> new evidence or a new combination on known ideas; <span class="chip no">low</span> the mechanism or result is established.</p>
+  <div class="tbl"><table>
+    <tr><th>Claim</th><th>Closest prior work</th><th>What is ours</th><th>Novelty</th></tr>
+    <tr><td><b>Energy pricing holds or raises accuracy</b>: pricing measured Pi power (with freshness, optionally heat) cuts about 1 W and throttling, at equal or better streaming accuracy</td><td>Lyapunov energy queues for offloading (LyDROO); heat- and memory-constrained offloading on phones (DGIST); AutoScale; AoPI, freshness × accuracy optimised online on a multi-camera edge testbed (Li et al., TMC 2024); thermal-aware power management and on-device inference (Nisha et al., NEWCAS 2024; Phoenix, Jeon et al., ACM TECS 2026)</td><td>Online dual-ascent prices on live measured power and temperature, with streaming accuracy as the objective; the measured coupling (heat and CPU contention lower accuracy) on a drone computer. Accuracy gain seen on Wi-Fi (+0.0074 sAP, 100 runs); on the mesh, equal accuracy at −1.5 W and no throttling. The freshness part alone has close prior work (AoPI); the energy and heat part does not</td><td><span class="chip yes">high</span> for the measured-energy price and its effect on heat</td></tr>
+    <tr><td><b>Match the objective to the forecaster</b>: the scheduler must use the decay curve after forecasting</td><td>Impatient queuing for latency-critical MEC offloading (Han et al., arXiv 2105.11727); adaptive streaming perception with RL</td><td>Measured decay curves with and without forecasting, the controller built on them, and a paired win (+0.0045 sAP, 20 runs); confirmed with a detector that never saw the clips</td><td><span class="chip yes">high</span>, small effect</td></tr>
+    <tr><td><b>Streaming accuracy measured on aerial video, on a distributed drone system</b></td><td>Streaming perception (ECCV 2020); StreamYOLO (CVPR 2022); <b>StreamFlow</b>, streaming perception on four UAV video datasets with optical flow (TCSVT 2025)</td><td>Streaming AP of a <i>distributed offloading system</i> on aerial video (StreamFlow improves the detector on one device); about 1,150 runs scored with the standard sAP</td><td><span class="chip no">medium–low</span></td></tr>
+    <tr><td><b>Topology decides the architecture</b>: direct ground link favours the camera deciding (+0.047); relay-only favours the edge drone deciding (+0.013)</td><td>A²-UAV (multi-hop UAV offloading testbed); hierarchical air-ground offloading (DRL, simulation)</td><td>A measured head-to-head of the two designs on one batman-adv mesh, with forced multi-hop</td><td><span class="chip part">medium</span>, 3 reps</td></tr>
+    <tr><td><b>Negative results</b>: the heat price adds nothing beyond the energy price; pricing the edge drone's energy saves only 0–10 % (idle-dominated Jetson)</td><td>None found reporting these</td><td>Measured, paired, with Jetson power logged</td><td><span class="chip part">medium</span></td></tr>
+    <tr><td><b>Aerial staleness and cheap forecasting</b>: detections lose most value within 100–200 ms; camera-motion plus object-motion forecasting recovers much of it on a Pi</td><td>Liu et al. MobiCom 2019 (motion-vector tracking hides offload latency); PVT++ ICCV 2023 (latency-aware UAV tracking on a Jetson); BoT-SORT camera motion</td><td>The measured aerial decay curves, a 2.7 ms Pi forecaster, gains on a distributed drone system</td><td><span class="chip part">medium–low</span></td></tr>
+    <tr><td><b>Many drones: admission coordination with radio link health</b></td><td>JCAB (INFOCOM 2020, bandwidth and configuration for shared uplinks); DroneCOCoNet</td><td>Admission rule with link health, calibrated simulator (r = 0.947); no admission-control paper found</td><td><span class="chip part">medium</span>, simulation only</td></tr>
+    <tr><td><b>Use every computer, adapt per frame</b></td><td>Odessa (MobiSys 2011), Chameleon (SIGCOMM 2018), Elf (MobiCom 2021)</td><td>Evidence on real drone tiers with sAP, not the mechanism</td><td><span class="chip no">low</span></td></tr>
+    <tr><td><b>Send the image, don't split the network</b> (and on aerial images JPEG costs 2.4–5.4× more than on COCO while INT8 splits stay lossless)</td><td>Auto-Split; Neurosurgeon; <b>learned feature compression beats image coding at equal rate for detection</b> (Yuan et al. 2022, 2024; BottleFit 2022)</td><td>A broad, bounded hardware measurement (19 detectors, exact splits with INT8/FP16 + zstd, 1,150 placements) and the aerial codec gap; not a general claim, since learned compressors were not tested</td><td><span class="chip no">low</span>, the aerial gap medium</td></tr>
+    <tr><td><b>Evaluation on a real batman-adv drone mesh</b></td><td>A²-UAV testbed; real FANET routing comparison where batman-adv trailed Babel and OLSR in throughput and loss (Guillen-Perez et al. 2021)</td><td>Strategies measured on a real ad-hoc mesh with forced multi-hop; batman-adv is used as is and its penalty is not characterised</td><td><span class="chip part">medium</span></td></tr>
+  </table></div>
+  <p class="src">Supporting, not claims: the receiver-fault audit, the VisDrone re-scoring of every campaign, YOLO11 on the Pi and the Pareto analysis strengthen credibility but are not contributions on their own.</p>
+</section>
+
+<section>
+  <h2>External check: Consensus review, 26 Oct 2026</h2>
+  <p>The Results Brief was reviewed with Consensus (a research-literature search engine), prompted to act as a sceptical program-committee reviewer. What it changed:</p>
+  <div class="tbl"><table>
+    <tr><th>Point</th><th>Verdict</th><th>Action taken</th></tr>
+    <tr><td>“No paper combines heat or throttling with offloading for detection” is too strong</td><td><span class="chip yes">agreed</span></td><td>Reworded: no detection-offloading paper prices heat with energy and freshness; thermal-aware inference control is cited</td></tr>
+    <tr><td>“Sending the image beats every split” is contradicted as a general claim by learned feature compression</td><td><span class="chip yes">agreed</span></td><td>Bounded to the tested splits and encodings; learned compressors named as untested</td></tr>
+    <tr><td>AoPI (TMC 2024) already optimises freshness × accuracy on an edge testbed</td><td><span class="chip yes">agreed</span>, verified</td><td>The freshness part of the pricing claim is no longer claimed as new; energy and heat remain the claim</td></tr>
+    <tr><td>StreamFlow (TCSVT 2025) applies streaming perception to UAV video</td><td><span class="chip yes">agreed</span>, verified</td><td>“Streaming AP on aerial video” downgraded; ours is sAP of a distributed offloading system</td></tr>
+    <tr><td>batman-adv can underperform other mesh protocols in real FANETs</td><td><span class="chip yes">agreed</span></td><td>Added as a limitation; justifying or characterising the routing choice is future work</td></tr>
+    <tr><td>Missing citations: StreamYOLO, OffloaD (TECS 2024), Qiu et al. (SEC 2024), AWStream, Glimpse (SenSys 2015), benchmarking methodology (Kalibera &amp; Jones 2013)</td><td><span class="chip yes">agreed</span></td><td>To be cited in the paper; OffloaD-style and Qiu-style schedulers are already baselines in the 240-run campaign</td></tr>
+    <tr><td>“The mesh campaign is pending”; “no temperatures, power traces or long thermal runs reported”</td><td><span class="chip part">outdated</span></td><td>It read the 6–7 October sections. Three mesh campaigns (112 runs) and 24-minute heat runs on the Pi and the Jetson are reported in Parts 15, 17 and 18.8–18.10; the stale “state” line was relabelled</td></tr>
+    <tr><td>Needs a learned split-compression baseline, long thermal runs that change decisions, a mesh that changes rankings</td><td><span class="chip part">partly done</span></td><td>Long runs and mesh rankings exist (heat and Jetson prices change decisions; topology changes the best design); the learned-compression baseline is open</td></tr>
+  </table></div>
+  <p><b>Second Consensus review (26 Oct).</b> It confirmed C1 (energy + freshness pricing on the Pi) and C2 (post-forecast calibration) as the strongest claims, partly published in their ingredients. Changes and checks:</p>
+  <div class="tbl"><table>
+    <tr><th>Point</th><th>Verdict</th><th>Action taken</th></tr>
+    <tr><td>“Energy-aware scheduling … improves accuracy” is causal wording without an ablation</td><td><span class="chip yes">agreed</span></td><td>Reworded in Part 20: raised on Wi-Fi, equal on the mesh, mechanism consistent but not isolated. An ablation that toggles onboard load with paths held fixed would settle it</td></tr>
+    <tr><td>Multi-drone video analytics orchestration with multi-hop forwarding (Qu et al., IEEE TNSM 2024)</td><td><span class="chip yes">verified</span></td><td>Closest work for the swarm claim; to be cited</td></tr>
+    <tr><td>Energy-aware inference offloading (Xu et al., TPDS 2021); energy-constrained MEC with deficit queues (Jiang et al., TMC 2023); energy-latency offloading (Younis et al., TNSM 2024); quality-aware offloading for cooperative perception (Zaki et al., TVT 2024); drone swarm Wi-Fi management (Betcher-Sbrolla et al., Drones 2025)</td><td><span class="chip yes">to cite</span></td><td>Related work for C1 and the swarm claim; none prices measured heat on a drone</td></tr>
+    <tr><td>“Primal-dual offloading for energy-aware cloud-edge collaboration, Su et al., IEEE TMC 2024”</td><td><span class="chip part">not verified</span></td><td>Could not be found; the closest real paper is Su, Zhang &amp; Zhang, <i>Mathematics</i> 2022. Do not cite until confirmed on IEEE Xplore</td></tr>
+    <tr><td>Forecaster judged by “raises sAP by about 1–2 %”</td><td><span class="chip no">misread</span></td><td>That sentence is about masking ignored regions (Part 19); the forecaster's effect is about 2× sAP (Parts 12, 14)</td></tr>
+    <tr><td>C3 (topology), C6 (swarm), C7 (split) “not assessable”</td><td><span class="chip no">not reviewed</span></td><td>Their evidence is in Parts 13, 18.8–18.9, 3, 7 and 20, which the review did not cover; a further run must include those parts</td></tr>
+  </table></div>
+  <p><b>Revised contribution statement</b>, in the form a strict reviewer would accept: <i>AEGIS-UAV is a real-system study of real-time aerial object-detection offloading across a Raspberry Pi 5 camera drone, a Jetson Orin Nano edge drone and a ground GPU, over Wi-Fi and a batman-adv mesh, scored with streaming AP on VisDrone video. It shows that a controller pricing the camera drone's measured energy and heat, together with detection freshness, keeps or raises streaming accuracy while removing thermal throttling; that the scheduler's objective must use the post-forecasting staleness curve; that the better offloading architecture depends on the mesh topology; and that, for the tested exact splits and encodings, full-frame image offloading beats layer splitting.</i></p>
+  <p><b>Venue fit, revised.</b> Now: IEEE Internet of Things Journal, ACM TECS, UAV and edge workshops (DroNet), IEEE ICC/Globecom/WoWMoM; IEEE TMC with a sharper comparative story. Top tier (MobiCom, MobiSys, SenSys, INFOCOM) needs a learned feature-compression baseline, a multi-drone mesh campaign, a published scheduler (AoPI or AccuMO-style) re-implemented on the testbed, and ideally a flight or outdoor test.</p>
+</section>
+
+<section class="two">
+  <div class="card">
+    <h3>What a reviewer will ask</h3>
+    <ul>
+      <li>No flight: replayed video, boards on a table one hop apart.</li>
+      <li>One camera drone on the mesh; multi-drone results are simulated.</li>
+      <li>3 repetitions per mesh cell; some controller variants differ only slightly.</li>
+      <li>No re-implementation of a published system on the same testbed.</li>
+      <li>The laptop joins the mesh through an SSH tunnel on the ground radio.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>What would strengthen it most</h3>
+    <ul>
+      <li>Two camera drones on the mesh (third Pi): measured contention for the Jetson.</li>
+      <li>A short outdoor or tethered flight with real distances.</li>
+      <li>One published baseline (A²-UAV-style or AccuMO-style) on the same testbed.</li>
+      <li>5 repetitions in the headline mesh comparisons.</li><li>A learned feature-compression baseline for the split-versus-JPEG result.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Sources checked</h2>
+  <ul class="src">
+    <li>A²-UAV, application-aware edge-assisted UAV networks: <a href="https://arxiv.org/pdf/2301.06363">arxiv.org/pdf/2301.06363</a>, <a href="https://www.sciencedirect.com/science/article/pii/S1389128624007199">ScienceDirect</a></li>
+    <li>AccuMO, MobiCom 2023: <a href="https://ranger.uta.edu/~jmeng/pubs/mobicom23.pdf">ranger.uta.edu/~jmeng/pubs/mobicom23.pdf</a></li>
+    <li>Towards Streaming Perception, ECCV 2020: <a href="https://ar5iv.labs.arxiv.org/html/2005.10420">arxiv 2005.10420</a>; Adaptive Streaming Perception using Deep RL: <a href="https://arxiv.org/abs/2106.05665v1">arxiv 2106.05665</a></li>
+    <li>Heat and memory constraints in edge-assisted on-device AI (DGIST): <a href="https://dgist.elsevierpure.com/en/publications/impact-of-joint-heat-and-memory-constraints-of-mobile-device-in-e/">dgist.elsevierpure.com</a></li>
+    <li>DeepBrain, offloading vs edge computing in the Internet of Drones: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7570899/">PMC7570899</a></li>
+    <li>DroneCOCoNet: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167739X21002351">ScienceDirect</a>; DyCOCo (ICNP 2019 workshop): <a href="https://icnp19.cs.ucr.edu/proceedings/Workshops/MERIT/paper_22.pdf">icnp19.cs.ucr.edu</a></li>
+    <li>AoPI, Towards Timely Video Analytics Services at the Network Edge (IEEE TMC 2024): <a href="https://arxiv.org/pdf/2406.14820">arxiv 2406.14820</a></li>
+    <li>StreamFlow, optical-flow-guided streaming perception on UAV video (IEEE TCSVT 2025): <a href="https://doi.org/10.1109/tcsvt.2025.3525796">doi 10.1109/tcsvt.2025.3525796</a>; StreamYOLO (CVPR 2022): <a href="https://doi.org/10.1109/cvpr52688.2022.00531">doi</a></li>
+    <li>Learned feature compression for split detection: <a href="https://doi.org/10.1109/tmm.2024.3406165">Yuan et al., TMM 2024</a>, <a href="https://doi.org/10.1109/mipr54900.2022.00008">Yuan et al., MIPR 2022</a>; BottleFit: <a href="https://doi.org/10.1109/wowmom54355.2022.00032">WoWMoM 2022</a></li>
+    <li>Thermal throttling prevention on the edge: <a href="https://doi.org/10.1109/newcas58973.2024.10666109">Nisha et al., NEWCAS 2024</a>; OffloaD: <a href="https://doi.org/10.1145/3677321">ACM TECS 2024</a>; Qiu et al.: <a href="https://doi.org/10.1109/sec62691.2024.00021">SEC 2024</a></li>
+    <li>Real FANET routing comparison (BATMAN-ADV, Babel, OLSR): <a href="https://doi.org/10.3390/app11104363">Guillen-Perez et al. 2021</a>; rigorous benchmarking: <a href="https://doi.org/10.1145/2464157.2464160">Kalibera &amp; Jones 2013</a></li>
+    <li>Computational offloading into UAV swarm networks, review: <a href="https://jwcn-eurasipjournals.springeropen.com/articles/10.1186/s13638-024-02401-4">EURASIP JWCN</a></li>
+    <li>Edge assisted real-time object detection for mobile AR (Liu et al., MobiCom 2019): <a href="https://www.winlab.rutgers.edu/~luyang/papers/mobicom19_augmented_reality.pdf">winlab.rutgers.edu</a></li>
+    <li>PVT++, latency-aware UAV tracking (ICCV 2023): <a href="https://openaccess.thecvf.com/content/ICCV2023/html/Li_PVT_A_Simple_End-to-End_Latency-Aware_Visual_Tracking_Framework_ICCV_2023_paper.html">thecvf.com</a></li>
+    <li>Elf, content-aware parallel offloading (MobiCom 2021): <a href="https://www.winlab.rutgers.edu/~luyang/papers/mobicom21-final273.pdf">winlab.rutgers.edu</a>; Odessa (MobiSys 2011): <a href="https://www.doi.org/10.1145/1999995.2000000">doi 10.1145/1999995.2000000</a></li>
+    <li>JCAB, joint configuration and bandwidth (INFOCOM 2020 / TON): <a href="http://staff.ustc.edu.cn/~xiaomj/papers/2020%20INFOCOM%20sheng%20zhang.pdf">staff.ustc.edu.cn</a></li>
+    <li>LyDROO, Lyapunov-guided online offloading under power limits: <a href="https://arxiv.org/pdf/2010.01370">arxiv 2010.01370</a>; AutoScale (MICRO-53): <a href="https://microarch.org/micro53/papers/738300b082.pdf">microarch.org</a></li>
+    <li>Auto-Split: <a href="https://arxiv.org/pdf/2108.13041">arxiv 2108.13041</a>; split computing for complex detectors: <a href="https://arxiv.org/pdf/2007.13312">arxiv 2007.13312</a>; feature compression for detection on the edge: <a href="https://arxiv.org/html/2204.07314">arxiv 2204.07314</a></li>
+    <li>Impatient queuing for MEC offloading (Han et al.): <a href="https://arxiv.org/pdf/2105.11727">arxiv 2105.11727</a>; Transtreaming: <a href="https://arxiv.org/pdf/2409.06584">arxiv 2409.06584</a></li>
+  </ul>
+</section>
+</main>

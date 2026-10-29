@@ -1,0 +1,976 @@
+{
+ "rows": [
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc__r1.json",
+   "with": 0.0413227512261642,
+   "without": 0.035214866048652885,
+   "W": 5.160335522705592,
+   "W_no_onboard": 2.8080345286686113,
+   "share": 0.3748384317104696
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc2__r4.json",
+   "with": 0.05715991903386409,
+   "without": 0.051613614320660244,
+   "W": 4.424644069225682,
+   "W_no_onboard": 2.8691084920182206,
+   "share": 0.23757828810020876
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_full__r2.json",
+   "with": 0.03416897430048889,
+   "without": 0.034623260412521034,
+   "W": 5.075060223448405,
+   "W_no_onboard": 2.7497471457495237,
+   "share": 0.17105263157894737
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc__r5.json",
+   "with": 0.059001984792770835,
+   "without": 0.0545255364250126,
+   "W": 4.323953507398184,
+   "W_no_onboard": 2.8787843974062923,
+   "share": 0.21377101681345076
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_full__r5.json",
+   "with": 0.07100118813342886,
+   "without": 0.07094780469839095,
+   "W": 3.4170036377873183,
+   "W_no_onboard": 3.0251425727826007,
+   "share": 0.018223234624145785
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc__r2.json",
+   "with": 0.038224035683663525,
+   "without": 0.036356571617055626,
+   "W": 5.06671783517308,
+   "W_no_onboard": 2.773812381162861,
+   "share": 0.4003777148253069
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_full__r2.json",
+   "with": 0.08890630542015825,
+   "without": 0.08890630542015825,
+   "W": 3.4795707713284942,
+   "W_no_onboard": 3.069178217384216,
+   "share": 0.01878855860908581
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc2__r1.json",
+   "with": 0.016990087286915603,
+   "without": 0.009995977252643557,
+   "W": 5.369697891738911,
+   "W_no_onboard": 2.6610236575413597,
+   "share": 0.7250361794500724
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc2__r5.json",
+   "with": 0.04589214821749013,
+   "without": 0.04123184228540181,
+   "W": 4.626713437109798,
+   "W_no_onboard": 2.7930987406861334,
+   "share": 0.302158273381295
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_full__r1.json",
+   "with": 0.04041706773264216,
+   "without": 0.03923793581595518,
+   "W": 4.842027864804406,
+   "W_no_onboard": 2.800864284178794,
+   "share": 0.14267241379310344
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc2__r4.json",
+   "with": 0.04696385526070852,
+   "without": 0.04174765014256247,
+   "W": 4.651162107837654,
+   "W_no_onboard": 2.809122798576036,
+   "share": 0.28966397277754147
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc2__r3.json",
+   "with": 0.0490980972201073,
+   "without": 0.04817877203708598,
+   "W": 4.964651451695084,
+   "W_no_onboard": 2.7854627042066236,
+   "share": 0.36084799278304014
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc__r5.json",
+   "with": 0.039957061903148676,
+   "without": 0.04751870745266742,
+   "W": 4.682381546775426,
+   "W_no_onboard": 2.8403422375138083,
+   "share": 0.3074492099322799
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc2__r1.json",
+   "with": 0.030386278357421862,
+   "without": 0.019389596129311945,
+   "W": 5.093146674122246,
+   "W_no_onboard": 2.7303717120056135,
+   "share": 0.45255474452554745
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc__r3.json",
+   "with": 0.04110847688462265,
+   "without": 0.035654724512403986,
+   "W": 5.042839237505761,
+   "W_no_onboard": 2.790430742604698,
+   "share": 0.35735735735735735
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_full__r3.json",
+   "with": 0.02466355570862571,
+   "without": 0.021125996921728625,
+   "W": 5.315625147696968,
+   "W_no_onboard": 2.699985409944959,
+   "share": 0.23106267029972752
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_full__r1.json",
+   "with": 0.017095022201332806,
+   "without": 0.009950546395913784,
+   "W": 5.724561821768604,
+   "W_no_onboard": 2.65798918648727,
+   "share": 0.4011299435028249
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc__r2.json",
+   "with": 0.03259225639852991,
+   "without": 0.03883258527246905,
+   "W": 4.9505927292362815,
+   "W_no_onboard": 2.8250747062105734,
+   "share": 0.3887240356083086
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc__r5.json",
+   "with": 0.0808280090941343,
+   "without": 0.0818107213324569,
+   "W": 3.449120597739516,
+   "W_no_onboard": 3.0514728300378122,
+   "share": 0.042491268917345754
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc__r1.json",
+   "with": 0.039579638617592214,
+   "without": 0.04604966238671394,
+   "W": 4.946999438719091,
+   "W_no_onboard": 2.791783645680002,
+   "share": 0.380066762041011
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc__r4.json",
+   "with": 0.055856640817184326,
+   "without": 0.05194366389048014,
+   "W": 4.586100005589127,
+   "W_no_onboard": 2.8493527900113134,
+   "share": 0.2704296545914069
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc__r2.json",
+   "with": 0.03792434366126201,
+   "without": 0.03841063531235048,
+   "W": 5.057743251721492,
+   "W_no_onboard": 2.786436175902823,
+   "share": 0.40307101727447214
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc2__r2.json",
+   "with": 0.029457045548826086,
+   "without": 0.037142018395181865,
+   "W": 4.9919551637217365,
+   "W_no_onboard": 2.801967227137501,
+   "share": 0.4093686354378819
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc__r2.json",
+   "with": 0.022279297510727384,
+   "without": 0.015539436195973304,
+   "W": 5.293539347618251,
+   "W_no_onboard": 2.7225547743918295,
+   "share": 0.5339696799550814
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_full__r4.json",
+   "with": 0.038682431975340804,
+   "without": 0.03464494009844601,
+   "W": 5.113362709041612,
+   "W_no_onboard": 2.7756953053830222,
+   "share": 0.15437881873727088
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_full__r5.json",
+   "with": 0.046730347453163776,
+   "without": 0.046647336347480896,
+   "W": 4.872431573349336,
+   "W_no_onboard": 2.831267992723724,
+   "share": 0.12619138391155166
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc2__r5.json",
+   "with": 0.05912010534964548,
+   "without": 0.05528751862786963,
+   "W": 4.325120392371198,
+   "W_no_onboard": 2.877576706121485,
+   "share": 0.2139967637540453
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_full__r1.json",
+   "with": 0.019015463757384186,
+   "without": 0.007464446752733241,
+   "W": 5.7924866950693525,
+   "W_no_onboard": 2.6579652670096268,
+   "share": 0.39656518345042935
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc__r4.json",
+   "with": 0.033490409697443074,
+   "without": 0.04382510129600457,
+   "W": 4.863176034745048,
+   "W_no_onboard": 2.8078527408418763,
+   "share": 0.35798398492699013
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc2__r3.json",
+   "with": 0.08927965177837918,
+   "without": 0.08976519137998658,
+   "W": 3.213722610491335,
+   "W_no_onboard": 3.0809801966522454,
+   "share": 0.011751538891997761
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_full__r4.json",
+   "with": 0.03895507211593088,
+   "without": 0.03780135732828089,
+   "W": 4.677980966987007,
+   "W_no_onboard": 2.7912464608577334,
+   "share": 0.1308251389482685
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc2__r3.json",
+   "with": 0.03194740858509845,
+   "without": 0.04338907716309259,
+   "W": 5.008451638963071,
+   "W_no_onboard": 2.8805590396795413,
+   "share": 0.3843503937007874
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc__r3.json",
+   "with": 0.0910434659707422,
+   "without": 0.09105862905484242,
+   "W": 3.1787027553242666,
+   "W_no_onboard": 3.0807324850303237,
+   "share": 0.009782001117942985
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc2__r4.json",
+   "with": 0.03381367072216611,
+   "without": 0.04392983466875817,
+   "W": 5.0474801559742275,
+   "W_no_onboard": 2.8088958684590053,
+   "share": 0.3781048758049678
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_full__r3.json",
+   "with": 0.04692858772923762,
+   "without": 0.04656618511740633,
+   "W": 5.060848461807662,
+   "W_no_onboard": 2.8220156658267337,
+   "share": 0.17066290550070523
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_full__r4.json",
+   "with": 0.08225833468725287,
+   "without": 0.08197389635936216,
+   "W": 3.3048515985497926,
+   "W_no_onboard": 3.0241794671824387,
+   "share": 0.013083048919226393
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_full__r2.json",
+   "with": 0.026708490630370483,
+   "without": 0.022834930242391603,
+   "W": 5.464491398548088,
+   "W_no_onboard": 2.7253084011990034,
+   "share": 0.23173277661795408
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc2__r4.json",
+   "with": 0.09118125911881322,
+   "without": 0.09123275437265269,
+   "W": 3.167060022560973,
+   "W_no_onboard": 3.0856137569268154,
+   "share": 0.006422786931024853
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc2__r2.json",
+   "with": 0.03500659464152366,
+   "without": 0.03440579304337992,
+   "W": 5.104066380513389,
+   "W_no_onboard": 2.75986477829824,
+   "share": 0.43876518218623484
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_full__r4.json",
+   "with": 0.057524376088716925,
+   "without": 0.05612159501519203,
+   "W": 4.8584563008146935,
+   "W_no_onboard": 2.854355698068203,
+   "share": 0.1411202778983934
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc2__r2.json",
+   "with": 0.08142452888170536,
+   "without": 0.08192937298764402,
+   "W": 3.6084256856803365,
+   "W_no_onboard": 3.0599144916539034,
+   "share": 0.056976744186046514
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc__r4.json",
+   "with": 0.08996516862491827,
+   "without": 0.09005007763070118,
+   "W": 3.192930859932066,
+   "W_no_onboard": 3.084161400542348,
+   "share": 0.01090299133351971
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc__r3.json",
+   "with": 0.03292965811212351,
+   "without": 0.04408845536747075,
+   "W": 5.10966353642458,
+   "W_no_onboard": 2.8869528115368976,
+   "share": 0.3756855575868373
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_full__r2.json",
+   "with": 0.03176412164476066,
+   "without": 0.03034242046133711,
+   "W": 5.507517969363752,
+   "W_no_onboard": 2.7065633422161297,
+   "share": 0.28007402837754475
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc2__r1.json",
+   "with": 0.05145040689965952,
+   "without": 0.04870559422164862,
+   "W": 4.767664498650719,
+   "W_no_onboard": 2.8395568976390244,
+   "share": 0.30725771403737506
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc__r3.json",
+   "with": 0.052721990285636906,
+   "without": 0.0496899218005549,
+   "W": 4.455132993996333,
+   "W_no_onboard": 2.872274223033312,
+   "share": 0.23741883116883117
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_full__r1.json",
+   "with": 0.04253078531439043,
+   "without": 0.041917684342421394,
+   "W": 5.026759205954819,
+   "W_no_onboard": 2.775572084014182,
+   "share": 0.15611633875106928
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc2__r1.json",
+   "with": 0.045000287562383404,
+   "without": 0.04252671001371957,
+   "W": 4.977494010093045,
+   "W_no_onboard": 2.8118042489743034,
+   "share": 0.34134821811936455
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_stream_fc2__r5.json",
+   "with": 0.039719833347277356,
+   "without": 0.0482056323785143,
+   "W": 4.682264548854079,
+   "W_no_onboard": 2.840550460608583,
+   "share": 0.3092075125973431
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc2__r2.json",
+   "with": 0.047815227453020366,
+   "without": 0.044896066381361385,
+   "W": 4.853623121464574,
+   "W_no_onboard": 2.8063992193832337,
+   "share": 0.3403776978417266
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_stream_fc__r1.json",
+   "with": 0.04132579100407905,
+   "without": 0.03885734293675789,
+   "W": 4.97206750202663,
+   "W_no_onboard": 2.819551506261485,
+   "share": 0.37265917602996257
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc2__r5.json",
+   "with": 0.09048756985320441,
+   "without": 0.09050355420046036,
+   "W": 3.212562054273632,
+   "W_no_onboard": 3.08521923498243,
+   "share": 0.011185682326621925
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission_mirror__A_full__r5.json",
+   "with": 0.05892616921971651,
+   "without": 0.057047066856838344,
+   "W": 4.71308754099644,
+   "W_no_onboard": 2.8634160127462884,
+   "share": 0.12557555462536626
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc__r5.json",
+   "with": 0.049002111126398865,
+   "without": 0.04281429978433459,
+   "W": 4.6970935029300325,
+   "W_no_onboard": 2.803758045463484,
+   "share": 0.3000428632661809
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_full__r3.json",
+   "with": 0.08941944111903856,
+   "without": 0.08941944111903856,
+   "W": 3.23915805918027,
+   "W_no_onboard": 3.0696748614502805,
+   "share": 0.007819044959508517
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_random__A_full__r3.json",
+   "with": 0.029362620356261852,
+   "without": 0.030367046686036923,
+   "W": 5.011853884718061,
+   "W_no_onboard": 2.7730210887371323,
+   "share": 0.14672594987873888
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_full__r5.json",
+   "with": 0.040347712961873276,
+   "without": 0.038931665590667894,
+   "W": 4.647650926949654,
+   "W_no_onboard": 2.791802235719649,
+   "share": 0.12541666666666668
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_static_good__A_stream_fc__r1.json",
+   "with": 0.019416546288177305,
+   "without": 0.010704768239971728,
+   "W": 5.370939642543772,
+   "W_no_onboard": 2.6865635838117146,
+   "share": 0.6787423103212576
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc__r4.json",
+   "with": 0.04449826713552597,
+   "without": 0.03989250280483979,
+   "W": 4.823752893021182,
+   "W_no_onboard": 2.803526963679279,
+   "share": 0.33363108530594016
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi_fc2/a2_mission__A_stream_fc2__r3.json",
+   "with": 0.04410558553917556,
+   "without": 0.03925613727599945,
+   "W": 4.835488059317779,
+   "W_no_onboard": 2.7882641572364384,
+   "share": 0.33674377224199287
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full_aer__r1.json",
+   "with": 0.04537175914950445,
+   "without": 0.0477378436175081,
+   "W": 5.78374931762167,
+   "W_no_onboard": 2.834542778957557,
+   "share": 0.23226433430515064
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full__r2.json",
+   "with": 0.03886389273753085,
+   "without": 0.037724579035047764,
+   "W": 5.559690477458076,
+   "W_no_onboard": 2.7340271983910394,
+   "share": 0.21757719714964371
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__static_multi__r3.json",
+   "with": 0.03887673547676808,
+   "without": 0.03944686201495359,
+   "W": 5.797863589184644,
+   "W_no_onboard": 2.819987196024687,
+   "share": 0.4109538002980626
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_stream__r1.json",
+   "with": 0.052498946100386565,
+   "without": 0.05129685348661647,
+   "W": 5.814367276426437,
+   "W_no_onboard": 2.828097759883202,
+   "share": 0.25038799793067773
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__static_multi__r3.json",
+   "with": 0.05631236231163953,
+   "without": 0.057366679889525714,
+   "W": 5.319663623351048,
+   "W_no_onboard": 2.8304505367749044,
+   "share": 0.26074660633484165
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_stream__r2.json",
+   "with": 0.03137518029551157,
+   "without": 0.030344223501409577,
+   "W": 5.757335471187828,
+   "W_no_onboard": 2.7648887916647387,
+   "share": 0.24782830863566685
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full__r2.json",
+   "with": 0.06591561063238142,
+   "without": 0.06612074674718117,
+   "W": 3.8878498928754754,
+   "W_no_onboard": 2.946221322663793,
+   "share": 0.04355251921434671
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full_aer__r2.json",
+   "with": 0.035491756060882534,
+   "without": 0.03541339341878656,
+   "W": 5.754609818239149,
+   "W_no_onboard": 2.836289094474305,
+   "share": 0.25678610206297503
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_stream__r2.json",
+   "with": 0.03408735389220912,
+   "without": 0.032637169244641,
+   "W": 5.818069930682617,
+   "W_no_onboard": 2.76385162136099,
+   "share": 0.29981829194427617
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full__r1.json",
+   "with": 0.03960285868517747,
+   "without": 0.03743755978605335,
+   "W": 5.143722505503069,
+   "W_no_onboard": 2.781346449925065,
+   "share": 0.1636052968816745
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_stream__r1.json",
+   "with": 0.051508976494924356,
+   "without": 0.05347845237010151,
+   "W": 5.289416691798794,
+   "W_no_onboard": 2.9949894289991814,
+   "share": 0.12796697626418987
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full_aer__r2.json",
+   "with": 0.06527387338616088,
+   "without": 0.06563858708516783,
+   "W": 5.425600502650783,
+   "W_no_onboard": 2.9705670023749726,
+   "share": 0.13032089063523247
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full__r3.json",
+   "with": 0.03611434040101545,
+   "without": 0.034701591937424066,
+   "W": 5.229715755671335,
+   "W_no_onboard": 2.780859418375378,
+   "share": 0.16722830665543387
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full__r1.json",
+   "with": 0.038353656622710154,
+   "without": 0.038299018482057065,
+   "W": 5.112103311484311,
+   "W_no_onboard": 2.8547390265638204,
+   "share": 0.12216288384512683
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__static_multi__r3.json",
+   "with": 0.03461840147744568,
+   "without": 0.03742466743773286,
+   "W": 5.712346533532535,
+   "W_no_onboard": 2.7992652749472273,
+   "share": 0.42363564978405965
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__static_multi__r2.json",
+   "with": 0.03750492258593649,
+   "without": 0.03742315734717103,
+   "W": 5.349140186955664,
+   "W_no_onboard": 2.8140305467224764,
+   "share": 0.3790876059749697
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_stream__r3.json",
+   "with": 0.032030314901860445,
+   "without": 0.03146229677505222,
+   "W": 5.8045498483091675,
+   "W_no_onboard": 2.7935716798465173,
+   "share": 0.23282442748091603
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_stream__r2.json",
+   "with": 0.04629160198680377,
+   "without": 0.04379620287828136,
+   "W": 5.759870062352183,
+   "W_no_onboard": 2.8106635236880706,
+   "share": 0.24934793948878456
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__static_multi__r1.json",
+   "with": 0.03916279988130854,
+   "without": 0.03852120530115215,
+   "W": 5.389228161936261,
+   "W_no_onboard": 2.813621562593918,
+   "share": 0.3843674456083803
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full_aer__r1.json",
+   "with": 0.06155563395686578,
+   "without": 0.06170431622537757,
+   "W": 5.218868524918949,
+   "W_no_onboard": 2.9615042399984586,
+   "share": 0.12611991729841487
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full__r1.json",
+   "with": 0.061648344701078446,
+   "without": 0.061666881765588585,
+   "W": 4.142320867798882,
+   "W_no_onboard": 2.9659601043527655,
+   "share": 0.05446250356429997
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full_aer__r1.json",
+   "with": 0.04441779629900887,
+   "without": 0.04263064100912649,
+   "W": 5.580933459946676,
+   "W_no_onboard": 2.810864647698323,
+   "share": 0.22619647355163727
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__static_multi__r1.json",
+   "with": 0.05051533663708109,
+   "without": 0.053308225204513136,
+   "W": 5.5362048781401,
+   "W_no_onboard": 2.8121094287308526,
+   "share": 0.30047647409172124
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full_aer__r1.json",
+   "with": 0.039266576018205254,
+   "without": 0.03642492098772636,
+   "W": 5.64383397428524,
+   "W_no_onboard": 2.7996392062786417,
+   "share": 0.2276543209876543
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__static_multi__r1.json",
+   "with": 0.04097868301107431,
+   "without": 0.048751357208043,
+   "W": 5.601186469888109,
+   "W_no_onboard": 2.852792845013368,
+   "share": 0.3441514536849222
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full__r3.json",
+   "with": 0.045050021662493105,
+   "without": 0.04249918751811309,
+   "W": 5.131584638288762,
+   "W_no_onboard": 2.8124487235697346,
+   "share": 0.1598639455782313
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_stream__r3.json",
+   "with": 0.04703782112122175,
+   "without": 0.04518234398111935,
+   "W": 5.808109562038642,
+   "W_no_onboard": 2.828017208475261,
+   "share": 0.24922600619195046
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full__r2.json",
+   "with": 0.039903577271149,
+   "without": 0.03795865625031091,
+   "W": 5.103821414856638,
+   "W_no_onboard": 2.78468550013761,
+   "share": 0.16270012981393336
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full_aer__r3.json",
+   "with": 0.03794433618196635,
+   "without": 0.03540218227794188,
+   "W": 5.788475647541351,
+   "W_no_onboard": 2.777497479078701,
+   "share": 0.27933600457927876
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full_aer__r2.json",
+   "with": 0.050314404726380664,
+   "without": 0.04796041671060346,
+   "W": 5.53344221446723,
+   "W_no_onboard": 2.8127907060577066,
+   "share": 0.2199501246882793
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__static_multi__r1.json",
+   "with": 0.03921882398668353,
+   "without": 0.040718570501086626,
+   "W": 5.870409277684589,
+   "W_no_onboard": 2.8061393717584333,
+   "share": 0.4180478821362799
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full_aer__r3.json",
+   "with": 0.03340642297883875,
+   "without": 0.029699424371233508,
+   "W": 5.608383665785628,
+   "W_no_onboard": 2.819783364597714,
+   "share": 0.23061224489795917
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_stream__r1.json",
+   "with": 0.03840879853524678,
+   "without": 0.03435714960660826,
+   "W": 5.789059999172404,
+   "W_no_onboard": 2.778081830709754,
+   "share": 0.27601809954751133
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_full_aer__r2.json",
+   "with": 0.03997051851982192,
+   "without": 0.038057527695437084,
+   "W": 5.577231990029952,
+   "W_no_onboard": 2.7824545258621836,
+   "share": 0.2504145936981758
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full__r2.json",
+   "with": 0.014770848895804545,
+   "without": 0.0024949989133489807,
+   "W": 5.875885060901331,
+   "W_no_onboard": 2.6116432102646763,
+   "share": 0.6305125148986889
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full__r1.json",
+   "with": 0.0416592642957757,
+   "without": 0.039587540324607,
+   "W": 5.260168157546825,
+   "W_no_onboard": 2.805134657271014,
+   "share": 0.17184801381692574
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__static_multi__r2.json",
+   "with": 0.02937526308635544,
+   "without": 0.03365126681642395,
+   "W": 5.470388300904554,
+   "W_no_onboard": 2.8191873778917875,
+   "share": 0.41002087682672234
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_stream__r3.json",
+   "with": 0.02070716671233537,
+   "without": 0.005944622579416253,
+   "W": 5.638774107862593,
+   "W_no_onboard": 2.6957447321783343,
+   "share": 0.3674884437596302
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_stream__r1.json",
+   "with": 0.040672328147986124,
+   "without": 0.040833238792767436,
+   "W": 5.5848129296726245,
+   "W_no_onboard": 2.8579842582832478,
+   "share": 0.17960178789110118
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full_aer__r3.json",
+   "with": 0.039775295378093406,
+   "without": 0.04029723394777322,
+   "W": 5.836008709374091,
+   "W_no_onboard": 2.831207703891294,
+   "share": 0.2319047619047619
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__static_multi__r2.json",
+   "with": 0.053780681574202745,
+   "without": 0.05708327748114842,
+   "W": 5.690356299153151,
+   "W_no_onboard": 2.817771999676999,
+   "share": 0.29762237762237764
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__static_multi__r2.json",
+   "with": 0.03655090715387925,
+   "without": 0.03891845567633908,
+   "W": 5.671992795409392,
+   "W_no_onboard": 2.7913091041114093,
+   "share": 0.415660303856642
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission_mirror__A_full_aer__r3.json",
+   "with": 0.03840603894090964,
+   "without": 0.036835547448129356,
+   "W": 6.104889748578454,
+   "W_no_onboard": 2.772699105163408,
+   "share": 0.2980132450331126
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__static_multi__r3.json",
+   "with": 0.03257943093108794,
+   "without": 0.04277863954103559,
+   "W": 5.500399674624324,
+   "W_no_onboard": 2.8761967243509945,
+   "share": 0.40215142738932563
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_stream__r2.json",
+   "with": 0.07000475286278056,
+   "without": 0.06932940439506699,
+   "W": 5.391497372067835,
+   "W_no_onboard": 2.9920583386107085,
+   "share": 0.13102054563826204
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_static_good__A_full__r3.json",
+   "with": 0.05546270318603495,
+   "without": 0.05495085811367615,
+   "W": 4.304602777381965,
+   "W_no_onboard": 2.9182184726208282,
+   "share": 0.066884661117717
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_random__A_full__r3.json",
+   "with": 0.030820042151626512,
+   "without": 0.031605949030262745,
+   "W": 5.68854869703489,
+   "W_no_onboard": 2.757873647310339,
+   "share": 0.18171384850803365
+  },
+  {
+   "file": "/home/sengar/BTP/uav-split-perception/experiments/results/hardware/vid_campaign_wifi/a2_mission__A_stream__r3.json",
+   "with": 0.0400777648671175,
+   "without": 0.03783109579385811,
+   "W": 5.665599723895275,
+   "W_no_onboard": 2.7843419780095537,
+   "share": 0.2532537960954447
+  }
+ ],
+ "summary": {
+  "vid_campaign_wifi|A_full": {
+   "n": 12,
+   "sAP_with": 0.04234709677023147,
+   "sAP_without_onboard": 0.04042063065863924,
+   "rel_change_median": -0.03421712386024692,
+   "rel_change_ci": [
+    -0.09091911759558154,
+    0.13276828230536314
+   ],
+   "W_with": 5.03666779640013,
+   "W_without": 2.8127631442871723,
+   "onboard_share": 0.178509318420338,
+   "W_with_corrected": 4.65836779640013,
+   "W_without_corrected": 2.4344631442871725
+  },
+  "vid_campaign_wifi|A_full_aer": {
+   "n": 12,
+   "sAP_with": 0.04426620096638655,
+   "sAP_without_onboard": 0.04315016956623429,
+   "rel_change_median": -0.040563451737428424,
+   "rel_change_ci": [
+    -0.029586535183984703,
+    0.025440617870931954
+   ],
+   "W_with": 5.654668964453265,
+   "W_without": 2.834153321202772,
+   "onboard_share": 0.22579775113688602,
+   "W_with_corrected": 5.2763689644532645,
+   "W_without_corrected": 2.455853321202772
+  },
+  "vid_campaign_wifi|A_stream": {
+   "n": 12,
+   "sAP_with": 0.04205841715986532,
+   "sAP_without_onboard": 0.03970775445041155,
+   "rel_change_median": -0.03615274305457565,
+   "rel_change_ci": [
+    -0.08760884465659986,
+    0.113184009783907
+   ],
+   "W_with": 5.676788581288867,
+   "W_without": 2.8243575959757963,
+   "onboard_share": 0.23873188507236762,
+   "W_with_corrected": 5.298488581288867,
+   "W_without_corrected": 2.4460575959757964
+  },
+  "vid_campaign_wifi|static_multi": {
+   "n": 12,
+   "sAP_with": 0.040789529009455226,
+   "sAP_without_onboard": 0.04378269703492709,
+   "rel_change_median": 0.058348262462188945,
+   "rel_change_ci": [
+    0.0803246763092857,
+    0.05330729846721253
+   ],
+   "W_with": 5.5757649825636975,
+   "W_without": 2.8210718307164213,
+   "onboard_share": 0.370576825300692,
+   "W_with_corrected": 5.197464982563697,
+   "W_without_corrected": 2.4427718307164215
+  },
+  "vid_campaign_wifi_fc2|A_full": {
+   "n": 20,
+   "sAP_with": 0.04627030342750577,
+   "sAP_without_onboard": 0.04434359309911506,
+   "rel_change_median": -0.026779981537601256,
+   "rel_change_ci": [
+    -0.07968805080950074,
+    0.06946881644226723
+   ],
+   "W_with": 4.757239337908237,
+   "W_without": 2.8232495349830757,
+   "onboard_share": 0.1594608284825264,
+   "W_with_corrected": 4.378939337908236,
+   "W_without_corrected": 2.444949534983076
+  },
+  "vid_campaign_wifi_fc2|A_stream_fc": {
+   "n": 20,
+   "sAP_with": 0.047153395241742266,
+   "sAP_without_onboard": 0.046641910468085704,
+   "rel_change_median": -0.05318313115793004,
+   "rel_change_ci": [
+    -0.01778742469689964,
+    0.08304009222614317
+   ],
+   "W_with": 4.661189137056285,
+   "W_without": 2.848172648489567,
+   "onboard_share": 0.3174697475041976,
+   "W_with_corrected": 4.2828891370562845,
+   "W_without_corrected": 2.469872648489567
+  },
+  "vid_campaign_wifi_fc2|A_stream_fc2": {
+   "n": 20,
+   "sAP_with": 0.05081497803286929,
+   "sAP_without_onboard": 0.05016663536389675,
+   "rel_change_median": -0.03603647984071631,
+   "rel_change_ci": [
+    -0.015950633963073543,
+    0.08324574651708327
+   ],
+   "W_with": 4.546269698732973,
+   "W_without": 2.858767719439337,
+   "onboard_share": 0.29568484845375587,
+   "W_with_corrected": 4.167969698732973,
+   "W_without_corrected": 2.480467719439337
+  }
+ },
+ "note": "W_*_corrected use the forecaster power from the 6-min steady test (0.29 W) instead of the short profile (0.67 W)"
+}

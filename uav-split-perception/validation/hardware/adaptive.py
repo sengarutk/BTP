@@ -37,6 +37,7 @@ import math
 import os
 import socket
 import statistics
+import struct
 import subprocess
 import threading
 import time
@@ -51,7 +52,10 @@ ACC = {"onboard": 0.4440, "lap_j90": 0.4407, "jet_j90": 0.4407, "lap_j50": 0.409
        "lap_k1": 0.4439}
 ACC0 = 0.4440
 PATH_OF = {"lap_j90": "laptop", "lap_j50": "laptop", "lap_k1": "laptop", "jet_j90": "jetson", "jet_j50": "jetson"}
-PORT = {"laptop": 48101, "jetson": 48102}
+PORT = {"laptop": 48101, "jetson": 48102, "relay": 48103}   # relay: Pi -> Jetson (relay.py) -> laptop GPU
+# netem band of each path; the relay's first hop is the Pi -> Jetson radio link, so unless a phase names it, it gets
+# the jetson path's impairment (the Jetson -> laptop hop is not impaired: the edge drone stays in range of the ground)
+BANDS = ((1, "laptop"), (2, "jetson"), (3, "relay"))
 P_COMPUTE_W = 2.7      # Pi compute rails, active - idle (measured, docs/hardware_results.md)
 P_RADIO_W = 0.31       # Pi Wi-Fi rail while transmitting, minus idle (measured)
 
@@ -74,7 +78,7 @@ def tc(args):
 def tc_setup(dev):
     tc(f"qdisc del dev {dev} root")
     tc(f"qdisc add dev {dev} root handle 1: prio bands 4 priomap 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3")
-    for band, path in ((1, "laptop"), (2, "jetson")):
+    for band, path in BANDS:
         tc(f"qdisc add dev {dev} parent 1:{band} handle {band}0: netem")
         tc(f"filter add dev {dev} parent 1: protocol ip prio 1 u32 match ip sport {PORT[path]} 0xffff flowid 1:{band}")
 
@@ -85,8 +89,8 @@ def tc_phase(dev, impair, legacy=False):
     (checked on the Pi, 12-13 Oct 2026), so an 'unimpaired' phase after a 'rate X' phase stayed limited to X in every
     campaign up to 13 Oct. The child qdisc is therefore deleted and re-added each phase (the u32 filters live on the
     root qdisc and survive). legacy=True reproduces the old behaviour exactly, for re-running earlier campaigns."""
-    for band, path in ((1, "laptop"), (2, "jetson")):
-        args = impair.get(path) or ""
+    for band, path in BANDS:
+        args = (impair.get(path, impair.get("jetson")) if path == "relay" else impair.get(path)) or ""
         if legacy:
             tc(f"qdisc change dev {dev} parent 1:{band} handle {band}0: netem " + args)
         else:
@@ -125,6 +129,8 @@ class Path:
         self.results, self.log_lock = results, log_lock
         self.samples, self.events = [], []
         self.edge_w, self.edge_w_t = None, 0.0   # worker-reported board power (W) and its time (v4.2)
+        self.where = {}                   # hierarchical edge node: frame id -> where it was processed (jetson/laptop)
+        self.hdr_extra = {}               # extra header fields sent with every frame and probe (e.g. edge_impair)
         self.connected = threading.Event()
         threading.Thread(target=self._acceptor, daemon=True).start()
         threading.Thread(target=self._sender, daemon=True).start()
@@ -145,6 +151,10 @@ class Path:
             except OSError:
                 return
             s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            # send timeout in the kernel, not s.settimeout(): settimeout toggles O_NONBLOCK on the shared descriptor,
+            # and the receiver thread's blocking recv() then fails with EAGAIN and ends (results lost until reconnect)
+            sec = int(self.stall_s)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_SNDTIMEO, struct.pack("ll", sec, int((self.stall_s - sec) * 1e6)))
             old = self.sock
             self.gen += 1
             self.sock = s
@@ -189,10 +199,10 @@ class Path:
             t0 = time.perf_counter()
             self.inflight = (t0, n)
             h["t_send"] = t0
+            if self.hdr_extra:
+                h.update(self.hdr_extra)
             try:
-                s.settimeout(self.stall_s)
-                send_msg(s, h, blobs, self.lock)
-                s.settimeout(None)
+                send_msg(s, h, blobs, self.lock)    # a send blocked for stall_s raises (SO_SNDTIMEO)
                 # stalled = no newly acknowledged bytes for stall_s (independent of the frame size)
                 last_q, last_prog = outq(s), time.perf_counter()
                 if last_q < 0:
@@ -244,6 +254,8 @@ class Path:
             if bw is not None and bw == bw:
                 self.edge_w = bw if self.edge_w is None else 0.8 * self.edge_w + 0.2 * bw
                 self.edge_w_t = time.time()
+            if h.get("where"):
+                self.where[h["id"]] = h["where"]
             with self.log_lock:
                 self.results[h["id"]] = now
 
@@ -492,6 +504,12 @@ def worker(a):
     import cv2
     from pipeline_node import decode
     models = {os.path.basename(w)[:-3]: load_model(w, dev, a.half) for w in a.weights.split(",")}
+    # the camera asks for "yolov8s" / "yolov8m"; a fine-tuned file (yolov8m_visdrone.pt) serves that name too. Without
+    # this alias an unknown name silently fell back to the FIRST model (a yolov8m request served by yolov8s)
+    for k in list(models):
+        if k.endswith("_visdrone") and k[:-len("_visdrone")] not in models:
+            models[k[:-len("_visdrone")]] = models[k]
+    print("worker models:", {k: id(v) for k, v in models.items()}, flush=True)
     model = models[next(iter(models))]
     layers = models
     sync = torch.cuda.synchronize if dev.type == "cuda" else (lambda: None)

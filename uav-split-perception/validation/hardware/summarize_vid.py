@@ -23,13 +23,26 @@ from stream_ap import VID, evaluate
 HW = Path(__file__).resolve().parent.parent.parent / "experiments" / "results" / "hardware"
 
 
+T975 = {1: 12.71, 2: 4.30, 3: 3.18, 4: 2.78, 5: 2.57, 6: 2.45, 7: 2.36, 8: 2.31, 9: 2.26, 10: 2.23, 11: 2.20, 12: 2.18,
+        13: 2.16, 14: 2.14, 15: 2.13, 16: 2.12, 17: 2.11, 18: 2.10, 19: 2.09, 20: 2.086, 21: 2.080, 22: 2.074, 23: 2.069,
+        24: 2.064, 25: 2.060, 26: 2.056, 27: 2.052, 28: 2.048, 29: 2.045, 30: 2.042}
+
+
+def t975(df):
+    """Two-sided 95 % Student-t quantile; beyond 30 df the Cornish-Fisher expansion (error < 0.1 %)."""
+    if df in T975:
+        return T975[df]
+    z = 1.959964
+    return z + (z ** 3 + z) / (4 * df) + (5 * z ** 5 + 16 * z ** 3 + 3 * z) / (96 * df ** 2)
+
+
 def tci(x):
     x = np.asarray(x, float)
     if len(x) < 2:
         return float(x.mean()) if len(x) else float("nan"), float("nan")
     from math import sqrt
-    tcrit = {1: 12.71, 2: 4.30, 3: 3.18, 4: 2.78, 5: 2.57, 6: 2.45, 7: 2.36, 8: 2.31, 9: 2.26}.get(len(x) - 1, 1.96)
-    return float(x.mean()), float(tcrit * x.std(ddof=1) / sqrt(len(x)))
+    # until 26 Oct 2026 this used 1.96 beyond 9 df: intervals of 11-20 pairs were 6-12 % too narrow
+    return float(x.mean()), float(t975(len(x) - 1) * x.std(ddof=1) / sqrt(len(x)))
 
 
 def main():

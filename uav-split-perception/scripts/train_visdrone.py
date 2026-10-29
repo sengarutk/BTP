@@ -15,7 +15,10 @@ from ultralytics import YOLO
 
 ROOT = Path(__file__).resolve().parent.parent
 INIT = {"yolov8n": ROOT / "weights" / "yolov8n.pt", "yolov8s": ROOT / "yolov8s.pt",
-        "yolov8m": ROOT / "weights" / "yolov8m.pt", "yolov8l": ROOT / "weights" / "yolov8l.pt"}
+        "yolov8m": ROOT / "weights" / "yolov8m.pt", "yolov8l": ROOT / "weights" / "yolov8l.pt",
+        # YOLO11 (the professor's request, 23 Oct): same data, settings and selection as the YOLOv8 models
+        "yolo11n": ROOT / "weights" / "yolo11n.pt", "yolo11s": ROOT / "weights" / "yolo11s.pt",
+        "yolo11m": ROOT / "weights" / "yolo11m.pt"}
 
 
 def main():
@@ -25,17 +28,28 @@ def main():
     ap.add_argument("--batch", type=float, default=-1, help="-1: AutoBatch (fits the 6 GB GPU)")
     ap.add_argument("--fraction", type=float, default=1.0, help="share of the training images (timing runs)")
     ap.add_argument("--name", default="")
+    ap.add_argument("--resume", action="store_true", help="continue an interrupted run from its last.pt")
+    ap.add_argument("--det-only", action="store_true", help="train on VisDrone-DET only (datasets/visdrone_det.yaml, no VID clips; task R2) -> weights/<model>_visdrone_det.pt, run <model>_det_e<EPOCHS>")
     a = ap.parse_args()
-    name = a.name or f"{a.model}_e{a.epochs}"
+    name = a.name or (f"{a.model}_det_e{a.epochs}" if a.det_only else f"{a.model}_e{a.epochs}")
+    data, out = ("visdrone_det.yaml", f"{a.model}_visdrone_det.pt") if a.det_only else ("visdrone_ft.yaml", f"{a.model}_visdrone.pt")
+    last = ROOT / "experiments" / "finetune" / name / "weights" / "last.pt"
+    if a.resume and last.exists():
+        YOLO(str(last)).train(resume=True)
+        best = ROOT / "experiments" / "finetune" / name / "weights" / "best.pt"
+        if best.exists():
+            shutil.copy(best, ROOT / "weights" / out)
+            print("best weights ->", ROOT / "weights" / out)
+        return
     m = YOLO(str(INIT[a.model]))
-    m.train(data=str(ROOT / "datasets" / "visdrone_ft.yaml"), imgsz=640, epochs=a.epochs,
+    m.train(data=str(ROOT / "datasets" / data), imgsz=640, epochs=a.epochs,
             batch=int(a.batch) if a.batch >= 1 else a.batch, device=0, workers=4, cache=False, amp=True,
             patience=max(15, a.epochs // 4), fraction=a.fraction, seed=0, deterministic=False,
             project=str(ROOT / "experiments" / "finetune"), name=name, exist_ok=True, plots=True, verbose=False)
     best = ROOT / "experiments" / "finetune" / name / "weights" / "best.pt"
     if a.fraction == 1.0 and best.exists():
-        shutil.copy(best, ROOT / "weights" / f"{a.model}_visdrone.pt")
-        print("best weights ->", ROOT / "weights" / f"{a.model}_visdrone.pt")
+        shutil.copy(best, ROOT / "weights" / out)
+        print("best weights ->", ROOT / "weights" / out)
 
 
 if __name__ == "__main__":

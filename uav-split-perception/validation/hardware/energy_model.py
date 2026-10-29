@@ -74,8 +74,10 @@ class Board:
                 # 6-min steady levels; the 20-s profile state followed a hot inference state (leakage) and is
                 # biased high
                 self.forecast_w = max(0.0, lv["forecaster_30fps"]["power_w"] - lv["idle"]["power_w"])
+            # below the firmware's soft throttle limit (80 C) only; until 28 Oct 2026 this was < 84 C, which let
+            # in the 50 %-duty level (83.8 C, clock already reduced to 2,070 MHz) and steepened the fit
             pts = [(v["power_w"], v["temp_steady_c"]) for k, v in lv.items()
-                   if v.get("arm_clock_mhz_last60", 0) >= 1450 and v["temp_steady_c"] < 84.0]
+                   if v.get("arm_clock_mhz_last60", 0) >= 1450 and v["temp_steady_c"] < 80.0]
             if len(pts) >= 3:
                 x, y = np.array(pts).T
                 slope, icpt = np.polyfit(x, y, 1)
