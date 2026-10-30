@@ -13,53 +13,59 @@
 \input{generated/metrics.tex}
 
 \begin{document}
-\title{Pricing the Camera Drone's Power in Streaming Perception:\\A Measured Study of Three-Tier Detection Offloading}
+\title{Heat Is a Hidden Accuracy Cost:\\Pricing a Camera Drone's Power in Streaming Perception}
 \author{\IEEEauthorblockN{Utkarsh Sengar}
 \IEEEauthorblockA{Department of Computer Science \& Engineering, Indian Institute of Technology Dharwad, India\\
 cs23bt026@iitdh.ac.in}}
 \maketitle
 
 \begin{abstract}
-A camera drone that detects objects in its video can run the detector on its own small computer, on an edge drone,
-or on a ground GPU, and a scheduler must choose one for every frame. We study this choice on real hardware: a fanless
-Raspberry Pi~5 camera drone, a Jetson Orin Nano edge drone and a ground GPU, over Wi-Fi and a batman-adv mesh, scored
-with streaming AP on VisDrone video. Our controller values each frame by the accuracy its result will still have when
-it is shown, using the measured decay of stale detections after motion forecasting, and prices the camera drone's
-measured power and the freshness of its results with online dual variables. Pricing power does not cost accuracy: on
-Wi-Fi it raised streaming AP by \EnGain{} ($\pm$\EnGainCi{}, \EnPairs{} pairs) and \EnRepGain{} in a replication; on
-the mesh removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and \MeshNoPriceC{}~$^\circ$C
-and throttled the board \MeshNoPriceThrottle{}\,\% of the time. The objective must use the decay curve of the forecaster
-that runs: built on the curve without forecasting, the same controller loses \MainNoFc{}. Where the decision should be
-made depends on the mesh topology. Against an AccuMO-style 30-frame model-predictive planner, re-implemented in a
-validated trace replay, the greedy priced choice is equal within the replay's error, at a fraction of the computation.
+A camera drone that detects objects in its video chooses, for every frame, whether to run the detector on its own
+computer, on an edge drone or on a ground GPU. On a fanless drone computer that choice has a cost a scheduler does not
+see: heat. We measure it on a real three-tier system (a Raspberry Pi~5 camera drone, a Jetson Orin Nano edge drone and
+a ground GPU, over Wi-Fi and a batman-adv mesh, scored with streaming AP on VisDrone video). Onboard detection keeps the
+board throttled most of the time, and throttling alone costs onboard streaming AP \ThrottleLossMin--\ThrottleLossMax\,\%
+against the same runs at the full clock. A controller that prices the camera drone's measured power inside a
+streaming-accuracy objective, with online dual variables for power and freshness, removes this cost without losing
+accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainPct\,\%, \EnPairs{} pairs) and \EnRepGain{}
+(\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and
+\MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
+\MeshVThrottle{}\,\%. In a trace replay validated against the hardware, the greedy priced controller reaches
+\OracleShareMin--\OracleShareMax\,\% of a hindsight oracle and ties an AccuMO-style 30-frame planner within the replay's
+error. Its objective must use the decay curve of the forecaster that runs: with the curve without forecasting it loses
+\MainNoFcLoss{}~sAP.
 \end{abstract}
 
 \section{Introduction}
 Object detection on a drone has three places to run: the drone's own computer, an edge drone that flies with it, and a
-ground station. The drone's computer is slow, heats up and has a battery; the radio links to the others fade, congest
-and drop. Offloading and per-frame adaptation are well studied for phones and cameras~\cite{Ra_2011,Chen_2015,Zhang_2021},
+ground station. Offloading and per-frame adaptation are well studied for phones and cameras~\cite{Ra_2011,Chen_2015,Zhang_2021},
 streaming perception defines how to score a detector whose results arrive late~\cite{Li_2020,Yang_2022}, and multi-hop
-UAV offloading has been built on testbeds~\cite{Coletta_2023}. What has not been measured is how the camera drone's
-power and heat interact with streaming accuracy when a scheduler can use all three tiers.
+UAV offloading has been built on testbeds~\cite{Coletta_2023}. Offloading schedulers usually treat the drone's own
+computer as a server with a fixed speed; thermal management of on-device inference~\cite{Jeon_2026} is studied
+separately from where each frame should go. A small camera drone carries a fanless board, however, and running the detector on it heats
+the board until its firmware lowers the clock: the onboard server slows down, and every other task on the board with it.
 
-We built and measured such a system and report four findings, each from paired hardware campaigns unless marked:
+\textbf{Thesis.} On a fanless drone computer, heat is a hidden accuracy cost, and a scheduler that prices the board's
+measured power inside its accuracy objective removes it without giving up accuracy. We support this on real hardware:
 \begin{itemize}
-\item \emph{Pricing the camera drone's power holds or raises streaming accuracy.} A dual-ascent price on the measured
-board power removes low-value onboard inference; on Wi-Fi this raised streaming AP (\EnGain{} and \EnRepGain{} in two
-campaigns of \EnPairs{} pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric and VisDrone-trained detections,
-Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}), and on the mesh it kept accuracy while removing throttling
-(Section~\ref{sec:energy}).
-\item \emph{The objective must match the forecaster.} Valuing a result by the decay curve measured \emph{after} motion
-forecasting beats the curve without forecasting and a flat curve (Section~\ref{sec:decay}).
-\item \emph{Where to decide depends on the topology.} With a direct ground link the camera drone should choose among all
-tiers; when the ground is reachable only through the edge drone, letting the edge drone decide is better
-(Section~\ref{sec:topology}).
-\item \emph{A greedy priced choice does as well as planning (trace replay).} An AccuMO-style planner~\cite{Kong_2023}
-ties our controller within the replay's known error (Section~\ref{sec:planner}).
+\item \emph{Heat costs accuracy.} Running YOLOv8s onboard kept the Pi throttled \ThrottleShareCool\,\% of short runs that
+started cool and \ThrottleShareLong\,\% of 24-minute runs; throttling alone cost \ThrottleLossMin--\ThrottleLossMax\,\% of
+onboard streaming AP against an emulated full clock (Section~\ref{sec:heat}).
+\item \emph{Pricing measured power removes the cost.} A dual-ascent price on the board's measured power, inside a
+streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRepGain{} in two campaigns of \EnPairs{}
+pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
+removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
+\EnGainPct\,\% and \EnRepGainPct\,\%.
+\item \emph{The greedy priced choice is near the best schedule} (trace replay): \OracleShareMin--\OracleShareMax\,\% of
+a hindsight oracle, no gain from a clairvoyant link, and a tie with an AccuMO-style planner~\cite{Kong_2023};
+on hardware it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers (Section~\ref{sec:best}).
+\item \emph{The objective must match the forecaster}: valuing a result by the decay measured \emph{after} motion
+forecasting beats the curve without forecasting and a flat one (Section~\ref{sec:decay}).
 \end{itemize}
-We also report negative results: a heat price adds nothing beyond the energy price, and pricing the edge drone's energy
-saves little because its power is dominated by idle draw (Section~\ref{sec:negative}). Finally, we measure a first
-two-camera hardware swarm and a calibrated swarm simulation (Section~\ref{sec:swarm}).
+Supporting results: the best place to decide depends on the mesh topology (Section~\ref{sec:topology}); a first
+two-camera hardware swarm and a calibrated swarm simulation (Section~\ref{sec:swarm}); and negative results, a predictive
+heat price adds nothing beyond the energy price and pricing the edge drone's energy saves little
+(Section~\ref{sec:negative}).
 
 \section{Related Work}
 \textbf{Offloading and adaptation.} Odessa~\cite{Ra_2011} adapts offloading and parallelism for interactive perception,
@@ -106,8 +112,10 @@ reaches the Jetson and the ground over Wi-Fi or over an ad-hoc batman-adv mesh, 
 forced through the Jetson (multihop). Link faults (rate limits, loss, blackouts) are applied per phase with
 \texttt{netem} on the camera drone.
 \textbf{Workload and metric.} The camera streams the VisDrone2019-VID validation clips~\cite{zhu2022visdrone} at
-30~frames/s. Detectors are YOLOv8~\cite{jocher2023yolo} models fine-tuned on VisDrone (onboard: YOLOv8s at 320 or
-640~px; servers: YOLOv8s at 320--640~px and YOLOv8m at 640~px, JPEG quality 90 or 50). Accuracy is streaming AP (sAP): at every frame
+30~frames/s. Detectors are YOLOv8~\cite{jocher2023yolo} models (onboard: YOLOv8s at 320 or 640~px; servers: YOLOv8s at
+320--640~px and YOLOv8m at 640~px, JPEG quality 90 or 50). The Wi-Fi campaigns ran COCO-trained weights and are also
+re-scored with the detections of the same models fine-tuned on VisDrone (reported as ``standard metric''); the mesh
+campaigns and the onboard-only runs ran the VisDrone-trained weights. Accuracy is streaming AP (sAP): at every frame
 the newest result that has arrived is scored against that frame's labels, with a camera-motion-aligned forecaster that
 moves stale boxes forward, running live on the Pi.
 
@@ -175,7 +183,15 @@ AccuMO-style $-$ v4.1, random faults & replay & \MpcRandom{}$\pm$\MpcRandomCi{} 
 \end{tabular}
 \end{table*}
 
-\subsection{Pricing power holds or raises accuracy}\label{sec:energy}
+\subsection{Heat costs accuracy}\label{sec:heat}
+In onboard-only runs on the Pi (YOLOv8s, YOLOv8m and YOLOv8l fine-tuned on VisDrone, with clock and throttle logging),
+runs of YOLOv8s that started at \ThrottleStartCool~$^\circ$C ran at a mean of \ThrottleTempCool~$^\circ$C with the board
+throttled \ThrottleShareCool\,\% of the time, and \ThrottleShareLong\,\% over 24-minute runs. Re-scoring the same runs
+with each result's latency at the board's full clock (an emulation), throttling cost \ThrottleLossMin--\ThrottleLossMax\,\%
+of the full-clock streaming AP across the \ThrottleCells{} detector-and-condition cells. Heat therefore costs the onboard server a
+large share of its accuracy, and an unpriced controller that keeps using it runs into that cost (next subsection).
+
+\subsection{Pricing measured power removes the cost}\label{sec:energy}
 On Wi-Fi, the energy-priced controller (v4) against the same controller without prices (v3 with forecasting) gained
 \EnGain{}$\pm$\EnGainCi{}~sAP, ahead in \EnWins{} of \EnPairs{} pairs; a second campaign gave
 \EnRepGain{}$\pm$\EnRepCi{} (ahead in \EnRepWins{} of 20). Re-scored with the standard metric and detections of the
@@ -194,23 +210,16 @@ strategy: \SysEffFixed{} sAP per watt against \SysEffMin--\SysEffMax{} for the p
 the time (the priced controllers at least \SysVAvailMin\,\%) and fails when its link fails, so the edge drone's case is
 robustness, not energy.
 
-\subsection{The objective must match the forecaster}\label{sec:decay}
-With the decay curve after forecasting, the streaming objective beat the rate objective of v2 by
-\FcGain{}$\pm$\FcGainCi{}~sAP (\FcPairs{} pairs). In the 240-run main campaign the priced controller (v5) with the curve
-measured without forecasting lost \MainNoFc{}$\pm$\MainNoFcCi{}, and with a flat curve \MainFlat{}$\pm$\MainFlatCi{}; generic
-linear and exponential decays on the deadline's time scale tied (\MainLin{}, \MainExp{}). What matters is a decay as
-slow as the forecaster makes it, not the exact measured shape.
+\subsection{Near the best schedule}\label{sec:best}\label{sec:planner}
+\textbf{Distance from the best schedule (trace replay).} Knowing the exact goodput of every next transfer in advance
+changes v4.1's streaming AP by at most \ClairMax{} (inside the interval in every scenario), so a better link predictor
+would not help under the emulated faults. Against a hindsight oracle that picks, per network phase, the best of v4.1
+and 17 fixed settings, v4.1 reaches \OracleShareMin--\OracleShareMax\,\% of the oracle's accuracy with 20~s phases and
+\OracleShareRandom\,\% when the faults change every 4~s.
 
-\subsection{Where the decision belongs}\label{sec:topology}
-On the mesh with a direct camera-to-ground link, the camera deciding among all tiers (v4.1) reached \TopoDirectV{}~sAP
-against \TopoDirectH{} for a hierarchical chain in which the edge drone decides (\TopoDirectPairs{} pairs,
-$p=\TopoDirectP{}$). With the direct link blocked so that every packet crosses the edge drone, the order reversed:
-\TopoMultiH{} for the chain against \TopoMultiV{} for v4.1 (3 pairs).
-
-\subsection{Published schedulers and a planner}\label{sec:planner}
-In the main campaign the re-implemented literature schedulers (confidence trigger~\cite{Gomez_2024}, offloading
-reward~\cite{Qiu_2024}, freshness threshold, shortest queue) differed from the priced controller (v5) by \MainLitMin{}
-to \MainLitMax{}~sAP (20 pairs each), and a LEAF-style fixed weight~\cite{Wang_2023} tied it (\MainLeaf{}). We re-implemented an
+\textbf{Published schedulers.} In the 240-run hardware campaign the re-implemented literature schedulers (confidence trigger~\cite{Gomez_2024}, offloading
+reward~\cite{Qiu_2024}, freshness threshold, shortest queue) trailed the priced controller (v5) by
+\LitBehindMin--\LitBehindMax~sAP (20 pairs each), and a LEAF-style fixed weight~\cite{Wang_2023} tied it (\MainLeaf{}). We re-implemented an
 AccuMO-style planner in the trace replay: one setting per server for the next 30 frames (252 plans), the
 content-conditioned decay, the plan maximising the accuracy of the result on screen. Against the priced controller it
 was \MpcMission{}$\pm$\MpcMissionCi{} on the mission (\MpcMissionN{} seeds), \MpcRandom{}$\pm$\MpcRandomCi{} on random
@@ -220,15 +229,22 @@ difference was \MpcHeldRandom{}$\pm$\MpcHeldRandomCi{}. All of these are within 
 onboard use (\ReplayLeafBias{}), so the supported claim is that the greedy priced choice does as well as a 30-frame
 planner here; the planner takes \MpcMs{}~ms per frame on a laptop CPU, and its hardware comparison is future work.
 
-\textbf{Distance from the best schedule (trace replay).} Knowing the exact goodput of every next transfer in advance
-changes v4.1's streaming AP by at most \ClairMax{} (inside the interval in every scenario), so a better link predictor
-would not help under the emulated faults. Against a hindsight oracle that picks, per network phase, the best of v4.1
-and 17 fixed settings, v4.1 reaches \OracleShareMin--\OracleShareMax\,\% of the oracle's accuracy with 20~s phases and
-\OracleShareRandom\,\% when the faults change every 4~s.
-
 \textbf{Calibration (trace replay).} Over \CalFrames{} offloaded frames, v4.1 predicted on average a \CalPred\,\%
 chance of meeting the deadline and \CalObs\,\% met it (expected calibration error \CalEce{}); no probability bin was
 over-confident, so the controller is cautious rather than optimistic.
+
+\subsection{The objective must match the forecaster}\label{sec:decay}
+With the decay curve after forecasting, the streaming objective beat the rate objective of v2 by
+\FcGain{}$\pm$\FcGainCi{}~sAP (\FcPairs{} pairs). In the 240-run main campaign the priced controller (v5) with the curve
+measured without forecasting lost \MainNoFcLoss{}$\pm$\MainNoFcCi{}, and with a flat curve \MainFlatLoss{}$\pm$\MainFlatCi{}; generic
+linear and exponential decays on the deadline's time scale tied (\MainLin{}, \MainExp{}). What matters is a decay as
+slow as the forecaster makes it, not the exact measured shape.
+
+\subsection{Where the decision belongs}\label{sec:topology}
+On the mesh with a direct camera-to-ground link, the camera deciding among all tiers (v4.1) reached \TopoDirectV{}~sAP
+against \TopoDirectH{} for a hierarchical chain in which the edge drone decides (\TopoDirectPairs{} pairs,
+$p=\TopoDirectP{}$). With the direct link blocked so that every packet crosses the edge drone, the order reversed:
+\TopoMultiH{} for the chain against \TopoMultiV{} for v4.1 (3 pairs).
 
 \subsection{Several camera drones}\label{sec:swarm}
 With two real camera drones (the Pi and the Jetson as cameras) sharing the ground GPU, sharing cost the Pi
@@ -249,13 +265,16 @@ The boards were on a table, one hop apart, with recorded video replayed; the mes
 routing protocols compared for UAV meshes~\cite{Diniz_2025}, and its own effect was not characterised; there was one
 camera drone on the mesh; most
 mesh cells have 3 repetitions; the trace replay favours low-onboard policies by about \ReplayLeafBias{}~sAP, so the
-planner comparison is provisional; the energy mechanism is not isolated by an ablation.
+planner comparison is provisional; the throttling cost is measured against an emulated full clock, and the energy mechanism is not isolated by an
+ablation; whether the controller also survives correlated failures of both links under real interference is not yet
+measured.
 
 \section{Conclusion}
-On a real three-tier drone system, a greedy scheduler that values each frame by the accuracy its result will still
-have, and prices the camera drone's measured power and the freshness of its results, keeps or raises streaming
-accuracy while removing thermal throttling. Its objective must use the decay curve of the forecaster in use, and the
-best place to decide depends on the mesh topology.
+On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and
+throttling alone costs a large share of onboard streaming accuracy. A greedy scheduler that values each frame by the
+accuracy its result will still have, and prices the camera drone's measured power and the freshness of its results,
+removes that cost while keeping or raising streaming accuracy, and in a validated replay it is close to the best
+schedule. Its objective must use the decay curve of the forecaster in use.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

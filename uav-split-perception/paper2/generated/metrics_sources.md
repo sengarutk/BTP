@@ -4,13 +4,22 @@
 | --- | --- | --- |
 | `\PiFullMs` | 758 | placements_summary.json devices.pi.full_ms |
 | `\JetsonFullMs` | 22.7 | placements_summary.json devices.jetson.full_ms |
+| `\ThrottleLossMin` | 37 | onboard_sap/throttle_analysis_visdrone.json counterfactual_full_clock.*.*: 1 - sAP_fc_measured / sAP_fc_full_clock, minimum over every condition and detector x 100 |
+| `\ThrottleLossMax` | 59 | ... maximum x 100 |
+| `\ThrottleCells` | 9 | ... number of condition x detector cells |
+| `\ThrottleStartCool` | 60 | onboard_sap/throttle_analysis_visdrone.json summary.short_cool.s640vd.temp_start (YOLOv8s onboard, runs started cool) |
+| `\ThrottleShareCool` | 64 | ... .throttled_share x 100 |
+| `\ThrottleTempCool` | 84 | ... .temp_mean |
+| `\ThrottleShareLong` | 89 | ... summary.long_cool.s640vd.throttled_share x 100 (24-min runs) |
 | `\EnGain` | +0.0074 | vid_campaign_energy_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.A_eco_tight.mean_diff (ref v3+fc2 minus v4, sign turned) |
 | `\EnGainCi` | 0.0030 | ... .A_eco_tight.ci95 |
 | `\EnPairs` | 20 | ... .A_eco_tight.n |
 | `\EnWins` | 17 | ... pairs minus .wins (wins = ref ahead) |
+| `\EnGainPct` | 16 | EnGain / mean over the 4 scenarios of scenarios.*.A_stream_fc2.sAP_quality_fcv2live (the unpriced controller's sAP) x 100 |
 | `\EnRepGain` | +0.0056 | vid_campaign_v42_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.A_stream_fc2.mean_diff (ref v4 minus v3+fc2) |
 | `\EnRepCi` | 0.0037 | ... .A_stream_fc2.ci95 |
 | `\EnRepWins` | 18 | ... .A_stream_fc2.wins |
+| `\EnRepGainPct` | 12 | EnRepGain / mean over scenarios of scenarios.*.A_stream_fc2.sAP_quality_fcv2live x 100 |
 | `\EnVdGain` | +0.0189 | report_c_summary_visdrone.json vid_campaign_energy.paired.A_stream_fc2.sAP_fc.A_eco_tight.mean_diff (sign turned) |
 | `\EnVdHolm` | 0.002 | ... .p_holm |
 | `\EnRepVdGain` | +0.0165 | report_c_summary_visdrone.json vid_campaign_v42.paired.A_eco_tight.sAP_fc.A_stream_fc2.mean_diff |
@@ -45,16 +54,23 @@
 | `\FcPairs` | 20 | ... .n |
 | `\MainNoFc` | −0.0059 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v5_nofc.mean_diff (ref v5 minus v5_nofc; sign turned: v5_nofc minus v5) |
 | `\MainNoFcCi` | 0.0042 | ... .v5_nofc.ci95 |
+| `\MainNoFcLoss` | 0.0059 | ... .v5_nofc.mean_diff (v5 minus v5_nofc: positive = what v5_nofc loses) |
 | `\MainFlat` | −0.0054 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v5_flat.mean_diff (ref v5 minus v5_flat; sign turned: v5_flat minus v5) |
 | `\MainFlatCi` | 0.0034 | ... .v5_flat.ci95 |
+| `\MainFlatLoss` | 0.0054 | ... .v5_flat.mean_diff (v5 minus v5_flat: positive = what v5_flat loses) |
 | `\MainLin` | +0.0005 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v5_lin.mean_diff (ref v5 minus v5_lin; sign turned: v5_lin minus v5) |
 | `\MainLinCi` | 0.0015 | ... .v5_lin.ci95 |
+| `\MainLinLoss` | −0.0005 | ... .v5_lin.mean_diff (v5 minus v5_lin: positive = what v5_lin loses) |
 | `\MainExp` | −0.0002 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v5_exp.mean_diff (ref v5 minus v5_exp; sign turned: v5_exp minus v5) |
 | `\MainExpCi` | 0.0026 | ... .v5_exp.ci95 |
+| `\MainExpLoss` | 0.0002 | ... .v5_exp.mean_diff (v5 minus v5_exp: positive = what v5_exp loses) |
 | `\MainLeaf` | −0.0004 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.leaf.mean_diff (ref v5 minus leaf; sign turned: leaf minus v5) |
 | `\MainLeafCi` | 0.0016 | ... .leaf.ci95 |
+| `\MainLeafLoss` | 0.0004 | ... .leaf.mean_diff (v5 minus leaf: positive = what leaf loses) |
 | `\MainLitMin` | −0.0112 | the same, aoi_thr/conf_trigger/jsq/reward_offload: the least negative |
 | `\MainLitMax` | −0.0278 | the same: the most negative |
+| `\LitBehindMin` | 0.0112 | v5 minus the literature schedulers (positive = v5 ahead): smallest margin |
+| `\LitBehindMax` | 0.0278 | v5 minus the literature schedulers: largest margin |
 | `\TopoDirectV` | 0.193 | vid_campaign_mesh_summary.json cells['ALL|v41'].sAP_fc[0] |
 | `\TopoDirectH` | 0.146 | ... cells['ALL|hier'].sAP_fc[0] |
 | `\TopoDirectP` | 0.031 | vid_campaign_mesh_summary.json paired_v41_minus_hier.ALL.sAP_fc.p_perm |

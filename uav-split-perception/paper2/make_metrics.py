@@ -42,6 +42,23 @@ def main():
     put("PiFullMs", pl["devices"]["pi"]["full_ms"], "placements_summary.json devices.pi.full_ms", "{:.0f}")
     put("JetsonFullMs", pl["devices"]["jetson"]["full_ms"], "placements_summary.json devices.jetson.full_ms", "{:.1f}")
 
+    # ---- heat as an accuracy cost: onboard-only runs on the Pi with clock and throttle logging (Part 17), and the same
+    # runs re-scored with each result's latency at the full 2.4 GHz clock (counterfactual_full_clock, an emulation)
+    th = j("onboard_sap/throttle_analysis_visdrone.json")
+    cf = th["counterfactual_full_clock"]
+    loss = [100 * (1 - v["sAP_fc_measured"] / v["sAP_fc_full_clock"]) for c in cf for v in cf[c].values()]
+    put("ThrottleLossMin", min(loss), "onboard_sap/throttle_analysis_visdrone.json counterfactual_full_clock.*.*: "
+        "1 - sAP_fc_measured / sAP_fc_full_clock, minimum over every condition and detector x 100", "{:.0f}")
+    put("ThrottleLossMax", max(loss), "... maximum x 100", "{:.0f}")
+    put("ThrottleCells", str(len(loss)), "... number of condition x detector cells")
+    sc = th["summary"]["short_cool"]["s640vd"]
+    put("ThrottleStartCool", sc["temp_start"], "onboard_sap/throttle_analysis_visdrone.json summary.short_cool.s640vd"
+        ".temp_start (YOLOv8s onboard, runs started cool)", "{:.0f}")
+    put("ThrottleShareCool", 100 * sc["throttled_share"], "... .throttled_share x 100", "{:.0f}")
+    put("ThrottleTempCool", sc["temp_mean"], "... .temp_mean", "{:.0f}")
+    put("ThrottleShareLong", 100 * th["summary"]["long_cool"]["s640vd"]["throttled_share"],
+        "... summary.long_cool.s640vd.throttled_share x 100 (24-min runs)", "{:.0f}")
+
     # ---- C1 energy pricing, Wi-Fi: G9 energy campaign (ref v3+fc2 = A_stream_fc2; v4 = A_eco_tight, 2.8 W)
     e = j("vid_campaign_energy_summary_v2_live.json")["paired_vs_ref"]["sAP_quality_fcv2live"]["A_eco_tight"]
     put("EnGain", signed(-e["mean_diff"]), "vid_campaign_energy_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live"
@@ -49,12 +66,20 @@ def main():
     put("EnGainCi", e["ci95"], "... .A_eco_tight.ci95")
     put("EnPairs", str(e["n"] if "n" in e else e["pairs"]), "... .A_eco_tight.n")
     put("EnWins", str((e["n"] if "n" in e else e["pairs"]) - e["wins"]), "... pairs minus .wins (wins = ref ahead)")
+    sce = j("vid_campaign_energy_summary_v2_live.json")["scenarios"]
+    ref = sum(v["A_stream_fc2"]["sAP_quality_fcv2live"] for v in sce.values()) / len(sce)
+    put("EnGainPct", 100 * -e["mean_diff"] / ref, "EnGain / mean over the 4 scenarios of scenarios.*.A_stream_fc2"
+        ".sAP_quality_fcv2live (the unpriced controller's sAP) x 100", "{:.0f}")
     # replication, G11 (11 Oct; ref v4, v3+fc2 = A_stream_fc2)
     r = j("vid_campaign_v42_summary_v2_live.json")["paired_vs_ref"]["sAP_quality_fcv2live"]["A_stream_fc2"]
     put("EnRepGain", signed(r["mean_diff"]), "vid_campaign_v42_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live"
         ".A_stream_fc2.mean_diff (ref v4 minus v3+fc2)")
     put("EnRepCi", r["ci95"], "... .A_stream_fc2.ci95")
     put("EnRepWins", str(r["wins"]), "... .A_stream_fc2.wins")
+    scr = j("vid_campaign_v42_summary_v2_live.json")["scenarios"]
+    ref2 = sum(v["A_stream_fc2"]["sAP_quality_fcv2live"] for v in scr.values()) / len(scr)
+    put("EnRepGainPct", 100 * r["mean_diff"] / ref2, "EnRepGain / mean over scenarios of scenarios.*.A_stream_fc2"
+        ".sAP_quality_fcv2live x 100", "{:.0f}")
     # standard metric, VisDrone detections, Holm (report_c_summary_visdrone.json)
     rc = j("report_c_summary_visdrone.json")
     a = rc["vid_campaign_energy"]["paired"]["A_stream_fc2"]["sAP_fc"]["A_eco_tight"]
@@ -130,9 +155,12 @@ def main():
         put(f"Main{name}", signed(-mn[key]["mean_diff"]), f"vid_campaign_main_summary_v2_live.json paired_vs_ref"
             f".sAP_quality_fcv2live.{key}.mean_diff (ref v5 minus {key}; sign turned: {key} minus v5)")
         put(f"Main{name}Ci", mn[key]["ci95"], f"... .{key}.ci95")
+        put(f"Main{name}Loss", mn[key]["mean_diff"], f"... .{key}.mean_diff (v5 minus {key}: positive = what {key} loses)")
     lit = {k: -mn[k]["mean_diff"] for k in ("aoi_thr", "conf_trigger", "jsq", "reward_offload")}
     put("MainLitMin", signed(max(lit.values())), "the same, aoi_thr/conf_trigger/jsq/reward_offload: the least negative")
     put("MainLitMax", signed(min(lit.values())), "the same: the most negative")
+    put("LitBehindMin", -max(lit.values()), "v5 minus the literature schedulers (positive = v5 ahead): smallest margin")
+    put("LitBehindMax", -min(lit.values()), "v5 minus the literature schedulers: largest margin")
 
     # ---- C3 where the decision belongs: v4.1 against the hierarchical chain (mesh 1: direct link; mesh 2: multihop)
     m1 = j("vid_campaign_mesh_summary.json")
