@@ -79,7 +79,8 @@ LEFT = [("<li>One published baseline (A²-UAV-style or AccuMO-style) re-implemen
          "<li>The AccuMO-style planner against v4.1 and the LEAF-style weight on the mesh (ported and tested; "
          "<code>tools/campaign_mesh4.sh</code>, 45 runs, about 6 h).</li>"),
         ("<li>Commit and push the work since <code>08bc5a28</code>.</li>",
-         "<li>Commit the work since <code>b34f3738</code> and push <code>main</code> (1 commit ahead of GitHub).</li>"),
+         "<li><s>Commit and push the work</s> Done 30 Oct: <code>main</code> is on GitHub (<code>bf77b3ca</code>); the 29 Oct "
+         "commit was split in two to fit GitHub's 2 GiB push limit.</li>"),
         ("<li>Write the paper from Parts 17–20 of the Results Brief and this report; update the professor's report.</li>",
          "<li>Paper 1 has a hardware section and the learned bottleneck; paper 2 (the priced controller) has a first draft "
          "in <code>paper2/</code>; finish it after the planner campaign.</li>")]
@@ -93,9 +94,9 @@ def main():
     i = h.index(a) + len(a)
     j = h.index("<h3>4.2 ", i)
     h = h[:i] + lb + h[j:]                          # replaces an earlier version of the paragraph (idempotent)
-    if "<h3>4.12 " in h:
+    if "<h3>4.12 " in h:                         # 4.12 sits just before section 4's </section>: cut only up to it
         i = h.index("<h3>4.12 ")
-        h = h[:i] + h[h.index("<h2", i):]
+        h = h[:i] + h[h.index("</section>", i):]
     k = h.index("<h2", h.index("<h3>4.11 "))
     k = h.rfind("</section>", 0, k) if h.rfind("</section>", 0, k) > h.index("<h3>4.11 ") else k
     h = h[:k] + pl + h[k:]

@@ -2430,7 +2430,7 @@ State on 6 October 2026, 15:25 (kept for the record):
 | Calibration of the deadline probabilities on hardware (the per-frame logging of 19.8; analysis ready: `calib_hw.py`, 19.11) | The next board campaign | no extra runs |
 | Co-channel interference test on the mesh: how often both paths fade together (19.9: a measurement; in the replay neither joint-failure awareness nor perfect prediction adds accuracy) | A device for interference traffic; the mesh | about half a day |
 | Cheaper camera-motion step on the Pi: 160 px, the step time and the onboard speed-up (19.9; scripted, 19.11: `tools/campaign_ego160.sh`, 12 runs) | The camera Pi on the mesh | about 1.5 h |
-| Commit the work since `b34f3738` (29 Oct, the 19.9–19.11 work); push `main`, which is 1 local commit ahead of GitHub (`08bc5a28`) | Your go-ahead | minutes |
+| <s>Commit and push the work since `08bc5a28`</s> **Done 30 Oct**: `main` is on GitHub (`bf77b3ca`); the 29 Oct commit was split in two to fit GitHub's 2 GiB push limit | — | — |
 | Paper 1: hardware section and the learned bottleneck (19.11–19.12). Paper 2: first draft in `paper2/` (19.12); to finish after the planner's board campaign. Final Report updated | The board campaign for paper 2 | a few days |
 | <s>Task C7 (Part 19): VisDrone replay of the 776 earlier runs</s> **Done 25 Oct** (19.5) | — | — |
 | <s>Hierarchical chain on the mesh (18.6)</s> **Done 23–24 Oct** (18.8, 18.9) | — | — |

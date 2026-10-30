@@ -241,8 +241,8 @@ LEFT_ROWS = [
      "Calibration of the deadline probabilities on hardware (the per-frame logging of 19.8; analysis ready: "
      "<code>calib_hw.py</code>, 19.11)", "The next board campaign", "no extra runs"),
     ("Commit and push the work since <code>08bc5a28</code> (branch <code>main</code>)", "Your go-ahead", "minutes",
-     "Commit the work since <code>b34f3738</code> (29 Oct, the 19.9–19.11 work); push <code>main</code>, which is "
-     "1 local commit ahead of GitHub (<code>08bc5a28</code>)", "Your go-ahead", "minutes"),
+     "<s>Commit and push the work since <code>08bc5a28</code></s> <b>Done 30 Oct</b>: <code>main</code> is on GitHub "
+     "(<code>bf77b3ca</code>); the 29 Oct commit was split in two to fit GitHub's 2 GiB push limit", "—", "—"),
     ("Paper and professor report update", "—", "1–2 weeks",
      "Paper: hardware section, claims and citations checked (19.11). Still to do: the controller paper (the argument of "
      "Part 20) and the professor's report", "—", "1–2 weeks"),
@@ -274,15 +274,13 @@ def main():
     k = m.index("**State on 26 Oct 2026")
     k = m.index("\n- ", k) + 1
     m = m[:k] + html_to_md("<ul>" + STATE + "</ul>").strip() + "\n" + m[k:]
-    for a, b, c, a2, b2, c2 in LEFT_ROWS:
+    for a, b, c, a2, b2, c2 in LEFT_ROWS:      # a row already replaced by a later update (19.12) is left alone
         old_h, new_h = html_row(a, b, c), html_row(a2, b2, c2)
-        if new_h not in h:
-            assert h.count(old_h) == 1, a[:60]
+        if new_h not in h and h.count(old_h) == 1:
             h = h.replace(old_h, new_h)
         old_m = f"| {md_cell(a)} | {md_cell(b)} | {md_cell(c)} |"
         new_m = f"| {md_cell(a2)} | {md_cell(b2)} | {md_cell(c2)} |"
-        if new_m not in m:
-            assert m.count(old_m) == 1, old_m[:80]
+        if new_m not in m and m.count(old_m) == 1:
             m = m.replace(old_m, new_m)
     HTML.write_text(h)
     MD.write_text(m)
