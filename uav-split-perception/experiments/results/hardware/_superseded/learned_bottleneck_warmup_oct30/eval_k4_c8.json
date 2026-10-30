@@ -1,0 +1,22 @@
+{
+ "config": "k4_c8",
+ "cut": 4,
+ "channels": 8,
+ "code_values": 8064,
+ "payload_bytes_mean": 7156.193078324226,
+ "payload_bytes_p95": 7338.0,
+ "gpu_codec_ms_median": 0.8103479995043017,
+ "base_map50_95": 0.26705827490531536,
+ "precision": 0.4671224463611088,
+ "recall": 0.30220404763712866,
+ "map50": 0.2938358801712462,
+ "map50_95": 0.1520587849466972,
+ "num_images": 548,
+ "boot_delta_map50": -0.1687492088792828,
+ "boot_delta_map50_ci_low": -0.17996918292129646,
+ "boot_delta_map50_ci_high": -0.1577076391162129,
+ "boot_delta_map50_95": -0.11499948995861817,
+ "boot_delta_map50_95_ci_low": -0.1225835755830692,
+ "boot_delta_map50_95_ci_high": -0.10675453498110682,
+ "boot_n_boot": 300
+}

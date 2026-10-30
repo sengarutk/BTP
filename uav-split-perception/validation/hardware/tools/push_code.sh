@@ -7,9 +7,9 @@
 # TARGETS="pi2 nano" (default "pi nano"): the boards to update.
 D=$(cd "$(dirname "$0")" && pwd); HW=$(cd "$D/.." && pwd); RES=$(cd "$HW/../../experiments/results/hardware" && pwd)
 CODE="adaptive.py adaptive2.py energy_profile.py power_logger.py hwbench.py egomotion.py forecast.py relay.py pipeline_node.py
-      thermal_steady.py"
+      thermal_steady.py mpc_planner.py decay_context.py bench_planner.py egomotion_bench.py"      # last 4: --policy accumo and the 160 px step test (29 Oct 2026)
 CONF="staleness_decay.json staleness_decay_forecast_v2.json forecast_tuning_v2.json
-      variant_accuracy_visdrone.json variant_accuracy_visdrone_ft.json"
+      variant_accuracy_visdrone.json variant_accuracy_visdrone_ft.json decay_context_train.json"
 for f in $CODE; do
   [ -f $HW/$f ] || { echo "missing code $f"; exit 1; }
   for t in ${TARGETS:-pi nano}; do $D/rcp.sh $t $HW/$f REMOTE:hwbench/ || exit 1; done

@@ -1,0 +1,1 @@
+Aborted 29 Oct ~19:40: launched with --netem reset (wrong: the 240 hardware runs of vid_campaign_main used the legacy netem, as validate_main_oct29_plant did), and killed by the laptop restart. Not used.

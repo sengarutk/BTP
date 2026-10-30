@@ -11,6 +11,7 @@ This is what a drone can compute live: one tracking step per camera frame on its
 usage: egomotion.py DATASET_DIR   -> DATASET_DIR/egomotion.npz  {seq: (n, 3, 3) cumulative transforms}
 """
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -18,7 +19,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-W_SMALL = 320
+W_SMALL = int(os.environ.get("EGO_W_SMALL", "320"))   # tracking width; EGO_W_SMALL=160: the cheaper step of 19.9
 
 
 def step(prev_small, cur_small, scale):

@@ -174,8 +174,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 
   <h3>4.1 Where to compute: send the image, don't split the network</h3>
   <p>Across 19 detectors the smallest split payload (INT8 + zstd at layer 4, 310.7 KiB for YOLOv8s) is 2.0–11.5× a JPEG frame, and the drone must also run the first layers (210–252 ms on the Pi). No split beats a JPEG in the model of all 1,150 placements over the Pi, the Jetson and the laptop, nor in live runs of the important ones: the best split (layer 1) delivered 7.0 frames/s (2.5 on time) against 15.2 (14.7 on time) for a JPEG to the laptop. INT8 splitting loses at most 0.04 mAP points on COCO and at most 0.0004 mAP on VisDrone; image codecs lose 2.4–5.4 times more accuracy on aerial images than on COCO (JPEG q50 −24 % against −8 %, q90 −4.0 % against −0.7 %), because small objects lose their detail first.</p>
-
-  <h3>4.2 Onboard detection is far too slow on a Pi, and heat makes it worse</h3>
+<p><b>A learned bottleneck changes the bits, not the verdict (30 Oct).</b> A small encoder and decoder trained at layer 2 or 4 of the VisDrone YOLOv8s, with the detector frozen (distillation of its own neck outputs, no labels), needs 23–76 % fewer bytes than JPEG for the same accuracy, measured on the same VisDrone frames, which no post-hoc split does. It tops out at 0.253 mAP (105 kB) against 0.256 for a JPEG q90 of 78 kB. In the system model it beats the image only with fast onboard compute and a slow link (YOLOv8s at 40 ms per frame: up to 17.3 Mbit/s), and on the measured Pi (758 ms) only up to 0.6 Mbit/s, where no option delivers more than 2.7 accuracy-weighted on-time results per second; above that, running the first layers and the encoder onboard costs more time than the smaller payload saves. (Results Brief 19.12.)</p>
+<h3>4.2 Onboard detection is far too slow on a Pi, and heat makes it worse</h3>
   <div class="tbl"><table>
     <tr><th>Detector (VisDrone weights)</th><th>DET-val mAP</th><th>Time per frame on the Pi (live pipeline)</th><th>sAP with forecaster, onboard: short runs started cool (range over hot, cool and 24-min runs)</th></tr>
     <tr><td>YOLO11n</td><td class="num">0.211</td><td class="num">≈ 300 ms</td><td class="num"><b>0.047</b> (0.039–0.047)</td></tr>
@@ -233,6 +233,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <li><b>Receiver fault.</b> A thread race in the camera's link code could silently drop returning results. Audited across the 824 runs made before the fix: it hit 16 (2 %), and removing them changes no verdict.</li>
     <li><b>Laptop network.</b> The laptop's Ethernet dropped sparse packets (energy-efficient Ethernet); worked around with a keep-awake ping, and every mesh run was checked against a 1-second ping log (5 runs discarded and re-run).</li>
   </ul>
+<h3>4.12 Against a published planner, and the distance from the best schedule (trace replay)</h3>
+<p>An AccuMO-style planner (MobiCom 2023: one setting per server for the next 30 frames, 252 plans, the content-conditioned decay) was re-implemented in the trace replay. Against v4.1 it tied on the mission (+0.0018) and was slightly ahead on random link faults (+0.0044; +0.0045 on fresh seeds) and over 24-minute missions (+0.0014), but a LEAF-style fixed weight was ahead by as much, and the replay is known to favour such low-onboard policies by about 0.005 sAP. So the claim narrows to: a greedy priced choice does as well as a 30-frame planner. The planner now runs in the board code (<code>adaptive2.py --policy accumo</code>); its mesh campaign is scripted. In the same replay v4.1 reaches 97–100 % of a hindsight per-phase oracle (88 % when the faults change every 4 s), gains nothing from a clairvoyant link, and its own settings are not hand-tuned: only the energy target moves accuracy, and 2.8 W holds on fresh seeds. (Results Brief 19.8–19.11.)</p>
 </section>
 
 <section id="negative">
@@ -263,7 +265,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td>Sending the image beats splitting the network, for the exact splits and encodings tested</td><td>Auto-Split; learned feature compression can beat image coding (Yuan 2022, 2024; BottleFit)</td><td><span class="chip lo">low</span>, bounded</td></tr>
   </table></div>
   <div class="note">
-    <p><b>Verdict.</b> Novel as a whole, narrowly stated: no published work found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI, TMC 2024) and streaming perception on UAV video alone (StreamFlow, TCSVT 2025) are published, as an external review with Consensus confirmed on 26 October. Ready in substance for a UAV or edge-computing workshop or an IEEE networking conference. A top venue would additionally need a learned feature-compression baseline for the split result, two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed, and ideally a flight or outdoor test. Fitting now: IEEE IoT Journal, ACM TECS, IEEE ICC/Globecom/WoWMoM, UAV and edge workshops. The closest single work is A²-UAV (INFOCOM 2023; Computer Networks 2025). Full analysis and sources: the AEGIS-UAV Novelty Brief.</p>
+    <p><b>Verdict.</b> Novel as a whole, narrowly stated: no published work found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI, TMC 2024) and streaming perception on UAV video alone (StreamFlow, TCSVT 2025) are published, as an external review with Consensus confirmed on 26 October. Ready in substance for a UAV or edge-computing workshop or an IEEE networking conference. A top venue would additionally need two or more camera drones on the mesh, the published scheduler measured on the testbed, and ideally a flight or outdoor test. Since 30 October a learned feature-compression baseline is measured (it beats JPEG on bits, and on the Pi end to end only at the lowest goodputs) and an AccuMO-style planner is re-implemented (in the trace replay, where it ties v4.1, and in the board code, where its campaign is scripted). Fitting now: IEEE IoT Journal, ACM TECS, IEEE ICC/Globecom/WoWMoM, UAV and edge workshops. The closest single work is A²-UAV (INFOCOM 2023; Computer Networks 2025). Full analysis and sources: the AEGIS-UAV Novelty Brief.</p>
   </div>
 </section>
 
@@ -303,13 +305,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <div class="card"><h3>Needs the boards</h3><ul>
       <li>Two camera drones on the mesh (the third Pi), to measure contention and the coordinator.</li>
       <li>A short outdoor or tethered flight with real distances.</li>
-      <li>One published baseline (A²-UAV-style or AccuMO-style) re-implemented on the testbed.</li>
+      <li>The AccuMO-style planner against v4.1 and the LEAF-style weight on the mesh (ported and tested; <code>tools/campaign_mesh4.sh</code>, 45 runs, about 6 h).</li>
       <li>5 repetitions for the headline mesh comparisons; runs with a fan on the Pi.</li><li>One mesh campaign with both topologies (direct and multihop) and 5 repetitions, to isolate the topology reversal.</li>
     </ul></div>
     <div class="card"><h3>Needs the team</h3><ul>
-      <li>Commit and push the work since <code>08bc5a28</code>.</li>
+      <li>Commit the work since <code>b34f3738</code> and push <code>main</code> (1 commit ahead of GitHub).</li>
       <li>Turn off energy-efficient Ethernet on the laptop.</li>
-      <li>Write the paper from Parts 17–20 of the Results Brief and this report; update the professor's report.</li>
+      <li>Paper 1 has a hardware section and the learned bottleneck; paper 2 (the priced controller) has a first draft in <code>paper2/</code>; finish it after the planner campaign.</li>
     </ul></div>
   </div>
 </section>

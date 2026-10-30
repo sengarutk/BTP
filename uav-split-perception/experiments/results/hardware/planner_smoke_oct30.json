@@ -1,0 +1,111 @@
+{
+ "note": "Loopback smoke run of adaptive2.py --policy accumo on the laptop, 30 Oct 2026 02:55 IST (repeats planner_smoke_oct29.json, whose run had missed ticks on an overloaded laptop): camera and a GPU worker (adaptive.py worker, yolov8s, cuda) on 127.0.0.1, laptop path only, tc replaced by a no-op (no impairment, the laptop network untouched), mission 6 x 3 s, --live-forecast and --mpc-context on; 6 replay processes ran beside it. A functional check, not a measurement; calib_hw.py run on it to test the plumbing (its calibration numbers mean nothing on an unimpaired loopback link).",
+ "mpc": {
+  "horizon": 30,
+  "context": true,
+  "plan_ms_median": 1.8732159999217401,
+  "plan_ms_p95": 2.257867850062212,
+  "plan_ms_max": 13.170638000019608,
+  "n": 540,
+  "tertile_counts": [
+   82,
+   421,
+   33
+  ]
+ },
+ "sends": {
+  "laptop:m640q50": 1,
+  "laptop:m640q90": 495,
+  "laptop:s640q90": 43
+ },
+ "n_frames": 540,
+ "frames_with_pred": 539,
+ "total": {
+  "on_time_fps": 29.833333333333336,
+  "acc_on_time_fps": 32.876026026026025,
+  "within_1s_fps": 29.833333333333336,
+  "aoi_mean_ms": 113.36296296293612,
+  "availability": 0.9927777777777776,
+  "pi_power_w": 0.14413930296835062
+ },
+ "calib_hw_all": {
+  "p_on_vs_deadline": {
+   "n": 539,
+   "mean_pred": 0.9095931354359925,
+   "observed": 0.9962894248608535,
+   "ece": 0.0866962894248608,
+   "brier": 0.02439576235621522,
+   "bins": [
+    {
+     "bin": "0.5-0.6",
+     "n": 34,
+     "pred": 0.5786470588235294,
+     "observed": 1.0
+    },
+    {
+     "bin": "0.6-0.7",
+     "n": 34,
+     "pred": 0.6356764705882353,
+     "observed": 0.9705882352941176
+    },
+    {
+     "bin": "0.7-0.8",
+     "n": 8,
+     "pred": 0.7465,
+     "observed": 0.875
+    },
+    {
+     "bin": "0.8-0.9",
+     "n": 8,
+     "pred": 0.865775,
+     "observed": 1.0
+    },
+    {
+     "bin": "0.9-1.0",
+     "n": 455,
+     "pred": 0.9584296703296704,
+     "observed": 1.0
+    }
+   ]
+  },
+  "p_late_vs_late_ms": {
+   "n": 539,
+   "mean_pred": 0.909886827458256,
+   "observed": 0.9962894248608535,
+   "ece": 0.08640259740259747,
+   "brier": 0.024211508385899815,
+   "bins": [
+    {
+     "bin": "0.5-0.6",
+     "n": 32,
+     "pred": 0.578971875,
+     "observed": 1.0
+    },
+    {
+     "bin": "0.6-0.7",
+     "n": 36,
+     "pred": 0.6359138888888889,
+     "observed": 0.9722222222222222
+    },
+    {
+     "bin": "0.7-0.8",
+     "n": 8,
+     "pred": 0.7467874999999999,
+     "observed": 0.875
+    },
+    {
+     "bin": "0.8-0.9",
+     "n": 8,
+     "pred": 0.8659,
+     "observed": 1.0
+    },
+    {
+     "bin": "0.9-1.0",
+     "n": 455,
+     "pred": 0.9584780219780219,
+     "observed": 1.0
+    }
+   ]
+  }
+ }
+}

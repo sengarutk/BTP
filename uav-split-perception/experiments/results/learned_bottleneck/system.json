@@ -1,0 +1,4117 @@
+{
+ "learned": [
+  {
+   "name": "learned_k2_c16_w128_d2",
+   "kind": "split",
+   "cut": 2,
+   "dtype": "learned_k2_c16_w128_d2",
+   "payload_bytes": 54176.82664233576,
+   "edge_flop_frac": 0.13375213770127706,
+   "host_edge_proc_ms": 0.33469100162619725,
+   "cloud_ms": 21.325111500132667,
+   "map50_95": 0.25139492774845323,
+   "map50": 0.4417188171724638,
+   "delta_map50_95": -0.01566334715686213,
+   "encoder_macs": 593100800.0,
+   "edge_macs": 1334000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.33469100162619725,
+   "host_decoder_ms": 2.267811500132666
+  },
+  {
+   "name": "learned_k2_c8_w128_d2",
+   "kind": "split",
+   "cut": 2,
+   "dtype": "learned_k2_c8_w128_d2",
+   "payload_bytes": 27134.153284671534,
+   "edge_flop_frac": 0.12965841199333702,
+   "host_edge_proc_ms": 0.2691555018827785,
+   "cloud_ms": 20.91459050099326,
+   "map50_95": 0.2332287419122978,
+   "map50": 0.4161056861131982,
+   "delta_map50_95": -0.03382953299301755,
+   "encoder_macs": 534118400.0,
+   "edge_macs": 1334000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.2691555018827785,
+   "host_decoder_ms": 1.8572905009932583
+  },
+  {
+   "name": "learned_k4_c16_w128_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c16_w128_d2",
+   "payload_bytes": 13747.35583941606,
+   "edge_flop_frac": 0.23224875069405887,
+   "host_edge_proc_ms": 0.24675650092831347,
+   "cloud_ms": 11.577072999834222,
+   "map50_95": 0.20607844511091913,
+   "map50": 0.3801835329582426,
+   "delta_map50_95": -0.06097982979439623,
+   "encoder_macs": 266240000.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.24675650092831347,
+   "host_decoder_ms": 0.5614729998342227
+  },
+  {
+   "name": "learned_k4_c16_w128_s1_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c16_w128_s1_d2",
+   "payload_bytes": 52742.062043795624,
+   "edge_flop_frac": 0.2876846196557468,
+   "host_edge_proc_ms": 0.30504749884130433,
+   "cloud_ms": 11.59108350196157,
+   "map50_95": 0.2508452625022979,
+   "map50": 0.44106682960120375,
+   "delta_map50_95": -0.01621301240301748,
+   "encoder_macs": 1064960000.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.30504749884130433,
+   "host_decoder_ms": 0.5754835019615712
+  },
+  {
+   "name": "learned_k4_c32_w128_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c32_w128_d2",
+   "payload_bytes": 26866.39598540146,
+   "edge_flop_frac": 0.23429561354802889,
+   "host_edge_proc_ms": 0.2553369995439425,
+   "cloud_ms": 11.589215998291643,
+   "map50_95": 0.22665519497314243,
+   "map50": 0.4097169229000321,
+   "delta_map50_95": -0.04040307993217293,
+   "encoder_macs": 295731200.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.2553369995439425,
+   "host_decoder_ms": 0.5736159982916433
+  },
+  {
+   "name": "learned_k4_c32_w128_s1_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c32_w128_s1_d2",
+   "payload_bytes": 104862.74270072993,
+   "edge_flop_frac": 0.2958720710716269,
+   "host_edge_proc_ms": 0.3416839990677545,
+   "cloud_ms": 11.571820500584458,
+   "map50_95": 0.2533431328994781,
+   "map50": 0.4440056124046546,
+   "delta_map50_95": -0.013715142005837289,
+   "encoder_macs": 1182924800.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.3416839990677545,
+   "host_decoder_ms": 0.5562205005844589
+  },
+  {
+   "name": "learned_k4_c4_w128_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c4_w128_d2",
+   "payload_bytes": 3555.556569343066,
+   "edge_flop_frac": 0.23071360355358134,
+   "host_edge_proc_ms": 0.24062049851636402,
+   "cloud_ms": 11.579361499506653,
+   "map50_95": 0.14169502723366326,
+   "map50": 0.27554973287622925,
+   "delta_map50_95": -0.1253632476716521,
+   "encoder_macs": 244121600.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.24062049851636402,
+   "host_decoder_ms": 0.5637614995066542
+  },
+  {
+   "name": "learned_k4_c64_w128_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c64_w128_d2",
+   "payload_bytes": 53775.78102189781,
+   "edge_flop_frac": 0.23838933925596892,
+   "host_edge_proc_ms": 0.29094149977026973,
+   "cloud_ms": 11.587615502257272,
+   "map50_95": 0.23083025147599728,
+   "map50": 0.41477692512785397,
+   "delta_map50_95": -0.03622802342931808,
+   "encoder_macs": 354713600.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.29094149977026973,
+   "host_decoder_ms": 0.5720155022572726
+  },
+  {
+   "name": "learned_k4_c8_w128_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c8_w128_d2",
+   "payload_bytes": 6956.541970802919,
+   "edge_flop_frac": 0.23122531926707385,
+   "host_edge_proc_ms": 0.24412850143562537,
+   "cloud_ms": 11.581568999580945,
+   "map50_95": 0.18104173662126505,
+   "map50": 0.34069468998205954,
+   "delta_map50_95": -0.08601653828405031,
+   "encoder_macs": 251494400.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.24412850143562537,
+   "host_decoder_ms": 0.5659689995809458
+  },
+  {
+   "name": "learned_k4_c8_w128_s1_d2",
+   "kind": "split",
+   "cut": 4,
+   "dtype": "learned_k4_c8_w128_s1_d2",
+   "payload_bytes": 26845.195255474453,
+   "edge_flop_frac": 0.2835908939478068,
+   "host_edge_proc_ms": 0.24660850067448337,
+   "cloud_ms": 11.560514999409229,
+   "map50_95": 0.2399317201927006,
+   "map50": 0.4256877048285648,
+   "delta_map50_95": -0.02712655471261477,
+   "encoder_macs": 1005977600.0,
+   "edge_macs": 3080000000.0,
+   "total_macs": 14408000000.0,
+   "host_quant_zstd_ms": 0.24660850067448337,
+   "host_decoder_ms": 0.5449149994092295
+  }
+ ],
+ "goodput_mbps": [
+  0.25,
+  0.298,
+  0.356,
+  0.425,
+  0.507,
+  0.605,
+  0.721,
+  0.861,
+  1.027,
+  1.225,
+  1.462,
+  1.744,
+  2.081,
+  2.483,
+  2.963,
+  3.536,
+  4.218,
+  5.033,
+  6.006,
+  7.166,
+  8.55,
+  10.201,
+  12.172,
+  14.523,
+  17.329,
+  20.676,
+  24.67,
+  29.435,
+  35.121,
+  41.905,
+  50.0
+ ],
+ "grid": [
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.25,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.0005457751907562462,
+    "latency_ms": 386.4743986325224
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 17318.61979810369
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 3.979328830058149,
+    "latency_ms": 155.3923348645631
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.298,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.15894102525687284,
+    "latency_ms": 329.9231232687836
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 14538.799713255798
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771830646182,
+    "latency_ms": 137.0657077151975
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.356,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.042629059161087,
+    "latency_ms": 281.93661268976837
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 12179.987024217031
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831393423,
+    "latency_ms": 121.51467227127185
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.425,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.5610452635189165,
+    "latency_ms": 241.9082706806117
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 10212.364041985182
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831406153,
+    "latency_ms": 108.5426483038074
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.507,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.8467061872207609,
+    "latency_ms": 208.50612221046043
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 8570.456541275918
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109713,
+    "latency_ms": 97.71798136105744
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.605,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.408367547032553,
+    "latency_ms": 258.8618549877133
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 7191.995597826195
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109731,
+    "latency_ms": 88.63014870301396
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.721,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.9838147787444145,
+    "latency_ms": 222.90722473576503
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 6044.637266056754
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109733,
+    "latency_ms": 81.06591515147198
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 0.861,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 3.5869039511339254,
+    "latency_ms": 192.4158435997562
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 5071.618215425255
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 74.6510549066123
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 1.027,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483736174066118,
+    "latency_ms": 167.03406976024894
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 4261.6532822364825
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 69.31116783423593
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 1.225,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483737290862034,
+    "latency_ms": 145.75531863848096
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3582.621062516021
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 64.8344859147642
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 1.462,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316404249003,
+    "latency_ms": 127.86358756479194
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3011.6729934265627
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 61.07037454623104
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 1.744,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316404476356,
+    "latency_ms": 112.91009179531619
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 8.1782286e-317,
+    "latency_ms": 1257.557616743951
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 73.55970344683354
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 2.081,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721263,
+    "latency_ms": 100.3556092520659
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.52690494357523e-201,
+    "latency_ms": 1061.71165410072
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 68.39203387160157
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 2.483,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721458,
+    "latency_ms": 89.8368447904841
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 9.394269429820633e-125,
+    "latency_ms": 897.6222505989044
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 64.06230551442829
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 2.963,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 65.00800900472848
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.0015666620100017e-74,
+    "latency_ms": 760.0166376159846
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 60.431389002310155
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 3.536,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 60.207711510284376
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.0003717720527916e-42,
+    "latency_ms": 644.667594251327
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 72.7968264398331
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 4.218,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 67.4391325189251
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 5.946877616398213e-23,
+    "latency_ms": 548.2250129415139
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 67.7679067042881
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 5.033,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 62.24860401858023
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 3.566266907422808e-11,
+    "latency_ms": 467.25440763976883
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 63.54576053741088
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 6.006,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 67.76131451955504
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.0001083405509626206,
+    "latency_ms": 399.3647114857457
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 60.005707708128284
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 7.166,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 62.52041901669662
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.15219469670695807,
+    "latency_ms": 342.51881230526163
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 73.70036046465188
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 8.55,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 63.84331244991257
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.177627616236966,
+    "latency_ms": 294.87610257128966
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 68.8491543652087
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 10.201,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 59.23746077971418
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.128531857958592,
+    "latency_ms": 254.95141797435673
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 64.78383409865638
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 12.172,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 66.16824759869039
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.9961305950650825,
+    "latency_ms": 221.4714359629495
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 61.374743938799824
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 14.523,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 61.25025002036925
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.000739191641702,
+    "latency_ms": 193.42112817363744
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 77.64048872759163
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 17.329,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 57.12726468520788
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.501009739918133,
+    "latency_ms": 169.90525493045132
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 72.80810539592396
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 20.676,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 66.72010725019896
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.501010624488788,
+    "latency_ms": 150.2028622716726
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 68.75937146656238
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 24.67,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 61.84849263685504
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512617244,
+    "latency_ms": 133.68797283645665
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 65.36565201562955
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 29.435,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 66.65769425623323
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512812128,
+    "latency_ms": 119.84807136601228
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 73.05226291635555
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 35.121,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 61.85889272658078
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269224299,
+    "latency_ms": 108.24750414273856
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 68.43816143885792
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 41.905,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 57.83718998058781
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269224485,
+    "latency_ms": 98.52548651633035
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 64.57124915509726
+   }
+  },
+  {
+   "t_full_ms": 40.0,
+   "goodput_mbps": 50.0,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 15.000000000000002,
+    "latency_ms": 40.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 54.46635222044734
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269224498,
+    "latency_ms": 90.37686236639789
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 61.33015085308115
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.25,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.00029668820475441387,
+    "latency_ms": 389.79731206916074
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 17345.510803944977
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 3.9793287185411432,
+    "latency_ms": 167.936288797161
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.298,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.12514295118604968,
+    "latency_ms": 333.24603670542194
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 14565.690719097087
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771828882726,
+    "latency_ms": 149.6096616477954
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.356,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.9887234917615616,
+    "latency_ms": 285.25952612640674
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 12206.87803005832
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831367249,
+    "latency_ms": 134.05862620386978
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.425,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.5547630589228156,
+    "latency_ms": 245.23118411725008
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 10239.255047826471
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831405588,
+    "latency_ms": 121.08660223640533
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.507,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.8465263210338139,
+    "latency_ms": 211.8290356470988
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 8597.347547117208
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109687,
+    "latency_ms": 110.26193529365534
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.605,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.3727561098673453,
+    "latency_ms": 262.18476842435166
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 7218.886603667483
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109729,
+    "latency_ms": 101.17410263561189
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.721,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.9820535917454682,
+    "latency_ms": 226.2301381724034
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 6071.528271898042
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109733,
+    "latency_ms": 93.60986908406991
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 0.861,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 3.5868714512778825,
+    "latency_ms": 195.73875703639456
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 5098.509221266542
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 87.19500883921023
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 1.027,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.4837357361002885,
+    "latency_ms": 170.3569831968873
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 4288.54428807777
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 81.85512176683386
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 1.225,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483737286209435,
+    "latency_ms": 149.07823207511933
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3609.512068357309
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 77.3784398473621
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 1.462,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.9783164041695,
+    "latency_ms": 131.18650100143032
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3038.5639992678507
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 15.917315494219466,
+    "latency_ms": 73.61432847882895
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 1.744,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316404474936,
+    "latency_ms": 116.23300523195456
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2561.378784457933
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 86.14394277423114
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 2.081,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721208,
+    "latency_ms": 103.67852268870428
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 9.941951873011176e-254,
+    "latency_ms": 1083.1849900879142
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 80.97627319899917
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 2.483,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721456,
+    "latency_ms": 93.15975822712247
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.2696934725487147e-159,
+    "latency_ms": 919.0955865860989
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 76.64654484182591
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 2.963,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 68.33092244136685
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 3.3482230765441623e-97,
+    "latency_ms": 781.489973603179
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 20.337329373387078,
+    "latency_ms": 73.01562832970777
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 3.536,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 63.53062494692274
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 5.611520594279301e-57,
+    "latency_ms": 666.1409302385215
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 85.44324946320259
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 4.218,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 70.76204595556348
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.0735592659332705e-31,
+    "latency_ms": 569.6983489287084
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 80.41432972765756
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 5.033,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 65.5715174552186
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.922965771905068e-16,
+    "latency_ms": 488.7277436269632
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 76.19218356078036
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 6.006,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 71.08422795619342
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.1170492117627008e-07,
+    "latency_ms": 420.8380474729401
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 23.14982883612016,
+    "latency_ms": 72.65213073149775
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 7.166,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 65.843332453335
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.009109924359427687,
+    "latency_ms": 363.9921482924561
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 88.91327048421181
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 8.55,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 67.16622588655093
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.8960260673129474,
+    "latency_ms": 316.3494385584841
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 84.06206438476863
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 10.201,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 62.56037421635256
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 3.630367807729749,
+    "latency_ms": 276.4247539615512
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 79.99674411821633
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 12.172,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 69.79831053710126
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.9675539479878585,
+    "latency_ms": 242.94477195014392
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 26.952737593819283,
+    "latency_ms": 76.58765395835977
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 14.523,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 64.88031295878011
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.000148500888108,
+    "latency_ms": 214.89446416083186
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 85.73055365354531
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 17.329,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 60.75732762361875
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.5010016072112276,
+    "latency_ms": 191.37859091764574
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 80.89817032187766
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 20.676,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 71.04534211690532
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.501010539752016,
+    "latency_ms": 171.67619825886703
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 76.84943639251608
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 24.67,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 66.17372750356138
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347511210758,
+    "latency_ms": 155.1613088236511
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 73.45571694158325
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 29.435,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 71.28044091865371
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512788257,
+    "latency_ms": 141.3214073532067
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 89.27762731683043
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 35.121,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 66.48163938900126
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269223418,
+    "latency_ms": 129.72084012993298
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 84.66352583933278
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 41.905,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 62.45993664300829
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269224455,
+    "latency_ms": 119.99882250352476
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 80.79661355557215
+   }
+  },
+  {
+   "t_full_ms": 90.0,
+   "goodput_mbps": 50.0,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 10.0,
+    "latency_ms": 90.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 59.08909888286783
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 15.002021269224494,
+    "latency_ms": 111.8501983535923
+   },
+   "learned": {
+    "best": "learned_k4_c32_w128_s1_d2",
+    "utility": 28.459309076563912,
+    "latency_ms": 77.55551525355602
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.25,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 8.857197810257384e-05,
+    "latency_ms": 395.77855625510983
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 17393.914614459296
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 3.979327003768155,
+    "latency_ms": 190.51540587583727
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.298,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.07661440917556762,
+    "latency_ms": 339.22728089137104
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 14614.094529611404
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771803919564,
+    "latency_ms": 172.18877872647167
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.356,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.8786686390681149,
+    "latency_ms": 291.2407703123558
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 12255.281840572638
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831047913,
+    "latency_ms": 156.63774328254604
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.425,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.538976674390942,
+    "latency_ms": 251.21242830319915
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 10287.658858340788
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831399807,
+    "latency_ms": 143.6657193150816
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.507,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.8460222513306204,
+    "latency_ms": 217.81027983304787
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 8645.751357631525
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109454,
+    "latency_ms": 132.8410523723316
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.605,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.28998028340533,
+    "latency_ms": 268.16601261030075
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 7267.290414181801
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109721,
+    "latency_ms": 123.75321971428812
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.721,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.9773099561466934,
+    "latency_ms": 232.21138235835247
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 6119.93208241236
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 7.958657747109731,
+    "latency_ms": 116.18898616274615
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 0.861,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 3.586777504270542,
+    "latency_ms": 201.72000122234363
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 5146.91303178086
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 10.168664686687332,
+    "latency_ms": 141.52168977266456
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 1.027,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483734444542098,
+    "latency_ms": 176.33822738283638
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 4336.948098592088
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 10.168664686693353,
+    "latency_ms": 131.0740572251679
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 1.225,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483737272634614,
+    "latency_ms": 155.0594762610684
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3657.9158788716277
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 10.16866468669353,
+    "latency_ms": 122.31530875488448
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 1.462,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316403944009,
+    "latency_ms": 137.16774518737938
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3086.9678097821693
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 10.168664686693539,
+    "latency_ms": 114.95072371530082
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 1.744,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316404471056,
+    "latency_ms": 122.21424941790363
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2609.7825949722514
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 11.574914418055766,
+    "latency_ms": 140.16546120238664
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 2.081,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721064,
+    "latency_ms": 109.65976687465334
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2209.1529668516373
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 11.574914418059942,
+    "latency_ms": 129.95323322914862
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 2.483,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721451,
+    "latency_ms": 99.14100241307153
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.7231285102070625e-258,
+    "latency_ms": 957.7475913630487
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 11.574914418060073,
+    "latency_ms": 121.3969251289617
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 2.963,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 74.31216662731592
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.5330098150598063e-162,
+    "latency_ms": 820.1419783801289
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 11.57491441806008,
+    "latency_ms": 114.2215926829277
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 3.536,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 69.51186913287181
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.518154919230319e-99,
+    "latency_ms": 704.7929350154714
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 13.476368796904106,
+    "latency_ms": 147.0627269419391
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 4.218,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 76.74329014151255
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.965599765192807e-58,
+    "latency_ms": 608.3503537056583
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 13.476368796909465,
+    "latency_ms": 137.24248704986186
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 5.033,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 71.55276164116766
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.1405061423665815e-32,
+    "latency_ms": 527.3797484039131
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 13.476368796909632,
+    "latency_ms": 128.9976769517633
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 6.006,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 77.06547214214248
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.193358477584995e-16,
+    "latency_ms": 459.4900522498901
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_s1_d2",
+    "utility": 13.476368796909641,
+    "latency_ms": 122.08482690795279
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 7.166,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 71.82457663928406
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.426418857775529e-07,
+    "latency_ms": 402.644153069406
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 26.199758310614598,
+    "latency_ms": 98.60544896110294
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 8.55,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 73.1474700725
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.007711146902711521,
+    "latency_ms": 355.00144333543403
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 26.199758310614598,
+    "latency_ms": 93.70202513925605
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 10.201,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 68.54161840230162
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.9248556100643422,
+    "latency_ms": 315.0767587385011
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 26.199758310614598,
+    "latency_ms": 89.59294631847834
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 12.172,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 76.33242382624081
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.158047282609666,
+    "latency_ms": 281.59677672709387
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 26.199758310614598,
+    "latency_ms": 86.1471611759788
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 14.523,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 71.41442624791968
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 5.9546856322747335,
+    "latency_ms": 253.5464689377818
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 100.29267052026198
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 17.329,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 67.2914409127583
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.500028311143241,
+    "latency_ms": 230.03059569459566
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 95.46028718859431
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 20.676,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 78.83076487697672
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 7.500999780151988,
+    "latency_ms": 210.32820303581695
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 91.41155325923273
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 24.67,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 73.95915026363278
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347361368508,
+    "latency_ms": 193.81331360060102
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 88.0178338082999
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 29.435,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 79.6013849110106
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347510913384,
+    "latency_ms": 179.97341213015665
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 85.1738097533107
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 35.121,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 74.80258338135815
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512783546,
+    "latency_ms": 168.37284490688293
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 82.78995663810132
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 41.905,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 70.78088063536518
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512815505,
+    "latency_ms": 158.65082728047472
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 80.79213519034168
+   }
+  },
+  {
+   "t_full_ms": 180.0,
+   "goodput_mbps": 50.0,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 5.0,
+    "latency_ms": 180.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 67.4100428752247
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 10.001347512816299,
+    "latency_ms": 150.50220313054226
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 28.24045738754036,
+    "latency_ms": 79.1176374963397
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.25,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 4.803879062543546e-06,
+    "latency_ms": 407.74104462700797
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 17490.72223548793
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 3.978723687388473,
+    "latency_ms": 235.67364003318977
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.298,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.021807375647631248,
+    "latency_ms": 351.18976926326917
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 14710.90215064004
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305762620228976,
+    "latency_ms": 217.34701288382416
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.356,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.620160024712316,
+    "latency_ms": 303.2032586842539
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 12352.089461601274
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771738273821,
+    "latency_ms": 201.79597743989854
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.425,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.4802388897009167,
+    "latency_ms": 263.1749166750973
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 10384.466479369425
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.30577183026182,
+    "latency_ms": 188.82395347243408
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.507,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.8436044356824581,
+    "latency_ms": 229.77276820494598
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 8742.558978660161
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 5.305771831386892,
+    "latency_ms": 177.9992865296841
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.605,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 2.216591729984793,
+    "latency_ms": 201.73004529057795
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 7364.098035210438
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 6.7791050860888795,
+    "latency_ms": 214.1754240021716
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.721,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 2.9565978793889927,
+    "latency_ms": 244.1738707302506
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 6216.739703440997
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 6.779109739527992,
+    "latency_ms": 199.37579779682068
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 0.861,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 3.5862912275570795,
+    "latency_ms": 213.68248959424176
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 5243.720652809498
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 6.77910979046654,
+    "latency_ms": 186.82495135129597
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 1.027,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483727371248603,
+    "latency_ms": 188.30071575473448
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 4433.755719620725
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 6.7791097911168565,
+    "latency_ms": 176.3773188037993
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 1.225,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.48373719930112,
+    "latency_ms": 167.0219646329665
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3754.723499900264
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 7.716606571491703,
+    "latency_ms": 212.40996914795443
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 1.462,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316402790527,
+    "latency_ms": 149.13023355927749
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3183.7754308108056
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 7.716609579362184,
+    "latency_ms": 197.8562481219443
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 1.744,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.9783164044526504,
+    "latency_ms": 134.17673778980173
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2706.5902160008877
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 7.7166096115929195,
+    "latency_ms": 185.69258408651675
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 2.081,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606720437,
+    "latency_ms": 121.62225524655146
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2305.9605878802736
+   },
+   "learned": {
+    "best": "learned_k4_c16_w128_d2",
+    "utility": 7.716609612031515,
+    "latency_ms": 175.48035611327873
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 2.483,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721428,
+    "latency_ms": 111.10349078496967
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1970.2933327772344
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 8.733252723842991,
+    "latency_ms": 183.135869067267
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 2.963,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 86.27465499921405
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1688.8022833187188
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 8.73325276958517,
+    "latency_ms": 168.97339500800575
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 3.536,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 11.083257079912348,
+    "latency_ms": 81.47435750476993
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1452.840082599599
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 13.099879155289921,
+    "latency_ms": 157.10158397501152
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 4.218,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 88.70577851341066
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.9522839987719476e-249,
+    "latency_ms": 685.6543632595582
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 13.099879155306816,
+    "latency_ms": 147.17564035686885
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 5.033,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 17.93494921344293,
+    "latency_ms": 83.51525001306578
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 2.792399917764916e-156,
+    "latency_ms": 604.683757957813
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 13.09987915530728,
+    "latency_ms": 138.84208424465572
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 6.006,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 89.0279605140406
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 4.4336246055820895e-95,
+    "latency_ms": 536.7940618037899
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 13.099879155307297,
+    "latency_ms": 131.8548252235297
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 7.166,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 21.157627470698376,
+    "latency_ms": 83.78706501118218
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.4981289056262989e-55,
+    "latency_ms": 479.9481626233059
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869374968,
+    "latency_ms": 160.05566285461944
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 8.55,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 85.10995844439812
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.1284595506857168e-30,
+    "latency_ms": 432.30545288933394
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.120228693769615,
+    "latency_ms": 150.26534658555903
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 10.201,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 22.808335880751848,
+    "latency_ms": 80.50410677419974
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.4236657169807693e-15,
+    "latency_ms": 392.380768292401
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.120228693770157,
+    "latency_ms": 142.06104226850758
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 12.172,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 89.40065040451994
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.522305062974242e-07,
+    "latency_ms": 358.90078628099377
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.120228693770178,
+    "latency_ms": 135.1810890835525
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 14.523,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 84.4826528261988
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 0.020975551483514557,
+    "latency_ms": 330.8504784916817
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 129.4169042536953
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 17.329,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 25.921978938260924,
+    "latency_ms": 80.35966749103743
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 1.564254108939275,
+    "latency_ms": 307.33460524849556
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 124.58452092202761
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 20.676,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 94.40161039711951
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 5.162035849882176,
+    "latency_ms": 287.63221258971686
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 120.53578699266603
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 24.67,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 28.788925662697956,
+    "latency_ms": 89.52999578377559
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 5.966117143062146,
+    "latency_ms": 271.1173231545009
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 117.1420675417332
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 29.435,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 96.24327289572436
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.00024587298503,
+    "latency_ms": 257.27742168405655
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 114.298043486744
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 35.121,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 91.4444713660719
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.000802389480218,
+    "latency_ms": 245.67685446078283
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 111.91419037153463
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 41.905,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 87.42276862007893
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.000808443193364,
+    "latency_ms": 235.95483683437462
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 109.91636892377498
+   }
+  },
+  {
+   "t_full_ms": 360.0,
+   "goodput_mbps": 50.0,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 360.0
+   },
+   "image": {
+    "best": "jpeg_q95",
+    "utility": 29.624415797548682,
+    "latency_ms": 84.05193085993847
+   },
+   "posthoc_split": {
+    "best": "k4_int8_zstd",
+    "utility": 6.0008085068630574,
+    "latency_ms": 227.80621268444216
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 14.12022869377018,
+    "latency_ms": 108.241871229773
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.25,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 3.1312204162235656e-10,
+    "latency_ms": 434.16485227515625
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 17704.559513937853
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 8.168816428850576e-06,
+    "latency_ms": 335.42316170520843
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.298,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.00021326163522333947,
+    "latency_ms": 377.61357691141745
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 14924.739429089963
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 0.0386177541880145,
+    "latency_ms": 317.0965345558428
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.356,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 0.11915080204559172,
+    "latency_ms": 329.62706633240225
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 12565.926740051196
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 1.1190357364319405,
+    "latency_ms": 301.5454991119172
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.425,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.0833163308445426,
+    "latency_ms": 289.59872432324556
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 10598.303757819347
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 2.460875958023749,
+    "latency_ms": 288.57347514445274
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.507,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 1.8070728456651528,
+    "latency_ms": 256.19657585309426
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 8956.396257110084
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 2.646898202680679,
+    "latency_ms": 277.74880820170273
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.605,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 2.2156248943999124,
+    "latency_ms": 228.15385293872626
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 7577.9353136603595
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 2.6528017669631825,
+    "latency_ms": 268.6609755436593
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.721,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q10",
+    "utility": 2.7707984247339503,
+    "latency_ms": 204.8125664596324
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 6430.576981890918
+   },
+   "learned": {
+    "best": "learned_k4_c4_w128_d2",
+    "utility": 2.6528850045276173,
+    "latency_ms": 261.0967419921173
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 0.861,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 3.576656197935181,
+    "latency_ms": 240.10629724239004
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 5457.557931259419
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 3.2338919932631867,
+    "latency_ms": 286.8948224827618
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 1.027,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483547748277712,
+    "latency_ms": 214.7245234028828
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 4647.592998070647
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 3.3854049074871733,
+    "latency_ms": 276.44718993526516
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 1.225,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 4.483735282747215,
+    "latency_ms": 193.4457722811148
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3968.560778350186
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 3.38950006792975,
+    "latency_ms": 267.68844146498174
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 1.462,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316375647371,
+    "latency_ms": 175.5540412074258
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 3397.612709260727
+   },
+   "learned": {
+    "best": "learned_k4_c8_w128_d2",
+    "utility": 3.389554330667628,
+    "latency_ms": 260.32385642539805
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 1.744,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 5.978316404089843,
+    "latency_ms": 160.60054543795005
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2920.4274944508093
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 5.962134640087826,
+    "latency_ms": 280.70149147256853
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 2.081,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606710386,
+    "latency_ms": 148.04606289469976
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2519.797866330195
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 6.5300848343750735,
+    "latency_ms": 260.5448764521472
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 2.483,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q20",
+    "utility": 8.967474606721156,
+    "latency_ms": 137.52729843311795
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 2184.1306112271564
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 6.5496484609987595,
+    "latency_ms": 243.6566705852647
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 2.963,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 10.578813735332973,
+    "latency_ms": 148.70199526743818
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1902.6395617686405
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 6.549936504942331,
+    "latency_ms": 229.4941965260034
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 3.536,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q35",
+    "utility": 10.578813735348747,
+    "latency_ms": 138.06741491346253
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1666.6773610495206
+   },
+   "learned": {
+    "best": "learned_k2_c8_w128_d2",
+    "utility": 6.549939544750312,
+    "latency_ms": 217.62238549300918
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 4.218,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 11.404167940374714,
+    "latency_ms": 140.7609851364078
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1469.3909071258918
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.0096601365944124,
+    "latency_ms": 266.65935826877717
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 5.033,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q50",
+    "utility": 11.40416794037588,
+    "latency_ms": 131.41993206532942
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1303.754490357714
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.059266234769152,
+    "latency_ms": 250.02034174709343
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 6.006,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 12.96098946912222,
+    "latency_ms": 149.45654006674252
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1164.8768573632826
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060105051138441,
+    "latency_ms": 236.06938050937953
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 7.166,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 12.960989469130217,
+    "latency_ms": 139.48987600704788
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 1048.590817347505
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060114249371781,
+    "latency_ms": 224.3878591458032
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 8.55,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q75",
+    "utility": 12.960989469130451,
+    "latency_ms": 131.13678652025058
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 951.1311565724187
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060114345652801,
+    "latency_ms": 214.5975428767428
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 10.201,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831326189,
+    "latency_ms": 159.69494018468868
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 869.4597688806547
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060114346863676,
+    "latency_ms": 206.39323855969133
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 12.172,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.39446283134836,
+    "latency_ms": 149.8189086035465
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 800.9718993239599
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.0601143468845455,
+    "latency_ms": 199.51328537473628
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 14.523,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348953,
+    "latency_ms": 141.54453959421983
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 743.5911689446847
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060114346885069,
+    "latency_ms": 193.74910054487904
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 17.329,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348976,
+    "latency_ms": 134.60775250966543
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 695.4862428834234
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.060114346885089,
+    "latency_ms": 188.91671721321137
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 20.676,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 128.7958780571683
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 655.1823114801908
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 184.8679832838498
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 24.67,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 123.92426344382437
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 621.3988526659977
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 181.47426383291696
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 29.435,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 119.84172528847428
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 593.0874465767605
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 178.63023977792778
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 35.121,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 116.4197530718471
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 569.3569041140871
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 176.2463866627184
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 41.905,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 113.55192139027348
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 549.4691910681701
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 174.24856521495875
+   }
+  },
+  {
+   "t_full_ms": 757.6,
+   "goodput_mbps": 50.0,
+   "onboard": {
+    "best": "full_fp32",
+    "utility": 0.0,
+    "latency_ms": 757.6
+   },
+   "image": {
+    "best": "jpeg_q90",
+    "utility": 14.394462831348978,
+    "latency_ms": 111.14821432077234
+   },
+   "posthoc_split": {
+    "best": "k2_int8_zstd",
+    "utility": 0.0,
+    "latency_ms": 532.8000689743482
+   },
+   "learned": {
+    "best": "learned_k2_c16_w128_d2",
+    "utility": 7.06011434688509,
+    "latency_ms": 172.57406752095676
+   }
+  }
+ ],
+ "learned_beats_image": {
+  "usable_threshold": 0.5,
+  "cells": 91,
+  "of": 155,
+  "by_t_full": {
+   "40.0": {
+    "goodput_mbps": [
+     0.25,
+     0.298,
+     0.356,
+     0.425,
+     0.507,
+     0.605,
+     0.721,
+     0.861,
+     1.027,
+     1.225,
+     1.462,
+     1.744,
+     2.081,
+     2.483,
+     2.963,
+     3.536,
+     4.218,
+     5.033,
+     6.006,
+     7.166,
+     8.55,
+     10.201,
+     12.172,
+     14.523,
+     17.329
+    ],
+    "max_goodput_mbps": 17.329,
+    "max_gain_pct_where_image_usable": 408.88393957315145,
+    "only_learned_usable_mbps": [
+     0.25,
+     0.298
+    ],
+    "best_learned": [
+     "learned_k2_c16_w128_d2",
+     "learned_k4_c16_w128_d2",
+     "learned_k4_c4_w128_d2",
+     "learned_k4_c8_w128_d2",
+     "learned_k4_c8_w128_s1_d2"
+    ]
+   },
+   "90.0": {
+    "goodput_mbps": [
+     0.25,
+     0.298,
+     0.356,
+     0.425,
+     0.507,
+     0.605,
+     0.721,
+     0.861,
+     1.027,
+     1.225,
+     1.462,
+     1.744,
+     2.081,
+     2.483,
+     2.963,
+     3.536,
+     4.218,
+     5.033,
+     6.006,
+     7.166,
+     8.55,
+     10.201,
+     12.172,
+     14.523,
+     17.329
+    ],
+    "max_goodput_mbps": 17.329,
+    "max_gain_pct_where_image_usable": 436.6284785966001,
+    "only_learned_usable_mbps": [
+     0.25,
+     0.298
+    ],
+    "best_learned": [
+     "learned_k2_c16_w128_d2",
+     "learned_k4_c16_w128_d2",
+     "learned_k4_c4_w128_d2",
+     "learned_k4_c8_w128_d2",
+     "learned_k4_c8_w128_s1_d2"
+    ]
+   },
+   "180.0": {
+    "goodput_mbps": [
+     0.25,
+     0.298,
+     0.356,
+     0.425,
+     0.507,
+     0.605,
+     0.721,
+     0.861,
+     1.027,
+     1.225,
+     1.462,
+     1.744,
+     2.081,
+     2.483,
+     2.963,
+     3.536,
+     7.166,
+     8.55,
+     10.201,
+     12.172,
+     14.523,
+     17.329
+    ],
+    "max_goodput_mbps": 17.329,
+    "max_gain_pct_where_image_usable": 503.8421761217093,
+    "only_learned_usable_mbps": [
+     0.25,
+     0.298
+    ],
+    "best_learned": [
+     "learned_k2_c16_w128_d2",
+     "learned_k2_c8_w128_d2",
+     "learned_k4_c16_w128_d2",
+     "learned_k4_c4_w128_d2",
+     "learned_k4_c8_w128_d2",
+     "learned_k4_c8_w128_s1_d2"
+    ]
+   },
+   "360.0": {
+    "goodput_mbps": [
+     0.25,
+     0.298,
+     0.356,
+     0.425,
+     0.507,
+     0.605,
+     0.721,
+     0.861,
+     1.027,
+     1.225,
+     1.462,
+     1.744,
+     3.536
+    ],
+    "max_goodput_mbps": 3.536,
+    "max_gain_pct_where_image_usable": 755.5488143137085,
+    "only_learned_usable_mbps": [
+     0.25,
+     0.298
+    ],
+    "best_learned": [
+     "learned_k2_c8_w128_d2",
+     "learned_k4_c16_w128_d2",
+     "learned_k4_c4_w128_d2",
+     "learned_k4_c8_w128_d2"
+    ]
+   },
+   "757.6": {
+    "goodput_mbps": [
+     0.25,
+     0.298,
+     0.356,
+     0.425,
+     0.507,
+     0.605
+    ],
+    "max_goodput_mbps": 0.605,
+    "max_gain_pct_where_image_usable": 127.1613459482582,
+    "only_learned_usable_mbps": [
+     0.356
+    ],
+    "best_learned": [
+     "learned_k4_c4_w128_d2"
+    ]
+   }
+  }
+ }
+}

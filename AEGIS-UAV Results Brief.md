@@ -38,6 +38,10 @@ Labels used throughout: Validated measured, repeated and cross-checked; Pending 
 
 **State on 26 Oct 2026: VisDrone detectors (YOLOv8 and YOLO11), onboard study, relay campaign, standard-metric rescoring, all three mesh campaigns, the VisDrone replay of the earlier campaigns (19.5), R2–R4 (19.6) and the Pareto analysis (19.7) done**
 
+- **Laptop-only additions, part 5 (19.12, 30 Oct):** a learned feature-compression baseline: a small bottleneck trained at layer 2 or 4 with the detector frozen beats JPEG on bits (fewer bytes for the same accuracy), but on the Pi it wins end to end only at the lowest goodputs, so "send the image" stands for the drone computers measured; the second paper's first draft is in `paper2/`.
+- **Laptop-only additions, part 4 (19.11, 30 Oct):** v4.1 is flat in its own settings except the energy target, and a tighter target gains nothing beyond the replay's error on fresh seeds (2.8 W stays); the replay's onboard power model was corrected (power error halved) but its pro-LEAF bias is not in the power model; the AccuMO-style planner runs on the board code (`--policy accumo`, same decisions as the replay's); the next mesh campaign and the 160 px test are scripted; the paper has a hardware section.
+- **A published scheduler (19.10, 29 Oct):** in the replay an AccuMO-style 30-frame planner ties v4.1 or is slightly ahead (random links, 24-min mission), but so is a LEAF-style fixed weight, and these differences are within the replay's known error; the claim narrows to "a greedy priced choice does as well as planning". The board test is listed under "What is left".
+- **Laptop-only additions, part 2 (19.9, 29 Oct):** in the replay, joint link fades cost v4.1 more than independent ones of the same amount, and perfect link prediction still adds nothing, so the interference test is a measurement, not a route to a better controller; tracking camera motion on a 160-px image keeps 98 % of the forecaster's gain at about 0.57× the cost (Pi measurement pending); on all 56 VID train sequences the decay curve is within 0.03 of the 8-sequence one up to 600 ms and the controller's accuracy is unchanged.
 - **Laptop-only additions (19.8, 29 Oct):** in the replay, v4.1 gains nothing from a clairvoyant link and reaches 97–100 % of a hindsight per-phase oracle (88 % with 4 s phases); its deadline probabilities are cautious, never over-confident; worst-phase sAP separates no strategies (0 of 169), while staleness does (v4.1 holds a result older than 300 ms 1.4 % of the time, v5 16 %); the replay's heat model was corrected (heat agreement with hardware back to r = 0.96); the controller now logs its own predictions for the hardware calibration check.
 - **Full audit (28 Oct):** every table of Parts 17–19 checked field by field against the data and every Part 19 statistic recomputed independently (no mismatch); the analysis code read line by line (`docs/audit_2026-10-28.md`, re-runnable checks in `scripts/audit_2026-10-28/`). Corrected: the Pi's thermal fit had included a throttling level (now T = 37.3 °C + 11.3 °C/W × P); Holm is now applied over the unique comparisons of a campaign (49 in 19.5, not 52; 18 significant with VisDrone detections, 3 newly significant); the holding rule changes 1 verdict, not none; the remaining 1.96-based intervals of Parts 12–16 are now Student-t, so v3 + forecasting v2 beats v2 significantly only in the original scoring; the onboard emulation's fresh AP; overstated statements about splitting, JPEG q90, energy efficiency and the mothership placement.
 - **Ten-round check (26 Oct):** every result re-derived from the data files. Corrections: 95 % intervals of 11 or more pairs in Parts 9–16 had used the normal value 1.96 instead of Student's t (6–12 % too narrow; headline values corrected, e.g. +0.0074 ± 0.0030; one verdict changes: v2 against the fixed laptop in Part 14 is not significant); v2's lead in Part 12 holds only in the original scoring (Part 19); image codecs lose 2.4–5.4× (not 3–5×) more on aerial images; several literature references corrected (Part 15, Final Report, Novelty Brief).
@@ -1062,7 +1066,7 @@ Every adaptive controller after v1 makes the same kind of decision, and they dif
 
 - **What is decided.** Every camera frame (30 per second) can go to at most one idle server: the Pi itself (YOLOv8n-320, YOLOv8s-320, YOLOv8s-640), the Jetson path (JPEG of the frame at 640 / 480 / 320 px, quality 90 or 50, YOLOv8s on the Jetson) or the laptop path (the same, plus YOLOv8m-640 at q90 or q50). Each server holds at most one frame at a time.
 - **How.** Each idle server proposes its best setting v\*(s) = argmax over v of value(s, v); the frame goes to the idle server with the highest value, if that value is above 0. Otherwise the frame is skipped.
-- **Why a greedy per-frame choice, and not planning or learning.** A decision has to be made 30 times a second on the Pi's CPU, from quantities the drone measures itself (link speed, server times, power, temperature). A greedy choice of the highest-value server takes well under a millisecond and needs no training data. Planning ahead over a horizon (model-predictive control, as in AccuMO) needs a predictive model of every future frame; reinforcement learning (as in Chanakya) needs training episodes and does not transfer to a new link or board without retraining. Long-run goals that a single frame cannot see (an average power budget, a freshness target) are handled by **prices** that move slowly, once per second (16.3, v4 onward). Choosing the best frame under the current prices and moving the prices towards their targets is the standard online primal-dual method for maximising an average reward under average constraints.
+- **Why a greedy per-frame choice, and not planning or learning.** A decision has to be made 30 times a second on the Pi's CPU, from quantities the drone measures itself (link speed, server times, power, temperature). A greedy choice of the highest-value server takes well under a millisecond and needs no training data. Planning ahead over a horizon (model-predictive control, as in AccuMO) needs a predictive model of every future frame; reinforcement learning (as in Chanakya) needs training episodes and does not transfer to a new link or board without retraining. Long-run goals that a single frame cannot see (an average power budget, a freshness target) are handled by **prices** that move slowly, once per second (16.3, v4 onward). Choosing the best frame under the current prices and moving the prices towards their targets is the standard online primal-dual method for maximising an average reward under average constraints. Whether planning would do better is tested in the replay in 19.10: an AccuMO-style 30-frame planner does no better than a greedy priced choice, within the replay's error.
 
 ### 16.2 The building blocks
 
@@ -2075,6 +2079,195 @@ Four checks that needed no boards. Nothing earlier was re-scored or overwritten:
 
 **What this changes in the plan.** A better link predictor is not worth building for the emulated faults. Prediction can only pay if real interference behaves differently, with bursts or both paths failing at once. The replay cannot test that, because its two paths draw goodput independently, so the co-channel interference test on the mesh remains the one novelty item. New claim for the paper, labelled as replay: v4.1 gains nothing from a clairvoyant link and reaches 97–100 % of a hindsight per-phase oracle (88 % with 4 s phases).
 
+### 19.9 Laptop-only additions, part 2: joint link failures, a cheaper camera-motion step, the decay curve on all train sequences (29 Oct 2026)
+
+Nothing earlier was re-scored or overwritten; every output is a new file (`docs/laptop_additions_2026-10-29_part2.md`).
+
+**1. Joint link failures: what do they cost, and could better prediction recover it?** (`validation/hardware/replay_joint.py`, 420 replay runs, `replay/joint_oct29/`.) All mesh links share one channel, so interference can hit both offloading paths at the same moment, and the replay draws the two paths independently. The unimpaired static_good scenario got short deep fades on top: during a burst a path's goodput is capped at 0.5 Mbit/s, and a transfer's time is integrated over the burst timeline. Bursts arrive at random, last 0.3 s or 1.5 s on average, and a share ρ of them hits both paths. The burst rate per path is the same for every ρ, so each path is faded for the same share of time (11–15 %), and only how often both are faded at once changes. 10 seeds; every policy of a seed sees the same bursts. The clairvoyant v4.1 knows every transfer's true time, bursts included. Check: without bursts the runs reproduce the 19.8 replay exactly. ± = Student-t 95 % half-width over 10 paired seeds; bold = interval excludes 0.
+
+| Bursts (ρ = share hitting both paths, mean length) | both paths faded | v4.1 sAP + fc | v4.1 loss vs no bursts | clairvoyant − v4.1 | v4.1 − v5 | v4.1 − fixed laptop | v4.1 frames onboard |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| no bursts | 0.0 % | 0.0748 | — | -0.0002 ± 0.0013 | **+0.0046 ± 0.0021** | +0.0022 ± 0.0055 | 3.4 % |
+| ρ 0, 0.3 s | 2.2 % | 0.0728 | **-0.0020 ± 0.0018** | -0.0009 ± 0.0011 | **+0.0048 ± 0.0027** | **+0.0074 ± 0.0043** | 2.6 % |
+| ρ 0.5, 0.3 s | 8.2 % | 0.0702 | **-0.0046 ± 0.0023** | -0.0009 ± 0.0011 | **+0.0057 ± 0.0035** | **+0.0054 ± 0.0031** | 3.9 % |
+| ρ 1, 0.3 s | 13.7 % | 0.0694 | **-0.0054 ± 0.0019** | -0.0004 ± 0.0023 | **+0.0055 ± 0.0022** | +0.0031 ± 0.0040 | 5.2 % |
+| ρ 0, 1.5 s | 1.5 % | 0.0724 | -0.0024 ± 0.0027 | -0.0004 ± 0.0015 | **+0.0054 ± 0.0017** | **+0.0102 ± 0.0045** | 3.2 % |
+| ρ 0.5, 1.5 s | 5.8 % | 0.0705 | **-0.0042 ± 0.0026** | +0.0000 ± 0.0011 | **+0.0058 ± 0.0028** | **+0.0073 ± 0.0038** | 4.3 % |
+| ρ 1, 1.5 s | 12.3 % | 0.0687 | **-0.0061 ± 0.0031** | +0.0002 ± 0.0012 | **+0.0075 ± 0.0027** | **+0.0073 ± 0.0051** | 5.5 % |
+
+- **Joint fades cost more than independent fades of the same amount.** v4.1 with every burst joint against every burst independent, each path faded equally often: -0.0035 ± 0.0016 sAP with 0.3 s bursts (significant), -0.0037 ± 0.0039 with 1.5 s bursts (not significant). Two parallel paths hedge independent fades; they cannot hedge joint ones. The single-path strategies are indifferent to ρ, as they must be.
+- **Perfect link prediction still adds nothing**, even when every fade is joint. The loss comes from having no good path, not from mispredicting one. Even with perfect knowledge the only remaining move is onboard inference, and v4.1 already makes it: its onboard share rises with ρ, and it keeps 98.6–98.9 % of frames fresh.
+- **v4.1 degrades least.** It loses 0.002–0.006 sAP; fixed laptop offloading loses 0.006–0.011. v4.1 is ahead of v5 in every condition.
+- **What this changes.** In the replay, a joint-failure-aware or radio-aware controller has no headroom: the clairvoyant bound is flat. The interference test on the mesh remains worth running, but as a measurement: whether joint fades occur on the shared channel, and how often, which sizes the cost above on real links. It is not a route to a better controller unless the measured fades look very different. Limits: synthetic bursts (0.5 Mbit/s cap, exponential lengths), the only onboard fallback is YOLOv8n-320, no other impairment.
+
+**2. A cheaper camera-motion step for the live forecaster** (`validation/hardware/forecast_cheap.py`; `forecast_cheap_oct29.json`, `forecast_cheap_oct29_timing.json`). Part 14 found that the live forecaster slows onboard inference on the Pi (YOLOv8s-320 170 → 412 ms). Over 780 live runs, the camera-motion step costs a median 7.46 ms per camera frame on the Pi (about 22 % of one core at 30 fps). Recording a result costs 1.80 ms, and moving the held boxes to the display time 0.28 ms. So the camera-motion step is the part to make cheaper. Variants of the step were tested with the forecaster's settings and detections unchanged. Accuracy uses `forecast.replay`: one result every 2 frames, shown 0–600 ms late, mean AP over the lagged settings. The variant is chosen on train (where the forecaster was tuned) and reported on val (the live test clips). "Gain" = lagged AP with the forecaster minus without. Check: the base variant reproduces the stored camera-motion chains exactly and the stored tuning to 4 decimals. Times were taken on the idle laptop, each variant 3 times interleaved.
+
+| Camera-motion step | train: share of the forecaster's gain kept | val: share kept | val: lagged AP | laptop time per frame |
+| --- | --- | --- | --- | --- |
+| base: 320 px, 200 corners, every frame | 100 % | 100 % | 0.0438 | 2.22 ms (1.00×) |
+| 240 px | 99 % | 100 % | 0.0438 | 1.94 ms (0.87×) |
+| 160 px | 99 % | 98 % | 0.0432 | 1.27 ms (0.57×) |
+| 100 corners | 99 % | 100 % | 0.0438 | 1.56 ms (0.70×) |
+| 50 corners | 97 % | 98 % | 0.0431 | 1.28 ms (0.58×) |
+| every second frame | 97 % | 88 % | 0.0400 | 1.19 ms (0.54×) |
+| 160 px, every second frame | 96 % | 89 % | 0.0404 | 0.68 ms (0.31×) |
+| 240 px, 100 corners | 99 % | 100 % | 0.0438 | 1.52 ms (0.68×) |
+
+- **Track on a 160-px image.** It is the cheapest variant that keeps ≥ 99 % of the gain on train. On val it keeps 98 % (lagged AP 0.0432 against 0.0438) at 0.57× the time. If the Pi scales like the laptop, that is about 7.5 → 4.2 ms per frame. This is an estimate: the Pi's step time and the onboard speed-up must be measured (a one-constant change, `W_SMALL = 160` in `egomotion.py`, not made because it changes what the live system runs).
+- **Tracking every second frame is the wrong saving.** It loses 12 % of the gain on val, because an odd frame's one-frame camera motion is left uncorrected.
+
+**3. The decay curve and the forecaster on all 56 VisDrone-VID train sequences, not 8** (`validation/hardware/decay_all56.py`, `staleness_decay_train56.json`). The decay curve the controllers schedule for, and the forecaster's settings, come from 8 of the 56 train sequences. The other 48 were downloaded from the same mirror and measured with the same pipeline: first 400 frames per sequence, COCO YOLOv8s at 640, one result every 2 frames. The forecaster is frozen, so for the 48 new sequences it is a held-out test. The 48 new sequences were detected on the laptop GPU (the CPU was too slow beside other work). Checks: the 8 known sequences reproduce the stored curve (largest difference 0.0000), and the same 8 detected on the GPU give the same curves (largest difference 0.0006).
+
+| Accuracy held / fresh accuracy, at age | 0 ms | 100 ms | 267 ms | 400 ms | 600 ms | 1167 ms |
+| --- | --- | --- | --- | --- | --- | --- |
+| 8 sequences (stored, what the controller uses), forecaster | 1.000 | 0.854 | 0.603 | 0.452 | 0.304 | 0.041 |
+| all 56 sequences, forecaster | 1.000 | 0.839 | 0.580 | 0.427 | 0.277 | 0.093 |
+| the 48 new sequences only, forecaster | 1.000 | 0.836 | 0.576 | 0.424 | 0.276 | 0.104 |
+| 8 sequences (stored), no forecaster | 1.000 | 0.411 | 0.070 | 0.026 | 0.014 | 0.007 |
+| all 56 sequences, no forecaster | 1.000 | 0.440 | 0.136 | 0.074 | 0.043 | 0.023 |
+| the 48 new sequences only, no forecaster | 1.000 | 0.448 | 0.150 | 0.084 | 0.049 | 0.026 |
+
+- **The curve holds.** With the forecaster, the curve on all 56 sequences is within 0.028 of the stored one (in the ratio to fresh accuracy) up to 600 ms, the range of live result ages. Beyond that it keeps more: 0.093 against 0.041 at 1167 ms.
+- **The forecaster keeps most of its effect on unseen video.** On the 48 sequences it never saw, it adds +0.0338 AP averaged over the stale ages, against +0.0529 on the 8 it was tuned on. Part of the difference is that accuracy decays more slowly on the new sequences, so less is lost. As a share of what is lost at 267 ms it recovers 50 % on the new sequences against 57 % on the 8.
+- **The controller does not depend on it.** v4.1 scheduling for the 56-sequence curve instead of the stored one, in the replay of 19.8 (4 scenarios × 5 seeds, paired): -0.0002 ± 0.0003 sAP. Measuring the curve on 8 sequences was enough.
+
+### 19.10 A published scheduler in the replay: AccuMO-style model-predictive offloading (29 Oct 2026)
+
+The closest published scheduler, AccuMO (MobiCom 2023), predicts how the accuracy of the last result falls with its age, depending on content (camera motion), and plans offloading over a 30-frame horizon (model-predictive control) to maximise the predicted accuracy; it prices neither energy nor heat. Part 16.1 argues that a greedy per-frame choice with slow prices is enough. This section tests that argument in the replay. Script `validation/hardware/replay_accumo.py`, output `replay/accumo_oct29/`, write-up `docs/laptop_additions_2026-10-29_part3.md`; nothing earlier was changed or re-scored.
+
+- **The planner.** The accuracy model is our measured decay with forecaster v2 for the camera-motion tertile of the current frame (AccuMO's content dependence; tertiles fixed on train). A plan fixes one setting, or none, per server for the next 30 frames (9 × 7 × 4 = 252 plans). Each server repeats its setting whenever it is free, and its results arrive after the expected latency at the live goodput estimate. Results already in flight are included, re-predicted with the live estimator. The objective is the mean over the horizon of the accuracy of the result on screen (the newest capture that has arrived) times its decay. Each frame the best plan is recomputed and one of its idle servers is started. The search takes 1.4 ms per frame on the laptop, beside other jobs (95th percentile 3.0 ms).
+- **Ablations.** One global decay curve instead of the content-conditioned one, and the planner with v4.1's energy price (same 2.8 W target and dual update), which separates planning from pricing.
+- **Same conditions as 19.8.** The same seeds and link draws for every policy; the stored v4.1 runs of 19.8 are reproduced exactly (20 runs, identical sAP). 15 seeds for the mission and random scenarios, 5 for the others, 7 for the 24-minute mission.
+
+| Scenario | v4.1 sAP + fc | AccuMO-style − v4.1 | AccuMO-style, one global curve − v4.1 | AccuMO-style + v4.1's energy price − v4.1 | LEAF-style fixed weight − v4.1 | v4 (v4.1 without the freshness price) − v4.1 | frames onboard, AccuMO-style / v4.1 | time fresh (< 300 ms), AccuMO-style / v4.1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| mission (6 × 20 s) | 0.0525 | +0.0018 ± 0.0019 (n 15) | +0.0018 ± 0.0019 (n 15) | +0.0018 ± 0.0019 (n 15) | **+0.0022 ± 0.0009 (n 15)** | +0.0001 ± 0.0008 (n 15) | 5.9 % / 10.7 % | 89 % / 99 % |
+| mirror mission (6 × 20 s) | 0.0631 | +0.0014 ± 0.0022 (n 5) | +0.0016 ± 0.0019 (n 5) | +0.0014 ± 0.0022 (n 5) | +0.0022 ± 0.0024 (n 5) | — | 5.8 % / 10.5 % | 92 % / 99 % |
+| random links (30 × 4 s) | 0.0470 | **+0.0044 ± 0.0019 (n 15)** | **+0.0045 ± 0.0022 (n 15)** | **+0.0044 ± 0.0019 (n 15)** | **+0.0053 ± 0.0014 (n 15)** | **+0.0020 ± 0.0014 (n 15)** | 2.0 % / 7.9 % | 89 % / 99 % |
+| good links (6 × 20 s) | 0.0755 | −0.0001 ± 0.0051 (n 5) | −0.0008 ± 0.0054 (n 5) | −0.0001 ± 0.0051 (n 5) | +0.0009 ± 0.0017 (n 5) | — | 0.0 % / 3.2 % | 97 % / 100 % |
+| 24-min mission (6 × 4 min) | 0.0469 | **+0.0014 ± 0.0008 (n 7)** | — | **+0.0014 ± 0.0008 (n 7)** | **+0.0022 ± 0.0005 (n 7)** | — | 5.1 % / 8.8 % | 94 % / 99 % |
+
+(Bold: the 95 % interval excludes zero. Positive means better than v4.1.)
+
+- **In the replay, v4.1 does not beat the AccuMO-style planner.** They tie on the mission, mirror mission and good links. The planner is ahead on random links (**+0.0044 ± 0.0019 (n 15)**) and over the 24-minute mission (**+0.0014 ± 0.0008 (n 7)**, 11 % of the time ≥ 80 °C against 16 %). It sends fewer frames onboard and keeps results fresh less of the time, yet scores higher. A likely reason: an onboard result is newer, so on screen it replaces a better offloaded one that is still on its way; the planner sees that cost, while v4.1's freshness price pushes towards onboard results (v4, without that price, recovers part of the gap on random links).
+- **The gain is not from planning.** The LEAF-style fixed-weight greedy controller is ahead of v4.1 by as much or more in every scenario, and v4 (v4.1 without the freshness price) is ahead on random links. Content conditioning adds nothing (the global curve gives the same result), and adding v4.1's energy price to the planner changes nothing (without it, its power is already at or below the 2.8 W target).
+- **These differences are within the replay's known error for this kind of comparison.** The validation against the 240-run main campaign (19.8) has the replay putting LEAF +0.0050 sAP ahead of v5 where the hardware measured a tie (−0.0004): the replay favours policies that run less onboard. On hardware v4.1 − v4 was +0.0025 ± 0.0041 (G11) and LEAF tied v5 (G12). So the replay cannot rank the AccuMO-style planner against v4.1; only a board campaign can.
+- **Against the other literature baselines the planner behaves like v4.1.** On the mission, v4.1 is ahead of shortest-queue, freshness-threshold, confidence-trigger and offloading-reward scheduling by +0.0073 to +0.0244 sAP (sAP 0.0333–0.0504), and the planner by similar margins.
+- **What this changes.** The paper cannot claim that v4.1 beats AccuMO-style planning. The supported claim is narrower: on this system a greedy priced choice does as well as a 30-frame model-predictive planner, at a fraction of the computation. The hardware test is the planner against v4.1 and LEAF on the board (the planner needs porting into `adaptive2.py`, and its time on the Pi measuring).
+
+### 19.11 Laptop-only additions, part 4: v4.1's settings, the replay's power model, a held-out check, the planner on the board (29–30 Oct 2026)
+
+Write-up `docs/laptop_additions_2026-10-30_part4.md`; nothing earlier was changed or re-scored (every new setting of the replay is a switch whose default reproduces the stored results exactly; checked on stored runs of v5, v4.1 and the planner, identical to the last digit).
+
+**1. How sensitive is v4.1 to its own settings?** One setting at a time moved away from what the board runs, the others held, on the same seeds and link draws as v4.1 (`validation/hardware/replay_sweep.py`, `replay/sweep_oct29/`, 295 runs; seeds 1–10, the 24-min mission seeds 1–3; old power model, as 19.8–19.10). Bold: the 95 % interval excludes zero; positive = better than v4.1.
+
+| Setting | Value | mission, n 10: sAP − v4.1 (Pi W) | random links, n 10: sAP − v4.1 (Pi W) | 24-min mission, n 3: sAP − v4.1 (Pi W) |
+| --- | --- | --- | --- | --- |
+| energy target (`--power-budget`, v4.1: 2.8 W) | 2.4 W | **+0.0015 ± 0.0005** (−0.10 W) | **+0.0016 ± 0.0011** (−0.16 W) | +0.0006 ± 0.0014 (−0.09 W) |
+| energy target (`--power-budget`, v4.1: 2.8 W) | 2.6 W | **+0.0011 ± 0.0005** (−0.06 W) | **+0.0018 ± 0.0009** (−0.11 W) | — |
+| energy target (`--power-budget`, v4.1: 2.8 W) | 3 W | **−0.0009 ± 0.0006** (+0.07 W) | **−0.0009 ± 0.0004** (+0.13 W) | — |
+| energy target (`--power-budget`, v4.1: 2.8 W) | 3.2 W | **−0.0019 ± 0.0011** (+0.16 W) | **−0.0028 ± 0.0008** (+0.27 W) | **−0.0024 ± 0.0005** (+0.23 W) |
+| freshness target (`--fresh-target`, v4.1: 0.95) | 0.85 | +0.0003 ± 0.0008 (−0.08 W) | **+0.0015 ± 0.0014** (−0.07 W) | +0.0009 ± 0.0012 (−0.05 W) |
+| freshness target (`--fresh-target`, v4.1: 0.95) | 0.9 | −0.0001 ± 0.0004 (−0.03 W) | +0.0013 ± 0.0014 (−0.03 W) | — |
+| freshness target (`--fresh-target`, v4.1: 0.95) | 0.99 | +0.0001 ± 0.0006 (+0.01 W) | −0.0010 ± 0.0011 (+0.05 W) | +0.0007 ± 0.0009 (+0.02 W) |
+| energy price step (`--eta`, v4.1: 0.1) | 0.05 | **−0.0012 ± 0.0008** (+0.05 W) | **−0.0007 ± 0.0007** (+0.07 W) | — |
+| energy price step (`--eta`, v4.1: 0.1) | 0.2 | **+0.0007 ± 0.0004** (−0.03 W) | **+0.0012 ± 0.0005** (−0.07 W) | — |
+| freshness price step (`--eta-f`, v4.1: 2.0) | 1 | +0.0000 ± 0.0004 (+0.00 W) | +0.0001 ± 0.0005 (−0.01 W) | — |
+| freshness price step (`--eta-f`, v4.1: 2.0) | 4 | −0.0001 ± 0.0004 (+0.00 W) | **+0.0005 ± 0.0005** (−0.01 W) | — |
+| freshness price cap (`--lam-f-max`, v4.1: 2.0) | 1 | +0.0001 ± 0.0003 (−0.01 W) | +0.0002 ± 0.0004 (−0.02 W) | — |
+| freshness price cap (`--lam-f-max`, v4.1: 2.0) | 4 | +0.0000 ± 0.0004 (−0.00 W) | +0.0001 ± 0.0005 (−0.01 W) | — |
+
+- **v4.1 is flat in its update speeds and freshness cap** (at most 0.0012 sAP from v4.1), and nearly flat in its freshness target (−0.0010 to +0.0015). Nothing in the result depends on hand-tuning these.
+- **The energy target is the one that matters.** A tighter target (2.4–2.6 W) scores +0.0011 to +0.0018 on the short scenarios, a looser one (3.0–3.2 W) −0.0028 to −0.0009; over the 24-min mission 3.2 W costs −0.0024 ± 0.0005 and 2.4 W ties (+0.0006 ± 0.0014). The direction is the replay's known bias (it favours less onboard work), so this is a hint, not a reason to change 2.8 W; it was checked on fresh seeds below.
+
+**2. The replay's onboard power, corrected.** The replay spread the bench energy of one onboard inference over the inference time, so a slower inference (CPU contention, throttling) drew *less* power; on the Pi the power during inference stays the same when it slows (4.8 W cool, 4.7 W throttled, Part 6), so the energy grows. Corrected as a switch (`replay.py --onboard-power power`: the bench power held for the whole inference), with the board held at its 85 °C throttle limit (the firmware does that; with full power kept, the linear thermal fit would let the simulated board reach 98 °C in the 24-min mission, which the real board never does). Re-validated against the same 240 hardware runs (`replay/validate_main_oct30_power_t85/`, same scenarios, seeds and netem setting as `validate_main_oct29_plant`):
+
+| Replay against the 240 hardware runs | old model: r / mean abs. diff. | corrected model: r / mean abs. diff. |
+| --- | --- | --- |
+| sAP | 0.947 / 0.004 | 0.957 / 0.003 |
+| Pi power (W) | 0.990 / 0.213 | 0.989 / 0.106 |
+| time ≥ 80 °C | 0.962 / 0.201 | 0.978 / 0.163 |
+| share of time with a fresh result | 0.926 / 0.055 | 0.927 / 0.053 |
+| paired verdicts against v5 that agree with hardware | 9 of 11 | 9 of 11 |
+| LEAF − v5 sAP (hardware −0.0004) | +0.0050 | +0.0049 |
+| Pi power of the 3 onboard-heavy baselines (replay / hardware) | 4.13 W / 4.80 W, 4.07 W / 4.71 W, 4.23 W / 4.66 W | 4.55 W / 4.80 W, 4.47 W / 4.71 W, 4.74 W / 4.66 W |
+| their time ≥ 80 °C (replay / hardware) | 9 % / 69 %, 5 % / 60 %, 8 % / 72 % | 22 % / 69 %, 19 % / 60 %, 26 % / 72 % |
+
+- **The power and heat errors shrink**, but the replay still under-states the onboard-heavy baselines' heat, and **its LEAF bias is unchanged** (+0.0049 against a hardware tie). So the bias is not in the power model; the likely cause is CPU contention on the Pi (onboard inference slowing the camera loop, encoding and forecasting), which the replay does not model. Comparisons of policies that differ in onboard use by a few per cent remain beyond the replay.
+
+**3. Held-out check on fresh seeds, corrected model.** Seeds 11–20 (never used before), v4.1 against the AccuMO-style planner, the LEAF-style weight and v4.1 with a 2.4 or 2.6 W target (`replay/heldout_power_oct30/`, 100 runs, peak 76 °C, so the 85 °C hold never acts there; the 24-min mission seeds 11–13 in `replay/heldout_power_oct30_t85/`, 12 runs).
+
+| Scenario | v4.1 sAP + fc | AccuMO-style planner − v4.1 | LEAF-style weight − v4.1 | v4.1 at 2.4 W − v4.1 | v4.1 at 2.6 W − v4.1 |
+| --- | --- | --- | --- | --- | --- |
+| mission (seeds 11–20) | 0.0529 | +0.0009 ± 0.0015 | **+0.0017 ± 0.0010** | **+0.0004 ± 0.0003** | +0.0003 ± 0.0003 |
+| random links (seeds 11–20) | 0.0456 | **+0.0045 ± 0.0026** | **+0.0047 ± 0.0022** | +0.0013 ± 0.0018 | **+0.0016 ± 0.0009** |
+| 24-min mission (seeds 11–13) | 0.0469 | +0.0011 ± 0.0023 | **+0.0018 ± 0.0006** | +0.0001 ± 0.0007 | — |
+
+- **The ranking of 19.10 holds on fresh seeds and with the corrected power model:** the planner and LEAF tie or lead v4.1 (random links **+0.0045 ± 0.0026** and **+0.0047 ± 0.0022**; mission +0.0009 ± 0.0015 and **+0.0017 ± 0.0010**), by less than the replay's LEAF bias. The board campaign below decides it.
+- **The tighter energy target gains little** (**+0.0004 ± 0.0003** and +0.0013 ± 0.0018 at 2.4 W; 24-min mission +0.0001 ± 0.0007): well inside the replay's error and in the direction of its bias. **2.8 W stays.**
+
+**4. The AccuMO-style planner on the board.** `adaptive2.py --policy accumo` (with `--mpc-horizon`, and `--mpc-context` for the camera-motion-conditioned decay from the live forecaster). The search is one shared module, `validation/hardware/mpc_planner.py`.
+
+- **Same decisions as the replay's planner:** `tests/test_mpc_planner.py` runs both on the same replay state every frame of two replayed missions (with and without the energy price) and requires identical choices.
+- **Runs end to end:** a loopback run on the laptop (camera and GPU worker on 127.0.0.1, the network shaping replaced by a no-op, the laptop's network untouched) completed all 540 frames; the planner took 1.87 ms per frame (95th percentile 2.26 ms) and used the camera-motion curve in 536 of 540 frames (`planner_smoke_oct30.json`; a functional check, not a measurement).
+- **Planner time:** 0.64 ms median, 0.97 ms 95th percentile per frame on the laptop, single-threaded, over 2950 sampled states (`bench_planner.py`, `planner_bench_laptop_oct30.json`), against a 33 ms frame budget. The same script runs on the Pi without workers.
+
+**5. The next board session, ready to run.**
+
+- `tools/push_code_mesh.sh`: the code and configuration to the camera and the Jetson over the mesh (with an import check on the camera); `tools/push_code.sh` updated for Wi-Fi.
+- `tools/campaign_mesh4.sh`: v4.1, the planner (`accumo`) and the LEAF-style weight (`leaf`, as in the 240-run campaign) × good links, mesh mission, multihop × 5 repetitions = 45 runs, shuffled, resumable; it first times the planner on the camera Pi. About 6 h.
+- `tools/campaign_ego160.sh`: the 160 px camera-motion step (19.9) timed on the Pi (`egomotion_bench.py`), then v4.1 at 320 and 160 px × 2 scenarios × 3 repetitions = 12 runs (`EGO_W=160`; the default stays 320). About 1.5 h.
+- `validation/hardware/calib_hw.py`: the calibration check of 19.8 on real runs (the controller's logged deadline probabilities against measured latencies, the same bins as the replay); tested on the loopback run and on campaign 3 (runs from before the logging are skipped).
+
+**6. The paper.** `paper/main.tex` has a new section "Hardware Check" (all 1,150 placements; live runs: a Q90 JPEG to the laptop 14.7 on-time results/s against 2.5 for the best split; INT8/FP16 splits within 0.0004 mAP with the VisDrone YOLOv8s while Q90 JPEG loses 4.0 %, so a split can beat it by at most 4.3 %; the simulator against 44 real runs, r = 0.947), plus updates to the abstract, contributions and limitations. Every number is generated from the result files (`evaluation/make_hardware.py`, traced in `docs/claims_to_evidence.md`). Checked: the simulator code against the paper's policy equations (they match); every cited DOI against CrossRef/DataCite (one fix: the YOLOv5 v7.0 entry is from 2022, not 2020).
+
+### 19.12 Laptop-only additions, part 5: a learned feature-compression baseline, and the second paper (30 Oct 2026)
+
+Write-up `docs/laptop_additions_2026-10-30_part5.md`. Part 20 (section 1) left one test open: a learned, trained compressor for the features. Code `evaluation/learned_bottleneck.py` (training, evaluation, the JPEG and post-hoc measurements, figure) and `evaluation/learned_bottleneck_system.py` (the system model); results `experiments/results/learned_bottleneck/`; weights `weights/learned_bottleneck/`.
+
+- **Design** (BottleFit / supervised compression, here with the detector frozen): a small encoder (two convolutions) after layer 2 or 4 of the VisDrone YOLOv8s outputs a few channels at half or full resolution, quantised per image to 8 bits and coded with zstd-1 (the toolkit's coder); a decoder restores the layer's output and the rest of the detector is unchanged. Only the encoder and decoder are trained, by distilling the detector's own neck outputs (layers 15, 18, 21) and the cut tensor: 6,000 VisDrone2019-DET training images, 471 held out for monitoring, no labels, 20 epochs. DET val (548 images) is the test set.
+- **Like for like.** Every payload is measured on the same DET val frames: the learned codes, JPEG at q10–q95 and the post-hoc INT8 + zstd splits (through the toolkit's quantiser and wire format). The VisDrone tables of R3 (`visdrone_ft_split/`) keep the COCO-measured payloads by design, so they were not used for sizes; on VisDrone frames JPEG q50 is 30.4 kB, not 37.4. The validator's warm-up pass on a dummy frame is excluded from every average.
+
+| Payload | kB per frame | mAP@[.5:.95] | JPEG mAP at the same size | JPEG kB for the same mAP | bytes saved against JPEG |
+| --- | --- | --- | --- | --- | --- |
+| learned, k2, 8 channels | 27.1 | 0.233 | 0.196 | 48.6 | **44 %** |
+| learned, k2, 16 channels | 54.2 | 0.251 | 0.239 | 70.4 | **23 %** |
+| learned, k4, 4 channels | 3.6 | 0.142 | — | 14.9 | **76 %** |
+| learned, k4, 8 channels | 7.0 | 0.181 | — | 22.2 | **69 %** |
+| learned, k4, 16 channels | 13.7 | 0.206 | 0.131 | 31.8 | **57 %** |
+| learned, k4, 8 channels, full resolution | 26.8 | 0.240 | 0.195 | 55.7 | **52 %** |
+| learned, k4, 32 channels | 26.9 | 0.227 | 0.195 | 43.4 | **38 %** |
+| learned, k4, 16 channels, full resolution | 52.7 | 0.251 | 0.237 | 69.6 | **24 %** |
+| learned, k4, 64 channels | 53.8 | 0.231 | 0.238 | 46.3 | −16 % |
+| learned, k4, 32 channels, full resolution | 104.9 | 0.253 | 0.263 | 73.3 | −43 % |
+| JPEG q10 | 11.0 | 0.099 |  |  |  |
+| JPEG q20 | 16.9 | 0.160 |  |  |  |
+| JPEG q35 | 24.3 | 0.188 |  |  |  |
+| JPEG q50 | 30.4 | 0.203 |  |  |  |
+| JPEG q75 | 46.2 | 0.231 |  |  |  |
+| JPEG q90 | 77.8 | 0.256 |  |  |  |
+| JPEG q95 | 109.1 | 0.264 |  |  |  |
+| post-hoc k2 int8 zstd | 539.3 | 0.267 |  |  |  |
+| post-hoc k4 int8 zstd | 263.6 | 0.267 |  |  |  |
+
+- **A learned code beats the image on bits.** It needs 23–76 % fewer bytes than JPEG for the same accuracy, which no post-hoc split does (k4 INT8 + zstd is 264 kB on these frames). Resolution matters more than channels: at about the same size, the k4 code at full resolution with 8 channels reached 0.240 (26.8 kB), the half-resolution one with 32 channels 0.227 (26.9 kB). Not every code wins: k4, 64 channels (53.8 kB, 0.231 against JPEG's 0.238 at that size) and k4, 32 channels, full resolution (104.9 kB, 0.253 against JPEG's 0.263 at that size) lose to JPEG; accuracy saturates near 0.25.
+- **It does not reach the unsplit accuracy.** The best code reached 0.253 at 104.9 kB; JPEG q90 reaches 0.256 at 77.8 kB and the unsplit model 0.267. A likely limit is the small decoder with the detector frozen; training the detector with the bottleneck (as supervised compression does) may go further.
+
+**Does it change the system result?** Each option scored with the paper's own model, exactly as its adaptive policy scores it (expected accuracy-weighted on-time results per second; `learned_bottleneck_system.py`), over 31 goodputs from 0.25 to 50 Mbit/s and the paper's onboard speeds plus the measured Pi:
+
+| Onboard speed (YOLOv8s per frame) | goodputs where a learned code beats the best image option | up to | largest gain where the image delivers at least 0.5 accuracy-weighted on-time results/s | learned codes that win |
+| --- | --- | --- | --- | --- |
+| 40 ms | 25 of 31 | 17.3 Mbit/s | +409 % | k2_c16_w128_d2, k4_c16_w128_d2, k4_c4_w128_d2, k4_c8_w128_d2, k4_c8_w128_s1_d2 |
+| 90 ms | 25 of 31 | 17.3 Mbit/s | +437 % | k2_c16_w128_d2, k4_c16_w128_d2, k4_c4_w128_d2, k4_c8_w128_d2, k4_c8_w128_s1_d2 |
+| 180 ms | 22 of 31 | 17.3 Mbit/s | +504 % | k2_c16_w128_d2, k2_c8_w128_d2, k4_c16_w128_d2, k4_c4_w128_d2, k4_c8_w128_d2, k4_c8_w128_s1_d2 |
+| 360 ms | 13 of 31 | 3.5 Mbit/s | +756 % | k2_c8_w128_d2, k4_c16_w128_d2, k4_c4_w128_d2, k4_c8_w128_d2 |
+| 758 ms (the Pi 5, measured) | 6 of 31 | 0.6 Mbit/s | +127 % | k4_c4_w128_d2 |
+
+- **Only with fast onboard compute and a slow link.** The image needs more bits now, so Proposition 1 no longer applies, but it still needs far less onboard work. With YOLOv8s at 40 ms per frame a learned code wins up to 17.3 Mbit/s; on the measured Pi (758 ms) only up to 0.6 Mbit/s, where no option delivers more than 2.7 accuracy-weighted on-time results per second; above that the image wins, because layers 0..k and the encoder cost more onboard time than the smaller payload saves.
+- **Verdict for the paper.** "Send the image" stays the answer for the drone computers measured here, except at the lowest goodputs; it is no longer a statement about bits alone. The paper now says so (`paper/main.tex`, section "A Learned Bottleneck", every number generated by `evaluation/make_learned.py`).
+
+**The second paper, first draft.** `paper2/` (`bash build.sh`): the priced controller — energy pricing on Wi-Fi and the mesh, the objective matched to the forecaster, decision placement by topology, the literature schedulers and the AccuMO-style planner, the hindsight oracle and calibration (replay), the two-camera swarm, the whole-system energy view and the negative results; 5 pages, a testbed figure, the decay figure and a results table, every number generated from the result files (`paper2/make_metrics.py`, sources in `paper2/generated/metrics_sources.md`), every new citation verified via doi.org. What it still needs is listed in `paper2/README.md`; chiefly the planner's board campaign.
+
 ## PART 20What it all means: the argument for the paper
 
 This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.
@@ -2084,7 +2277,7 @@ This part ties the results into one line of reasoning: what can be claimed, why 
 **Claim.** For the YOLO-class detectors, exact split points and lightweight encodings tested (INT8/FP16 with zstd), on this drone hardware, offloading a compressed image beats every split of the network. This is a bounded empirical result: learned feature compressors for detection can beat image coding at equal bit rate (Yuan et al. 2022, 2024; BottleFit, Matsubara et al. 2022) and were not tested here.\
 **Why.** A split has to send intermediate features. Even INT8+zstd, the smallest split (k4, 310.7 KiB), is 2.0–11.5× a JPEG frame across 19 detectors. The drone also has to compute the first layers, which on a Pi takes 210–252 ms. Both costs push latency up, and they buy little accuracy: JPEG q90 loses 0.7 % on COCO and 4 % on aerial images, where an INT8 split is lossless (19.6).\
 **Evidence.** A closed-form bound, simulation (a split wins by at most 0.47 % in 1,300 random systems), all 1,150 placements on real hardware, live runs (best split 7.0 frames/s against 15.2 for JPEG), and the calibrated swarm study (the split never beats JPEG in any cell).\
-**Limit.** A learned, trained compressor for the features could change this; that test is still to do.
+**Limit.** A learned compressor changes the bits but not, on these drone computers, the verdict (19.12): trained with the detector frozen, it needs fewer bytes than JPEG for the same accuracy, but it does not reach the unsplit accuracy, and on the Pi it wins end to end only at the lowest goodputs because it needs far more onboard work. A compressor trained together with the detector, or faster onboard hardware, may change this.
 
 ### 2. How to schedule: use every computer, adapt per frame
 
@@ -2227,17 +2420,18 @@ State on 6 October 2026, 15:25 (kept for the record):
 | --- | --- | --- |
 | <s>Move the three devices onto AegisSwarm; measure each mesh link</s> **Done 23 Oct** (18.8) | — | — |
 | ~~v4 refinements: recover freshness; live Jetson power logging; 20–30 min runs to show sustained heating~~ **Done 9 Oct 2026 in code**: v4.1 (`--fresh-target`), v4.2 (`--edge-energy-aware`: the edge drone priced, budgets derived from battery + flight power, live Jetson power from the worker headers, coordinator `--energy-pref`), system-view rescoring of every campaign (G10) and the 24-min heat-run tool. **Done**: the campaign (G11, 11 Oct) and the 24-min runs (G13) | — | — |
-| Make the live forecaster cheaper on the Pi (camera tracking every other frame or at lower resolution) | Code + short campaign | half a day |
+| Make the live forecaster cheaper on the Pi (19.9: track camera motion at 160 px, not every other frame) | Code + short campaign | half a day |
 | <s>Task-level campaign on the mesh (220 runs)</s> **Replaced** by mesh campaigns 2 and 3 (100 runs, 18.9–18.10) and the 240-run G12 campaign | — | — |
-| Learned feature-compression baseline for the split result (e.g. Yuan et al. 2022/2024, BottleFit) | The laptop GPU | 1–2 weeks |
+| <s>Learned feature-compression baseline for the split result</s> **Done 30 Oct** (19.12): fewer bytes than JPEG; on the Pi better end to end only at the lowest goodputs. Open: a bottleneck trained together with the detector | The laptop GPU | days |
 | One mesh campaign with both topologies (direct ground link and forced multihop), v4.1 and the hierarchical chain, 5 repetitions: isolates the topology reversal of Part 20, section 7 | Mesh | about 4 h |
 | Ablation of the energy mechanism: onboard inference switched on and off with the offloading paths held fixed | Mesh | about 3 h |
-| 5 repetitions of the 24-minute missions; a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed | Mesh; code | about 1 day; 1 week |
+| 5 repetitions of the 24-minute missions; the AccuMO-style planner against v4.1 and the LEAF-style weight on the board (planner ported and tested, 19.11; `tools/campaign_mesh4.sh`, 45 runs) | Mesh (`push_code_mesh.sh` first) | about 1 day; about 6 h |
 | Swarm test with 3 Pis and 2 Jetsons (5 cameras) on the mesh | Your new boards set up | 3–5 days |
-| Co-channel interference test on the mesh: both paths failing at once (19.8: the only remaining place where better link prediction could pay) | A device for interference traffic; the mesh | about half a day |
-| Calibration of the deadline probabilities on hardware (the per-frame logging of 19.8; push adaptive2.py to the camera Pi first) | The next board campaign | no extra runs |
-| Commit and push the work since `08bc5a28` (branch `main`) | Your go-ahead | minutes |
-| Paper and professor report update | — | 1–2 weeks |
+| Calibration of the deadline probabilities on hardware (the per-frame logging of 19.8; analysis ready: `calib_hw.py`, 19.11) | The next board campaign | no extra runs |
+| Co-channel interference test on the mesh: how often both paths fade together (19.9: a measurement; in the replay neither joint-failure awareness nor perfect prediction adds accuracy) | A device for interference traffic; the mesh | about half a day |
+| Cheaper camera-motion step on the Pi: 160 px, the step time and the onboard speed-up (19.9; scripted, 19.11: `tools/campaign_ego160.sh`, 12 runs) | The camera Pi on the mesh | about 1.5 h |
+| Commit the work since `b34f3738` (29 Oct, the 19.9–19.11 work); push `main`, which is 1 local commit ahead of GitHub (`08bc5a28`) | Your go-ahead | minutes |
+| Paper 1: hardware section and the learned bottleneck (19.11–19.12). Paper 2: first draft in `paper2/` (19.12); to finish after the planner's board campaign. Final Report updated | The board campaign for paper 2 | a few days |
 | <s>Task C7 (Part 19): VisDrone replay of the 776 earlier runs</s> **Done 25 Oct** (19.5) | — | — |
 | <s>Hierarchical chain on the mesh (18.6)</s> **Done 23–24 Oct** (18.8, 18.9) | — | — |
 | <s>Size of the receiver fault in the earlier campaigns</s> **Done 24 Oct**: 16 of the 824 runs made before the fix (2 %), no verdict changes, no re-run needed (18.9) | — | — |

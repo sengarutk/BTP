@@ -51,6 +51,13 @@ ONB_MS = {"n320": 96.0, "s320": 595.0, "s640": 700.0}
 ENC_MS = {640: 3.5, 480: 2.2, 320: 1.2}
 STALL_S, RECOVER_S, PROBE_B = 1.5, 1.2, 65536
 NETEM_LEGACY = True   # set by --netem: legacy (rate limits persist, campaigns up to 13 Oct) or reset
+# Onboard inference power. "energy" (as up to 29 Oct 2026, every stored result): the bench energy per inference spread
+# over the inference time, so a slower inference (CPU contention, throttling) draws less power. "power": the bench power
+# during inference (infer_j / infer_ms) held for the whole inference, so a slower one costs more energy. The Pi measured
+# 4.8 W cool and 4.7 W throttled at 1.5 GHz (Part 6 of the brief): the power, not the energy, stays the same.
+# With "power" the board's temperature is also held at its throttle limit (energy_constants pi.thermal.throttle_c, 85 C;
+# measured peak 89.2 C): the firmware lowers the clock to stay there, which the linear thermal fit does not know.
+ONB_POWER = "energy"
 T0_C = 70.0   # starting Pi temperature: campaign runs are back to back, measured run-mean temperatures 68-81 C
 TAU_HEAT, TAU_COOL, P_SD = 148.8, 148.8, 0.07   # one time constant: heating steps of the 24-min heat run fit 137-146 s
 
@@ -365,6 +372,8 @@ class Replay:
             t_ss = pl["intercept_c"] + pl["c_per_w"] * p
             tau = TAU_HEAT if t_ss > self.temp else TAU_COOL
             self.temp += (t_ss - self.temp) * (1 - math.exp(-PERIOD / tau))
+            if ONB_POWER == "power":                   # the firmware holds the board at its throttle limit (85 C):
+                self.temp = min(self.temp, c["pi"]["thermal"]["throttle_c"])   # with full power kept it would run on
             temps.append(self.temp)
             e_j += p * PERIOD
             edge_j += c["jetson"]["idle_w"] * PERIOD
@@ -373,7 +382,7 @@ class Replay:
                 last_dual = t
                 pbar = float(np.mean([x[1] for x in p_log[-30:]]))
                 if "energy" in cf and "mu_fixed" not in cf and t - self.exempt_t > 1.0:   # anti-windup
-                    self.mu = min(5.0, max(0.0, self.mu + 0.1 * (pbar - cf["energy"])))
+                    self.mu = min(5.0, max(0.0, self.mu + cf.get("mu_step", 0.1) * (pbar - cf["energy"])))
                     if self.temp >= (84.0 if "heat" in cf else 78.0):
                         self.mu = max(self.mu, 1.0)
                 if "heat" in cf:
@@ -386,7 +395,8 @@ class Replay:
                     self.mu_e = min(5.0, max(0.0, self.mu_e + 0.1 * (sum(served) / 5.0 - cf["edge"])))
                 if "fresh" in cf:
                     win = [f for ts, f in fresh_hist[-150:]]
-                    self.lam_f = min(2.0, max(0.0, self.lam_f + 2.0 * (cf["fresh"] - sum(win) / len(win))))
+                    self.lam_f = min(cf.get("fresh_cap", 2.0), max(0.0, self.lam_f + cf.get("fresh_step", 2.0) *
+                                                            (cf["fresh"] - sum(win) / len(win))))
             # ---- decide
             choice = None
             if "fixed" in cf:
@@ -419,7 +429,9 @@ class Replay:
                 if srv == "onboard":
                     dur = self.onboard_ms(var) / 1e3
                     self.onb_free = t + dur
-                    onb_until, onb_power = t + dur, c["pi"]["infer_j"][var] / dur
+                    onb_until = t + dur
+                    onb_power = (c["pi"]["infer_j"][var] / dur if ONB_POWER == "energy" else
+                                 c["pi"]["infer_j"][var] / (c["pi"]["infer_ms"][var] / 1e3))
                     pending.append((t + dur, tick, srv, var))
                     rec.update(server=srv, variant=var, res=ONBOARD_VARIANTS[var][1])
                 else:
@@ -496,9 +508,12 @@ def main():
     ap.add_argument("--netem", default="reset", choices=["reset", "legacy"],
                     help="reset: each phase replaces the previous one (adaptive.py since 13 Oct 2026); legacy: an earlier "
                          "rate limit persists, as in every campaign up to 13 Oct (use it to validate against those)")
+    ap.add_argument("--onboard-power", default="energy", choices=["energy", "power"],
+                    help="onboard inference power model (see ONB_POWER); energy reproduces every result before 29 Oct")
     a = ap.parse_args()
-    global NETEM_LEGACY
+    global NETEM_LEGACY, ONB_POWER
     NETEM_LEGACY = a.netem == "legacy"
+    ONB_POWER = a.onboard_power
     lo, hi = (int(x) for x in a.seeds.split("-"))
     gp = load_goodput()
     c, decays, accs, vd = load_all()

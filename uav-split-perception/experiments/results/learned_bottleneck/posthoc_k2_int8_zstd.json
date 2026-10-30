@@ -1,0 +1,8 @@
+{
+ "config": "k2_int8_zstd",
+ "cut": 2,
+ "payload_bytes_mean": 539314.0529197081,
+ "payload_bytes_p95": 574006.15,
+ "n": 548,
+ "map50_95_unchanged_check": 0.26705827490531536
+}

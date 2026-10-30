@@ -1,0 +1,21 @@
+{
+ "host": "LAPTOP-JPJH7SR6",
+ "machine": "x86_64",
+ "python": "3.12.3",
+ "numpy": "1.26.4",
+ "threads": "1",
+ "horizon": 30,
+ "price": false,
+ "n": 2950,
+ "ms_median": 2.024285502557177,
+ "ms_p95": 13.741012242826397,
+ "ms_p99": 22.79983235624948,
+ "ms_max": 46.881319998647086,
+ "frame_budget_ms": 33.333333333333336,
+ "chosen": {
+  "none": 1044,
+  "laptop": 961,
+  "jetson": 969,
+  "onboard": 26
+ }
+}

@@ -58,13 +58,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   <div class="eyebrow">AEGIS-UAV · contribution and novelty, 26 Oct 2026</div>
   <h1>Priced, freshness-aware offloading for a drone camera, measured on a real mesh</h1>
   <p class="lede">What the project contributes, what the measurements show, how it compares with the closest published work, and what a reviewer will ask for.</p>
-  <p class="meta">Evidence: about 1,150 live hardware runs (Raspberry Pi 5 camera drones, Jetson Orin Nano edge drone, laptop ground station; Wi-Fi and a batman-adv mesh), VisDrone video, standard streaming accuracy (sAP). Full numbers: the AEGIS-UAV Results Brief.</p>
+  <p class="meta">Evidence: about 1,150 live hardware runs (Raspberry Pi 5 camera drones, Jetson Orin Nano edge drone, laptop ground station; Wi-Fi and a batman-adv mesh), VisDrone video, standard streaming accuracy (sAP). Full numbers: the AEGIS-UAV Results Brief. Updated 30 Oct 2026: a published scheduler re-implemented (AccuMO-style, Results Brief 19.10–19.11).</p>
 </header>
 
 <div class="verdict">
   <h2>Verdict</h2>
   <p><b>Novel enough for a solid systems-and-measurement paper</b> at a UAV or edge-computing workshop or an IEEE networking conference: no published work we found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI) and streaming perception on UAV video alone (StreamFlow) are published, so the claim must stay this narrow.</p>
-  <p><b>Not yet enough for a top venue</b> (MobiCom, MobiSys, SenSys): that would need a learned feature-compression baseline for the split result, two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed, and ideally a flight or outdoor test.</p>
+  <p><b>Not yet enough for a top venue</b> (MobiCom, MobiSys, SenSys): that would need two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed (an AccuMO-style planner now runs in the trace replay and in the board code; its board campaign is scripted but not yet run), and ideally a flight or outdoor test. A learned feature-compression baseline is now measured (30 Oct; Results Brief 19.12).</p>
 </div>
 
 <section>
@@ -104,12 +104,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><th>Work</th><th>What it does</th><th>Streaming accuracy</th><th>Drone, real hardware</th><th>Energy / heat / freshness priced</th><th>Mesh, multi-hop</th></tr>
     <tr><td><b>This project</b></td><td>Per-frame place, model and quality with dual-ascent prices and a forecaster</td><td><span class="chip yes">yes</span></td><td><span class="chip yes">yes</span></td><td><span class="chip yes">all three</span></td><td><span class="chip yes">batman-adv</span></td></tr>
     <tr><td>A²-UAV (INFOCOM 2023; Computer Networks 2025)</td><td>Application-aware DNN offloading in multi-hop UAV networks; 4-UAV testbed (a Jetson Nano edge server in the arXiv version)</td><td><span class="chip no">no</span></td><td><span class="chip yes">yes</span></td><td><span class="chip no">no</span></td><td><span class="chip yes">yes</span></td></tr>
-    <tr><td>AccuMO (MobiCom 2023)</td><td>Balances offloading frequency of several AR tasks using content-dependent accuracy-loss models</td><td><span class="chip part">related</span></td><td><span class="chip no">phone AR</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td></tr>
+    <tr><td>AccuMO (MobiCom 2023)</td><td>Balances offloading frequency of several AR tasks using content-dependent accuracy-loss models; re-implemented here as an AccuMO-style 30-frame planner (19.10–19.11): in the replay it ties v4.1 or is slightly ahead, by less than the replay's known error</td><td><span class="chip part">related</span></td><td><span class="chip no">phone AR</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td></tr>
     <tr><td>Towards Streaming Perception (ECCV 2020) and adaptive follow-ups</td><td>Define sAP; adapt detector settings on the device</td><td><span class="chip yes">yes</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td><td><span class="chip no">no</span></td></tr>
     <tr><td>Thermal-aware offloading and scheduling on phones (DGIST, NetAISys 2024; Tan &amp; Cao, TMC 2024)</td><td>Jointly set offloading, DVFS and model size under heat limits (DGIST); thermal-aware GPU/NPU scheduling on the phone (Tan &amp; Cao)</td><td><span class="chip no">no</span></td><td><span class="chip no">phones</span></td><td><span class="chip part">heat only</span></td><td><span class="chip no">no</span></td></tr>
     <tr><td>Energy-aware UAV video offloading (ICNC 2020; DroneCOCoNet)</td><td>Offloading decisions for drone video under energy</td><td><span class="chip no">no</span></td><td><span class="chip part">mostly simulated</span></td><td><span class="chip part">energy only</span></td><td><span class="chip no">no</span></td></tr>
   </table></div>
   <p class="src">The dual-ascent pricing itself is a standard technique; the contribution is what is priced together, the objective it optimises (accuracy after delay) and the measurement on hardware. A full literature search is still needed before submission.</p>
+  <p class="src"><b>Re-implemented baseline (29–30 Oct).</b> AccuMO plans offloading over a 30-frame horizon to maximise predicted accuracy after delay, with content-dependent decay and no energy or heat price. An AccuMO-style planner (252 plans per frame, our measured decay per camera-motion tertile) was run against v4.1 in the trace replay on the same link draws: it ties v4.1 on the mission and good links and is ahead on random links (+0.0044 sAP, 15 seeds; +0.0045 on 10 fresh seeds with the corrected power model), but a LEAF-style fixed energy weight is ahead by as much, and the replay is known to favour such low-onboard policies by about 0.005 sAP against hardware. So the paper <b>must not claim that v4.1 beats planning</b>; what it can claim is that a greedy priced choice does as well as a 30-frame model-predictive planner on this system, at a fraction of the computation (the planner takes 0.6 ms per frame on an idle laptop, 1.9 ms in a live loopback run; not yet timed on the Pi). The planner runs in the board code (<code>adaptive2.py --policy accumo</code>, same decisions as the replay's) and a 45-run mesh campaign against v4.1 and LEAF is scripted; until it runs, this comparison is replay-only.</p>
 </section>
 
 <section>
@@ -125,7 +126,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td><b>Aerial staleness and cheap forecasting</b>: detections lose most value within 100–200 ms; camera-motion plus object-motion forecasting recovers much of it on a Pi</td><td>Liu et al. MobiCom 2019 (motion-vector tracking hides offload latency); PVT++ ICCV 2023 (latency-aware UAV tracking on a Jetson); BoT-SORT camera motion</td><td>The measured aerial decay curves, a 2.7 ms Pi forecaster, gains on a distributed drone system</td><td><span class="chip part">medium–low</span></td></tr>
     <tr><td><b>Many drones: admission coordination with radio link health</b></td><td>JCAB (INFOCOM 2020, bandwidth and configuration for shared uplinks); DroneCOCoNet</td><td>Admission rule with link health, calibrated simulator (r = 0.947); no admission-control paper found</td><td><span class="chip part">medium</span>, simulation only</td></tr>
     <tr><td><b>Use every computer, adapt per frame</b></td><td>Odessa (MobiSys 2011), Chameleon (SIGCOMM 2018), Elf (MobiCom 2021)</td><td>Evidence on real drone tiers with sAP, not the mechanism</td><td><span class="chip no">low</span></td></tr>
-    <tr><td><b>Send the image, don't split the network</b> (and on aerial images JPEG costs 2.4–5.4× more than on COCO while INT8 splits stay lossless)</td><td>Auto-Split; Neurosurgeon; <b>learned feature compression beats image coding at equal rate for detection</b> (Yuan et al. 2022, 2024; BottleFit 2022)</td><td>A broad, bounded hardware measurement (19 detectors, exact splits with INT8/FP16 + zstd, 1,150 placements) and the aerial codec gap; not a general claim, since learned compressors were not tested</td><td><span class="chip no">low</span>, the aerial gap medium</td></tr>
+    <tr><td><b>A greedy priced choice does as well as planning</b> (replay only: an AccuMO-style 30-frame planner ties v4.1 or leads by less than the replay's error)</td><td>AccuMO (MobiCom 2023, model-predictive offloading over a horizon); LEAF-style fixed weights</td><td>The comparison on the same link draws, with the planner ported to the board code; a hardware campaign is still needed</td><td><span class="chip no">low until measured on the board</span></td></tr>
+    <tr><td><b>Send the image, don't split the network</b> (and on aerial images JPEG costs 2.4–5.4× more than on COCO while INT8 splits stay lossless)</td><td>Auto-Split; Neurosurgeon; <b>learned feature compression beats image coding at equal rate for detection</b> (Yuan et al. 2022, 2024; BottleFit 2022)</td><td>A broad, bounded hardware measurement (19 detectors, exact splits with INT8/FP16 + zstd, 1,150 placements) and the aerial codec gap; a learned bottleneck trained with the detector frozen needs 23–76 % fewer bytes than JPEG but, on the measured Pi, wins end to end only at the lowest goodputs, because it needs far more onboard work</td><td><span class="chip no">low</span>, the aerial gap medium</td></tr>
     <tr><td><b>Evaluation on a real batman-adv drone mesh</b></td><td>A²-UAV testbed; real FANET routing comparison where batman-adv trailed Babel and OLSR in throughput and loss (Guillen-Perez et al. 2021)</td><td>Strategies measured on a real ad-hoc mesh with forced multi-hop; batman-adv is used as is and its penalty is not characterised</td><td><span class="chip part">medium</span></td></tr>
   </table></div>
   <p class="src">Supporting, not claims: the receiver-fault audit, the VisDrone re-scoring of every campaign, YOLO11 on the Pi and the Pareto analysis strengthen credibility but are not contributions on their own.</p>
@@ -166,7 +168,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
       <li>No flight: replayed video, boards on a table one hop apart.</li>
       <li>One camera drone on the mesh; multi-drone results are simulated.</li>
       <li>3 repetitions per mesh cell; some controller variants differ only slightly.</li>
-      <li>No re-implementation of a published system on the same testbed.</li>
+      <li>A published scheduler (AccuMO-style) is re-implemented, but compared only in the trace replay so far; the board campaign is scripted, not run.</li>
       <li>The laptop joins the mesh through an SSH tunnel on the ground radio.</li>
     </ul>
   </div>
@@ -175,8 +177,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <ul>
       <li>Two camera drones on the mesh (third Pi): measured contention for the Jetson.</li>
       <li>A short outdoor or tethered flight with real distances.</li>
-      <li>One published baseline (A²-UAV-style or AccuMO-style) on the same testbed.</li>
-      <li>5 repetitions in the headline mesh comparisons.</li><li>A learned feature-compression baseline for the split-versus-JPEG result.</li>
+      <li>The AccuMO-style planner on the mesh against v4.1 and LEAF (ported and tested; <code>campaign_mesh4.sh</code>, 45 runs, about 6 h).</li>
+      <li>5 repetitions in the headline mesh comparisons.</li><li><s>A learned feature-compression baseline for the split-versus-JPEG result.</s> Done 30 Oct: 23–76 % fewer bytes than JPEG for the same accuracy, but on the Pi better end to end only at the lowest goodputs.</li>
     </ul>
   </div>
 </section>

@@ -40,6 +40,11 @@ for its learned estimator):
   jsq                 queue only: every frame to the idle server with the smallest expected latency (paths s640q90,
                       onboard n320), no accuracy or energy term
   LEAF-style fixed energy weight: any A_* policy with --energy-aware --mu-fixed W (no dual ascent)
+  accumo              AccuMO-style (Kong et al., MobiCom 2023): model-predictive offloading over --mpc-horizon frames
+                      (mpc_planner.py; the replay version is brief 19.10): the plan of one setting per server that
+                      maximises the predicted accuracy of the result on screen, decayed with its age; no energy or heat
+                      price unless --energy-aware. --mpc-context: the decay curve of the current camera-motion tertile
+                      (needs --live-forecast for the live camera motion), else the global --decay curve
 Metrics per phase: on-time results/s, accuracy-weighted on-time results/s, results within 1 s,
 mean age of information of the newest result (AoI), availability = share of time AoI <= deadline,
 Pi perception power (compute + radio, measured powers).
@@ -312,6 +317,10 @@ def main():
     ap.add_argument("--eta-f", type=float, default=2.0, help="dual-ascent step for lam_F (per unit shortfall per s)")
     ap.add_argument("--mu-fixed", type=float, default=-1.0,
                     help="LEAF-style baseline: a constant energy weight mu instead of dual ascent (-1: off)")
+    ap.add_argument("--mpc-horizon", type=int, default=30, help="accumo: planning horizon (frames)")
+    ap.add_argument("--mpc-context", default="",
+                    help="accumo: decay_context_train.json (decay per camera-motion tertile, AccuMO's content "
+                         "dependence); needs --live-forecast; empty: the global --decay curve")
     ap.add_argument("--trigger-conf", type=float, default=0.5, help="conf_trigger: failure if top-5 mean conf below")
     ap.add_argument("--reward-share", type=float, default=0.3, help="reward_offload: share of frames worth offloading")
     ap.add_argument("--aoi-thr-ms", type=float, default=150.0, help="aoi_thr: offload when the newest result is older")
@@ -805,6 +814,99 @@ def main():
                 return (p, "s640q90")
         return ("onboard", "n320") if idle("onboard") else None
 
+    mpc = {"sent": {}, "plan_ms": [], "tertile": []}          # accumo: what it sent, planner time per frame
+    if pol == "accumo":
+        import mpc_planner
+        mpc_opts = {"laptop": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "jetson": list(PATH_VARIANTS),
+                    "relay": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "onboard": list(ONBOARD_VARIANTS)}
+        if a.mpc_context:
+            from decay_context import ego_speed
+            _mc = json.load(open(a.mpc_context))
+            mpc["ctx"] = (np.array(_mc["lags_ms"], float), [np.array(_mc["ratio"]["v2"][f"ego{k}"], float)
+                                                             for k in range(3)], _mc["cuts"]["ego"])
+
+    def mpc_option(srv, var, now):
+        """(latency s, repeat period s, A/A_ref, energy J) of one setting, or None if unusable now."""
+        if srv == "onboard":
+            model, res = ONBOARD_VARIANTS[var]
+            ms = onboard.ms[var]
+            return ms / 1e3, mpc_planner.repeat_period(ms, period), acc_of(model, res) / REF_ACC, e_onboard(var)
+        path = paths[srv]
+        if path.sock is None or (srv == "laptop" and not coord["allowed"]):
+            return None
+        model, res, q = path_variants(srv)[var]
+        r = path.est_rate()[0]
+        if srv == "laptop" and coord["share"]:
+            r = min(r, coord["share"])
+        b = nbytes[(res, q)]
+        tx = b * 8 / (r * 1e6)
+        if tx + path.rtt_ms / 1e3 > a.stall_s:          # the transfer would stall and drop the link
+            return None
+        lat = enc_ms[res] / 1e3 + tx + (remote_ms[srv][model] + 1.5 * path.rtt_ms) / 1e3
+        return lat, max(tx + path.rtt_ms / 1e3, period), acc_of(model, res, q) / REF_ACC, e_offload(res, q, b, r)
+
+    def mpc_choice(tick, now, img):
+        """AccuMO-style receding-horizon choice (mpc_planner.plan) from the live state; times are s since t_start."""
+        t0 = time.perf_counter()
+        lag, rat = _lag, _rat
+        if "ctx" in mpc and lf is not None and frame_keys is not None:      # camera motion up to the last frame
+            sq, i = frame_keys[tick % len(frame_keys)]
+            C = lf["chains"].get(sq)
+            if C is not None and i > 2:
+                e = ego_speed(C, i - 1, img.shape[1], img.shape[0])
+                if e == e:
+                    k = int(np.searchsorted(mpc["ctx"][2], e, side="right"))
+                    lag, rat = mpc["ctx"][0], mpc["ctx"][1][k]
+                    mpc["tertile"].append(k)
+        while True:                                      # results is filled by other threads
+            try:
+                got = dict(results)
+                break
+            except RuntimeError:
+                pass
+        shown = max(got) if got else None
+        sent, inflight = mpc["sent"], []
+        for k in list(sent):                             # keep the shown result and those still on their way
+            srv, var, acc, t_arr, t_free, t_q, rest = sent[k]
+            if k == shown:
+                continue
+            lost = srv != "onboard" and paths[srv].sock is None
+            if (shown is not None and k < shown) or k in got or lost or now - t_arr >= a.stall_s:
+                del sent[k]
+        if shown in sent:
+            inflight.append((shown, sent[shown][2], -math.inf))
+        for k, (srv, var, acc, t_arr, t_free, t_q, rest) in sorted(sent.items()):
+            if k == shown:
+                continue
+            inf = paths[srv].inflight if srv != "onboard" else None
+            if inf is not None and inf[0] - t_start >= t_q - 1e-6 and k == max(x for x in sent if sent[x][0] == srv):
+                t_arr = inf[0] - t_start + inf[1] * 8 / (max(paths[srv].est_rate()[0], 1e-3) * 1e6) + rest
+            inflight.append((k, acc, mpc_planner.overdue_arrival(t_arr, now, period)))
+        idle_ = {s: idle(s) for s in tuple(paths) + ("onboard",)}
+        free = {}
+        for s in idle_:
+            fr = [v[4] for v in sent.values() if v[0] == s and v[4] > now]
+            free[s] = now if idle_[s] else (max(fr) if fr else now + period)
+        opts = {s: [(v,) + o for v in mpc_opts[s] if (o := mpc_option(s, v, now)) is not None] for s in idle_}
+        price = cam_price() if a.energy_aware else 0.0
+        if price and not any(opts[p] for p in paths):    # as v4: onboard is not priced while no path can deliver
+            price = 0.0
+            energy["exempt_t"] = time.time()
+        ch = mpc_planner.plan(now, tick, period, a.mpc_horizon, opts, free, idle_, inflight, lag, rat, price)
+        if ch is not None:
+            srv, var, _ = ch
+            lat, per, acc, _ = mpc_option(srv, var, now)
+            if srv == "onboard":
+                sent[tick] = (srv, var, acc, now + lat, now + lat, now, 0.0)
+            else:                                        # the path is free again once the transfer is acknowledged
+                model, res, q = path_variants(srv)[var]
+                t_send = now + enc_ms[res] / 1e3
+                rest = (remote_ms[srv][model] + 1.5 * paths[srv].rtt_ms) / 1e3
+                sent[tick] = (srv, var, acc, now + lat, t_send + per, now, rest)
+            ch = (srv, var)
+        mpc["plan_ms"].append((time.perf_counter() - t0) * 1e3)
+        return ch
+
     try:
         while True:
             el = time.perf_counter() - t_start
@@ -863,6 +965,8 @@ def main():
                     choice = (srv, var)
             elif pol in ("conf_trigger", "reward_offload", "aoi_thr", "jsq"):
                 choice = baseline_choice(pol)
+            elif pol == "accumo":
+                choice = mpc_choice(tick, el, img)
             elif pol == "static_multi":
                 order = list(paths) + ["onboard"]
                 for i in range(len(order)):
@@ -903,7 +1007,7 @@ def main():
                 pp = paths[p]
                 if pp.sock is not None and pp.inflight is None and pp.slot.item is None \
                         and time.perf_counter() - last_probe[p] > 0.8 and (choice is None or choice[0] != p):
-                    pp.probe(65536 if pol.startswith(("A_", "abr:", "rule_")) or pol in ("conf_trigger", "reward_offload", "aoi_thr", "jsq")
+                    pp.probe(65536 if pol.startswith(("A_", "abr:", "rule_")) or pol in ("conf_trigger", "reward_offload", "aoi_thr", "jsq", "accumo")
                              else 1024)
                     last_probe[p] = time.perf_counter()
             rec = {"id": tick, "t_cap": cap_t, "phase": phases[ph][0], "soc": phases[ph][2]}
@@ -1008,6 +1112,11 @@ def main():
            "onboard_ms": onboard.ms, "link_events": {p: paths[p].events for p in paths},
            "link_goodput_samples": {p: paths[p].samples for p in paths},   # (unix time, Mbit/s) per frame/probe
            "frames": [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "t_cap"} for r in log]}
+    if mpc["plan_ms"]:                 # accumo: planner time per frame on this board
+        pm = np.array(mpc["plan_ms"])
+        out["mpc"] = {"horizon": a.mpc_horizon, "context": bool(a.mpc_context), "plan_ms_median": float(np.median(pm)),
+                      "plan_ms_p95": float(np.percentile(pm, 95)), "plan_ms_max": float(pm.max()), "n": len(pm),
+                      "tertile_counts": [mpc["tertile"].count(k) for k in range(3)]}
     # The result JSON is written ONCE, last, after the _dets/_livefc files: the campaign copies the run's files as
     # soon as the JSON exists, so everything else must be complete by then (write_json_atomic makes the JSON itself
     # appear only when whole).

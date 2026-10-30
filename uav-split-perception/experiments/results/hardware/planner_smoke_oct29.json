@@ -1,0 +1,39 @@
+{
+ "note": "Loopback smoke run of adaptive2.py --policy accumo on the laptop, 29 Oct 2026: camera and a GPU worker (adaptive.py worker, yolov8s, cuda) on 127.0.0.1, laptop path only, tc replaced by a no-op (no impairment applied, the laptop network untouched), mission scenario 6 x 3 s, --live-forecast and --mpc-context on; the laptop was loaded by the replay sweep (load about 25 on 16 cores). A functional check, not a measurement.",
+ "mpc": {
+  "horizon": 30,
+  "context": true,
+  "plan_ms_median": 4.85690200002864,
+  "plan_ms_p95": 23.148936990764923,
+  "plan_ms_max": 68.58625198947266,
+  "n": 321,
+  "tertile_counts": [
+   1,
+   31,
+   6
+  ]
+ },
+ "sends": {
+  "laptop:m640q50": 1,
+  "laptop:m640q90": 13,
+  "laptop:s640q90": 292,
+  "laptop:s480q90": 1
+ },
+ "n_frames": 321,
+ "availability": {
+  "good": 0.537,
+  "ground_congested": 1.0,
+  "ground_blackout": 1.0,
+  "both_degraded": 1.0,
+  "total_blackout": 0.993,
+  "recovered_low_battery": 1.0
+ },
+ "total": {
+  "on_time_fps": 14.333333333333334,
+  "acc_on_time_fps": 14.26968218218218,
+  "within_1s_fps": 14.333333333333334,
+  "aoi_mean_ms": 849.874074073867,
+  "availability": 0.9216666666666665,
+  "pi_power_w": 0.003263207722225637
+ }
+}

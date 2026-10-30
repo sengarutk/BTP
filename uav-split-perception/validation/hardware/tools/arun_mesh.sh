@@ -8,8 +8,13 @@
 #     noprice  stream objective, no prices                                    fixlap   fixed Pi -> laptop, YOLOv8m q90
 #     aoithr   freshness-threshold offloading (literature)                    hier     hierarchical chain: camera v41
 #              objective over onboard + Jetson only; the Jetson runs edge_node.py and decides local vs forward
+#     accumo   AccuMO-style 30-frame model-predictive planner (mpc_planner.py, brief 19.10-19.11): content-conditioned
+#              decay (camera-motion tertile from the live forecaster), no energy or heat price
+#     leaf     LEAF-style fixed energy weight mu = 2.0 (as campaign_main.sh's leaf: v3+fc2 objective, no dual ascent)
 #   SCENARIO static_good | mesh_mission | multihop (multihop: the direct camera <-> pi-sender radio link is blocked by a
 #     temporary nftables rule on both boards, so batman-adv relays through the Jetson; removed at every cleanup)
+# Optional env EGO_W=160: the live forecaster's camera-motion step at that tracking width (env EGO_W_SMALL -> egomotion.W_SMALL; the
+#   cheaper step of 19.9); unset = 320 px, as in every run before 29 Oct 2026.
 # Needs mesh_tunnel.sh running. Passwords: env PI2_PW PI3_PW NANO_PW.
 D=$(cd "$(dirname "$0")" && pwd); HW=$(cd "$D/.." && pwd)
 L=$1; ST=$2; SC=$3; PS=$4; SEED=$5; R=$6; mkdir -p $R; R=$(cd $R && pwd)
@@ -30,6 +35,8 @@ case $ST in
   fixlap)  POL=fixed:laptop:m640q90; X="";;
   aoithr)  POL=aoi_thr; X="";;
   hier)    POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95";;
+  accumo)  POL=accumo; X="$DEC --mpc-context decay_context_train.json";;
+  leaf)    POL=A_full; X="$DEC --energy-aware --mu-fixed 2.0";;
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson
@@ -85,7 +92,7 @@ if [ $SC != multihop ]; then    # after a multihop run batman-adv keeps the rela
   [ $i -gt 1 ] && echo "direct route restored after $(((i-1)*5)) s"
 fi
 $D/mesh_ssh.sh jetson "PW='$NANO_PW'; $S jetson_clocks" 2>/dev/null
-$D/mesh_ssh.sh camera "cd ~/hwbench; rm -f results/a2_$L.* results/link_$L.txt; PW='$PI2_PW'; $S nohup $PY -W ignore adaptive2.py --policy '$POL' $COMMON $X --paths $PATHS --out results/a2_$L.json > results/a2_$L.log 2>&1 & echo cam_up"
+$D/mesh_ssh.sh camera "cd ~/hwbench; rm -f results/a2_$L.* results/link_$L.txt; PW='$PI2_PW'; $S ${EGO_W:+env EGO_W_SMALL=$EGO_W} nohup $PY -W ignore adaptive2.py --policy '$POL' $COMMON $X --paths $PATHS --out results/a2_$L.json > results/a2_$L.log 2>&1 & echo cam_up"
 $D/mesh_ssh.sh camera "cd ~/hwbench; PW='$PI2_PW' nohup bash linklog.sh results/link_$L.txt > /dev/null 2>&1 & echo linklog_up"
 sleep 20
 if [ $ST = hier ]; then

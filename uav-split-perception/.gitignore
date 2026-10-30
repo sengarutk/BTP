@@ -84,3 +84,11 @@ experiments/checkpoints/
 runs/
 paper/*.pdf
 !paper/figures/*.pdf
+
+# paper2 build outputs (as paper/; its figures/*.pdf stay tracked)
+paper2/*.aux
+paper2/*.log
+paper2/*.out
+paper2/*.bbl
+paper2/*.blg
+paper2/*.pdf

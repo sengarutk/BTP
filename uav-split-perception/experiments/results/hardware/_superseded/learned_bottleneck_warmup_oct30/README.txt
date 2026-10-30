@@ -1,0 +1,1 @@
+Measured 30 Oct 2026 before learned_bottleneck.drop_warmup: byte means include Ultralytics' warm-up pass (549 samples for 548 images, about 0.2 % of the mean). Accuracies unaffected. Superseded by the re-measured files in experiments/results/learned_bottleneck/.
