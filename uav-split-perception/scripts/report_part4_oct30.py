@@ -211,7 +211,7 @@ campaign 3 (runs from before the logging are skipped).</li>
 </ul>
 <p><b>6. The paper.</b> <code>paper/main.tex</code> has a new section "Hardware Check" (all
 {hw['HwNPlacements']} placements; live runs: a Q90 JPEG to the laptop {hw['HwJpegOnTime']} on-time results/s against
-{hw['HwKOneOnTime']} for the best split; INT8/FP16 splits within {hw['HwVdSplitMaxAbsDelta']} mAP with the VisDrone
+{hw['HwKOneOnTime']} for the best split; INT8/FP16 splits within {hw['HwVdSplitMaxAbsDelta']} mAP points with the VisDrone
 YOLOv8s while Q90 JPEG loses {hw['HwVdJpegNinetyPct']} %, so a split can beat it by at most {hw['HwVdBoundPct']} %;
 the simulator against {hw['HwSimRuns']} real runs, r = {hw['HwSimR']}), plus updates to the abstract, contributions and
 limitations. Every number is generated from the result files (<code>evaluation/make_hardware.py</code>, traced in
