@@ -2,7 +2,7 @@
 
 Sources (experiments/results/):
   hardware/placements_summary.json            all placements over Pi 5, Jetson Orin Nano and the laptop GPU
-  hardware/placements.csv                     the placement model's prediction for every placement
+  hardware/placement_model_check.json         placement model vs live runs (evaluation/placement_model_check.py)
   hardware/live_summary.csv                   live pipeline runs (30 fps camera, 60 s, detections returned)
   hardware/raw/pi5_cpu_4t_sustained.json      per-segment and encoding times on the throttled Pi 5 (4 threads)
   hardware/raw/laptop_gpu_fp16.json           the same on the laptop GPU (FP16)
@@ -28,15 +28,6 @@ LIVE_ROWS = [("pi_laptop_jpeg", "Pi JPEG Q90 $\\to$ laptop"), ("pi_jetson_jpeg",
              ("pi_laptop_k1", "Pi $k_1$ INT8 $\\to$ laptop (best split)"),
              ("pi_laptop_k4", "Pi $k_4$ INT8 $\\to$ laptop"), ("pi_jetson_k4", "Pi $k_4$ INT8 $\\to$ Jetson"),
              ("pi_solo", "Pi alone")]
-# Live placement -> (chain, cuts, encodings) of the placement model (validation/hardware/placement.py)
-LIVE_TO_MODEL = {"jetson_solo": ("jetson", "", ""), "pi_solo": ("pi", "", ""),
-                 "pi_laptop_jpeg": ("pi>laptop", "-1", "jpeg"), "pi_jetson_jpeg": ("pi>jetson", "-1", "jpeg"),
-                 "jetson_laptop_jpeg": ("jetson>laptop", "-1", "jpeg"),
-                 "pi_laptop_k1": ("pi>laptop", "1", "int8_zstd"), "pi_laptop_k2": ("pi>laptop", "2", "int8_zstd"),
-                 "pi_laptop_k4": ("pi>laptop", "4", "int8_zstd"), "pi_jetson_k4": ("pi>jetson", "4", "int8_zstd"),
-                 "tier3_jpeg_relay": ("pi>jetson>laptop", "-1,-1", "jpeg,jpeg"),
-                 "tier3_jpeg_j9": ("pi>jetson>laptop", "-1,9", "jpeg,int8_zstd"),
-                 "tier3_k4_j9": ("pi>jetson>laptop", "4,9", "int8_zstd,int8_zstd")}
 SIM_POLICY = {"fixed:laptop:m640q90": "Laptop", "fixed:jetson:s640q90": "Jetson"}
 
 
@@ -76,24 +67,18 @@ def main():
     add("HwPiSoloFps", r1(live["pi_solo"]["fps_median"]), src, "YOLOv8s on the Pi alone: median frames/s")
     add("HwLiveRuns", str(sum(int(r["runs"]) for r in live.values())), src, "sum of runs over every live placement")
 
-    # Placement model against the live runs: predicted frame rate / median live frame rate
-    model = {(r["chain"], r["cuts"], r["encs"]): float(r["fps"])
-             for r in csv.DictReader(open(RES / "hardware" / "placements.csv"))}
-    ratio = {k: model[LIVE_TO_MODEL[k]] / float(live[k]["fps_median"]) for k in LIVE_TO_MODEL}
-    short = [k for k in ratio if LIVE_TO_MODEL[k][0].count(">") <= 1]
-    long_ = [k for k in ratio if LIVE_TO_MODEL[k][0].count(">") == 2]
-    src = "hardware/placements.csv, hardware/live_summary.csv"
-    add("HwModelNShort", str(len(short)), src, "live placements on one or two devices compared with the model")
-    add("HwModelRatioMin", f"{min(ratio[k] for k in short):.1f}", src,
+    # Placement model against the live runs (evaluation/placement_model_check.py -> placement_model_check.json)
+    pc = json.load(open(RES / "hardware" / "placement_model_check.json"))
+    src = "hardware/placement_model_check.json"
+    s2, s3, iv = pc["one_or_two_devices"], pc["three_devices"], pc["pi_image_vs_split"]
+    add("HwModelNShort", str(s2["n"]), src, "live placements on one or two devices matched to a model row")
+    add("HwModelRatioMin", f"{s2['min_ratio']:.1f}", src,
         "min over one- and two-device live placements of model fps / median live fps")
-    add("HwModelRatioMax", f"{max(ratio[k] for k in short):.1f}", src, "max of the same ratio")
-    add("HwModelNThree", str(len(long_)), src, "live three-device placements compared with the model")
-    add("HwModelRatioThreeMax", f"{max(ratio[k] for k in long_):.1f}", src,
+    add("HwModelRatioMax", f"{s2['max_ratio']:.1f}", src, "max of the same ratio")
+    add("HwModelNThree", str(s3["n"]), src, "live three-device placements matched to a model row")
+    add("HwModelRatioThreeMax", f"{s3['max_ratio']:.1f}", src,
         "max over three-device live placements of model fps / median live fps")
-    pi_img = [k for k in short if k.startswith("pi_") and LIVE_TO_MODEL[k][2] == "jpeg"]
-    pi_split = [k for k in short if k.startswith("pi_") and LIVE_TO_MODEL[k][2] == "int8_zstd"]
-    both = (min(model[LIVE_TO_MODEL[a]] for a in pi_img) > max(model[LIVE_TO_MODEL[b]] for b in pi_split)
-            and min(float(live[a]["fps_median"]) for a in pi_img) > max(float(live[b]["fps_median"]) for b in pi_split))
+    both = iv["model_ranks_every_image_above_every_split"] and iv["live_ranks_every_image_above_every_split"]
     add("HwModelImageAboveSplit", "every" if both else "not every", src,
         "whether model and live runs both rank every Pi image-offload placement above every Pi split placement")
 

@@ -1,0 +1,200 @@
+{
+ "description": "placement model (placements.csv) against live runs (live_summary.csv): model fps / live median fps",
+ "generated_by": "evaluation/placement_model_check.py",
+ "pairs": [
+  {
+   "placement": "jetson_solo",
+   "description": "Jetson GPU alone (camera on Jetson)",
+   "chain": "jetson",
+   "cuts": "",
+   "encs": "",
+   "devices": 1,
+   "runs": 3,
+   "live_fps_median": 18.45,
+   "model_fps": 15.0,
+   "ratio_model_over_live": 0.813
+  },
+  {
+   "placement": "pi_laptop_jpeg",
+   "description": "Pi JPEG -> laptop",
+   "chain": "pi>laptop",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "devices": 2,
+   "runs": 4,
+   "live_fps_median": 15.16,
+   "model_fps": 30.0,
+   "ratio_model_over_live": 1.9789
+  },
+  {
+   "placement": "pi_jetson_jpeg",
+   "description": "Pi JPEG -> Jetson",
+   "chain": "pi>jetson",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "devices": 2,
+   "runs": 3,
+   "live_fps_median": 10.85,
+   "model_fps": 17.04,
+   "ratio_model_over_live": 1.5705
+  },
+  {
+   "placement": "jetson_laptop_jpeg",
+   "description": "Jetson JPEG -> laptop (camera on Jetson)",
+   "chain": "jetson>laptop",
+   "cuts": "-1",
+   "encs": "jpeg",
+   "devices": 2,
+   "runs": 3,
+   "live_fps_median": 8.95,
+   "model_fps": 14.42,
+   "ratio_model_over_live": 1.6112
+  },
+  {
+   "placement": "pi_laptop_k1",
+   "description": "Pi k1 INT8 -> laptop",
+   "chain": "pi>laptop",
+   "cuts": "1",
+   "encs": "int8_zstd",
+   "devices": 2,
+   "runs": 1,
+   "live_fps_median": 6.98,
+   "model_fps": 8.58,
+   "ratio_model_over_live": 1.2292
+  },
+  {
+   "placement": "tier3_jpeg_relay",
+   "description": "Pi JPEG -> Jetson relay -> laptop",
+   "chain": "pi>jetson>laptop",
+   "cuts": "-1,-1",
+   "encs": "jpeg,jpeg",
+   "devices": 3,
+   "runs": 3,
+   "live_fps_median": 3.4,
+   "model_fps": 14.21,
+   "ratio_model_over_live": 4.1794
+  },
+  {
+   "placement": "pi_laptop_k4",
+   "description": "Pi k4 INT8 -> laptop",
+   "chain": "pi>laptop",
+   "cuts": "4",
+   "encs": "int8_zstd",
+   "devices": 2,
+   "runs": 3,
+   "live_fps_median": 4.15,
+   "model_fps": 3.33,
+   "ratio_model_over_live": 0.8024
+  },
+  {
+   "placement": "pi_jetson_k4",
+   "description": "Pi k4 INT8 -> Jetson (detections on Jetson)",
+   "chain": "pi>jetson",
+   "cuts": "4",
+   "encs": "int8_zstd",
+   "devices": 2,
+   "runs": 3,
+   "live_fps_median": 2.72,
+   "model_fps": 3.33,
+   "ratio_model_over_live": 1.2243
+  },
+  {
+   "placement": "pi_solo",
+   "description": "Pi 5 CPU alone",
+   "chain": "pi",
+   "cuts": "",
+   "encs": "",
+   "devices": 1,
+   "runs": 3,
+   "live_fps_median": 1.62,
+   "model_fps": 1.3,
+   "ratio_model_over_live": 0.8025
+  },
+  {
+   "placement": "tier3_jpeg_j9",
+   "description": "Pi JPEG -> Jetson k9 INT8 -> laptop",
+   "chain": "pi>jetson>laptop",
+   "cuts": "-1,9",
+   "encs": "jpeg,int8_zstd",
+   "devices": 3,
+   "runs": 1,
+   "live_fps_median": 2.3,
+   "model_fps": 4.26,
+   "ratio_model_over_live": 1.8522
+  },
+  {
+   "placement": "tier3_k4_j9",
+   "description": "Pi k4 INT8 -> Jetson k9 INT8 -> laptop",
+   "chain": "pi>jetson>laptop",
+   "cuts": "4,9",
+   "encs": "int8_zstd,int8_zstd",
+   "devices": 3,
+   "runs": 1,
+   "live_fps_median": 2.1,
+   "model_fps": 3.33,
+   "ratio_model_over_live": 1.5857
+  },
+  {
+   "placement": "pi_laptop_k2",
+   "description": "Pi k2 INT8 -> laptop",
+   "chain": "pi>laptop",
+   "cuts": "2",
+   "encs": "int8_zstd",
+   "devices": 2,
+   "runs": 1,
+   "live_fps_median": 2.9,
+   "model_fps": 5.0,
+   "ratio_model_over_live": 1.7241
+  }
+ ],
+ "unmatched": [],
+ "one_or_two_devices": {
+  "n": 9,
+  "min_ratio": 0.8024,
+  "max_ratio": 1.9789
+ },
+ "three_devices": {
+  "n": 3,
+  "min_ratio": 1.5857,
+  "max_ratio": 4.1794
+ },
+ "pi_image_vs_split": {
+  "image_placements": [
+   "pi_laptop_jpeg",
+   "pi_jetson_jpeg"
+  ],
+  "split_placements": [
+   "pi_laptop_k1",
+   "pi_laptop_k4",
+   "pi_jetson_k4",
+   "pi_laptop_k2"
+  ],
+  "model_ranks_every_image_above_every_split": true,
+  "live_ranks_every_image_above_every_split": true
+ },
+ "one_or_two_devices_order": {
+  "model": [
+   "pi_laptop_jpeg",
+   "pi_jetson_jpeg",
+   "jetson_solo",
+   "jetson_laptop_jpeg",
+   "pi_laptop_k1",
+   "pi_laptop_k2",
+   "pi_laptop_k4",
+   "pi_jetson_k4",
+   "pi_solo"
+  ],
+  "live": [
+   "jetson_solo",
+   "pi_laptop_jpeg",
+   "pi_jetson_jpeg",
+   "jetson_laptop_jpeg",
+   "pi_laptop_k1",
+   "pi_laptop_k4",
+   "pi_laptop_k2",
+   "pi_jetson_k4",
+   "pi_solo"
+  ],
+  "same_order": false
+ }
+}

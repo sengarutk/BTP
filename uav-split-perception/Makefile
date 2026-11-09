@@ -75,6 +75,7 @@ tables:
 	$(PYTHON) -m evaluation.make_tables
 	$(PYTHON) -m evaluation.make_generalization
 	$(PYTHON) -m evaluation.make_validation
+	$(PYTHON) -m evaluation.placement_model_check
 	$(PYTHON) -m evaluation.make_hardware
 	$(PYTHON) -m evaluation.make_learned
 

@@ -93,10 +93,14 @@ changed during that time; on-time means latency of at most 300 ms.
 | Pi k4 INT8 -> Jetson k9 INT8 -> laptop (two-hop split) | 1 | 2.1 | 0.0 | 1413 / 1982 |
 | Pi 5 CPU alone | 3 | 1.6 [1.55, 1.63] | 0.0 | 589 / 656 |
 
-The composition model (`placement.py`) enumerates all 1,150 placements. For two-device chains it
-predicts the measured frame rate within about 30 % and ranks them in the same order. For three-device
-chains it is too optimistic, because both Wi-Fi hops share one channel; the live runs are the
-reference there.
+The composition model (`placement.py`) enumerates all 1,150 placements. For the 9 one- and two-device
+placements that ran live, its frame rate is 0.8-2.0x the live median (Pi JPEG -> laptop: 30.0 predicted
+against 15.2 live), and it ranks every image-offload placement from the Pi above every split placement
+from the Pi, as the live runs do; the order among the other placements differs. For the 3 three-device
+chains it is 1.6-4.2x too optimistic, because both Wi-Fi hops share one channel; the live runs are the
+reference there. (Corrected 9 Nov 2026; computed by `evaluation/placement_model_check.py`, output
+`experiments/results/hardware/placement_model_check.json`. The earlier text said "within about 30 %
+and ranks them in the same order", which the result files do not support.)
 
 ## 6. Conclusions
 
