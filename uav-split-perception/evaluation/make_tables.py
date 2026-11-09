@@ -187,7 +187,7 @@ def main() -> None:
     m.add("SQNRINT", num(float(qm["int8"]["sqnr_db_mean"])), "quantization_modes_benchmark.csv")
     m.add("SQNRPerChannel", num(float(qm["int8_per_channel"]["sqnr_db_mean"])), "quantization_modes_benchmark.csv")
     m.add("SQNRFPsixteen", num(float(qm["fp16"]["sqnr_db_mean"])), "quantization_modes_benchmark.csv")
-    m.add("BoundRatioMax", f"{max(float(qm['int8']['bound_ratio_max']), float(qm['int8_per_channel']['bound_ratio_max'])):.6f}",
+    m.add("BoundRatioMax", f"{max(float(qm['int8']['bound_ratio_max']), float(qm['int8_per_channel']['bound_ratio_max'])):.4f}",
           "quantization_modes_benchmark.csv")
 
     # ---------------------------------------------------------------- system model constants
