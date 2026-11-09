@@ -5,7 +5,12 @@ Run after `bash build_paper.sh` (it needs the generated main.bbl, because arXiv 
 The package holds main.tex (comments removed), main.bbl, the generated_tables/*.tex files main.tex inputs and the
 figures it includes -- nothing else. It refuses to build if main.tex refers to an absolute path or if a file it
 needs is missing. Check the result with pdflatex alone (twice) in a fresh copy of the folder.
+
+It also refuses to build while a placeholder is still in main.tex (the repository URL REPO-URL, the author
+placeholder, or a PLACEHOLDER note) and prints each one with its line. `--draft` builds anyway, for checking that the
+package compiles, but only into paper/arxiv_draft/ (git-ignored), without the zip and without metadata.md.
 """
+import argparse
 import re
 import shutil
 import sys
@@ -14,6 +19,14 @@ from pathlib import Path
 
 PAPER = Path(__file__).resolve().parent
 OUT = PAPER / "arxiv"
+PLACEHOLDERS = {"REPO-URL": "repository URL", "Author names withheld": "author block",
+                "to be supplied": "author block", "PLACEHOLDER": "placeholder note"}
+
+
+def placeholders(tex: str) -> list:
+    """(line number, placeholder, what it stands for, line text) for every placeholder still in main.tex."""
+    return [(i, p, what, line[max(0, line.index(p) - 50):line.index(p) + len(p) + 50].strip())
+            for i, line in enumerate(tex.splitlines(), 1) for p, what in PLACEHOLDERS.items() if p in line]
 
 
 def strip_comments(tex: str) -> str:
@@ -29,7 +42,22 @@ def strip_comments(tex: str) -> str:
 
 
 def main() -> int:
+    global OUT
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--draft", action="store_true", help="build into arxiv_draft/ even with placeholders (no zip)")
+    args = ap.parse_args()
     tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+    left = placeholders(tex)
+    if left:
+        print("Placeholders still in main.tex:")
+        for i, p, what, line in left:
+            print(f"  line {i}: {p!r} ({what}): {line[:110]}")
+        if not args.draft:
+            print("Refusing to build the arXiv package. Fill them in, rebuild (bash build_paper.sh), and run again;"
+                  " use --draft only to test that a package compiles.")
+            return 1
+        OUT = PAPER / "arxiv_draft"
+        print(f"--draft: building {OUT.name}/ only (no zip, no metadata); NOT for upload.")
     bbl = PAPER / "main.bbl"
     if not bbl.exists():
         sys.exit("main.bbl missing: run `bash build_paper.sh` first")
@@ -51,6 +79,9 @@ def main() -> int:
     shutil.copy2(bbl, OUT / "main.bbl")
     for p in paths:
         shutil.copy2(PAPER / p, OUT / p)
+    if args.draft and left:
+        print(f"{sum(1 for f in OUT.rglob('*') if f.is_file())} files in {OUT.name}/ (draft)")
+        return 0
     zpath = PAPER / "arxiv.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(OUT.rglob("*")):
