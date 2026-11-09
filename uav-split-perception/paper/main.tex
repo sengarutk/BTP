@@ -212,7 +212,7 @@ Sizes in this paragraph are means over the same \TimingImages{} frames as the sp
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{rate_accuracy.pdf}
-\caption{Rate--accuracy on COCO val2017. Codec curves send the image; split points send quantized activations. Error bars are 95\% paired-bootstrap CIs.}
+\caption{Rate--accuracy on COCO val2017. Codec curves send the image; split points send quantized activations. Error bars are 95\% paired-bootstrap CIs. Codec settings below the axis are listed in Table~\ref{tab:codecs}.}
 \label{fig:rate}
 \end{figure}
 
@@ -397,7 +397,7 @@ We repeated the central comparison on a three-tier testbed: a fanless Raspberry 
 \resizebox{\columnwidth}{!}{\input{generated_tables/table_hardware.tex}}
 \end{table}
 
-\textbf{Accuracy with an aerial detector.} Section~\ref{sec:gen-models} evaluated aerial imagery only zero-shot. With YOLOv8s fine-tuned on VisDrone (mAP@[.5:.95] \HwVdFullMap{} on VisDrone2019-DET val), each of the \HwVdSplitN{} INT8 and FP16 split configurations stays within \HwVdSplitMaxAbsDelta{} of the unsplit model, and \HwVdSplitAllCiZero{} of their paired-bootstrap 95\,\% intervals contain zero. Image codecs lose more on aerial images than on COCO: Q90 JPEG loses \HwVdJpegNinetyDelta{} (\HwVdJpegNinetyPct\,\%) and Q50 \HwVdJpegFiftyDelta{} (\HwVdJpegFiftyPct\,\%). The Q90 image still needs fewer bits and less onboard work than any split (its payload is smaller by a factor of at least \GenRatioMin), so by Proposition~\ref{prop:dominance} a split can beat it by at most the accuracy ratio, \HwVdBoundPct\,\% with the best split on these images.
+\textbf{Accuracy with an aerial detector.} Section~\ref{sec:gen-models} evaluated aerial imagery only zero-shot. With YOLOv8s fine-tuned on VisDrone (mAP@[.5:.95] \HwVdFullMap{} on VisDrone2019-DET val), each of the \HwVdSplitN{} INT8 and FP16 split configurations stays within \HwVdSplitMaxAbsDelta{} points of the unsplit model, and \HwVdSplitAllCiZero{} of their paired-bootstrap 95\,\% intervals contain zero. Image codecs lose more on aerial images than on COCO: Q90 JPEG loses \HwVdJpegNinetyLoss{} points (\HwVdJpegNinetyPct\,\%) and Q50 \HwVdJpegFiftyLoss{} points (\HwVdJpegFiftyPct\,\%). The Q90 image still needs fewer bits and less onboard work than any split (its payload is smaller by a factor of at least \GenRatioMin), so by Proposition~\ref{prop:dominance} a split can beat it by at most the accuracy ratio, \HwVdBoundPct\,\% with the best split on these images.
 
 \textbf{Simulator against hardware.} We rebuilt \HwSimRuns{} real runs of an adaptive multi-server controller (\HwSimPhases{} network phases) in the simulator, with nothing fitted. Once the controller's one-frame-in-flight rule and the network conditions actually applied are modelled, the predicted on-time throughput per phase correlates with the measured one at $r=\HwSimR$ (mean absolute error \HwSimMae{} results/s). The same testbed was used to evaluate an adaptive controller that runs the onboard CPU, the edge GPU and the ground GPU in parallel, on streaming accuracy, energy and heat; those results are reported separately.
 
@@ -421,12 +421,12 @@ INT8+zstd splits.}
 \end{figure}
 
 \textbf{Fewer bits than an image.} Unlike every post-hoc split, the learned code beats JPEG on bits: at $k_4$ it needs
-\LbKFourSavingMin--\LbKFourSavingMax\,\% fewer bytes than JPEG for the same mAP (for example \LbKFourExBytes~kB at
-\LbKFourExMap{} against \LbKFourExJpegBytes~kB), and at $k_2$ \LbKTwoSavingMin--\LbKTwoSavingMax\,\% (\LbKTwoExBytes~kB at \LbKTwoExMap{}
-against \LbKTwoExJpegBytes~kB). It does not reach the unsplit accuracy: the best code reached \LbMaxMap{} at
-\LbMaxBytes~kB, against \LbBaseMap{} unsplit and \LbJpegNinetyMap{} for a Q90 JPEG of \LbJpegNinetyBytes~kB. Halving the
-resolution caps accuracy: the $k_4$ code with the most channels (\LbKFourLoseBytes~kB) reached only \LbKFourLoseMap{},
-below JPEG's \LbKFourLoseJpegMap{} at that size, while keeping full resolution reached more at the same size; even
+\LbKFourSavingMin--\LbKFourSavingMax\,\% fewer bytes than JPEG for the same mAP (for example \LbKFourExBytes~KiB at
+\LbKFourExMap{} against \LbKFourExJpegBytes~KiB), and at $k_2$ \LbKTwoSavingMin--\LbKTwoSavingMax\,\% (\LbKTwoExBytes~KiB at \LbKTwoExMap{}
+against \LbKTwoExJpegBytes~KiB). It does not reach the unsplit accuracy: the best code reached \LbMaxMap{} at
+\LbMaxBytes~KiB, against \LbBaseMap{} unsplit and \LbJpegNinetyMap{} for a Q90 JPEG of \LbJpegNinetyBytes~KiB. Halving the
+resolution caps accuracy: the $k_4$ code with the most channels (\LbKFourLoseOneBytes~KiB) reached only \LbKFourLoseOneMap{},
+below JPEG's \LbKFourLoseOneJpegMap{} at that size, while keeping full resolution reached more at the same size; even
 so, accuracy saturates, and the best code is below JPEG's \LbMaxJpegMap{} at its own size.
 
 \textbf{But not the system.} Proposition~\ref{prop:dominance} no longer applies, because the image now needs more bits;

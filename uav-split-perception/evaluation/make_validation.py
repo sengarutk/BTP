@@ -167,6 +167,7 @@ def main() -> None:
                                                  + "\n".join(lines) + "\n", encoding="utf-8")
     (TABLES / "val_metrics.tex").write_text(m.tex().replace("make_tables.py", "make_validation.py"), encoding="utf-8")
     LEDGER.write_text(m.ledger().replace("make_tables.py", "make_validation.py")
+                      .replace("; the sections below are written by the generators named in them (`evaluation/ledger.py`)", "")
                       .replace("# Claims-to-evidence ledger", "# Claims-to-evidence ledger: simulator validation"),
                       encoding="utf-8")
     print(f"{len(m.items)} macros")

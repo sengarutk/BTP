@@ -37,6 +37,7 @@ MODEL_LABEL = {"yolov5nu": "YOLOv5n", "yolov5su": "YOLOv5s", "yolov5mu": "YOLOv5
                "yolov9t": "YOLOv9t", "yolov9s": "YOLOv9s", "yolov9m": "YOLOv9m", "yolov10n": "YOLOv10n",
                "yolov10s": "YOLOv10s", "yolov10m": "YOLOv10m", "yolo11n": "YOLO11n", "yolo11s": "YOLO11s",
                "yolo11m": "YOLO11m", "yolo11l": "YOLO11l", "yolo11x": "YOLO11x"}
+TFULL_RANGE_MS = (10, 1000)  # as sampled in evaluation/gen_scenarios.py (_logu(rng, 10, 1000)); checked in scenarios_part
 SPACE = [  # (column, label, range text) -- ranges as sampled in evaluation/gen_scenarios.py
     ("t_full_ms", "Onboard full-model latency $t_{full}$", "10--1000 ms (log)"),
     ("deadline_ms", "Deadline $D$", "100--1000 ms (log)"),
@@ -226,6 +227,10 @@ def models_part(m: Macros, acc: List[Dict[str, str]]) -> None:
         def ag(model, s, kind, setting):
             return next((r for r in aer if r["model"] == model and int(r["imgsz"]) == s and r["kind"] == kind
                          and int(r["setting"]) == setting), None)
+        n_aer = {int(r["num_images"]) for r in aer}
+        assert len(n_aer) == 1, "every aerial accuracy row must use the same VisDrone images"
+        m.add("GenAerialValImages", f"{n_aer.pop():,}", a_src,
+              "num_images of the visdrone_val rows of accuracy.csv (VisDrone2019-DET val)")
         for model, tag in (("yolov8s", "VEightS"), ("yolo11s", "ElevenS")):
             for s, stag in ((640, "Low"), (1280, "High")):
                 base = ag(model, s, "full", 32)
@@ -279,6 +284,13 @@ def scenarios_part(m: Macros) -> None:
     f = lambda r, k: float(r[k])  # noqa: E731
     single = [r for r in rows if r["swarm"] == "False"]
     swarm = [r for r in rows if r["swarm"] == "True"]
+    tf = [f(r, "t_full_ms") for r in rows]
+    assert TFULL_RANGE_MS[0] <= min(tf) and max(tf) <= TFULL_RANGE_MS[1], "t_full outside the documented range"
+    assert SPACE[0][2] == f"{TFULL_RANGE_MS[0]}--{TFULL_RANGE_MS[1]} ms (log)", "Table V and TFULL_RANGE_MS disagree"
+    m.add("GenTfullMinMs", f"{TFULL_RANGE_MS[0]:g}", "evaluation/gen_scenarios.py",
+          "design constant: lower end of the log-uniform t_full range of the Monte Carlo (sampled values checked)")
+    m.add("GenTfullMaxMs", f"{TFULL_RANGE_MS[1]:g}", "evaluation/gen_scenarios.py",
+          "design constant: upper end of the log-uniform t_full range of the Monte Carlo (sampled values checked)")
     m.add("GenNScenarios", num(len(single), 0), src)
     m.add("GenNSwarmScenarios", num(len(swarm), 0), src)
     from evaluation.gen_scenarios import sample
@@ -395,7 +407,9 @@ def scenarios_part(m: Macros) -> None:
     ax.set_ylim(0.1, 300)
     ax.set_xlabel("Onboard full-model latency $t_{full}$ (ms)")
     ax.set_ylabel("Mean goodput (Mbit/s)")
-    ax.legend(frameon=False, fontsize=5.5, loc="lower left", ncol=1)
+    # Legend above the axes, off the data (the scatter fills every corner of the plot).
+    ax.legend(frameon=False, fontsize=6, loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2,
+              columnspacing=1.0, handletextpad=0.4, markerscale=1.5)
     save(fig, "gen_regimes")
 
 
@@ -432,6 +446,7 @@ def main() -> None:
     TABLES.mkdir(parents=True, exist_ok=True)
     (TABLES / "gen_metrics.tex").write_text(m.tex().replace("make_tables.py", "make_generalization.py"), encoding="utf-8")
     LEDGER.write_text(m.ledger().replace("make_tables.py", "make_generalization.py")
+                      .replace("; the sections below are written by the generators named in them (`evaluation/ledger.py`)", "")
                       .replace("# Claims-to-evidence ledger", "# Claims-to-evidence ledger: generalization study"),
                       encoding="utf-8")
     print(f"{len(m.items)} macros")

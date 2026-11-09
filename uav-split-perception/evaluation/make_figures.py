@@ -108,7 +108,7 @@ def fig_rate_accuracy() -> None:
         ax.errorbar(xs, ys, yerr=[lo, hi], fmt=mk, color=col, label=lab, capsize=1.5, elinewidth=0.6, ms=3)
     ax.axhline(0, color="k", lw=0.6)
     ax.set_ylim(-4.0, 0.5)
-    ax.text(0.98, 0.03, "lower-quality codec settings fall below the axis (Table III)", transform=ax.transAxes, ha="right",
+    ax.text(0.98, 0.03, "lower-quality codec settings fall below the axis", transform=ax.transAxes, ha="right",
             fontsize=5.5, color="0.35")
     ax.set_xscale("log")
     ax.set_xlabel("Payload per frame (KiB, log scale)")
@@ -136,7 +136,7 @@ def fig_latency_vs_bandwidth() -> None:
         ax.set_yscale("log")
         ax.set_ylim(20, 3000)
         ax.set_title(f"Onboard full-model latency $t_{{full}}$ = {tf:g} ms")
-        ax.set_xlabel("Uplink goodput (Mbps)")
+        ax.set_xlabel("Uplink goodput (Mbit/s)")
     axes[0].set_ylabel("Predicted frame latency (ms)")
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, frameon=False, ncol=6, loc="upper center", bbox_to_anchor=(0.5, 1.06))
@@ -199,7 +199,7 @@ def fig_timeline() -> None:
     frames = d["frames"]
     fig, axes = plt.subplots(3, 1, figsize=(COL_W, 3.0), sharex=True, gridspec_kw={"height_ratios": [1, 0.8, 1]})
     axes[0].plot(t_bw, bw, color=C["split"], lw=0.6)
-    axes[0].set_ylabel("Goodput\n(Mbps)")
+    axes[0].set_ylabel("Goodput\n(Mbit/s)")
     kinds = sorted({f["cfg"] for f in frames if f["cfg"]}, key=lambda n: (n != "full_fp32", n))
     idx = {k: i for i, k in enumerate(kinds)}
     ts = [f["t_ms"] / 1000 for f in frames if f["cfg"]]
@@ -238,7 +238,7 @@ def fig_swarm() -> None:
         ax.set_xscale("log")
         ax.set_xticks([1, 2, 5, 10, 20], ["1", "2", "5", "10", "20"])
         ax.xaxis.set_minor_formatter(NullFormatter())
-        ax.set_xlabel("UAVs sharing a 100 Mbps cell")
+        ax.set_xlabel("UAVs sharing a 100 Mbit/s cell")
         ax.set_title(f"{PROFILE_LABEL[prof]} channel")
     axes[0].set_ylabel("On-time frames/s per UAV")
     handles, labels = axes[0].get_legend_handles_labels()

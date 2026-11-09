@@ -332,31 +332,34 @@ def cmd_figure(a):
     lb = [r for r in (json.load(open(f)) for f in OUT.glob("eval_*.json"))
           if r.get("width") == 128 and r.get("dec_layers") == 2]     # the family (not the width-64 pilot)
     ph = [json.load(open(f)) for f in OUT.glob("posthoc_k*_int8_zstd.json")]
-    base = jp[0]["base_map50_95"]
-    fig, ax = plt.subplots(figsize=(3.45, 2.3))
-    ax.plot([r["payload_bytes_mean"] / 1e3 for r in jp], [r["map50_95"] for r in jp], "o-", color="#D55E00",
-            label="JPEG (q10-q95)")
+    base = 100 * jp[0]["base_map50_95"]
+    kib = lambda r: r["payload_bytes_mean"] / 1024  # noqa: E731   payloads in KiB (1 KiB = 1024 bytes), as in the paper
+    pts = lambda r: 100 * r["map50_95"]  # noqa: E731              mAP in points, as in the paper
+    # Label offsets (points), one per marker, chosen so no two labels or markers overlap at column width.
+    jpeg_off = {10: (4, -4), 20: (-14, 1), 35: (4, -6), 50: (4, -6), 75: (-2, -10), 90: (-4, -10), 95: (5, -1)}
+    lb_off = {(4, 4, 2): (-9, -1), (4, 8, 2): (-9, -1), (4, 16, 2): (-11, -1), (4, 32, 2): (-2, -9),
+              (4, 8, 1): (-13, 1), (4, 16, 1): (-15, 2), (4, 64, 2): (5, -3), (4, 32, 1): (4, -9),
+              (2, 8, 2): (5, -2), (2, 16, 2): (-2, 4)}
+    fig, ax = plt.subplots(figsize=(3.45, 2.5))
+    ax.plot([kib(r) for r in jp], [pts(r) for r in jp], "o-", color="#D55E00", label="JPEG (q10-q95)")
     for r in jp:
-        ax.annotate(f"q{r['q']}", (r["payload_bytes_mean"] / 1e3, r["map50_95"]), textcoords="offset points",
-                    xytext=(3, -8), fontsize=5.5, color="#D55E00")
+        ax.annotate(f"q{r['q']}", (kib(r), pts(r)), textcoords="offset points", xytext=jpeg_off.get(r["q"], (4, -6)),
+                    fontsize=5.5, color="#D55E00")
     for cut, mk, col in ((4, "s", "#0072B2"), (2, "^", "#009E73")):
         rs = sorted((r for r in lb if r["cut"] == cut), key=lambda r: r["payload_bytes_mean"])
         if rs:
-            ax.plot([r["payload_bytes_mean"] / 1e3 for r in rs], [r["map50_95"] for r in rs], mk, color=col,
-                    label=f"learned bottleneck at k{cut}")
-            for r in rs:                         # labels: channels (f = full resolution), placed per family
-                off = (-11, 2) if cut == 2 else ((4, -7) if r.get("stride") == 1 else (-9, 3))
-                ax.annotate(f"{r['channels']}{'f' if r.get('stride') == 1 else ''}", (r["payload_bytes_mean"] / 1e3,
-                            r["map50_95"]), textcoords="offset points", xytext=off, fontsize=5.5, color=col)
-    ax.plot([r["payload_bytes_mean"] / 1e3 for r in ph], [base for _ in ph], "D", color="#56B4E9",
-            label="post-hoc INT8+zstd (k2, k4)")
+            ax.plot([kib(r) for r in rs], [pts(r) for r in rs], mk, color=col, label=f"learned bottleneck at k{cut}")
+            for r in rs:                         # labels: channels (f = full resolution)
+                off = lb_off.get((cut, r["channels"], r.get("stride", 2)), (4, -6))
+                ax.annotate(f"{r['channels']}{'f' if r.get('stride') == 1 else ''}", (kib(r), pts(r)),
+                            textcoords="offset points", xytext=off, fontsize=5.5, color=col)
+    ax.plot([kib(r) for r in ph], [base for _ in ph], "D", color="#56B4E9", label="post-hoc INT8+zstd (k2, k4)")
     ax.axhline(base, color="#000000", lw=0.6, ls="--", label="unsplit model")
     ax.set_xscale("log")
-    ax.set_ylim(min([r["map50_95"] for r in jp + lb]) - 0.015, base + 0.008)
-    ax.set_xlim(min(r["payload_bytes_mean"] for r in jp + lb) / 1e3 / 1.6,
-                max(r["payload_bytes_mean"] for r in ph) / 1e3 * 1.4)
-    ax.set_xlabel("payload per frame (kB, VisDrone DET val)")
-    ax.set_ylabel("mAP@[.5:.95]")
+    ax.set_ylim(min(pts(r) for r in jp + lb) - 1.5, base + 0.8)
+    ax.set_xlim(min(kib(r) for r in jp + lb) / 1.6, max(kib(r) for r in ph) * 1.4)
+    ax.set_xlabel("Payload per frame (KiB, VisDrone DET val)")
+    ax.set_ylabel("mAP@[.5:.95] (points)")
     ax.legend(loc="lower right", frameon=False)
     (REPO / "paper" / "figures").mkdir(parents=True, exist_ok=True)
     (REPO / "docs" / "figs").mkdir(parents=True, exist_ok=True)
