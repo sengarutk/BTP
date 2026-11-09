@@ -92,3 +92,5 @@ paper2/*.out
 paper2/*.bbl
 paper2/*.blg
 paper2/*.pdf
+paper/arxiv/
+paper/arxiv.zip

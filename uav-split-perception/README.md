@@ -18,7 +18,13 @@ The repository provides
 - **a generalization study**: a closed-form model of onboard / split / offload
   (`simulation/analytic.py`) checked on 1,300 randomly drawn systems varying 24 parameters, payload
   and exactness for 19 detectors (YOLOv5u/v8/v9/v10/11), 2–8-bit wire formats, input sizes
-  320–1280 px, and VisDrone aerial imagery.
+  320–1280 px, and VisDrone aerial imagery;
+- **a hardware check** (`validation/hardware/`): YOLOv8s on a Raspberry Pi 5, a Jetson Orin Nano and a
+  laptop GPU, a model of every placement built from measured component timings, live pipelines, and
+  the simulator rebuilt from live runs;
+- **a learned bottleneck** (`evaluation/learned_bottleneck.py`, `evaluation/learned_bottleneck_system.py`):
+  a small encoder and decoder trained at a cut of the frozen VisDrone-trained YOLOv8s, compared with
+  JPEG and the post-hoc splits on the same frames and in the system model.
 
 ## Quick start
 
@@ -26,14 +32,18 @@ The repository provides
 python3 -m venv venv && source venv/bin/activate
 make setup          # pinned dependencies + editable install
 make data           # COCO val2017 (~800 MB) and COCO128
-make test           # 106 unit / integration / kernel-parity / property tests
-make reproduce      # every result, table, figure, and the PDF (GPU recommended, ~7 h)
+make test           # pytest suite: 126 tests collected (replay and IPC tests need Linux; CUDA tests a GPU and nvcc)
+make reproduce      # COCO results, generalization study, tables, figures and the PDF (GPU recommended, ~7 h)
 ```
 
-`make results` regenerates only the CSV/JSON files in `experiments/results/`; `make tables figures`
+`make results` regenerates the COCO accuracy, codec, timing and system-study files in `experiments/results/`; `make tables figures`
 rebuilds `paper/generated_tables/` and `paper/figures/` from them; `make paper` builds the PDF.
-Every number in the paper text is a macro written by `evaluation/make_tables.py`; the mapping from
-each macro to its value and source file is in `docs/claims_to_evidence.md`.
+Every number in the paper text is a macro written by a generator in `evaluation/` (`make_tables.py`,
+`make_generalization.py`, `make_validation.py`, `make_hardware.py`, `make_learned.py`); the mapping from
+each macro to its value and source file is in `docs/claims_to_evidence.md` and the `docs/claims_*.md` ledgers.
+`make reproduce` does not run four parts, whose result files are committed: the simulator validation
+(`make validate`, `make validate-omnetpp`), the hardware runs (`validation/hardware/`), the VisDrone
+fine-tuning (`scripts/train_visdrone.py`) and the learned bottleneck (`evaluation/learned_bottleneck.py`).
 `python scripts/verify_math_proofs.py` checks the paper's equations and stated model constants against
 the code, `configs/`, and the result files (SymPy proofs, exact-rational checks, and parameter comparisons);
 it exits with status 1 if any check fails.
