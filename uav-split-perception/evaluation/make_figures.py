@@ -31,7 +31,7 @@ STRATEGY_STYLE = {
     "split_k4_int8": ("Split k4 INT8", C["split"]),
     "split_k4_int8_zstd": ("Split k4 INT8+zstd", C["zstd"]),
     "split_k9_int8": ("Split k9 INT8", C["fp16"]),
-    "jpeg_q90": ("JPEG Q90 offload", C["jpeg"]),
+    "jpeg_q90": ("Image offload (JPEG Q90)", C["jpeg"]),
     "adaptive_split": ("Adaptive (onboard/split)", C["adaptive_split"]),
     "adaptive_all": ("Adaptive (all)", "#8B6914"),
 }

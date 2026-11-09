@@ -30,7 +30,7 @@ STRATEGY_NAMES = {"onboard": "Onboard", "split_k4_int8": "SplitKFour", "split_k4
                   "adaptive_all": "AdaptiveAll"}
 STRATEGY_LABEL = {"onboard": "Onboard only", "split_k4_int8": "Split $k_4$ INT8",
                   "split_k4_int8_zstd": "Split $k_4$ INT8+zstd", "split_k9_int8": "Split $k_9$ INT8",
-                  "jpeg_q90": "JPEG Q90 offload", "adaptive_split": "Adaptive (onboard/split)",
+                  "jpeg_q90": "Image offload (JPEG Q90)", "adaptive_split": "Adaptive (onboard/split)",
                   "adaptive_all": "Adaptive (all options)"}
 
 
@@ -366,7 +366,8 @@ def main() -> None:
     label = {"fp16": "FP16", "int8": "INT8 per-tensor", "int8_per_channel": "INT8 per-channel",
              "uint8": "UINT8 affine", "uint8_clip": "UINT8 + 99.9\\% clip"}
     t = [r"\begin{tabular}{@{}lrrrl@{}}", r"\toprule",
-         r"Mode ($k_4$) & KiB & SQNR (dB) & $\max\frac{|X-\hat X|}{S/2}$ & $\Delta$mAP [95\% CI] \\ \midrule"]
+         r"Mode ($k_4$) & KiB & SQNR & $\max|X-\hat X|$ & $\Delta$mAP \\",
+         r" & & (dB) & $/\,(S/2)$ & [95\% CI] \\ \midrule"]
     for r in quant:
         br = f"{float(r['bound_ratio_max']):.4f}" if r["bound_ratio_max"] else "--"
         t.append(f"{label[r['mode']]} & {num(float(r['payload_kib']))} & {num(float(r['sqnr_db_mean']))} & {br} & {ci(r)} \\\\")
@@ -374,7 +375,8 @@ def main() -> None:
     write("table_quant_modes.tex", "\n".join(t) + "\n")
 
     t = [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
-         r"Config & Edge DNN & Quant+ser. & Deser.+deq. & Cloud DNN & NMS & Total \\ \midrule"]
+         r"Config & Edge & Quant. & Deser. & Cloud & NMS & Total \\",
+         r" & DNN & +ser. & +deq. & DNN & & \\ \midrule"]
     for c in ("full_fp32", "k2_int8", "k4_int8", "k4_int8_zstd", "k4_fp16", "k9_int8", "k18_int8"):
         r = pareto[c]
         if c == "full_fp32":

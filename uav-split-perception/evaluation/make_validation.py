@@ -153,9 +153,11 @@ def main() -> None:
     m.add("ValShareRelayGainMax", f"{max(sh[mdl][p]['relay_gain_max'] for mdl in sh for p in sh[mdl]):.2f}", src)
 
     lines = [r"\begin{tabular}{@{}lllll@{}}", r"\toprule",
-             r"Conclusion & Paper models & ns-3 cellular & ns-3 A2A & Both \\ \midrule"]
-    rows_ = [("JPEG Q90 best fixed strategy (of 16)", lambda v: c[v]["jpeg_best_fixed_cells"].split("/")[0]),
-             ("Split beats onboard (of 16)", lambda v: c[v]["split_beats_onboard_cells"].split("/")[0]),
+             r"Conclusion & Paper & ns-3 & ns-3 & Both \\",
+             r" & models & cellular & A2A & \\ \midrule"]
+    n_cells = c["default"]["jpeg_best_fixed_cells"].split("/")[1]
+    rows_ = [(f"JPEG Q90 best fixed (of {n_cells})", lambda v: c[v]["jpeg_best_fixed_cells"].split("/")[0]),
+             (f"Split beats onboard (of {n_cells})", lambda v: c[v]["split_beats_onboard_cells"].split("/")[0]),
              ("Adaptive (all) / JPEG Q90", lambda v: "{:.2f}--{:.2f}".format(*c[v]["adaptive_all_over_jpeg"])),
              ("Relayed split frames on time", lambda v: "{:,} / {:,}".format(*map(int, c[v]["relayed_split_on_time"].split("/")))),
              ("Largest relay gain (frames/s)", lambda v: f"{c[v]['relay_gain_fps_max']:.2f}")]

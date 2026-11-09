@@ -32,14 +32,14 @@ TABLES = REPO_ROOT / "paper" / "generated_tables"
 LEDGER = REPO_ROOT / "docs" / "claims_generalization.md"
 
 WORDS = {2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight"}
-MODEL_LABEL = {"yolov5nu": "YOLOv5n", "yolov5su": "YOLOv5s", "yolov5mu": "YOLOv5m", "yolov8n": "YOLOv8n",
+MODEL_LABEL = {"yolov5nu": "YOLOv5nu", "yolov5su": "YOLOv5su", "yolov5mu": "YOLOv5mu", "yolov8n": "YOLOv8n",
                "yolov8s": "YOLOv8s", "yolov8m": "YOLOv8m", "yolov8l": "YOLOv8l", "yolov8x": "YOLOv8x",
                "yolov9t": "YOLOv9t", "yolov9s": "YOLOv9s", "yolov9m": "YOLOv9m", "yolov10n": "YOLOv10n",
                "yolov10s": "YOLOv10s", "yolov10m": "YOLOv10m", "yolo11n": "YOLO11n", "yolo11s": "YOLO11s",
                "yolo11m": "YOLO11m", "yolo11l": "YOLO11l", "yolo11x": "YOLO11x"}
 TFULL_RANGE_MS = (10, 1000)  # as sampled in evaluation/gen_scenarios.py (_logu(rng, 10, 1000)); checked in scenarios_part
 SPACE = [  # (column, label, range text) -- ranges as sampled in evaluation/gen_scenarios.py
-    ("t_full_ms", "Onboard full-model latency $t_{full}$", "10--1000 ms (log)"),
+    ("t_full_ms", "Onboard latency $t_{full}$", "10--1000 ms (log)"),
     ("deadline_ms", "Deadline $D$", "100--1000 ms (log)"),
     ("camera_fps", "Camera rate $F$", "10, 15, 24, 30, 60 FPS"),
     ("mean_sinr_db", "Mean SINR", "$-$5--20 dB"),
@@ -366,7 +366,8 @@ def scenarios_part(m: Macros) -> None:
     y_so = np.log((us + eps) / (uo + eps))
     y_cs = np.log((uc + eps) / (us + eps))
     lines = ["\\begin{tabular}{@{}llrr@{}}", "\\toprule",
-             "Variable & Range sampled & $r_s$(split/onboard) & $r_s$(codec/split) \\\\ \\midrule"]
+             "Variable & Range sampled & \\multicolumn{2}{c}{$r_s$ with log utility ratio} \\\\",
+             " & & split/onboard & image/split \\\\ \\midrule"]
     rhos = {}
     for col, label, rng in SPACE:
         x = np.array([f(r, col) for r in feas])

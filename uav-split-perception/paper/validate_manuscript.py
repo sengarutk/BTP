@@ -35,7 +35,8 @@ if missing:
     errors.append(f"undefined number macros: {missing} (run `make tables`)")
 
 labels = set(re.findall(r"\\label\{([^}]+)\}", tex))
-refs = set(re.findall(r"\\ref\{([^}]+)\}", tex))
+# \ref and the figure-reference command \figref; "#1" is the parameter inside \figref's own definition
+refs = {r for r in re.findall(r"\\(?:fig)?ref\{([^}]+)\}", tex) if not r.startswith("#")}
 if refs - labels:
     errors.append(f"undefined \\ref targets: {sorted(refs - labels)}")
 if Counter(re.findall(r"\\begin\{([^}]+)\}", tex)) != Counter(re.findall(r"\\end\{([^}]+)\}", tex)):
