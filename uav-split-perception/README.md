@@ -32,7 +32,7 @@ The repository provides
 python3 -m venv venv && source venv/bin/activate
 make setup          # pinned dependencies + editable install
 make data           # COCO val2017 (~800 MB) and COCO128
-make test           # pytest suite: 126 tests collected (replay and IPC tests need Linux; CUDA tests a GPU and nvcc)
+make test           # 130 tests (pytest -q tests, on Linux; some tests need Linux-only features, CUDA or a C++ compiler and are skipped elsewhere)
 make reproduce      # COCO results, generalization study, tables, figures and the PDF (GPU recommended, ~7 h)
 ```
 
