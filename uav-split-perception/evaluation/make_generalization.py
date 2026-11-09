@@ -214,6 +214,11 @@ def models_part(m: Macros, acc: List[Dict[str, str]]) -> None:
     m.add("GenResRatioSixForty", f"{by[('coco', 640)]:.1f}", src)
     m.add("GenResMinRatioAllModels", f"{min(float(r['ratio_jpeg_q90']) for r in summ):.1f}", src)
     m.add("GenNSurveyRows", str(len(summ)), src)
+    # Onboard work at the bottleneck cut (FLOP fraction + quantize/serialize time, both relative to the full model)
+    # against the image's encoding time: the onboard-time condition of prop:dominance, per survey row.
+    onb = [r for r in summ if float(r["edge_flop_frac"]) + float(r["rho_split"]) > float(r["rho_jpeg"])]
+    m.add("GenOnboardFavoursImageRows", str(len(onb)), src,
+          "survey rows (model x input size x imagery) where edge_flop_frac + rho_split > rho_jpeg at the bottleneck cut")
     for size, word in ((640, "Low"), (1280, "High")):
         if ("visdrone", size) in by:
             m.add(f"GenAerialRatio{word}", f"{by[('visdrone', size)]:.1f}", src)

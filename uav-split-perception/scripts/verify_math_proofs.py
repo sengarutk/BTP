@@ -970,7 +970,7 @@ STATED = [  # (pattern, condition the code enforces and the paper must state)
     (r"127/\(1-2\^\{-23\}\)<127\.5", "clamp inactive with the float32 scale"),
     (r"B\^\\ast_c=\\infty\$ if \$D\\le e_c\+d\+s_c", "B* = oo without positive slack"),
     (r"\$p_c=0\$", "p_c = 0 when the deadline cannot be met"),
-    (r"p_c=\\mathbb\{1\}\[t_\{full\}\\le D\]", "onboard p_c"),
+    (r"p_c=\\mathbf\{1\}\[t_\{full\}\\le D\]", "onboard p_c"),
     (r"\\lambda_E=\\PolicyEnergyWeight~\\mathrm\{s\^\{-1\}J\^\{-1\}\}", "units of the energy weight"),
     (r"\$A_\{\\mathrm\{ref\}\}\$ that of the unsplit FP32 model", "definition of A_ref"),
     (r"\\min\(B_i,\s*C/N\)", "water-filling share in Prop. 4"),

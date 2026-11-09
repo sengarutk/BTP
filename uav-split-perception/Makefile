@@ -2,19 +2,20 @@
 #   make setup       install pinned dependencies (into the active Python environment)
 #   make data        download COCO val2017 (+ COCO128 smoke-test set)
 #   make test        unit, integration, and kernel-parity tests
-#   make results     regenerate every result CSV from scratch (GPU recommended, ~1.5 h)
+#   make results     regenerate the COCO accuracy, codec, timing and system-study results (GPU recommended, ~1.5 h)
 #   make generalization  detectors, bit widths, resolutions, aerial images, Monte Carlo (~5 h)
 #   make validate    cross-check the simulator against ns-3 (needs NS3_DIR; see validation/README.md)
 #   make validate-omnetpp  the same against OMNeT++/INET/Simu5G
-#   make paper       tables, figures, and the PDF from the result CSVs
-#   make reproduce   all of the above, in order
+#   make paper       tables, figures, and the PDF from the result files
+#   make reproduce   clean-cache, data, test, results, generalization, paper (not validate or validate-omnetpp;
+#                    the hardware runs, VisDrone fine-tuning and learned bottleneck are separate steps, see README)
 PYTHON ?= python3
 RESULTS := experiments/results
 
 .PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help
 
 help:
-	@sed -n '2,10p' Makefile
+	@sed -n '2,11p' Makefile
 
 setup:
 	$(PYTHON) -m pip install -r requirements-dev.txt
