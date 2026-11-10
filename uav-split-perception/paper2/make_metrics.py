@@ -381,6 +381,7 @@ def main():
         put("RnShareClean", 100 * rn["hops1"]["relayed_on_time_adaptive_all"]["3dB_0pct"]["share"],
             f"{src} hops1.relayed_on_time_adaptive_all.3dB_0pct.share x 100", "{:.0f}")
         put("RnShareMin", 100 * min(shares), f"{src} min over hops, shadowing, loss of relayed_on_time share x 100", "{:.0f}")
+        put("RnShareMax", 100 * max(shares), f"{src} max over hops, shadowing, loss of relayed_on_time share x 100", "{:.0f}")
         put("RnShareTwoHopTen", 100 * min(v["share"] for k, v in rn[f"hops{hops[-1]}"]["relayed_on_time_adaptive_all"].items()
                                           if k.endswith("_10pct")),
             f"{src} hops{hops[-1]}, 10 % loss, worst shadowing: relayed on-time share x 100", "{:.0f}")
@@ -390,6 +391,9 @@ def main():
         gain = [rn[f"hops{h}"]["relay_gain_fps"] for h in hops]
         put("RnGainMin", min(x["adaptive_all_min"] for x in gain), f"{src} hops*.relay_gain_fps.adaptive_all_min", "{:.2f}")
         put("RnGainMax", max(x["adaptive_all_max"] for x in gain), f"{src} hops*.relay_gain_fps.adaptive_all_max", "{:.2f}")
+        put("RnGainRelPct", 100 * max(x["adaptive_all_rel_abs_max"] for x in gain),
+            f"{src} max over hops of relay_gain_fps.adaptive_all_rel_abs_max x 100 (|relay - no relay| / no relay, "
+            "cells with >= 1 on-time frame/s per drone without relaying)", "{:.0f}")
         if "second_hop_cost_adaptive_all_fps" in rn:
             sh = rn["second_hop_cost_adaptive_all_fps"]
             put("RnSecondHopMin", sh["min"], f"{src} second_hop_cost_adaptive_all_fps.min", "{:.2f}")

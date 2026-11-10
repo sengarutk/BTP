@@ -394,6 +394,12 @@ by \DuoAdaptGain{}$\pm$\DuoAdaptCi{} (\DuoAdaptWins{} of \DuoPairs{} pairs). A g
 rarely acted with two cameras (\DuoCoordGain{}$\pm$\DuoCoordCi{}). In a swarm simulation calibrated with the measured
 boards and links, 20 Pi camera drones on one Wi-Fi access point each delivered \SwarmTwentyAlone{} detections/s when
 every drone adapted alone and \SwarmTwentyCoord{} with the coordinator; larger hardware swarms are future work.
+The same simulation tested relaying with a noisy relay link. Each drone could send through a neighbour over one
+or two air-to-air hops, with 3, 6 or 8~dB of shadowing and 0--10\,\% per-packet loss with retransmission. There
+were \RnCells{} settings with 5--20 drones and \RnSeeds{} seeds each. Only \RnShareMin--\RnShareMax\,\% of the
+relayed frames arrived on time, at every noise level. Relaying changed the adaptive policy's rate by \RnGainMin{} to
+\RnGainMax{} detections/s per drone, at most \RnGainRelPct\,\% wherever it delivered at least one per second. Noise
+on the relay link therefore changes little: the shared access point limits the swarm.
 
 \subsection{Negative results}\label{sec:negative}
 A predictive heat price added nothing on top of the energy price: on Wi-Fi, v5 (both prices) against v4.2 (energy

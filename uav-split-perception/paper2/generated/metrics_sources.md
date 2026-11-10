@@ -184,3 +184,17 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\ThLevels` | 6 | energy/thermal_steady_pi.json levels with clock >= 1450 MHz and < 84 C (as replay.py) |
 | `\ThHotLevelC` | 83.8 | ... hottest of them: temp_steady_c |
 | `\ThHotLevelMhz` | 2070 | ... its arm_clock_mhz_last60 (2400 MHz unthrottled) |
+| `\RnCells` | 432 | relay_noise_pi5/summary.json hops*.cells (relay-on cells) |
+| `\RnSeeds` | 5 | relay_noise_pi5/summary.json setting.seeds |
+| `\RnRankChanges` | 0 | relay_noise_pi5/summary.json hops*.ranking_changes (cells whose strategy order differs from 3 dB, no loss) |
+| `\RnShareClean` | 18 | relay_noise_pi5/summary.json hops1.relayed_on_time_adaptive_all.3dB_0pct.share x 100 |
+| `\RnShareMin` | 15 | relay_noise_pi5/summary.json min over hops, shadowing, loss of relayed_on_time share x 100 |
+| `\RnShareMax` | 18 | relay_noise_pi5/summary.json max over hops, shadowing, loss of relayed_on_time share x 100 |
+| `\RnShareTwoHopTen` | 16 | relay_noise_pi5/summary.json hops2, 10 % loss, worst shadowing: relayed on-time share x 100 |
+| `\RnLeadMin` | 0.0 | relay_noise_pi5/summary.json hops*.adaptive_lead_fps.min |
+| `\RnLeadMax` | 15.0 | relay_noise_pi5/summary.json hops*.adaptive_lead_fps.max |
+| `\RnGainMin` | −0.36 | relay_noise_pi5/summary.json hops*.relay_gain_fps.adaptive_all_min |
+| `\RnGainMax` | 0.37 | relay_noise_pi5/summary.json hops*.relay_gain_fps.adaptive_all_max |
+| `\RnGainRelPct` | 4 | relay_noise_pi5/summary.json max over hops of relay_gain_fps.adaptive_all_rel_abs_max x 100 (|relay - no relay| / no relay, cells with >= 1 on-time frame/s per drone without relaying) |
+| `\RnSecondHopMin` | −0.05 | relay_noise_pi5/summary.json second_hop_cost_adaptive_all_fps.min |
+| `\RnSecondHopMedian` | 0.00 | relay_noise_pi5/summary.json second_hop_cost_adaptive_all_fps.median |

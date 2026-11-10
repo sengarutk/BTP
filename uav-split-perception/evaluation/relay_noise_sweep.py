@@ -136,7 +136,8 @@ def summary_hops(rows, hops):
     for r in rel:
         b = ref[(r["profile"], r["n_uavs"], r["strategy"])]
         gain.append({**{k: r[k] for k in ("profile", "n_uavs", "strategy", "sigma_db", "loss")},
-                     "relay_gain_fps": r["on_time_fps_per_uav"] - b["on_time_fps_per_uav"]})
+                     "relay_gain_fps": r["on_time_fps_per_uav"] - b["on_time_fps_per_uav"],
+                     "no_relay_fps": b["on_time_fps_per_uav"]})
         if r["strategy"] == "adaptive_all":
             fx = next(x for x in rel if key(x) == key(r) and x["strategy"] == "split_k4_int8_zstd")
             lead.append({**{k: r[k] for k in ("profile", "n_uavs", "sigma_db", "loss")},
@@ -144,11 +145,16 @@ def summary_hops(rows, hops):
     g = np.array([x["relay_gain_fps"] for x in gain])
     ld = np.array([x["lead_fps"] for x in lead])
     ga = np.array([x["relay_gain_fps"] for x in gain if x["strategy"] == "adaptive_all"])
+    # relative change, over cells where the policy delivers at least 1 on-time frame/s per drone without relaying
+    rel_ga = [abs(x["relay_gain_fps"]) / x["no_relay_fps"] for x in gain
+              if x["strategy"] == "adaptive_all" and x["no_relay_fps"] >= 1.0]
     return {"cells": len(rel), "relayed_on_time_adaptive_all": on_time, "base_order": base_order,
             "ranking_changes": changes,
             "relay_gain_fps": {"min": float(g.min()), "max": float(g.max()),
                                "adaptive_all_min": float(ga.min()), "adaptive_all_max": float(ga.max()),
-                               "adaptive_all_median": float(np.median(ga)), "per_cell": gain},
+                               "adaptive_all_median": float(np.median(ga)),
+                               "adaptive_all_rel_abs_max": float(max(rel_ga)) if rel_ga else None,
+                               "adaptive_all_rel_cells": len(rel_ga), "per_cell": gain},
             "adaptive_lead_fps": {"min": float(ld.min()), "max": float(ld.max()), "per_cell": lead}}
 
 

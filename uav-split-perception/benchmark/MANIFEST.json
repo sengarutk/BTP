@@ -1562,8 +1562,8 @@
    "bytes": 1439
   },
   "experiments/results/hardware/theory_check/theory_check.json": {
-   "sha256": "a5f33d26e2c3ff7e25af26fe2aa25b485f4a3d6b79425f7940425d71fb55202e",
-   "bytes": 181246
+   "sha256": "5e4205c57bb227752608fc21baf3a1453a678bda1644ef1c2b9dd974b418c9c7",
+   "bytes": 253988
   },
   "experiments/results/hardware/variant_accuracy_visdrone.json": {
    "sha256": "3ba06df78194f3fc77aa3aee55a502b02c79cdf499562a91627b0c484121d138",
@@ -6074,5 +6074,5 @@
    "bytes": 760294
   }
  },
- "total_bytes": 1108394280
+ "total_bytes": 1108467022
 }

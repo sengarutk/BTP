@@ -1,0 +1,5161 @@
+{
+ "setting": {
+  "calib": "pi5",
+  "seeds": 5,
+  "duration_s": 120.0,
+  "cell_mbps": 25.0,
+  "t_full_ms": 758.0,
+  "retry_ms": 1.0,
+  "sigmas_db": [
+   3.0,
+   6.0,
+   8.0
+  ],
+  "losses": [
+   0.0,
+   0.01,
+   0.05,
+   0.1
+  ],
+  "sizes": [
+   5,
+   10,
+   20
+  ],
+  "hops": [
+   1,
+   2
+  ]
+ },
+ "hops1": {
+  "cells": 216,
+  "relayed_on_time_adaptive_all": {
+   "3dB_0pct": {
+    "relayed_frames": 2456.6,
+    "relayed_on_time": 433.2,
+    "share": 0.17634128470243426
+   },
+   "3dB_1pct": {
+    "relayed_frames": 2459.2000000000003,
+    "relayed_on_time": 428.59999999999997,
+    "share": 0.17428432010409886
+   },
+   "3dB_5pct": {
+    "relayed_frames": 2473.2000000000003,
+    "relayed_on_time": 413.59999999999997,
+    "share": 0.1672327349183244
+   },
+   "3dB_10pct": {
+    "relayed_frames": 2480.4,
+    "relayed_on_time": 393.8,
+    "share": 0.15876471536848896
+   },
+   "6dB_0pct": {
+    "relayed_frames": 2460.6,
+    "relayed_on_time": 431.40000000000003,
+    "share": 0.1753230919287979
+   },
+   "6dB_1pct": {
+    "relayed_frames": 2463.4,
+    "relayed_on_time": 429.99999999999994,
+    "share": 0.17455549240886575
+   },
+   "6dB_5pct": {
+    "relayed_frames": 2473.0,
+    "relayed_on_time": 406.8,
+    "share": 0.16449656287909423
+   },
+   "6dB_10pct": {
+    "relayed_frames": 2482.0,
+    "relayed_on_time": 402.0,
+    "share": 0.16196615632554393
+   },
+   "8dB_0pct": {
+    "relayed_frames": 2463.0,
+    "relayed_on_time": 434.4,
+    "share": 0.1763702801461632
+   },
+   "8dB_1pct": {
+    "relayed_frames": 2465.0,
+    "relayed_on_time": 432.4,
+    "share": 0.1754158215010142
+   },
+   "8dB_5pct": {
+    "relayed_frames": 2474.2000000000003,
+    "relayed_on_time": 413.40000000000003,
+    "share": 0.16708431008002586
+   },
+   "8dB_10pct": {
+    "relayed_frames": 2481.8,
+    "relayed_on_time": 406.2,
+    "share": 0.16367152872914817
+   }
+  },
+  "base_order": {
+   "moderate_5": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "moderate_10": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "moderate_20": [
+    "split_k4_int8_zstd",
+    "adaptive_split",
+    "adaptive_all"
+   ],
+   "blackout_5": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "blackout_10": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "blackout_20": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ]
+  },
+  "ranking_changes": [],
+  "relay_gain_fps": {
+   "min": -0.36099999999999977,
+   "max": 0.3743333333333343,
+   "adaptive_all_min": -0.36099999999999977,
+   "adaptive_all_max": 0.3743333333333343,
+   "adaptive_all_median": -0.018791666666667376,
+   "adaptive_all_rel_abs_max": 0.04353593825373851,
+   "adaptive_all_rel_cells": 48,
+   "per_cell": [
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.03766666666666829,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.03750000000000142,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03766666666666829,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.03766666666666829,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.03783333333333516,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.03783333333333516,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03766666666666829,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.037666666666666515,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.037666666666666515,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.037666666666666515,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03783333333333516,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.03800000000000203,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.37333333333333485,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.3743333333333343,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.359,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3490000000000002,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.37400000000000055,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.3736666666666668,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.3550000000000004,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3436666666666657,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.3723333333333354,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.3719999999999999,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.35800000000000054,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3463333333333338,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.36099999999999977,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.3569999999999993,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.32949999999999946,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.3210000000000006,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.3519999999999994,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.34616666666666696,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.3336666666666659,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.31700000000000017,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.342833333333334,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.33949999999999925,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.3323333333333336,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.3185000000000011,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.18691666666666662,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.1793333333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.15983333333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.14008333333333328,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.19324999999999998,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.1858333333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.16516666666666663,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.14716666666666667,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.19016666666666665,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.18099999999999997,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.1663333333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.1530833333333333,
+     "no_relay_fps": 0.40549999999999997
+    }
+   ]
+  },
+  "adaptive_lead_fps": {
+   "min": 0.0,
+   "max": 14.982999999999999,
+   "per_cell": [
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 8.271833333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 8.272
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 8.271833333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 8.271833333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 8.271666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 8.271666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 8.271833333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 8.271833333333335
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 8.271833333333335
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 8.271833333333335
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 8.271666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 8.2715
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 14.543000000000001
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 14.544
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 14.528666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 14.518666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 14.543666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 14.543333333333333
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 14.524666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 14.513333333333332
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 14.542000000000002
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 14.541666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 14.527666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 14.516
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 7.931
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 7.9350000000000005
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 7.9625
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 7.970999999999999
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 7.94
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 7.945833333333333
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 7.958333333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 7.975
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 7.949166666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 7.952500000000001
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 7.959666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 7.973499999999999
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 0.21858333333333335
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 0.22616666666666668
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 0.24566666666666664
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 0.2654166666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 0.21225
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 0.21966666666666668
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 0.24033333333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 0.2583333333333333
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 0.21533333333333332
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 0.2245
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 0.23916666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 0.2524166666666667
+    }
+   ]
+  }
+ },
+ "hops2": {
+  "cells": 216,
+  "relayed_on_time_adaptive_all": {
+   "3dB_0pct": {
+    "relayed_frames": 2485.4,
+    "relayed_on_time": 380.0,
+    "share": 0.15289289450390278
+   },
+   "3dB_1pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 377.4,
+    "share": 0.15183456710653362
+   },
+   "3dB_5pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 382.2,
+    "share": 0.15376569037656904
+   },
+   "3dB_10pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 390.0,
+    "share": 0.15690376569037656
+   },
+   "6dB_0pct": {
+    "relayed_frames": 2484.8,
+    "relayed_on_time": 393.4,
+    "share": 0.15832260141661297
+   },
+   "6dB_1pct": {
+    "relayed_frames": 2485.2000000000003,
+    "relayed_on_time": 390.6,
+    "share": 0.15717044905842587
+   },
+   "6dB_5pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 394.0,
+    "share": 0.15851303508207273
+   },
+   "6dB_10pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 402.59999999999997,
+    "share": 0.1619729642742195
+   },
+   "8dB_0pct": {
+    "relayed_frames": 2485.0,
+    "relayed_on_time": 394.6,
+    "share": 0.1587927565392354
+   },
+   "8dB_1pct": {
+    "relayed_frames": 2485.0,
+    "relayed_on_time": 395.0,
+    "share": 0.158953722334004
+   },
+   "8dB_5pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 388.2,
+    "share": 0.15617959446411328
+   },
+   "8dB_10pct": {
+    "relayed_frames": 2485.6,
+    "relayed_on_time": 400.2,
+    "share": 0.1610074026392018
+   }
+  },
+  "base_order": {
+   "moderate_5": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "moderate_10": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "moderate_20": [
+    "split_k4_int8_zstd",
+    "adaptive_split",
+    "adaptive_all"
+   ],
+   "blackout_5": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "blackout_10": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ],
+   "blackout_20": [
+    "adaptive_all",
+    "split_k4_int8_zstd",
+    "adaptive_split"
+   ]
+  },
+  "ranking_changes": [],
+  "relay_gain_fps": {
+   "min": -0.31799999999999873,
+   "max": 0.3503333333333334,
+   "adaptive_all_min": -0.31799999999999873,
+   "adaptive_all_max": 0.3503333333333334,
+   "adaptive_all_median": -0.018958333333334246,
+   "adaptive_all_rel_abs_max": 0.038350217076700284,
+   "adaptive_all_rel_cells": 48,
+   "per_cell": [
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0036666666666658188,
+     "no_relay_fps": 14.979333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.0381666666666689,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.03833333333333577,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03850000000000087,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.03783333333333516,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.03800000000000203,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.0381666666666689,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03883333333333461,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.03850000000000087,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.03800000000000203,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.0381666666666689,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.03883333333333461,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.038166666666667126,
+     "no_relay_fps": 8.309500000000002
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -8.333333333333333e-05,
+     "no_relay_fps": 8.333333333333333e-05
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.3279999999999994,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.33433333333333337,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.3386666666666649,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3436666666666657,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.33433333333333515,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.3366666666666678,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.3463333333333338,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3503333333333334,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.3326666666666682,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.33633333333333404,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.34166666666666856,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.3436666666666657,
+     "no_relay_fps": 14.169666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.3030000000000008,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.30050000000000043,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.29933333333333323,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.3001666666666658,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.3118333333333334,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.30916666666666615,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.3018333333333345,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.2963333333333322,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.31799999999999873,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.31266666666666776,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.3076666666666661,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.2988333333333326,
+     "no_relay_fps": 8.292
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "split_k4_int8_zstd",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_split",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": 0.0,
+     "no_relay_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.11933333333333335,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.11649999999999999,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.11683333333333329,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.12049999999999994,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.14308333333333328,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.1348333333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.11791666666666661,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.11891666666666662,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "relay_gain_fps": -0.1525833333333333,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "relay_gain_fps": -0.14199999999999996,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "relay_gain_fps": -0.12258333333333327,
+     "no_relay_fps": 0.40549999999999997
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "strategy": "adaptive_all",
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "relay_gain_fps": -0.11899999999999994,
+     "no_relay_fps": 0.40549999999999997
+    }
+   ]
+  },
+  "adaptive_lead_fps": {
+   "min": 0.0,
+   "max": 14.982999999999999,
+   "per_cell": [
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 14.982999999999999
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 8.271333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 8.271166666666666
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 8.271
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 8.271666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 8.2715
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 8.271333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 8.270666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 8.271
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 8.2715
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 8.271333333333333
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 8.270666666666667
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 8.271333333333335
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "moderate",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 0.0
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 14.497666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 14.504
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 14.508333333333331
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 14.513333333333332
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 14.504000000000001
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 14.506333333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 14.516
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 14.52
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 14.502333333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 14.506
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 14.511333333333335
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 5,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 14.513333333333332
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 7.988999999999999
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 7.991499999999999
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 7.992666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 7.991833333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 7.980166666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 7.982833333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 7.990166666666665
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 7.995666666666668
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 7.974000000000001
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 7.979333333333332
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 7.984333333333334
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 10,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 7.993166666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.0,
+     "lead_fps": 0.2861666666666666
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.01,
+     "lead_fps": 0.289
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.05,
+     "lead_fps": 0.2886666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 3.0,
+     "loss": 0.1,
+     "lead_fps": 0.28500000000000003
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.0,
+     "lead_fps": 0.2624166666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.01,
+     "lead_fps": 0.27066666666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.05,
+     "lead_fps": 0.28758333333333336
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 6.0,
+     "loss": 0.1,
+     "lead_fps": 0.28658333333333336
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.0,
+     "lead_fps": 0.2529166666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.01,
+     "lead_fps": 0.2635
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.05,
+     "lead_fps": 0.2829166666666667
+    },
+    {
+     "profile": "blackout",
+     "n_uavs": 20,
+     "sigma_db": 8.0,
+     "loss": 0.1,
+     "lead_fps": 0.28650000000000003
+    }
+   ]
+  }
+ },
+ "second_hop_cost_adaptive_all_fps": {
+  "min": -0.045333333333335446,
+  "max": 0.06758333333333327,
+  "median": 0.0
+ }
+}
