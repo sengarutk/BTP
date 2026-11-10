@@ -7,10 +7,20 @@ with two exceptions: the thermal guard can only raise mu (mu >= 1 at >= 78 C), a
 held. Write s_t = mu_t - mu_{t-1} - ETA (P_t - B). Ordinary steps, the clip at zero and the guard have s_t >= 0; only held
 steps and steps clipped at MU_MAX can have s_t < 0 (the set H). Summing over N updates:
     (1/N) sum P_t  =  B + (mu_N - mu_0)/(ETA N) - (1/(ETA N)) sum s_t
-                   <=  B + (mu_N - mu_0)/(ETA N) + (1/(ETA N)) sum_{t in H} |s_t|
-This is an identity plus a sign argument, so it holds on every run without statistical assumptions. The check below
-confirms on the logged updates (mu_log: time, mu after the update, the 1-s mean power P_t used, temperature) that s_t < 0
-occurs only where the code allows it, and reports the three terms per run.
+                   <=  B + (mu_N - mu_0)/(ETA N) + (1/(ETA N)) sum_{t in H} (-s_t)^+
+The inequality itself is an identity plus a sign argument; what can fail on a real run is the premise that the code only
+departs from a plain step in these ways. The check therefore classifies every logged update (mu_log: time, mu after the
+update, the 1-s mean power P_t used, temperature) from the logged values alone, without using s_t's sign to define H:
+  held      mu_t = mu_{t-1}                       (the hold; the price is not updated)
+  capped    mu_t = MU_MAX
+  guard     mu_t = 1 and temperature >= 78 C       (thermal guard; with s_t < 0 only possible during a hold)
+  zero      mu_t = 0                               (clip at zero, s_t >= 0)
+  (a hold while at the cap, mu_t = mu_{t-1} = MU_MAX, can have s_t > 0: allowed)
+  plain     |s_t| <= TOL                           (an ordinary step)
+An update with s_t < -TOL that is not held, capped or guard, or one with s_t > TOL that is none of held, guard, zero,
+is "unexplained": it would contradict the controller as written. H = held or capped or (guard with s_t < 0), and the
+held term is split into its held and capped parts. (Audit of 11 Nov 2026: the first version defined H as {s_t < 0},
+which makes the check circular.)
 
 Proposition (budget -> temperature). With a linear first-order thermal response theta' = (a + b P - theta)/tau, the
 mean temperature over a long window equals a + b * (mean power) up to a transient that decays with tau. Checked on the
@@ -49,24 +59,39 @@ def runs():
 
 def theorem1(f, me):
     B = float(me["power_budget_w"])
-    L = np.array([(x[1], x[2]) for x in me["mu_log"]], float)
-    mu, P = L[:, 0], L[:, 1]
+    L = np.array([(x[1], x[2], x[3] if len(x) > 3 and x[3] is not None else np.nan) for x in me["mu_log"]], float)
+    mu, P, T = L[:, 0], L[:, 1], L[:, 2]
     if len(mu) > 5 and np.ptp(mu) == 0 and mu[0] > 0:       # a fixed weight, not the dual ascent
         return None
     prev = np.concatenate([[0.0], mu[:-1]])                 # the price starts at 0
     s = mu - prev - ETA * (P - B)
-    H = s < -TOL
-    capped = H & (mu >= MU_MAX - TOL)
+    e = 1.5e-4                                              # mu is logged to 4 decimals
+    zero = mu <= e                                          # clip at zero (s >= 0)
+    capped = np.abs(mu - MU_MAX) <= e                       # at the cap: clipped or held there (the log cannot tell)
+    held = (np.abs(mu - prev) <= e) & ~zero & ~capped       # the hold, below the cap
+    guard = ~held & ~capped & (np.abs(mu - 1.0) <= e) & (T >= 78.0 - 0.01)
+    neg, pos = s < -TOL, s > TOL
+    H = held | capped | (guard & neg)                       # guard with s < 0 is only possible during a hold
+    unexpl_neg = neg & ~H
+    unexpl_pos = pos & ~(held | guard | zero | (capped & (np.abs(mu - prev) <= e)))   # (a hold at the cap)
     N = len(P)
     avg = float(P.mean())
     term_mu = float((mu[-1] - 0.0) / (ETA * N))
-    term_h = float(-s[H].sum() / (ETA * N))
+    sm = np.maximum(-s, 0.0)                                # the shortfall (-s_t)^+ ; s_t >= 0 outside H
+    term_h = float(sm[H].sum() / (ETA * N))
+    term_held = float(sm[H & ~capped].sum() / (ETA * N))
+    term_cap = float(sm[capped].sum() / (ETA * N))
     bound = B + term_mu + term_h
     exact = B + term_mu - float(s.sum() / (ETA * N))         # the identity: equals avg up to the logged rounding
     return {"run": str(Path(f).relative_to(HW)), "budget_w": B, "updates": N, "avg_power_w": avg,
-            "bound_w": bound, "term_price_w": term_mu, "term_held_w": term_h, "identity_error_w": abs(exact - avg),
-            "held_or_capped_share": float(H.mean()), "capped_steps": int(capped.sum()), "mu_max_reached": float(mu.max()),
-            "G_w": float(np.abs(P - B).max()), "msq_w2": float(((P - B) ** 2).mean()), "holds": bool(avg <= bound + ROUND_W)}
+            "bound_w": bound, "term_price_w": term_mu, "term_held_w": term_h, "term_hold_only_w": term_held,
+            "term_cap_only_w": term_cap, "identity_error_w": abs(exact - avg),
+            "held_share": float(held.mean()), "capped_share": float(capped.mean()),
+            "held_or_capped_share": float((held | capped).mean()), "capped_steps": int(capped.sum()),
+            "unexplained_neg_steps": int(unexpl_neg.sum()), "unexplained_pos_steps": int(unexpl_pos.sum()),
+            "mu_max_reached": float(mu.max()),
+            "G_w": float(np.abs(P - B).max()), "msq_w2": float(((P - B) ** 2).mean()),
+            "holds": bool(avg <= bound + ROUND_W and not unexpl_neg.any())}
 
 
 def temperature(f, me, fits):
@@ -102,7 +127,16 @@ def main():
                 "max_avg_minus_budget_w": max(x["avg_power_w"] - x["budget_w"] for x in v),
                 "max_bound_minus_budget_w": max(x["bound_w"] - x["budget_w"] for x in v),
                 "mean_held_share": float(np.mean([x["held_or_capped_share"] for x in v])),
+                "mean_hold_only_share": float(np.mean([x["held_share"] for x in v])),
+                "mean_capped_share": float(np.mean([x["capped_share"] for x in v])),
                 "max_term_held_w": max(x["term_held_w"] for x in v),
+                "max_term_hold_only_w": max(x["term_hold_only_w"] for x in v),
+                "max_term_cap_only_w": max(x["term_cap_only_w"] for x in v),
+                "budgets_w": sorted({x["budget_w"] for x in v}),
+                "runs_over_budget": sum(1 for x in v if x["avg_power_w"] > x["budget_w"]),
+                "unexplained_neg_steps": sum(x["unexplained_neg_steps"] for x in v),
+                "unexplained_pos_steps": sum(x["unexplained_pos_steps"] for x in v),
+                "updates": sum(x["updates"] for x in v),
                 "runs_capped": sum(1 for x in v if x["capped_steps"] > 0),
                 "max_identity_error_w": max(x["identity_error_w"] for x in v),
                 "max_mu": max(x["mu_max_reached"] for x in v)} for c, v in sorted(by.items())}
@@ -113,6 +147,9 @@ def main():
                    "mean_error_c": float(e.mean()) if len(e) else None,
                    "mean_abs_error_c": float(np.abs(e).mean()) if len(e) else None,
                    "max_abs_error_c": float(np.abs(e).max()) if len(e) else None,
+                   "signed_error_by_campaign_c": {c: float(np.mean([r[f"pred_{k}_c"] - r["mean_temp_c"] for r in tt
+                                                                     if r["run"].split("/")[0] == c]))
+                                                  for c in sorted({r["run"].split("/")[0] for r in tt})},
                    "budget_for_80c_w": (80.0 - fits[k][0]) / fits[k][1],
                    "budget_for_85c_w": (85.0 - fits[k][0]) / fits[k][1]}
     orc = json.load(open(HW / "replay" / "oracle_oct29_plant" / "oracle_summary.json"))["scenarios"]
@@ -124,6 +161,10 @@ def main():
            "theorem1": {"runs": len(t1), "all_hold": all(r["holds"] for r in t1),
                         "runs_any_held_or_capped": sum(1 for r in t1 if r["held_or_capped_share"] > 0),
                         "runs_capped": sum(1 for r in t1 if r["capped_steps"] > 0),
+                        "runs_over_budget": sum(1 for r in t1 if r["avg_power_w"] > r["budget_w"]),
+                        "unexplained_neg_steps": sum(r["unexplained_neg_steps"] for r in t1),
+                        "unexplained_pos_steps": sum(r["unexplained_pos_steps"] for r in t1),
+                        "updates": sum(r["updates"] for r in t1),
                         "max_identity_error_w": max(r["identity_error_w"] for r in t1), "by_campaign": camp,
                         "per_run": t1},
            "theorem2": {"G_w": G, "gap_bound_value_per_s": ETA * G * G / 2,

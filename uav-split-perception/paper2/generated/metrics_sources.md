@@ -126,6 +126,8 @@
 | `\DuoCoordCi` | 0.0027 | ... .ci95 |
 | `\DuoShareLossMin` | 11 | swarm_duo_summary.json cells: 1 - pi_sAP_fc(duo_none) / pi_sAP_fc(pi_alone), mission and static_good, minimum x 100 |
 | `\DuoShareLossMax` | 19 | ... maximum x 100 |
+| `\MpcLessWMin` | 0.33 | replay/accumo_oct29/accumo_summary.json {mission_20s, random_20s, mission_240s}.policies: v41.pi_w - accumo.pi_w, min (the planner runs less onboard) |
+| `\MpcLessWMax` | 0.53 | ... max |
 | `\MpcMs` | 0.64 | planner_bench_laptop_oct30.json ms_median |
 | `\MpcPlanMsReplay` | 1.5 | replay/accumo_oct29/accumo_summary.json mission_20s.policies.accumo.plan_ms_median (replay, beside other jobs) |
 | `\ThmRuns` | 376 | theory_check/theory_check.json theorem1.runs (priced runs with a logged price, every campaign) |
@@ -137,9 +139,28 @@
 | `\ThmMeshExcess` | 0.07 | theory_check/theory_check.json by_campaign[mesh, mesh2, mesh3].max_avg_minus_budget_w, max |
 | `\ThmMeshRuns` | 51 | ... .runs, sum |
 | `\ThmLongExcess` | 0.15 | theory_check/theory_check.json by_campaign.vid_campaign_mesh2_long.max_avg_minus_budget_w |
-| `\ThmLongHeldPct` | 18 | ... .mean_held_share x 100 |
-| `\ThmLongHeldW` | 0.11 | ... .max_term_held_w |
+| `\ThmLongCapPct` | 18 | ... .mean_capped_share x 100 (updates with the price at its cap) |
+| `\ThmLongCapW` | 0.11 | ... .max_term_cap_only_w |
+| `\ThmLongHoldW` | 0.00 | ... .max_term_hold_only_w |
 | `\ThmLongRuns` | 8 | ... .runs |
+| `\ThmUpdates` | 66{,}655 | theory_check/theory_check.json theorem1.updates |
+| `\ThmUnexplained` | 0 | theory_check/theory_check.json theorem1.unexplained_neg_steps + unexplained_pos_steps (updates the controller as written cannot make) |
+| `\ThmOverRuns` | 364 | theory_check/theory_check.json theorem1.runs_over_budget |
+| `\ThmCapRuns` | 15 | theory_check/theory_check.json theorem1.runs_capped |
+| `\ThmWifiHoldExcess` | 1.06 | theory_check/theory_check.json by_campaign[table, b, long].max_avg_minus_budget_w, max (Wi-Fi campaigns with the cap and the hold) |
+| `\ThmWifiHoldW` | 0.74 | ... .max_term_hold_only_w, max |
+| `\ThmAltBudgetRuns` | 40 | theory_check/theory_check.json theorem1.per_run with budget_w != 2.8 |
+| `\ThmAltBudget` | 3.5 | ... min budget_w of those runs |
+| `\ThmCampaignRows` | Wi-Fi, main$^\dagger$ & 120 & 1.28 & 0.2 & 0.0 & 0.00 & 0.00 & 14.1 \\
+Wi-Fi, edge price$^\dagger$ & 80 & 1.29 & 0.2 & 0.0 & 0.00 & 0.00 & 14.2 \\
+Wi-Fi, energy$^\dagger$ & 40 & 0.92 & 0.5 & 0.0 & 0.00 & 0.00 & 10.2 \\
+Wi-Fi, B & 9 & 0.66 & 6.2 & 0.0 & 0.48 & 0.00 & 4.5 \\
+Wi-Fi, table & 60 & 1.06 & 15.6 & 0.5 & 0.74 & 0.29 & 5.0 \\
+Wi-Fi, 24 min & 8 & 0.55 & 15.8 & 19.0 & 0.42 & 0.48 & 5.0 \\
+mesh 1 & 12 & 0.07 & 0.2 & 0.0 & 0.00 & 0.00 & 3.3 \\
+mesh 2 & 21 & 0.07 & 0.1 & 0.0 & 0.00 & 0.00 & 2.9 \\
+mesh 3 & 18 & 0.04 & 0.5 & 0.0 & 0.00 & 0.00 & 3.3 \\
+mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theory_check.json theorem1.by_campaign (rows of Table tab:thm) |
 | `\ThmOldExcess` | 1.3 | theory_check/theory_check.json by_campaign[energy, v42, main].max_avg_minus_budget_w, max (campaigns before the price cap and the blackout hold) |
 | `\ThmOldMu` | 14 | ... .max_mu, max |
 | `\ThmMsqMed` | 0.70 | theory_check/theory_check.json theorem2.msq_median_w2 (v4.1 mesh runs: mean (P-B)^2) |
@@ -157,3 +178,9 @@
 | `\ThBudgetEightyCtl` | 3.8 | theory_check/theory_check.json temperature.fits.controller.budget_for_80c_w |
 | `\ThPredBudget` | 70 | plant fit at the 2.8 W budget |
 | `\ThTau` | 149 | energy/energy_constants.json pi.thermal.tau_s (measured cool-down time constant) |
+| `\ThMeanErr` | +0.8 | theory_check/theory_check.json temperature.fits.plant.mean_error_c (predicted minus measured) |
+| `\ThBiasWifi` | +1.63 | ... .signed_error_by_campaign_c.vid_campaign_long |
+| `\ThBiasMesh` | −0.04 | ... .signed_error_by_campaign_c.vid_campaign_mesh2_long |
+| `\ThLevels` | 6 | energy/thermal_steady_pi.json levels with clock >= 1450 MHz and < 84 C (as replay.py) |
+| `\ThHotLevelC` | 83.8 | ... hottest of them: temp_steady_c |
+| `\ThHotLevelMhz` | 2070 | ... its arm_clock_mhz_last60 (2400 MHz unthrottled) |

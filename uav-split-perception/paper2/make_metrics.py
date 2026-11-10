@@ -268,6 +268,11 @@ def main():
         "mission and static_good, minimum x 100", "{:.0f}")
     put("DuoShareLossMax", max(loss), "... maximum x 100", "{:.0f}")
     bench = j("planner_bench_laptop_oct30.json")
+    lw = [ac[sc]["policies"]["v41"]["pi_w"] - ac[sc]["policies"]["accumo"]["pi_w"]
+          for sc in ("mission_20s", "random_20s", "mission_240s")]
+    put("MpcLessWMin", min(lw), "replay/accumo_oct29/accumo_summary.json {mission_20s, random_20s, mission_240s}"
+        ".policies: v41.pi_w - accumo.pi_w, min (the planner runs less onboard)", "{:.2f}")
+    put("MpcLessWMax", max(lw), "... max", "{:.2f}")
     put("MpcMs", bench["ms_median"], "planner_bench_laptop_oct30.json ms_median", "{:.2f}")
     put("MpcPlanMsReplay", ac["mission_20s"]["policies"]["accumo"]["plan_ms_median"],
         "replay/accumo_oct29/accumo_summary.json mission_20s.policies.accumo.plan_ms_median (replay, beside other jobs)",
@@ -293,9 +298,37 @@ def main():
     lg = bc["vid_campaign_mesh2_long"]
     put("ThmLongExcess", lg["max_avg_minus_budget_w"], f"{src} by_campaign.vid_campaign_mesh2_long"
         ".max_avg_minus_budget_w", "{:.2f}")
-    put("ThmLongHeldPct", 100 * lg["mean_held_share"], "... .mean_held_share x 100", "{:.0f}")
-    put("ThmLongHeldW", lg["max_term_held_w"], "... .max_term_held_w", "{:.2f}")
+    put("ThmLongCapPct", 100 * lg["mean_capped_share"], "... .mean_capped_share x 100 (updates with the price at its "
+        "cap)", "{:.0f}")
+    put("ThmLongCapW", lg["max_term_cap_only_w"], "... .max_term_cap_only_w", "{:.2f}")
+    put("ThmLongHoldW", lg["max_term_hold_only_w"], "... .max_term_hold_only_w", "{:.2f}")
     put("ThmLongRuns", str(lg["runs"]), "... .runs")
+    # audit of 11 Nov 2026: every update classified from the logged values (theory_check.py), per-campaign table
+    put("ThmUpdates", f"{t1['updates']:,}".replace(",", "{,}"), f"{src} theorem1.updates")
+    put("ThmUnexplained", str(t1["unexplained_neg_steps"] + t1["unexplained_pos_steps"]),
+        f"{src} theorem1.unexplained_neg_steps + unexplained_pos_steps (updates the controller as written cannot make)")
+    put("ThmOverRuns", str(t1["runs_over_budget"]), f"{src} theorem1.runs_over_budget")
+    put("ThmCapRuns", str(t1["runs_capped"]), f"{src} theorem1.runs_capped")
+    wifi_h = [bc[c] for c in ("vid_campaign_table", "vid_campaign_b", "vid_campaign_long")]
+    put("ThmWifiHoldExcess", max(x["max_avg_minus_budget_w"] for x in wifi_h), f"{src} by_campaign[table, b, long]"
+        ".max_avg_minus_budget_w, max (Wi-Fi campaigns with the cap and the hold)", "{:.2f}")
+    put("ThmWifiHoldW", max(x["max_term_hold_only_w"] for x in wifi_h), "... .max_term_hold_only_w, max", "{:.2f}")
+    alt = [r for r in t1["per_run"] if abs(r["budget_w"] - 2.8) > 1e-6]
+    put("ThmAltBudgetRuns", str(len(alt)), f"{src} theorem1.per_run with budget_w != 2.8")
+    put("ThmAltBudget", min(r["budget_w"] for r in alt), "... min budget_w of those runs", "{:.1f}")
+    names = {"vid_campaign_main": "Wi-Fi, main$^\\dagger$", "vid_campaign_v42": "Wi-Fi, edge price$^\\dagger$",
+             "vid_campaign_energy": "Wi-Fi, energy$^\\dagger$", "vid_campaign_b": "Wi-Fi, B",
+             "vid_campaign_table": "Wi-Fi, table", "vid_campaign_long": "Wi-Fi, 24 min",
+             "vid_campaign_mesh": "mesh 1", "vid_campaign_mesh2": "mesh 2", "vid_campaign_mesh3": "mesh 3",
+             "vid_campaign_mesh2_long": "mesh, 24 min"}
+    rows = []
+    for c in names:
+        x = bc[c]
+        f2 = lambda v: f"{v:.2f}"  # noqa: E731
+        rows.append(f"{names[c]} & {x['runs']} & {f2(x['max_avg_minus_budget_w'])} & {100 * x['mean_hold_only_share']:.1f}"
+                    f" & {100 * x['mean_capped_share']:.1f} & {f2(x['max_term_hold_only_w'])} & {f2(x['max_term_cap_only_w'])}"
+                    f" & {x['max_mu']:.1f} \\\\")
+    put("ThmCampaignRows", "\n".join(rows), f"{src} theorem1.by_campaign (rows of Table tab:thm)")
     old = [bc[c] for c in ("vid_campaign_energy", "vid_campaign_v42", "vid_campaign_main")]
     put("ThmOldExcess", max(x["max_avg_minus_budget_w"] for x in old), f"{src} by_campaign[energy, v42, main]"
         ".max_avg_minus_budget_w, max (campaigns before the price cap and the blackout hold)", "{:.1f}")
@@ -318,6 +351,49 @@ def main():
     put("ThPredBudget", pl["intercept_c"] + pl["c_per_w"] * 2.8, "plant fit at the 2.8 W budget", "{:.0f}")
     put("ThTau", j("energy/energy_constants.json")["pi"]["thermal"]["tau_s"], "energy/energy_constants.json "
         "pi.thermal.tau_s (measured cool-down time constant)", "{:.0f}")
+    sg1 = lambda v: ("+" if v >= 0 else "-") + f"{abs(v):.1f}"  # noqa: E731
+    put("ThMeanErr", sg1(pl["mean_error_c"]), f"{src} temperature.fits.plant.mean_error_c (predicted minus measured)")
+    be = pl["signed_error_by_campaign_c"]
+    sg2 = lambda v: ("+" if v >= 0 else "-") + f"{abs(v):.2f}"  # noqa: E731
+    put("ThBiasWifi", sg2(be["vid_campaign_long"]),
+        "... .signed_error_by_campaign_c.vid_campaign_long")
+    put("ThBiasMesh", sg2(be["vid_campaign_mesh2_long"]),
+        "... .signed_error_by_campaign_c.vid_campaign_mesh2_long")
+    lvl = j("energy/thermal_steady_pi.json")["levels"]
+    used = [v for v in lvl.values() if v.get("arm_clock_mhz_last60", 0) >= 1450 and v["temp_steady_c"] < 84.0]
+    put("ThLevels", str(len(used)), "energy/thermal_steady_pi.json levels with clock >= 1450 MHz and < 84 C (as replay.py)")
+    hot = max(used, key=lambda v: v["temp_steady_c"])
+    put("ThHotLevelC", hot["temp_steady_c"], "... hottest of them: temp_steady_c", "{:.1f}")
+    put("ThHotLevelMhz", hot["arm_clock_mhz_last60"], "... its arm_clock_mhz_last60 (2400 MHz unthrottled)", "{:.0f}")
+
+    # ---- relay noise (Phase 4, 10-11 Nov 2026): evaluation/relay_noise_sweep.py --calib pi5 (paper 2's calibrated
+    #      swarm: Pi 5 758 ms, measured powers, 25 Mbit/s access point) -> relay_noise_pi5/summary.json
+    rn, src = (j("../relay_noise_pi5/summary.json") if (HW.parent / "relay_noise_pi5" / "summary.json").exists()
+               else None), "relay_noise_pi5/summary.json"
+    hops = rn["setting"]["hops"] if rn else []
+    if rn:
+        shares = [v["share"] for h in hops for v in rn[f"hops{h}"]["relayed_on_time_adaptive_all"].values()
+                  if v["share"] is not None]
+        put("RnCells", str(sum(rn[f"hops{h}"]["cells"] for h in hops)), f"{src} hops*.cells (relay-on cells)")
+        put("RnSeeds", str(rn["setting"]["seeds"]), f"{src} setting.seeds")
+        put("RnRankChanges", str(sum(len(rn[f"hops{h}"]["ranking_changes"]) for h in hops)),
+            f"{src} hops*.ranking_changes (cells whose strategy order differs from 3 dB, no loss)")
+        put("RnShareClean", 100 * rn["hops1"]["relayed_on_time_adaptive_all"]["3dB_0pct"]["share"],
+            f"{src} hops1.relayed_on_time_adaptive_all.3dB_0pct.share x 100", "{:.0f}")
+        put("RnShareMin", 100 * min(shares), f"{src} min over hops, shadowing, loss of relayed_on_time share x 100", "{:.0f}")
+        put("RnShareTwoHopTen", 100 * min(v["share"] for k, v in rn[f"hops{hops[-1]}"]["relayed_on_time_adaptive_all"].items()
+                                          if k.endswith("_10pct")),
+            f"{src} hops{hops[-1]}, 10 % loss, worst shadowing: relayed on-time share x 100", "{:.0f}")
+        lead = [rn[f"hops{h}"]["adaptive_lead_fps"] for h in hops]
+        put("RnLeadMin", min(x["min"] for x in lead), f"{src} hops*.adaptive_lead_fps.min", "{:.1f}")
+        put("RnLeadMax", max(x["max"] for x in lead), f"{src} hops*.adaptive_lead_fps.max", "{:.1f}")
+        gain = [rn[f"hops{h}"]["relay_gain_fps"] for h in hops]
+        put("RnGainMin", min(x["adaptive_all_min"] for x in gain), f"{src} hops*.relay_gain_fps.adaptive_all_min", "{:.2f}")
+        put("RnGainMax", max(x["adaptive_all_max"] for x in gain), f"{src} hops*.relay_gain_fps.adaptive_all_max", "{:.2f}")
+        if "second_hop_cost_adaptive_all_fps" in rn:
+            sh = rn["second_hop_cost_adaptive_all_fps"]
+            put("RnSecondHopMin", sh["min"], f"{src} second_hop_cost_adaptive_all_fps.min", "{:.2f}")
+            put("RnSecondHopMedian", sh["median"], f"{src} second_hop_cost_adaptive_all_fps.median", "{:.2f}")
 
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "metrics.tex").write_text("% Generated by paper2/make_metrics.py from experiments/results -- do not edit.\n" +

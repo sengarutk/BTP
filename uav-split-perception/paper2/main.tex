@@ -33,10 +33,12 @@ accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainP
 (\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and
 \MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
 \MeshVThrottle{}\,\%. In a trace replay validated against the hardware, the greedy priced controller reaches
-\OracleShareMin--\OracleShareMax\,\% of a hindsight oracle and ties an AccuMO-style 30-frame planner within the replay's
-error. The price update carries a sample-path guarantee: on all \ThmRuns{} recorded priced runs the mean power stays
-below the budget plus a price term and a blackout term (at most \ThmMeshExcess~W over 2.8~W on the mesh), and through a
-measured thermal model the budget sets the board's mean temperature (within \ThMae~$^\circ$C). Its objective must use
+\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. An AccuMO-style 30-frame planner is slightly
+ahead of it there, but that lead lies within the replay's known bias. The price update carries a sample-path guarantee:
+mean power stays below the budget plus a price term and a hold-and-cap term. All \ThmUpdates{} logged updates of the
+\ThmRuns{} priced runs follow the coded rule, so the bound holds on every run (an excess of at most \ThmMeshExcess~W on
+the mesh and \ThmLongExcess~W over 24 minutes, where the price sat at its cap). Through a measured thermal model the
+budget sets the board's mean temperature (within \ThMae~$^\circ$C). Its objective must use
 the decay curve of the forecaster that runs: with the curve without forecasting it loses \MainNoFcLoss{}~sAP.
 \end{abstract}
 
@@ -60,11 +62,13 @@ streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRep
 pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
 removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
 \EnGainPct\,\% and \EnRepGainPct\,\%.
-\item \emph{The price has guarantees.} Mean power stays below the budget plus two named terms on every run, which all
-\ThmRuns{} recorded runs confirm; the budget sets the mean temperature; and an idealised version is within a small,
-stated gap of the best power-feasible policy (Section~\ref{sec:theory}).
-\item \emph{The greedy priced choice is near the best schedule} (trace replay): \OracleShareMin--\OracleShareMax\,\% of
-a hindsight oracle, no gain from a clairvoyant link, and a tie with an AccuMO-style planner~\cite{Kong_2023};
+\item \emph{The price has guarantees.} Mean power stays below the budget plus two named terms on every run: every one
+of the \ThmUpdates{} logged price updates of the \ThmRuns{} runs follows the coded rule. The budget sets the mean
+temperature, and an idealised version is within a small, stated gap of the best power-feasible policy
+(Section~\ref{sec:theory}).
+\item \emph{The greedy priced choice is near the best schedule we can construct} (trace replay):
+\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle, no gain from a clairvoyant link, and within the
+replay's bias of an AccuMO-style planner~\cite{Kong_2023};
 on hardware it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers (Section~\ref{sec:best}).
 \item \emph{The objective must match the forecaster}: valuing a result by the decay measured \emph{after} motion
 forecasting beats the curve without forecasting and a flat one (Section~\ref{sec:decay}).
@@ -156,9 +160,11 @@ that runs.}
 \label{fig:decay}
 \end{figure} The energy price follows the measured board power
 $\bar P$ of the camera drone's board (mean of the last second): $\mu \leftarrow \min(5, \max(0, \mu + 0.1(\bar P -
-2.8\,\mathrm{W})))$ once per second. Two exceptions: at a measured 78~$^\circ$C or more, $\mu$ is at least 1 (a thermal
-guard); and while no server but the camera's own has more than a 20\,\% chance of delivering in time (and the board is
-below 85~$^\circ$C), onboard inference is not priced and $\mu$ is held (anti-windup: the budget cannot be met then). The
+B)))$ once per second, with budget $B = 2.8$~W (\ThmAltBudget--3.6~W in \ThmAltBudgetRuns{} runs of two early Wi-Fi
+campaigns). Two exceptions: at a measured 78~$^\circ$C or more, $\mu$ is at least 1 (a thermal
+guard); and while, for every link, the setting with the highest value has at most a 20\,\% chance of delivering in time
+(and the board is below 85~$^\circ$C), onboard inference is not priced and $\mu$ is held, also for 1~s after
+(anti-windup: the budget cannot be met then). The
 freshness price follows the share $\hat F$ of the last 5~s with a result younger than $D$: $\lambda_F \leftarrow
 \min(2, \max(0, \lambda_F + 2(0.95 - \hat F)))$, once per second. The edge-priced variant subtracts $\mu_e
 E_{\mathrm{edge}}$ for the Jetson's energy, with $\mu_e$ following the Jetson's measured extra power against its own
@@ -168,36 +174,67 @@ was tested in two ways: on top of the energy price (camera joules priced at $\mu
 ($\lambda_T$ alone, no energy price and no exceptions; mesh).
 
 \section{Guarantees}\label{sec:theory}
-The price update is a projected dual-ascent step on the power constraint $\bar P \le B$, which gives a guarantee on every
-run as coded. Let $\mu_t$ be the energy price after the $t$-th update ($\mu_0 = 0$), $P_t$ the 1-s mean power that update
-used, $\eta = \ThmEta$ the step, and $s_t = \mu_t - \mu_{t-1} - \eta (P_t - B)$ the amount by which the update departs
-from a plain step.
+The price update is a projected dual-ascent step on the power constraint $\bar P \le B$, and the standard virtual-queue
+argument~\cite{Neely_2010} gives a bound on every run as coded; what is specific here is the explicit term for the hold
+and the cap, and that the logged runs can be checked against it. Let $\mu_t$ be the energy price after the $t$-th
+update ($\mu_0 = 0$), $P_t$ the 1-s mean power that update used, $\eta = \ThmEta$ the step, and
+$s_t = \mu_t - \mu_{t-1} - \eta (P_t - B)$ the amount by which the update departs from a plain step.
 
 \begin{theorem}[Power budget, every run]\label{thm:power}
-Let $\mathcal H$ be the updates during which the price is held (no link can deliver) or clipped at its cap. After $N$
-updates,
+Let $\mathcal H$ be the updates during which the price is held or at its cap. After $N$ updates,
 \begin{equation*}
-\frac1N\sum_{t=1}^{N} P_t \;\le\; B + \frac{\mu_N}{\eta N} + \frac{1}{\eta N}\sum_{t\in\mathcal H}\lvert s_t\rvert .
+\frac1N\sum_{t=1}^{N} P_t \;\le\; B + \frac{\mu_N}{\eta N} + \frac{1}{\eta N}\sum_{t\in\mathcal H}(-s_t)^+ .
 \end{equation*}
 \end{theorem}
 \begin{proof}
-Clipping at zero and the thermal guard can only raise $\mu_t$, so $s_t \ge 0$ outside $\mathcal H$. Summing the
-definition of $s_t$ gives $\mu_N - \mu_0 = \eta\sum_t (P_t - B) + \sum_t s_t$; dropping the non-negative $s_t$ outside
-$\mathcal H$ gives the bound.
+Outside $\mathcal H$ an update is a plain step ($s_t = 0$), is clipped at zero, or is raised by the thermal guard, so
+$s_t \ge 0$. Summing the definition of $s_t$ gives $\mu_N - \mu_0 = \eta\sum_t (P_t - B) + \sum_t s_t$, so
+$\eta\sum_t(P_t - B) = \mu_N - \sum_t s_t \le \mu_N + \sum_{t\in\mathcal H}(-s_t)^+$.
 \end{proof}
-The bound needs no statistical assumption, and it names the only two ways to exceed the budget: a high final price
-(at most $\ThmMuMax/(\eta N)$, i.e. \ThmMarginFour~W over a 4-minute run and \ThmMarginLong~W over 24 minutes, with the
-cap of \ThmMuMax), or onboard work during blackouts, when no link can deliver. On all \ThmRuns{} priced runs of
-\ThmCamps{} campaigns the logged updates satisfy it, to the logged precision (2~mW). On the mesh (\ThmMeshRuns{} runs) the mean power exceeded the
-2.8~W budget by at most \ThmMeshExcess~W; in the \ThmLongRuns{} 24-minute missions by at most \ThmLongExcess~W, of which
-the blackout seconds (\ThmLongHeldPct\,\% of the updates) account for up to \ThmLongHeldW~W. Earlier Wi-Fi campaigns,
-run before the cap and the hold were added, exceeded it by up to \ThmOldExcess~W because the price wound up to
-\ThmOldMu{} during blackouts, the failure the hold removes.
+The bound names the only ways to exceed the budget: a high final price (at most $\ThmMuMax/(\eta N)$, i.e.
+\ThmMarginFour~W over a 4-minute run and \ThmMarginLong~W over 24 minutes), or updates in $\mathcal H$. The smaller
+$\eta$, the larger the price term; Theorem~\ref{thm:gap} shows the opposite trade for accuracy. Since the inequality
+follows from the update rule, what can fail on a real run is the rule itself. We therefore classified each of the
+\ThmUpdates{} logged updates of the \ThmRuns{} priced runs (\ThmCamps{} campaigns) from the logged values alone, as a
+plain step, clipped at zero, raised by the guard, held (price unchanged), or at the cap (where a hold and a clip look
+the same). \ThmUnexplained{} updates fall outside these cases, so the bound holds on every run.
+
+The bound is a decomposition, not a cap: \ThmOverRuns{} of the \ThmRuns{} runs averaged above their budget.
+Table~\ref{tab:thm} gives the terms by campaign.
+\begin{itemize}
+\item \textbf{Mesh} (\ThmMeshRuns{} runs): the excess was at most \ThmMeshExcess~W.
+\item \textbf{24-minute mesh missions:} the excess reached \ThmLongExcess~W. The price sat at its cap for
+\ThmLongCapPct\,\% of the updates, and the cap term accounts for up to \ThmLongCapW~W of the excess (the hold for
+\ThmLongHoldW~W).
+\item \textbf{Wi-Fi scenarios with total blackouts:} the excess reached \ThmWifiHoldExcess~W, of which up to
+\ThmWifiHoldW~W comes from the hold. In a blackout, onboard inference is the only way to show results, and the hold
+lets the board spend power on it instead of winding the price up.
+\item \textbf{Wi-Fi campaigns run before the cap and the hold were added} (marked $^\dagger$): they exceeded the budget
+by up to \ThmOldExcess~W, with the price wound up to \ThmOldMu.
+\end{itemize}
+
+\begin{table}[t]
+\centering
+\caption{Theorem~\ref{thm:power} on every priced run: largest excess of mean power over the budget, mean share of
+updates held and at the cap, the largest hold and cap terms of the bound, and the largest price reached. $^\dagger$Before the cap and the
+hold were added.}
+\label{tab:thm}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Campaign & Runs & Excess & Held & Cap & Hold & Cap & $\max\mu$ \\
+ & & W & \% & \% & W & W & \\
+\midrule
+\ThmCampaignRows
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{theorem}[Accuracy gap, idealised]\label{thm:gap}
 Assume that the link and content states are independent and identically distributed over one-second slots, that in
-every slot the controller chooses the action maximising its expected value $U$ minus $\mu_t$ times the true power,
-with no freshness term and the cap not reached. Let $U^\ast$ be the best expected value of any policy that knows the
+every slot the controller chooses the action maximising its expected value $U$ minus $\mu_{t-1}$ times the true power,
+with no freshness term, and that every update is a plain projected step (never held, raised by the guard or capped). Let $U^\ast$ be the best expected value of any policy that knows the
 states' distribution and meets $\mathbb E[P] \le B$. Then
 \begin{equation*}
 \frac1T\sum_{t=1}^{T}\mathbb E[U_t] \;\ge\; U^\ast - \frac{\eta}{2}\,\frac1T\sum_{t=1}^{T}\mathbb E\big[(P_t - B)^2\big].
@@ -209,29 +246,47 @@ $L_t - L_{t-1} \le \eta\mu_{t-1}(P_t - B) + \eta^2 (P_t - B)^2/2$; the greedy ch
 no larger than under the optimal stationary policy, whose mean power is at most $B$; summing, with $L_0 = 0$ and
 $L_T \ge 0$, gives the bound.
 \end{proof}
-The hardware departs from these assumptions in four ways, so Theorem~\ref{thm:gap} is a guide, not a measurement: link
-phases and video content are correlated in time (Markov rather than independent states, which adds a mixing term to the
-bound~\cite{Neely_2010}); decisions are made per frame with modelled per-frame energy, while the price follows the
-measured board power; the freshness bonus is a heuristic term; and the realised metric is streaming AP, not the
-controller's value. With the measured $(P_t - B)^2$ of the \ThmMsqRuns{} v4.1 mesh runs (median \ThmMsqMed~W$^2$, at most
-\ThmMsqMax), the bound is \ThmGapMed--\ThmGapMax{} value units per second, at most \ThmGapPct\,\% of the largest value
-rate (one full-accuracy result per frame). The empirical counterpart is Section~\ref{sec:best}: in the validated replay
-v4.1 reaches \OracleShareMin--\OracleShareMax\,\% of a hindsight per-phase oracle (\OracleShareRandom\,\% when faults
-change every 4~s).
+This is a direct application of drift-plus-penalty, with its usual trade: a gap of order $\eta$ against a price term of
+order $1/\eta$ in Theorem~\ref{thm:power}. Theorem~\ref{thm:gap} is a guide, not a measurement, because the hardware
+breaks its assumptions in six ways.
+\begin{itemize}
+\item \textbf{Not every step is plain.} The price reached its cap in \ThmCapRuns{} runs, including all \ThmLongRuns{}
+24-minute mesh missions, and it was held during blackouts (Table~\ref{tab:thm}).
+\item \textbf{The state depends on past actions.} Which servers are busy depends on earlier choices, and so does the
+board temperature ($\tau = \ThTau$~s), which changes onboard time and power; that dependence is this paper's thesis.
+\item \textbf{The state is correlated in time.} Link phases and video content are Markov, not independent, which adds a
+mixing term to the bound~\cite{Neely_2010}.
+\item \textbf{The choice is per frame.} Decisions are greedy among the idle servers, using modelled per-frame energy,
+while the price follows the measured board power.
+\item \textbf{The freshness bonus} is a heuristic term.
+\item \textbf{The metric is streaming AP,} not the controller's value.
+\end{itemize}
+Evaluated with the measured $(P_t - B)^2$ of the \ThmMsqRuns{} v4.1 mesh runs (median \ThmMsqMed~W$^2$, at most
+\ThmMsqMax), which belong to the real controller rather than the idealised one, the bound is \ThmGapMed--\ThmGapMax{}
+value units per second, at most \ThmGapPct\,\% of the largest value rate (one full-accuracy result per frame). The
+empirical counterpart is Section~\ref{sec:best}. In the validated replay, v4.1 reaches
+\OracleShareMin--\OracleShareMax\,\% of a per-phase oracle that picks, with hindsight, the best of v4.1 and 17 fixed
+settings in each phase (\OracleShareRandom\,\% when faults change every 4~s). This oracle contains v4.1, so it bounds
+what a better per-phase choice could add, not the best possible schedule.
 
 \begin{proposition}[Budget and temperature]\label{prop:temp}
 If the board temperature follows $\dot\theta = (a + bP - \theta)/\tau$, its mean over a window of length $W$ is
-$\bar\theta = a + b\bar P - \tau(\theta(W) - \theta(0))/W$. With Theorem~\ref{thm:power}, a run that meets the budget
-keeps $\bar\theta \le a + bB$ up to the price and blackout terms and a transient that vanishes as $W/\tau$ grows.
+$\bar\theta = a + b\bar P - \tau(\theta(W) - \theta(0))/W$. With Theorem~\ref{thm:power}, the mean temperature is at
+most $a + bB$ plus $b$ times the price and hold-and-cap terms, plus a transient that vanishes as $W/\tau$ grows. This
+bounds the mean, not the peak.
 \end{proposition}
 \begin{proof}
 Integrate the differential equation over the window and divide by $W$.
 \end{proof}
-The six measured steady levels below 84~$^\circ$C give $a = \ThPlantA$~$^\circ$C and $b = \ThPlantB$~$^\circ$C/W
-($\tau = \ThTau$~s). On the second half of all \ThRuns{} runs of 20 minutes or more, $a + b\bar P$ predicts the mean
-temperature within \ThMae~$^\circ$C on average (at most \ThMax). The budget therefore sets the temperature: 2.8~W
-predicts \ThPredBudget~$^\circ$C, and keeping the board below 80~$^\circ$C, where it starts to throttle, needs
-$B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below 80~$^\circ$C).
+The proposition is a one-line consequence of a standard first-order model; its use is the rule for choosing $B$. The
+\ThLevels{} measured steady levels below 84~$^\circ$C give $a = \ThPlantA$~$^\circ$C and $b = \ThPlantB$~$^\circ$C/W
+($\tau = \ThTau$~s). The hottest of them, \ThHotLevelC~$^\circ$C, already ran at a reduced clock (\ThHotLevelMhz{} of
+2400~MHz). On the second half of all \ThRuns{} runs of 20 minutes or more, $a + b\bar P$ predicts the mean temperature
+within \ThMae~$^\circ$C on average (at most \ThMax). The error is a campaign offset, not scatter: \ThBiasWifi~$^\circ$C
+on the 24-minute Wi-Fi runs and \ThBiasMesh~$^\circ$C on the mesh (mean \ThMeanErr). The budget therefore sets the mean
+temperature: 2.8~W predicts \ThPredBudget~$^\circ$C, and keeping the mean below 80~$^\circ$C, where the board starts to
+throttle, needs $B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below
+80~$^\circ$C). Peaks and the onset of throttling are not bounded by this rule.
 
 \section{Method}\label{sec:method}
 Strategies are compared in paired campaigns: every repetition runs all strategies on the same scenario, in shuffled
@@ -297,9 +352,9 @@ robustness, not energy.
 \subsection{Near the best schedule}\label{sec:best}\label{sec:planner}
 \textbf{Distance from the best schedule (trace replay).} Knowing the exact goodput of every next transfer in advance
 changes v4.1's streaming AP by at most \ClairMax{} (inside the interval in every scenario), so a better link predictor
-would not help under the emulated faults. Against a hindsight oracle that picks, per network phase, the best of v4.1
-and 17 fixed settings, v4.1 reaches \OracleShareMin--\OracleShareMax\,\% of the oracle's accuracy with 20~s phases and
-\OracleShareRandom\,\% when the faults change every 4~s.
+would not help under the emulated faults. Against a per-phase hindsight oracle that picks, in each network phase, the best of v4.1 and 17 fixed settings, v4.1
+reaches \OracleShareMin--\OracleShareMax\,\% of the oracle's accuracy with 20~s phases and \OracleShareRandom\,\% when
+the faults change every 4~s. The oracle contains v4.1, so this bounds what a better per-phase choice could add.
 
 \textbf{Published schedulers.} In the 240-run hardware campaign the re-implemented literature schedulers (confidence trigger~\cite{Gomez_2024}, offloading
 reward~\cite{Qiu_2024}, freshness threshold, shortest queue) trailed the priced controller (v5) by
@@ -309,9 +364,11 @@ content-conditioned decay, the plan maximising the accuracy of the result on scr
 was \MpcMission{}$\pm$\MpcMissionCi{} on the mission (\MpcMissionN{} seeds), \MpcRandom{}$\pm$\MpcRandomCi{} on random
 link faults and \MpcLong{}$\pm$\MpcLongCi{} over 24-minute missions; the LEAF-style weight was ahead by as much
 (\LeafMission{}, \LeafRandom{}, \LeafLong{}). On fresh seeds with a corrected onboard power model the random-link
-difference was \MpcHeldRandom{}$\pm$\MpcHeldRandomCi{}. All of these are within the replay's known bias towards light
-onboard use (\ReplayLeafBias{}), so the supported claim is that the greedy priced choice does as well as a 30-frame
-planner here; the planner takes \MpcMs{}~ms per frame on a laptop CPU, and its hardware comparison is future work.
+difference was \MpcHeldRandom{}$\pm$\MpcHeldRandomCi{}. The planner and the LEAF-style weight both draw less power than v4.1 (the planner \MpcLessWMin--\MpcLessWMax~W less):
+they run less onboard. That is the direction the replay is known to favour; with the LEAF-style weight, the replay
+overstates the difference measured on hardware by \ReplayLeafBias{}. Their leads, including the significant ones, are
+within that bias, so the supported claim is that the greedy priced choice does about as well as a 30-frame planner here
+(the board session tests this); the planner takes \MpcMs{}~ms per frame on a laptop CPU, and its hardware comparison is future work.
 
 \textbf{Calibration (trace replay).} Over \CalFrames{} offloaded frames, v4.1 predicted on average a \CalPred\,\%
 chance of meeting the deadline and \CalObs\,\% met it (expected calibration error \CalEce{}); no probability bin was
@@ -361,9 +418,9 @@ measured.
 On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and
 throttling alone costs a large share of onboard streaming accuracy. A greedy scheduler that values each frame by the
 accuracy its result will still have, and prices the camera drone's measured power and the freshness of its results,
-removes that cost while keeping or raising streaming accuracy, and in a validated replay it is close to the best
-schedule. Its power budget holds on every run up to a price term and a blackout term, and it sets the board's
-temperature. Its objective must use the decay curve of the forecaster in use.
+removes that cost while keeping or raising streaming accuracy. In a validated replay it reaches
+\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. Its power budget holds on every run up to a price
+term and a hold-and-cap term, and it sets the board's mean temperature. Its objective must use the decay curve of the forecaster in use.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

@@ -35,6 +35,11 @@ no prices at all 4.24 W, 82.3 °C, throttled 13 % of the time, sAP 0.2028.
 
 - **P2.1 (Theorem 1)** Every v41 run averages at most 2.94 W (2.8 + 0.14), and every v41b36 run at most 3.74 W.
   The bound holds on every logged update sequence (it is an identity plus a sign argument).
+  Clarification, 11 Nov 2026, before the session, after an independent audit of paper 2. The testable part is that every
+  logged update is one the coded rule allows: a plain step, clipped at zero, raised by the thermal guard, held, or at
+  the cap. `paper2/theory_check.py` now classifies each update from the logged values, and on the 376 earlier runs it
+  found 0 exceptions in 66,655 updates. The 2.94 / 3.74 W figures assume that no update is held or capped in
+  static_good. If some are, the run's own hold and cap terms are added to the limit, and that is reported.
 - **P2.2 (Proposition 1)** Second-half mean temperature within ±3 °C of 34.4 + 12.7 × (mean power): about 70–71 °C
   for v41, about 80 °C for v41b36 (at most 82 °C).
 - **P2.3 (mechanism)** freshonly runs like the unpriced controller: about 4.2 W, a mean above 80 °C and throttling

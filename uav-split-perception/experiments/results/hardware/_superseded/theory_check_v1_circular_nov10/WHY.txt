@@ -1,0 +1,1 @@
+theory_check.json of 10 Nov 2026 (commit 3d0b1f43): H was defined as {s_t < 0}, which makes the Theorem 1 check circular (audit 11 Nov). Replaced by the step classification in paper2/theory_check.py.
