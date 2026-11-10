@@ -19,6 +19,7 @@
 | `\EnRepGain` | +0.0056 | vid_campaign_v42_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.A_stream_fc2.mean_diff (ref v4 minus v3+fc2) |
 | `\EnRepCi` | 0.0037 | ... .A_stream_fc2.ci95 |
 | `\EnRepWins` | 18 | ... .A_stream_fc2.wins |
+| `\EnRepPairs` | 20 | ... .A_stream_fc2.pairs |
 | `\EnRepGainPct` | 12 | EnRepGain / mean over scenarios of scenarios.*.A_stream_fc2.sAP_quality_fcv2live x 100 |
 | `\EnVdGain` | +0.0189 | report_c_summary_visdrone.json vid_campaign_energy.paired.A_stream_fc2.sAP_fc.A_eco_tight.mean_diff (sign turned) |
 | `\EnVdHolm` | 0.002 | ... .p_holm |
@@ -42,6 +43,13 @@
 | `\SysEffRatioMax` | 2.6 | fixed / worst v4.x |
 | `\SysFixedAvail` | 50 | ... pooled.fixed_laptop_m640q90.availability x 100 (share of time with a result younger than 300 ms) |
 | `\SysVAvailMin` | 86 | ... pooled.A_eco*.availability, min x 100 |
+| `\HeatTopSap` | +0.0018 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v42.mean_diff (ref v5 minus v42 = heat price on top minus energy price alone) |
+| `\HeatTopSapCi` | 0.0024 | ... .v42.ci95 |
+| `\HeatTopPairs` | 20 | ... .v42.pairs |
+| `\HeatTopW` | −0.01 | vid_campaign_main_measured_summary.json paired_vs_ref.v42.camera_w.diff (v42 minus v5; sign turned: v5 minus v42) |
+| `\HeatTopWCi` | 0.06 | ... .camera_w.ci |
+| `\MainPairs` | 20 | vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live.v42.pairs (every main-campaign comparison has the same 20 pairs) |
+| `\PowerHz` | 3.8 | vid_campaign_mesh2/a2_*.json measured_energy.log_t_w_c: median samples per second over 66 runs |
 | `\HeatSap` | −0.0002 | vid_campaign_mesh2_summary.json paired['heat-v41|ALL'].sAP_fc.mean_diff (heat price minus v4.1) |
 | `\HeatW` | 0.46 | ... .pi_w.mean_diff |
 | `\HeatC` | 4.8 | ... .pi_temp_c.mean_diff |
@@ -120,3 +128,32 @@
 | `\DuoShareLossMax` | 19 | ... maximum x 100 |
 | `\MpcMs` | 0.64 | planner_bench_laptop_oct30.json ms_median |
 | `\MpcPlanMsReplay` | 1.5 | replay/accumo_oct29/accumo_summary.json mission_20s.policies.accumo.plan_ms_median (replay, beside other jobs) |
+| `\ThmRuns` | 376 | theory_check/theory_check.json theorem1.runs (priced runs with a logged price, every campaign) |
+| `\ThmCamps` | 10 | theory_check/theory_check.json theorem1.by_campaign (number of campaigns) |
+| `\ThmEta` | 0.1 | theory_check/theory_check.json eta (adaptive2.py default) |
+| `\ThmMuMax` | 5 | theory_check/theory_check.json mu_max (adaptive2.py default) |
+| `\ThmMarginFour` | 0.21 | mu_max / (eta x 240 updates): the price term's ceiling for a 4-minute run |
+| `\ThmMarginLong` | 0.035 | mu_max / (eta x 1440 updates): 24-minute run |
+| `\ThmMeshExcess` | 0.07 | theory_check/theory_check.json by_campaign[mesh, mesh2, mesh3].max_avg_minus_budget_w, max |
+| `\ThmMeshRuns` | 51 | ... .runs, sum |
+| `\ThmLongExcess` | 0.15 | theory_check/theory_check.json by_campaign.vid_campaign_mesh2_long.max_avg_minus_budget_w |
+| `\ThmLongHeldPct` | 18 | ... .mean_held_share x 100 |
+| `\ThmLongHeldW` | 0.11 | ... .max_term_held_w |
+| `\ThmLongRuns` | 8 | ... .runs |
+| `\ThmOldExcess` | 1.3 | theory_check/theory_check.json by_campaign[energy, v42, main].max_avg_minus_budget_w, max (campaigns before the price cap and the blackout hold) |
+| `\ThmOldMu` | 14 | ... .max_mu, max |
+| `\ThmMsqMed` | 0.70 | theory_check/theory_check.json theorem2.msq_median_w2 (v4.1 mesh runs: mean (P-B)^2) |
+| `\ThmMsqMax` | 1.6 | ... .msq_max_w2 |
+| `\ThmMsqRuns` | 42 | ... .v41_mesh_runs |
+| `\ThmGapMed` | 0.035 | ... eta x msq_median / 2 |
+| `\ThmGapMax` | 0.08 | ... eta x msq_max / 2 |
+| `\ThmGapPct` | 0.3 | ThmGapMax / 30 frames/s (the largest value rate: one full-accuracy result per frame) x 100 |
+| `\ThPlantA` | 34.4 | theory_check/theory_check.json temperature.fits.plant.intercept_c (6 levels below 84 C) |
+| `\ThPlantB` | 12.7 | ... .c_per_w |
+| `\ThRuns` | 16 | ... .runs (runs of at least 20 minutes, second half) |
+| `\ThMae` | 1.6 | ... .mean_abs_error_c |
+| `\ThMax` | 2.8 | ... .max_abs_error_c |
+| `\ThBudgetEighty` | 3.6 | ... .budget_for_80c_w |
+| `\ThBudgetEightyCtl` | 3.8 | theory_check/theory_check.json temperature.fits.controller.budget_for_80c_w |
+| `\ThPredBudget` | 70 | plant fit at the 2.8 W budget |
+| `\ThTau` | 149 | energy/energy_constants.json pi.thermal.tau_s (measured cool-down time constant) |

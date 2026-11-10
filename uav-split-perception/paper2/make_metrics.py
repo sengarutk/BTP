@@ -76,6 +76,7 @@ def main():
         ".A_stream_fc2.mean_diff (ref v4 minus v3+fc2)")
     put("EnRepCi", r["ci95"], "... .A_stream_fc2.ci95")
     put("EnRepWins", str(r["wins"]), "... .A_stream_fc2.wins")
+    put("EnRepPairs", str(r["pairs"]), "... .A_stream_fc2.pairs")
     scr = j("vid_campaign_v42_summary_v2_live.json")["scenarios"]
     ref2 = sum(v["A_stream_fc2"]["sAP_quality_fcv2live"] for v in scr.values()) / len(scr)
     put("EnRepGainPct", 100 * r["mean_diff"] / ref2, "EnRepGain / mean over scenarios of scenarios.*.A_stream_fc2"
@@ -128,7 +129,32 @@ def main():
     put("SysVAvailMin", 100 * min(v["availability"] for v in v4x.values()), "... pooled.A_eco*.availability, min x 100",
         "{:.0f}")
 
-    # ---- negative: a heat price adds nothing beyond the energy price (heat-v41)
+    # ---- negative results on heat pricing (corrected 10 Nov 2026): two different experiments.
+    # (a) Wi-Fi main campaign: v5 = v4.2 + the predictive heat price ON TOP of the energy price, against v4.2 (same
+    #     energy price, no heat price): does a heat price add anything beyond the energy price?
+    v42 = j("vid_campaign_main_summary_v2_live.json")["paired_vs_ref"]["sAP_quality_fcv2live"]["v42"]
+    put("HeatTopSap", signed(v42["mean_diff"]), "vid_campaign_main_summary_v2_live.json paired_vs_ref"
+        ".sAP_quality_fcv2live.v42.mean_diff (ref v5 minus v42 = heat price on top minus energy price alone)")
+    put("HeatTopSapCi", v42["ci95"], "... .v42.ci95")
+    put("HeatTopPairs", str(v42["pairs"]), "... .v42.pairs")
+    ms = j("vid_campaign_main_measured_summary.json")
+    cw = ms["paired_vs_ref"]["v42"]["camera_w"]
+    assert (ms["pooled"]["v42"]["camera_w"] - ms["pooled"]["v5"]["camera_w"]) * cw["diff"] >= 0   # diff = v42 - v5
+    put("HeatTopW", f"{-cw['diff']:+.2f}", "vid_campaign_main_measured_summary.json paired_vs_ref.v42"
+        ".camera_w.diff (v42 minus v5; sign turned: v5 minus v42)")
+    put("HeatTopWCi", cw["ci"], "... .camera_w.ci", "{:.2f}")
+    put("MainPairs", str(v42["pairs"]), "vid_campaign_main_summary_v2_live.json paired_vs_ref.sAP_quality_fcv2live"
+        ".v42.pairs (every main-campaign comparison has the same 20 pairs)")
+    import glob
+    import statistics
+    hz = []
+    for f in sorted(glob.glob(str(HW / "vid_campaign_mesh2" / "a2_*__r?.json"))):
+        lg = json.load(open(f))["measured_energy"]["log_t_w_c"]
+        hz.append(len(lg) / (lg[-1][0] - lg[0][0]))
+    put("PowerHz", statistics.median(hz), f"vid_campaign_mesh2/a2_*.json measured_energy.log_t_w_c: median samples "
+        f"per second over {len(hz)} runs", "{:.1f}")
+    # (b) mesh campaign 2: "heat" = the heat price INSTEAD of the energy price (arun_mesh.sh HEAT has no
+    #     --energy-aware; its runs log no energy price), against v4.1 (energy price): which signal should be priced?
     h = m2["paired"]["heat-v41|ALL"]
     put("HeatSap", signed(h["sAP_fc"]["mean_diff"]), "vid_campaign_mesh2_summary.json paired['heat-v41|ALL'].sAP_fc"
         ".mean_diff (heat price minus v4.1)")
@@ -246,6 +272,52 @@ def main():
     put("MpcPlanMsReplay", ac["mission_20s"]["policies"]["accumo"]["plan_ms_median"],
         "replay/accumo_oct29/accumo_summary.json mission_20s.policies.accumo.plan_ms_median (replay, beside other jobs)",
         "{:.1f}")
+
+    # ---- guarantees (Phase 1, 10 Nov 2026): paper2/theory_check.py -> theory_check/theory_check.json
+    tc = j("theory_check/theory_check.json")
+    t1, t2, tf = tc["theorem1"], tc["theorem2"], tc["temperature"]["fits"]
+    src = "theory_check/theory_check.json"
+    assert t1["all_hold"]
+    put("ThmRuns", str(t1["runs"]), f"{src} theorem1.runs (priced runs with a logged price, every campaign)")
+    put("ThmCamps", str(len(t1["by_campaign"])), f"{src} theorem1.by_campaign (number of campaigns)")
+    put("ThmEta", tc["eta"], f"{src} eta (adaptive2.py default)", "{:g}")
+    put("ThmMuMax", tc["mu_max"], f"{src} mu_max (adaptive2.py default)", "{:g}")
+    put("ThmMarginFour", tc["mu_max"] / (tc["eta"] * 240), "mu_max / (eta x 240 updates): the price term's ceiling "
+        "for a 4-minute run", "{:.2f}")
+    put("ThmMarginLong", tc["mu_max"] / (tc["eta"] * 1440), "mu_max / (eta x 1440 updates): 24-minute run", "{:.3f}")
+    bc = t1["by_campaign"]
+    mesh = [bc[c] for c in ("vid_campaign_mesh", "vid_campaign_mesh2", "vid_campaign_mesh3")]
+    put("ThmMeshExcess", max(x["max_avg_minus_budget_w"] for x in mesh), f"{src} by_campaign[mesh, mesh2, mesh3]"
+        ".max_avg_minus_budget_w, max", "{:.2f}")
+    put("ThmMeshRuns", str(sum(x["runs"] for x in mesh)), "... .runs, sum")
+    lg = bc["vid_campaign_mesh2_long"]
+    put("ThmLongExcess", lg["max_avg_minus_budget_w"], f"{src} by_campaign.vid_campaign_mesh2_long"
+        ".max_avg_minus_budget_w", "{:.2f}")
+    put("ThmLongHeldPct", 100 * lg["mean_held_share"], "... .mean_held_share x 100", "{:.0f}")
+    put("ThmLongHeldW", lg["max_term_held_w"], "... .max_term_held_w", "{:.2f}")
+    put("ThmLongRuns", str(lg["runs"]), "... .runs")
+    old = [bc[c] for c in ("vid_campaign_energy", "vid_campaign_v42", "vid_campaign_main")]
+    put("ThmOldExcess", max(x["max_avg_minus_budget_w"] for x in old), f"{src} by_campaign[energy, v42, main]"
+        ".max_avg_minus_budget_w, max (campaigns before the price cap and the blackout hold)", "{:.1f}")
+    put("ThmOldMu", max(x["max_mu"] for x in old), "... .max_mu, max", "{:.0f}")
+    put("ThmMsqMed", t2["msq_median_w2"], f"{src} theorem2.msq_median_w2 (v4.1 mesh runs: mean (P-B)^2)", "{:.2f}")
+    put("ThmMsqMax", t2["msq_max_w2"], "... .msq_max_w2", "{:.1f}")
+    put("ThmMsqRuns", str(t2["v41_mesh_runs"]), "... .v41_mesh_runs")
+    put("ThmGapMed", t2["gap_bound_msq_median_value_per_s"], "... eta x msq_median / 2", "{:.3f}")
+    put("ThmGapMax", t2["gap_bound_msq_max_value_per_s"], "... eta x msq_max / 2", "{:.2f}")
+    put("ThmGapPct", 100 * t2["gap_bound_msq_max_value_per_s"] / 30.0, "ThmGapMax / 30 frames/s (the largest value "
+        "rate: one full-accuracy result per frame) x 100", "{:.1f}")
+    pl, ct = tf["plant"], tf["controller"]
+    put("ThPlantA", pl["intercept_c"], f"{src} temperature.fits.plant.intercept_c (6 levels below 84 C)", "{:.1f}")
+    put("ThPlantB", pl["c_per_w"], "... .c_per_w", "{:.1f}")
+    put("ThRuns", str(pl["runs"]), "... .runs (runs of at least 20 minutes, second half)")
+    put("ThMae", pl["mean_abs_error_c"], "... .mean_abs_error_c", "{:.1f}")
+    put("ThMax", pl["max_abs_error_c"], "... .max_abs_error_c", "{:.1f}")
+    put("ThBudgetEighty", pl["budget_for_80c_w"], "... .budget_for_80c_w", "{:.1f}")
+    put("ThBudgetEightyCtl", ct["budget_for_80c_w"], f"{src} temperature.fits.controller.budget_for_80c_w", "{:.1f}")
+    put("ThPredBudget", pl["intercept_c"] + pl["c_per_w"] * 2.8, "plant fit at the 2.8 W budget", "{:.0f}")
+    put("ThTau", j("energy/energy_constants.json")["pi"]["thermal"]["tau_s"], "energy/energy_constants.json "
+        "pi.thermal.tau_s (measured cool-down time constant)", "{:.0f}")
 
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "metrics.tex").write_text("% Generated by paper2/make_metrics.py from experiments/results -- do not edit.\n" +

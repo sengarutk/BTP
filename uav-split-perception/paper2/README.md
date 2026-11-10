@@ -21,6 +21,13 @@ calibration of the deadline probabilities (replay), the two-camera hardware swar
 the whole-system energy view (G11, board view), and related work verified via doi.org on 30 Oct (Chameleon, AWStream,
 Kalibera & Jones, Qu TNSM 2024, Xu TPDS 2021, Diniz ICUAS 2025, Jiang TMC 2023, Younis TNSM 2024, Zaki TVT 2024).
 
+In since draft 2 (10 Nov 2026, hardening plan Phase 1): a Guarantees section (Theorem 1, the power budget on every run,
+checked on all priced runs; Theorem 2, the accuracy gap of an idealised controller, drift-plus-penalty [Neely 2010];
+Proposition 1, budget and temperature), all numbers from `paper2/theory_check.py` ->
+`experiments/results/hardware/theory_check/theory_check.json`; the controller written out exactly as coded (caps, guard,
+blackout hold, skipped frames); the heat price reported as the two experiments it was (on top of the energy price on
+Wi-Fi, instead of it on the mesh).
+
 Not yet in this draft:
 - the board campaign against the planner (tools/campaign_mesh4.sh), which decides the planner claim;
 - the correlated-failure (interference) measurement on the mesh, the most novel item of the plan, to add to the thesis;

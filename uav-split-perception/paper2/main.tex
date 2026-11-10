@@ -2,7 +2,9 @@
 % Draft 1, 30 Oct 2026. Every measured number is a macro from generated/metrics.tex (make_metrics.py), traced in
 % generated/metrics_sources.md; design constants of the controller (deadline, frame rate, budgets, step sizes) are
 % the defaults of validation/hardware/adaptive2.py and are written out.
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -32,8 +34,10 @@ accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainP
 \MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
 \MeshVThrottle{}\,\%. In a trace replay validated against the hardware, the greedy priced controller reaches
 \OracleShareMin--\OracleShareMax\,\% of a hindsight oracle and ties an AccuMO-style 30-frame planner within the replay's
-error. Its objective must use the decay curve of the forecaster that runs: with the curve without forecasting it loses
-\MainNoFcLoss{}~sAP.
+error. The price update carries a sample-path guarantee: on all \ThmRuns{} recorded priced runs the mean power stays
+below the budget plus a price term and a blackout term (at most \ThmMeshExcess~W over 2.8~W on the mesh), and through a
+measured thermal model the budget sets the board's mean temperature (within \ThMae~$^\circ$C). Its objective must use
+the decay curve of the forecaster that runs: with the curve without forecasting it loses \MainNoFcLoss{}~sAP.
 \end{abstract}
 
 \section{Introduction}
@@ -56,6 +60,9 @@ streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRep
 pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
 removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
 \EnGainPct\,\% and \EnRepGainPct\,\%.
+\item \emph{The price has guarantees.} Mean power stays below the budget plus two named terms on every run, which all
+\ThmRuns{} recorded runs confirm; the budget sets the mean temperature; and an idealised version is within a small,
+stated gap of the best power-feasible policy (Section~\ref{sec:theory}).
 \item \emph{The greedy priced choice is near the best schedule} (trace replay): \OracleShareMin--\OracleShareMax\,\% of
 a hindsight oracle, no gain from a clairvoyant link, and a tie with an AccuMO-style planner~\cite{Kong_2023};
 on hardware it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers (Section~\ref{sec:best}).
@@ -64,7 +71,8 @@ forecasting beats the curve without forecasting and a flat one (Section~\ref{sec
 \end{itemize}
 Supporting results: the best place to decide depends on the mesh topology (Section~\ref{sec:topology}); a first
 two-camera hardware swarm and a calibrated swarm simulation (Section~\ref{sec:swarm}); and negative results, a predictive
-heat price adds nothing beyond the energy price and pricing the edge drone's energy saves little
+heat price adds nothing on top of the energy price and does worse in its place, and pricing the edge drone's energy saves
+little
 (Section~\ref{sec:negative}).
 
 \section{Related Work}
@@ -120,8 +128,9 @@ the newest result that has arrived is scored against that frame's labels, with a
 moves stale boxes forward, running live on the Pi.
 
 \section{Controller}\label{sec:controller}
-Every camera tick each idle server $s$ proposes its best setting $v$, and the frame goes to the server with the
-largest value. The value of a result is the accuracy it provides while it is held:
+Every camera tick each idle server $s$ (the edge drone, the ground station, or the camera's own detector) proposes its
+best setting $v$, and the frame goes to the idle server with the largest value if that value is positive; otherwise
+the frame is skipped. The value of a result is the accuracy it provides while it is held:
 \begin{equation}
 \begin{split}
 V(s,v) = {} & \frac{A_v}{A_{\mathrm{ref}}}\,H(L,T)\,p_{\mathrm{late}} - \mu\,E_{\mathrm{cam}}(s,v)\\
@@ -129,10 +138,13 @@ V(s,v) = {} & \frac{A_v}{A_{\mathrm{ref}}}\,H(L,T)\,p_{\mathrm{late}} - \mu\,E_{
 \end{split}
 \end{equation}
 where $A_v$ is the measured accuracy of setting $v$, $L$ the expected latency (encode, transfer at the live goodput
-estimate, server time, round trip), $T$ how long the result will be held, $H(L,T)$ the mean of the measured decay
-$\rho(\cdot)$ of streaming accuracy over the holding window, $p_{\mathrm{on}}$ and $p_{\mathrm{late}}$ the probabilities
-of arriving within the 300~ms deadline $D$ and a 1~s late window under Gaussian goodput uncertainty, and $E_{\mathrm{cam}}$
-the camera drone's measured energy for the frame (onboard inference, or encoding and radio). The decay $\rho$ is
+estimate, server time, round trip), $T$ how long the result will be held (the server's busy time per frame divided by
+the number of servers that can currently deliver), $H(L,T)$ the mean of the measured decay $\rho(\cdot)$ of streaming
+accuracy over the holding window (sampled at $L$, $L+T/4$, \dots, $L+T$), $p_{\mathrm{on}}$ and $p_{\mathrm{late}}$ the
+probabilities of arriving within the 300~ms deadline $D$ and a 1~s late window under Gaussian goodput uncertainty
+(for onboard inference both are 0 or 1 from its measured time, and the factor $p_{\mathrm{late}}$ is 1), and
+$E_{\mathrm{cam}}$ the camera drone's modelled energy for the frame from measured constants (onboard inference, or
+encoding and radio). The decay $\rho$ is
 measured on the training clips with the forecaster that runs (Fig.~\ref{fig:decay}).
 
 \begin{figure}[t]
@@ -143,17 +155,89 @@ velocity forecasting, and with camera-aligned forecasting. The controller's obje
 that runs.}
 \label{fig:decay}
 \end{figure} The energy price follows the measured board power
-$\bar P$: $\mu \leftarrow \max(0, \mu + 0.1(\bar P - 2.8\,\mathrm{W}))$ once per second, with a thermal guard and no
-price on onboard inference while no link can deliver. The freshness price follows the share $\hat F$ of the last 5~s
-with a result younger than $D$: $\lambda_F \leftarrow \max(0, \lambda_F + 2(0.95 - \hat F))$. The heat-priced variant
-replaces $\mu$ by $\mu + \lambda_T$, with $\lambda_T$ driven by a measured thermal model's 60~s prediction; the edge-priced
-variant subtracts $\mu_e E_{\mathrm{edge}}$ for the Jetson's measured energy.
+$\bar P$ of the camera drone's board (mean of the last second): $\mu \leftarrow \min(5, \max(0, \mu + 0.1(\bar P -
+2.8\,\mathrm{W})))$ once per second. Two exceptions: at a measured 78~$^\circ$C or more, $\mu$ is at least 1 (a thermal
+guard); and while no server but the camera's own has more than a 20\,\% chance of delivering in time (and the board is
+below 85~$^\circ$C), onboard inference is not priced and $\mu$ is held (anti-windup: the budget cannot be met then). The
+freshness price follows the share $\hat F$ of the last 5~s with a result younger than $D$: $\lambda_F \leftarrow
+\min(2, \max(0, \lambda_F + 2(0.95 - \hat F)))$, once per second. The edge-priced variant subtracts $\mu_e
+E_{\mathrm{edge}}$ for the Jetson's energy, with $\mu_e$ following the Jetson's measured extra power against its own
+budget in the same way. The heat price $\lambda_T$ follows a measured thermal model's 60~s prediction $\hat\theta$ of
+the board temperature: $\lambda_T \leftarrow \min(2, \max(0, \lambda_T + 0.01(\hat\theta - 75\,^\circ\mathrm{C})))$; it
+was tested in two ways: on top of the energy price (camera joules priced at $\mu + \lambda_T$; Wi-Fi) and instead of it
+($\lambda_T$ alone, no energy price and no exceptions; mesh).
+
+\section{Guarantees}\label{sec:theory}
+The price update is a projected dual-ascent step on the power constraint $\bar P \le B$, which gives a guarantee on every
+run as coded. Let $\mu_t$ be the energy price after the $t$-th update ($\mu_0 = 0$), $P_t$ the 1-s mean power that update
+used, $\eta = \ThmEta$ the step, and $s_t = \mu_t - \mu_{t-1} - \eta (P_t - B)$ the amount by which the update departs
+from a plain step.
+
+\begin{theorem}[Power budget, every run]\label{thm:power}
+Let $\mathcal H$ be the updates during which the price is held (no link can deliver) or clipped at its cap. After $N$
+updates,
+\begin{equation*}
+\frac1N\sum_{t=1}^{N} P_t \;\le\; B + \frac{\mu_N}{\eta N} + \frac{1}{\eta N}\sum_{t\in\mathcal H}\lvert s_t\rvert .
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Clipping at zero and the thermal guard can only raise $\mu_t$, so $s_t \ge 0$ outside $\mathcal H$. Summing the
+definition of $s_t$ gives $\mu_N - \mu_0 = \eta\sum_t (P_t - B) + \sum_t s_t$; dropping the non-negative $s_t$ outside
+$\mathcal H$ gives the bound.
+\end{proof}
+The bound needs no statistical assumption, and it names the only two ways to exceed the budget: a high final price
+(at most $\ThmMuMax/(\eta N)$, i.e. \ThmMarginFour~W over a 4-minute run and \ThmMarginLong~W over 24 minutes, with the
+cap of \ThmMuMax), or onboard work during blackouts, when no link can deliver. On all \ThmRuns{} priced runs of
+\ThmCamps{} campaigns the logged updates satisfy it, to the logged precision (2~mW). On the mesh (\ThmMeshRuns{} runs) the mean power exceeded the
+2.8~W budget by at most \ThmMeshExcess~W; in the \ThmLongRuns{} 24-minute missions by at most \ThmLongExcess~W, of which
+the blackout seconds (\ThmLongHeldPct\,\% of the updates) account for up to \ThmLongHeldW~W. Earlier Wi-Fi campaigns,
+run before the cap and the hold were added, exceeded it by up to \ThmOldExcess~W because the price wound up to
+\ThmOldMu{} during blackouts, the failure the hold removes.
+
+\begin{theorem}[Accuracy gap, idealised]\label{thm:gap}
+Assume that the link and content states are independent and identically distributed over one-second slots, that in
+every slot the controller chooses the action maximising its expected value $U$ minus $\mu_t$ times the true power,
+with no freshness term and the cap not reached. Let $U^\ast$ be the best expected value of any policy that knows the
+states' distribution and meets $\mathbb E[P] \le B$. Then
+\begin{equation*}
+\frac1T\sum_{t=1}^{T}\mathbb E[U_t] \;\ge\; U^\ast - \frac{\eta}{2}\,\frac1T\sum_{t=1}^{T}\mathbb E\big[(P_t - B)^2\big].
+\end{equation*}
+\end{theorem}
+\begin{proof}[Proof sketch]
+This is the drift-plus-penalty argument~\cite{Neely_2010}: with $L_t = \mu_t^2/2$, projection gives
+$L_t - L_{t-1} \le \eta\mu_{t-1}(P_t - B) + \eta^2 (P_t - B)^2/2$; the greedy choice makes $\mathbb E[\mu_{t-1}P_t - U_t]$
+no larger than under the optimal stationary policy, whose mean power is at most $B$; summing, with $L_0 = 0$ and
+$L_T \ge 0$, gives the bound.
+\end{proof}
+The hardware departs from these assumptions in four ways, so Theorem~\ref{thm:gap} is a guide, not a measurement: link
+phases and video content are correlated in time (Markov rather than independent states, which adds a mixing term to the
+bound~\cite{Neely_2010}); decisions are made per frame with modelled per-frame energy, while the price follows the
+measured board power; the freshness bonus is a heuristic term; and the realised metric is streaming AP, not the
+controller's value. With the measured $(P_t - B)^2$ of the \ThmMsqRuns{} v4.1 mesh runs (median \ThmMsqMed~W$^2$, at most
+\ThmMsqMax), the bound is \ThmGapMed--\ThmGapMax{} value units per second, at most \ThmGapPct\,\% of the largest value
+rate (one full-accuracy result per frame). The empirical counterpart is Section~\ref{sec:best}: in the validated replay
+v4.1 reaches \OracleShareMin--\OracleShareMax\,\% of a hindsight per-phase oracle (\OracleShareRandom\,\% when faults
+change every 4~s).
+
+\begin{proposition}[Budget and temperature]\label{prop:temp}
+If the board temperature follows $\dot\theta = (a + bP - \theta)/\tau$, its mean over a window of length $W$ is
+$\bar\theta = a + b\bar P - \tau(\theta(W) - \theta(0))/W$. With Theorem~\ref{thm:power}, a run that meets the budget
+keeps $\bar\theta \le a + bB$ up to the price and blackout terms and a transient that vanishes as $W/\tau$ grows.
+\end{proposition}
+\begin{proof}
+Integrate the differential equation over the window and divide by $W$.
+\end{proof}
+The six measured steady levels below 84~$^\circ$C give $a = \ThPlantA$~$^\circ$C and $b = \ThPlantB$~$^\circ$C/W
+($\tau = \ThTau$~s). On the second half of all \ThRuns{} runs of 20 minutes or more, $a + b\bar P$ predicts the mean
+temperature within \ThMae~$^\circ$C on average (at most \ThMax). The budget therefore sets the temperature: 2.8~W
+predicts \ThPredBudget~$^\circ$C, and keeping the board below 80~$^\circ$C, where it starts to throttle, needs
+$B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below 80~$^\circ$C).
 
 \section{Method}\label{sec:method}
 Strategies are compared in paired campaigns: every repetition runs all strategies on the same scenario, in shuffled
 order, with the same scripted link faults, following common advice on benchmarking with repetitions~\cite{Kalibera_2013}. Differences are reported as paired means with Student-$t$ 95\,\%
 intervals; $p$-values are exact sign-permutation tests, Holm-corrected over the comparisons of a campaign where
-stated. The board's power and temperature are measured (PMIC rails, 5~Hz); the Jetson's power is logged from its
+stated. The board's power and temperature are measured (PMIC rails, about \PowerHz{} samples per second); the Jetson's power is logged from its
 INA3221 sensor. Comparisons that cannot be run on hardware (a published planner, hindsight oracles) use a trace replay
 rebuilt from the recorded runs; against the 240 runs of the main campaign it reproduces per-policy streaming AP with
 $r=\ReplaySapR{}$, but it favours policies that run less onboard by about \ReplayLeafBias{}~sAP.
@@ -169,12 +253,12 @@ first strategy is better). Camera: measured change of the camera drone's power a
 \toprule
 Comparison & Where & $\Delta$ sAP & Pairs & Camera \\ \midrule
 v4 $-$ v3+fc (no price) & Wi-Fi & \EnGain{}$\pm$\EnGainCi{} & \EnPairs{} & \\
-v4 $-$ v3+fc, replication & Wi-Fi & \EnRepGain{}$\pm$\EnRepCi{} & 20 & \\
+v4 $-$ v3+fc, replication & Wi-Fi & \EnRepGain{}$\pm$\EnRepCi{} & \EnRepPairs{} & \\
 v4.1 $-$ no prices & mesh & \MeshNoPriceSap{}$\pm$\MeshNoPriceSapCi{} & \MeshPairs{} & $-$\MeshNoPriceW{}~W, $-$\MeshNoPriceC{}~$^\circ$C \\
-heat price $-$ v4.1 & mesh & \HeatSap{}$\pm$\HeatSapCi{} & \MeshPairs{} & +\HeatW{}~W, +\HeatC{}~$^\circ$C \\
+heat price alone $-$ v4.1 & mesh & \HeatSap{}$\pm$\HeatSapCi{} & \MeshPairs{} & +\HeatW{}~W, +\HeatC{}~$^\circ$C \\
 v3+fc $-$ v2 (rate) & Wi-Fi & \FcGain{}$\pm$\FcGainCi{} & \FcPairs{} & \\
-v5, decay without fc $-$ v5 & Wi-Fi & \MainNoFc{}$\pm$\MainNoFcCi{} & 20 & \\
-v5, flat decay $-$ v5 & Wi-Fi & \MainFlat{}$\pm$\MainFlatCi{} & 20 & \\
+v5, decay without fc $-$ v5 & Wi-Fi & \MainNoFc{}$\pm$\MainNoFcCi{} & \MainPairs{} & \\
+v5, flat decay $-$ v5 & Wi-Fi & \MainFlat{}$\pm$\MainFlatCi{} & \MainPairs{} & \\
 camera decides $-$ chain, direct & mesh & \TopoDirectDiff{}$\pm$\TopoDirectDiffCi{} & \TopoDirectPairs{} & \\
 camera decides $-$ chain, multihop & mesh & \TopoMultiDiff{}$\pm$\TopoMultiDiffCi{} & \TopoMultiPairs{} & \\
 AccuMO-style $-$ v4.1, random faults & replay & \MpcRandom{}$\pm$\MpcRandomCi{} & \MpcRandomN{}$^\dagger$ & \\
@@ -255,9 +339,13 @@ boards and links, 20 Pi camera drones on one Wi-Fi access point each delivered \
 every drone adapted alone and \SwarmTwentyCoord{} with the coordinator; larger hardware swarms are future work.
 
 \subsection{Negative results}\label{sec:negative}
-A predictive heat price added nothing beyond the energy price: same accuracy (\HeatSap{}) at \HeatW{}~W and
-\HeatC{}~$^\circ$C more on the camera drone ($p=\HeatP{}$). Pricing the Jetson's energy at a 0.5~W budget cost
-\JetHalfSap{}~sAP, and at 1.2~W \JetTwelveSap{} ($p=\JetTwelveP{}$), for little saving, because the edge drone's power is
+A predictive heat price added nothing on top of the energy price: on Wi-Fi, v5 (both prices) against v4.2 (energy
+price only) changed streaming AP by \HeatTopSap{}$\pm$\HeatTopSapCi{} and the camera drone's power by
+\HeatTopW{}$\pm$\HeatTopWCi{}~W (\HeatTopPairs{} pairs). In place of the energy price it did worse: on the mesh, the heat
+price alone kept the same accuracy as v4.1 (\HeatSap{}) at \HeatW{}~W and \HeatC{}~$^\circ$C more on the camera drone
+($p=\HeatP{}$), because it stays at zero until the predicted temperature reaches 75~$^\circ$C, while the energy price acts
+on every joule. Pricing the measured power is the better signal. Pricing the Jetson's energy at a 0.5~W budget changed
+streaming AP by \JetHalfSap{}, and at 1.2~W by \JetTwelveSap{} ($p=\JetTwelveP{}$), for little saving, because the edge drone's power is
 dominated by its idle draw.
 
 \section{Limitations}
@@ -274,7 +362,8 @@ On a fanless drone computer heat is a hidden accuracy cost: onboard detection ke
 throttling alone costs a large share of onboard streaming accuracy. A greedy scheduler that values each frame by the
 accuracy its result will still have, and prices the camera drone's measured power and the freshness of its results,
 removes that cost while keeping or raising streaming accuracy, and in a validated replay it is close to the best
-schedule. Its objective must use the decay curve of the forecaster in use.
+schedule. Its power budget holds on every run up to a price term and a blackout term, and it sets the board's
+temperature. Its objective must use the decay curve of the forecaster in use.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
