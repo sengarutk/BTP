@@ -1,7 +1,8 @@
 % Draft for paper 1's journal version (arXiv v2), hardening plan Phase 3, 10 Nov 2026. Not included in the arXiv v1
 % source. Every number is a macro of experiments/results/break_even/be_metrics.tex (evaluation/break_even_rule.py);
 % the figure is paper/figures/break_even_map.pdf from the same script. To include: \input the macro file in the
-% preamble and this file after the learned-bottleneck section; add the jointly trained codes once their evaluation is in.
+% preamble and this file after the learned-bottleneck section. Jointly trained codes added 11 Nov 2026 (run 2,
+% experiments/results/joint_bottleneck/, evaluation/joint_bottleneck.py).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits whose payload is no smaller than an image's. Learned codes are smaller,
 so we ask where, in onboard speed and goodput, \emph{any} code can beat \emph{every} JPEG setting. In the model of
@@ -30,7 +31,8 @@ $U_q \ge P f_q A_q \ge f_k A_k \ge U_k$.
 \includegraphics[width=\columnwidth]{figures/break_even_map.pdf}
 \caption{Break-even goodput $B_{\mathrm{be}}$ of each learned code against the JPEG family (lines, Proposition~\ref{prop:break-even}
 with $P = \BePOn$) and the largest goodput at which the code actually beats every JPEG setting (dots), over the onboard
-speed of the paper's sweep and of the three measured devices.}
+speed of the paper's sweep and of the three measured devices. Dashed lines and open dots: the same codes trained jointly
+with the detector's server-side layers.}
 \label{fig:break-even}
 \end{figure}
 \textbf{Check on every measured point.} We evaluated the \BeCodes{} learned codes and the post-hoc INT8 splits on
@@ -42,6 +44,23 @@ predicts that the \BePiCodeKib~KiB code can only win below \BePiBe~Mbit/s (again
 \BePiWin~Mbit/s. All \BeSurveyRows{} rows of the \BeSurveyModels-detector survey satisfy the conditions of
 Proposition~\ref{prop:dominance} (more bits and more onboard work than a Q95 JPEG), so no post-hoc split of an
 unmodified detector can exceed its accuracy ratio over the image.
+
+\textbf{Jointly trained codes.} Training the bottleneck together with the detector's server-side layers, on the
+detection loss, raises the accuracy of \BeJointCodes{} codes by \BeJointGainMin{} to \BeJointGainMax{} mAP$_{50:95}$ on the
+same held-out frames. The gain is largest for the smallest code: at \BeJointPiCodeKib~KiB it reaches \BeJointSmallMap{}
+against \BeFrozenSmallMap{} when trained on the frozen detector. Higher accuracy moves $B_{\mathrm{be}}$ up, because it
+must now be matched by a better JPEG setting (\BeJointPiQstar{} instead of \BePiQstar):
+\begin{itemize}
+\item on the Jetson, from \BeFrozenFastBe{} to \BeJointFastBe~Mbit/s; the code wins up to \BeJointFastWin{} instead of
+\BeFrozenFastWin~Mbit/s;
+\item on the Pi, from \BePiBe{} to \BeJointPiBe~Mbit/s; it wins up to \BeJointPiWin{} instead of \BePiWin~Mbit/s;
+\item on the Pi, the jointly trained \BeJointKtwoKib~KiB code at the second cut now wins up to \BeJointKtwoPiWin~Mbit/s, where its
+frozen version never won.
+\end{itemize}
+Every winning cell of the jointly trained codes also lies below its $B_{\mathrm{be}}$; they are included in the
+\BeCells{} cells above. With them the rule is looser on the Pi: the median gap is \BeTightPi\,\% against
+\BeTightPiFrozen\,\% for the frozen codes alone. Joint training widens the regime in which a split can pay off; for the smallest code it moves $B_{\mathrm{be}}$ up by
+\BeJointShift\,\%. It does not remove the regime: above $B_{\mathrm{be}}$ the image still wins, as the proposition requires.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from the code's size and accuracy, the JPEG
 rate--accuracy curve on the same frames, and the device's full-model time: if the link's goodput is mostly above
