@@ -125,6 +125,8 @@ dl.gl dd{margin:0}
 <h2 id="now"><span class="num">PART 1</span>Where things stand right now</h2>
 <div class="box state"><b class="h">State on 26 Oct 2026: VisDrone detectors (YOLOv8 and YOLO11), onboard study, relay campaign, standard-metric rescoring, all three mesh campaigns, the VisDrone replay of the earlier campaigns (19.5), R2–R4 (19.6) and the Pareto analysis (19.7) done</b>
 <ul>
+<li><b>Clock speed (19.14, 10 Nov):</b> the Pi's clock is often below 2.4 GHz with v4.1 (40 % of the time) only because the governor slows an idle CPU, which is harmless; pinning it at full clock would save at most about 6 ms on offloaded frames, about +0.0009 sAP at most, while throttling (12–27 % slower onboard inference) is the effect that matters, and v4.1 prevents it (0 % against 86 % without prices).</li>
+<li><b>Overload (19.13, 10 Nov):</b> when cameras offer a Jetson more frames than it can process, a naive queue delivers no on-time result at full power; our one-frame-in-flight rule serves about 4 cameras per Jetson on Wi-Fi and 6 on one mesh hop (queueing model from measured timings), and a relayed mesh path already saturates with one camera (measured), so the edge drone must compute rather than forward.</li>
 <li><b>Laptop-only additions, part 5 (19.12, 30 Oct):</b> a learned feature-compression baseline: a small bottleneck trained at layer 2 or 4 with the detector frozen beats JPEG on bits (fewer bytes for the same accuracy), but on the Pi it wins end to end only at the lowest goodputs, so "send the image" stands for the drone computers measured; the second paper's first draft is in <code>paper2/</code>.</li>
 <li><b>Laptop-only additions, part 4 (19.11, 30 Oct):</b> v4.1 is flat in its own settings except the energy target, and a tighter target gains nothing beyond the replay's error on fresh seeds (2.8 W stays); the replay's onboard power model was corrected (power error halved) but its pro-LEAF bias is not in the power model; the AccuMO-style planner runs on the board code (<code>--policy accumo</code>, same decisions as the replay's); the next mesh campaign and the 160 px test are scripted; the paper has a hardware section.</li>
 <li><b>A published scheduler (19.10, 29 Oct):</b> in the replay an AccuMO-style 30-frame planner ties v4.1 or is slightly ahead (random links, 24-min mission), but so is a LEAF-style fixed weight, and these differences are within the replay's known error; the claim narrows to "a greedy priced choice does as well as planning". The board test is listed under "What is left".</li>
@@ -2380,6 +2382,201 @@ relative effect sizes, sign and wording fixes); 5 pages, a testbed figure, the d
 number generated from the result files (<code>paper2/make_metrics.py</code>, sources in
 <code>paper2/generated/metrics_sources.md</code>), every new citation verified via doi.org. What it still needs is listed in
 <code>paper2/README.md</code>; chiefly the planner's board campaign.</p>
+<h3>19.13 Overload: more frames than the edge computer can take (10 Nov 2026, laptop only)</h3>
+<p>Question: what happens when two or more Pis send to the same Jetson, or one Pi sends faster than the Jetson can
+process, on the Wi-Fi and on the mesh (one hop, and relayed)? No new board runs: a queueing model is fed with timings
+already measured (<code>validation/hardware/overload_model.py</code>, results
+<code>experiments/results/hardware/overload_model/overload_summary.json</code>) and checked against the runs that exist.</p>
+<ul>
+<li><b>Model.</b> Every frame passes through shared stages in tandem: the radio channel into the edge computer (shared
+by all cameras), then the server that runs the detector. Three sending rules: a <i>naive queue</i> (each camera sends
+every frame at its camera rate into first-in-first-out queues); <i>one frame in flight</i> per camera (our system: the
+camera sends its newest frame only when the previous result is back, and skips the rest); and <i>latest frame wins</i>
+(a newer frame replaces a waiting older one, the rule <code>edge_node.py</code> already applies inside the Jetson).
+Deadline 300 ms, 30 frames/s cameras, 5 seeds of 120 s.</li>
+<li><b>Assumptions.</b> Server times vary by ±25 % (coefficient of variation);
+the radio's spread is taken from the measured goodput samples; the radio is one shared first-come queue (collisions and
+rate adaptation are not modelled, so real behaviour is probably somewhat worse); the returned detections (under 1 KB)
+are ignored; the Jetson's heating under sustained load is not modelled.</li>
+</ul>
+<div class="tbl"><table>
+<tr><th>Link</th><th>time on air per Q90 frame</th><th>server time per frame</th><th>limit of the path (frames/s)</th><th>bottleneck</th><th>source</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">58.7 ms</td><td class="n">38.0 ms</td><td class="n">17</td><td class="n">the radio</td><td class="n">placements.csv (measured stages)</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">22.1 ms (27 Mbit/s, 75 kB)</td><td class="n">38.0 ms</td><td class="n">26</td><td class="n">the Jetson's GPU</td><td class="n">mesh campaign 2, 26,703 goodput samples</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">83.7 ms (6.4 Mbit/s, 67 kB)</td><td class="n">11.4 ms (laptop)</td><td class="n">12</td><td class="n">the shared channel, both hops</td><td class="n">mesh campaign 2, 16,969 samples</td></tr>
+</table></div>
+<p><b>Check against the boards.</b> One hop on Wi-Fi or the mesh: the model agrees with the measurements. Relayed
+on the mesh it does not: the real boards are much worse, because the model leaves out contention between the two hops,
+the mesh routing overhead and the Jetson's forwarding cost. For the relayed mesh, the measurements are the answer.</p>
+<div class="tbl"><table>
+<tr><th>One camera, one frame in flight</th><th>model</th><th>measured on the boards</th><th>verdict</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">8.3 frames/s, median 103 ms</td><td class="n">10.8 frames/s, median 150 ms (live placement runs)</td><td class="n">right in direction and size, not exact</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">median 66 ms</td><td class="n">median 74 ms (21,675 Jetson-served frames)</td><td class="n">close</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">100 % on time, median 95 ms</td><td class="n"><b>12.5 % on time</b>, median 309 ms (fixed offload to the laptop, 3 runs)</td><td class="n"><b>model far too optimistic: trust the boards</b></td></tr>
+</table></div>
+<p><b>Results.</b></p>
+<div class="tbl"><table>
+<tr><th>Link</th><th>cameras at 30 frames/s</th><th>naive queue: on time of total · median latency · server work wasted on late results</th><th>one frame in flight (ours): on time of total · median / 95th-percentile</th><th>latest frame wins: on time of total · median</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">1</td><td class="n">0.0 of 17.1 · 28 s · 100 % wasted</td><td class="n">8.3 of 8.3 · 103 ms / 135 ms</td><td class="n">17.0 of 17.0 · 121 ms</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">0.0 of 17.1 · 47 s · 100 % wasted</td><td class="n">15.2 of 15.2 · 112 ms / 157 ms</td><td class="n">17.1 of 17.1 · 128 ms</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">0.0 of 17.1 · 56 s · 100 % wasted</td><td class="n">16.9 of 17.0 · 217 ms / 275 ms</td><td class="n">17.1 of 17.1 · 133 ms</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">0.0 of 17.1 · 59 s · 100 % wasted</td><td class="n">3.2 of 17.0 · 333 ms / 404 ms</td><td class="n">17.1 of 17.1 · 134 ms</td></tr>
+<tr><td></td><td class="n">8</td><td class="n">0.0 of 17.1 · 60 s · 100 % wasted</td><td class="n">0.0 of 17.1 · 451 ms / 527 ms</td><td class="n">17.1 of 17.1 · 135 ms</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 17.0 · 61 s · 100 % wasted</td><td class="n">0.0 of 17.0 · 570 ms / 654 ms</td><td class="n">17.0 of 17.0 · 135 ms</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">1</td><td class="n">0.0 of 26.3 · 8 s · 100 % wasted</td><td class="n">12.0 of 12.0 · 66 ms / 94 ms</td><td class="n">25.2 of 25.2 · 81 ms</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">0.0 of 26.4 · 36 s · 100 % wasted</td><td class="n">21.5 of 21.5 · 74 ms / 108 ms</td><td class="n">26.3 of 26.3 · 117 ms</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">0.0 of 26.4 · 51 s · 100 % wasted</td><td class="n">26.2 of 26.2 · 135 ms / 173 ms</td><td class="n">26.2 of 26.2 · 148 ms</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">0.0 of 26.3 · 56 s · 100 % wasted</td><td class="n">26.4 of 26.4 · 209 ms / 254 ms</td><td class="n">26.3 of 26.3 · 174 ms</td></tr>
+<tr><td></td><td class="n">8</td><td class="n">0.0 of 26.2 · 58 s · 100 % wasted</td><td class="n">17.9 of 26.3 · 287 ms / 337 ms</td><td class="n">26.2 of 26.3 · 201 ms</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 26.4 · 59 s · 100 % wasted</td><td class="n">0.4 of 26.2 · 363 ms / 419 ms</td><td class="n">25.4 of 26.3 · 226 ms</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">1</td><td class="n">0.0 of 11.9 · 39 s · 100 % wasted</td><td class="n">8.4 of 8.4 · 95 ms / 173 ms</td><td class="n">11.9 of 12.0 · 112 ms</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">0.0 of 11.9 · 52 s · 100 % wasted</td><td class="n">11.8 of 11.9 · 144 ms / 247 ms</td><td class="n">11.9 of 11.9 · 121 ms</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">0.0 of 11.9 · 58 s · 100 % wasted</td><td class="n">5.3 of 11.9 · 311 ms / 458 ms</td><td class="n">11.9 of 11.9 · 125 ms</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">0.0 of 12.0 · 61 s · 100 % wasted</td><td class="n">0.1 of 11.9 · 477 ms / 657 ms</td><td class="n">11.9 of 12.0 · 126 ms</td></tr>
+<tr><td></td><td class="n">8</td><td class="n">0.0 of 12.0 · 62 s · 100 % wasted</td><td class="n">0.0 of 12.0 · 642 ms / 832 ms</td><td class="n">12.0 of 12.0 · 126 ms</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 11.9 · 62 s · 100 % wasted</td><td class="n">0.0 of 11.9 · 814 ms / 1 s</td><td class="n">11.8 of 11.9 · 128 ms</td></tr>
+<tr><td><i>The relayed rows are the model's; it is far too optimistic there (see the check above).</i></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+</table></div>
+<figure class="chart"><svg viewBox="0 0 640 370" width="100%" role="img" aria-label="On-time results per second against the number of cameras sending 30 frames per second to one Jetson, for three links and two sending rules" xmlns="http://www.w3.org/2000/svg"><line class="ax" x1="64" x2="584" y1="260.0" y2="260.0"/><text x="56" y="264.0" text-anchor="end">0</text><line class="ax" x1="64" x2="584" y1="220.7" y2="220.7"/><text x="56" y="224.7" text-anchor="end">5</text><line class="ax" x1="64" x2="584" y1="181.3" y2="181.3"/><text x="56" y="185.3" text-anchor="end">10</text><line class="ax" x1="64" x2="584" y1="142.0" y2="142.0"/><text x="56" y="146.0" text-anchor="end">15</text><line class="ax" x1="64" x2="584" y1="102.7" y2="102.7"/><text x="56" y="106.7" text-anchor="end">20</text><line class="ax" x1="64" x2="584" y1="63.3" y2="63.3"/><text x="56" y="67.3" text-anchor="end">25</text><line class="ax" x1="64" x2="584" y1="24.0" y2="24.0"/><text x="56" y="28.0" text-anchor="end">30</text><line class="ax" x1="64.0" x2="64.0" y1="260" y2="264"/><text x="64.0" y="278" text-anchor="middle">1</text><line class="ax" x1="121.8" x2="121.8" y1="260" y2="264"/><text x="121.8" y="278" text-anchor="middle">2</text><line class="ax" x1="179.6" x2="179.6" y1="260" y2="264"/><text x="179.6" y="278" text-anchor="middle">3</text><line class="ax" x1="237.3" x2="237.3" y1="260" y2="264"/><text x="237.3" y="278" text-anchor="middle">4</text><line class="ax" x1="295.1" x2="295.1" y1="260" y2="264"/><text x="295.1" y="278" text-anchor="middle">5</text><line class="ax" x1="352.9" x2="352.9" y1="260" y2="264"/><text x="352.9" y="278" text-anchor="middle">6</text><line class="ax" x1="468.4" x2="468.4" y1="260" y2="264"/><text x="468.4" y="278" text-anchor="middle">8</text><line class="ax" x1="584.0" x2="584.0" y1="260" y2="264"/><text x="584.0" y="278" text-anchor="middle">10</text><text x="324" y="298" text-anchor="middle">cameras sending 30 frames/s to one Jetson</text><text x="14" y="142" text-anchor="middle" transform="rotate(-90 14 142)">on-time results/s (≤ 300 ms)</text><polyline points="64.0,194.8 121.8,140.6 179.6,125.7 237.3,127.4 295.1,159.4 352.9,235.0 468.4,260.0 584.0,260.0" fill="none" stroke="var(--c-heat)" stroke-width="2"/><circle cx="64.0" cy="194.8" r="2.5" fill="var(--c-heat)"/><circle cx="121.8" cy="140.6" r="2.5" fill="var(--c-heat)"/><circle cx="179.6" cy="125.7" r="2.5" fill="var(--c-heat)"/><circle cx="237.3" cy="127.4" r="2.5" fill="var(--c-heat)"/><circle cx="295.1" cy="159.4" r="2.5" fill="var(--c-heat)"/><circle cx="352.9" cy="235.0" r="2.5" fill="var(--c-heat)"/><circle cx="468.4" cy="260.0" r="2.5" fill="var(--c-heat)"/><circle cx="584.0" cy="260.0" r="2.5" fill="var(--c-heat)"/><polyline points="64.0,125.9 121.8,125.7 179.6,125.9 237.3,125.6 295.1,126.3 352.9,125.5 468.4,125.4 584.0,126.6" fill="none" stroke="var(--c-heat)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="125.9" r="2.5" fill="var(--c-heat)"/><circle cx="121.8" cy="125.7" r="2.5" fill="var(--c-heat)"/><circle cx="179.6" cy="125.9" r="2.5" fill="var(--c-heat)"/><circle cx="237.3" cy="125.6" r="2.5" fill="var(--c-heat)"/><circle cx="295.1" cy="126.3" r="2.5" fill="var(--c-heat)"/><circle cx="352.9" cy="125.5" r="2.5" fill="var(--c-heat)"/><circle cx="468.4" cy="125.4" r="2.5" fill="var(--c-heat)"/><circle cx="584.0" cy="126.6" r="2.5" fill="var(--c-heat)"/><polyline points="64.0,165.8 121.8,90.6 179.6,56.5 237.3,54.0 295.1,53.7 352.9,52.5 468.4,119.5 584.0,256.9" fill="none" stroke="var(--c-hier)" stroke-width="2"/><circle cx="64.0" cy="165.8" r="2.5" fill="var(--c-hier)"/><circle cx="121.8" cy="90.6" r="2.5" fill="var(--c-hier)"/><circle cx="179.6" cy="56.5" r="2.5" fill="var(--c-hier)"/><circle cx="237.3" cy="54.0" r="2.5" fill="var(--c-hier)"/><circle cx="295.1" cy="53.7" r="2.5" fill="var(--c-hier)"/><circle cx="352.9" cy="52.5" r="2.5" fill="var(--c-hier)"/><circle cx="468.4" cy="119.5" r="2.5" fill="var(--c-hier)"/><circle cx="584.0" cy="256.9" r="2.5" fill="var(--c-hier)"/><polyline points="64.0,61.8 121.8,53.3 179.6,52.9 237.3,53.7 295.1,53.3 352.9,53.3 468.4,54.2 584.0,60.5" fill="none" stroke="var(--c-hier)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="61.8" r="2.5" fill="var(--c-hier)"/><circle cx="121.8" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="179.6" cy="52.9" r="2.5" fill="var(--c-hier)"/><circle cx="237.3" cy="53.7" r="2.5" fill="var(--c-hier)"/><circle cx="295.1" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="352.9" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="468.4" cy="54.2" r="2.5" fill="var(--c-hier)"/><circle cx="584.0" cy="60.5" r="2.5" fill="var(--c-hier)"/><polyline points="64.0,193.7 121.8,167.3 179.6,180.5 237.3,218.5 295.1,250.2 352.9,259.3 468.4,260.0 584.0,260.0" fill="none" stroke="var(--c-fixed)" stroke-width="2"/><circle cx="64.0" cy="193.7" r="2.5" fill="var(--c-fixed)"/><circle cx="121.8" cy="167.3" r="2.5" fill="var(--c-fixed)"/><circle cx="179.6" cy="180.5" r="2.5" fill="var(--c-fixed)"/><circle cx="237.3" cy="218.5" r="2.5" fill="var(--c-fixed)"/><circle cx="295.1" cy="250.2" r="2.5" fill="var(--c-fixed)"/><circle cx="352.9" cy="259.3" r="2.5" fill="var(--c-fixed)"/><circle cx="468.4" cy="260.0" r="2.5" fill="var(--c-fixed)"/><circle cx="584.0" cy="260.0" r="2.5" fill="var(--c-fixed)"/><polyline points="64.0,166.0 121.8,166.5 179.6,165.7 237.3,166.6 295.1,166.3 352.9,166.2 468.4,165.9 584.0,167.2" fill="none" stroke="var(--c-fixed)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="166.0" r="2.5" fill="var(--c-fixed)"/><circle cx="121.8" cy="166.5" r="2.5" fill="var(--c-fixed)"/><circle cx="179.6" cy="165.7" r="2.5" fill="var(--c-fixed)"/><circle cx="237.3" cy="166.6" r="2.5" fill="var(--c-fixed)"/><circle cx="295.1" cy="166.3" r="2.5" fill="var(--c-fixed)"/><circle cx="352.9" cy="166.2" r="2.5" fill="var(--c-fixed)"/><circle cx="468.4" cy="165.9" r="2.5" fill="var(--c-fixed)"/><circle cx="584.0" cy="167.2" r="2.5" fill="var(--c-fixed)"/><line x1="64" x2="84" y1="318" y2="318" stroke="var(--c-heat)" stroke-width="2"/><text class="ink" x="90" y="322">Wi-Fi (access point), Pi → Jetson</text><line x1="64" x2="84" y1="333" y2="333" stroke="var(--c-hier)" stroke-width="2"/><text class="ink" x="90" y="337">Mesh, one hop, Pi → Jetson</text><line x1="64" x2="84" y1="348" y2="348" stroke="var(--c-fixed)" stroke-width="2"/><text class="ink" x="90" y="352">Mesh, relayed, Pi → Jetson → laptop</text><line x1="370" x2="390" y1="318" y2="318" stroke="var(--muted)" stroke-width="2"/><text class="ink" x="396" y="322">solid: one frame in flight (our system)</text><line x1="370" x2="390" y1="333" y2="333" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/><text class="ink" x="396" y="337">dashed: latest frame wins</text></svg><figcaption>Model prediction from measured timings. A first-in-first-out queue delivers no on-time result in any overloaded cell and is left out. Data: <code>experiments/results/hardware/overload_model/overload_summary.json</code>.</figcaption></figure>
+<p><b>How many cameras one Jetson can serve</b> (the largest number sending 30 frames/s that keeps at
+least 95 % of results on time):</p>
+<div class="tbl"><table>
+<tr><th>Link</th><th>naive queue</th><th>one frame in flight (ours)</th><th>latest frame wins (needs a coordinator at the radio)</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">0</td><td class="n">4</td><td class="n">10 or more</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">0</td><td class="n">6</td><td class="n">10 or more</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">0</td><td class="n">2 in the model; <b>fails with 1 on the boards</b></td><td class="n">10 or more (model only)</td></tr>
+</table></div>
+<ul>
+<li><b>Which part saturates first depends on the link.</b> Over the access-point Wi-Fi the radio fills first (about
+17 frames/s in total), before the Jetson's GPU (about 26).
+On the mesh's direct hop the radio is faster, so the GPU itself is the limit: one Pi sending 30 frames/s already
+overloads the Nano. Relayed on the mesh, the shared channel carries both hops and limits everything to about
+12 frames/s.</li>
+<li><b>A naive queue turns overload into zero useful output.</b> One Pi at 30 frames/s on Wi-Fi: 17
+frames/s processed, <b>0 on time</b>, median latency 28 s, and
+100.0 % of the Jetson's work spent on results that arrive too late. On the mesh's direct hop:
+26 frames/s processed, 0 on time, the GPU busy 100 % of
+the time. Latency keeps growing for as long as the overload lasts, so the board runs at full power for nothing.</li>
+<li><b>One frame in flight (our system) caps the load but not the waiting.</b> Each camera limits itself, but its frame
+still waits behind the other cameras' frames, so from about 5 cameras on Wi-Fi and
+7 on the mesh's direct hop that wait alone breaks the deadline. On the relayed mesh the
+model puts the limit at 3 cameras, but the boards already miss most deadlines with one
+(below).</li>
+<li><b>Latest frame wins removes the problem in the model:</b> the path stays at its full rate, on time, with
+10 cameras. At the radio this needs a coordinator that tells the cameras when to send (a frame
+already handed to the radio cannot be replaced).</li>
+</ul>
+<p><b>What the boards already show.</b></p>
+<ul>
+<li><b>Relaying saturates with a single camera.</b> In mesh campaign 2's multihop scenario, fixed offload to the laptop
+through the Jetson delivered only 12.5 % of results on time (1.9 per
+second, median latency 309 ms, 3 runs). Adding cameras can only make this worse.</li>
+<li><b>Computing at the relay is the fix:</b> in the same scenario the hierarchical mode, where the Jetson runs the
+detector instead of forwarding, scored 0.151 sAP against 0.137 for v4.1 and
+0.067 for fixed offload, with 100.0 % of results on time.</li>
+<li><b>Two cameras sharing a path</b> (the Pi and the Jetson's own camera, mission scenario): with fixed offload the Pi's
+detections were available 19 % of the time (information age
+3.0 s); with the adaptive controller 68 % without the
+coordinator and 70 % with it (alone: 76 %). So with two
+cameras the adaptivity avoids the overload, and the coordinator adds little; the model says coordination starts to matter
+from about 5–7 cameras per Jetson.</li>
+</ul>
+<p><b>What it means.</b> A shared edge drone needs admission control: our one-frame-in-flight rule already prevents
+the naive collapse and serves about 4 cameras per Jetson over Wi-Fi and about
+6 over one mesh hop; beyond that, or on a relay path, the edge drone must compute rather than
+forward, and a coordinator that grants send slots (latest frame wins) is needed. The naive case, full power for no
+on-time output, also supports the second paper's argument that an edge computer's work must be priced.
+<b>Limits:</b> model results from measured timings, not overload measurements; the relayed case is reliable only where
+measured; heat on the Jetson under sustained full load is not modelled. Two short board runs would confirm it directly
+(one Pi at 30 frames/s with a naive queue, and two Pis on one Jetson), about 1 h in the planned board session.</p>
+<h3>19.14 Clock speed: does the camera Pi need to run at its full 2.4 GHz? (10 Nov 2026, laptop only)</h3>
+<p>Question: the clock-against-temperature graph of 18.11 shows many samples below the Pi's full clock. Does that cost
+latency, accuracy, speed or energy, and should every board on the mesh be kept at full capability, for example by
+letting the Pi process one frame onboard first so that it reaches its full clock before v4.1 takes over? No new runs:
+every mesh run (campaigns 1–3, 96 runs) logs the Pi's clock and throttle flags about once a second, its power
+and temperature four times a second, and every frame's latency
+(<code>validation/hardware/clock_effect_analysis.py</code>, results
+<code>experiments/results/hardware/clock_effect/clock_effect.json</code>). Each sample and frame is put in one of three
+classes by the nearest clock sample: full clock; below full but not throttled (the frequency governor slowing an idle
+CPU); and throttled (a current throttle flag, above about 80 °C).</p>
+<figure class="chart"><svg viewBox="0 0 640 276" width="100%" role="img" aria-label="Share of clock samples at full clock, slowed by the governor and throttled, per strategy" xmlns="http://www.w3.org/2000/svg"><text class="ink" x="192" y="27" text-anchor="end">v4.1</text><rect x="200.0" y="14" width="252.2" height="17" fill="var(--c-hier)"><title>v4.1: 60 % full</title></rect><text x="326.1" y="27" text-anchor="middle" fill="#fff">60 %</text><rect x="452.2" y="14" width="167.8" height="17" fill="var(--c-fixed)"><title>v4.1: 40 % governor</title></rect><text x="536.1" y="27" text-anchor="middle" fill="#fff">40 %</text><text class="ink" x="192" y="51" text-anchor="end">v4.1 + Jetson energy price</text><rect x="200.0" y="38" width="246.1" height="17" fill="var(--c-hier)"><title>v4.1 + Jetson energy price: 59 % full</title></rect><text x="323.0" y="51" text-anchor="middle" fill="#fff">59 %</text><rect x="446.1" y="38" width="173.9" height="17" fill="var(--c-fixed)"><title>v4.1 + Jetson energy price: 41 % governor</title></rect><text x="533.0" y="51" text-anchor="middle" fill="#fff">41 %</text><text class="ink" x="192" y="75" text-anchor="end">v4.1 + Jetson price, 1.2 W</text><rect x="200.0" y="62" width="249.8" height="17" fill="var(--c-hier)"><title>v4.1 + Jetson price, 1.2 W: 59 % full</title></rect><text x="324.9" y="75" text-anchor="middle" fill="#fff">59 %</text><rect x="449.8" y="62" width="170.2" height="17" fill="var(--c-fixed)"><title>v4.1 + Jetson price, 1.2 W: 41 % governor</title></rect><text x="534.9" y="75" text-anchor="middle" fill="#fff">41 %</text><text class="ink" x="192" y="99" text-anchor="end">heat price</text><rect x="200.0" y="86" width="264.0" height="17" fill="var(--c-hier)"><title>heat price: 63 % full</title></rect><text x="332.0" y="99" text-anchor="middle" fill="#fff">63 %</text><rect x="464.0" y="86" width="152.6" height="17" fill="var(--c-fixed)"><title>heat price: 36 % governor</title></rect><text x="540.3" y="99" text-anchor="middle" fill="#fff">36 %</text><rect x="616.6" y="86" width="3.4" height="17" fill="var(--c-heat)"><title>heat price: 1 % throttled</title></rect><text class="ink" x="192" y="123" text-anchor="end">heat + Jetson price</text><rect x="200.0" y="110" width="270.8" height="17" fill="var(--c-hier)"><title>heat + Jetson price: 64 % full</title></rect><text x="335.4" y="123" text-anchor="middle" fill="#fff">64 %</text><rect x="470.8" y="110" width="141.4" height="17" fill="var(--c-fixed)"><title>heat + Jetson price: 34 % governor</title></rect><text x="541.4" y="123" text-anchor="middle" fill="#fff">34 %</text><rect x="612.1" y="110" width="7.9" height="17" fill="var(--c-heat)"><title>heat + Jetson price: 2 % throttled</title></rect><text class="ink" x="192" y="147" text-anchor="end">hierarchical chain</text><rect x="200.0" y="134" width="187.0" height="17" fill="var(--c-hier)"><title>hierarchical chain: 45 % full</title></rect><text x="293.5" y="147" text-anchor="middle" fill="#fff">45 %</text><rect x="387.0" y="134" width="232.8" height="17" fill="var(--c-fixed)"><title>hierarchical chain: 55 % governor</title></rect><text x="503.4" y="147" text-anchor="middle" fill="#fff">55 %</text><rect x="619.8" y="134" width="0.2" height="17" fill="var(--c-heat)"><title>hierarchical chain: 0 % throttled</title></rect><text class="ink" x="192" y="171" text-anchor="end">fixed laptop offload</text><rect x="200.0" y="158" width="93.2" height="17" fill="var(--c-hier)"><title>fixed laptop offload: 22 % full</title></rect><text x="246.6" y="171" text-anchor="middle" fill="#fff">22 %</text><rect x="293.2" y="158" width="326.8" height="17" fill="var(--c-fixed)"><title>fixed laptop offload: 78 % governor</title></rect><text x="456.6" y="171" text-anchor="middle" fill="#fff">78 %</text><text class="ink" x="192" y="195" text-anchor="end">freshness threshold</text><rect x="200.0" y="182" width="23.8" height="17" fill="var(--c-hier)"><title>freshness threshold: 6 % full</title></rect><rect x="223.8" y="182" width="396.2" height="17" fill="var(--c-fixed)"><title>freshness threshold: 94 % governor</title></rect><text x="421.9" y="195" text-anchor="middle" fill="#fff">94 %</text><text class="ink" x="192" y="219" text-anchor="end">no prices</text><rect x="200.0" y="206" width="52.7" height="17" fill="var(--c-hier)"><title>no prices: 13 % full</title></rect><text x="226.3" y="219" text-anchor="middle" fill="#fff">13 %</text><rect x="252.7" y="206" width="7.2" height="17" fill="var(--c-fixed)"><title>no prices: 2 % governor</title></rect><rect x="259.8" y="206" width="360.2" height="17" fill="var(--c-heat)"><title>no prices: 86 % throttled</title></rect><text x="439.9" y="219" text-anchor="middle" fill="#fff">86 %</text><rect x="200" y="242" width="10" height="10" fill="var(--c-hier)"/><text class="ink" x="215" y="251">2.4 GHz (full)</text><rect x="340" y="242" width="10" height="10" fill="var(--c-fixed)"/><text class="ink" x="355" y="251">slowed by the governor (idle)</text><rect x="480" y="242" width="10" height="10" fill="var(--c-heat)"/><text class="ink" x="495" y="251">throttled (too hot)</text></svg><figcaption>Share of the camera Pi's clock samples (about one per second) in each state, all 96 mesh runs of campaigns 1–3. Data: <code>experiments/results/hardware/clock_effect/clock_effect.json</code>.</figcaption></figure>
+<ul>
+<li><b>Two different kinds of low clock.</b> With v4.1 the Pi is at full clock 60 % of the time and
+slowed by the governor 40 %, never throttled (0 %): it mostly offloads, so
+its CPU is often idle and the governor lowers the clock. That is harmless. Throttling is the harmful kind: without prices
+the Pi is throttled 86 % of the time. Mean temperature: 70 °C at full clock,
+67 °C when slowed by the governor, 84 °C when throttled.</li>
+</ul>
+<div class="tbl"><table>
+<tr><th>Scenario</th><th>frames processed by</th><th>median latency at full clock (frames)</th><th>slowed by the governor</th><th>throttled</th></tr>
+<tr><td>good links</td><td class="n">laptop</td><td class="n">39 ms (87,716)</td><td class="n">44 ms (44,418)</td><td class="n">43 ms (11,572)</td></tr>
+<tr><td></td><td class="n">Jetson</td><td class="n">84 ms (25,265)</td><td class="n">84 ms (14,575)</td><td class="n">82 ms (3,106)</td></tr>
+<tr><td></td><td class="n">onboard</td><td class="n">205 ms (1,756)</td><td class="n">198 ms (682)</td><td class="n">229 ms (1,172)</td></tr>
+<tr><td>mission</td><td class="n">laptop</td><td class="n">39 ms (57,769)</td><td class="n">44 ms (30,206)</td><td class="n">45 ms (7,919)</td></tr>
+<tr><td></td><td class="n">Jetson</td><td class="n">77 ms (27,695)</td><td class="n">78 ms (23,589)</td><td class="n">80 ms (4,779)</td></tr>
+<tr><td></td><td class="n">onboard</td><td class="n">199 ms (1,998)</td><td class="n">197 ms (1,056)</td><td class="n">249 ms (1,744)</td></tr>
+<tr><td>relayed (multihop)</td><td class="n">laptop</td><td class="n">254 ms (8,184)</td><td class="n">318 ms (12,331)</td><td class="n">353 ms (2,073)</td></tr>
+<tr><td></td><td class="n">Jetson</td><td class="n">91 ms (24,570)</td><td class="n">93 ms (34,875)</td><td class="n">99 ms (7,363)</td></tr>
+<tr><td></td><td class="n">onboard</td><td class="n">197 ms (2,393)</td><td class="n">198 ms (1,319)</td><td class="n">250 ms (2,523)</td></tr>
+</table></div>
+<ul>
+<li><b>Slowed by the governor:</b> frames sent to the laptop take 6 ms longer in the median (good links), frames
+sent to the Jetson 0–2 ms, and <b>onboard inference takes no longer at all</b>, because the governor raises the clock to full
+within milliseconds once inference starts.</li>
+<li><b>Throttled:</b> onboard inference takes 12–27 % longer on the mesh, as in the benchmark below (+32 %
+per frame and +58 % energy per frame). This is the clock effect that
+matters, and v4.1's energy price prevents it.</li>
+<li><b>Accuracy does not depend on the clock:</b> the same model gives the same detections at any speed; only timing,
+and so staleness, changes.</li>
+<li><b>The 6 ms is an upper bound on the clock's own effect.</b> The CPU idles exactly when there is less to do,
+which is also when links are slow, so latency differences between classes are partly coincidence (for example the
+relayed path's large gap is mostly the link). And the benchmark shows JPEG encoding itself taking about the same time
+when throttled to 1.5 GHz (4.0 ms) as at a cool start
+(4.0 ms).</li>
+</ul>
+<div class="tbl"><table>
+<tr><th>Pi 5 benchmark (4 threads)</th><th>YOLOv8s per frame</th><th>JPEG q90 encode</th><th>inference energy per frame</th><th>clock at the end</th></tr>
+<tr><td>cool start</td><td class="n">576 ms</td><td class="n">4.0 ms</td><td class="n">1.3 J</td><td class="n">not recorded</td></tr>
+<tr><td>sustained, throttled</td><td class="n">758 ms (+32 %)</td><td class="n">4.0 ms</td><td class="n">2.0 J (+58 %)</td><td class="n">1.5 GHz, flags 0xe0006</td></tr>
+</table></div>
+<p><b>Power.</b> Power is lower when the governor slows the clock, but mostly because the Pi is doing less in those
+moments (same caveat). What a fixed full clock costs while idle was not measured.</p>
+<div class="tbl"><table>
+<tr><th>Strategy</th><th>Pi power at full clock</th><th>slowed by the governor</th><th>throttled</th></tr>
+<tr><td>v4.1</td><td class="n">3.13 W</td><td class="n">2.39 W</td><td class="n">—</td></tr>
+<tr><td>v4.1 + Jetson energy price</td><td class="n">3.18 W</td><td class="n">2.37 W</td><td class="n">—</td></tr>
+<tr><td>v4.1 + Jetson price, 1.2 W</td><td class="n">3.16 W</td><td class="n">2.37 W</td><td class="n">—</td></tr>
+<tr><td>heat price</td><td class="n">3.76 W</td><td class="n">2.51 W</td><td class="n">5.33 W</td></tr>
+<tr><td>heat + Jetson price</td><td class="n">3.70 W</td><td class="n">2.47 W</td><td class="n">4.99 W</td></tr>
+<tr><td>hierarchical chain</td><td class="n">3.57 W</td><td class="n">2.26 W</td><td class="n">—</td></tr>
+<tr><td>fixed laptop offload</td><td class="n">2.56 W</td><td class="n">2.10 W</td><td class="n">—</td></tr>
+<tr><td>freshness threshold</td><td class="n">2.39 W</td><td class="n">2.14 W</td><td class="n">—</td></tr>
+<tr><td>no prices</td><td class="n">4.34 W</td><td class="n">3.48 W</td><td class="n">4.31 W</td></tr>
+</table></div>
+<p><b>Would pinning the clock at 2.4 GHz help v4.1?</b> A little, and not measurably.</p>
+<ul>
+<li><b>Latency:</b> at most about 6 ms less on laptop-served frames (65 % of v4.1's frames),
+0–2 ms on Jetson-served frames, nothing onboard.</li>
+<li><b>On-time results:</b> no change. v4.1 already delivers 100 % of its results within the 300 ms
+deadline on good links, 100 % in the mission and 100 % relayed.</li>
+<li><b>Accuracy:</b> with the forecaster each frame of staleness costs 4.3 % of
+accuracy (measured decay curve), so the gain is at most 0.5 % relative, about
++0.0009 sAP, assuming the whole gap is the clock's doing. The paired campaigns resolve
+differences of about ±0.005, so no campaign could detect it.</li>
+<li><b>Cost:</b> a CPU that never slows down idles at higher power and runs warmer, closer to the 80 °C point where
+throttling starts, which is the effect that does cost speed and energy; v4.1's power budget would then allow less
+onboard work.</li>
+<li><b>The warm-up idea</b> (process one frame onboard first, then hand over to v4.1) would not hold: the governor
+re-decides the clock every few tens of milliseconds from the current load, so the clock falls back as soon as the CPU
+idles, which with v4.1 happens between most frames. Pinning the clock needs the governor set to "performance".</li>
+<li><b>The other boards are already at full capability:</b> the Jetson's clocks are locked at its highest (15 W) mode
+by <code>jetson_clocks</code> before every run (<code>tools/arun_mesh.sh</code>), the laptop's GPU is far from busy, and
+the relay Pi only forwards packets.</li>
+</ul>
+<p><b>Verdict.</b> Keep the default governor. The clock problem worth solving is overheating, and v4.1 already solves it
+(never throttled, against 86 % without prices). Optional board test if the session has time:
+v4.1 with the governor set to "performance" against the default, 2 scenarios × 3 runs (about 1 h), measuring latency,
+sAP, power and temperature; expected: a few ms less latency, the same accuracy, more power and heat.</p>
 <h2 id="argument"><span class="num">PART 20</span>What it all means: the argument for the paper</h2>
 <p>This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.</p>
 <h3>1. Where to compute: send the image, don't split the network</h3>

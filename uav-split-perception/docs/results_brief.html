@@ -300,7 +300,7 @@ pre.f{font:12.5px/1.55 var(--mono);background:var(--surface);color:var(--ink);bo
 <tr><td>Pi k4 → Jetson k9 → laptop (two splits)</td><td class="n">2.1</td><td class="n">0.0</td><td class="n">1,413 ms</td></tr>
 <tr><td>Pi alone</td><td class="n">1.6</td><td class="n">0.0</td><td class="n">589 ms</td></tr>
 </table></div>
-<p>The model predicts two-device placements within about 30 %. It is too optimistic for three devices, because both Wi-Fi hops share one channel.</p>
+<p>The model predicts one- and two-device placements at 0.80–1.98× the live frame rate (corrected 10 Nov 2026 from "within about 30 %"; computed by <code>evaluation/placement_model_check.py</code>). It is too optimistic for three devices, because both Wi-Fi hops share one channel.</p>
 <h3>Encoding twice costs nothing</h3>
 <div class="tbl"><table>
 <tr><th>Hop 1</th><th>Hop 2</th><th class="n">mAP change (points, 95 % CI)</th></tr>

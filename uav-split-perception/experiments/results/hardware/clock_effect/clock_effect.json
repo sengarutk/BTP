@@ -1,0 +1,319 @@
+{
+ "runs": 96,
+ "campaigns": [
+  "vid_campaign_mesh",
+  "vid_campaign_mesh2",
+  "vid_campaign_mesh3"
+ ],
+ "full_mhz": 2400,
+ "clock_share_by_strategy": {
+  "hier": {
+   "full": 0.44518103008669047,
+   "governor": 0.5543090260071392,
+   "throttled": 0.0005099439061703213,
+   "n": 1961
+  },
+  "v41": {
+   "governor": 0.39946483180428133,
+   "full": 0.6005351681957186,
+   "n": 5232
+  },
+  "aoithr": {
+   "full": 0.05678391959798995,
+   "governor": 0.9432160804020101,
+   "n": 1990
+  },
+  "fixlap": {
+   "full": 0.2219438877755511,
+   "governor": 0.7780561122244489,
+   "n": 1996
+  },
+  "heat": {
+   "full": 0.6286727456940223,
+   "throttled": 0.008105369807497468,
+   "governor": 0.36322188449848025,
+   "n": 1974
+  },
+  "heate": {
+   "full": 0.6446700507614214,
+   "governor": 0.3365482233502538,
+   "throttled": 0.018781725888324875,
+   "n": 1970
+  },
+  "noprice": {
+   "full": 0.1254390366281987,
+   "throttled": 0.8575012543903663,
+   "governor": 0.017059708981435023,
+   "n": 1993
+  },
+  "v41e": {
+   "governor": 0.41411042944785276,
+   "full": 0.5858895705521472,
+   "n": 1956
+  },
+  "v41e12": {
+   "governor": 0.4053224155578301,
+   "full": 0.5946775844421699,
+   "n": 1954
+  }
+ },
+ "latency_ms_by_scenario_server_class": {
+  "mesh_mission|jetson|full": {
+   "median": 77.3935,
+   "n": 27695
+  },
+  "mesh_mission|onboard|full": {
+   "median": 199.41145,
+   "n": 1998
+  },
+  "mesh_mission|jetson|governor": {
+   "median": 78.0819,
+   "n": 23589
+  },
+  "mesh_mission|onboard|governor": {
+   "median": 196.90654999999998,
+   "n": 1056
+  },
+  "mesh_mission|laptop|governor": {
+   "median": 43.960499999999996,
+   "n": 30206
+  },
+  "mesh_mission|laptop|full": {
+   "median": 38.7902,
+   "n": 57769
+  },
+  "static_good|jetson|governor": {
+   "median": 84.1802,
+   "n": 14575
+  },
+  "static_good|onboard|governor": {
+   "median": 198.3392,
+   "n": 682
+  },
+  "static_good|jetson|full": {
+   "median": 83.812,
+   "n": 25265
+  },
+  "static_good|onboard|full": {
+   "median": 205.29485,
+   "n": 1756
+  },
+  "static_good|laptop|full": {
+   "median": 38.60435,
+   "n": 87716
+  },
+  "static_good|laptop|governor": {
+   "median": 44.4139,
+   "n": 44418
+  },
+  "mesh_mission|jetson|throttled": {
+   "median": 80.2284,
+   "n": 4779
+  },
+  "mesh_mission|laptop|throttled": {
+   "median": 44.9504,
+   "n": 7919
+  },
+  "mesh_mission|onboard|throttled": {
+   "median": 248.9838,
+   "n": 1744
+  },
+  "multihop|laptop|full": {
+   "median": 253.5001,
+   "n": 8184
+  },
+  "multihop|jetson|full": {
+   "median": 91.3357,
+   "n": 24570
+  },
+  "multihop|jetson|governor": {
+   "median": 93.3857,
+   "n": 34875
+  },
+  "multihop|laptop|governor": {
+   "median": 317.6721,
+   "n": 12331
+  },
+  "multihop|onboard|full": {
+   "median": 196.6498,
+   "n": 2393
+  },
+  "multihop|onboard|governor": {
+   "median": 198.3612,
+   "n": 1319
+  },
+  "multihop|laptop|throttled": {
+   "median": 352.9174,
+   "n": 2073
+  },
+  "multihop|jetson|throttled": {
+   "median": 98.6973,
+   "n": 7363
+  },
+  "multihop|onboard|throttled": {
+   "median": 249.9768,
+   "n": 2523
+  },
+  "static_good|laptop|throttled": {
+   "median": 43.214749999999995,
+   "n": 11572
+  },
+  "static_good|jetson|throttled": {
+   "median": 81.60480000000001,
+   "n": 3106
+  },
+  "static_good|onboard|throttled": {
+   "median": 229.38275,
+   "n": 1172
+  }
+ },
+ "power_w_by_strategy_class": {
+  "hier|full": {
+   "mean": 3.5695533980582526,
+   "n": 3605
+  },
+  "hier|governor": {
+   "mean": 2.2598013071895426,
+   "n": 4590
+  },
+  "v41|governor": {
+   "mean": 2.389038864142539,
+   "n": 8980
+  },
+  "v41|full": {
+   "mean": 3.1275939667939823,
+   "n": 12829
+  },
+  "aoithr|full": {
+   "mean": 2.394320879120879,
+   "n": 455
+  },
+  "aoithr|governor": {
+   "mean": 2.1388946362441765,
+   "n": 8371
+  },
+  "fixlap|full": {
+   "mean": 2.5574127423822715,
+   "n": 1805
+  },
+  "fixlap|governor": {
+   "mean": 2.1038348823700264,
+   "n": 6886
+  },
+  "heat|full": {
+   "mean": 3.760657766517248,
+   "n": 5131
+  },
+  "heat|throttled": {
+   "mean": 5.326117647058823,
+   "n": 68
+  },
+  "heat|governor": {
+   "mean": 2.514969291081346,
+   "n": 3061
+  },
+  "heate|full": {
+   "mean": 3.7026221417682925,
+   "n": 5248
+  },
+  "heate|governor": {
+   "mean": 2.465852167732765,
+   "n": 2814
+  },
+  "noprice|full": {
+   "mean": 4.339717330861909,
+   "n": 1079
+  },
+  "noprice|throttled": {
+   "mean": 4.310639577464789,
+   "n": 7100
+  },
+  "noprice|governor": {
+   "mean": 3.477822222222222,
+   "n": 135
+  },
+  "v41e|governor": {
+   "mean": 2.374737510828761,
+   "n": 3463
+  },
+  "v41e|full": {
+   "mean": 3.1807897435897434,
+   "n": 4680
+  },
+  "heate|throttled": {
+   "mean": 4.985598765432099,
+   "n": 162
+  },
+  "v41e12|governor": {
+   "mean": 2.3674579521982886,
+   "n": 3389
+  },
+  "v41e12|full": {
+   "mean": 3.161674868559411,
+   "n": 4755
+  }
+ },
+ "temp_c_by_class": {
+  "full": {
+   "mean": 70.40177330941975,
+   "n": 39587
+  },
+  "governor": {
+   "mean": 66.99503466142149,
+   "n": 41689
+  },
+  "throttled": {
+   "mean": 84.17560676302155,
+   "n": 7334
+  }
+ },
+ "v41_served_share": {
+  "laptop": 0.6505482934213016,
+  "onboard": 0.01617321629825846,
+  "jetson": 0.33327849028043993
+ },
+ "bench": {
+  "full_clock": {
+   "yolov8s_ms": 575.9530434999078,
+   "jpeg_q90_enc_ms": 3.9806744999850707,
+   "temperature_c": 85.35,
+   "idle_w": 2.559299884181924,
+   "active_w": 4.794984097321582,
+   "energy_per_frame_j": 1.287649126862483,
+   "end_state": null,
+   "source": "raw/pi5_cpu_4t.json"
+  },
+  "throttled": {
+   "yolov8s_ms": 757.588298499968,
+   "jpeg_q90_enc_ms": 3.9910825000788464,
+   "temperature_c": 87.0,
+   "idle_w": 2.0333672882705787,
+   "active_w": 4.718729174954557,
+   "energy_per_frame_j": 2.034398742589579,
+   "end_state": {
+    "arm_clock_hz": 1500022656,
+    "throttled": "0xe0006"
+   },
+   "source": "raw/pi5_cpu_4t_sustained.json"
+  }
+ },
+ "v41_on_time_share": {
+  "static_good": 0.9996752945542258,
+  "mesh_mission": 0.9998145314601011,
+  "multihop": 0.9985629347173095
+ },
+ "v41_sAP_fc": {
+  "static_good": 0.20568024670407814,
+  "mesh_mission": 0.18552864199639604,
+  "multihop": 0.1372985038654886,
+  "ALL": 0.17616913085532093
+ },
+ "accuracy_estimate": {
+  "laptop_latency_gap_ms": 5.8095500000000015,
+  "decay_loss_per_ms": 0.0012885726359032066,
+  "v41_laptop_share": 0.6505482934213016,
+  "relative_sap_gain_upper": 0.004870022191434279,
+  "absolute_sap_gain_upper": 0.0008579475767111023,
+  "note": "upper bound: assumes the whole governor-vs-full latency gap on laptop-served frames is caused by the clock and that every laptop-served frame is affected; the bench shows JPEG encoding itself unchanged"
+ }
+}
