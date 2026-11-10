@@ -11,7 +11,9 @@
 #     accumo   AccuMO-style 30-frame model-predictive planner (mpc_planner.py, brief 19.10-19.11): content-conditioned
 #              decay (camera-motion tertile from the live forecaster), no energy or heat price
 #     leaf     LEAF-style fixed energy weight mu = 2.0 (as campaign_main.sh's leaf: v3+fc2 objective, no dual ascent)
-#   SCENARIO static_good | mesh_mission | multihop (multihop: the direct camera <-> pi-sender radio link is blocked by a
+#     freshonly  v41 without the energy price (freshness price kept): the energy test (campaign_energy_nov.sh)
+#     v41b36   v41 with a 3.6 W budget (the 80 C budget of paper 2's Proposition 1): the energy test
+#   SCENARIO static_good | mesh_mission | multihop | multihop_loss2 | multihop_loss5 (multihop*: the direct camera <-> pi-sender radio link is blocked by a
 #     temporary nftables rule on both boards, so batman-adv relays through the Jetson; removed at every cleanup)
 # Optional env EGO_W=160: the live forecaster's camera-motion step at that tracking width (env EGO_W_SMALL -> egomotion.W_SMALL; the
 #   cheaper step of 19.9); unset = 320 px, as in every run before 29 Oct 2026.
@@ -37,6 +39,8 @@ case $ST in
   hier)    POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95";;
   accumo)  POL=accumo; X="$DEC --mpc-context decay_context_train.json";;
   leaf)    POL=A_full; X="$DEC --energy-aware --mu-fixed 2.0";;
+  freshonly) POL=A_full; X="$DEC --fresh-target 0.95";;                     # energy test: v41 without the energy price
+  v41b36)  POL=A_full; X="$DEC --energy-aware --power-budget 3.6 --fresh-target 0.95";;  # energy test: the 80 C budget
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson
@@ -70,7 +74,7 @@ if ! link_ok; then
 fi
 T_RUN0=$(date +%s.%N)
 cleanup
-if [ $SC = multihop ]; then     # block the direct camera <-> ground-radio link; wait until batman-adv routes via the Jetson
+if [[ $SC == multihop* ]]; then     # block the direct camera <-> ground-radio link; wait until batman-adv routes via the Jetson
   $D/mesh_ssh.sh camera "$(NFT_ON "$PI2_PW" $GND_MAC)"; $D/mesh_ssh.sh sender "$(NFT_ON "$PI3_PW" $CAM_MAC)"
   ok=0
   for i in $(seq 30); do
@@ -81,7 +85,7 @@ if [ $SC = multihop ]; then     # block the direct camera <-> ground-radio link;
   echo "multihop route camera -> ground radio: next hop ${nh:-none} after $((i*5)) s"
   [ $ok = 1 ] || { echo "multihop route not established: run abandoned"; cleanup; echo "NO RESULT for $L"; exit 1; }
 fi
-if [ $SC != multihop ]; then    # after a multihop run batman-adv keeps the relayed route for a while: wait for the direct one
+if [[ $SC != multihop* ]]; then    # after a multihop run batman-adv keeps the relayed route for a while: wait for the direct one
   ok=0
   for i in $(seq 36); do
     nh=$($D/mesh_ssh.sh camera "PW='$PI2_PW'; $S /usr/sbin/batctl o -H 2>/dev/null | awk '\$1==\"*\" && \$2==\"$GND_MAC\" {for(i=3;i<=NF;i++) if(\$i ~ /^([0-9a-f][0-9a-f]:){5}[0-9a-f][0-9a-f]\$/) {print \$i; exit}}'" 2>/dev/null)

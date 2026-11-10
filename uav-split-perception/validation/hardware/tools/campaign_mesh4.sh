@@ -1,7 +1,7 @@
 #!/bin/bash
 # campaign_mesh4.sh - mesh campaign 4 (prepared 29 Oct 2026): the published-scheduler test of brief 19.10-19.11 on the
 #   board. v41 against the AccuMO-style planner (accumo) and the LEAF-style fixed weight (leaf), which tied v4.1 or
-#   were slightly ahead in the replay, within its error. static_good, mesh_mission, multihop x 5 reps = 45 runs,
+#   were slightly ahead in the replay, within its error. static_good, mesh_mission, multihop x 5 reps = 45 runs (REPS=2: 18),
 #   order shuffled, resumable, two passes. Before the first run the planner is timed on the camera Pi
 #   (bench_planner.py, no workers needed) -> planner_bench_pi_mesh4.json. Every run logs the controller's predictions
 #   (calib_hw.py) and accumo's planner time per frame (the run JSON's "mpc"). Results: vid_campaign_mesh4/.
@@ -14,7 +14,7 @@ if [ ! -f $R/planner_bench_pi_mesh4.json ]; then
     || { echo "planner benchmark failed (run push_code_mesh.sh first?)"; rm -f $R/planner_bench_pi_mesh4.json; exit 1; }
 fi
 jobs() {
-  for rep in 1 2 3 4 5; do for sc in static_good mesh_mission multihop; do
+  for rep in $(seq ${REPS:-5}); do for sc in static_good mesh_mission multihop; do
     for m in $(python3 -c "import random;p=['v41','accumo','leaf'];random.Random($rep*1000+len('$sc')).shuffle(p);print(' '.join(p))"); do echo "$rep $sc $m"; done
   done; done
 }

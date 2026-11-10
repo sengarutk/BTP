@@ -145,6 +145,11 @@ def scenario_phases(name, phase_s, seed):
         return [(f"good{i}", good, .9, phase_s) for i in range(6)]
     if name == "out_of_range":         # the camera is beyond the ground station's range: direct Pi -> laptop link cut
         return [(f"oor{i}", {"laptop": "loss 100%"}, .9, phase_s) for i in range(6)]
+    if name in ("multihop_loss2", "multihop_loss5"):   # noisy relay (hardening plan Phase 5, 10 Nov 2026): the multihop
+        # route of "multihop", with x % packet loss and 5 +- 5 ms delay on both hops: the camera's paths (its air link is
+        # shared) and the edge drone's own link to the ground ("uplink", applied by edge_node.py)
+        noisy = f"delay 5ms 5ms loss {name[-1]}%"
+        return [(f"mhn{i}", {"laptop": noisy, "jetson": noisy, "uplink": noisy}, .9, phase_s) for i in range(6)]
     if name == "multihop":             # mesh test: links good, but the direct camera <-> ground-radio link is blocked
         # at the batman-adv level during the run (arun_mesh.sh), so all traffic to the ground is relayed by the Jetson
         return [(f"mh{i}", good, .9, phase_s) for i in range(6)]
