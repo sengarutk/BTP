@@ -35,6 +35,7 @@ OUT = REPO / "experiments" / "results" / "relay_noise"
 SIGMAS, LOSSES, SIZES, PROFILES_ = (3.0, 6.0, 8.0), (0.0, 0.01, 0.05, 0.10), (5, 10, 20), ("moderate", "blackout")
 STRATS = ("split_k4_int8_zstd", "adaptive_split", "adaptive_all")
 SEEDS, DURATION, CELL, T_FULL, RETRY_MS = 5, 120.0, 100.0, 180.0, 1.0
+CAMERA_FPS = 30.0      # stream_sim's camera rate (SimParams.camera_fps default)
 HOPS = (1, 2)
 METRICS = ("on_time_fps_per_uav", "relayed_frames", "relayed_on_time", "mean_map50_95_on_time")
 
@@ -148,7 +149,30 @@ def summary_hops(rows, hops):
     # relative change, over cells where the policy delivers at least 1 on-time frame/s per drone without relaying
     rel_ga = [abs(x["relay_gain_fps"]) / x["no_relay_fps"] for x in gain
               if x["strategy"] == "adaptive_all" and x["no_relay_fps"] >= 1.0]
-    return {"cells": len(rel), "relayed_on_time_adaptive_all": on_time, "base_order": base_order,
+    # 4) per condition (profile x swarm size): range of the adaptive policy's relayed on-time share over shadowing x
+    #    loss (the pooled share above is dominated by the large swarms), and how much it relays at all
+    per_cond, fixed = {}, {}
+    for p in PROFILES_:
+        for n in SIZES:
+            rr = [r for r in rel if (r["profile"], r["n_uavs"]) == (p, n)]
+            aa = [r for r in rr if r["strategy"] == "adaptive_all"]
+            sh = [r["relayed_on_time"] / r["relayed_frames"] for r in aa if r["relayed_frames"]]
+            per_cond[f"{p}_{n}"] = {
+                "share_min": min(sh) if sh else None, "share_max": max(sh) if sh else None,
+                "relayed_frames_per_run": [min(r["relayed_frames"] for r in aa), max(r["relayed_frames"] for r in aa)],
+                "relayed_per_camera_frame": max(r["relayed_frames"] / (CAMERA_FPS * n * DURATION) for r in aa)}
+            fx = {(r["sigma_db"], r["loss"]): r for r in rr if r["strategy"] == "split_k4_int8_zstd"}
+            fixed[f"{p}_{n}"] = {f"{sg:g}dB_{100 * ls:g}pct": [fx[(sg, ls)]["relayed_frames"], fx[(sg, ls)]["relayed_on_time"]]
+                                 for sg in SIGMAS for ls in LOSSES}
+    gf = np.array([x["relay_gain_fps"] for x in gain if x["strategy"] == "split_k4_int8_zstd"])
+    pc = [v for v in per_cond.values() if v["share_min"] is not None]
+    return {"cells": len(rel), "settings": len(rel) // len(STRATS), "relayed_on_time_adaptive_all": on_time,
+            "per_condition_adaptive_all": per_cond,
+            "per_condition_share_min": min(v["share_min"] for v in pc), "per_condition_share_max": max(v["share_max"] for v in pc),
+            "relayed_per_camera_frame_max": max(v["relayed_per_camera_frame"] for v in per_cond.values()),
+            "fixed_split_relayed_frames_on_time": fixed,
+            "fixed_split_relay_gain_fps": {"min": float(gf.min()), "max": float(gf.max())},
+            "base_order": base_order,
             "ranking_changes": changes,
             "relay_gain_fps": {"min": float(g.min()), "max": float(g.max()),
                                "adaptive_all_min": float(ga.min()), "adaptive_all_max": float(ga.max()),
@@ -169,6 +193,7 @@ def summary(rows, calib="paper1"):
         one = {k(r): r for r in rows if r["relay"] and r["hops"] == 1}
         d = [r["on_time_fps_per_uav"] - one[k(r)]["on_time_fps_per_uav"] for r in rows
              if r["relay"] and r["hops"] == 2 and r["strategy"] == "adaptive_all"]
+        # hops2 minus hops1 (negative: the second hop costs on-time frames)
         out["second_hop_cost_adaptive_all_fps"] = {"min": float(min(d)), "max": float(max(d)),
                                                     "median": float(np.median(d))}
     json.dump(out, open(OUT / "summary.json", "w"), indent=1)

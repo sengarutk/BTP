@@ -191,6 +191,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\RnShareMin` | 15 | relay_noise_pi5/summary.json min over hops, shadowing, loss of relayed_on_time share x 100 |
 | `\RnShareMax` | 18 | relay_noise_pi5/summary.json max over hops, shadowing, loss of relayed_on_time share x 100 |
 | `\RnShareTwoHopTen` | 16 | relay_noise_pi5/summary.json hops2, 10 % loss, worst shadowing: relayed on-time share x 100 |
+| `\RnSettings` | 144 | relay_noise_pi5/summary.json hops*.settings (relay settings; x3 policies = RnCells) |
+| `\RnCondShareMin` | 0 | relay_noise_pi5/summary.json min over hops*.per_condition_adaptive_all.share_min x 100 |
+| `\RnCondShareMax` | 100 | relay_noise_pi5/summary.json max over hops*.per_condition_adaptive_all.share_max x 100 |
+| `\RnNoiseSpreadPts` | 8 | relay_noise_pi5/summary.json max over conditions of (share_max - share_min) x 100: what shadowing x loss move the share |
+| `\RnRelayedPct` | 1.9 | relay_noise_pi5/summary.json max hops*.relayed_per_camera_frame_max x 100 |
 | `\RnLeadMin` | 0.0 | relay_noise_pi5/summary.json hops*.adaptive_lead_fps.min |
 | `\RnLeadMax` | 15.0 | relay_noise_pi5/summary.json hops*.adaptive_lead_fps.max |
 | `\RnGainMin` | −0.36 | relay_noise_pi5/summary.json hops*.relay_gain_fps.adaptive_all_min |

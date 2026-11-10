@@ -385,6 +385,15 @@ def main():
         put("RnShareTwoHopTen", 100 * min(v["share"] for k, v in rn[f"hops{hops[-1]}"]["relayed_on_time_adaptive_all"].items()
                                           if k.endswith("_10pct")),
             f"{src} hops{hops[-1]}, 10 % loss, worst shadowing: relayed on-time share x 100", "{:.0f}")
+        H = [rn[f"hops{h}"] for h in hops]
+        pcs = [v for x in H for v in x["per_condition_adaptive_all"].values() if v["share_min"] is not None]
+        put("RnSettings", str(sum(x["settings"] for x in H)), f"{src} hops*.settings (relay settings; x3 policies = RnCells)")
+        put("RnCondShareMin", 100 * min(v["share_min"] for v in pcs), f"{src} min over hops*.per_condition_adaptive_all.share_min x 100", "{:.0f}")
+        put("RnCondShareMax", 100 * max(v["share_max"] for v in pcs), f"{src} max over hops*.per_condition_adaptive_all.share_max x 100", "{:.0f}")
+        put("RnNoiseSpreadPts", 100 * max(v["share_max"] - v["share_min"] for v in pcs),
+            f"{src} max over conditions of (share_max - share_min) x 100: what shadowing x loss move the share", "{:.0f}")
+        put("RnRelayedPct", 100 * max(x["relayed_per_camera_frame_max"] for x in H),
+            f"{src} max hops*.relayed_per_camera_frame_max x 100", "{:.1f}")
         lead = [rn[f"hops{h}"]["adaptive_lead_fps"] for h in hops]
         put("RnLeadMin", min(x["min"] for x in lead), f"{src} hops*.adaptive_lead_fps.min", "{:.1f}")
         put("RnLeadMax", max(x["max"] for x in lead), f"{src} hops*.adaptive_lead_fps.max", "{:.1f}")

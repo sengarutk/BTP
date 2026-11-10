@@ -1,19 +1,35 @@
 % Draft for paper 1's journal version (arXiv v2), hardening plan Phase 4, 11 Nov 2026. Not in the arXiv v1 source.
 % Numbers: experiments/results/relay_noise/rn_metrics.tex (evaluation/relay_noise_macros.py from
 % evaluation/relay_noise_sweep.py). To include: \input the macro file in the preamble and this paragraph after
-% "Relaying rarely helps" in the swarm subsection.
-\textbf{Noisy relays.} The relay hop above is clean apart from its static shadowing. We therefore swept
-three kinds of noise:
+% "Relaying rarely helps" in the swarm subsection. Revised after an independent audit (11 Nov 2026): per-condition
+% shares instead of a pooled one, the fixed split reported, and the relay model's limits stated.
+\textbf{Imperfect relay links.} The relay hop above is clean apart from its static shadowing. We therefore varied the
+relay link three ways:
 \begin{itemize}
-\item shadowing of 3, 6 and 8~dB;
-\item per-packet loss of 0, 1, 5 and 10\,\% on every air-to-air hop, where a lost 1500-byte packet is resent until it
-arrives, at the cost of its airtime plus a 1~ms backoff;
-\item one or two air-to-air hops, the second through the intermediate drone with the best bottleneck rate, forwarded
-store-and-forward.
+\item a shadowing spread of 3, 6 or 8~dB, drawn once per pair of drones and run;
+\item a per-packet loss of 0, 1, 5 or 10\,\% on every air-to-air hop, where a lost 1500-byte packet is resent until it
+arrives, at the cost of its airtime plus a 1~ms backoff (no retry limit);
+\item one or two air-to-air hops; with two, every relayed frame goes through the intermediate drone with the best
+bottleneck rate, store-and-forward, even where the direct link would be better.
 \end{itemize}
-We ran 5, 10 and 20 drones under both channel profiles, \RnSeeds{} seeds each, \RnCells{} relay settings in all. In none
-of them did the order of the fixed split and the two adaptive policies change (\RnRankChanges{} changes). Frames
-relayed by the adaptive policy stayed on time between \RnShareMin\,\% and \RnShareMax\,\% of the time, and its lead over the fixed split stayed between
-\RnLeadMin{} and \RnLeadMax{} on-time frames/s per drone. Relaying itself still changed the adaptive policy's throughput
-by only \RnGainMin{} to \RnGainMax{} frames/s (at most \RnGainRelPct\,\% of its rate), and a second hop by \RnSecondHopMin{} to \RnSecondHopMax{} (median \RnSecondHopMedian{}), so noise does not change the conclusion: the shared cell, not the relay
-link, is the bottleneck.
+We ran 5, 10 and 20 drones under both channel profiles, \RnSeeds{} seeds each: \RnSettings{} relay settings, each with
+the fixed split and the two adaptive policies.
+
+The relay is chosen by the neighbour's uplink alone, not by the quality of the air-to-air link, and the adaptive
+policy relays at most \RnRelayedPct\,\% of the camera frames. The share of its relayed frames that arrive on time
+depends on the channel and the swarm size: \RnCondShareMin\,\% (blackout, 20 drones) to \RnCondShareMax\,\%. Within any
+one of these conditions, the twelve noise levels move it by at most \RnNoiseSpreadPts{} points. Relaying changes the
+adaptive policy's throughput by \RnGainMin{} to \RnGainMax{} frames/s (at most \RnGainRelPct\,\% of its rate). A
+second hop changes it by \RnSecondHopMin{} to \RnSecondHopMax.
+
+For the fixed split, with its much larger payload, noise does matter. Under blackouts with 5 drones it relays about
+\RnFixedSent{} frames per run:
+\begin{itemize}
+\item on one clean hop, \RnFixedOnClean{} of them arrive on time;
+\item at 10\,\% loss, at most \RnFixedOnLoss;
+\item over two hops, at most \RnFixedTwoHopMax{} of about \RnFixedTwoHopSent{}.
+\end{itemize}
+Relaying lowers its throughput by up to \RnFixedGainMin{}~frames/s. The order of the three policies is the same in every
+setting (\RnRankChanges{} changes), but this says little, because the noise effects are far smaller than the gaps
+between the policies. The conclusion stands for this relay model: the shared cell, not the relay link, limits the swarm,
+and a large split payload cannot use a lossy relay.

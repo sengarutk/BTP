@@ -14,7 +14,10 @@ is a candidate. Evaluation on the 548 VisDrone-DET val frames, as for the frozen
 | k2_c8 | 26.5 KB | 0.233 | 0.238 | +0.005 | 22 |
 | k4_c32_s1 | 104.8 KB | 0.253 | 0.256 | +0.002 | 23 |
 
-The full detector scores 0.267 on the same frames. Every code chose a trained epoch over its start.
+The full detector scores 0.267 on the same frames. Every code chose a trained epoch over its start. The bootstrap
+half-width of each estimate is up to 0.008 mAP, so the two smallest gains (+0.005, +0.002) are not claimed; the split's
+server side gets extra training while the JPEG path keeps the unmodified detector, so the gains bound the split's
+advantage from above.
 Break-even rule with these codes: `experiments/results/break_even/` (0 exceptions in 657 winning cells);
 paper text: `paper/drafts/design_rule.tex`. Run 1 (invalid) is in `_superseded/run1_nov10/`.
 Weights (`weights/joint_bottleneck/*.pt`, 23 MB each) are not in git.

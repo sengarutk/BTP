@@ -29,6 +29,7 @@
  },
  "hops1": {
   "cells": 216,
+  "settings": 72,
   "relayed_on_time_adaptive_all": {
    "3dB_0pct": {
     "relayed_frames": 2456.6,
@@ -90,6 +91,371 @@
     "relayed_on_time": 406.2,
     "share": 0.16367152872914817
    }
+  },
+  "per_condition_adaptive_all": {
+   "moderate_5": {
+    "share_min": 1.0,
+    "share_max": 1.0,
+    "relayed_frames_per_run": [
+     16.4,
+     16.4
+    ],
+    "relayed_per_camera_frame": 0.000911111111111111
+   },
+   "moderate_10": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     30.8,
+     30.8
+    ],
+    "relayed_per_camera_frame": 0.0008555555555555556
+   },
+   "moderate_20": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     99.2,
+     99.2
+    ],
+    "relayed_per_camera_frame": 0.001377777777777778
+   },
+   "blackout_5": {
+    "share_min": 0.7838494231936856,
+    "share_max": 0.862112586970272,
+    "relayed_frames_per_run": [
+     316.2,
+     330.2
+    ],
+    "relayed_per_camera_frame": 0.018344444444444444
+   },
+   "blackout_10": {
+    "share_min": 0.1786035361102787,
+    "share_max": 0.21954933008526187,
+    "relayed_frames_per_run": [
+     656.8,
+     668.6
+    ],
+    "relayed_per_camera_frame": 0.018572222222222223
+   },
+   "blackout_20": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     1337.2,
+     1337.2
+    ],
+    "relayed_per_camera_frame": 0.018572222222222223
+   }
+  },
+  "per_condition_share_min": 0.0,
+  "per_condition_share_max": 1.0,
+  "relayed_per_camera_frame_max": 0.018572222222222223,
+  "fixed_split_relayed_frames_on_time": {
+   "moderate_5": {
+    "3dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_10pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_10pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_10pct": [
+     3.2,
+     0.0
+    ]
+   },
+   "moderate_10": {
+    "3dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     6.0,
+     0.0
+    ]
+   },
+   "moderate_20": {
+    "3dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_10pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_10pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_10pct": [
+     20.2,
+     0.0
+    ]
+   },
+   "blackout_5": {
+    "3dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     90.0,
+     0.0
+    ]
+   },
+   "blackout_10": {
+    "3dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     180.0,
+     0.0
+    ]
+   },
+   "blackout_20": {
+    "3dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     360.0,
+     0.0
+    ]
+   }
+  },
+  "fixed_split_relay_gain_fps": {
+   "min": 0.0,
+   "max": 0.0
   },
   "base_order": {
    "moderate_5": [
@@ -2592,6 +2958,7 @@
  },
  "hops2": {
   "cells": 216,
+  "settings": 72,
   "relayed_on_time_adaptive_all": {
    "3dB_0pct": {
     "relayed_frames": 2485.4,
@@ -2653,6 +3020,371 @@
     "relayed_on_time": 400.2,
     "share": 0.1610074026392018
    }
+  },
+  "per_condition_adaptive_all": {
+   "moderate_5": {
+    "share_min": 1.0,
+    "share_max": 1.0,
+    "relayed_frames_per_run": [
+     16.4,
+     16.4
+    ],
+    "relayed_per_camera_frame": 0.000911111111111111
+   },
+   "moderate_10": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     30.8,
+     30.8
+    ],
+    "relayed_per_camera_frame": 0.0008555555555555556
+   },
+   "moderate_20": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     99.2,
+     99.2
+    ],
+    "relayed_per_camera_frame": 0.001377777777777778
+   },
+   "blackout_5": {
+    "share_min": 0.7749099639855942,
+    "share_max": 0.8110377924415116,
+    "relayed_frames_per_run": [
+     333.2,
+     333.4
+    ],
+    "relayed_per_camera_frame": 0.01852222222222222
+   },
+   "blackout_10": {
+    "share_min": 0.1525575830092731,
+    "share_max": 0.17449865309787488,
+    "relayed_frames_per_run": [
+     668.0,
+     668.6
+    ],
+    "relayed_per_camera_frame": 0.018572222222222223
+   },
+   "blackout_20": {
+    "share_min": 0.0,
+    "share_max": 0.0,
+    "relayed_frames_per_run": [
+     1337.2,
+     1337.2
+    ],
+    "relayed_per_camera_frame": 0.018572222222222223
+   }
+  },
+  "per_condition_share_min": 0.0,
+  "per_condition_share_max": 1.0,
+  "relayed_per_camera_frame_max": 0.018572222222222223,
+  "fixed_split_relayed_frames_on_time": {
+   "moderate_5": {
+    "3dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "3dB_10pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "6dB_10pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_0pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_1pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_5pct": [
+     3.2,
+     0.0
+    ],
+    "8dB_10pct": [
+     3.2,
+     0.0
+    ]
+   },
+   "moderate_10": {
+    "3dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     6.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     6.0,
+     0.0
+    ]
+   },
+   "moderate_20": {
+    "3dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "3dB_10pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "6dB_10pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_0pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_1pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_5pct": [
+     20.2,
+     0.0
+    ],
+    "8dB_10pct": [
+     20.2,
+     0.0
+    ]
+   },
+   "blackout_5": {
+    "3dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     90.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     90.0,
+     0.0
+    ]
+   },
+   "blackout_10": {
+    "3dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     180.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     180.0,
+     0.0
+    ]
+   },
+   "blackout_20": {
+    "3dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "3dB_10pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "6dB_10pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_0pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_1pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_5pct": [
+     360.0,
+     0.0
+    ],
+    "8dB_10pct": [
+     360.0,
+     0.0
+    ]
+   }
+  },
+  "fixed_split_relay_gain_fps": {
+   "min": 0.0,
+   "max": 0.0
   },
   "base_order": {
    "moderate_5": [

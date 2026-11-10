@@ -22,6 +22,19 @@ def main():
          "RnLeadMax": f"{max(x['adaptive_lead_fps']['max'] for x in H):.1f}",
          "RnGainMin": f"{min(x['relay_gain_fps']['adaptive_all_min'] for x in H):.3f}",
          "RnGainMax": f"{max(x['relay_gain_fps']['adaptive_all_max'] for x in H):.3f}"}
+    pcs = [v for x in H for v in x["per_condition_adaptive_all"].values() if v["share_min"] is not None]
+    fx1 = H[0]["fixed_split_relayed_frames_on_time"]["blackout_5"]
+    fx2 = H[-1]["fixed_split_relayed_frames_on_time"]["blackout_5"]
+    M.update({"RnSettings": str(sum(x["settings"] for x in H)),
+              "RnCondShareMin": f"{100 * min(v['share_min'] for v in pcs):.0f}",
+              "RnCondShareMax": f"{100 * max(v['share_max'] for v in pcs):.0f}",
+              "RnNoiseSpreadPts": f"{100 * max(v['share_max'] - v['share_min'] for v in pcs):.0f}",
+              "RnRelayedPct": f"{100 * max(x['relayed_per_camera_frame_max'] for x in H):.1f}",
+              "RnFixedSent": f"{fx1['3dB_0pct'][0]:.0f}", "RnFixedOnClean": f"{fx1['3dB_0pct'][1]:.0f}",
+              "RnFixedOnLoss": f"{max(v[1] for k, v in fx1.items() if k.endswith('_10pct')):.0f}",
+              "RnFixedTwoHopMax": f"{max(v[1] for v in fx2.values()):.0f}",
+              "RnFixedTwoHopSent": f"{min(v[0] for v in fx2.values()):.0f}",
+              "RnFixedGainMin": f"{min(x['fixed_split_relay_gain_fps']['min'] for x in H):.2f}"})
     if "second_hop_cost_adaptive_all_fps" in rn:
         M["RnSecondHopMedian"] = f"{rn['second_hop_cost_adaptive_all_fps']['median']:.4f}"
         M["RnSecondHopMax"] = f"{rn['second_hop_cost_adaptive_all_fps']['max']:.3f}"
