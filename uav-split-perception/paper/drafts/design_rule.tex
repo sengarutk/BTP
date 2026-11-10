@@ -1,0 +1,48 @@
+% Draft for paper 1's journal version (arXiv v2), hardening plan Phase 3, 10 Nov 2026. Not included in the arXiv v1
+% source. Every number is a macro of experiments/results/break_even/be_metrics.tex (evaluation/break_even_rule.py);
+% the figure is paper/figures/break_even_map.pdf from the same script. To include: \input the macro file in the
+% preamble and this file after the learned-bottleneck section; add the jointly trained codes once their evaluation is in.
+\subsection{When can a split pay off? A design rule}\label{sec:design-rule}
+Proposition~\ref{prop:dominance} settles splits whose payload is no smaller than an image's. Learned codes are smaller,
+so we ask where, in onboard speed and goodput, \emph{any} code can beat \emph{every} JPEG setting. In the model of
+Section~\ref{sec:system}, an option $c$ has onboard time $e_c$, payload $b_c$, server time $s_c$, accuracy $A_c$, frame
+rate $F/\lceil F\max(e_c, b_c/B)\rceil$ and on-time probability $p_c(B) = Q\big((R_c - B)/\sigma(B)\big)$ ($Q$ the standard normal tail) with required
+rate $R_c = b_c/(D - e_c - d - s_c)$ and $\sigma(B) = sB$ shared by all options.
+
+\begin{proposition}[Break-even goodput]\label{prop:break-even}
+Let $m_k = \max(e_k, 1/F)$ for a split code $k$ and fix $P<1$ with normal quantile $z_P$, $z_P s < 1$. An image setting
+$q$ with $P A_q \ge A_k$ and $e_q \le m_k$ gives $U_q(B) \ge U_k(B)$ whenever
+$B \ge \max\big(b_q/m_k,\; R_q/(1 - z_P s)\big)$. Hence $k$ can beat the whole JPEG family only below
+\begin{equation*}
+B_{\mathrm{be}}(k) = \min_{q:\,P A_q \ge A_k,\; e_q \le m_k} \max\Big(\frac{b_q}{m_k},\; \frac{R_q}{1 - z_P s}\Big),
+\end{equation*}
+which falls in inverse proportion to the onboard speed ($e_k = t_{\mathrm{full}}(\phi_k + \rho_k)$) until the camera
+rate binds.
+\end{proposition}
+\begin{proof}
+$b_q \le B m_k$ and $e_q \le m_k$ give $\lceil F\max(e_q, b_q/B)\rceil \le \lceil F m_k\rceil = \max(1, \lceil F e_k\rceil)
+\le \lceil F\max(e_k, b_k/B)\rceil$, so $f_q \ge f_k$; $B \ge R_q/(1 - z_P s)$ gives $p_q \ge P$; hence
+$U_q \ge P f_q A_q \ge f_k A_k \ge U_k$.
+\end{proof}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/break_even_map.pdf}
+\caption{Break-even goodput $B_{\mathrm{be}}$ of each learned code against the JPEG family (lines, Proposition~\ref{prop:break-even}
+with $P = \BePOn$) and the largest goodput at which the code actually beats every JPEG setting (dots), over the onboard
+speed of the paper's sweep and of the three measured devices.}
+\label{fig:break-even}
+\end{figure}
+\textbf{Check on every measured point.} We evaluated the \BeCodes{} learned codes and the post-hoc INT8 splits on
+\BeDevices{} onboard speeds (the paper's sweep, the laptop GPU, the Jetson Orin Nano and the throttled Pi~5) at every
+goodput of Section~\ref{sec:learned}: a split code beats the best JPEG setting in \BeCells{} cells, and all of them lie
+below its $B_{\mathrm{be}}$ (\BeViolations{} exceptions). The rule is tight: on the laptop and the Jetson the largest
+winning goodput is within \BeTightFast\,\% of $B_{\mathrm{be}}$ (median), on the Pi within \BeTightPi\,\%. On the Pi it
+predicts that the \BePiCodeKib~KiB code can only win below \BePiBe~Mbit/s (against JPEG \BePiQstar), and it wins up to
+\BePiWin~Mbit/s. All \BeSurveyRows{} rows of the \BeSurveyModels-detector survey satisfy the conditions of
+Proposition~\ref{prop:dominance} (more bits and more onboard work than a Q95 JPEG), so no post-hoc split of an
+unmodified detector can exceed its accuracy ratio over the image.
+
+\textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from the code's size and accuracy, the JPEG
+rate--accuracy curve on the same frames, and the device's full-model time: if the link's goodput is mostly above
+$B_{\mathrm{be}}$, send the image.
