@@ -165,6 +165,12 @@ class SimParams:
     carrier_hz: float = 3.5e9
     policy_delay_ms: float = 20.0           # one-way delay the adaptive policy assumes
     a2a_shadow_sigma_db: float = A2A_SHADOW_SIGMA_DB
+    a2a_loss: float = 0.0                   # per-packet loss on the air-to-air relay hop (link-layer retransmission:
+    a2a_packet_bytes: int = 1500            # a lost packet is resent until it arrives, costing its airtime again
+    a2a_retry_ms: float = 0.0               # plus this backoff per retry); 0 = no loss and no random draws
+    relay_hops: int = 1                     # air-to-air hops to the relaying neighbour: 1 (direct) or 2 (through the
+                                            # intermediate drone with the best bottleneck rate; store-and-forward,
+                                            # its radio is busy for the second hop; each hop draws its own losses)
     rate_model: str = "tr36942"             # cellular SINR->rate mapping ("ns3_lte": calibrated, V2)
     a2a_model: str = "analytic"             # air-to-air goodput ("ns3": calibrated, V1)
     sharing: str = "waterfill"              # cell sharing: "waterfill", "capped", "weighted" (see share_cell)
@@ -295,6 +301,10 @@ class StreamSimulator:
         rng = np.random.default_rng(prof.seed * 100_003 + p.seed * 1_009 + 7_919)
         sh = rng.normal(0.0, p.a2a_shadow_sigma_db, (p.n_uavs, p.n_uavs))
         self.a2a_shadow_db = np.triu(sh, 1) + np.triu(sh, 1).T
+        # Packet loss on the relay hop (relay-noise study, 10 Nov 2026): its own generator, created only when used, so
+        # runs without loss draw exactly the same numbers as before.
+        self._a2a_rng = (np.random.default_rng(prof.seed * 100_003 + p.seed * 1_009 + 31_337)
+                         if p.a2a_loss > 0 else None)
 
     # ------------------------------------------------------------------ helpers
     def _feedback(self, t0: float) -> None:
@@ -411,7 +421,21 @@ class StreamSimulator:
             self.decisions.append((t_ms, uav.idx, cfg.name))
         return cfg
 
-    def _relay_target(self, uav: UAV, now_ms: float) -> Optional[Tuple[int, float]]:
+    def _a2a_rate(self, a: "UAV", b: "UAV") -> float:
+        f = a2a_rate_ns3_mbps if self.p.a2a_model == "ns3" else a2a_rate_mbps
+        return f(float(np.linalg.norm(a.pos - b.pos)), float(self.a2a_shadow_db[a.idx, b.idx]))
+
+    def _a2a_airtime_ms(self, payload_bytes: float, rate_mbps: float) -> float:
+        ms = payload_bytes * 8.0 / (rate_mbps * 1e3)
+        if self._a2a_rng is not None:      # retransmissions of lost packets on this hop
+            npk = max(1, math.ceil(payload_bytes / self.p.a2a_packet_bytes))
+            retries = int(self._a2a_rng.negative_binomial(npk, 1.0 - self.p.a2a_loss))
+            ms *= (npk + retries) / npk
+            ms += retries * self.p.a2a_retry_ms
+        return ms
+
+    def _relay_target(self, uav: UAV, now_ms: float) -> Optional[Tuple]:
+        """(j, rate) for one hop; (j, rate of hop 1, intermediate m, rate of hop 2) for relay_hops = 2."""
         best = None
         for other in self.uavs:
             # a neighbour is busy while a whole relayed frame waits in its queue; under packet
@@ -420,10 +444,21 @@ class StreamSimulator:
                                                                and other.relay.pending.a2a_end_ms > now_ms)
             if other is uav or other.est_mbps < self.p.relay_neighbor_min_mbps or waiting:
                 continue
-            a2a = a2a_rate_ns3_mbps if self.p.a2a_model == "ns3" else a2a_rate_mbps
-            rate = a2a(float(np.linalg.norm(uav.pos - other.pos)), float(self.a2a_shadow_db[uav.idx, other.idx]))
-            if rate > 0 and (best is None or other.est_mbps > self.uavs[best[0]].est_mbps):
-                best = (other.idx, rate)
+            if self.p.relay_hops == 2:
+                via = [(min(self._a2a_rate(uav, m), self._a2a_rate(m, other)), m) for m in self.uavs
+                       if m is not uav and m is not other]
+                via = [(r, m) for r, m in via if r > 0]
+                if not via:
+                    continue
+                _, m = max(via, key=lambda x: x[0])
+                cand = (other.idx, self._a2a_rate(uav, m), m.idx, self._a2a_rate(m, other))
+            else:
+                rate = self._a2a_rate(uav, other)
+                if rate <= 0:
+                    continue
+                cand = (other.idx, rate)
+            if best is None or other.est_mbps > self.uavs[best[0]].est_mbps:
+                best = cand
         return best
 
     def _enqueue(self, flow: Flow, frame: Frame) -> None:
@@ -495,11 +530,20 @@ class StreamSimulator:
                     if target is None:
                         self._enqueue(u.own, f)
                     else:
-                        j, rate = target
+                        j, rate = target[0], target[1]
                         start = max(f.ready_ms, u.a2a_free_ms)
-                        a2a_ms = f.cfg.payload_bytes * 8.0 / (rate * 1e3)
+                        a2a_ms = self._a2a_airtime_ms(f.cfg.payload_bytes, rate)
                         u.a2a_free_ms = start + a2a_ms
                         u.energy.add_a2a(p.hw, a2a_ms)
+                        if p.relay_hops == 2:
+                            # second air-to-air hop: the intermediate drone forwards the whole frame to j
+                            m, rate2 = target[2], target[3]
+                            mid = self.uavs[m]
+                            start2 = max(start + a2a_ms, mid.a2a_free_ms)
+                            a2a2_ms = self._a2a_airtime_ms(f.cfg.payload_bytes, rate2)
+                            mid.a2a_free_ms = start2 + a2a2_ms
+                            mid.energy.add_a2a(p.hw, a2a2_ms)
+                            start, a2a_ms = start2, a2a2_ms          # the last hop sets when the relay may start
                         f.status, f.relayed_via = "in_a2a", j
                         f.a2a_start_ms, f.a2a_end_ms = start, start + a2a_ms
                         # packet forwarding: the relay may start once the first bytes have arrived

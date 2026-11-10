@@ -297,6 +297,8 @@ class Replay:
     # ---------------------------------------------------------------- baselines
     def baseline(self, t):
         b = self.cfg["base"]
+        if b == "custom":     # open benchmark (benchmark/aegis_bench.py): a user policy decide(replay, t) -> (srv, var)|None
+            return self.cfg["decide"](self, t)
         live = [p for p in self.links if self.links[p].idle(t) and self.links[p].est(t)[0] >= 0.5]
         best_live = max(live, key=lambda p: self.links[p].est(t)[0]) if live else None
         if b == "jsq":

@@ -1,0 +1,15 @@
+{
+ "config": "joint_k4_c32_w128_s1_d2",
+ "cut": 4,
+ "channels": 32,
+ "width": 128,
+ "stride": 1,
+ "dec_layers": 2,
+ "epochs": 30,
+ "batch": 8,
+ "lr0": 0.002,
+ "fraction": 1.0,
+ "patience": 10,
+ "minutes": 17.605721660455067,
+ "run_dir": "/home/sengar/BTP/uav-split-perception/experiments/joint_bottleneck_runs/joint_k4_c32_w128_s1_d2"
+}

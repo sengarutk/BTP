@@ -1,0 +1,27 @@
+{
+ "config": "joint_k4_c16_w128_d2",
+ "run": "pilot_lr3e-4",
+ "cut": 4,
+ "channels": 16,
+ "width": 128,
+ "stride": 2,
+ "dec_layers": 2,
+ "epochs": 4,
+ "batch": 8,
+ "optimizer": "AdamW",
+ "lr0": 0.0003,
+ "lrf": 0.1,
+ "fraction": 0.25,
+ "selection_set": "vidval",
+ "selection_map50_95_start": 0.2143848548943228,
+ "selection_map50_95_per_epoch": [
+  0.2027,
+  0.20652,
+  0.21323,
+  0.22145
+ ],
+ "best_epoch": 4,
+ "chosen": "trained",
+ "minutes": 1.9760934233665466,
+ "run_dir": "/home/sengar/BTP/uav-split-perception/experiments/joint_bottleneck_runs/joint_k4_c16_w128_d2_pilot_lr3e-4_f0.25"
+}

@@ -7,15 +7,16 @@
 #   make validate    cross-check the simulator against ns-3 (needs NS3_DIR; see validation/README.md)
 #   make validate-omnetpp  the same against OMNeT++/INET/Simu5G
 #   make paper       tables, figures, and the PDF from the result files
+#   make benchmark-check  the open benchmark's one-command check (replay, oracle, traces, theory; ~70 s; benchmark/)
 #   make reproduce   clean-cache, data, test, results, generalization, paper (not validate or validate-omnetpp;
 #                    the hardware runs, VisDrone fine-tuning and learned bottleneck are separate steps, see README)
 PYTHON ?= python3
 RESULTS := experiments/results
 
-.PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help
+.PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help benchmark-check
 
 help:
-	@sed -n '2,11p' Makefile
+	@sed -n '2,12p' Makefile
 
 setup:
 	$(PYTHON) -m pip install -r requirements-dev.txt
@@ -86,6 +87,9 @@ paper: tables figures
 	cd paper && bash build_paper.sh
 
 reproduce: clean-cache data test results generalization paper
+
+benchmark-check:
+	$(PYTHON) -m benchmark.aegis_bench check
 
 clean-cache:
 	rm -rf experiments/cache

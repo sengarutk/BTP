@@ -148,8 +148,15 @@ def scenario_phases(name, phase_s, seed):
     if name in ("multihop_loss2", "multihop_loss5"):   # noisy relay (hardening plan Phase 5, 10 Nov 2026): the multihop
         # route of "multihop", with x % packet loss and 5 +- 5 ms delay on both hops: the camera's paths (its air link is
         # shared) and the edge drone's own link to the ground ("uplink", applied by edge_node.py)
-        noisy = f"delay 5ms 5ms loss {name[-1]}%"
-        return [(f"mhn{i}", {"laptop": noisy, "jetson": noisy, "uplink": noisy}, .9, phase_s) for i in range(6)]
+        # Equal noise for every strategy (fixed 11 Nov 2026, before any run): the camera's netem sees the whole relayed
+        # route to the laptop as one path (batman-adv forwards on the Jetson below bat0, where no qdisc can act), so the
+        # laptop path gets the two-hop equivalent: loss 1 - (1 - x)^2 and delay 10 ms with jitter 7 ms (uniform, the
+        # standard deviation of the sum of two 5 +- 5 ms hops). The Jetson path is one hop. The hierarchical chain's
+        # forwarded frames cross camera -> Jetson ("jetson") and Jetson -> ground ("uplink", edge_node.py): two hops too.
+        x = int(name[-1]) / 100
+        hop = f"delay 5ms 5ms loss {100 * x:g}%"
+        two = f"delay 10ms 7ms loss {100 * (1 - (1 - x) ** 2):.2f}%"
+        return [(f"mhn{i}", {"laptop": two, "jetson": hop, "uplink": hop}, .9, phase_s) for i in range(6)]
     if name == "multihop":             # mesh test: links good, but the direct camera <-> ground-radio link is blocked
         # at the batman-adv level during the run (arun_mesh.sh), so all traffic to the ground is relayed by the Jetson
         return [(f"mh{i}", good, .9, phase_s) for i in range(6)]

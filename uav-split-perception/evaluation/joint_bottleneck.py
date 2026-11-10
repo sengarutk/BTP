@@ -14,8 +14,15 @@ Design
                fine-tuning of the detector itself)
   frozen       layers 0..k (the drone side): its weights do not change, so the Pi's measured prefix timings still hold
                (their batch-norm statistics are frozen too)
-  selection    the best epoch is picked on the last 471 DET train images (held out, as in learned_bottleneck.py);
-               DET val (548 images) is used only for the final measurement, exactly as for JPEG and the other splits
+  optimizer    AdamW set explicitly (lr0 1e-4, cosine decay to lrf x lr0, 1 warm-up epoch, no early stopping). Run 1
+               (10 Nov) used optimizer=auto, which silently ignored lr0 and fine-tuned at 8.3e-4: the held-out mAP fell
+               after epoch 1 for 3 of 4 codes; those results are in _superseded/ (see the README there).
+  selection    the best epoch is picked on 288 frames of the VisDrone2019-VID val clips (every 10th frame, 640 px wide,
+               --sel vidval, the default): images neither the detector nor the bottleneck ever saw. The starting point
+               (the distilled bottleneck, "epoch 0") is a candidate too, so joint training can never be reported worse
+               than its start on the selection set. (--sel holdout: the last 471 DET train images, run 1's choice; the
+               detector was fine-tuned on them, which inflates their mAP.) DET val (548 images) is used only for the
+               final measurement, exactly as for JPEG and the other splits
   measurement  as learned_bottleneck.py eval: zstd-1 of the uint8 code + 8-byte header per image on DET val, batch 1,
                mAP@[.5:.95], paired bootstrap against the unsplit detector
 usage: joint_bottleneck.py prepare                                   -> datasets/visdrone_joint.yaml (+ two image lists)
@@ -36,6 +43,8 @@ from evaluation.learned_bottleneck import (ARCH, CKPT, REPO, WEIGHTS, drop_warmu
 
 DATA = REPO / "datasets"
 YAML = DATA / "visdrone_joint.yaml"
+SEL_YAML = DATA / "visdrone_joint_vidsel.yaml"
+SEL_DIR = DATA / "visdrone_joint_sel"          # scripts/prepare_visdrone_finetune.vid_train(VID val, stride 10)
 RUNS = REPO / "experiments" / "joint_bottleneck_runs"
 OUT = REPO / "experiments" / "results" / "joint_bottleneck"
 JCKPT = REPO / "weights" / "joint_bottleneck"
@@ -83,6 +92,18 @@ def cmd_prepare(a):
                     "names:\n  0: person\n  1: bicycle\n  2: car\n  3: motorcycle\n  4: airplane\n  5: bus\n"
                     "  6: train\n  7: truck\n")
     print(f"wrote {YAML}: {len(tr)} training images, {len(ho)} held out")
+    if not (SEL_DIR / "images").exists():
+        import sys
+        sys.path.insert(0, str(REPO / "scripts"))
+        import prepare_visdrone_finetune as pv
+        pv.VID_STRIDE = 10
+        print("selection set (VID val, every 10th frame):",
+              pv.vid_train(DATA / "visdrone_vid" / "VisDrone2019-VID-val", SEL_DIR), "(images, boxes)")
+    SEL_YAML.write_text("# Joint bottleneck: training on DET train minus 471; epoch selection on VID val frames (never seen\n"
+                        "# by the detector or the bottleneck). DET val is not used here.\n"
+                        f"path: {DATA}\ntrain: visdrone_joint_train.txt\nval: {SEL_DIR.name}/images\nnames:\n"
+                        + "".join(f"  {i}: {n}\n" for i, n in enumerate(
+                            ("person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck"))))
 
 
 def build(a, device="cpu"):
@@ -94,9 +115,17 @@ def build(a, device="cpu"):
     return yolo, ck
 
 
+def sel_map(yolo, data):
+    r = yolo.val(data=str(data), imgsz=640, batch=8, device=0, plots=False, verbose=False, workers=1)
+    return float(r.box.map), float(r.box.map50)
+
+
 def cmd_train(a):
     from ultralytics.models.yolo.detect import DetectionTrainer
+    data = SEL_YAML if a.sel == "vidval" else YAML
     yolo, _ = build(a)
+    init_map, init_map50 = sel_map(yolo, data)         # "epoch 0": the distilled bottleneck with the detector as it is
+    yolo, _ = build(a)                                 # fresh copy (val may change module state)
     model = yolo.model
     for p in model.parameters():
         p.requires_grad_(True)
@@ -105,25 +134,38 @@ def cmd_train(a):
         for b in m.modules():                     # drone-side layers compute exactly what the measured detector does
             if isinstance(b, nn.BatchNorm2d):
                 b.momentum = 0.0
-    name = jtag(a) + (f"_f{a.fraction:g}" if a.fraction < 1 else "")
-    ov = dict(model=str(WEIGHTS), data=str(YAML), imgsz=640, epochs=a.epochs, batch=a.batch, device=0, workers=a.workers,
-              cache=False, amp=True, patience=a.patience, fraction=a.fraction, seed=0, deterministic=False,
-              project=str(RUNS), name=name, exist_ok=True, plots=False, verbose=False, lr0=a.lr0, warmup_epochs=1,
+    name = jtag(a) + f"_{a.run}" + (f"_f{a.fraction:g}" if a.fraction < 1 else "")
+    ov = dict(model=str(WEIGHTS), data=str(data), imgsz=640, epochs=a.epochs, batch=a.batch, device=0,
+              workers=a.workers, cache=False, amp=True, patience=a.patience or a.epochs + 1, fraction=a.fraction,
+              seed=0, deterministic=False, project=str(RUNS), name=name, exist_ok=True, plots=False, verbose=False,
+              optimizer="AdamW", lr0=a.lr0, lrf=a.lrf, cos_lr=True, warmup_epochs=1, momentum=0.9,
               freeze=[f"{i}" for i in range(a.cut)] + [f"{a.cut}.layer"], val=True)
     tr = DetectionTrainer(overrides=ov)
     tr.model = model                              # the trainer uses a ready nn.Module as it is
     t0 = time.time()
     tr.train()
+    import csv
+    rows = list(csv.DictReader(open(RUNS / name / "results.csv")))
+    curve = [float(r[[k for k in r if "mAP50-95" in k][0]]) for r in rows]
+    best_ep = int(np.argmax(curve)) + 1
+    chosen = "trained" if max(curve) > init_map else "start"
     best = RUNS / name / "weights" / "best.pt"
-    JCKPT.mkdir(parents=True, exist_ok=True)
-    if a.fraction == 1.0 and best.exists():
-        import shutil
-        shutil.copy(best, JCKPT / f"{tag(a)}.pt")
+    if a.fraction == 1.0 and a.save:
+        JCKPT.mkdir(parents=True, exist_ok=True)
+        if chosen == "trained":
+            import shutil
+            shutil.copy(best, JCKPT / f"{tag(a)}.pt")
+        else:                                     # no epoch beat the start: the joint code IS the distilled one
+            yolo0, _ = build(a)
+            yolo0.save(str(JCKPT / f"{tag(a)}.pt"))
     OUT.mkdir(parents=True, exist_ok=True)
-    json.dump({"config": jtag(a), "cut": a.cut, "channels": a.channels, **{k: getattr(a, k) for k in ARCH},
-               "epochs": a.epochs, "batch": a.batch, "lr0": a.lr0, "fraction": a.fraction, "patience": a.patience,
-               "minutes": (time.time() - t0) / 60, "run_dir": str(RUNS / name)},
+    json.dump({"config": jtag(a), "run": a.run, "cut": a.cut, "channels": a.channels,
+               **{k: getattr(a, k) for k in ARCH}, "epochs": a.epochs, "batch": a.batch, "optimizer": "AdamW",
+               "lr0": a.lr0, "lrf": a.lrf, "fraction": a.fraction, "selection_set": a.sel,
+               "selection_map50_95_start": init_map, "selection_map50_95_per_epoch": curve, "best_epoch": best_ep,
+               "chosen": chosen, "minutes": (time.time() - t0) / 60, "run_dir": str(RUNS / name)},
               open(OUT / f"train_{name}.json", "w"), indent=1)
+    print(f"start {init_map:.4f}  best epoch {best_ep} {max(curve):.4f}  -> {chosen}")
 
 
 def cmd_eval(a):
@@ -167,8 +209,12 @@ def main():
         if name == "train":
             p.add_argument("--epochs", type=int, default=30)
             p.add_argument("--batch", type=int, default=8)
-            p.add_argument("--lr0", type=float, default=0.002)
-            p.add_argument("--patience", type=int, default=10)
+            p.add_argument("--lr0", type=float, default=1e-4)
+            p.add_argument("--lrf", type=float, default=0.1)
+            p.add_argument("--patience", type=int, default=0, help="0: no early stopping")
+            p.add_argument("--sel", choices=["vidval", "holdout"], default="vidval")
+            p.add_argument("--run", default="r2", help="run name suffix")
+            p.add_argument("--save", type=int, default=1, help="copy the chosen weights to weights/joint_bottleneck")
             p.add_argument("--fraction", type=float, default=1.0)
             p.add_argument("--workers", type=int, default=3)
         else:

@@ -47,6 +47,13 @@ no prices at all 4.24 W, 82.3 °C, throttled 13 % of the time, sAP 0.2028.
 `tools/campaign_relaynoise_nov.sh`: multihop route with 2 % or 5 % loss and 5 ± 5 ms delay on both hops; v41, the
 hierarchical chain (hier) and fixed laptop offloading × 2 reps = 12 runs.
 
+Correction, 11 Nov 2026, before any run of this campaign (found in the laptop dry run): the camera's netem cannot act
+on the Jetson's batman-adv forwarding, so in the first version the relayed laptop path of v41 and fixed offloading
+got the noise of one hop while the hierarchical chain's forwarded frames got two. The laptop path now carries the
+two-hop equivalent (loss 1 − (1 − x)², i.e. 3.96 % and 9.75 %, delay 10 ms with 7 ms jitter); the Jetson path and the
+edge node's uplink carry one hop each (`adaptive2.py`, scenarios `multihop_loss2/5`). The predictions below are
+unchanged.
+
 Reference, noise-free multihop [vid_campaign_mesh2_summary.json]: hier 0.1506, v41 0.1373, fixed laptop 0.0672 sAP
 (only 12.5 % of its results on time). Simulator sweep [experiments/results/relay_noise/summary.json, written on the
 same day]: see that file for how relay loss changes the relayed frames' on-time share and the strategy order.
