@@ -9,6 +9,8 @@
 % evaluation/break_even_sim.py) and the fading version of the rule; also \input sim_metrics.tex. Third revision
 % (11 Nov 2026): against the detector fine-tuned on JPEG (evaluation/jpeg_tuned_detector.py,
 % experiments/results/jpeg_tuned/); also \input sim_tuned_metrics.tex.
+% Fourth revision (11 Nov 2026): entropy-coded codes (evaluation/entropy_bottleneck.py,
+% experiments/results/entropy_bottleneck/); also \input sim_entropy_metrics.tex and sim_entropy_tuned_metrics.tex.
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -152,6 +154,29 @@ split wins lie at or above the constant-goodput $B_{\mathrm{be}}$.
 \end{itemize}
 Training both sides therefore keeps the picture, a split pays off only at low goodput, but narrows the window: part
 of the jointly trained codes' advantage came from training only one side.
+
+\textbf{A stronger coder for the split.} The learned codes above compress a uint8 code with zstd. We also trained
+\BeEcCodes{} codes with a learned entropy model, the coding used in supervised compression: a learned per-channel
+gain, integer rounding, a factorised prior and a range coder, trained for distillation plus a rate penalty on the
+frozen detector. The bitstreams are real: all \BeEcDecoded{} decodes of the test frames reproduce the encoder's
+symbols, and the coder is within \BeEcOverheadMax\,\% of the model's ideal size. The codes span \BeEcPayMin--\BeEcPayMax~KiB
+and \BeEcMapMin--\BeEcMapMax{} mAP$_{50:95}$. At the same accuracy they are \BeEcSaveZstdMin--\BeEcSaveZstdMax\,\%
+smaller than the zstd codes and \BeEcSaveJpegMin--\BeEcSaveJpegMax\,\% smaller than JPEG. They do not move the bound.
+\begin{itemize}
+\item At equal accuracy (\BeEcPairEcMap{} mAP), the entropy code of \BeEcPairEcKib~KiB and the zstd code of
+\BeEcPairZsKib~KiB are matched by \BeEcPairSameQstar{} JPEG setting (\BeEcPairQstar). On the Jetson both have
+$B_{\mathrm{be}} = \BeEcPairEcBe$~Mbit/s and both win up to \BeEcPairEcWin~Mbit/s. The smaller code only adds wins at
+lower goodputs, down to \BeEcPairEcMinWin{} instead of \BeEcPairZsMinWin~Mbit/s. Against the tuned detector:
+\BeEcTunedPairEcBe{} and \BeEcTunedPairEcWin~Mbit/s for both.
+\item On the Pi, the entropy codes win up to \BeEcPiMaxWin~Mbit/s (\BeEcTunedPiMaxWin{} against the tuned detector),
+as the zstd codes do.
+\item No winning cell lies at or above its $B_{\mathrm{be}}$ against either detector (\BeEcViol{} and
+\BeEcTunedViol{} exceptions). In the simulator the fading version again has no exceptions: \BeSimEModFadingExc{} and
+\BeSimEVehFadingExc{} untuned, \BeSimETModFadingExc{} and \BeSimETVehFadingExc{} tuned.
+\end{itemize}
+This is what Proposition~\ref{prop:be-family} says. $B_{\mathrm{be}}$ is set by the size of the JPEG setting that
+matches the code's accuracy and by the device's onboard time, not by the code's own payload. A better coder
+therefore helps only below the bound.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
