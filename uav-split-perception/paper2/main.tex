@@ -288,6 +288,48 @@ temperature: 2.8~W predicts \ThPredBudget~$^\circ$C, and keeping the mean below 
 throttle, needs $B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below
 80~$^\circ$C). Peaks and the onset of throttling are not bounded by this rule.
 
+\textbf{The settings, swept in the replay.} We swept the step size, the budget, the room temperature and the hold in
+the trace replay (Section~\ref{sec:method}). Each change is to one setting of v4.1, on the same seeds and link draws.
+There are \TsEtaN{} step sizes from \TsEtaMin{} to \TsEtaMax{} and budgets from \TsBudMin{} to \TsBudMax~W, on
+\TsShortSeeds{} seeds of the 2-minute scenarios and \TsLongSeeds{} of the 24-minute mission: \TsRuns{} runs. Every
+prediction was committed before its runs. Theorem~\ref{thm:power} holds in \TsBoundAll{} run. Against the hardware, the
+replay reproduces mean power ($r = \ReplayPowerR$) and how the share of time at or above 80~$^\circ$C varies between
+policies ($r = \ReplayHotR$). The level of that share is off by \ReplayHotMad{} points on average, so the shares below
+are comparisons between settings, not predictions of the board's.
+Its streaming AP is reliable only to about \ReplayLeafBias, and every accuracy difference below is smaller than that,
+so we report them without drawing conclusions. Its thermal plant is Proposition~\ref{prop:temp}'s own model, so its
+mean temperatures are no evidence for the proposition.
+\begin{itemize}
+\item \textbf{Step size, 2-minute runs.} As $\eta$ grows, the price term of Theorem~\ref{thm:power} falls from
+\TsMisPriceLo{} to \TsMisPriceHi~W on the mission (\TsRndPriceLo{} to \TsRndPriceHi~W with random faults). The excess
+over the budget falls with it, from \TsMisExcLo{} to \TsMisExcHi~W (\TsRndExcLo{} to \TsRndExcHi~W). Theorem~\ref{thm:gap}'s
+gap term grows to \TsMisGapHi{} (\TsRndGapHi) value units per second, but streaming AP does not fall: at
+$\eta = \TsEtaMax$ it differs from v4.1 by \TsMisSapHi{} $\pm$ \TsMisSapHiCi{} (\TsRndSapHi{} $\pm$ \TsRndSapHiCi). We
+had predicted a loss; the idealised $O(\eta)$ gap is not visible in this system.
+\item \textbf{Step size, 24-minute missions.} The price term all but vanishes (\TsLongPriceLo{} to \TsLongPriceHi~W),
+and the excess stays between \TsLongExcHi{} and \TsLongExcLo~W at every step size. Almost all of it is the hold term
+(up to \TsLongHoldMax~W): over a long run the step size hardly matters.
+\item \textbf{Budget.} From \TsBudMin{} to \TsBudMax~W the mean temperature rises from \TsTempLo{} to \TsTempHi~$^\circ$C,
+below 80~$^\circ$C as the proposition says. Yet the board spends \TsHotMin--\TsHotMax\,\% of the mission at or above
+80~$^\circ$C at every budget; we had predicted almost no such time below 3.2~W.
+\item \textbf{The hold.} During a blackout, the hold lets onboard inference run unpriced. Switching it off (a
+diagnostic, not a proposed controller) cuts that time from \TsVHot\,\% to \TsNoHoldHot\,\% and the excess from
+\TsVExc{} to \TsNoHoldExc~W; streaming AP changes by \TsNoHoldSap{} $\pm$ \TsNoHoldSapCi. On a long mission with
+blackouts, the hold, not the budget, is what heats the board.
+\item \textbf{A hold capped at 78~$^\circ$C,} the thermal guard's threshold, keeps the hold for a cool board. It brings
+the time at or above 80~$^\circ$C to \TsHoldSeventyEightHot\,\% and the excess to \TsHoldSeventyEightExc~W, with
+streaming AP \TsHoldSeventyEightSap{} $\pm$ \TsHoldSeventyEightSapCi{} against v4.1.
+\item \textbf{A hotter room.} This one is an extrapolation: ambient was not logged, so the plant's intercept was shifted
+by +5 and +10~$^\circ$C. With the lab's 3.6~W, the time at or above 80~$^\circ$C rises to \TsAmbFiveKeptHot\,\% and
+\TsAmbTenKeptHot\,\%. Lowering the budget by $1/b$ per degree, as the proposition suggests, leaves it at
+\TsAmbFiveCorrHot\,\% and \TsAmbTenCorrHot\,\%. The capped hold does not help either at +10~$^\circ$C
+(\TsHoldSeventyEightAmbTenHot\,\%). There the price is at its cap in \TsHoldSeventyEightAmbTenCapPct\,\% of the
+updates, and the cap term reaches \TsHoldSeventyEightAmbTenCapW~W: the cap, untested here, is the remaining lever.
+\end{itemize}
+The budget rule therefore sets the mean temperature, as stated. On long missions with blackouts, however, the time
+spent hot, and with it the throttling this paper is about, is set by the hold. Capping the hold at the guard's
+temperature removes that time in the replay. It has not yet been run on the board.
+
 \section{Method}\label{sec:method}
 Strategies are compared in paired campaigns: every repetition runs all strategies on the same scenario, in shuffled
 order, with the same scripted link faults, following common advice on benchmarking with repetitions~\cite{Kalibera_2013}. Differences are reported as paired means with Student-$t$ 95\,\%
@@ -420,7 +462,9 @@ camera drone on the mesh; most
 mesh cells have 3 repetitions; the trace replay favours low-onboard policies by about \ReplayLeafBias{}~sAP, so the
 planner comparison is provisional; the throttling cost is measured against an emulated full clock, and the energy mechanism is not isolated by an
 ablation; whether the controller also survives correlated failures of both links under real interference is not yet
-measured.
+measured; the step-size, budget, hold and room-temperature results come from the replay, whose thermal plant is
+the model of Proposition~\ref{prop:temp}, and the room temperature was not logged, so the capped hold still needs a
+board run.
 
 \section{Conclusion}
 On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and

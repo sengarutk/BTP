@@ -108,6 +108,9 @@
 | `\MpcHeldRandomCi` | 0.0026 | ... .ci95 |
 | `\ReplayLeafBias` | +0.0053 | replay/validate_main_oct30_power_t85/replay_check.json paired_vs_v5.leaf.replay_diff - .hardware_diff |
 | `\ReplaySapR` | 0.957 | ... agreement.sAP.pearson |
+| `\ReplayPowerR` | 0.99 | ... agreement.pi_w.pearson |
+| `\ReplayHotR` | 0.98 | ... agreement.hot_share.pearson |
+| `\ReplayHotMad` | 16 | ... agreement.hot_share.mean_abs_diff x 100 (percentage points, policy means) |
 | `\OracleShareMin` | 97 | replay/oracle_oct29_plant/oracle_summary.json scenarios.{mission,mission_mirror,static_good}.v41_share_of_oracle_schedule, minimum x 100 |
 | `\OracleShareMax` | 100 | ... maximum x 100 |
 | `\OracleShareRandom` | 88 | ... scenarios.random.v41_share_of_oracle_schedule x 100 |
@@ -203,3 +206,118 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\RnGainRelPct` | 4 | relay_noise_pi5/summary.json max over hops of relay_gain_fps.adaptive_all_rel_abs_max x 100 (|relay - no relay| / no relay, cells with >= 1 on-time frame/s per drone without relaying) |
 | `\RnSecondHopMin` | −0.05 | relay_noise_pi5/summary.json second_hop_cost_adaptive_all_fps.min |
 | `\RnSecondHopMedian` | 0.00 | relay_noise_pi5/summary.json second_hop_cost_adaptive_all_fps.median |
+| `\TsShortSeeds` | 10 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.seeds |
+| `\TsLongSeeds` | 5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.seeds |
+| `\TsEtaMin` | 0.02 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s policies th_eta*: smallest step |
+| `\TsEtaMax` | 1 | ... largest step |
+| `\TsEtaN` | 6 | ... number of steps (with v4.1's 0.1) |
+| `\TsMisExcLo` | 0.79 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta0.02.excess (mean P_t - B, W) |
+| `\TsMisExcHi` | 0.52 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta1.excess |
+| `\TsMisPriceLo` | 0.41 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta0.02.price_term (mu_N / (eta N), W) |
+| `\TsMisPriceHi` | 0.017 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta1.price_term |
+| `\TsMisHoldMax` | 0.38 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta*.hold_term, max |
+| `\TsMisGapHi` | 0.55 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta1.gap_term (Theorem 2's (eta/2) mean (P-B)^2) |
+| `\TsMisSapLo` | −0.0022 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta0.02.sAP_minus_v41.mean |
+| `\TsMisSapLoCi` | 0.0011 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta0.02.sAP_minus_v41.ci95 |
+| `\TsMisSapHi` | +0.0009 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta1.sAP_minus_v41.mean |
+| `\TsMisSapHiCi` | 0.0010 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_20s.th_eta1.sAP_minus_v41.ci95 |
+| `\TsRndExcLo` | 0.52 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta0.02.excess (mean P_t - B, W) |
+| `\TsRndExcHi` | 0.16 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta1.excess |
+| `\TsRndPriceLo` | 0.48 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta0.02.price_term (mu_N / (eta N), W) |
+| `\TsRndPriceHi` | 0.024 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta1.price_term |
+| `\TsRndHoldMax` | 0.05 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta*.hold_term, max |
+| `\TsRndGapHi` | 0.20 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta1.gap_term (Theorem 2's (eta/2) mean (P-B)^2) |
+| `\TsRndSapLo` | −0.0029 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta0.02.sAP_minus_v41.mean |
+| `\TsRndSapLoCi` | 0.0017 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta0.02.sAP_minus_v41.ci95 |
+| `\TsRndSapHi` | +0.0014 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta1.sAP_minus_v41.mean |
+| `\TsRndSapHiCi` | 0.0008 | replay/theory_sweep_nov11/theory_sweep_summary.json random_20s.th_eta1.sAP_minus_v41.ci95 |
+| `\TsLongExcLo` | 0.57 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta0.02.excess (mean P_t - B, W) |
+| `\TsLongExcHi` | 0.54 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta1.excess |
+| `\TsLongPriceLo` | 0.13 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta0.02.price_term (mu_N / (eta N), W) |
+| `\TsLongPriceHi` | 0.001 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta1.price_term |
+| `\TsLongHoldMax` | 0.44 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta*.hold_term, max |
+| `\TsLongGapHi` | 0.69 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta1.gap_term (Theorem 2's (eta/2) mean (P-B)^2) |
+| `\TsLongSapLo` | +0.0004 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta0.02.sAP_minus_v41.mean |
+| `\TsLongSapLoCi` | 0.0002 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta0.02.sAP_minus_v41.ci95 |
+| `\TsLongSapHi` | +0.0002 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta1.sAP_minus_v41.mean |
+| `\TsLongSapHiCi` | 0.0003 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_eta1.sAP_minus_v41.ci95 |
+| `\TsBudMin` | 2.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s th_b*: smallest budget |
+| `\TsBudMax` | 4.5 | ... largest budget |
+| `\TsHotMin` | 18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s th_b* and v41 hot_share, min x 100 |
+| `\TsHotMax` | 21 | ... max x 100 |
+| `\TsTempLo` | 73.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_b2.4.temp_mean_c |
+| `\TsTempHi` | 78.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_b4.5.temp_mean_c |
+| `\TsBudSapThreeSix` | −0.0029 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_b3.6.sAP_minus_v41.mean |
+| `\TsBudSapThreeSixCi` | 0.0005 | ... .ci95 |
+| `\TsBudSapTwoFour` | +0.0007 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_b2.4.sAP_minus_v41.mean |
+| `\TsBudSapTwoFourCi` | 0.0006 | ... .ci95 |
+| `\TsAmbFiveKeptHot` | 38 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.hot_share x 100 |
+| `\TsAmbFiveKeptTemp` | 80.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.temp_mean_c |
+| `\TsAmbFiveKeptExc` | 0.04 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.excess |
+| `\TsAmbFiveKeptSap` | −0.0013 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.sAP_minus_v41.mean |
+| `\TsAmbFiveKeptSapCi` | 0.0005 | ... .ci95 |
+| `\TsAmbFiveKeptOnb` | 8.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.onboard_share x 100 |
+| `\TsAmbFiveKeptCapPct` | 5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsAmbFiveKeptCapW` | 0.09 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.cap_term |
+| `\TsAmbFiveCorrHot` | 37 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.hot_share x 100 |
+| `\TsAmbFiveCorrTemp` | 80.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.temp_mean_c |
+| `\TsAmbFiveCorrExc` | 0.39 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.excess |
+| `\TsAmbFiveCorrSap` | −0.0012 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.sAP_minus_v41.mean |
+| `\TsAmbFiveCorrSapCi` | 0.0004 | ... .ci95 |
+| `\TsAmbFiveCorrOnb` | 8.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.onboard_share x 100 |
+| `\TsAmbFiveCorrCapPct` | 6 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.cap_share x 100 (updates at the cap) |
+| `\TsAmbFiveCorrCapW` | 0.10 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.cap_term |
+| `\TsAmbTenKeptHot` | 60 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.hot_share x 100 |
+| `\TsAmbTenKeptTemp` | 81.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.temp_mean_c |
+| `\TsAmbTenKeptExc` | −0.02 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.excess |
+| `\TsAmbTenKeptSap` | +0.0001 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.sAP_minus_v41.mean |
+| `\TsAmbTenKeptSapCi` | 0.0006 | ... .ci95 |
+| `\TsAmbTenKeptOnb` | 6.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.onboard_share x 100 |
+| `\TsAmbTenKeptCapPct` | 9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsAmbTenKeptCapW` | 0.18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.cap_term |
+| `\TsAmbTenCorrHot` | 57 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.hot_share x 100 |
+| `\TsAmbTenCorrTemp` | 81.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.temp_mean_c |
+| `\TsAmbTenCorrExc` | 0.72 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.excess |
+| `\TsAmbTenCorrSap` | +0.0004 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.sAP_minus_v41.mean |
+| `\TsAmbTenCorrSapCi` | 0.0006 | ... .ci95 |
+| `\TsAmbTenCorrOnb` | 6.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.onboard_share x 100 |
+| `\TsAmbTenCorrCapPct` | 13 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.cap_share x 100 (updates at the cap) |
+| `\TsAmbTenCorrCapW` | 0.32 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.cap_term |
+| `\TsNoHoldHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.hot_share x 100 |
+| `\TsNoHoldTemp` | 72.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.temp_mean_c |
+| `\TsNoHoldExc` | 0.18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.excess |
+| `\TsNoHoldSap` | −0.0002 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.sAP_minus_v41.mean |
+| `\TsNoHoldSapCi` | 0.0004 | ... .ci95 |
+| `\TsNoHoldOnb` | 5.6 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.onboard_share x 100 |
+| `\TsNoHoldCapPct` | 29 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.cap_share x 100 (updates at the cap) |
+| `\TsNoHoldCapW` | 0.16 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.cap_term |
+| `\TsNoHoldThreeSixHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.hot_share x 100 |
+| `\TsNoHoldThreeSixTemp` | 77.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.temp_mean_c |
+| `\TsNoHoldThreeSixExc` | −0.17 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.excess |
+| `\TsNoHoldThreeSixSap` | −0.0034 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.sAP_minus_v41.mean |
+| `\TsNoHoldThreeSixSapCi` | 0.0004 | ... .ci95 |
+| `\TsNoHoldThreeSixOnb` | 10.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.onboard_share x 100 |
+| `\TsNoHoldThreeSixCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsNoHoldThreeSixCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.cap_term |
+| `\TsHoldSeventyEightHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.hot_share x 100 |
+| `\TsHoldSeventyEightTemp` | 72.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.temp_mean_c |
+| `\TsHoldSeventyEightExc` | 0.22 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.excess |
+| `\TsHoldSeventyEightSap` | +0.0000 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.sAP_minus_v41.mean |
+| `\TsHoldSeventyEightSapCi` | 0.0001 | ... .ci95 |
+| `\TsHoldSeventyEightOnb` | 6.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.onboard_share x 100 |
+| `\TsHoldSeventyEightCapPct` | 12 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightCapW` | 0.07 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.cap_term |
+| `\TsHoldSeventyEightAmbTenHot` | 57 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.hot_share x 100 |
+| `\TsHoldSeventyEightAmbTenTemp` | 81.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.temp_mean_c |
+| `\TsHoldSeventyEightAmbTenExc` | 0.70 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.excess |
+| `\TsHoldSeventyEightAmbTenSap` | +0.0003 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.sAP_minus_v41.mean |
+| `\TsHoldSeventyEightAmbTenSapCi` | 0.0005 | ... .ci95 |
+| `\TsHoldSeventyEightAmbTenOnb` | 6.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.onboard_share x 100 |
+| `\TsHoldSeventyEightAmbTenCapPct` | 29 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightAmbTenCapW` | 0.75 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.cap_term |
+| `\TsVHot` | 18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.hot_share x 100 |
+| `\TsVExc` | 0.52 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.excess |
+| `\TsVHold` | 0.43 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.hold_term |
+| `\TsVOnb` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.onboard_share x 100 |
+| `\TsBoundAll` | every | replay/theory_sweep_nov11/theory_sweep_summary.json all scenarios and policies: bound_holds_all |
+| `\TsRuns` | 215 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |

@@ -3,7 +3,8 @@
   "mu_step": 0.1,
   "energy": 2.8,
   "ambient_c": 0.0,
-  "no_exempt": false
+  "no_exempt": false,
+  "hold_max_c": 85.0
  },
  "predictions": "docs/theory_sweep_predictions_nov11.md",
  "scenarios": {
@@ -26,7 +27,8 @@
       "mu_step": 0.1,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.054140255730738364,
@@ -60,7 +62,8 @@
       "mu_step": 0.02,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.051962668251419174,
@@ -106,7 +109,8 @@
       "mu_step": 0.05,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.05337070246378256,
@@ -152,7 +156,8 @@
       "mu_step": 0.2,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.05486532262549605,
@@ -198,7 +203,8 @@
       "mu_step": 0.5,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.05474805552977492,
@@ -244,7 +250,8 @@
       "mu_step": 1.0,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.055049244472669775,
@@ -301,7 +308,8 @@
       "mu_step": 0.1,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.0459704230680008,
@@ -335,7 +343,8 @@
       "mu_step": 0.02,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04635613231921768,
@@ -381,7 +390,8 @@
       "mu_step": 0.05,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04605192719945578,
@@ -427,7 +437,8 @@
       "mu_step": 0.2,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04629932934896984,
@@ -473,7 +484,8 @@
       "mu_step": 0.5,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.046072078260516666,
@@ -519,7 +531,8 @@
       "mu_step": 1.0,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.0461769826842232,
@@ -565,7 +578,8 @@
       "mu_step": 0.1,
       "energy": 2.4,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04669169363542465,
@@ -611,7 +625,8 @@
       "mu_step": 0.1,
       "energy": 3.2,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04431202746472617,
@@ -657,7 +672,8 @@
       "mu_step": 0.1,
       "energy": 3.6,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04310603753942379,
@@ -703,7 +719,8 @@
       "mu_step": 0.1,
       "energy": 4.0,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04332024318979079,
@@ -749,7 +766,8 @@
       "mu_step": 0.1,
       "energy": 4.5,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04333368129474869,
@@ -795,7 +813,8 @@
       "mu_step": 0.1,
       "energy": 3.2,
       "ambient_c": 5.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04479823119302127,
@@ -841,7 +860,8 @@
       "mu_step": 0.1,
       "energy": 3.6,
       "ambient_c": 5.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04467513212588321,
@@ -887,7 +907,8 @@
       "mu_step": 0.1,
       "energy": 2.8,
       "ambient_c": 10.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04637243808725909,
@@ -933,7 +954,8 @@
       "mu_step": 0.1,
       "energy": 3.6,
       "ambient_c": 10.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04611645690183854,
@@ -979,7 +1001,8 @@
       "mu_step": 0.1,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": true
+      "no_exempt": true,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.04581425588643638,
@@ -1025,7 +1048,8 @@
       "mu_step": 0.1,
       "energy": 3.6,
       "ambient_c": 0.0,
-      "no_exempt": true
+      "no_exempt": true,
+      "hold_max_c": 85.0
      },
      "n": 5,
      "sAP": 0.042523990847389795,
@@ -1065,6 +1089,100 @@
       "n": 5,
       "wins": 5
      }
+    },
+    "th_hold78": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 0.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0
+     },
+     "n": 5,
+     "sAP": 0.0460165976903337,
+     "pi_w": 3.107041145038732,
+     "temp_mean_c": 72.77515151732317,
+     "temp_max_c": 78.01651947064673,
+     "hot_share": 0.0,
+     "fresh_share": 0.9936944444444444,
+     "eta": 0.1,
+     "budget": 2.8,
+     "updates": 1439.0,
+     "mean_p_updates": 3.0173625230981815,
+     "excess": 0.21736252309818155,
+     "price_term": 0.01852368792407703,
+     "hold_term": 0.1299124913937783,
+     "cap_term": 0.06943423235636732,
+     "other_neg": 4.248239638489273e-14,
+     "mu_final": 2.665558692274685,
+     "mu_max": 5.0,
+     "held_share": 0.16997915218902016,
+     "cap_share": 0.11994440583738708,
+     "msq": 0.3706987974778758,
+     "gap_term": 0.01853493987389379,
+     "bound": 3.0178704116742225,
+     "excess_max": 0.2352206926613789,
+     "bound_holds_all": true,
+     "onboard_share": 0.06,
+     "sAP_minus_v41": {
+      "mean": 4.61746223328896e-05,
+      "ci95": 6.697563104004787e-05,
+      "n": 5,
+      "wins": 4
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.30575303139589594,
+      "ci95": 0.002398112894833038,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_hold78_amb10": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 10.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0
+     },
+     "n": 5,
+     "sAP": 0.04629776533939717,
+     "pi_w": 3.592114455887933,
+     "temp_mean_c": 81.48169908427685,
+     "temp_max_c": 85.0,
+     "hot_share": 0.5669537037037037,
+     "fresh_share": 0.9868703703703705,
+     "eta": 0.1,
+     "budget": 2.8,
+     "updates": 1439.0,
+     "mean_p_updates": 3.504018727528964,
+     "excess": 0.7040187275289643,
+     "price_term": 0.01805847254643513,
+     "hold_term": 0.0,
+     "cap_term": 0.7538474039416009,
+     "other_neg": 4.0880416185464644e-14,
+     "mu_final": 2.5986141994320153,
+     "mu_max": 5.0,
+     "held_share": 0.0,
+     "cap_share": 0.2921473245309243,
+     "msq": 2.2529081416462517,
+     "gap_term": 0.11264540708231259,
+     "bound": 3.571905876488036,
+     "excess_max": 0.7862618889248014,
+     "bound_holds_all": true,
+     "onboard_share": 0.06431944444444444,
+     "sAP_minus_v41": {
+      "mean": 0.000327342271396365,
+      "ci95": 0.0005420127390977152,
+      "n": 5,
+      "wins": 4
+     },
+     "pi_w_minus_v41": {
+      "mean": 0.17932027945330545,
+      "ci95": 0.06829763711081568,
+      "n": 5,
+      "wins": 5
+     }
     }
    }
   },
@@ -1087,7 +1205,8 @@
       "mu_step": 0.1,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.050387007896837865,
@@ -1121,7 +1240,8 @@
       "mu_step": 0.02,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.047470782017279126,
@@ -1167,7 +1287,8 @@
       "mu_step": 0.05,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.04927446398092857,
@@ -1213,7 +1334,8 @@
       "mu_step": 0.2,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.05088616936343675,
@@ -1259,7 +1381,8 @@
       "mu_step": 0.5,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.051843185798249994,
@@ -1305,7 +1428,8 @@
       "mu_step": 1.0,
       "energy": 2.8,
       "ambient_c": 0.0,
-      "no_exempt": false
+      "no_exempt": false,
+      "hold_max_c": 85.0
      },
      "n": 10,
      "sAP": 0.051802237381741056,

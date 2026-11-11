@@ -227,6 +227,10 @@ def main():
     put("ReplayLeafBias", signed(ck["paired_vs_v5"]["leaf"]["replay_diff"] - ck["paired_vs_v5"]["leaf"]["hardware_diff"]),
         "replay/validate_main_oct30_power_t85/replay_check.json paired_vs_v5.leaf.replay_diff - .hardware_diff")
     put("ReplaySapR", ck["agreement"]["sAP"]["pearson"], "... agreement.sAP.pearson", "{:.3f}")
+    put("ReplayPowerR", ck["agreement"]["pi_w"]["pearson"], "... agreement.pi_w.pearson", "{:.2f}")
+    put("ReplayHotR", ck["agreement"]["hot_share"]["pearson"], "... agreement.hot_share.pearson", "{:.2f}")
+    put("ReplayHotMad", 100 * ck["agreement"]["hot_share"]["mean_abs_diff"], "... agreement.hot_share.mean_abs_diff x 100 "
+        "(percentage points, policy means)", "{:.0f}")
     orc = j("replay/oracle_oct29_plant/oracle_summary.json")["scenarios"]
     sh = {k: v["v41_share_of_oracle_schedule"] for k, v in orc.items()}
     put("OracleShareMin", 100 * min(v for k, v in sh.items() if k != "random"), "replay/oracle_oct29_plant/oracle_summary"
@@ -407,6 +411,71 @@ def main():
             sh = rn["second_hop_cost_adaptive_all_fps"]
             put("RnSecondHopMin", sh["min"], f"{src} second_hop_cost_adaptive_all_fps.min", "{:.2f}")
             put("RnSecondHopMedian", sh["median"], f"{src} second_hop_cost_adaptive_all_fps.median", "{:.2f}")
+
+    # ---- step size, budget, room temperature and the blackout hold in the validated replay (11 Nov 2026):
+    # validation/hardware/replay_theory_sweep.py; predictions before every run in docs/theory_sweep_predictions_nov11.md
+    tsf = HW / "replay" / "theory_sweep_nov11" / "theory_sweep_summary.json"
+    if tsf.exists():
+        src = "replay/theory_sweep_nov11/theory_sweep_summary.json"
+        ts = json.load(open(tsf))["scenarios"]
+        sh, rd, lg = (ts[k]["policies"] for k in ("mission_20s", "random_20s", "mission_240s"))
+        put("TsShortSeeds", str(len(ts["mission_20s"]["seeds"])), f"{src} mission_20s.seeds")
+        put("TsLongSeeds", str(len(ts["mission_240s"]["seeds"])), f"{src} mission_240s.seeds")
+        etas = sorted(e["setting"]["mu_step"] for n, e in sh.items() if n == "v41" or n.startswith("th_eta"))
+        put("TsEtaMin", etas[0], f"{src} mission_20s policies th_eta*: smallest step", "{:g}")
+        put("TsEtaMax", etas[-1], "... largest step", "{:g}")
+        put("TsEtaN", str(len(etas)), "... number of steps (with v4.1's 0.1)")
+        lo_n, hi_n = f"th_eta{etas[0]:g}", f"th_eta{etas[-1]:g}"
+        for tag, pol in (("Mis", sh), ("Rnd", rd), ("Long", lg)):
+            sc = {"Mis": "mission_20s", "Rnd": "random_20s", "Long": "mission_240s"}[tag]
+            put(f"Ts{tag}ExcLo", pol[lo_n]["excess"], f"{src} {sc}.{lo_n}.excess (mean P_t - B, W)", "{:.2f}")
+            put(f"Ts{tag}ExcHi", pol[hi_n]["excess"], f"{src} {sc}.{hi_n}.excess", "{:.2f}")
+            put(f"Ts{tag}PriceLo", pol[lo_n]["price_term"], f"{src} {sc}.{lo_n}.price_term (mu_N / (eta N), W)", "{:.2f}")
+            put(f"Ts{tag}PriceHi", pol[hi_n]["price_term"], f"{src} {sc}.{hi_n}.price_term", "{:.3f}")
+            put(f"Ts{tag}HoldMax", max(e["hold_term"] for n, e in pol.items() if n == "v41" or n.startswith("th_eta")),
+                f"{src} {sc}.th_eta*.hold_term, max", "{:.2f}")
+            put(f"Ts{tag}GapHi", pol[hi_n]["gap_term"], f"{src} {sc}.{hi_n}.gap_term (Theorem 2's (eta/2) mean (P-B)^2)",
+                "{:.2f}")
+            d = pol[lo_n]["sAP_minus_v41"]
+            put(f"Ts{tag}SapLo", signed(d["mean"]), f"{src} {sc}.{lo_n}.sAP_minus_v41.mean")
+            put(f"Ts{tag}SapLoCi", d["ci95"], f"{src} {sc}.{lo_n}.sAP_minus_v41.ci95")
+            d = pol[hi_n]["sAP_minus_v41"]
+            put(f"Ts{tag}SapHi", signed(d["mean"]), f"{src} {sc}.{hi_n}.sAP_minus_v41.mean")
+            put(f"Ts{tag}SapHiCi", d["ci95"], f"{src} {sc}.{hi_n}.sAP_minus_v41.ci95")
+        bud = {n: e for n, e in lg.items() if n == "v41" or (n.startswith("th_b") and "amb" not in n)}
+        put("TsBudMin", min(e["setting"]["energy"] for e in bud.values()), f"{src} mission_240s th_b*: smallest budget", "{:.1f}")
+        put("TsBudMax", max(e["setting"]["energy"] for e in bud.values()), "... largest budget", "{:.1f}")
+        put("TsHotMin", 100 * min(e["hot_share"] for e in bud.values()), f"{src} mission_240s th_b* and v41 hot_share, min x 100", "{:.0f}")
+        put("TsHotMax", 100 * max(e["hot_share"] for e in bud.values()), "... max x 100", "{:.0f}")
+        put("TsTempLo", bud["th_b2.4"]["temp_mean_c"], f"{src} mission_240s.th_b2.4.temp_mean_c", "{:.1f}")
+        put("TsTempHi", bud["th_b4.5"]["temp_mean_c"], f"{src} mission_240s.th_b4.5.temp_mean_c", "{:.1f}")
+        d = lg["th_b3.6"]["sAP_minus_v41"]
+        put("TsBudSapThreeSix", signed(d["mean"]), f"{src} mission_240s.th_b3.6.sAP_minus_v41.mean")
+        put("TsBudSapThreeSixCi", d["ci95"], "... .ci95")
+        d = lg["th_b2.4"]["sAP_minus_v41"]
+        put("TsBudSapTwoFour", signed(d["mean"]), f"{src} mission_240s.th_b2.4.sAP_minus_v41.mean")
+        put("TsBudSapTwoFourCi", d["ci95"], "... .ci95")
+        for n, k in (("th_amb5_b3.6", "AmbFiveKept"), ("th_amb5_b3.2", "AmbFiveCorr"), ("th_amb10_b3.6", "AmbTenKept"),
+                     ("th_amb10_b2.8", "AmbTenCorr"), ("th_nohold_b2.8", "NoHold"), ("th_nohold_b3.6", "NoHoldThreeSix"),
+                     ("th_hold78", "HoldSeventyEight"), ("th_hold78_amb10", "HoldSeventyEightAmbTen")):
+            if n not in lg:
+                continue
+            e = lg[n]
+            put(f"Ts{k}Hot", 100 * e["hot_share"], f"{src} mission_240s.{n}.hot_share x 100", "{:.0f}")
+            put(f"Ts{k}Temp", e["temp_mean_c"], f"{src} mission_240s.{n}.temp_mean_c", "{:.1f}")
+            put(f"Ts{k}Exc", e["excess"], f"{src} mission_240s.{n}.excess", "{:.2f}")
+            put(f"Ts{k}Sap", signed(e["sAP_minus_v41"]["mean"]), f"{src} mission_240s.{n}.sAP_minus_v41.mean")
+            put(f"Ts{k}SapCi", e["sAP_minus_v41"]["ci95"], "... .ci95")
+            put(f"Ts{k}Onb", 100 * e["onboard_share"], f"{src} mission_240s.{n}.onboard_share x 100", "{:.1f}")
+            put(f"Ts{k}CapPct", 100 * e["cap_share"], f"{src} mission_240s.{n}.cap_share x 100 (updates at the cap)", "{:.0f}")
+            put(f"Ts{k}CapW", e["cap_term"], f"{src} mission_240s.{n}.cap_term", "{:.2f}")
+        put("TsVHot", 100 * lg["v41"]["hot_share"], f"{src} mission_240s.v41.hot_share x 100", "{:.0f}")
+        put("TsVExc", lg["v41"]["excess"], f"{src} mission_240s.v41.excess", "{:.2f}")
+        put("TsVHold", lg["v41"]["hold_term"], f"{src} mission_240s.v41.hold_term", "{:.2f}")
+        put("TsVOnb", 100 * lg["v41"]["onboard_share"], f"{src} mission_240s.v41.onboard_share x 100", "{:.1f}")
+        put("TsBoundAll", "every" if all(e["bound_holds_all"] for t in ts.values() for e in t["policies"].values())
+            else "NOT every", f"{src} all scenarios and policies: bound_holds_all")
+        put("TsRuns", str(sum(e["n"] for t in ts.values() for e in t["policies"].values())), f"{src} sum of n")
 
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "metrics.tex").write_text("% Generated by paper2/make_metrics.py from experiments/results -- do not edit.\n" +

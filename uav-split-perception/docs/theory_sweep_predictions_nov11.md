@@ -65,3 +65,9 @@ against v41 and th_amb10_b2.8.
 8. The hot time falls far below v4.1's 18 % in the lab and below th_amb10_b2.8's 58 % at +10 C, while the hold
    still covers most blackout time below 78 C; sAP within the paired interval of v4.1 (lab) and of th_amb10_b2.8.
    If the hot time does not fall much, the guard's own heating is the cause and we say so.
+
+Result of addendum 3 (11 Nov 2026, ~16:00 IST): prediction 8 held in the lab (hot time 18 % -> 0 %, excess 0.52 ->
+0.22 W, sAP +0.0000 +- 0.0001) and failed at +10 C (57 %: the price is at its cap in 29 % of the updates, cap term
+0.75 W). The replay's hot-share level differs from the hardware's by 16 points on average (r 0.98 between
+policies), so all shares are comparisons between settings. Paper 2: Section "Guarantees", "The settings, swept in
+the replay".
