@@ -258,6 +258,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsAmbFiveKeptSapCi` | 0.0005 | ... .ci95 |
 | `\TsAmbFiveKeptOnb` | 8.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.onboard_share x 100 |
 | `\TsAmbFiveKeptCapPct` | 5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsAmbFiveKeptFresh` | 99.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.fresh_share x 100 |
+| `\TsAmbFiveKeptPower` | 3.73 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.pi_w |
+| `\TsAmbFiveKeptBudget` | 3.60 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.budget (mean over the updates) |
+| `\TsAmbFiveKeptMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.temp_max_c (mean of the seeds' maxima) |
+| `\TsAmbFiveKeptMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.mu_max (largest price, mean of seeds) |
 | `\TsAmbFiveKeptCapW` | 0.09 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.6.cap_term |
 | `\TsAmbFiveCorrHot` | 37 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.hot_share x 100 |
 | `\TsAmbFiveCorrTemp` | 80.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.temp_mean_c |
@@ -266,6 +271,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsAmbFiveCorrSapCi` | 0.0004 | ... .ci95 |
 | `\TsAmbFiveCorrOnb` | 8.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.onboard_share x 100 |
 | `\TsAmbFiveCorrCapPct` | 6 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.cap_share x 100 (updates at the cap) |
+| `\TsAmbFiveCorrFresh` | 99.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.fresh_share x 100 |
+| `\TsAmbFiveCorrPower` | 3.67 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.pi_w |
+| `\TsAmbFiveCorrBudget` | 3.20 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.budget (mean over the updates) |
+| `\TsAmbFiveCorrMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.temp_max_c (mean of the seeds' maxima) |
+| `\TsAmbFiveCorrMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.mu_max (largest price, mean of seeds) |
 | `\TsAmbFiveCorrCapW` | 0.10 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb5_b3.2.cap_term |
 | `\TsAmbTenKeptHot` | 60 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.hot_share x 100 |
 | `\TsAmbTenKeptTemp` | 81.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.temp_mean_c |
@@ -274,6 +284,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsAmbTenKeptSapCi` | 0.0006 | ... .ci95 |
 | `\TsAmbTenKeptOnb` | 6.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.onboard_share x 100 |
 | `\TsAmbTenKeptCapPct` | 9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsAmbTenKeptFresh` | 99.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.fresh_share x 100 |
+| `\TsAmbTenKeptPower` | 3.67 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.pi_w |
+| `\TsAmbTenKeptBudget` | 3.60 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.budget (mean over the updates) |
+| `\TsAmbTenKeptMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.temp_max_c (mean of the seeds' maxima) |
+| `\TsAmbTenKeptMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.mu_max (largest price, mean of seeds) |
 | `\TsAmbTenKeptCapW` | 0.18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b3.6.cap_term |
 | `\TsAmbTenCorrHot` | 57 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.hot_share x 100 |
 | `\TsAmbTenCorrTemp` | 81.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.temp_mean_c |
@@ -282,6 +297,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsAmbTenCorrSapCi` | 0.0006 | ... .ci95 |
 | `\TsAmbTenCorrOnb` | 6.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.onboard_share x 100 |
 | `\TsAmbTenCorrCapPct` | 13 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.cap_share x 100 (updates at the cap) |
+| `\TsAmbTenCorrFresh` | 99.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.fresh_share x 100 |
+| `\TsAmbTenCorrPower` | 3.61 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.pi_w |
+| `\TsAmbTenCorrBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.budget (mean over the updates) |
+| `\TsAmbTenCorrMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.temp_max_c (mean of the seeds' maxima) |
+| `\TsAmbTenCorrMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.mu_max (largest price, mean of seeds) |
 | `\TsAmbTenCorrCapW` | 0.32 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_amb10_b2.8.cap_term |
 | `\TsNoHoldHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.hot_share x 100 |
 | `\TsNoHoldTemp` | 72.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.temp_mean_c |
@@ -290,6 +310,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsNoHoldSapCi` | 0.0004 | ... .ci95 |
 | `\TsNoHoldOnb` | 5.6 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.onboard_share x 100 |
 | `\TsNoHoldCapPct` | 29 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.cap_share x 100 (updates at the cap) |
+| `\TsNoHoldFresh` | 98.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.fresh_share x 100 |
+| `\TsNoHoldPower` | 3.07 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.pi_w |
+| `\TsNoHoldBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.budget (mean over the updates) |
+| `\TsNoHoldMaxTemp` | 76.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.temp_max_c (mean of the seeds' maxima) |
+| `\TsNoHoldMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.mu_max (largest price, mean of seeds) |
 | `\TsNoHoldCapW` | 0.16 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b2.8.cap_term |
 | `\TsNoHoldThreeSixHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.hot_share x 100 |
 | `\TsNoHoldThreeSixTemp` | 77.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.temp_mean_c |
@@ -298,6 +323,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsNoHoldThreeSixSapCi` | 0.0004 | ... .ci95 |
 | `\TsNoHoldThreeSixOnb` | 10.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.onboard_share x 100 |
 | `\TsNoHoldThreeSixCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.cap_share x 100 (updates at the cap) |
+| `\TsNoHoldThreeSixFresh` | 99.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.fresh_share x 100 |
+| `\TsNoHoldThreeSixPower` | 3.52 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.pi_w |
+| `\TsNoHoldThreeSixBudget` | 3.60 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.budget (mean over the updates) |
+| `\TsNoHoldThreeSixMaxTemp` | 79.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.temp_max_c (mean of the seeds' maxima) |
+| `\TsNoHoldThreeSixMuMax` | 1.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.mu_max (largest price, mean of seeds) |
 | `\TsNoHoldThreeSixCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_nohold_b3.6.cap_term |
 | `\TsHoldSeventyEightHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.hot_share x 100 |
 | `\TsHoldSeventyEightTemp` | 72.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.temp_mean_c |
@@ -306,6 +336,11 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsHoldSeventyEightSapCi` | 0.0001 | ... .ci95 |
 | `\TsHoldSeventyEightOnb` | 6.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.onboard_share x 100 |
 | `\TsHoldSeventyEightCapPct` | 12 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightFresh` | 99.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.fresh_share x 100 |
+| `\TsHoldSeventyEightPower` | 3.11 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.pi_w |
+| `\TsHoldSeventyEightBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.budget (mean over the updates) |
+| `\TsHoldSeventyEightMaxTemp` | 78.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.temp_max_c (mean of the seeds' maxima) |
+| `\TsHoldSeventyEightMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.mu_max (largest price, mean of seeds) |
 | `\TsHoldSeventyEightCapW` | 0.07 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78.cap_term |
 | `\TsHoldSeventyEightAmbTenHot` | 57 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.hot_share x 100 |
 | `\TsHoldSeventyEightAmbTenTemp` | 81.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.temp_mean_c |
@@ -314,13 +349,187 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsHoldSeventyEightAmbTenSapCi` | 0.0005 | ... .ci95 |
 | `\TsHoldSeventyEightAmbTenOnb` | 6.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.onboard_share x 100 |
 | `\TsHoldSeventyEightAmbTenCapPct` | 29 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightAmbTenFresh` | 98.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.fresh_share x 100 |
+| `\TsHoldSeventyEightAmbTenPower` | 3.59 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.pi_w |
+| `\TsHoldSeventyEightAmbTenBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.budget (mean over the updates) |
+| `\TsHoldSeventyEightAmbTenMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.temp_max_c (mean of the seeds' maxima) |
+| `\TsHoldSeventyEightAmbTenMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.mu_max (largest price, mean of seeds) |
 | `\TsHoldSeventyEightAmbTenCapW` | 0.75 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10.cap_term |
+| `\TsHoldSeventyEightAmbFiveHot` | 25 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.hot_share x 100 |
+| `\TsHoldSeventyEightAmbFiveTemp` | 78.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.temp_mean_c |
+| `\TsHoldSeventyEightAmbFiveExc` | 0.46 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.excess |
+| `\TsHoldSeventyEightAmbFiveSap` | −0.0003 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.sAP_minus_v41.mean |
+| `\TsHoldSeventyEightAmbFiveSapCi` | 0.0001 | ... .ci95 |
+| `\TsHoldSeventyEightAmbFiveOnb` | 6.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.onboard_share x 100 |
+| `\TsHoldSeventyEightAmbFiveCapPct` | 28 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightAmbFiveFresh` | 98.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.fresh_share x 100 |
+| `\TsHoldSeventyEightAmbFivePower` | 3.35 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.pi_w |
+| `\TsHoldSeventyEightAmbFiveBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.budget (mean over the updates) |
+| `\TsHoldSeventyEightAmbFiveMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.temp_max_c (mean of the seeds' maxima) |
+| `\TsHoldSeventyEightAmbFiveMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.mu_max (largest price, mean of seeds) |
+| `\TsHoldSeventyEightAmbFiveCapW` | 0.44 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb5.cap_term |
+| `\TsCapTenHot` | 42 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.hot_share x 100 |
+| `\TsCapTenTemp` | 79.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.temp_mean_c |
+| `\TsCapTenExc` | −0.04 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.excess |
+| `\TsCapTenSap` | −0.0008 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.sAP_minus_v41.mean |
+| `\TsCapTenSapCi` | 0.0003 | ... .ci95 |
+| `\TsCapTenOnb` | 2.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.onboard_share x 100 |
+| `\TsCapTenCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.cap_share x 100 (updates at the cap) |
+| `\TsCapTenFresh` | 89.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.fresh_share x 100 |
+| `\TsCapTenPower` | 2.85 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.pi_w |
+| `\TsCapTenBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.budget (mean over the updates) |
+| `\TsCapTenMaxTemp` | 83.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.temp_max_c (mean of the seeds' maxima) |
+| `\TsCapTenMuMax` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.mu_max (largest price, mean of seeds) |
+| `\TsCapTenCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap10.cap_term |
+| `\TsCapFiftyHot` | 42 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.hot_share x 100 |
+| `\TsCapFiftyTemp` | 79.7 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.temp_mean_c |
+| `\TsCapFiftyExc` | −0.04 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.excess |
+| `\TsCapFiftySap` | −0.0008 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.sAP_minus_v41.mean |
+| `\TsCapFiftySapCi` | 0.0003 | ... .ci95 |
+| `\TsCapFiftyOnb` | 2.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.onboard_share x 100 |
+| `\TsCapFiftyCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.cap_share x 100 (updates at the cap) |
+| `\TsCapFiftyFresh` | 89.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.fresh_share x 100 |
+| `\TsCapFiftyPower` | 2.85 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.pi_w |
+| `\TsCapFiftyBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.budget (mean over the updates) |
+| `\TsCapFiftyMaxTemp` | 83.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.temp_max_c (mean of the seeds' maxima) |
+| `\TsCapFiftyMuMax` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.mu_max (largest price, mean of seeds) |
+| `\TsCapFiftyCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb10_cap50.cap_term |
+| `\TsAdaptLabHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.hot_share x 100 |
+| `\TsAdaptLabTemp` | 72.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.temp_mean_c |
+| `\TsAdaptLabExc` | 0.31 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.excess |
+| `\TsAdaptLabSap` | +0.0008 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.sAP_minus_v41.mean |
+| `\TsAdaptLabSapCi` | 0.0007 | ... .ci95 |
+| `\TsAdaptLabOnb` | 5.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.onboard_share x 100 |
+| `\TsAdaptLabCapPct` | 21 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.cap_share x 100 (updates at the cap) |
+| `\TsAdaptLabFresh` | 99.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.fresh_share x 100 |
+| `\TsAdaptLabPower` | 3.05 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.pi_w |
+| `\TsAdaptLabBudget` | 2.65 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.budget (mean over the updates) |
+| `\TsAdaptLabMaxTemp` | 78.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.temp_max_c (mean of the seeds' maxima) |
+| `\TsAdaptLabMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.mu_max (largest price, mean of seeds) |
+| `\TsAdaptLabCapW` | 0.12 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb0.cap_term |
+| `\TsAdaptFiveHot` | 23 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.hot_share x 100 |
+| `\TsAdaptFiveTemp` | 77.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.temp_mean_c |
+| `\TsAdaptFiveExc` | 0.74 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.excess |
+| `\TsAdaptFiveSap` | +0.0006 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.sAP_minus_v41.mean |
+| `\TsAdaptFiveSapCi` | 0.0003 | ... .ci95 |
+| `\TsAdaptFiveOnb` | 5.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.onboard_share x 100 |
+| `\TsAdaptFiveCapPct` | 73 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.cap_share x 100 (updates at the cap) |
+| `\TsAdaptFiveFresh` | 98.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.fresh_share x 100 |
+| `\TsAdaptFivePower` | 3.23 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.pi_w |
+| `\TsAdaptFiveBudget` | 2.39 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.budget (mean over the updates) |
+| `\TsAdaptFiveMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.temp_max_c (mean of the seeds' maxima) |
+| `\TsAdaptFiveMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.mu_max (largest price, mean of seeds) |
+| `\TsAdaptFiveCapW` | 0.70 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5.cap_term |
+| `\TsAdaptTenHot` | 52 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.hot_share x 100 |
+| `\TsAdaptTenTemp` | 81.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.temp_mean_c |
+| `\TsAdaptTenExc` | 0.89 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.excess |
+| `\TsAdaptTenSap` | +0.0003 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.sAP_minus_v41.mean |
+| `\TsAdaptTenSapCi` | 0.0007 | ... .ci95 |
+| `\TsAdaptTenOnb` | 6.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.onboard_share x 100 |
+| `\TsAdaptTenCapPct` | 74 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.cap_share x 100 (updates at the cap) |
+| `\TsAdaptTenFresh` | 97.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.fresh_share x 100 |
+| `\TsAdaptTenPower` | 3.54 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.pi_w |
+| `\TsAdaptTenBudget` | 2.56 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.budget (mean over the updates) |
+| `\TsAdaptTenMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.temp_max_c (mean of the seeds' maxima) |
+| `\TsAdaptTenMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.mu_max (largest price, mean of seeds) |
+| `\TsAdaptTenCapW` | 0.87 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10.cap_term |
+| `\TsAdaptCapFiveHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.hot_share x 100 |
+| `\TsAdaptCapFiveTemp` | 73.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.temp_mean_c |
+| `\TsAdaptCapFiveExc` | 0.38 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.excess |
+| `\TsAdaptCapFiveSap` | +0.0004 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.sAP_minus_v41.mean |
+| `\TsAdaptCapFiveSapCi` | 0.0022 | ... .ci95 |
+| `\TsAdaptCapFiveOnb` | 2.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.onboard_share x 100 |
+| `\TsAdaptCapFiveCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.cap_share x 100 (updates at the cap) |
+| `\TsAdaptCapFiveFresh` | 94.3 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.fresh_share x 100 |
+| `\TsAdaptCapFivePower` | 2.76 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.pi_w |
+| `\TsAdaptCapFiveBudget` | 2.28 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.budget (mean over the updates) |
+| `\TsAdaptCapFiveMaxTemp` | 78.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.temp_max_c (mean of the seeds' maxima) |
+| `\TsAdaptCapFiveMuMax` | 27.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.mu_max (largest price, mean of seeds) |
+| `\TsAdaptCapFiveCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb5_cap50.cap_term |
+| `\TsAdaptCapTenHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.hot_share x 100 |
+| `\TsAdaptCapTenTemp` | 77.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.temp_mean_c |
+| `\TsAdaptCapTenExc` | 0.32 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.excess |
+| `\TsAdaptCapTenSap` | −0.0016 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.sAP_minus_v41.mean |
+| `\TsAdaptCapTenSapCi` | 0.0015 | ... .ci95 |
+| `\TsAdaptCapTenOnb` | 1.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.onboard_share x 100 |
+| `\TsAdaptCapTenCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.cap_share x 100 (updates at the cap) |
+| `\TsAdaptCapTenFresh` | 88.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.fresh_share x 100 |
+| `\TsAdaptCapTenPower` | 2.63 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.pi_w |
+| `\TsAdaptCapTenBudget` | 2.21 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.budget (mean over the updates) |
+| `\TsAdaptCapTenMaxTemp` | 80.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.temp_max_c (mean of the seeds' maxima) |
+| `\TsAdaptCapTenMuMax` | 32.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.mu_max (largest price, mean of seeds) |
+| `\TsAdaptCapTenCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_adapt_amb10_cap50.cap_term |
+| `\TsHoldSeventyEightAmbFifteenHot` | 100 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.hot_share x 100 |
+| `\TsHoldSeventyEightAmbFifteenTemp` | 84.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.temp_mean_c |
+| `\TsHoldSeventyEightAmbFifteenExc` | 0.79 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.excess |
+| `\TsHoldSeventyEightAmbFifteenSap` | −0.0001 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.sAP_minus_v41.mean |
+| `\TsHoldSeventyEightAmbFifteenSapCi` | 0.0008 | ... .ci95 |
+| `\TsHoldSeventyEightAmbFifteenOnb` | 6.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.onboard_share x 100 |
+| `\TsHoldSeventyEightAmbFifteenCapPct` | 33 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.cap_share x 100 (updates at the cap) |
+| `\TsHoldSeventyEightAmbFifteenFresh` | 98.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.fresh_share x 100 |
+| `\TsHoldSeventyEightAmbFifteenPower` | 3.68 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.pi_w |
+| `\TsHoldSeventyEightAmbFifteenBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.budget (mean over the updates) |
+| `\TsHoldSeventyEightAmbFifteenMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.temp_max_c (mean of the seeds' maxima) |
+| `\TsHoldSeventyEightAmbFifteenMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.mu_max (largest price, mean of seeds) |
+| `\TsHoldSeventyEightAmbFifteenCapW` | 0.83 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_hold78_amb15.cap_term |
+| `\TsGuardLabHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.hot_share x 100 |
+| `\TsGuardLabTemp` | 72.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.temp_mean_c |
+| `\TsGuardLabExc` | 0.22 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.excess |
+| `\TsGuardLabSap` | +0.0000 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.sAP_minus_v41.mean |
+| `\TsGuardLabSapCi` | 0.0001 | ... .ci95 |
+| `\TsGuardLabOnb` | 6.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.onboard_share x 100 |
+| `\TsGuardLabCapPct` | 12 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.cap_share x 100 (updates at the cap) |
+| `\TsGuardLabFresh` | 99.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.fresh_share x 100 |
+| `\TsGuardLabPower` | 3.11 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.pi_w |
+| `\TsGuardLabBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.budget (mean over the updates) |
+| `\TsGuardLabMaxTemp` | 78.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.temp_max_c (mean of the seeds' maxima) |
+| `\TsGuardLabMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.mu_max (largest price, mean of seeds) |
+| `\TsGuardLabCapW` | 0.07 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb0.cap_term |
+| `\TsGuardFiveHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.hot_share x 100 |
+| `\TsGuardFiveTemp` | 76.4 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.temp_mean_c |
+| `\TsGuardFiveExc` | 0.10 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.excess |
+| `\TsGuardFiveSap` | −0.0005 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.sAP_minus_v41.mean |
+| `\TsGuardFiveSapCi` | 0.0005 | ... .ci95 |
+| `\TsGuardFiveOnb` | 4.6 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.onboard_share x 100 |
+| `\TsGuardFiveCapPct` | 13 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.cap_share x 100 (updates at the cap) |
+| `\TsGuardFiveFresh` | 94.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.fresh_share x 100 |
+| `\TsGuardFivePower` | 2.99 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.pi_w |
+| `\TsGuardFiveBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.budget (mean over the updates) |
+| `\TsGuardFiveMaxTemp` | 78.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.temp_max_c (mean of the seeds' maxima) |
+| `\TsGuardFiveMuMax` | 5.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.mu_max (largest price, mean of seeds) |
+| `\TsGuardFiveCapW` | 0.04 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb5.cap_term |
+| `\TsGuardTenHot` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.hot_share x 100 |
+| `\TsGuardTenTemp` | 78.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.temp_mean_c |
+| `\TsGuardTenExc` | −0.16 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.excess |
+| `\TsGuardTenSap` | +0.0001 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.sAP_minus_v41.mean |
+| `\TsGuardTenSapCi` | 0.0002 | ... .ci95 |
+| `\TsGuardTenOnb` | 1.5 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.onboard_share x 100 |
+| `\TsGuardTenCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.cap_share x 100 (updates at the cap) |
+| `\TsGuardTenFresh` | 86.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.fresh_share x 100 |
+| `\TsGuardTenPower` | 2.73 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.pi_w |
+| `\TsGuardTenBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.budget (mean over the updates) |
+| `\TsGuardTenMaxTemp` | 80.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.temp_max_c (mean of the seeds' maxima) |
+| `\TsGuardTenMuMax` | 1.1 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.mu_max (largest price, mean of seeds) |
+| `\TsGuardTenCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb10.cap_term |
+| `\TsGuardFifteenHot` | 84 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.hot_share x 100 |
+| `\TsGuardFifteenTemp` | 81.8 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.temp_mean_c |
+| `\TsGuardFifteenExc` | −0.28 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.excess |
+| `\TsGuardFifteenSap` | −0.0035 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.sAP_minus_v41.mean |
+| `\TsGuardFifteenSapCi` | 0.0003 | ... .ci95 |
+| `\TsGuardFifteenOnb` | 0.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.onboard_share x 100 |
+| `\TsGuardFifteenCapPct` | 0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.cap_share x 100 (updates at the cap) |
+| `\TsGuardFifteenFresh` | 78.9 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.fresh_share x 100 |
+| `\TsGuardFifteenPower` | 2.61 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.pi_w |
+| `\TsGuardFifteenBudget` | 2.80 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.budget (mean over the updates) |
+| `\TsGuardFifteenMaxTemp` | 85.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.temp_max_c (mean of the seeds' maxima) |
+| `\TsGuardFifteenMuMax` | 1.2 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.mu_max (largest price, mean of seeds) |
+| `\TsGuardFifteenCapW` | 0.00 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.th_guard_amb15.cap_term |
 | `\TsVHot` | 18 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.hot_share x 100 |
 | `\TsVExc` | 0.52 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.excess |
 | `\TsVHold` | 0.43 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.hold_term |
 | `\TsVOnb` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.onboard_share x 100 |
 | `\TsBoundAll` | every | replay/theory_sweep_nov11/theory_sweep_summary.json all scenarios and policies: bound_holds_all |
-| `\TsRuns` | 250 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |
+| `\TsRuns` | 285 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |
 | `\HwLongWifiRuns` | 2 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): number of 24-min Wi-Fi v4.1 runs |
 | `\HwLongWifiHotMin` | 19 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): share of log samples >= 80 C, min x 100 |
 | `\HwLongWifiHotMax` | 27 | ... max x 100 |
@@ -348,3 +557,48 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TgMarginThrottle` | 14.5 | theory_check/guard_theorem.json hardware.margin_throttle_c |
 | `\TgConverseMax` | 10.8 | theory_check/guard_theorem.json hardware.converse_margin_max_c |
 | `\TgConverseMean` | 16.2 | theory_check/guard_theorem.json hardware.converse_margin_mean_c |
+| `\TgReplayRuns` | 20 | theory_check/guard_theorem.json replay.guard_runs |
+| `\TgReplayHolds` | 4 | theory_check/guard_theorem.json replay.ambient.*.bound_holds_all, count |
+| `\TgRpLabFloor` | 64.9 | theory_check/guard_theorem.json replay.ambient.0.floor_mean_c |
+| `\TgRpLabThetaF` | 70.0 | theory_check/guard_theorem.json replay.ambient.0.theta_f_c |
+| `\TgRpLabBound` | 84.0 | theory_check/guard_theorem.json replay.ambient.0.bound_c |
+| `\TgRpLabMax` | 78.0 | theory_check/guard_theorem.json replay.ambient.0.guard_temp_max_c |
+| `\TgRpLabHot` | 0 | theory_check/guard_theorem.json replay.ambient.0.guard_hot_share_mean x 100 |
+| `\TgRpFiveFloor` | 69.9 | theory_check/guard_theorem.json replay.ambient.5.floor_mean_c |
+| `\TgRpFiveThetaF` | 75.0 | theory_check/guard_theorem.json replay.ambient.5.theta_f_c |
+| `\TgRpFiveBound` | 84.6 | theory_check/guard_theorem.json replay.ambient.5.bound_c |
+| `\TgRpFiveMax` | 78.0 | theory_check/guard_theorem.json replay.ambient.5.guard_temp_max_c |
+| `\TgRpFiveHot` | 0 | theory_check/guard_theorem.json replay.ambient.5.guard_hot_share_mean x 100 |
+| `\TgRpTenFloor` | 74.9 | theory_check/guard_theorem.json replay.ambient.10.floor_mean_c |
+| `\TgRpTenThetaF` | 80.0 | theory_check/guard_theorem.json replay.ambient.10.theta_f_c |
+| `\TgRpTenBound` | 85.3 | theory_check/guard_theorem.json replay.ambient.10.bound_c |
+| `\TgRpTenMax` | 80.0 | theory_check/guard_theorem.json replay.ambient.10.guard_temp_max_c |
+| `\TgRpTenHot` | 0 | theory_check/guard_theorem.json replay.ambient.10.guard_hot_share_mean x 100 |
+| `\TgRpFifteenFloor` | 79.9 | theory_check/guard_theorem.json replay.ambient.15.floor_mean_c |
+| `\TgRpFifteenThetaF` | 85.0 | theory_check/guard_theorem.json replay.ambient.15.theta_f_c |
+| `\TgRpFifteenBound` | 85.9 | theory_check/guard_theorem.json replay.ambient.15.bound_c |
+| `\TgRpFifteenMax` | 85.0 | theory_check/guard_theorem.json replay.ambient.15.guard_temp_max_c |
+| `\TgRpFifteenHot` | 84 | theory_check/guard_theorem.json replay.ambient.15.guard_hot_share_mean x 100 |
+| `\RlIter` | 571 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): checkpoint iteration |
+| `\RlLambda` | 18.5 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): multiplier at the checkpoint |
+| `\RlLongN` | 5 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 240s runs |
+| `\RlLongSap` | 0.036 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 240s mean sAP |
+| `\RlLongVSap` | 0.046 | ... v4.1 mean sAP |
+| `\RlLongDiff` | −0.0100 | ... paired difference RL - v4.1, mean |
+| `\RlLongDiffCi` | 0.0010 | ... 95 % half-width |
+| `\RlLongPower` | 2.43 | ... RL mean power |
+| `\RlLongVPower` | 3.41 | ... v4.1 mean power |
+| `\RlMisN` | 10 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 20s runs |
+| `\RlMisSap` | 0.042 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 20s mean sAP |
+| `\RlMisVSap` | 0.054 | ... v4.1 mean sAP |
+| `\RlMisDiff` | −0.0124 | ... paired difference RL - v4.1, mean |
+| `\RlMisDiffCi` | 0.0033 | ... 95 % half-width |
+| `\RlMisPower` | 2.42 | ... RL mean power |
+| `\RlMisVPower` | 3.48 | ... v4.1 mean power |
+| `\RlRndN` | 10 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): random 20s runs |
+| `\RlRndSap` | 0.047 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): random 20s mean sAP |
+| `\RlRndVSap` | 0.050 | ... v4.1 mean sAP |
+| `\RlRndDiff` | −0.0038 | ... paired difference RL - v4.1, mean |
+| `\RlRndDiffCi` | 0.0030 | ... 95 % half-width |
+| `\RlRndPower` | 2.47 | ... RL mean power |
+| `\RlRndVPower` | 3.16 | ... v4.1 mean power |

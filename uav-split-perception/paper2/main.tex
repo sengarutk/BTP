@@ -383,7 +383,27 @@ by +5 and +10~$^\circ$C. With the lab's 3.6~W, the time at or above 80~$^\circ$C
 \TsAmbTenKeptHot\,\%. Lowering the budget by $1/b$ per degree, as the proposition suggests, leaves it at
 \TsAmbFiveCorrHot\,\% and \TsAmbTenCorrHot\,\%. The capped hold does not help either at +10~$^\circ$C
 (\TsHoldSeventyEightAmbTenHot\,\%). There the price is at its cap in \TsHoldSeventyEightAmbTenCapPct\,\% of the
-updates, and the cap term reaches \TsHoldSeventyEightAmbTenCapW~W: the cap, untested here, is the remaining lever.
+updates, and the cap term reaches \TsHoldSeventyEightAmbTenCapW~W: the cap is the remaining lever.
+\item \textbf{The cap, and a budget that follows the room,} at +10~$^\circ$C. Raising the cap from 5 to 10, 20 or 50
+gives the same runs, since the price never passes \TsCapTenMuMax: the time at or above 80~$^\circ$C falls to
+\TsCapTenHot\,\% and freshness to \TsCapTenFresh\,\%. The rest is the budget: 2.8~W is too much in that room. A budget
+set from an online estimate of the room's offset (the controller's fit inverted, $\hat a = \theta + \tau\dot\theta - b\bar P$)
+stays near 2.8~W in the lab (\TsAdaptLabBudget~W, no hot time) and falls in the hot room (a mean of \TsAdaptTenBudget~W).
+Under the cap of 5, however, it cannot be enforced: the price sits at the cap in \TsAdaptTenCapPct\,\% of the updates,
+and the board is hot \TsAdaptTenHot\,\% of the time. With both changes the hot time is \TsAdaptCapFiveHot\,\% at
++5~$^\circ$C and \TsAdaptCapTenHot\,\% at +10~$^\circ$C (\TsAdaptCapTenPower~W). Freshness falls to
+\TsAdaptCapFiveFresh\,\% and \TsAdaptCapTenFresh\,\%, and streaming AP changes by \TsAdaptCapTenSap{} $\pm$
+\TsAdaptCapTenSapCi.
+\item \textbf{The hard guard} (Theorem~\ref{thm:guard}), with the hold capped at 78~$^\circ$C. The peak is
+\TgRpLabMax~$^\circ$C in the lab and \TgRpFiveMax~$^\circ$C at +5~$^\circ$C, and there is no time at or above
+80~$^\circ$C up to +10~$^\circ$C. At +15~$^\circ$C the floor alone averages \TgRpFifteenFloor~$^\circ$C, above the
+guard. The board is then hot \TsGuardFifteenHot\,\% of the time, which by part (a) no controller can avoid. The replay
+starts the board at 70~$^\circ$C plus the room's offset, so at +10 and +15~$^\circ$C every run starts above the guard
+(the peaks there, \TgRpTenMax{} and \TgRpFifteenMax~$^\circ$C, are the start). The bound of part (b) holds on all
+\TgReplayRuns{} runs; the replay's radio model makes it loose (\TgRpLabBound--\TgRpFifteenBound~$^\circ$C). The cost
+is freshness, \TsGuardTenFresh\,\% at +10~$^\circ$C against \TsHoldSeventyEightAmbTenFresh\,\% without the guard. Streaming
+AP changes by \TsGuardTenSap{} $\pm$ \TsGuardTenSapCi{} there, and by \TsGuardFifteenSap{} $\pm$ \TsGuardFifteenSapCi{}
+at +15~$^\circ$C.
 \end{itemize}
 The hardware partly agrees. The \HwLongWifiRuns{} 24-minute Wi-Fi missions of v4.1 (the replay's scenario, with
 total blackouts) spent \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time at or above 80~$^\circ$C. In the first,
@@ -477,6 +497,16 @@ they run less onboard. That is the direction the replay is known to favour; with
 overstates the difference measured on hardware by \ReplayLeafBias{}. Their leads, including the significant ones, are
 within that bias, so the supported claim is that the greedy priced choice does about as well as a 30-frame planner here
 (the board session tests this); the planner takes \MpcMs{}~ms per frame on a laptop CPU, and its hardware comparison is future work.
+
+\textbf{A learned policy.} We also trained a constrained deep-RL policy in the replay: PPO with a Lagrange multiplier on
+the 2.8~W budget (PPO-Lagrangian). It was trained on 2-minute episodes from seeds not used for evaluation, with v4.1's
+actions and a reward for fresh, accurate results. The predictions were committed before training. Over 24-minute
+missions it reached \RlLongSap{} streaming AP, against v4.1's \RlLongVSap{} (paired difference \RlLongDiff{} $\pm$
+\RlLongDiffCi). On 2-minute missions the difference was \RlMisDiff{} $\pm$ \RlMisDiffCi{}, and with random link faults
+\RlRndDiff{} $\pm$ \RlRndDiffCi. It drew \RlLongPower~W against v4.1's \RlLongVPower~W. It keeps the budget, which v4.1
+exceeds through its hold and cap (Theorem~\ref{thm:power}), so the comparison is at the same budget, not at the same
+power. Two earlier training runs failed and are reported with it: one under-charged the radio's energy, and in the
+other the multiplier wound up until the policy only skipped.
 
 \textbf{Calibration (trace replay).} Over \CalFrames{} offloaded frames, v4.1 predicted on average a \CalPred\,\%
 chance of meeting the deadline and \CalObs\,\% met it (expected calibration error \CalEce{}); no probability bin was
