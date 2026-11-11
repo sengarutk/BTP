@@ -43,3 +43,13 @@ seeds 1-5), compared with th_b3.6 (lab).
    brings it back to about the lab's level. Streaming AP at the corrected budget is no more than slightly below the
    kept budget's; if keeping 3.6 W gives clearly higher sAP despite the heat, the rule protects temperature only, and
    we say so.
+
+Addendum 2 (11 Nov 2026, ~14:25 IST, after the step-size and budget runs, before these runs): the blackout hold
+The 24-min missions spend 18-21 % of the time at or above 80 C at every budget from 2.4 to 4.5 W, and the hold term
+(0.16-0.50 W) is the largest term of Theorem 1 there. Hypothesis: the heat comes from the hold (in a blackout
+onboard inference is not priced), not from the budget. Diagnostic runs th_nohold_b2.8 and th_nohold_b3.6 (24-min
+missions, seeds 1-5): the hold switched off, so onboard inference is priced in blackouts too (replay.py no_exempt;
+not a proposed controller: without the hold nothing is shown during a blackout except what the price allows).
+7. Without the hold, the share of time at or above 80 C falls well below 18 % at 2.8 W, the excess power falls to
+   about the price and cap terms, and sAP falls (the hold is there to show results in blackouts). If the hot share
+   stays near 18 %, the heat has another cause and we say so.

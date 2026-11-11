@@ -37,13 +37,16 @@ BUDGETS = (2.4, 2.8, 3.2, 3.6, 4.0, 4.5)
 AMBIENT = {(5, 3.6), (5, 3.2), (10, 3.6), (10, 2.8)}
 SWEEP = {**{f"th_eta{v:g}": {"mu_step": v} for v in ETAS if v != 0.1},
          **{f"th_b{v:g}": {"energy": v} for v in BUDGETS if v != 2.8},
-         **{f"th_amb{d}_b{b:g}": {"ambient_c": float(d), "energy": b} for d, b in sorted(AMBIENT)}}
-DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0}
+         **{f"th_amb{d}_b{b:g}": {"ambient_c": float(d), "energy": b} for d, b in sorted(AMBIENT)},
+         # diagnostic (addendum 2 of the predictions): the blackout hold switched off, onboard priced in blackouts too
+         **{f"th_nohold_b{b:g}": {"no_exempt": True, "energy": b} for b in (2.8, 3.6)}}
+DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0, "no_exempt": False}
 for name, ov in SWEEP.items():
     R.POLICIES[name] = dict(BASE, **ov)
 ETA_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["mu_step"]]
 BUDGET_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["energy"]]
 AMB_POLS = [n for n in SWEEP if n.startswith("th_amb")]
+HOLD_POLS = [n for n in SWEEP if n.startswith("th_nohold")]
 METRICS = ("sAP", "pi_w", "temp_mean_c", "temp_max_c", "hot_share", "fresh_share")
 
 
@@ -81,7 +84,7 @@ def cmd_analyze(a):
     for sc in sorted({k[0] for k in by}):
         keys = sorted(k for k in by if k[0] == sc and "v41" in by[k])
         ent = {"seeds": [k[1] for k in keys], "policies": {}}
-        for pol in ETA_POLS + BUDGET_POLS[1:] + AMB_POLS:
+        for pol in ETA_POLS + BUDGET_POLS[1:] + AMB_POLS + HOLD_POLS:
             ks = [k for k in keys if pol in by[k]]
             if not ks:
                 continue
