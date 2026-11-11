@@ -428,7 +428,8 @@ class Replay:
             else:
                 props = {s: self.best(s, t) for s in ("laptop", "jetson", "onboard")}
                 self.n_active = sum(1 for s in props if props[s][2] > 0.2) or 1
-                if "energy" in cf and "no_exempt" not in cf and not any(props[s][2] > 0.2 for s in self.links)                         and self.temp < 85.0:      # no_exempt: diagnostic only (replay_theory_sweep.py th_nohold_*)
+                if "energy" in cf and "no_exempt" not in cf and not any(props[s][2] > 0.2 for s in self.links)                         and self.temp < cf.get("hold_max_c", 85.0):   # no_exempt: diagnostic only; hold_max_c:
+                    # the hold allowed only below this temperature (replay_theory_sweep.py th_hold78_*; default 85 C)
                     self.exempt_t = t
                     vals = {v: self.onboard_value(v, penalize=False) for v in ONBOARD_VARIANTS}
                     bv = max(vals, key=lambda k: vals[k][0])

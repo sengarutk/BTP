@@ -53,3 +53,15 @@ not a proposed controller: without the hold nothing is shown during a blackout e
 7. Without the hold, the share of time at or above 80 C falls well below 18 % at 2.8 W, the excess power falls to
    about the price and cap terms, and sAP falls (the hold is there to show results in blackouts). If the hot share
    stays near 18 %, the heat has another cause and we say so.
+
+Results so far (step size, budget, ambient, no hold) are in theory_sweep_summary.json; predictions 4, 5 and 6 failed
+(sAP does not fall at large eta; hot time is 18-21 % at every budget; the corrected budget does not reduce the hot
+time in a hotter room), prediction 7 held for heat (18 % -> 0 %) and excess, not for sAP (no significant change).
+
+Addendum 3 (11 Nov 2026, ~15:15 IST, before these runs): a hold capped at the guard temperature
+The hold is allowed while the board is below 85 C. Proposed change: allow it only below 78 C, the thermal guard's own
+threshold (replay.py hold_max_c). Runs th_hold78 (lab) and th_hold78_amb10 (room +10 C), 24-min missions, seeds 1-5,
+against v41 and th_amb10_b2.8.
+8. The hot time falls far below v4.1's 18 % in the lab and below th_amb10_b2.8's 58 % at +10 C, while the hold
+   still covers most blackout time below 78 C; sAP within the paired interval of v4.1 (lab) and of th_amb10_b2.8.
+   If the hot time does not fall much, the guard's own heating is the cause and we say so.
