@@ -28,11 +28,13 @@ see: heat. We measure it on a real three-tier system (a Raspberry Pi~5 camera dr
 a ground GPU, over Wi-Fi and a batman-adv mesh, scored with streaming AP on VisDrone video). Onboard detection keeps the
 board throttled most of the time, and throttling alone costs onboard streaming AP \ThrottleLossMin--\ThrottleLossMax\,\%
 against the same runs at the full clock. A controller that prices the camera drone's measured power inside a
-streaming-accuracy objective, with online dual variables for power and freshness, removes this cost without losing
-accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainPct\,\%, \EnPairs{} pairs) and \EnRepGain{}
+streaming-accuracy objective, with online dual variables for power and freshness, removes most of this cost without
+losing accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainPct\,\%, \EnPairs{} pairs) and \EnRepGain{}
 (\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and
 \MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
-\MeshVThrottle{}\,\%. In a trace replay validated against the hardware, the greedy priced controller reaches
+\MeshVThrottle{}\,\%. It does not remove all of it: on 24-minute Wi-Fi missions with total blackouts the board
+still spent \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time at or above 80~$^\circ$C, which the replay traces to
+the controller's blackout hold. In a trace replay validated against the hardware, the greedy priced controller reaches
 \OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. An AccuMO-style 30-frame planner is slightly
 ahead of it there, but that lead lies within the replay's known bias. The price update carries a sample-path guarantee:
 mean power stays below the budget plus a price term and a hold-and-cap term. All \ThmUpdates{} logged updates of the
@@ -52,7 +54,8 @@ separately from where each frame should go. A small camera drone carries a fanle
 the board until its firmware lowers the clock: the onboard server slows down, and every other task on the board with it.
 
 \textbf{Thesis.} On a fanless drone computer, heat is a hidden accuracy cost, and a scheduler that prices the board's
-measured power inside its accuracy objective removes it without giving up accuracy. We support this on real hardware:
+measured power inside its accuracy objective removes most of it without giving up accuracy. We support this on real
+hardware, and we report where it falls short:
 \begin{itemize}
 \item \emph{Heat costs accuracy.} Running YOLOv8s onboard kept the Pi throttled \ThrottleShareCool\,\% of short runs that
 started cool and \ThrottleShareLong\,\% of 24-minute runs; throttling alone cost \ThrottleLossMin--\ThrottleLossMax\,\% of
@@ -61,7 +64,8 @@ onboard streaming AP against an emulated full clock (Section~\ref{sec:heat}).
 streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRepGain{} in two campaigns of \EnPairs{}
 pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
 removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
-\EnGainPct\,\% and \EnRepGainPct\,\%.
+\EnGainPct\,\% and \EnRepGainPct\,\%. On 24-minute Wi-Fi missions with total blackouts the board was still at or
+above 80~$^\circ$C \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time (Section~\ref{sec:theory}).
 \item \emph{The price has guarantees.} Mean power stays below the budget plus two named terms on every run: every one
 of the \ThmUpdates{} logged price updates of the \ThmRuns{} runs follows the coded rule. The budget sets the mean
 temperature, and an idealised version is within a small, stated gap of the best power-feasible policy
@@ -94,7 +98,16 @@ a horizon; AoPI~\cite{Li_2024} optimises freshness and accuracy of video analyti
 or heat. LEAF~\cite{Wang_2023} trades energy against accuracy with a fixed weight; energy-aware DNN offloading and offloading
 under energy or latency budgets are studied in~\cite{Xu_2021,Jiang_2023,Younis_2024}, and quality-aware offloading for
 cooperative perception in~\cite{Zaki_2024}; Phoenix~\cite{Jeon_2026} manages on-device inference under thermal limits.
-\textbf{UAV offloading.} A$^2$-UAV~\cite{Coletta_2023} optimises DNN offloading over a multi-hop UAV testbed; Qu et al.~\cite{Qu_2024} orchestrate
+\textbf{Heat on edge devices.} Throttling cuts the throughput of continuous inference on a Raspberry Pi by up to
+about 90\,\% without cooling~\cite{BenoitCattin_2020}; thermal-aware schedulers choose between on-device
+processors~\cite{Tan_2024}, and a threshold policy jointly sets offloading, DVFS and model size under heat and memory
+limits~\cite{Choi_2024}. These measure frame rate or latency on one device; we measure the streaming-accuracy cost of
+heat in a distributed offloading system and price it with a guarantee. Freshness under an energy budget is also studied
+as age of information, e.g.\ with a safe DQN for UAV-aided edge computing~\cite{Zhao_2024}; our freshness price plays
+that role inside an accuracy objective.
+\textbf{Why a few watts matter.} The camera board draws a few watts against the motors' far larger flight power; on
+drones, compute matters through mission time~\cite{Boroujerdian_2018}, and here through heat, which the board must
+shed without a fan. \textbf{UAV offloading.} A$^2$-UAV~\cite{Coletta_2023} optimises DNN offloading over a multi-hop UAV testbed; Qu et al.~\cite{Qu_2024} orchestrate
 video analytics across a drone network edge; multi-UAV edge computing is mostly studied analytically~\cite{Sun_2024,Hao_2024}.
 \textbf{Split computing.} Splitting the detector between drone and server~\cite{kang2017neurosurgeon,matsubara2022survey}
 and learned feature compression~\cite{Matsubara_2022,Furutanpey_2024} are alternatives to sending the image; on our
@@ -379,7 +392,7 @@ with each result's latency at the board's full clock (an emulation), throttling 
 of the full-clock streaming AP across the \ThrottleCells{} detector-and-condition cells. Heat therefore costs the onboard server a
 large share of its accuracy, and an unpriced controller that keeps using it runs into that cost (next subsection).
 
-\subsection{Pricing measured power removes the cost}\label{sec:energy}
+\subsection{Pricing measured power removes most of the cost}\label{sec:energy}
 On Wi-Fi, the energy-priced controller (v4) against the same controller without prices (v3 with forecasting) gained
 \EnGain{}$\pm$\EnGainCi{}~sAP, ahead in \EnWins{} of \EnPairs{} pairs; a second campaign gave
 \EnRepGain{}$\pm$\EnRepCi{} (ahead in \EnRepWins{} of 20). Re-scored with the standard metric and detections of the
@@ -477,7 +490,8 @@ board run.
 On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and
 throttling alone costs a large share of onboard streaming accuracy. A greedy scheduler that values each frame by the
 accuracy its result will still have, and prices the camera drone's measured power and the freshness of its results,
-removes that cost while keeping or raising streaming accuracy. In a validated replay it reaches
+removes most of that cost while keeping or raising streaming accuracy; on long missions with total blackouts its
+blackout hold still lets the board run hot, which a hold capped at the guard's temperature removes in the replay. In a validated replay it reaches
 \OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. Its power budget holds on every run up to a price
 term and a hold-and-cap term, and it sets the board's mean temperature. Its objective must use the decay curve of the forecaster in use.
 
