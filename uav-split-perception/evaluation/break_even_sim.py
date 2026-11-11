@@ -25,6 +25,9 @@ Setup
               checked here too (no parameter is fitted: the spread is the std / mean of the traces)
 usage: break_even_sim.py [--workers 3] [--seeds 3] [--duration 60]   -> experiments/results/break_even/sim_check.json
        break_even_sim.py --analyse-only     (re-derives the summary and sim_metrics.tex from the stored per-cell wins)
+       break_even_sim.py --tuned jpegtuned_qmix_r1   against the detector fine-tuned on JPEG (at each quality the better
+              of tuned and untuned, break_even_rule.tuned_jpeg(best=True)) -> sim_check_tuned.json, sim_tuned_metrics.tex
+              (macros BeSimT...)
 """
 import argparse
 import json
@@ -40,14 +43,20 @@ PROFILES_ = ("moderate", "vehicular_fading")
 _STATE = {}
 
 
-def _setup(seeds, duration):
+def jpeg_options(base, tuned):
+    from evaluation import break_even_rule as b
+    jpeg = b.jpeg_grid(base)
+    return jpeg if not tuned else b.tuned_jpeg(jpeg, tuned, best=True)
+
+
+def _setup(seeds, duration, tuned=None):
     import simulation.stream_sim as ss
     from evaluation import break_even_rule as b
     from evaluation.learned_bottleneck_system import VD, family, measured_configs
     from simulation.system_model import host_full_ms
     from simulation.trace_generator import PROFILES, generate_trace
     base = measured_configs()
-    jpeg = b.jpeg_grid(base)
+    jpeg = jpeg_options(base, tuned)
     splits = [c for c in base if c.kind == "split"] + b.learned_and_joint()
     full = next(c for c in base if family(c) == "onboard")
     traces = {}
@@ -90,24 +99,26 @@ def main():
     ap.add_argument("--seeds", type=int, default=3)
     ap.add_argument("--duration", type=float, default=60.0)
     ap.add_argument("--analyse-only", action="store_true")
+    ap.add_argument("--tuned", default=None, help="a jpeg_tuned_detector.py run: JPEG with the tuned detector")
     a = ap.parse_args()
     if a.analyse_only:
-        out = json.load(open(OUT / "sim_check.json"))
+        out = json.load(open(OUT / f"sim_check{'_tuned' if a.tuned else ''}.json"))
         fading(out)
         return
     from evaluation import break_even_rule as b
     from evaluation.learned_bottleneck_system import GOODPUT
-    _setup(a.seeds, a.duration)
+    _setup(a.seeds, a.duration, a.tuned)
     jpeg, splits = _STATE["jpeg"], _STATE["splits"]
     rows, *_ = b.analyse(jpeg, [c for c in splits])
     bbe = {(r["device"], r["t_full_ms"], r["code"]): r for r in rows}
     jobs = [(d, t, p, float(B)) for d, t in b.devices() for p in PROFILES_ for B in GOODPUT]
     t0 = time.time()
-    with mp.get_context("fork").Pool(a.workers, initializer=_setup, initargs=(a.seeds, a.duration)) as pool:
+    with mp.get_context("fork").Pool(a.workers, initializer=_setup, initargs=(a.seeds, a.duration, a.tuned)) as pool:
         res = dict(pool.map(_cell, jobs, chunksize=4))
     out = {"setting": {"profiles": PROFILES_, "seeds": a.seeds, "duration_s": a.duration, "goodputs": len(GOODPUT),
                        "devices": [{"device": d, "t_full_ms": t} for d, t in b.devices()],
-                       "jpeg_options": [c.name for c in jpeg], "codes": [c.name for c in splits],
+                       "jpeg_tuned_run": a.tuned, "jpeg_options": [c.name for c in jpeg],
+                       "jpeg_map50_95": [c.map50_95 for c in jpeg], "codes": [c.name for c in splits],
                        "trace_rel_std": {f"{p}_{k}": _STATE["traces"][(p, k)][2] for p in PROFILES_ for k in range(a.seeds)},
                        "minutes": (time.time() - t0) / 60},
            "profiles": {}}
@@ -145,7 +156,8 @@ def fading(out):
     from evaluation.learned_bottleneck_system import VD, measured_configs
     from simulation.system_model import host_full_ms
     base = measured_configs()
-    jpeg = b.jpeg_grid(base)
+    tuned = out["setting"].get("jpeg_tuned_run")
+    jpeg = jpeg_options(base, tuned)
     splits = {c.name: c for c in [c for c in base if c.kind == "split"] + b.learned_and_joint()}
     cfgs, hf = list(splits.values()) + jpeg, host_full_ms(None, VD)
     m = {}
@@ -166,7 +178,7 @@ def fading(out):
         v["constant_rule_exception_margin_median"] = (float(np.median([e["u_code"] / e["u_best_jpeg"] - 1 for e in ex]))
                                                       if ex else None)
         v["constant_rule_exception_tfull_max"] = max((e["t_full_ms"] for e in ex), default=None)
-        tag = {"moderate": "Mod", "vehicular_fading": "Veh"}[p]
+        tag = ("T" if tuned else "") + {"moderate": "Mod", "vehicular_fading": "Veh"}[p]
         m.update({f"BeSim{tag}Wins": str(v["split_win_cells"]), f"BeSim{tag}Exc": str(len(ex)),
                   f"BeSim{tag}ExcPct": f"{100 * len(ex) / max(1, v['split_win_cells']):.0f}",
                   f"BeSim{tag}Ratio": f"{v['constant_rule_exception_ratio_max']:.1f}" if ex else "none",
@@ -177,11 +189,13 @@ def fading(out):
         print(f"{p}: spread {s:.2f}; constant rule {len(ex)} of {v['split_win_cells']} wins at/above B_be (devices "
               f"{v['constant_rule_exception_devices']}); fading rule {exc} exceptions, median slack "
               f"{v['fading_rule']['median_slack']:.2f}", flush=True)
-    m.update({"BeSimSeeds": str(out["setting"]["seeds"]), "BeSimDuration": f"{out['setting']['duration_s']:.0f}",
-              "BeSimExcTfullMax": f"{max(v['constant_rule_exception_tfull_max'] or 0 for v in out['profiles'].values()):.0f}"})
+    t = "T" if tuned else ""
+    m.update({f"BeSim{t}Seeds": str(out["setting"]["seeds"]), f"BeSim{t}Duration": f"{out['setting']['duration_s']:.0f}",
+              f"BeSim{t}ExcTfullMax": f"{max(v['constant_rule_exception_tfull_max'] or 0 for v in out['profiles'].values()):.0f}"})
     OUT.mkdir(parents=True, exist_ok=True)
-    json.dump(out, open(OUT / "sim_check.json", "w"), indent=1)
-    (OUT / "sim_metrics.tex").write_text("% Generated by evaluation/break_even_sim.py -- do not edit.\n"
+    sfx = "_tuned" if tuned else ""
+    json.dump(out, open(OUT / f"sim_check{sfx}.json", "w"), indent=1)
+    (OUT / f"sim{sfx}_metrics.tex").write_text("% Generated by evaluation/break_even_sim.py -- do not edit.\n"
                                          + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
 
 

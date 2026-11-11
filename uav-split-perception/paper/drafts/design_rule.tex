@@ -6,7 +6,9 @@
 % (11 Nov 2026): speed scaling corrected, the check called a consistency check, the survey scoped to the conditions it
 % tests, grid resolution and sample sizes given, the JPEG grid and the training asymmetry stated. Second revision
 % (11 Nov 2026): 18 JPEG qualities, paired joint-vs-frozen test, simulator check (sim_metrics.tex from
-% evaluation/break_even_sim.py) and the fading version of the rule; also \input sim_metrics.tex.
+% evaluation/break_even_sim.py) and the fading version of the rule; also \input sim_metrics.tex. Third revision
+% (11 Nov 2026): against the detector fine-tuned on JPEG (evaluation/jpeg_tuned_detector.py,
+% experiments/results/jpeg_tuned/); also \input sim_tuned_metrics.tex.
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -121,12 +123,41 @@ jointly trained \BeJointKtwoKib~KiB code also appeared to win on the Pi, at \BeJ
 finer grid, a JPEG setting between the measured ones beats it. Every winning cell of the jointly trained codes lies
 below its $B_{\mathrm{be}}$, and they are included in the \BeCells{} cells above.
 
-%JPEG-TUNED-PARAGRAPH
+\textbf{Against a detector tuned on JPEG.} The jointly trained codes get a trained server side, while the image path
+so far used the original detector. For a like-for-like comparison we fine-tuned the whole detector (for an image,
+every layer runs on the server) on JPEG-decoded images with the same recipe. It ran for \BeTunedEpochs{} epochs, each
+training image at a quality drawn from the \BeTunedQualities{} grid qualities, and the epoch was chosen on the same
+held-out frames (epoch \BeTunedBestEpoch). Payloads are unchanged. On the test frames, the tuned detector gains
+\BeTunedGainQten{} mAP$_{50:95}$ at Q10 and \BeTunedGainQthirtyfive{} at Q35, and its gain is significant up to
+\BeTunedSigPosMax. From \BeTunedSigNegMin{} up it is significantly worse than the original (\BeTunedGainQninetyfive{}
+at Q95). A detector trained at Q35 alone scores \BeTunedDedMap{} there, against \BeTunedMixMapQthirtyfive{} for the
+mixed one (paired interval \BeTunedDedLo{} to \BeTunedDedHi, \BeTunedDedSig), so one detector for every quality
+loses nothing measurable. The server knows the quality it receives, so the fair image baseline runs the better of
+the two detectors at each quality. (With the tuned detector at every quality, \BeTunedMixNoQ{} codes would have no
+qualifying JPEG setting on the Pi, an artefact of its loss at high quality.)
+
+Against this baseline:
+\begin{itemize}
+\item splits beat JPEG in \BeTunedCells{} cells instead of \BeCells{} (\BeTunedCellsDropPct\,\% fewer), all below
+their $B_{\mathrm{be}}$ (\BeTunedViolations{} exceptions);
+\item the smallest jointly trained code is now matched by \BeTunedJointPiQstar{} instead of \BeJointPiQstar. Its
+$B_{\mathrm{be}}$ falls from \BeJointPiBe{} to \BeTunedJointPiBe~Mbit/s on the Pi, where it wins up to
+\BeTunedJointPiWin~Mbit/s, and from \BeJointFastBe{} to \BeTunedJointFastBe~Mbit/s on the Jetson, where it wins up to
+\BeTunedJointFastWin~Mbit/s;
+\item joint training still raises that code's $B_{\mathrm{be}}$ by \BeTunedJointShift\,\% over the frozen code
+(\BeTunedFrozenPiBe~Mbit/s), against \BeJointShift\,\% when JPEG is not tuned;
+\item in the simulator, with the same traces, the fading version again has no exceptions (\BeSimTModFadingExc{} and
+\BeSimTVehFadingExc), while \BeSimTModExc{} of \BeSimTModWins{} and \BeSimTVehExc{} of \BeSimTVehWins{} simulated
+split wins lie at or above the constant-goodput $B_{\mathrm{be}}$.
+\end{itemize}
+Training both sides therefore keeps the picture, a split pays off only at low goodput, but narrows the window: part
+of the jointly trained codes' advantage came from training only one side.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
 \item the code's size and accuracy;
-\item the JPEG rate--accuracy curve on the same frames;
+\item the JPEG rate--accuracy curve on the same frames, with the best detector the server can run for JPEG (if the
+split's server side is trained, a detector tuned on JPEG);
 \item the device's full-model time;
 \item on a fading link, the relative spread of its goodput.
 \end{itemize}

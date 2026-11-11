@@ -341,6 +341,8 @@ class Replay:
         self.mu, self.mu_e, self.lam_t, self.lam_f = (cf.get("mu_fixed", 0.0) or 0.0), 0.0, 0.0, 0.0
         self.temp, self.n_active, self.aoi = T0_C, 1, float("inf")
         self.onb_free, self.last_onboard_det, self.rewards, self.exempt_t = 0.0, None, [], -10.0
+        self.price = {"n": 0, "sum_p": 0.0, "sum_sq": 0.0, "mu_max": 0.0,
+                      **{f"{a}_{k}": 0.0 if a == "neg" else 0 for a in ("neg", "n") for k in ("step", "cap", "held")}}
         bounds = np.cumsum([0] + [ph[3] for ph in self.phases])
         total = bounds[-1]
         frames, pending, results = [], [], {}       # pending: (t_arrive, id, srv, var)
@@ -383,10 +385,23 @@ class Replay:
             if t - last_dual >= 1.0:
                 last_dual = t
                 pbar = float(np.mean([x[1] for x in p_log[-30:]]))
+                mu_prev = self.mu
                 if "energy" in cf and "mu_fixed" not in cf and t - self.exempt_t > 1.0:   # anti-windup
                     self.mu = min(5.0, max(0.0, self.mu + cf.get("mu_step", 0.1) * (pbar - cf["energy"])))
                     if self.temp >= (84.0 if "heat" in cf else 78.0):
                         self.mu = max(self.mu, 1.0)
+                    kind = "cap" if mu_prev + cf.get("mu_step", 0.1) * (pbar - cf["energy"]) > 5.0 else "step"
+                else:
+                    kind = "held"
+                if "energy" in cf and "mu_fixed" not in cf:   # Theorem 1's terms (paper 2), logging only
+                    st = self.mu - mu_prev - cf.get("mu_step", 0.1) * (pbar - cf["energy"])
+                    pr = self.price
+                    pr["n"] += 1
+                    pr["sum_p"] += pbar
+                    pr["sum_sq"] += (pbar - cf["energy"]) ** 2
+                    pr[f"neg_{kind}"] += max(0.0, -st)
+                    pr[f"n_{kind}"] += 1
+                    pr["mu_max"] = max(pr["mu_max"], self.mu)
                 if "heat" in cf:
                     p10 = float(np.mean([x[1] for x in p_log[-300:]]))
                     t_hat = self.temp + (th["intercept_c"] + th["c_per_w"] * p10 - self.temp) * \
@@ -468,7 +483,8 @@ class Replay:
         out = {"policy": self.pol, "scenario": self.scenario, "seed": self.seed, "frames": frames,
                "replay": {"pi_w": e_j / total, "edge_w": edge_j / total, "availability": avail,
                           "temp_mean_c": float(tt.mean()), "temp_max_c": float(tt.max()),
-                          "hot_share": float((tt >= 80.0).mean()), "duration_s": float(total)}}
+                          "hot_share": float((tt >= 80.0).mean()), "duration_s": float(total),
+                          "price": dict(self.price, mu_final=self.mu)}}
         json.dump(out, open(out_dir / f"a2_{name}.json", "w"))
         return out_dir / f"a2_{name}.json", out["replay"]
 

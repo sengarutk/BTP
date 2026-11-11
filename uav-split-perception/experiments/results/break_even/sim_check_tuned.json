@@ -1,0 +1,7473 @@
+{
+ "setting": {
+  "profiles": [
+   "moderate",
+   "vehicular_fading"
+  ],
+  "seeds": 3,
+  "duration_s": 60.0,
+  "goodputs": 31,
+  "devices": [
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968
+   }
+  ],
+  "jpeg_tuned_run": "jpegtuned_qmix_r1",
+  "jpeg_options": [
+   "jpeg_q10",
+   "jpeg_q15",
+   "jpeg_q20",
+   "jpeg_q25",
+   "jpeg_q30",
+   "jpeg_q35",
+   "jpeg_q40",
+   "jpeg_q45",
+   "jpeg_q50",
+   "jpeg_q55",
+   "jpeg_q60",
+   "jpeg_q65",
+   "jpeg_q70",
+   "jpeg_q75",
+   "jpeg_q80",
+   "jpeg_q85",
+   "jpeg_q90",
+   "jpeg_q95"
+  ],
+  "jpeg_map50_95": [
+   0.1686180846816814,
+   0.187233425704226,
+   0.19850976079832847,
+   0.20616592352785643,
+   0.21225639680543287,
+   0.21681528494898517,
+   0.21912504001961178,
+   0.2237871746433854,
+   0.2238047876701291,
+   0.22747376393503385,
+   0.22848710460089244,
+   0.23086030019159756,
+   0.23311347954031836,
+   0.23437472344575114,
+   0.23994503305531795,
+   0.24713508582224072,
+   0.2562773607952493,
+   0.26371484593237077
+  ],
+  "codes": [
+   "k2_int8_zstd",
+   "k4_int8_zstd",
+   "learned_k2_c16_w128_d2",
+   "learned_k2_c8_w128_d2",
+   "learned_k4_c16_w128_d2",
+   "learned_k4_c16_w128_s1_d2",
+   "learned_k4_c32_w128_d2",
+   "learned_k4_c32_w128_s1_d2",
+   "learned_k4_c4_w128_d2",
+   "learned_k4_c64_w128_d2",
+   "learned_k4_c8_w128_d2",
+   "learned_k4_c8_w128_s1_d2",
+   "joint_k2_c8_w128_d2",
+   "joint_k4_c16_w128_d2",
+   "joint_k4_c32_w128_s1_d2",
+   "joint_k4_c4_w128_d2"
+  ],
+  "trace_rel_std": {
+   "moderate_0": 0.3639466940993709,
+   "moderate_1": 0.3934579256767259,
+   "moderate_2": 0.38935128456428564,
+   "vehicular_fading_0": 0.5254614580233218,
+   "vehicular_fading_1": 0.5451095723892745,
+   "vehicular_fading_2": 0.5538639669531887
+  },
+  "minutes": 8.876890019575756
+ },
+ "profiles": {
+  "moderate": {
+   "split_win_cells": 519,
+   "exceptions": [
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.3043385222867,
+     "u_best_jpeg": 26.33270272877731
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.73317509743083,
+     "u_best_jpeg": 27.152221925948286
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.963282527995972,
+     "u_best_jpeg": 27.85595121992535
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 25.92805711331934,
+     "u_best_jpeg": 25.098057909916665
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 26.044500483588735,
+     "u_best_jpeg": 25.532140050600628
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 22.656823222017596,
+     "u_best_jpeg": 21.654278104682202
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 22.89689552105885,
+     "u_best_jpeg": 22.550080728212105
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.317694563212466,
+     "u_best_jpeg": 26.33270272877731
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.703847265729696,
+     "u_best_jpeg": 27.152221925948286
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.92301501580705,
+     "u_best_jpeg": 27.85595121992535
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 24.617323136980655,
+     "u_best_jpeg": 24.12891856630462
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 25.00395797651952,
+     "u_best_jpeg": 24.673104391370426
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 25.21142057334525,
+     "u_best_jpeg": 25.098057909916665
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.09629435859138,
+     "u_best_jpeg": 18.466083470576212
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.197981005458313,
+     "u_best_jpeg": 19.544991954303196
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.798008915039944,
+     "u_best_jpeg": 25.532140050600628
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.862895135173204,
+     "u_best_jpeg": 26.33270272877731
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.641201334791088,
+     "u_best_jpeg": 25.532140050600628
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.70073474559509,
+     "u_best_jpeg": 26.33270272877731
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 24.377222040781135,
+     "u_best_jpeg": 22.550080728212105
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 24.482119347972517,
+     "u_best_jpeg": 23.37939977618788
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 24.545969882784664,
+     "u_best_jpeg": 24.12891856630462
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.53519319356494,
+     "u_best_jpeg": 18.466083470576212
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.546610091189237,
+     "u_best_jpeg": 19.544991954303196
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.330487093941827,
+     "u_best_jpeg": 26.36354931533972
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.74363452609288,
+     "u_best_jpeg": 27.130896795827766
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.968512242326995,
+     "u_best_jpeg": 27.84528865486509
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 25.932908920413894,
+     "u_best_jpeg": 25.078847762262697
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 26.04935229068329,
+     "u_best_jpeg": 25.54662314417486
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 22.631101189977468,
+     "u_best_jpeg": 21.662855754951437
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 22.888321510378802,
+     "u_best_jpeg": 22.54124968034517
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.333349402503703,
+     "u_best_jpeg": 26.36354931533972
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.698628985965957,
+     "u_best_jpeg": 27.130896795827766
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.907360176515805,
+     "u_best_jpeg": 27.84528865486509
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 24.574887605811753,
+     "u_best_jpeg": 24.114952377668903
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 24.96623750436939,
+     "u_best_jpeg": 24.654176041242792
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 25.197275396288955,
+     "u_best_jpeg": 25.078847762262697
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.08499584227283,
+     "u_best_jpeg": 18.47776840000286
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.19044866124595,
+     "u_best_jpeg": 19.549316383650936
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.78802641963482,
+     "u_best_jpeg": 25.54662314417486
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.84792139206553,
+     "u_best_jpeg": 26.36354931533972
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.641201334791088,
+     "u_best_jpeg": 25.54662314417486
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.705695863162088,
+     "u_best_jpeg": 26.36354931533972
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 24.36810053580797,
+     "u_best_jpeg": 22.54124968034517
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 24.47299784299936,
+     "u_best_jpeg": 23.356122795128357
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 24.536848377811506,
+     "u_best_jpeg": 24.114952377668903
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.53138756102351,
+     "u_best_jpeg": 18.47776840000286
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.546610091189237,
+     "u_best_jpeg": 19.549316383650936
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.299108807955673,
+     "u_best_jpeg": 26.368690413100126
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.7070265257757,
+     "u_best_jpeg": 27.1362280783579
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.9475933850029,
+     "u_best_jpeg": 27.834626089804832
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 25.928057113319337,
+     "u_best_jpeg": 25.074045225349206
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 26.025093255210503,
+     "u_best_jpeg": 25.541631619527696
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.626317982090086,
+     "u_best_jpeg": 25.541631619527696
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.69081251046109,
+     "u_best_jpeg": 26.368690413100126
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.33571680827286,
+     "u_best_jpeg": 26.378972608620927
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.74886424042391,
+     "u_best_jpeg": 27.146890643418157
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.963282527995972,
+     "u_best_jpeg": 27.855951219925355
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 25.932908920413894,
+     "u_best_jpeg": 25.107662983743655
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 26.039648676494178,
+     "u_best_jpeg": 25.561597718116342
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 22.65253621667758,
+     "u_best_jpeg": 21.688588705759145
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 22.89689552105885,
+     "u_best_jpeg": 22.589820443613302
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.32813112273996,
+     "u_best_jpeg": 26.378972608620927
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.709065545493445,
+     "u_best_jpeg": 27.146890643418157
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.928233295570795,
+     "u_best_jpeg": 27.855951219925355
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 24.636183373055726,
+     "u_best_jpeg": 24.16150633978795
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 25.00395797651952,
+     "u_best_jpeg": 24.70622900409378
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 25.206705514326483,
+     "u_best_jpeg": 25.107662983743655
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.09629435859138,
+     "u_best_jpeg": 18.540088023611638
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.19421483335213,
+     "u_best_jpeg": 19.591731672009775
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.78802641963482,
+     "u_best_jpeg": 25.561597718116342
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.862895135173204,
+     "u_best_jpeg": 26.378972608620927
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.641201334791088,
+     "u_best_jpeg": 25.561597718116342
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.705695863162088,
+     "u_best_jpeg": 26.378972608620927
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 24.377222040781135,
+     "u_best_jpeg": 22.589820443613302
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 24.47755859548594,
+     "u_best_jpeg": 23.421298342095028
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 24.54140913029809,
+     "u_best_jpeg": 24.16150633978795
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.53138756102351,
+     "u_best_jpeg": 18.540088023611638
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.546610091189237,
+     "u_best_jpeg": 19.591731672009775
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.340946522603883,
+     "u_best_jpeg": 26.363549315339725
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.75932366908596,
+     "u_best_jpeg": 27.130896795827766
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.968512242326995,
+     "u_best_jpeg": 27.839957372334965
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 25.937760727508458,
+     "u_best_jpeg": 25.102860446830164
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 26.04935229068329,
+     "u_best_jpeg": 25.54183886923333
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 22.648249211337554,
+     "u_best_jpeg": 21.67572223035529
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 22.88403450503878,
+     "u_best_jpeg": 22.5633273000125
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 27.354222521558693,
+     "u_best_jpeg": 26.363549315339725
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 27.740375224075922,
+     "u_best_jpeg": 27.130896795827766
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 27.933451575334544,
+     "u_best_jpeg": 27.839957372334965
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 24.61732313698066,
+     "u_best_jpeg": 24.14288475494033
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 24.994527858481987,
+     "u_best_jpeg": 24.68730065396615
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 25.211420573345254,
+     "u_best_jpeg": 25.102860446830164
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.088762014379014,
+     "u_best_jpeg": 18.505033235331698
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.19421483335213,
+     "u_best_jpeg": 19.564466836680936
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.79800891503994,
+     "u_best_jpeg": 25.54183886923333
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.862895135173204,
+     "u_best_jpeg": 26.363549315339725
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 26.641201334791088,
+     "u_best_jpeg": 25.54183886923333
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.70073474559509,
+     "u_best_jpeg": 26.363549315339725
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 24.377222040781135,
+     "u_best_jpeg": 22.5633273000125
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 24.482119347972517,
+     "u_best_jpeg": 23.40733215345931
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 24.54140913029809,
+     "u_best_jpeg": 24.14288475494033
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.53519319356494,
+     "u_best_jpeg": 18.505033235331698
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.546610091189237,
+     "u_best_jpeg": 19.564466836680936
+    }
+   ],
+   "cells": 3472,
+   "model_sim_agreement": 0.940668202764977,
+   "per_code": [
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329
+     ],
+     "b_be_fading_mbps": 38.394713793422284,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166
+     ],
+     "b_be_fading_mbps": 15.198394644855783,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523
+     ],
+     "b_be_fading_mbps": 32.2718204885774,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 85.14973670675349,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 4.303059873155873,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 35.46482545995192,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.508342518694354,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 46.007975872992475,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.309910755502386,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 24.57722197423479,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 93.1267643480172,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.823935412950563,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329
+     ],
+     "b_be_fading_mbps": 38.394713793422284,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166
+     ],
+     "b_be_fading_mbps": 15.198394644855783,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523
+     ],
+     "b_be_fading_mbps": 32.2718204885774,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 85.14973670675349,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 4.303059873155873,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 35.46482545995192,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.508342518694354,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 46.007975872992475,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.309910755502386,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 24.57722197423479,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 93.1267643480172,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.823935412950563,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329
+     ],
+     "b_be_fading_mbps": 38.394713793422284,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 3.8596842944612244,
+     "model_wins": [
+      0.861,
+      1.225,
+      1.744,
+      2.081
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 11.127721734533806,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 11.034119496994583,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 43.96798941322725,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 6.6082422187753,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 23.3726766962099,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 10.651323543424267,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 48.59203581291647,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 1.9436608540750957,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "b_be_fading_mbps": 3.1762829477654,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 7.818120005950039,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 24.993377110999628,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 2.486729321013112,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "b_be_fading_mbps": 6.260286950809416,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 9.092487050149083,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 28.00251733915832,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.309910755502386,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 5.004539978272261,
+     "model_wins": [
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      1.027,
+      1.225
+     ],
+     "b_be_fading_mbps": 17.994564131792846,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 14.936879810025713,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 53.144252035966375,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 2.4947155487205226,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "b_be_fading_mbps": 6.513345482172625,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 10.681101290360967,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 42.561307096965315,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 7.7296404469612074,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 23.35551153849661,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 1.9298421472306122,
+     "model_wins": [
+      0.861,
+      1.225
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 5.563860867266903,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 5.517059748497291,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 21.983994706613625,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 3.30412110938765,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 11.68633834810495,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 5.3256617717121335,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 24.296017906458236,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 0.9718304270375479,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721
+     ],
+     "b_be_fading_mbps": 1.5881414738827,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 3.9090600029750195,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 12.496688555499814,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 1.243364660506556,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861
+     ],
+     "b_be_fading_mbps": 3.130143475404708,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 4.546243525074542,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 14.00125866957916,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 9.087338222575033,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 26.95372695022368,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 2.5022699891361304,
+     "model_wins": [
+      0.861,
+      1.225
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 8.997282065896423,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 7.468439905012857,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 26.572126017983187,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 1.2473577743602613,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861
+     ],
+     "b_be_fading_mbps": 3.2566727410863123,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329
+     ],
+     "b_be_fading_mbps": 38.394713793422284,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166
+     ],
+     "b_be_fading_mbps": 15.198394644855783,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523
+     ],
+     "b_be_fading_mbps": 32.2718204885774,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 85.14973670675349,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081
+     ],
+     "b_be_fading_mbps": 4.303059873155873,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 35.46482545995192,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.508342518694354,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 46.007975872992475,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.309910755502386,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 24.57722197423479,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 93.1267643480172,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.823935412950563,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329
+     ],
+     "b_be_fading_mbps": 38.394713793422284,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166
+     ],
+     "b_be_fading_mbps": 15.198394644855783,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 74.37392735354709,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523
+     ],
+     "b_be_fading_mbps": 32.2718204885774,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 85.14973670675349,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081
+     ],
+     "b_be_fading_mbps": 4.303059873155873,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 35.46482545995192,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.508342518694354,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 46.007975872992475,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.309910755502386,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 24.57722197423479,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 93.1267643480172,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218
+     ],
+     "b_be_fading_mbps": 8.823935412950563,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 5.07557531200452,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 20.22479833076271,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 3.6730643364156346,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 11.09835536069745,
+     "b_be_fading_p": 0.9450000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 1.055626024295568,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 2.643902916903579,
+     "b_be_fading_p": 0.925
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 4.02775814957451,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 12.607541667801337,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 1.8517636131344037,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 5.553256054307918,
+     "b_be_fading_p": 0.9199999999999999
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 4.02775814957451,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 14.434209564186855,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 0.5272851483575777,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425
+     ],
+     "b_be_fading_mbps": 0.7546723355281552,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 2.2718624759198964,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 5.938328098371655,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 0.676777769876428,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 1.4874195567392896,
+     "b_be_fading_p": 0.88
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 3.16700743415615,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 7.61862903272149,
+     "b_be_fading_p": 0.94
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 4.3182316392749165,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 12.808199019564098,
+     "b_be_fading_p": 0.935
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 1.368744756733846,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 4.275437662033594,
+     "b_be_fading_p": 0.95
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 5.782101231966782,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 15.786440271251147,
+     "b_be_fading_p": 0.97
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 0.676777769876428,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507
+     ],
+     "b_be_fading_mbps": 1.547545268468956,
+     "b_be_fading_p": 0.89
+    }
+   ],
+   "fading_rule": {
+    "rel_std": 0.38225196811346085,
+    "exceptions": 0,
+    "median_slack": 1.2188758018251595
+   },
+   "constant_rule_exception_devices": [
+    "Jetson Orin Nano 23 ms",
+    "laptop GPU 5 ms",
+    "sweep 180 ms",
+    "sweep 40 ms",
+    "sweep 90 ms"
+   ],
+   "constant_rule_exception_ratio_max": 1.5916785759507373,
+   "constant_rule_exception_margin_median": 0.023162775561286653,
+   "constant_rule_exception_tfull_max": 180.0
+  },
+  "vehicular_fading": {
+   "split_win_cells": 628,
+   "exceptions": [
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.21768250420733,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.923693938895838,
+     "u_best_jpeg": 24.929183040187656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.509421943970747,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.9225693761218,
+     "u_best_jpeg": 26.437830066910966
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.23112252165234,
+     "u_best_jpeg": 27.01893986269506
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.513527095527735,
+     "u_best_jpeg": 27.466767595225907
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 24.55499570555935,
+     "u_best_jpeg": 23.430609134518843
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 24.957695694407686,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 12.706950656934305,
+     "u_code": 25.25365592717574,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 12.706950656934305,
+     "u_code": 25.50594989609277,
+     "u_best_jpeg": 24.929183040187656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 21.156371353009806,
+     "u_best_jpeg": 19.65568559195059
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 21.66652498847246,
+     "u_best_jpeg": 20.536601814551496
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 5.271609635036496,
+     "u_code": 22.052355469074467,
+     "u_best_jpeg": 21.37460313853333
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 5.271609635036496,
+     "u_code": 22.3095757894758,
+     "u_best_jpeg": 22.159685968668725
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.277347175587618,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.96616010440214,
+     "u_best_jpeg": 24.929183040187656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.514079479595512,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.92110530116774,
+     "u_best_jpeg": 26.437830066910966
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.234202086992525,
+     "u_best_jpeg": 27.01893986269506
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.49511607517984,
+     "u_best_jpeg": 27.466767595225907
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 22.759589883586596,
+     "u_best_jpeg": 22.159685968668725
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 23.377262615045026,
+     "u_best_jpeg": 22.867306192878313
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 23.91477934318442,
+     "u_best_jpeg": 23.430609134518843
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 17.329,
+     "b_be": 9.124329635036496,
+     "u_code": 24.306129241742056,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 20.676,
+     "b_be": 9.124329635036496,
+     "u_code": 24.57960266483052,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 18.985273587267457,
+     "u_best_jpeg": 16.72892396248151
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.320462904717722,
+     "u_best_jpeg": 17.72214296374642
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.565264091619607,
+     "u_best_jpeg": 18.772959923970674
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.761105041141107,
+     "u_best_jpeg": 19.65568559195059
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.70991691588205,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.994418034927918,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.243980420055877,
+     "u_best_jpeg": 24.929183040187656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.448621575860802,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.59336775923502,
+     "u_best_jpeg": 26.437830066910966
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.55967770518504,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.837500288937054,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.115322872689063,
+     "u_best_jpeg": 24.929183040187656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.293923105101072,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 23.104772097024732,
+     "u_best_jpeg": 20.536601814551496
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 23.48331455341105,
+     "u_best_jpeg": 21.37460313853333
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 23.766081207579134,
+     "u_best_jpeg": 22.159685968668725
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 12.172,
+     "b_be": 6.835269197080292,
+     "u_code": 24.003240336881408,
+     "u_best_jpeg": 22.867306192878313
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 14.523,
+     "b_be": 6.835269197080292,
+     "u_code": 24.171988178884945,
+     "u_best_jpeg": 23.430609134518843
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 17.329,
+     "b_be": 6.835269197080292,
+     "u_code": 24.29968924850924,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 6.835269197080292,
+     "u_code": 24.40914730818721,
+     "u_best_jpeg": 24.348862151411694
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.15082430688035,
+     "u_best_jpeg": 16.72892396248151
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.257382018040435,
+     "u_best_jpeg": 17.72214296374642
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.348717199034795,
+     "u_best_jpeg": 18.772959923970674
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.41721858478056,
+     "u_best_jpeg": 19.65568559195059
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.233371647200403,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.939383081888916,
+     "u_best_jpeg": 25.00629950659368
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.540800229956904,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.94871794777693,
+     "u_best_jpeg": 26.41117365426032
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.246811664645417,
+     "u_best_jpeg": 27.013608580164927
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.529216238520814,
+     "u_best_jpeg": 27.456105030165656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 24.5841065481267,
+     "u_best_jpeg": 23.444575323154552
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 24.977102922785917,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 12.706950656934305,
+     "u_code": 25.273063155553974,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 12.706950656934305,
+     "u_code": 25.525357124471,
+     "u_best_jpeg": 25.00629950659368
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 12.706950656934305,
+     "u_code": 25.70487398696966,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 21.11778830494961,
+     "u_best_jpeg": 19.65997441708521
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 21.632228945752285,
+     "u_best_jpeg": 20.55867943421882
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 5.271609635036496,
+     "u_code": 21.996624399654177,
+     "u_best_jpeg": 21.379113500031224
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 5.271609635036496,
+     "u_code": 22.288140762775686,
+     "u_best_jpeg": 22.164341364880627
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.27212889582387,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.981814943693383,
+     "u_best_jpeg": 25.00629950659368
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.51929775935926,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.92110530116773,
+     "u_best_jpeg": 26.41117365426032
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.208110688173793,
+     "u_best_jpeg": 27.013608580164927
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.474242956124858,
+     "u_best_jpeg": 27.456105030165656
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 22.679433880267567,
+     "u_best_jpeg": 22.164341364880627
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 23.34425720191366,
+     "u_best_jpeg": 22.890583173937838
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 23.872343812015526,
+     "u_best_jpeg": 23.444575323154552
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 17.329,
+     "b_be": 9.124329635036496,
+     "u_code": 24.268408769591925,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 20.676,
+     "b_be": 9.124329635036496,
+     "u_code": 24.556027369736686,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 18.947611866205627,
+     "u_best_jpeg": 16.748398844859253
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.290333527868267,
+     "u_best_jpeg": 17.729932916697518
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.538900886876323,
+     "u_best_jpeg": 18.77708947960727
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.7422741806102,
+     "u_best_jpeg": 19.65997441708521
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.714908163584614,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.974453044117684,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.253962915461,
+     "u_best_jpeg": 25.00629950659368
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.44363032815824,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.588376511532456,
+     "u_best_jpeg": 26.41117365426032
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.58944441058705,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.872228111906058,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.135167342957065,
+     "u_best_jpeg": 25.00629950659368
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.303845340235075,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.452678867245083,
+     "u_best_jpeg": 26.41117365426032
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 23.086529087078407,
+     "u_best_jpeg": 20.55867943421882
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 23.460510790978137,
+     "u_best_jpeg": 21.379113500031224
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 23.743277445146223,
+     "u_best_jpeg": 22.164341364880627
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 12.172,
+     "b_be": 6.835269197080292,
+     "u_code": 23.96675431698875,
+     "u_best_jpeg": 22.890583173937838
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 14.523,
+     "b_be": 6.835269197080292,
+     "u_code": 24.158305921425196,
+     "u_best_jpeg": 23.444575323154552
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 17.329,
+     "b_be": 6.835269197080292,
+     "u_code": 24.290567743536077,
+     "u_best_jpeg": 23.94909499898844
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 6.835269197080292,
+     "u_code": 24.400025803214046,
+     "u_best_jpeg": 24.33925707758471
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.13179614417319,
+     "u_best_jpeg": 16.748398844859253
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.257382018040435,
+     "u_best_jpeg": 17.729932916697518
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.348717199034795,
+     "u_best_jpeg": 18.77708947960727
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.421024217321996,
+     "u_best_jpeg": 19.65997441708521
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.196763646883227,
+     "u_best_jpeg": 24.34659035166874
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.90800479590276,
+     "u_best_jpeg": 24.970311822270872
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.504192229639724,
+     "u_best_jpeg": 25.648800252451835
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.927799090452826,
+     "u_best_jpeg": 26.400511089200062
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.21543337865926,
+     "u_best_jpeg": 26.98695216751428
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.487378523872607,
+     "u_best_jpeg": 27.44544246510539
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 24.579254741032145,
+     "u_best_jpeg": 23.444575323154552
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 24.962547501502243,
+     "u_best_jpeg": 23.93489873639271
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 12.706950656934305,
+     "u_code": 25.24880412008118,
+     "u_best_jpeg": 24.34659035166874
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 12.706950656934305,
+     "u_code": 25.50594989609277,
+     "u_best_jpeg": 24.970311822270872
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 12.706950656934305,
+     "u_code": 25.70487398696966,
+     "u_best_jpeg": 25.648800252451835
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.584483293020043,
+     "u_best_jpeg": 23.93489873639271
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.852383641638056,
+     "u_best_jpeg": 24.34659035166874
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.105400637555064,
+     "u_best_jpeg": 24.970311822270872
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.284000869967073,
+     "u_best_jpeg": 25.648800252451835
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.44275663211108,
+     "u_best_jpeg": 26.400511089200062
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.254290504524505,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.934153367557887,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.530340801294855,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.959177376438983,
+     "u_best_jpeg": 26.41650493679045
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.25204137897644,
+     "u_best_jpeg": 27.034933710285443
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.529216238520814,
+     "u_best_jpeg": 27.472098877756036
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 24.57440293393758,
+     "u_best_jpeg": 23.463196908002175
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 24.97710292278592,
+     "u_best_jpeg": 23.972755436647983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 12.706950656934305,
+     "u_code": 25.268211348459417,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 12.706950656934305,
+     "u_code": 25.520505317376443,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 21.139223331649724,
+     "u_best_jpeg": 19.685707367892913
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 21.66223798313244,
+     "u_best_jpeg": 20.620496769287357
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 5.271609635036496,
+     "u_code": 22.018059426354284,
+     "u_best_jpeg": 21.433237838005983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 5.271609635036496,
+     "u_code": 22.301001778795754,
+     "u_best_jpeg": 22.22020611942349
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.29300201487885,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.997469782984624,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.540170878414248,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.947196699986467,
+     "u_best_jpeg": 26.41650493679045
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.23420208699252,
+     "u_best_jpeg": 27.034933710285443
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.49511607517984,
+     "u_best_jpeg": 27.472098877756036
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 22.736014588492765,
+     "u_best_jpeg": 22.22020611942349
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 23.35840237896996,
+     "u_best_jpeg": 22.899893966361645
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 23.900634166128125,
+     "u_best_jpeg": 23.463196908002175
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 17.329,
+     "b_be": 9.124329635036496,
+     "u_code": 24.301414182723292,
+     "u_best_jpeg": 23.972755436647983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 20.676,
+     "b_be": 9.124329635036496,
+     "u_code": 24.560742428755457,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 18.96267655463036,
+     "u_best_jpeg": 16.78345363313919
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.29786587208063,
+     "u_best_jpeg": 17.76947790427756
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.55396557530106,
+     "u_best_jpeg": 18.80599636906345
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.753572696928742,
+     "u_best_jpeg": 19.685707367892913
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.71989941128717,
+     "u_best_jpeg": 23.972755436647983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.99940928263048,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.263945410866114,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.4486215758608,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.603350254640134,
+     "u_best_jpeg": 26.41650493679045
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.599366645721044,
+     "u_best_jpeg": 23.972755436647983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.862305876772055,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.12028399025607,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.303845340235075,
+     "u_best_jpeg": 25.718106925343516
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.452678867245083,
+     "u_best_jpeg": 26.41650493679045
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 23.10477209702474,
+     "u_best_jpeg": 20.620496769287357
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 23.48331455341105,
+     "u_best_jpeg": 21.433237838005983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 23.747838197632806,
+     "u_best_jpeg": 22.22020611942349
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 12.172,
+     "b_be": 6.835269197080292,
+     "u_code": 23.989558079421656,
+     "u_best_jpeg": 22.899893966361645
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 14.523,
+     "b_be": 6.835269197080292,
+     "u_code": 24.16286667391178,
+     "u_best_jpeg": 23.463196908002175
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 17.329,
+     "b_be": 6.835269197080292,
+     "u_code": 24.30425000099582,
+     "u_best_jpeg": 23.972755436647983
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 6.835269197080292,
+     "u_code": 24.40458655570063,
+     "u_best_jpeg": 24.382479909806147
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.143213041797488,
+     "u_best_jpeg": 16.78345363313919
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.245965120416145,
+     "u_best_jpeg": 17.76947790427756
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.344911566493362,
+     "u_best_jpeg": 18.80599636906345
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.409607319697702,
+     "u_best_jpeg": 19.685707367892913
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.26474993318656,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.970761367875074,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.535570515625878,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.95394766210796,
+     "u_best_jpeg": 26.40584237173019
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.257271093307466,
+     "u_best_jpeg": 27.013608580164924
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.534445952851843,
+     "u_best_jpeg": 27.450773747635527
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 14.523,
+     "b_be": 12.706950656934305,
+     "u_code": 24.588958355221262,
+     "u_best_jpeg": 23.43991992694265
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 12.706950656934305,
+     "u_code": 24.986806536975028,
+     "u_best_jpeg": 23.96802334911607
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 12.706950656934305,
+     "u_code": 25.258507734270296,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 12.706950656934305,
+     "u_code": 25.525357124471,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 12.706950656934305,
+     "u_code": 25.709725794064216,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 6.006,
+     "b_be": 5.271609635036496,
+     "u_code": 21.130649320969678,
+     "u_best_jpeg": 19.67284089248906
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 5.271609635036496,
+     "u_code": 21.636515951092303,
+     "u_best_jpeg": 20.58958810175309
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 5.271609635036496,
+     "u_code": 22.009485415674238,
+     "u_best_jpeg": 21.419706753512298
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 5.271609635036496,
+     "u_code": 22.29242776811571,
+     "u_best_jpeg": 22.18296294972825
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 18.664733430656934,
+     "u_code": 25.29300201487885,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 18.664733430656934,
+     "u_code": 25.98703322345713,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 18.664733430656934,
+     "u_code": 26.55582571770549,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 18.664733430656934,
+     "u_code": 26.95763325951396,
+     "u_best_jpeg": 26.40584237173019
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 41.905,
+     "b_be": 18.664733430656934,
+     "u_code": 27.255075206047508,
+     "u_best_jpeg": 27.013608580164924
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "goodput": 50.0,
+     "b_be": 18.664733430656934,
+     "u_code": 27.51077091447108,
+     "u_best_jpeg": 27.450773747635527
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 10.201,
+     "b_be": 9.124329635036496,
+     "u_code": 22.726584470455226,
+     "u_best_jpeg": 22.18296294972825
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 12.172,
+     "b_be": 9.124329635036496,
+     "u_code": 23.348972260932428,
+     "u_best_jpeg": 22.881272381514023
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 14.523,
+     "b_be": 9.124329635036496,
+     "u_code": 23.900634166128125,
+     "u_best_jpeg": 23.43991992694265
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 17.329,
+     "b_be": 9.124329635036496,
+     "u_code": 24.268408769591925,
+     "u_best_jpeg": 23.96802334911607
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "goodput": 20.676,
+     "b_be": 9.124329635036496,
+     "u_code": 24.55131231071792,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 18.966442726736542,
+     "u_best_jpeg": 16.775663680188092
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.294099699974442,
+     "u_best_jpeg": 17.74161784612416
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.565264091619607,
+     "u_best_jpeg": 18.793607702153654
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 19.75733886903493,
+     "u_best_jpeg": 19.67284089248906
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.724890658989725,
+     "u_best_jpeg": 23.96802334911607
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 26.009391778035596,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.283910401676348,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.45361282356336,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.598359006937574,
+     "u_best_jpeg": 26.40584237173019
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 17.329,
+     "b_be": 14.938904233576642,
+     "u_code": 25.594405528154045,
+     "u_best_jpeg": 23.96802334911607
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 20.676,
+     "b_be": 14.938904233576642,
+     "u_code": 25.887111464607056,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 24.67,
+     "b_be": 14.938904233576642,
+     "u_code": 26.120283990256066,
+     "u_best_jpeg": 24.954888528989667
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 29.435,
+     "b_be": 14.938904233576642,
+     "u_code": 26.298884222668075,
+     "u_best_jpeg": 25.69145051269287
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "goodput": 35.121,
+     "b_be": 14.938904233576642,
+     "u_code": 26.457639984812086,
+     "u_best_jpeg": 26.40584237173019
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 7.166,
+     "b_be": 6.835269197080292,
+     "u_code": 23.086529087078414,
+     "u_best_jpeg": 20.58958810175309
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 8.55,
+     "b_be": 6.835269197080292,
+     "u_code": 23.46507154346472,
+     "u_best_jpeg": 21.419706753512298
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 10.201,
+     "b_be": 6.835269197080292,
+     "u_code": 23.73871669265964,
+     "u_best_jpeg": 22.18296294972825
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 12.172,
+     "b_be": 6.835269197080292,
+     "u_code": 23.980436574448493,
+     "u_best_jpeg": 22.881272381514023
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 14.523,
+     "b_be": 6.835269197080292,
+     "u_code": 24.167427426398362,
+     "u_best_jpeg": 23.43991992694265
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 17.329,
+     "b_be": 6.835269197080292,
+     "u_code": 24.290567743536077,
+     "u_best_jpeg": 23.96802334911607
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "goodput": 20.676,
+     "b_be": 6.835269197080292,
+     "u_code": 24.40458655570063,
+     "u_best_jpeg": 24.363269762152175
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 3.536,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.13179614417319,
+     "u_best_jpeg": 16.775663680188092
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 4.218,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.249770752957573,
+     "u_best_jpeg": 17.74161784612416
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 5.033,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.348717199034795,
+     "u_best_jpeg": 18.793607702153654
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "goodput": 6.006,
+     "b_be": 3.3797084671532844,
+     "u_code": 20.3981904220734,
+     "u_best_jpeg": 19.67284089248906
+    }
+   ],
+   "cells": 3472,
+   "model_sim_agreement": 0.9058179723502304,
+   "per_code": [
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67
+     ],
+     "b_be_fading_mbps": 72.63068700810847,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 28.403656780810458,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 53.32298221245464,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 1385.6535033744765,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 5.472747099030201,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 64.2836087013893,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.344242499867027,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 95.52375175701482,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 90.14809596316927,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.479345910906424,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 40.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.955343959311314,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 72.63068700810847,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 28.403656780810458,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 53.32298221245464,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 1385.6535033744765,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 5.472747099030201,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 64.2836087013893,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.344242499867027,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 95.52375175701482,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 90.14809596316927,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.479345910906424,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 90.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.955343959311314,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 72.63068700810847,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 3.8596842944612244,
+     "model_wins": [
+      0.861,
+      1.225,
+      1.744,
+      2.081
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 20.796143032582915,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 11.034119496994583,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 188.7522069752278,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 6.6082422187753,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 38.61885709765215,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 10.651323543424267,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 790.7449542932698,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 1.9436608540750957,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "b_be_fading_mbps": 4.039681947379799,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 7.818120005950039,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 45.30304191526502,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 2.486729321013112,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "b_be_fading_mbps": 9.082673866237736,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 9.092487050149083,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 58.140039071953204,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 90.14809596316927,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 5.004539978272261,
+     "model_wins": [
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 32.56618845584249,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 14.936879810025713,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 180.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 2.4947155487205226,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225
+     ],
+     "b_be_fading_mbps": 9.562924828702565,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 10.681101290360967,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 182.7133956661169,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 7.7296404469612074,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 44.181260409796955,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 1.9298421472306122,
+     "model_wins": [
+      0.861,
+      1.225
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 10.398071516291457,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 5.517059748497291,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 94.3761034876139,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 3.30412110938765,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 19.309428548826077,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 5.3256617717121335,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 395.3724771466349,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 0.9718304270375479,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721
+     ],
+     "b_be_fading_mbps": 2.0198409736898997,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 3.9090600029750195,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 22.65152095763251,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 1.243364660506556,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721
+     ],
+     "b_be_fading_mbps": 4.541336933118868,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 4.546243525074542,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 29.070019535976602,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 9.087338222575033,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 54.8371035338204,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 2.5022699891361304,
+     "model_wins": [
+      0.861,
+      1.225
+     ],
+     "sim_wins": [],
+     "b_be_fading_mbps": 16.283094227921246,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 7.468439905012857,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "sweep",
+     "t_full_ms": 360.0,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 1.2473577743602613,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861
+     ],
+     "b_be_fading_mbps": 4.7814624143512825,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67
+     ],
+     "b_be_fading_mbps": 72.63068700810847,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 28.403656780810458,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 53.32298221245464,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 1385.6535033744765,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 5.472747099030201,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 64.2836087013893,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.344242499867027,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 95.52375175701482,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 90.14809596316927,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.479345910906424,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "laptop GPU",
+     "t_full_ms": 5.4638009969494306,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.955343959311314,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 12.706950656934305,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435
+     ],
+     "b_be_fading_mbps": 72.63068700810847,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 5.271609635036496,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      3.536,
+      4.218
+     ],
+     "sim_wins": [
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201
+     ],
+     "b_be_fading_mbps": 28.403656780810458,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [
+      14.523,
+      17.329
+     ],
+     "sim_wins": [
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121,
+      41.905,
+      50.0
+     ],
+     "b_be_fading_mbps": 319.2832584965561,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 9.124329635036496,
+     "model_wins": [
+      7.166
+     ],
+     "sim_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 53.32298221245464,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 18.664733430656934,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 1385.6535033744765,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 2.6331687591240875,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483
+     ],
+     "b_be_fading_mbps": 5.472747099030201,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 11.093669343065693,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 64.2836087013893,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.344242499867027,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 95.52375175701482,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 14.938904233576642,
+     "model_wins": [
+      7.166,
+      8.55,
+      10.201,
+      12.172
+     ],
+     "sim_wins": [
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676,
+      24.67,
+      29.435,
+      35.121
+     ],
+     "b_be_fading_mbps": 90.14809596316927,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 6.835269197080292,
+     "model_wins": [
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.225,
+      1.744,
+      2.081,
+      2.483,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "sim_wins": [
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006,
+      7.166,
+      8.55,
+      10.201,
+      12.172,
+      14.523,
+      17.329,
+      20.676
+     ],
+     "b_be_fading_mbps": 44.479345910906424,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 26.17448233576642,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Jetson Orin Nano",
+     "t_full_ms": 22.693572500429582,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 3.3797084671532844,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507,
+      0.605,
+      0.721,
+      0.861,
+      1.027,
+      1.225,
+      1.462,
+      1.744,
+      2.081,
+      2.483,
+      2.963,
+      3.536,
+      4.218,
+      5.033,
+      6.006
+     ],
+     "b_be_fading_mbps": 12.955343959311314,
+     "b_be_fading_p": 0.845
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "k2_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "k4_int8_zstd",
+     "b_be_mbps": null,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k2_c16_w128_d2",
+     "b_be_mbps": 5.07557531200452,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 86.82396833483413,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k2_c8_w128_d2",
+     "b_be_mbps": 3.6730643364156346,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 20.994587401916654,
+     "b_be_fading_p": 0.915
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c16_w128_d2",
+     "b_be_mbps": 1.055626024295568,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 4.941081789775139,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c16_w128_s1_d2",
+     "b_be_mbps": 4.02775814957451,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 54.12349634558777,
+     "b_be_fading_p": 0.9550000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c32_w128_d2",
+     "b_be_mbps": 1.8517636131344037,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 9.175688551870739,
+     "b_be_fading_p": 0.885
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c32_w128_s1_d2",
+     "b_be_mbps": 4.02775814957451,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 234.88989895456203,
+     "b_be_fading_p": 0.9650000000000001
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c4_w128_d2",
+     "b_be_mbps": 0.5272851483575777,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356
+     ],
+     "b_be_fading_mbps": 0.9598125419414651,
+     "b_be_fading_p": 0.76
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c64_w128_d2",
+     "b_be_mbps": 2.2718624759198964,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 10.763824574500141,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c8_w128_d2",
+     "b_be_mbps": 0.676777769876428,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 2.1580075869174236,
+     "b_be_fading_p": 0.855
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "learned_k4_c8_w128_s1_d2",
+     "b_be_mbps": 3.16700743415615,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 16.192767054190508,
+     "b_be_fading_p": 0.91
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k2_c8_w128_d2",
+     "b_be_mbps": 4.3182316392749165,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 26.05816023196691,
+     "b_be_fading_p": 0.905
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c16_w128_d2",
+     "b_be_mbps": 1.368744756733846,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": 7.73759828875168,
+     "b_be_fading_p": 0.89
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c32_w128_s1_d2",
+     "b_be_mbps": 5.782101231966782,
+     "model_wins": [],
+     "sim_wins": [],
+     "b_be_fading_mbps": null,
+     "b_be_fading_p": null
+    },
+    {
+     "device": "Pi 5 (throttled)",
+     "t_full_ms": 757.588298499968,
+     "code": "joint_k4_c4_w128_d2",
+     "b_be_mbps": 0.676777769876428,
+     "model_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425,
+      0.507
+     ],
+     "sim_wins": [
+      0.25,
+      0.298,
+      0.356,
+      0.425
+     ],
+     "b_be_fading_mbps": 2.2721133266903735,
+     "b_be_fading_p": 0.845
+    }
+   ],
+   "fading_rule": {
+    "rel_std": 0.5414783324552617,
+    "exceptions": 0,
+    "median_slack": 1.6961026459029922
+   },
+   "constant_rule_exception_devices": [
+    "Jetson Orin Nano 23 ms",
+    "laptop GPU 5 ms",
+    "sweep 180 ms",
+    "sweep 40 ms",
+    "sweep 90 ms"
+   ],
+   "constant_rule_exception_ratio_max": 3.024899152301393,
+   "constant_rule_exception_margin_median": 0.0363265525873373,
+   "constant_rule_exception_tfull_max": 180.0
+  }
+ }
+}

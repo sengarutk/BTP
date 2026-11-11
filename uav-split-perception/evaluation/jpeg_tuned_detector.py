@@ -25,6 +25,8 @@ Design (as joint_bottleneck.py, so the two are like for like)
                bootstrap against the untuned detector at the same quality (cached jpeg rows of learned_bottleneck.py)
 usage: jpeg_tuned_detector.py train --q mix|N [--epochs 30] [--lr0 1e-3]
        jpeg_tuned_detector.py eval  --q mix|N                -> experiments/results/jpeg_tuned/eval_<run>_q<Q>.json
+       jpeg_tuned_detector.py compare --q N   paired bootstrap of the dedicated quality-N detector against the
+              mixed-quality one at quality N (cached per-image stats)  -> paired_dedicated_vs_mix_q<N>.json
 """
 import argparse
 import json
@@ -185,10 +187,33 @@ def cmd_eval(a):
               f"payload {pay:.0f} (untuned {ref['payload_bytes_mean']:.0f})", flush=True)
 
 
+def cmd_compare(a):
+    import pickle
+    from evaluation.detection_eval import STATS_CACHE, map_from_stats, paired_bootstrap
+    q = int(a.q)
+    res = {}
+    for kind in ("mix", str(q)):
+        name = run_name(kind, a.run)
+        r = pickle.load(open(STATS_CACHE / "visdrone_val" / f"jt_{name}_q{q}.pkl", "rb"))
+        ev = json.load(open(OUT / f"eval_{name}_q{q}.json"))
+        assert abs(map_from_stats(r["stats"])[1] - ev["map50_95"]) < 1e-6 and r["num_images"] == ev["n"], name
+        res[kind] = r
+    pb = paired_bootstrap(res["mix"], res[str(q)], n_boot=a.n_boot, workers=a.workers)
+    row = {"method": f"paired image-level bootstrap, dedicated Q{q} detector minus the mixed-quality detector at Q{q}, "
+                     "same VisDrone-DET val frames; cached stats checked against the eval files",
+           "map50_95_mix": res["mix"]["map50_95"], "map50_95_dedicated": res[str(q)]["map50_95"],
+           "gain": res[str(q)]["map50_95"] - res["mix"]["map50_95"], "n_boot": a.n_boot,
+           **{f"boot_{k}": v for k, v in pb.items()}}
+    row["significant"] = bool(row["boot_delta_map50_95_ci_low"] > 0 or row["boot_delta_map50_95_ci_high"] < 0)
+    json.dump(row, open(OUT / f"paired_dedicated_vs_mix_q{q}.json", "w"), indent=1)
+    print(f"Q{q}: mix {row['map50_95_mix']:.4f} dedicated {row['map50_95_dedicated']:.4f} gain {row['gain']:+.4f} CI "
+          f"[{row['boot_delta_map50_95_ci_low']:+.4f}, {row['boot_delta_map50_95_ci_high']:+.4f}]", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("train", "eval"):
+    for name in ("train", "eval", "compare"):
         p = sub.add_parser(name)
         p.add_argument("--q", default="mix", help="mix or a JPEG quality")
         p.add_argument("--run", default="r1")
@@ -200,10 +225,10 @@ def main():
             p.add_argument("--workers", type=int, default=2)
             p.add_argument("--fraction", type=float, default=1.0, help="< 1: smoke test, nothing saved")
         else:
-            p.add_argument("--n-boot", type=int, default=300)
+            p.add_argument("--n-boot", type=int, default=300 if name == "eval" else 1000)
             p.add_argument("--workers", type=int, default=4)
     a = ap.parse_args()
-    {"train": cmd_train, "eval": cmd_eval}[a.cmd](a)
+    {"train": cmd_train, "eval": cmd_eval, "compare": cmd_compare}[a.cmd](a)
 
 
 if __name__ == "__main__":

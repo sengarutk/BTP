@@ -1,0 +1,15 @@
+{
+ "method": "paired image-level bootstrap, dedicated Q35 detector minus the mixed-quality detector at Q35, same VisDrone-DET val frames; cached stats checked against the eval files",
+ "map50_95_mix": 0.21681528494898517,
+ "map50_95_dedicated": 0.21994186486924383,
+ "gain": 0.0031265799202586653,
+ "n_boot": 1000,
+ "boot_delta_map50": 0.0013042188680847944,
+ "boot_delta_map50_ci_low": -0.005224941472100961,
+ "boot_delta_map50_ci_high": 0.007862035342120084,
+ "boot_delta_map50_95": 0.0031265799202586653,
+ "boot_delta_map50_95_ci_low": -0.0014137139561471348,
+ "boot_delta_map50_95_ci_high": 0.006847500994996624,
+ "boot_n_boot": 1000,
+ "significant": false
+}

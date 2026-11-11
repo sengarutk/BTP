@@ -1,0 +1,19 @@
+{
+ "run": "jpegtuned_qmix_r1",
+ "q": 45,
+ "n": 548,
+ "payload_bytes_mean": 28480.28832116788,
+ "payload_bytes_untuned": 28480.28832116788,
+ "payload_matches_untuned": true,
+ "map50_95_untuned": 0.19875262747840716,
+ "map50_95": 0.2237871746433854,
+ "map50": 0.3973185047537715,
+ "gain": 0.025034547164978244,
+ "boot_delta_map50": 0.033766211840660254,
+ "boot_delta_map50_ci_low": 0.027142603380341555,
+ "boot_delta_map50_ci_high": 0.04240508433874967,
+ "boot_delta_map50_95": 0.025034547164978244,
+ "boot_delta_map50_95_ci_low": 0.020716226703996043,
+ "boot_delta_map50_95_ci_high": 0.030292715159383546,
+ "boot_n_boot": 300
+}

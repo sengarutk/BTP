@@ -14,10 +14,15 @@ is a candidate. Evaluation on the 548 VisDrone-DET val frames, as for the frozen
 | k2_c8 | 26.5 KB | 0.233 | 0.238 | +0.005 | 22 |
 | k4_c32_s1 | 104.8 KB | 0.253 | 0.256 | +0.002 | 23 |
 
-The full detector scores 0.267 on the same frames. Every code chose a trained epoch over its start. The bootstrap
-half-width of each estimate is up to 0.008 mAP, so the two smallest gains (+0.005, +0.002) are not claimed; the split's
-server side gets extra training while the JPEG path keeps the unmodified detector, so the gains bound the split's
-advantage from above.
-Break-even rule with these codes: `experiments/results/break_even/` (0 exceptions in 657 winning cells);
+The full detector scores 0.267 on the same frames. Every code chose a trained epoch over its start.
+Paired image-level bootstrap of joint against frozen on the same frames (`evaluation/joint_vs_frozen.py`, 1000
+resamples, `paired_joint_vs_frozen.json`): k4_c4 +0.041 [+0.035, +0.048], k4_c16 +0.013 [+0.009, +0.018] and
+k2_c8 +0.005 [+0.001, +0.009] are significant; k4_c32_s1 +0.002 [−0.002, +0.007] is not. (The unpaired half-width
+of each eval file, up to 0.008, overstated the uncertainty of the difference; this replaces the earlier note that
+the two smallest gains are not claimed.)
+The split's server side is trained while the untuned JPEG path is not; the like-for-like comparison against a
+detector fine-tuned on JPEG with the same recipe is in `experiments/results/jpeg_tuned/` and in
+`break_even.json` → `jpeg_tuned`.
+Break-even rule with these codes: `experiments/results/break_even/` (18 JPEG qualities: 0 exceptions in 548 winning cells; the paper's 7 qualities: 657);
 paper text: `paper/drafts/design_rule.tex`. Run 1 (invalid) is in `_superseded/run1_nov10/`.
 Weights (`weights/joint_bottleneck/*.pt`, 23 MB each) are not in git.
