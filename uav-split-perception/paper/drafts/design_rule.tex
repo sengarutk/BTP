@@ -12,7 +12,8 @@
 % Fourth revision (11 Nov 2026): entropy-coded codes (evaluation/entropy_bottleneck.py,
 % experiments/results/entropy_bottleneck/); also \input sim_entropy_metrics.tex and sim_entropy_tuned_metrics.tex.
 % Fifth revision (11 Nov 2026): Corollaries cor:coder and cor:switch (needs \newtheorem{corollary}{Corollary} in the
-% preamble), bootstrap intervals on B_be (b_be_ci_metrics.tex from evaluation/break_even_ci.py).
+% preamble), bootstrap intervals on B_be (b_be_ci_metrics.tex from evaluation/break_even_ci.py), the energy version
+% (energy_be_metrics.tex from evaluation/energy_break_even.py).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -219,6 +220,21 @@ Across all codes and devices, the interval's width is a median \BeCiRelWidthMedi
 \BeCiRelWidthMax\,\%). $B_{\mathrm{be}}$ moves in steps, since it changes only when the matching quality does. The
 frozen code against the tuned detector is matched by Q10, the grid's lowest quality, in every resample. Its interval
 is therefore a single point, and its $B_{\mathrm{be}}$ is an upper bound limited by the grid.
+
+\textbf{Energy.} The proposition counts accurate results per second; the drone also pays in joules. With the Pi's
+measured constants, the energy of a frame above idle is $e_{\mathrm{enc}} + (a + bB)\,b_q/B$ for an image and
+$e_c(k) + (a + bB)\,b_k/B$ for a split (sizes in Mbit, $B$ in Mbit/s). Here $a + bB$ is the fitted radio power, $e_{\mathrm{enc}} = \BeEnEncJ$~J the
+measured encode energy, and $e_c(k)$ the onboard layers' share of the \BeEnComputeJ~J of a full inference (by MACs,
+as for the onboard time) plus quantisation. At the accuracy-matched setting $q^\ast$, with $S = b_{q^\ast} - b_k$ the
+bits saved, the split uses less energy per frame exactly when
+\begin{equation*}
+B < B_E(k) = \frac{aS}{e_c(k) - e_{\mathrm{enc}} - bS}.
+\end{equation*}
+For the \BeEnCodes{} codes on the Pi, $B_E$ is at most \BeEnMax~kbit/s (median \BeEnMedian). For the smallest jointly
+trained code it is \BeEnJointPi~kbit/s (\BeEnTunedJointPi{} against the tuned detector). At 1~Mbit/s that code costs
+\BeEnJointSplitJ~J per frame against \BeEnJointImageJ~J for its JPEG setting, \BeEnJointRatio{} times as much. On a
+board like the Pi, then, a split is never the energy-saving choice: the onboard layers cost more than the radio time
+they save.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
