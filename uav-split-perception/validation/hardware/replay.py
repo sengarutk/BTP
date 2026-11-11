@@ -339,7 +339,10 @@ class Replay:
     def run(self, out_dir):
         cf, c = self.cfg, self.c
         self.mu, self.mu_e, self.lam_t, self.lam_f = (cf.get("mu_fixed", 0.0) or 0.0), 0.0, 0.0, 0.0
-        self.temp, self.n_active, self.aoi = T0_C, 1, float("inf")
+        # ambient_c: a hotter (or cooler) room than the measured one, as a shift of the plant's intercept and of the
+        # starting temperature (paper 2's ambient extrapolation, replay_theory_sweep.py; default 0 = as measured)
+        amb = float(cf.get("ambient_c", 0.0))
+        self.temp, self.n_active, self.aoi = T0_C + amb, 1, float("inf")
         self.onb_free, self.last_onboard_det, self.rewards, self.exempt_t = 0.0, None, [], -10.0
         self.price = {"n": 0, "sum_p": 0.0, "sum_sq": 0.0, "mu_max": 0.0,
                       **{f"{a}_{k}": 0.0 if a == "neg" else 0 for a in ("neg", "n") for k in ("step", "cap", "held")}}
@@ -373,7 +376,7 @@ class Replay:
             p_meas = p + self.rng.gauss(0.0, P_SD)
             th = c["pi"]["thermal_steady"]              # the controller's model (v5's heat price, as on the Pi)
             pl = c["pi"]["thermal_plant"]               # the board itself (full-range fit, see load_all)
-            t_ss = pl["intercept_c"] + pl["c_per_w"] * p
+            t_ss = pl["intercept_c"] + amb + pl["c_per_w"] * p
             tau = TAU_HEAT if t_ss > self.temp else TAU_COOL
             self.temp += (t_ss - self.temp) * (1 - math.exp(-PERIOD / tau))
             if ONB_POWER == "power":                   # the firmware holds the board at its throttle limit (85 C):

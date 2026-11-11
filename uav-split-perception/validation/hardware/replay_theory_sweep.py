@@ -5,6 +5,7 @@ Predictions written before any run: docs/theory_sweep_predictions_nov11.md.
 One setting of v4.1 is changed at a time, everything else held (replay_sweep.py's design, common random numbers):
   step size eta (mu_step)   0.02, 0.05, 0.1 (v4.1), 0.2, 0.5, 1.0        budget 2.8 W
   budget B (energy)         2.4, 2.8 (v4.1), 3.2, 3.6, 4.0, 4.5 W        eta 0.1
+  ambient (ambient_c)       +5 C at 3.6 and 3.2 W, +10 C at 3.6 and 2.8 W (plant intercept and start shifted)
 The replay (replay.py) logs, per run, the price updates and Theorem 1's terms: N updates, the mean of the 1-s power
 P_t the updates used, the final price mu_N, and the sums of (-s_t)^+ over held and capped updates. From these:
   excess      mean P_t - B (Theorem 1's left side minus B)
@@ -31,18 +32,23 @@ import replay_accumo as A  # noqa: E402
 BASE = dict(R.POLICIES["v41"])
 ETAS = (0.02, 0.05, 0.1, 0.2, 0.5, 1.0)
 BUDGETS = (2.4, 2.8, 3.2, 3.6, 4.0, 4.5)
-SWEEP = {**{f"th_eta{v:g}": ("mu_step", v) for v in ETAS if v != 0.1},
-         **{f"th_b{v:g}": ("energy", v) for v in BUDGETS if v != 2.8}}
-DEFAULT = {"mu_step": 0.1, "energy": 2.8}
-for name, (k, v) in SWEEP.items():
-    R.POLICIES[name] = dict(BASE, **{k: v})
-ETA_POLS = ["v41"] + [n for n, (k, _) in SWEEP.items() if k == "mu_step"]
-BUDGET_POLS = ["v41"] + [n for n, (k, _) in SWEEP.items() if k == "energy"]
+# a hotter room than the measured one (ambient extrapolation, docs/theory_sweep_predictions_nov11.md, addendum):
+# +5 and +10 C with the lab's 80-C budget kept (3.6 W) or with the budget the rule gives for that room (80 - a - dT)/b
+AMBIENT = {(5, 3.6), (5, 3.2), (10, 3.6), (10, 2.8)}
+SWEEP = {**{f"th_eta{v:g}": {"mu_step": v} for v in ETAS if v != 0.1},
+         **{f"th_b{v:g}": {"energy": v} for v in BUDGETS if v != 2.8},
+         **{f"th_amb{d}_b{b:g}": {"ambient_c": float(d), "energy": b} for d, b in sorted(AMBIENT)}}
+DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0}
+for name, ov in SWEEP.items():
+    R.POLICIES[name] = dict(BASE, **ov)
+ETA_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["mu_step"]]
+BUDGET_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["energy"]]
+AMB_POLS = [n for n in SWEEP if n.startswith("th_amb")]
 METRICS = ("sAP", "pi_w", "temp_mean_c", "temp_max_c", "hot_share", "fresh_share")
 
 
 def setting(pol):
-    return {**DEFAULT, **({SWEEP[pol][0]: SWEEP[pol][1]} if pol in SWEEP else {})}
+    return {**DEFAULT, **SWEEP.get(pol, {})}
 
 
 def terms(row):
@@ -75,7 +81,7 @@ def cmd_analyze(a):
     for sc in sorted({k[0] for k in by}):
         keys = sorted(k for k in by if k[0] == sc and "v41" in by[k])
         ent = {"seeds": [k[1] for k in keys], "policies": {}}
-        for pol in ETA_POLS + BUDGET_POLS[1:]:
+        for pol in ETA_POLS + BUDGET_POLS[1:] + AMB_POLS:
             ks = [k for k in keys if pol in by[k]]
             if not ks:
                 continue
@@ -97,7 +103,7 @@ def cmd_analyze(a):
         print(f"{sc}  seeds {ent['seeds']}")
         for pol, e in ent["policies"].items():
             d = e.get("sAP_minus_v41", {"mean": 0.0, "ci95": 0.0})
-            print(f"  {pol:11s} eta {e['setting']['mu_step']:<4g} B {e['setting']['energy']:<3g}  excess {e['excess']:+.3f}"
+            print(f"  {pol:14s} amb +{e['setting']['ambient_c']:g} eta {e['setting']['mu_step']:<4g} B {e['setting']['energy']:<3g}  excess {e['excess']:+.3f}"
                   f" (max {e['excess_max']:+.3f})  price {e['price_term']:.3f} hold {e['hold_term']:.3f} cap "
                   f"{e['cap_term']:.3f}  gap {e['gap_term']:.3f}  bound {'ok' if e['bound_holds_all'] else 'FAILS'}  "
                   f"sAP {e['sAP']:.4f} ({d['mean']:+.4f} ± {d['ci95']:.4f})  T {e['temp_mean_c']:.1f}/{e['temp_max_c']:.1f}"

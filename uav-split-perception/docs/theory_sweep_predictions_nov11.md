@@ -30,3 +30,16 @@ Predictions
 5. Budget: the share of time at or above 80 C is about 0 for B <= 3.2 W and rises above 3.6 W; sAP rises with B
    while the board stays cool and stops rising (or falls) once it throttles, so the best budget is within one step of
    3.6 W. If sAP keeps rising up to 4.5 W, the rule only protects temperature and not accuracy, and we say so.
+
+Addendum (11 Nov 2026, ~12:30 IST, before the ambient runs): hotter room
+Ambient was never logged on the boards, so this is an extrapolation of the model, labelled as such. Assumption: a
+hotter room shifts the plant's intercept a by the same amount (the board's rise above the room is set by its power),
+so the 80-C budget falls by 1/b = 0.079 W per degree: 3.6 W in the lab, 3.2 W at +5 C, 2.8 W at +10 C. The campaign
+offsets of the hardware fit (1.6 C between the 24-min Wi-Fi and mesh runs, 0.13 W of budget) show the size of
+day-to-day shifts already seen. Runs: th_amb5_b3.6, th_amb5_b3.2, th_amb10_b3.6, th_amb10_b2.8 (24-min missions,
+seeds 1-5), compared with th_b3.6 (lab).
+6. Keeping the lab's 3.6 W on a hotter room raises the share of time at or above 80 C clearly above the lab's
+   (largest at +10 C, where the board reaches its 85-C throttle limit for part of the run); the corrected budget
+   brings it back to about the lab's level. Streaming AP at the corrected budget is no more than slightly below the
+   kept budget's; if keeping 3.6 W gives clearly higher sAP despite the heat, the rule protects temperature only, and
+   we say so.
