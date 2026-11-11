@@ -446,6 +446,8 @@ class Replay:
                     vals = {v: self.onboard_value(v, penalize=False) for v in ONBOARD_VARIANTS}
                     bv = max(vals, key=lambda k: vals[k][0])
                     props["onboard"] = (bv, vals[bv][0], vals[bv][1])
+                if "guard_hard_c" in cf and self.temp >= cf["guard_hard_c"]:   # hard thermal guard (paper 2,
+                    props["onboard"] = (props["onboard"][0], 0.0, 0.0)         # Theorem 3): no onboard inference while hot
                 cand = [s for s in props if props[s][1] > 0 and
                         (self.onb_free <= t if s == "onboard" else self.links[s].idle(t))]
                 if cand:

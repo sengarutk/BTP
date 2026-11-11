@@ -11,6 +11,8 @@
 % experiments/results/jpeg_tuned/); also \input sim_tuned_metrics.tex.
 % Fourth revision (11 Nov 2026): entropy-coded codes (evaluation/entropy_bottleneck.py,
 % experiments/results/entropy_bottleneck/); also \input sim_entropy_metrics.tex and sim_entropy_tuned_metrics.tex.
+% Fifth revision (11 Nov 2026): Corollaries cor:coder and cor:switch (needs \newtheorem{corollary}{Corollary} in the
+% preamble), bootstrap intervals on B_be (b_be_ci_metrics.tex from evaluation/break_even_ci.py).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -37,7 +39,29 @@ From $b_q \le B m_k$ and $e_q \le m_k$:
 so $f_q \ge f_k$. Since $\sigma(B) \le sB$, $B \ge R_q/(1 - z_P s)$ gives $p_q \ge P$. Hence
 $U_q \ge P f_q A_q \ge f_k A_k \ge U_k$.
 \end{proof}
-\noindent The first term, $b_q/m_k$, grows with onboard speed: a faster device shortens $e_k = t_{\mathrm{full}}(\phi_k +
+\begin{corollary}[No coder raises the bound]\label{cor:coder}
+$B_{\mathrm{be}}(k)$ depends on the code only through its accuracy $A_k$ and its onboard time $m_k$, not through its
+payload $b_k$. It is non-decreasing in $A_k$ and non-increasing in $m_k$. Hence two codes of equal accuracy and
+onboard time have the same bound, however different their payloads. This holds for any coder, including one at the
+task's rate--distortion limit: a better coder adds wins only below $B_{\mathrm{be}}$.
+\end{corollary}
+\begin{proof}
+$b_k$ does not appear in the expression for $B_{\mathrm{be}}(k)$. Raising $A_k$ shrinks the set of qualifying settings
+($P A_q \ge A_k$), so the minimum cannot fall. Raising $m_k$ lowers $b_q/m_k$ and enlarges the set ($e_q \le m_k$),
+so the minimum cannot rise.
+\end{proof}
+\begin{corollary}[Switching codes does not help either]\label{cor:switch}
+A split that chooses among codes $k \in \mathcal K$ slot by slot, for example by channel state, can beat every image
+setting in a slot of goodput $B$ only if $B < \max_{k \in \mathcal K} B_{\mathrm{be}}(k)$.
+\end{corollary}
+\begin{proof}
+In a slot of goodput $B$, its value is that of the code it uses. If $B \ge B_{\mathrm{be}}(k)$ for every $k$, each
+such value is at most that of some image setting, by Proposition~\ref{prop:be-family}.
+\end{proof}
+\noindent Information-theoretic work on task-oriented coding bounds the rate a code needs for a given accuracy and
+finds learned codes far from that limit~\cite{shao2022taskoriented,tosc2026limits}. Corollary~\ref{cor:coder} is the
+system-level complement: closing that gap shrinks $b_k$ but leaves $B_{\mathrm{be}}$ where it is.
+The first term, $b_q/m_k$, grows with onboard speed: a faster device shortens $e_k = t_{\mathrm{full}}(\phi_k +
 \rho_k)$, so a code can win at higher goodputs. The growth stops where the camera rate binds ($m_k = 1/F$), or where the
 deadline term $R_q/(1 - z_P s)$ dominates.
 
