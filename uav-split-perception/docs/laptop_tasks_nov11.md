@@ -16,12 +16,12 @@ Status: [x] done and pushed, [~] running or in progress, [ ] to do. Board items 
 - [x] P1-11 bootstrap intervals on B_be
 - [x] P1-12 a channel-adaptive split obeys the bound slot by slot (Corollary cor:switch)
 - [x] P1-1  video codecs (x264/x265 low delay) as the image family on VisDrone-VID val; same frames for JPEG and codes
-- [~] P1-4  second detector (running: bottleneck training, then analyse) (YOLO11s, VisDrone): JPEG grid, post-hoc, learned and entropy codes, break-even rule
+- [x] P1-4  second detector YOLO11s (033c7239): codes 3.3-25.9 KiB; B_be 0.78-1.77 Mbit/s Pi (no win: 250 ms prefix vs 300 ms deadline), 4.06-9.12 Jetson; 220 wins, 0 exceptions. Entropy codes not trained for it
 - [x] P1-3  learned image codecs as the image family (rate, accuracy, encode time)
 - [x] P1-6  energy version of the break-even rule (measured Pi energy constants)
-- [ ] P1-10 inter-frame coding of the split code (the fair video counterpart)
-- [ ] P1-9  region-of-interest image encoding as the image family
-- [ ] P1-8  MPEG FCM baseline (feasibility first)
+- [x] P1-10 inter-frame coding of the split codes (39ff4b85): lossless, 26-32 % fewer bytes; B_be unchanged; wins 204 -> 260; 0 exceptions
+- [x] P1-9  ROI JPEG with server feedback (af554d3b): median 0 % saving at equal accuracy; Jetson B_be 9.84 -> 8.99; nothing added once video is available
+- [x] P1-8  MPEG FCM: not run. The reference software (FCTM) is on git.mpeg.expert, believed to need an MPEG member login, and uses VTM. Handle by discussion + citation (arXiv 2512.10209, 2509.20777)
 
 ## Afterwards
 - [ ] rewrite both papers around the results; fresh-context audit
