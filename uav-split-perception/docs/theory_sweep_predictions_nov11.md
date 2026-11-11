@@ -118,3 +118,12 @@ keeps T <= 78 C plus the rise during one inference already started; the ambient 
 13. th_floor: mean temperature 34.4 + 12.73 x P + ambient with P = 2.2-2.5 W, i.e. 62-67 C in the lab, and the
     maximum within 5 C above the mean; at +15 C the mean exceeds 78 C, which is why th_guard_amb15 cannot hold the
     guard (Theorem 3: the temperature is never below the floor's).
+
+Addendum 6 (11 Nov 2026, ~22:30 IST, before training): a constrained deep-RL baseline (validation/hardware/rl_baseline.py)
+PPO-Lagrangian, trained on 2-min replay episodes with seeds 1001+ (600 episodes: 300 iterations x 2 workers), the
+multiplier on the measured mean power against v4.1's 2.8 W; greedy policy evaluated on the 24-min mission (seeds 1-5)
+and the 2-min mission and random scenarios (seeds 1-10), against v4.1 on the same seeds.
+14. Its mean power ends within 0.3 W of 2.8 W on the 24-min mission (the multiplier enforces the budget on average).
+15. It does not beat v4.1's streaming AP by more than the replay's accuracy bias on any of the three scenarios, and is
+    below it by more than that on at least one. A learned policy with this much training is a baseline, not a
+    contender; if it does beat v4.1, we report that.
