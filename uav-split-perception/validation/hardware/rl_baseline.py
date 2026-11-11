@@ -15,12 +15,16 @@ the same streaming AP as every other policy.
              it is younger than the 300 ms deadline, else 0 (the quantity streaming AP rewards); minus lambda times
              the camera energy the replay bills for the action (J: inference power x inference time; radio power
              from the send to the acknowledgement)
-  constraint after each batch lambda <- max(0, lambda + alpha (mean measured board power - B)), B = 2.8 W (v4.1's)
+  constraint after each batch lambda <- min(20, max(0, lambda + 0.1 (mean measured board power - B))), B = 2.8 W
+             (v4.1's). The cap: in attempt 2 (archived) lambda wound up to 88 while the policy still learned, and
+             the policy collapsed towards skipping; 20 is about twice the price at which one s640 inference (2.2 J)
+             stops paying for the ~21 ticks its result is shown
   PPO        MLP 64-64 (tanh), masked categorical policy and value head; GAE (gamma 0.99, lambda 0.95), clip 0.2,
-             4 epochs, minibatch 1024, Adam 3e-4, entropy 0.01; batch = one episode per worker; alpha = 0.2
+             4 epochs, minibatch 1024, Adam 3e-4, entropy 0.01; batch = one episode per worker
   training   2-min episodes (mission and random faults alternating), seeds 1001+ (the evaluation uses seeds 1-5 and
              1-10); the run with the best mean training reward among the last checkpoints is kept
-  evaluation the greedy policy (argmax) on the theory sweep's scenarios: the 24-min mission, seeds 1-5, and the 2-min
+  evaluation the stochastic policy as trained (actions sampled, generator seeded by the run's seed; the argmax policy of
+             attempt 2 always skipped) on the theory sweep's scenarios: the 24-min mission, seeds 1-5, and the 2-min
              mission and random scenarios, against v4.1 rows on the same seeds (common random numbers)
 usage: rl_baseline.py train [--iters 120] [--workers 3]   -> experiments/results/hardware/replay/rl_baseline/
        rl_baseline.py eval                                  (runs + rows + summary.json)
@@ -43,7 +47,7 @@ sys.path.insert(0, str(HERE))
 import replay as R  # noqa: E402
 
 OUT = R.HW / "replay" / "rl_baseline"
-BUDGET, ALPHA_L, E_SCALE = 2.8, 0.2, 1.0
+BUDGET, ALPHA_L, LAM_MAX, E_SCALE = 2.8, 0.1, 20.0, 1.0
 SERVERS = ("laptop", "jetson")
 ACTIONS = ([None] + [("laptop", v) for v in dict(R.PATH_VARIANTS, **R.LAPTOP_EXTRA)]
            + [("jetson", v) for v in R.PATH_VARIANTS] + [("onboard", v) for v in R.ONBOARD_VARIANTS])
@@ -240,7 +244,7 @@ def cmd_train(a):
                     loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(), 0.5)
                     opt.step()
-            lam = max(0.0, lam + ALPHA_L * (pw - BUDGET))
+            lam = min(LAM_MAX, max(0.0, lam + ALPHA_L * (pw - BUDGET)))
             log.append({"iter": it, "power_w": pw, "reward": rew, "lambda": lam, "steps": n,
                         "s": round(time.time() - t0, 1)})
             print(json.dumps(log[-1]), flush=True)
@@ -270,7 +274,8 @@ def cmd_eval(a):
             if f.exists():
                 rows.append(json.load(open(f)))
                 continue
-            ag = Agent(net, greedy=True)
+            ag = Agent(net, greedy=False, rng=np.random.default_rng(10_000 + s))
+            ag.lam = 0.0                                       # (only labels the stored costs; not used to act)
             R.POLICIES["rl_ppo_lag"] = dict(base="custom", decide=ag)
             path, m = R.Replay("rl_ppo_lag", scenario, phase_s, s, w["gp"], w["c"], w["decays"], w["vd"],
                                w["accs"]).run(OUT / "runs")
@@ -288,7 +293,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     t = sub.add_parser("train")
-    t.add_argument("--iters", type=int, default=120)
+    t.add_argument("--iters", type=int, default=600)
     t.add_argument("--workers", type=int, default=3)
     t.add_argument("--out", default=None, help="output directory (smoke tests; default the results directory)")
     sub.add_parser("eval")

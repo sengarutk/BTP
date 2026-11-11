@@ -127,3 +127,10 @@ and the 2-min mission and random scenarios (seeds 1-10), against v4.1 on the sam
 15. It does not beat v4.1's streaming AP by more than the replay's accuracy bias on any of the three scenarios, and is
     below it by more than that on at least one. A learned policy with this much training is a baseline, not a
     contender; if it does beat v4.1, we report that.
+Addendum 6, attempt 2 (11 Nov, ~23:00 IST): the first training run charged the radio energy of the transfer only;
+in the replay the radio stays on until the acknowledgement, so the cost was too low (fixed, cost now within 3 % of the
+billed power). The second run ended at 2.3 W, but the multiplier had wound up to 88 while the policy was still
+learning, and the argmax policy always skipped (availability 0). Attempt 3, before its run: the multiplier capped at
+20 (about twice the price at which one s640 inference stops paying for the ticks its result is shown), its step 0.1,
+600 iterations; the stochastic policy is evaluated, as trained. Predictions 14 and 15 stand. Attempt 2 is archived
+(experiments/results/hardware/replay/rl_baseline/_superseded/attempt2/).
