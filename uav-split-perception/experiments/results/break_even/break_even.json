@@ -64,10 +64,138 @@
   }
  ],
  "rule_check": {
-  "split_win_cells": 657,
-  "cells_with_q_star": 657,
+  "split_win_cells": 548,
+  "cells_with_q_star": 548,
   "violations": []
  },
+ "jpeg_options": [
+  {
+   "config": "jpeg_q10",
+   "payload_kb": 10.971536496350366,
+   "map50_95": 0.09866251720311717,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q15",
+   "payload_kb": 14.082118613138686,
+   "map50_95": 0.1392696017704765,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q20",
+   "payload_kb": 16.900419708029197,
+   "map50_95": 0.15965588658188373,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q25",
+   "payload_kb": 19.52873722627737,
+   "map50_95": 0.17566554202302093,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q30",
+   "payload_kb": 21.9650401459854,
+   "map50_95": 0.18068515637225185,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q35",
+   "payload_kb": 24.306344890510946,
+   "map50_95": 0.18834398311380066,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q40",
+   "payload_kb": 26.284330291970804,
+   "map50_95": 0.19290936161364086,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q45",
+   "payload_kb": 28.480288321167883,
+   "map50_95": 0.19875262747840716,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q50",
+   "payload_kb": 30.41457481751825,
+   "map50_95": 0.20303849445915317,
+   "host_edge_proc_ms": 0.793,
+   "cloud_ms": 12.7269
+  },
+  {
+   "config": "jpeg_q55",
+   "payload_kb": 32.428715328467156,
+   "map50_95": 0.20955552644549497,
+   "host_edge_proc_ms": 0.80766,
+   "cloud_ms": 12.7583
+  },
+  {
+   "config": "jpeg_q60",
+   "payload_kb": 34.932768248175186,
+   "map50_95": 0.21358692439584084,
+   "host_edge_proc_ms": 0.82232,
+   "cloud_ms": 12.7897
+  },
+  {
+   "config": "jpeg_q65",
+   "payload_kb": 38.0180401459854,
+   "map50_95": 0.2199951821776936,
+   "host_edge_proc_ms": 0.83698,
+   "cloud_ms": 12.821100000000001
+  },
+  {
+   "config": "jpeg_q70",
+   "payload_kb": 41.8372299270073,
+   "map50_95": 0.22540499052458982,
+   "host_edge_proc_ms": 0.85164,
+   "cloud_ms": 12.852500000000001
+  },
+  {
+   "config": "jpeg_q75",
+   "payload_kb": 46.22362226277372,
+   "map50_95": 0.23075596591279604,
+   "host_edge_proc_ms": 0.8663,
+   "cloud_ms": 12.8839
+  },
+  {
+   "config": "jpeg_q80",
+   "payload_kb": 52.945627737226275,
+   "map50_95": 0.23994503305531795,
+   "host_edge_proc_ms": 0.9216,
+   "cloud_ms": 12.978966666666667
+  },
+  {
+   "config": "jpeg_q85",
+   "payload_kb": 62.245434306569344,
+   "map50_95": 0.24713508582224072,
+   "host_edge_proc_ms": 0.9769,
+   "cloud_ms": 13.074033333333334
+  },
+  {
+   "config": "jpeg_q90",
+   "payload_kb": 77.76972262773722,
+   "map50_95": 0.2562773607952493,
+   "host_edge_proc_ms": 1.0322,
+   "cloud_ms": 13.1691
+  },
+  {
+   "config": "jpeg_q95",
+   "payload_kb": 109.06034306569343,
+   "map50_95": 0.26371484593237077,
+   "host_edge_proc_ms": 1.1032,
+   "cloud_ms": 13.3185
+  }
+ ],
  "codes": [
   {
    "device": "sweep",
@@ -128,21 +256,17 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 6.088611822736183,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -153,10 +277,10 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 10.117138418695582,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 7.782891678832117,
    "wins_at_mbps": [
     0.507,
     0.605,
@@ -173,11 +297,9 @@
     4.218,
     5.033,
     6.006,
-    7.166,
-    8.55,
-    10.201
+    7.166
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 7.166,
    "rule_upper_bound_holds": true
   },
   {
@@ -212,8 +334,6 @@
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 11.093669343065693,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201
@@ -278,15 +398,12 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 10.510880928485767,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
-   "wins_at_mbps": [
-    14.523,
-    17.329
-   ],
-   "max_win_mbps": 17.329,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -332,23 +449,17 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 12.170328015647941,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.225,
-    1.744,
-    2.483,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -359,21 +470,17 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 6.088611822736183,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -384,10 +491,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 10.117138418695582,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 10.040935182481752,
    "wins_at_mbps": [
     0.425,
     0.507,
@@ -406,10 +513,9 @@
     5.033,
     6.006,
     7.166,
-    8.55,
-    10.201
+    8.55
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 8.55,
    "rule_upper_bound_holds": true
   },
   {
@@ -522,21 +628,17 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 13.69937660115641,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -547,10 +649,10 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 22.763561442065058,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 7.782891678832117,
    "wins_at_mbps": [
     0.507,
     0.605,
@@ -567,11 +669,9 @@
     4.218,
     5.033,
     6.006,
-    7.166,
-    8.55,
-    10.201
+    7.166
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 7.166,
    "rule_upper_bound_holds": true
   },
   {
@@ -606,8 +706,6 @@
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 11.093669343065693,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201
@@ -672,15 +770,12 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 23.649482089092974,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
-   "wins_at_mbps": [
-    14.523,
-    17.329
-   ],
-   "max_win_mbps": 17.329,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -726,22 +821,17 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 27.383238035207867,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    2.483,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -752,21 +842,17 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 13.69937660115641,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -777,10 +863,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 22.763561442065058,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 10.040935182481752,
    "wins_at_mbps": [
     0.507,
     0.605,
@@ -798,10 +884,9 @@
     5.033,
     6.006,
     7.166,
-    8.55,
-    10.201
+    8.55
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 8.55,
    "rule_upper_bound_holds": true
   },
   {
@@ -914,21 +999,17 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 27.39875320231282,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -939,12 +1020,11 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 45.527122884130115,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 8.122388472544817,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 5.69835531421577,
    "wins_at_mbps": [
-    0.507,
     0.605,
     0.721,
     0.861,
@@ -954,10 +1034,9 @@
     1.744,
     2.081,
     2.483,
-    2.963,
-    3.536
+    2.963
    ],
-   "max_win_mbps": 3.536,
+   "max_win_mbps": 2.963,
    "rule_upper_bound_holds": true
   },
   {
@@ -988,11 +1067,8 @@
    "q_star_map50_95": 0.23075596591279604,
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 8.034524951014303,
-   "wins_at_mbps": [
-    1.744,
-    3.536
-   ],
-   "max_win_mbps": 3.536,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1048,10 +1124,10 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 47.29896417818595,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 13.15372951251296,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 8.955059148909573,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -1095,16 +1171,12 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 54.766476070415735,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 11.360193783911921,
-   "wins_at_mbps": [
-    1.744,
-    2.483,
-    3.536
-   ],
-   "max_win_mbps": 3.536,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 9.092487050149083,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1115,21 +1187,17 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 27.39875320231282,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -1140,10 +1208,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 45.527122884130115,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 8.122388472544817,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 7.351614119519239,
    "wins_at_mbps": [
     0.507,
     0.605,
@@ -1155,10 +1223,9 @@
     1.744,
     2.081,
     2.483,
-    2.963,
-    3.536
+    2.963
    ],
-   "max_win_mbps": 3.536,
+   "max_win_mbps": 2.963,
    "rule_upper_bound_holds": true
   },
   {
@@ -1264,15 +1331,12 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 54.79750640462564,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 11.353760815827549,
-   "wins_at_mbps": [
-    1.744,
-    3.536
-   ],
-   "max_win_mbps": 3.536,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 7.7296404469612074,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1283,19 +1347,18 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 91.05424576826023,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 4.061194236272408,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 2.849177657107885,
    "wins_at_mbps": [
     0.721,
     0.861,
     1.027,
     1.225,
-    1.462,
-    1.744
+    1.462
    ],
-   "max_win_mbps": 1.744,
+   "max_win_mbps": 1.462,
    "rule_upper_bound_holds": true
   },
   {
@@ -1326,10 +1389,8 @@
    "q_star_map50_95": 0.23075596591279604,
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 4.0172624755071515,
-   "wins_at_mbps": [
-    1.744
-   ],
-   "max_win_mbps": 1.744,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1383,10 +1444,10 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 94.5979283563719,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 6.57686475625648,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 4.4775295744547865,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -1414,10 +1475,9 @@
     0.861,
     1.027,
     1.225,
-    1.462,
-    1.744
+    1.462
    ],
-   "max_win_mbps": 1.744,
+   "max_win_mbps": 1.462,
    "rule_upper_bound_holds": true
   },
   {
@@ -1428,14 +1488,12 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 109.53295214083147,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 5.6800968919559605,
-   "wins_at_mbps": [
-    1.744
-   ],
-   "max_win_mbps": 1.744,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 4.546243525074542,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1446,15 +1504,12 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 54.79750640462564,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 11.353760815827549,
-   "wins_at_mbps": [
-    1.744,
-    3.536
-   ],
-   "max_win_mbps": 3.536,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 9.087338222575033,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1465,10 +1520,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 91.05424576826023,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 4.061194236272408,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 3.6758070597596193,
    "wins_at_mbps": [
     0.721,
     0.861,
@@ -1519,10 +1574,9 @@
     0.861,
     1.027,
     1.225,
-    1.462,
-    1.744
+    1.462
    ],
-   "max_win_mbps": 1.744,
+   "max_win_mbps": 1.462,
    "rule_upper_bound_holds": true
   },
   {
@@ -1584,21 +1638,17 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 0.8316740836776011,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -1609,10 +1659,10 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 1.3819507744586075,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 7.782891678832117,
    "wins_at_mbps": [
     0.425,
     0.507,
@@ -1630,11 +1680,9 @@
     4.218,
     5.033,
     6.006,
-    7.166,
-    8.55,
-    10.201
+    7.166
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 7.166,
    "rule_upper_bound_holds": true
   },
   {
@@ -1669,8 +1717,6 @@
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 11.093669343065693,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201
@@ -1735,15 +1781,12 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 1.4357340423969323,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
-   "wins_at_mbps": [
-    14.523,
-    17.329
-   ],
-   "max_win_mbps": 17.329,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -1789,23 +1832,17 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 1.6624062586274702,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.225,
-    1.744,
-    2.483,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -1816,21 +1853,17 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 0.8316740836776011,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -1841,10 +1874,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 1.3819507744586075,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 10.040935182481752,
    "wins_at_mbps": [
     0.425,
     0.507,
@@ -1863,10 +1896,9 @@
     5.033,
     6.006,
     7.166,
-    8.55,
-    10.201
+    8.55
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 8.55,
    "rule_upper_bound_holds": true
   },
   {
@@ -1979,21 +2011,17 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 3.4543088456559072,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -2004,10 +2032,10 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 5.739850355038742,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 7.782891678832117,
    "wins_at_mbps": [
     0.425,
     0.507,
@@ -2025,11 +2053,9 @@
     4.218,
     5.033,
     6.006,
-    7.166,
-    8.55,
-    10.201
+    7.166
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 7.166,
    "rule_upper_bound_holds": true
   },
   {
@@ -2064,8 +2090,6 @@
    "q_star_kb": 46.22362226277372,
    "b_be_mbps": 11.093669343065693,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201
@@ -2130,15 +2154,12 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 5.963235959849358,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
-   "wins_at_mbps": [
-    14.523,
-    17.329
-   ],
-   "max_win_mbps": 17.329,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 12.706950656934305,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -2184,23 +2205,17 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 6.904705529427897,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.225,
-    1.744,
-    2.483,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -2211,21 +2226,17 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 3.4543088456559072,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 14.938904233576642,
    "wins_at_mbps": [
-    1.744,
-    3.536,
     7.166,
     8.55,
     10.201,
-    12.172,
-    14.523,
-    17.329
+    12.172
    ],
-   "max_win_mbps": 17.329,
+   "max_win_mbps": 12.172,
    "rule_upper_bound_holds": true
   },
   {
@@ -2236,10 +2247,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 5.739850355038742,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 10.040935182481752,
    "wins_at_mbps": [
     0.425,
     0.507,
@@ -2258,10 +2269,9 @@
     5.033,
     6.006,
     7.166,
-    8.55,
-    10.201
+    8.55
    ],
-   "max_win_mbps": 10.201,
+   "max_win_mbps": 8.55,
    "rule_upper_bound_holds": true
   },
   {
@@ -2371,10 +2381,10 @@
    "payload_kb": 27.134153284671534,
    "map50_95": 0.2332287419122978,
    "onboard_ms": 115.31652677533734,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 5.395217827137664,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 3.6730643364156346,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -2387,10 +2397,10 @@
    "payload_kb": 13.747355839416059,
    "map50_95": 0.20607844511091913,
    "onboard_ms": 191.61564200770607,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 2.2718624759198964,
+   "q_star": "jpeg_q55",
+   "q_star_map50_95": 0.20955552644549497,
+   "q_star_kb": 32.428715328467156,
+   "b_be_mbps": 1.5654472198511815,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -2474,10 +2484,10 @@
    "payload_kb": 53.775781021897814,
    "map50_95": 0.23083025147599728,
    "onboard_ms": 199.07300995868238,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q80",
+   "q_star_map50_95": 0.23994503305531795,
+   "q_star_kb": 52.945627737226275,
+   "b_be_mbps": 2.6472500410386766,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -2506,10 +2516,10 @@
    "payload_kb": 26.845195255474454,
    "map50_95": 0.2399317201927006,
    "onboard_ms": 230.5024523390304,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 3.16700743415615,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -2522,14 +2532,12 @@
    "payload_kb": 26.483985401459854,
    "map50_95": 0.2384833498281953,
    "onboard_ms": 115.31652677533734,
-   "q_star": "jpeg_q90",
-   "q_star_map50_95": 0.2562773607952493,
-   "q_star_kb": 77.76972262773722,
-   "b_be_mbps": 5.395217827137664,
-   "wins_at_mbps": [
-    1.744
-   ],
-   "max_win_mbps": 1.744,
+   "q_star": "jpeg_q85",
+   "q_star_map50_95": 0.24713508582224072,
+   "q_star_kb": 62.245434306569344,
+   "b_be_mbps": 4.3182316392749165,
+   "wins_at_mbps": [],
+   "max_win_mbps": null,
    "rule_upper_bound_holds": true
   },
   {
@@ -2540,10 +2548,10 @@
    "payload_kb": 13.37579197080292,
    "map50_95": 0.2192376044406121,
    "onboard_ms": 191.61564200770607,
-   "q_star": "jpeg_q75",
-   "q_star_map50_95": 0.23075596591279604,
-   "q_star_kb": 46.22362226277372,
-   "b_be_mbps": 2.2718624759198964,
+   "q_star": "jpeg_q70",
+   "q_star_map50_95": 0.22540499052458982,
+   "q_star_kb": 41.8372299270073,
+   "b_be_mbps": 2.0469886565606834,
    "wins_at_mbps": [],
    "max_win_mbps": null,
    "rule_upper_bound_holds": true
@@ -3023,6 +3031,920 @@
     "split_onboard_frac": 0.471,
     "jpeg_onboard_frac": 0.0205,
     "prop2_bits_and_onboard": true
+   }
+  ]
+ },
+ "coarse_jpeg_grid": {
+  "jpeg_options": [
+   "jpeg_q10",
+   "jpeg_q20",
+   "jpeg_q35",
+   "jpeg_q50",
+   "jpeg_q75",
+   "jpeg_q90",
+   "jpeg_q95"
+  ],
+  "rule_check": {
+   "split_win_cells": 657,
+   "cells_with_q_star": 657,
+   "violations": []
+  },
+  "codes": [
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 4.056100729927007,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 26.17448233576642,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 40.0,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 4.056100729927007,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 26.17448233576642,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 90.0,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 8.122388472544817,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 11.034119496994583,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 8.034524951014303,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 10.651323543424267,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 2.9939912440579843,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 13.15372951251296,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 4.292202202408444,
+    "max_win_mbps": 2.483
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 11.360193783911921,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 8.122388472544817,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 14.936879810025713,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 180.0,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 4.3059867763325235,
+    "max_win_mbps": 2.483
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 10.681101290360967,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 11.353760815827549,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 4.061194236272408,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.517059748497291,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 4.0172624755071515,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.3256617717121335,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 1.4969956220289922,
+    "max_win_mbps": 1.225
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 6.57686475625648,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 2.146101101204222,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.6800968919559605,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 11.353760815827549,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 4.061194236272408,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 7.468439905012857,
+    "max_win_mbps": null
+   },
+   {
+    "device": "sweep",
+    "t_full_ms": 360.0,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 2.1529933881662617,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": null
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 4.056100729927007,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 26.17448233576642,
+    "max_win_mbps": null
+   },
+   {
+    "device": "laptop GPU",
+    "t_full_ms": 5.4638009969494306,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 4.056100729927007,
+    "max_win_mbps": 3.536
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 18.664733430656934,
+    "max_win_mbps": 17.329
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 11.093669343065693,
+    "max_win_mbps": 10.201
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 26.17448233576642,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Jetson Orin Nano",
+    "t_full_ms": 22.693572500429582,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 5.833522773722627,
+    "max_win_mbps": 5.033
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "k2_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "k4_int8_zstd",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k2_c16_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.07557531200452,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.395217827137664,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 2.2718624759198964,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 4.02775814957451,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 2.2718624759198964,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 4.02775814957451,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q20",
+    "b_be_mbps": 0.812223549182726,
+    "max_win_mbps": 0.605
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 4.02775814957451,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 1.1681476587975463,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 4.02775814957451,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": "jpeg_q90",
+    "b_be_mbps": 5.395217827137664,
+    "max_win_mbps": 1.744
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 2.2718624759198964,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 5.782101231966782,
+    "max_win_mbps": null
+   },
+   {
+    "device": "Pi 5 (throttled)",
+    "t_full_ms": 757.588298499968,
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q35",
+    "b_be_mbps": 1.1681476587975463,
+    "max_win_mbps": 0.721
    }
   ]
  }

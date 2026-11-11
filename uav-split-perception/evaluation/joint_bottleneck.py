@@ -14,7 +14,8 @@ Design
                fine-tuning of the detector itself)
   frozen       layers 0..k (the drone side): its weights do not change, so the Pi's measured prefix timings still hold
                (their batch-norm statistics are frozen too)
-  optimizer    AdamW set explicitly (lr0 1e-4, cosine decay to lrf x lr0, 1 warm-up epoch, no early stopping). Run 1
+  optimizer    AdamW set explicitly (--lr0; run 2 used 1e-3, the best of a 4-rate pilot; cosine decay to lrf x lr0,
+               1 warm-up epoch, no early stopping). Run 1
                (10 Nov) used optimizer=auto, which silently ignored lr0 and fine-tuned at 8.3e-4: the held-out mAP fell
                after epoch 1 for 3 of 4 codes; those results are in _superseded/ (see the README there).
   selection    the best epoch is picked on 288 frames of the VisDrone2019-VID val clips (every 10th frame, 640 px wide,

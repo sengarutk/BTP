@@ -16,9 +16,8 @@ quantile of P (P = 0.99). [(iii) gives ceil(F max(e_q, b_q/B)) <= ceil(F m_k) = 
 so U_q >= P f_q A_q >= f_k A_k >= U_k since p_k <= 1.] Taking the best image setting, k can beat the image family only
 below the break-even goodput
     B_be(k) = min over q with (i) and e_q <= m_k of  max( b_q / m_k ,  R_q / (1 - z_P s) ),
-where b_q / m_k = b_q / max(t_full (phi_k + rho_k), 1/F) falls inversely with the onboard speed until the camera rate
-limits,
-and not at all if no JPEG setting is at least as accurate (then the paper's Proposition 2 bounds its gain by the
+where b_q / m_k = b_q / max(t_full (phi_k + rho_k), 1/F) grows with the onboard speed (shorter e_k) until the camera
+rate (m_k = 1/F) or the deadline term R_q / (1 - z_P s) binds; B_be is infinite if no JPEG setting is at least as accurate (then the paper's Proposition 2 bounds its gain by the
 accuracy ratio). A code larger than q* (b_k >= b_q) never beats it beyond that ratio (Proposition 2).
 
 Tested points: every learned code (frozen detector, learned_bottleneck/system.json) and every jointly trained code
@@ -26,6 +25,13 @@ Tested points: every learned code (frozen detector, learned_bottleneck/system.js
 accuracy), the post-hoc INT8 + zstd splits, on the paper's onboard sweep and the three measured devices (laptop GPU,
 Jetson Orin Nano FP16, Pi 5 throttled), at the 31 goodputs of the learned-bottleneck study; and the 43 rows of the
 19-detector survey (generalization/model_summary.csv) against Proposition 2.
+JPEG options (11 Nov 2026, after an independent audit): the 7 qualities of the paper (10, 20, 35, 50, 75, 90, 95) plus
+the finer grid of learned_bottleneck/jpeg_fine/ (every 5 from 15 to 85), measured on the same frames with the same
+detector. Encode and server times of a quality not in the VisDrone codec table are interpolated in quality between
+its rows (50, 75, 90, 95; they differ by < 0.4 ms); below 50 they are q50's, as the paper's q10-q35 rows already are
+(slightly too slow for JPEG, so the error favours the split). With experiments/results/jpeg_tuned/ present, the rule is
+also evaluated against the detector fine-tuned on JPEG (evaluation/jpeg_tuned_detector.py), the fair counterpart of
+the jointly trained codes -> break_even.json "jpeg_tuned".
 usage: break_even_rule.py   -> experiments/results/break_even/break_even.json, paper/figures/break_even_map.pdf
 """
 import csv
@@ -39,9 +45,11 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 from evaluation.learned_bottleneck_system import GOODPUT, VD, family, measured_configs  # noqa: E402
 from simulation.system_model import (HARDWARE_SCENARIOS_MS, AdaptivePolicy, EdgeHardware, OffloadConfig,  # noqa: E402
+                                     load_offload_configs,
                                      host_full_ms)
 
 RES = REPO / "experiments" / "results"
+TUNED_RUNS = ("jpegtuned_qmix_r1",)            # evaluation/jpeg_tuned_detector.py run names
 P_ON, Z_P = 0.99, 2.3263478740408408   # scipy.stats.norm.ppf(0.99)
 OUT = RES / "break_even"
 FIG = REPO / "paper" / "figures" / "break_even_map.pdf"
@@ -62,6 +70,50 @@ def learned_and_joint():
     return out
 
 
+def jpeg_grid(base_cfgs):
+    """The paper's JPEG rows plus the finer grid (learned_bottleneck/jpeg_fine/jpeg_q*.json), timings interpolated."""
+    jp = {c.name: c for c in base_cfgs if family(c) == "image"}
+    tab = load_offload_configs(VD)
+    ref = sorted((int(n[len("jpeg_q"):]), c) for n, c in tab.items() if n.startswith("jpeg_q"))
+
+    def timing(q):
+        if q <= ref[0][0]:
+            c = ref[0][1]
+            return c.host_edge_proc_ms, c.cloud_ms
+        for (q0, c0), (q1, c1) in zip(ref, ref[1:]):
+            if q0 <= q <= q1:
+                w = (q - q0) / (q1 - q0)
+                return (c0.host_edge_proc_ms + w * (c1.host_edge_proc_ms - c0.host_edge_proc_ms),
+                        c0.cloud_ms + w * (c1.cloud_ms - c0.cloud_ms))
+        c = ref[-1][1]
+        return c.host_edge_proc_ms, c.cloud_ms
+    proto = jp["jpeg_q50"]
+    for f in sorted((RES / "learned_bottleneck" / "jpeg_fine").glob("jpeg_q*.json")):
+        m = json.load(open(f))
+        if m["config"] in jp:
+            continue
+        hp, cl = timing(m["q"])
+        jp[m["config"]] = replace(proto, name=m["config"], dtype=f"q{m['q']}", payload_bytes=m["payload_bytes_mean"],
+                                  map50_95=m["map50_95"], map50=m["map50"],
+                                  delta_map50_95=m["map50_95"] - m["base_map50_95"], host_edge_proc_ms=hp, cloud_ms=cl)
+    return sorted(jp.values(), key=lambda c: int(c.name[len("jpeg_q"):]))
+
+
+def tuned_jpeg(jpeg, run):
+    """The same JPEG options with the accuracy of the detector fine-tuned on JPEG (jpeg_tuned/eval_<run>_q<Q>.json);
+    payload and timings unchanged (the eval checks that the payload equals the untuned row's)."""
+    out = []
+    for c in jpeg:
+        f = RES / "jpeg_tuned" / f"eval_{run}_q{c.name[len('jpeg_q'):]}.json"
+        if not f.exists():
+            return None
+        ev = json.load(open(f))
+        assert ev["payload_matches_untuned"], f
+        out.append(replace(c, map50_95=ev["map50_95"], map50=ev["map50"],
+                           delta_map50_95=c.delta_map50_95 + ev["gain"]))
+    return out
+
+
 def devices():
     hw = RES / "hardware"
     return ([("sweep", t) for t in HARDWARE_SCENARIOS_MS]
@@ -70,10 +122,36 @@ def devices():
                ("Pi 5 (throttled)", json.load(open(hw / "placements_summary.json"))["devices"]["pi"]["full_ms"])])
 
 
-def main():
-    cfgs = measured_configs() + learned_and_joint()
+def b_be_fading(dev_t, k, jpeg, rel_std, hfull, cfgs):
+    """Fading version of B_be (11 Nov 2026, from evaluation/break_even_sim.py): with a goodput that varies with relative
+    spread rel_std (std / mean of the trace), both terms are discounted by the low quantile (1 - z_P rel_std):
+        B_be,f(k) = min over P of  min over q with P A_q >= A_k, e_q <= m_k of  max(b_q / m_k, R_q) / (1 - z_P rel_std).
+    Not proved for fading channels (the frame rate under a varying goodput has no closed form in the model); it is an
+    empirical rule, checked in the simulator. Returns (B_be,f, P) or None."""
+    from statistics import NormalDist
+    pol = AdaptivePolicy(cfgs, EdgeHardware(name="d", t_full_ms=dev_t, host_full_ms=hfull))
+    e = {c.name: pol.hw.onboard_ms(c) for c in cfgs}
+
+    def R(c):
+        slack = pol.deadline_ms - e[c.name] - pol.delay_ms - c.cloud_ms
+        return math.inf if slack <= 0 else c.payload_bytes * 8 / 1e3 / slack
+    m_k = max(e[k.name], 1000.0 / pol.camera_fps)
+    best = None
+    for P in [0.5 + 0.005 * i for i in range(100)] + [0.999]:
+        z = NormalDist().inv_cdf(P)
+        if z * rel_std >= 1:
+            continue
+        c = [max(q.payload_bytes * 8 / 1e3 / m_k, R(q)) / (1 - z * rel_std) for q in jpeg
+             if P * q.map50_95 >= k.map50_95 and e[q.name] <= m_k]
+        if c and (best is None or min(c) < best[0]):
+            best = (min(c), P)
+    return best
+
+
+def analyse(jpeg, others):
+    """Break-even goodput of every split in `others` against the JPEG options `jpeg`, on every device and goodput."""
+    cfgs = others + jpeg
     hfull = host_full_ms(None, VD)
-    jpeg = [c for c in cfgs if family(c) == "image"]
     splits = [c for c in cfgs if c.kind == "split"]
     rows, viol, checked, wins_total = [], [], 0, 0
     for dev, t in devices():
@@ -109,6 +187,14 @@ def main():
                          "q_star": qs.name if qs else None, "q_star_map50_95": qs.map50_95 if qs else None, "q_star_kb": qs.payload_bytes / 1e3 if qs else None,
                          "b_be_mbps": b_be, "wins_at_mbps": win, "max_win_mbps": max(win) if win else None,
                          "rule_upper_bound_holds": (not win) or b_be is None or max(win) < b_be})
+    return rows, viol, checked, wins_total
+
+
+def main():
+    base = measured_configs()
+    jpeg = jpeg_grid(base)
+    others = [c for c in base if family(c) != "image"] + learned_and_joint()
+    rows, viol, checked, wins_total = analyse(jpeg, others)
     surv = []
     for r in csv.DictReader(open(RES / "generalization" / "model_summary.csv")):
         bk, bq = float(r["int8_zstd_kib"]), float(r["jpeg_q95_kib"])
@@ -118,9 +204,24 @@ def main():
     out = {"model": "simulation/system_model.py AdaptivePolicy.predict (as learned_bottleneck_system.py)",
            "goodput_mbps": GOODPUT.tolist(), "devices": [{"device": d, "t_full_ms": t} for d, t in devices()],
            "rule_check": {"split_win_cells": wins_total, "cells_with_q_star": checked, "violations": viol},
+           "jpeg_options": [{"config": c.name, "payload_kb": c.payload_bytes / 1e3, "map50_95": c.map50_95,
+                             "host_edge_proc_ms": c.host_edge_proc_ms, "cloud_ms": c.cloud_ms} for c in jpeg],
            "codes": rows,
            "survey": {"rows": len(surv), "prop2_holds": sum(s["prop2_bits_and_onboard"] for s in surv),
                       "models": len({s["model"] for s in surv}), "per_row": surv}}
+    # the paper's 7 JPEG qualities only, to show what the finer grid changes
+    cr, cv, cc, cw = analyse([c for c in base if family(c) == "image"], others)
+    out["coarse_jpeg_grid"] = {"jpeg_options": [c.name for c in base if family(c) == "image"],
+                               "rule_check": {"split_win_cells": cw, "cells_with_q_star": cc, "violations": cv},
+                               "codes": [{k: r[k] for k in ("device", "t_full_ms", "code", "q_star", "b_be_mbps",
+                                                            "max_win_mbps")} for r in cr]}
+    for run in TUNED_RUNS:                        # against the detector fine-tuned on JPEG, if evaluated
+        tj = tuned_jpeg(jpeg, run)
+        if tj is not None:
+            tr, tv, tc, tw = analyse(tj, others)
+            out.setdefault("jpeg_tuned", {})[run] = {
+                "jpeg_options": [{"config": c.name, "map50_95": c.map50_95} for c in tj],
+                "rule_check": {"split_win_cells": tw, "cells_with_q_star": tc, "violations": tv}, "codes": tr}
     OUT.mkdir(parents=True, exist_ok=True)
     json.dump(out, open(OUT / "break_even.json", "w"), indent=1)
     figure(out)
@@ -191,8 +292,27 @@ def macros(out):
               "BePiWinCodesJoint": str(sum(1 for x in r if x["device"].startswith("Pi") and x["family"] == "joint")),
               "BeSweepSpeeds": str(sum(1 for d in out["devices"] if d["device"] == "sweep")),
               "BeMeasuredDevices": str(sum(1 for d in out["devices"] if d["device"] != "sweep")),
-              "BeJpegQualities": str(len([c for c in measured_configs() if family(c) == "image"])),
+              "BeJpegQualities": str(len(out["jpeg_options"])),
               "BeJointHalfCi": f"{max(halfw):.3f}" if halfw else "nan"})
+    pf = RES / "joint_bottleneck" / "paired_joint_vs_frozen.json"     # evaluation/joint_vs_frozen.py
+    if pf.exists():
+        pr = json.load(open(pf))["rows"]
+        ns = [x for x in pr if not x["significant"]]
+        m.update({"BeJointPairedSig": str(sum(x["significant"] for x in pr)), "BeJointPairedN": str(len(pr)),
+                  "BeJointPairedBoot": str(pr[0]["n_boot"]),
+                  "BeJointNsGain": f"{ns[0]['gain']:.3f}" if ns else "none",
+                  "BeJointNsLo": f"{ns[0]['boot_delta_map50_95_ci_low']:.3f}".replace("-", "\\textminus{}") if ns else "",
+                  "BeJointNsHi": f"{ns[0]['boot_delta_map50_95_ci_high']:.3f}" if ns else "",
+                  "BeJointSigMinGain": f"{min(x['gain'] for x in pr if x['significant']):.3f}",
+                  "BeJointSigMinLo": f"{min((x for x in pr if x['significant']), key=lambda x: x['gain'])['boot_delta_map50_95_ci_low']:.3f}"})
+    m["BeTightFastMedian"] = m["BeTightFast"]
+    if "coarse_jpeg_grid" in out:
+        co = out["coarse_jpeg_grid"]
+        ck = next(x for x in co["codes"] if x["device"].startswith("Pi") and x["code"] == "joint_k2_c8_w128_d2")
+        m.update({"BeCellsCoarse": str(co["rule_check"]["split_win_cells"]),
+                  "BeViolationsCoarse": str(len(co["rule_check"]["violations"])),
+                  "BeJpegQualitiesCoarse": str(len(co["jpeg_options"])),
+                  "BeJointKtwoPiWinCoarse": f"{ck['max_win_mbps']:.2f}" if ck["max_win_mbps"] else "none"})
     (OUT / "be_metrics.tex").write_text("% Generated by evaluation/break_even_rule.py -- do not edit.\n"
                                         + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
 

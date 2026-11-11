@@ -4,7 +4,9 @@
 % preamble and this file after the learned-bottleneck section. Jointly trained codes added 11 Nov 2026 (run 2,
 % experiments/results/joint_bottleneck/, evaluation/joint_bottleneck.py). Revised after an independent audit
 % (11 Nov 2026): speed scaling corrected, the check called a consistency check, the survey scoped to the conditions it
-% tests, grid resolution and sample sizes given, the JPEG grid and the training asymmetry stated.
+% tests, grid resolution and sample sizes given, the JPEG grid and the training asymmetry stated. Second revision
+% (11 Nov 2026): 18 JPEG qualities, paired joint-vs-frozen test, simulator check (sim_metrics.tex from
+% evaluation/break_even_sim.py) and the fading version of the rule; also \input sim_metrics.tex.
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -46,20 +48,51 @@ detector's server-side layers.}
 \label{fig:break-even}
 \end{figure}
 \textbf{Consistency check.} We evaluated the \BeCodes{} learned codes (including the four jointly trained ones below) and
-the post-hoc INT8 splits. The goodputs were those of Section~\ref{sec:learned}: a grid with steps of \BeGridStepPct\,\%.
-The onboard speeds were \BeMeasuredDevices{} measured devices (the laptop GPU, the Jetson Orin Nano and the throttled
-Pi~5) and \BeSweepSpeeds{} speeds of the paper's sweep. In the model, a split code beats the best JPEG setting in
-\BeCells{} cells, and all of them lie below its $B_{\mathrm{be}}$ (\BeViolations{} exceptions). This check uses the
-same model as the proposition, so it confirms the derivation and its implementation, not the model itself;
-Section~\ref{sec:gen-mc} compares the model with the simulator.
+the post-hoc INT8 splits against \BeJpegQualities{} JPEG qualities (every 5 from 10 to 95, on the same frames with the
+same detector). Encode and server times are measured at Q50, 75, 90 and 95. In between they are interpolated (they
+differ by less than 0.4~ms), and below Q50 they are Q50's, slightly too slow for JPEG, which favours the split. The goodputs were those of Section~\ref{sec:learned}: a grid with steps of \BeGridStepPct\,\%. The
+onboard speeds were \BeMeasuredDevices{} measured devices (the laptop GPU, the Jetson Orin Nano and the throttled Pi~5)
+and \BeSweepSpeeds{} speeds of the paper's sweep. In the model, a split code beats every JPEG setting in \BeCells{}
+cells, and all of them lie below its $B_{\mathrm{be}}$ (\BeViolations{} exceptions). With only the paper's
+\BeJpegQualitiesCoarse{} qualities, splits win in \BeCellsCoarse{} cells: a coarse JPEG grid overstates where a split
+pays off. This check uses the same model as the proposition, so it confirms the derivation and its implementation, not
+the model.
 
 \textbf{How close the bound is.}
 \begin{itemize}
-\item On the laptop and the Jetson, \BeTightFastN{} code--device pairs win at some goodput. Each one's largest winning
-goodput is within \BeTightFastMax\,\% of $B_{\mathrm{be}}$, which is less than one grid step.
+\item On the laptop and the Jetson, \BeTightFastN{} code--device pairs win at some goodput. Their largest winning
+goodput is a median \BeTightFastMedian\,\% (at most \BeTightFastMax\,\%) below $B_{\mathrm{be}}$; one grid step is
+\BeGridStepPct\,\%.
 \item On the Pi, only \BePiWinCodesFrozen{} frozen code wins at all: the \BePiCodeKib~KiB code. The proposition limits
 it to below \BePiBe~Mbit/s (against JPEG \BePiQstar), and it wins up to \BePiWin~Mbit/s.
 \end{itemize}
+
+\textbf{Test in the simulator.} The proposition assumes a goodput that varies by at most $sB$ around its mean. We
+therefore ran every code and every JPEG setting in the stream simulator on fading channel traces. These come from the
+trace generator's moderate and vehicular profiles, with \BeSimSeeds{} realisations of \BeSimDuration~s each, rescaled to
+each mean goodput, and every option sees the same realisation. Their goodput varies far more than the model's $s = 0.1$:
+the standard deviation is \BeSimModSpread{} and \BeSimVehSpread{} of the mean. Model and simulator agree on whether a
+split beats JPEG in \BeSimModAgree\,\% and \BeSimVehAgree\,\% of the cells, but the bound does not hold as stated:
+\begin{itemize}
+\item on the moderate profile, \BeSimModExc{} of \BeSimModWins{} simulated split wins (\BeSimModExcPct\,\%) lie at or
+above $B_{\mathrm{be}}$, at up to \BeSimModRatio{}$\times$ it;
+\item on the vehicular profile, \BeSimVehExc{} of \BeSimVehWins{} (\BeSimVehExcPct\,\%), at up to
+\BeSimVehRatio{}$\times$ it.
+\end{itemize}
+All exceptions are on devices that need at most \BeSimExcTfullMax~ms per full inference, where the camera rate binds.
+On the Pi and at 360~ms the bound holds. The margins are small: a median \BeSimModMargin\,\% and \BeSimVehMargin\,\% over
+the best JPEG setting. The cause is the frame-rate term: JPEG keeps up with the camera only while the goodput stays
+above $b_q F$, and under fading it often dips below that, while a small code keeps pace.
+
+\textbf{Fading version.} Discounting both terms by the same low quantile of the goodput gives
+\[
+B_{\mathrm{be,f}}(k) = \min_{P}\; \min_{q:\,P A_q \ge A_k,\; e_q \le m_k} \frac{\max(b_q/m_k,\; R_q)}{1 - z_P s},
+\]
+with $s$ the measured relative spread of the goodput. This is an empirical rule, not a theorem: the model has no
+closed form for the frame rate under a varying goodput. With the traces' own spread, and nothing fitted, no simulated
+split win lies at or above $B_{\mathrm{be,f}}$ on either profile (\BeSimModFadingExc{} and \BeSimVehFadingExc{}
+exceptions). It is conservative: the bound is a median \BeSimModFadingSlack\,\% and \BeSimVehFadingSlack\,\% above the
+largest winning goodput.
 
 \textbf{Post-hoc splits.} The \BeSurveyRows{} rows of the \BeSurveyModels-detector survey all meet the bit and onboard
 conditions of Proposition~\ref{prop:dominance}: more bits and more onboard work than a Q95 JPEG. The server-time
@@ -68,37 +101,34 @@ full inference. For these detectors on such processors, a post-hoc split cannot 
 image.
 
 \textbf{Jointly trained codes.} We also trained the bottleneck together with the detector's server-side layers, on the
-detection loss. This raised the accuracy of the \BeJointCodes{} codes by \BeJointGainMin{} to \BeJointGainMax{}
-mAP$_{50:95}$ on the same held-out frames.
-\begin{itemize}
-\item The two smallest gains are below the bootstrap half-width of the estimates (up to \BeJointHalfCi), and we do not
-claim them.
-\item The gain is largest for the smallest code: at \BeJointPiCodeKib~KiB it reaches \BeJointSmallMap{}, against
-\BeFrozenSmallMap{} when trained on the frozen detector.
-\item The comparison favours the split. The split's server side gets extra training, while the image path keeps the
-unmodified detector. A detector fine-tuned on low-quality JPEG would gain as well, so these gains bound the split's
-advantage from above.
-\end{itemize}
+detection loss. On the same held-out frames this raised the accuracy of the \BeJointCodes{} codes by \BeJointGainMin{} to
+\BeJointGainMax{} mAP$_{50:95}$. A paired image-level bootstrap of joint against frozen (\BeJointPairedBoot{} resamples)
+finds the gain significant for \BeJointPairedSig{} of the \BeJointPairedN{} codes, down to \BeJointSigMinGain{}
+(95\,\% interval from \BeJointSigMinLo). The \BeJointNsGain{} gain of the largest code is not significant (interval
+\BeJointNsLo{} to \BeJointNsHi). The gain is largest for the smallest code: at \BeJointPiCodeKib~KiB it reaches
+\BeJointSmallMap{}, against \BeFrozenSmallMap{} when trained on the frozen detector.
+
 Higher accuracy moves $B_{\mathrm{be}}$ up, because a better JPEG setting is now needed to match it (\BeJointPiQstar{}
 instead of \BePiQstar):
 \begin{itemize}
 \item on the Jetson, from \BeFrozenFastBe{} to \BeJointFastBe~Mbit/s, and the code wins up to \BeJointFastWin{} instead
 of \BeFrozenFastWin~Mbit/s;
 \item on the Pi, from \BePiBe{} to \BeJointPiBe~Mbit/s, and it wins up to \BeJointPiWin{} instead of
-\BePiWin~Mbit/s;
-\item on the Pi, the jointly trained \BeJointKtwoKib~KiB code at the second cut wins at one goodput,
-\BeJointKtwoPiWin~Mbit/s, against $B_{\mathrm{be}} = \BeJointKtwoPiBe$; its frozen version never wins.
+\BePiWin~Mbit/s.
 \end{itemize}
-The \BeJointShift\,\% shift for the smallest code is partly an artefact of the JPEG grid. We measured \BeJpegQualities{}
-qualities, so the matching setting jumps a whole step; the three lowest (Q10--Q35) also take the Q50 row's encode and
-server times. Every winning cell of the jointly trained codes lies below its $B_{\mathrm{be}}$; they are included in
-the \BeCells{} cells above. Joint training therefore widens the regime in which a split can pay off, but does not remove
-its bound: above $B_{\mathrm{be}}$, the image wins.
+The \BeJointShift\,\% shift for the smallest code holds on the 5-step quality grid. On the paper's coarser grid, the
+jointly trained \BeJointKtwoKib~KiB code also appeared to win on the Pi, at \BeJointKtwoPiWinCoarse~Mbit/s. With the
+finer grid, a JPEG setting between the measured ones beats it. Every winning cell of the jointly trained codes lies
+below its $B_{\mathrm{be}}$, and they are included in the \BeCells{} cells above.
+
+%JPEG-TUNED-PARAGRAPH
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
 \item the code's size and accuracy;
 \item the JPEG rate--accuracy curve on the same frames;
-\item the device's full-model time.
+\item the device's full-model time;
+\item on a fading link, the relative spread of its goodput.
 \end{itemize}
-If the link's goodput is mostly above $B_{\mathrm{be}}$, send the image.
+If the link's goodput is mostly above $B_{\mathrm{be}}$, send the image. On a fading link, use $B_{\mathrm{be,f}}$
+with the link's measured spread.

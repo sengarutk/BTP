@@ -280,7 +280,9 @@ def cmd_jpeg(a):
         row = {"config": f"jpeg_q{q}", "q": q, "payload_bytes_mean": float(np.mean(log["bytes"])), "n": len(log["bytes"]),
                "map50": res["map50"], "map50_95": res["map50_95"], "base_map50_95": base["map50_95"],
                **{f"boot_{k}": v for k, v in pb.items()}}
-        json.dump(row, open(OUT / f"jpeg_q{q}.json", "w"), indent=1)
+        out = Path(a.out) if a.out else OUT
+        out.mkdir(parents=True, exist_ok=True)
+        json.dump(row, open(out / f"jpeg_q{q}.json", "w"), indent=1)
         print(json.dumps({k: (round(v, 5) if isinstance(v, float) else v) for k, v in row.items()}), flush=True)
 
 
@@ -421,6 +423,8 @@ def main():
     jp = sub.add_parser("jpeg")
     jp.add_argument("--q", type=int, nargs="+", default=[10, 20, 35, 50])
     jp.add_argument("--n-boot", type=int, default=300)
+    jp.add_argument("--out", default=None, help="output directory (default: the results directory; the finer grid of "
+                    "the break-even rule, 11 Nov 2026, goes to learned_bottleneck/jpeg_fine/ so the paper's files stay)")
     ph = sub.add_parser("posthoc")
     ph.add_argument("--cuts", type=int, nargs="+", default=[2, 4])
     sub.add_parser("figure")
