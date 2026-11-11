@@ -1,0 +1,23 @@
+{
+ "config": "cheng2020-anchor_q1",
+ "codec": "cheng2020-anchor",
+ "q": 1,
+ "n": 548,
+ "payload_bytes_mean": 4537.846715328467,
+ "payload_bytes_p95": 7260.0,
+ "encoder_macs_640": 65930854400.0,
+ "g_a_macs_640": 65326284800.0,
+ "g_a_ms_median": 49.83147449820535,
+ "compress_ms_median": 2991.086957499647,
+ "decompress_ms_median": 4643.687683997996,
+ "map50_95": 0.1395257472702725,
+ "map50": 0.2521454934584623,
+ "base_map50_95": 0.26705827490531536,
+ "boot_delta_map50": -0.21043959559206665,
+ "boot_delta_map50_ci_low": -0.22392145327717222,
+ "boot_delta_map50_ci_high": -0.1990827319011805,
+ "boot_delta_map50_95": -0.12753252763504286,
+ "boot_delta_map50_95_ci_low": -0.13567017552623478,
+ "boot_delta_map50_95_ci_high": -0.11986156249566368,
+ "boot_n_boot": 300
+}

@@ -1,0 +1,23 @@
+{
+ "config": "mbt2018-mean_q7",
+ "codec": "mbt2018-mean",
+ "q": 7,
+ "n": 548,
+ "payload_bytes_mean": 46636.7299270073,
+ "payload_bytes_p95": 69588.39999999998,
+ "encoder_macs_640": 34768896000.0,
+ "g_a_macs_640": 33423360000.0,
+ "g_a_ms_median": 9.06237649905961,
+ "compress_ms_median": 29.794173999107443,
+ "decompress_ms_median": 43.09281699897838,
+ "map50_95": 0.2595253782806269,
+ "map50": 0.4485302458871592,
+ "base_map50_95": 0.26705827490531536,
+ "boot_delta_map50": -0.014054843163369801,
+ "boot_delta_map50_ci_low": -0.017799837308309897,
+ "boot_delta_map50_ci_high": -0.011318447747266421,
+ "boot_delta_map50_95": -0.007532896624688479,
+ "boot_delta_map50_95_ci_low": -0.009992190973190913,
+ "boot_delta_map50_95_ci_high": -0.00519029203937016,
+ "boot_n_boot": 300
+}

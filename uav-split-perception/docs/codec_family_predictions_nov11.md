@@ -25,3 +25,18 @@ L2. Their analysis transforms cost 20-150 % of the YOLOv8s's MACs at 640 x 640. 
     exceeds the codes' frame time for most qualities, so they are excluded there and B_be on the Pi barely moves; on
     the Jetson they lower B_be, as video does.
 L3. No winning cell at or above B_be (consistency check).
+
+Deviation (12 Nov 2026, ~02:00 IST, before any analysis): cheng2020-anchor was run at quality 1 only. Its serial
+context model takes 3.0 s to encode and 4.6 s to decode one frame on this laptop's GPU (median over the 548 frames),
+10-15 times the 300 ms deadline, so no quality of it can be an image option on any device; qualities 2-6 would have
+taken about 6 h. bmshj2018-hyperprior and mbt2018-mean ran at all 8 qualities.
+
+Results, learned image codecs (12 Nov 2026, ~02:05 IST; 17 settings: bmshj2018-hyperprior and mbt2018-mean at
+qualities 1-8, cheng2020-anchor at quality 1):
+L1. Right. At equal accuracy they need a median 52 % fewer bytes than JPEG (predicted 30-60 %).
+L2. Direction right, size wrong. Their analysis transforms cost 108-458 % of the YOLOv8s's MACs at 640 x 640 (predicted
+    20-150 %): more than the whole detector. On the Pi and the Jetson no learned-codec setting fits within the codes'
+    frame time, so with them alone the smallest jointly trained code has no qualifying image option; with JPEG and them
+    together its B_be is unchanged (1.17 Mbit/s on the Pi, 5.83 on the Jetson, matched by JPEG Q35). They qualify only
+    on the fastest boards of the sweep, where they take 170 of the codes' 1030 winning cells (860 left).
+L3. Right. No winning cell at or above B_be with any family (0 exceptions in all three cases).

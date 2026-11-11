@@ -8,7 +8,8 @@ image family with payload b_q, onboard time e_q and accuracy A_q, so the rule ca
 Codecs (CompressAI 1.2.8 pretrained models, MSE-optimised, real bitstreams from compress(), the range/ANS coder):
   bmshj2018-hyperprior  quality 1-8   (Balle et al., ICLR 2018)
   mbt2018-mean          quality 1-8   (Minnen et al., NeurIPS 2018, mean-scale hyperprior without context model)
-  cheng2020-anchor      quality 1-6   (Cheng et al., CVPR 2020; autoregressive context, slow to decode)
+  cheng2020-anchor      quality 1     (Cheng et al., CVPR 2020; serial context model: 3.0 s encode, 4.6 s decode
+                                      per frame here, so 2-6 were not run, see docs/codec_family_predictions_nov11.md)
 Method: exactly as the JPEG rows (benchmark_codecs.make_codec_hook): a forward pre-hook on layer 0 of the VisDrone
 YOLOv8s replaces each letterboxed input by its encode -> decode version (padded to a multiple of 64 with edge pixels,
 cropped back), on the 548 VisDrone-DET val frames, batch 1, mAP@[.5:.95]. Payload = the bytes of the compressed

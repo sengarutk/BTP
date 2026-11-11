@@ -1,0 +1,23 @@
+{
+ "config": "bmshj2018-hyperprior_q6",
+ "codec": "bmshj2018-hyperprior",
+ "q": 6,
+ "n": 548,
+ "payload_bytes_mean": 36114.0,
+ "payload_bytes_p95": 54406.399999999994,
+ "encoder_macs_640": 34768896000.0,
+ "g_a_macs_640": 33423360000.0,
+ "g_a_ms_median": 9.084687997528818,
+ "compress_ms_median": 29.39583950137603,
+ "decompress_ms_median": 42.40637450129725,
+ "map50_95": 0.2503491230667521,
+ "map50": 0.4355096941373782,
+ "base_map50_95": 0.26705827490531536,
+ "boot_delta_map50": -0.027075394913150752,
+ "boot_delta_map50_ci_low": -0.03216696600040116,
+ "boot_delta_map50_ci_high": -0.021376417529551387,
+ "boot_delta_map50_95": -0.016709151838563252,
+ "boot_delta_map50_95_ci_low": -0.020306146736725445,
+ "boot_delta_map50_95_ci_high": -0.013375455365045244,
+ "boot_n_boot": 300
+}
