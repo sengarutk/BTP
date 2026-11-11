@@ -147,6 +147,8 @@ def cmd_jpeg_tuned(a):
     """The JPEG-tuned detector (jpeg_tuned_detector.py, mixed qualities) on the same JPEG frames. Its first layer's
     in-model JPEG round trip is removed: the frames are already the decoded JPEGs, as for the untuned rows."""
     from evaluation.jpeg_tuned_detector import CKPT as JT, JpegInput
+    import __main__                    # saved by jpeg_tuned_detector.py run as a script: its layer-0 wrapper is
+    __main__.JpegInput = JpegInput     # pickled as __main__.JpegInput
     run = "jpegtuned_qmix_r1"
 
     def prep(yolo):
