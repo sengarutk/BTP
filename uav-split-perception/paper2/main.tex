@@ -326,9 +326,16 @@ by +5 and +10~$^\circ$C. With the lab's 3.6~W, the time at or above 80~$^\circ$C
 (\TsHoldSeventyEightAmbTenHot\,\%). There the price is at its cap in \TsHoldSeventyEightAmbTenCapPct\,\% of the
 updates, and the cap term reaches \TsHoldSeventyEightAmbTenCapW~W: the cap, untested here, is the remaining lever.
 \end{itemize}
-The budget rule therefore sets the mean temperature, as stated. On long missions with blackouts, however, the time
-spent hot, and with it the throttling this paper is about, is set by the hold. Capping the hold at the guard's
-temperature removes that time in the replay. It has not yet been run on the board.
+The hardware partly agrees. The \HwLongWifiRuns{} 24-minute Wi-Fi missions of v4.1 (the replay's scenario, with
+total blackouts) spent \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time at or above 80~$^\circ$C. In the first,
+\HwLongHeldHi\,\% of the price updates were held, and \HwLongHotAfterHi\,\% of its hot time came within 150~s
+(about one thermal time constant) of a held update, against \HwLongAllAfterHi\,\% of all its time. In the second,
+only \HwLongHeldLo\,\% were held, yet it was hot \HwLongHotLo\,\% of the time, so its heat has another cause. The
+\HwLongMeshRuns{} 24-minute mesh missions, whose prices were almost never held, spent at most
+\HwLongMeshHotMax\,\% of the time at or above 80~$^\circ$C. The budget rule therefore sets the mean temperature, as
+stated. On long missions with blackouts, the hold explains the hot time in the replay and in one of the two hardware
+runs. Capping the hold at the guard's temperature removes that time in the replay; it has not yet been run on the
+board.
 
 \section{Method}\label{sec:method}
 Strategies are compared in paired campaigns: every repetition runs all strategies on the same scenario, in shuffled

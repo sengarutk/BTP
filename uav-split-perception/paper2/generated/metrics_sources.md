@@ -321,3 +321,13 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsVOnb` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.onboard_share x 100 |
 | `\TsBoundAll` | every | replay/theory_sweep_nov11/theory_sweep_summary.json all scenarios and policies: bound_holds_all |
 | `\TsRuns` | 215 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |
+| `\HwLongWifiRuns` | 2 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): number of 24-min Wi-Fi v4.1 runs |
+| `\HwLongWifiHotMin` | 19 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): share of log samples >= 80 C, min x 100 |
+| `\HwLongWifiHotMax` | 27 | ... max x 100 |
+| `\HwLongHeldHi` | 18 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): the run with more held updates, held share x 100 |
+| `\HwLongHotAfterHi` | 99 | ... share of its hot time within 150 s after a held update x 100 |
+| `\HwLongAllAfterHi` | 47 | ... share of all its time within 150 s after a held update x 100 |
+| `\HwLongHeldLo` | 2 | the other run: held share x 100 |
+| `\HwLongHotLo` | 27 | ... its hot share x 100 |
+| `\HwLongMeshRuns` | 5 | vid_campaign_mesh2_long v4.1 runs |
+| `\HwLongMeshHotMax` | 0.1 | vid_campaign_mesh2_long v4.1: hot share, max x 100 |
