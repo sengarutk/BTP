@@ -70,6 +70,32 @@ def learned_and_joint():
     return out
 
 
+def fam(c):
+    return "joint" if c.name.startswith("joint_") else "entropy" if c.name.startswith("ec_") else family(c)
+
+
+def entropy_codes():
+    """The entropy-coded codes of evaluation/entropy_bottleneck.py (eval_ec_*.json, smoke runs excluded) as options:
+    the encoder and decoder of the k4_c32 code they start from (same MACs, same decoder time), its server time, plus
+    the measured range-coding times (encode onboard, decode on the server; host CPU, as the uint8 + zstd time of the
+    learned rows)."""
+    ec = RES / "entropy_bottleneck"
+    if not ec.exists():
+        return []
+    frozen = {c.name: c for c in learned_and_joint()}
+    out = []
+    for f in sorted(ec.glob("eval_ec_*.json")):
+        ev = json.load(open(f))
+        if "smoke" in ev["config"]:
+            continue
+        b = frozen["learned_" + ev["init"]]
+        out.append(replace(b, name=ev["config"], dtype=ev["config"], payload_bytes=ev["payload_bytes_mean"],
+                           host_edge_proc_ms=ev["host_range_encode_ms_median"],
+                           cloud_ms=b.cloud_ms + ev["host_range_decode_ms_median"], map50_95=ev["map50_95"],
+                           map50=ev["map50"], delta_map50_95=ev["map50_95"] - ev["base_map50_95"]))
+    return out
+
+
 def jpeg_grid(base_cfgs):
     """The paper's JPEG rows plus the finer grid (learned_bottleneck/jpeg_fine/jpeg_q*.json), timings interpolated."""
     jp = {c.name: c for c in base_cfgs if family(c) == "image"}
@@ -186,7 +212,7 @@ def analyse(jpeg, others):
                         checked += 1
                         if not B < b_be:
                             viol.append({"device": dev, "t_full_ms": t, "code": k.name, "goodput": float(B), "b_be": b_be})
-            rows.append({"device": dev, "t_full_ms": t, "code": k.name, "family": "joint" if k.name.startswith("joint_") else family(k),
+            rows.append({"device": dev, "t_full_ms": t, "code": k.name, "family": fam(k),
                          "payload_kb": k.payload_bytes / 1e3, "map50_95": k.map50_95, "onboard_ms": e[k.name],
                          "q_star": qs.name if qs else None, "q_star_map50_95": qs.map50_95 if qs else None, "q_star_kb": qs.payload_bytes / 1e3 if qs else None,
                          "b_be_mbps": b_be, "wins_at_mbps": win, "max_win_mbps": max(win) if win else None,
@@ -227,6 +253,15 @@ def main():
                 out.setdefault("jpeg_tuned", {})[run + ("_best_of_both" if best else "")] = {
                     "jpeg_options": [{"config": c.name, "map50_95": c.map50_95} for c in tj],
                     "rule_check": {"split_win_cells": tw, "cells_with_q_star": tc, "violations": tv}, "codes": tr}
+    ec = entropy_codes()                          # entropy-coded codes, a separate analysis (main cells unchanged)
+    if ec:
+        out["entropy_codes"] = {"codes": [c.name for c in ec]}
+        for key, jp in (("untuned", jpeg), ("best_of_both", tuned_jpeg(jpeg, TUNED_RUNS[0], best=True))):
+            if jp is None:
+                continue
+            er, ev_, ec_, ew = analyse(jp, others + ec)
+            out["entropy_codes"][key] = {"rule_check": {"split_win_cells": ew, "violations": ev_},
+                                         "codes": [r for r in er if r["family"] in ("entropy", "learned", "joint")]}
     OUT.mkdir(parents=True, exist_ok=True)
     json.dump(out, open(OUT / "break_even.json", "w"), indent=1)
     figure(out)

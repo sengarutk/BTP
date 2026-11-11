@@ -1,0 +1,34 @@
+{
+ "name": "ec_k4_c32_l0.01_smoke64",
+ "init": "k4_c32_w128_d2",
+ "lam_per_kib": 0.01,
+ "epochs": 2,
+ "batch": 8,
+ "lr": 0.001,
+ "lr_em": 0.01,
+ "w_cut": 0.1,
+ "seed": 0,
+ "n_train": 64,
+ "n_holdout": 16,
+ "init_log_gain": 1.8192546367645264,
+ "epochs_log": [
+  {
+   "epoch": 1,
+   "train_loss": 0.6344138383865356,
+   "train_d": 0.2403702326118946,
+   "train_kib": 39.40436029434204,
+   "holdout_distill": 0.34805914759635925,
+   "holdout_kib_relaxed": 40.65463066101074,
+   "minutes": 0.34569453398386635
+  },
+  {
+   "epoch": 2,
+   "train_loss": 0.5757938250899315,
+   "train_d": 0.18890822306275368,
+   "train_kib": 38.688560962677,
+   "holdout_distill": 0.3105245381593704,
+   "holdout_kib_relaxed": 40.577049255371094,
+   "minutes": 0.5134405334790547
+  }
+ ]
+}
