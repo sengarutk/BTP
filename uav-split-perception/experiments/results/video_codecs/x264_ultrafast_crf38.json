@@ -1,0 +1,18 @@
+{
+ "option": "x264_ultrafast_crf38",
+ "family": "x264_ultrafast",
+ "codec": "libx264",
+ "preset": "ultrafast",
+ "crf": 38,
+ "frames_scored": 2558,
+ "frames_encoded": 2846,
+ "payload_bytes_mean": 1189.76114151681,
+ "payload_bytes_p95": 2087.0,
+ "payload_bytes_max": 3045,
+ "encode_ms_per_frame": 0.9458867417460395,
+ "decode_ms_per_frame": 0.33572818763541495,
+ "timing_note": "single-thread wall time per frame, from raw YUV input (encode) and to no output (decode), incl. one ffmpeg start-up per sequence (upper bound)",
+ "map50_95": 0.0730686692077895,
+ "map50": 0.16168477771963638,
+ "num_images": 2558
+}

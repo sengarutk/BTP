@@ -40,3 +40,17 @@ L2. Direction right, size wrong. Their analysis transforms cost 108-458 % of the
     together its B_be is unchanged (1.17 Mbit/s on the Pi, 5.83 on the Jetson, matched by JPEG Q35). They qualify only
     on the fastest boards of the sweep, where they take 170 of the codes' 1030 winning cells (860 left).
 L3. Right. No winning cell at or above B_be with any family (0 exceptions in all three cases).
+
+Results, video (12 Nov 2026, ~02:35 IST; evaluation/video_codecs.py analyse; 2558 frames, 7 sequences):
+V1. Right in direction, the size larger than predicted. Median byte saving over JPEG at equal accuracy: x264 ultrafast
+    46 %, x265 ultrafast 64 %, x265 medium 86 %, x264 medium 87 %, NVENC 91 % (predicted 40-80 %, x265 medium the
+    most: NVENC and x264 medium save as much or more). x264 ultrafast saves the least, as predicted.
+V2. Right. The smallest jointly trained code's B_be on the Jetson falls from 9.84 Mbit/s (JPEG) to 1.51 (video, matched
+    by x264 medium CRF 23): -85 % (predicted at least -30 %). On the Pi from 1.88 to 1.06, matched by x264 ultrafast
+    CRF 23 (x264 ultrafast admitted, x265 medium not, as predicted). Winning cells: 1118 with JPEG, 255 with video,
+    204 with both, 168 with both and the JPEG-tuned detector.
+V3. Right: 0 exceptions with every family and timing.
+V4. Right. With encoding free onboard (NVENC included), B_be falls to 0.89 Mbit/s on the Jetson and 0.16 on the Pi, and
+    the winning cells to 64 (44 with the tuned detector); on the Jetson the code still wins up to 0.86 Mbit/s.
+Caveat for the paper: on these frames the jointly trained code is matched by JPEG Q75 (Q35 on DET val); its epoch, like
+the tuned detector's, was chosen on the 288 excluded frames of the same 7 sequences, so it is not fully held out here.

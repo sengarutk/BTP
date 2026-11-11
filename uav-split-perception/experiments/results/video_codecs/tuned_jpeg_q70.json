@@ -1,0 +1,10 @@
+{
+ "option": "jpeg_q70",
+ "detector": "jpegtuned_qmix_r1",
+ "q": 70,
+ "payload_bytes_mean": 37517.039874902264,
+ "map50_95": 0.24300738464391677,
+ "map50": 0.45736720986352103,
+ "map50_95_untuned": 0.21242799839865098,
+ "num_images": 2558
+}

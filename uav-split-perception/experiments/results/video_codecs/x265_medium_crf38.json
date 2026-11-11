@@ -1,0 +1,18 @@
+{
+ "option": "x265_medium_crf38",
+ "family": "x265_medium",
+ "codec": "libx265",
+ "preset": "medium",
+ "crf": 38,
+ "frames_scored": 2558,
+ "frames_encoded": 2846,
+ "payload_bytes_mean": 363.11219702892885,
+ "payload_bytes_p95": 845.1500000000001,
+ "payload_bytes_max": 1317,
+ "encode_ms_per_frame": 7.101263724175876,
+ "decode_ms_per_frame": 0.6673889455389965,
+ "timing_note": "single-thread wall time per frame, from raw YUV input (encode) and to no output (decode), incl. one ffmpeg start-up per sequence (upper bound)",
+ "map50_95": 0.09813658350854895,
+ "map50": 0.20832992275348472,
+ "num_images": 2558
+}

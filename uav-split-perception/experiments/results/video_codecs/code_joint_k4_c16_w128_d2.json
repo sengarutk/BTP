@@ -1,0 +1,10 @@
+{
+ "option": "joint_k4_c16_w128_d2",
+ "family": "joint",
+ "frames": 2558,
+ "payload_bytes_mean": 13076.062939796717,
+ "payload_bytes_p95": 13731.0,
+ "map50_95": 0.22734110528910348,
+ "map50": 0.4353768289524245,
+ "num_images": 2558
+}

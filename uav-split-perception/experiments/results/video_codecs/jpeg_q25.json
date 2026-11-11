@@ -1,0 +1,13 @@
+{
+ "option": "jpeg_q25",
+ "family": "jpeg",
+ "q": 25,
+ "frames": 2558,
+ "payload_bytes_mean": 17759.632525410478,
+ "payload_bytes_p95": 25035.15,
+ "encode_ms_median": 0.469417998829158,
+ "decode_ms_median": 0.4879459993389901,
+ "map50_95": 0.15983613658467624,
+ "map50": 0.3272012148847889,
+ "num_images": 2558
+}

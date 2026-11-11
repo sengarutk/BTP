@@ -1,0 +1,18 @@
+{
+ "option": "nvenc_crf28",
+ "family": "nvenc",
+ "codec": "h264_nvenc",
+ "preset": "p1",
+ "crf": 28,
+ "frames_scored": 2558,
+ "frames_encoded": 2846,
+ "payload_bytes_mean": 3726.3741204065677,
+ "payload_bytes_p95": 5645.3,
+ "payload_bytes_max": 8980,
+ "encode_ms_per_frame": 2.6151184803205845,
+ "decode_ms_per_frame": 1.203750917426405,
+ "timing_note": "single-thread wall time per frame, from raw YUV input (encode) and to no output (decode), incl. one ffmpeg start-up per sequence (upper bound)",
+ "map50_95": 0.22122059639158875,
+ "map50": 0.43865896780666686,
+ "num_images": 2558
+}

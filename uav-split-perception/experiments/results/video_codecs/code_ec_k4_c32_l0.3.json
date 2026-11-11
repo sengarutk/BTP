@@ -1,0 +1,10 @@
+{
+ "option": "ec_k4_c32_l0.3",
+ "family": "entropy",
+ "frames": 2558,
+ "payload_bytes_mean": 1365.8483189992182,
+ "payload_bytes_p95": 1664.0,
+ "map50_95": 0.11995667449672896,
+ "map50": 0.2652526218502147,
+ "num_images": 2558
+}

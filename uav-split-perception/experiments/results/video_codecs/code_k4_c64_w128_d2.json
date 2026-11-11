@@ -1,0 +1,10 @@
+{
+ "option": "learned_k4_c64_w128_d2",
+ "family": "learned",
+ "frames": 2558,
+ "payload_bytes_mean": 52328.90852228303,
+ "payload_bytes_p95": 55049.45,
+ "map50_95": 0.2316492859253069,
+ "map50": 0.4496767767890266,
+ "num_images": 2558
+}
