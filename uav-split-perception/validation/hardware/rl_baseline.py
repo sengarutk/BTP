@@ -13,7 +13,8 @@ the same streaming AP as every other policy.
              result; the policy's own modelled camera energy over the last second
   reward     per tick, the accuracy of the newest result (relative to the full model, the replay's accuracy table) when
              it is younger than the 300 ms deadline, else 0 (the quantity streaming AP rewards); minus lambda times
-             the modelled camera energy of the action (J, replay.e_onb / e_off, the energies v4.1 prices)
+             the camera energy the replay bills for the action (J: inference power x inference time; radio power
+             from the send to the acknowledgement)
   constraint after each batch lambda <- max(0, lambda + alpha (mean measured board power - B)), B = 2.8 W (v4.1's)
   PPO        MLP 64-64 (tanh), masked categorical policy and value head; GAE (gamma 0.99, lambda 0.95), clip 0.2,
              4 epochs, minibatch 1024, Adam 3e-4, entropy 0.01; batch = one episode per worker; alpha = 0.2
@@ -99,13 +100,21 @@ class Agent:
         return m
 
     def energy(self, rp, a, t):
+        """The camera energy the replay will bill for the action (its power model, replay.run): onboard, the
+        inference power held for the inference time; remote, the encode energy plus the radio power a + b r held
+        from the send until the acknowledgement (transfer at the estimate plus the round trip, at most STALL_S)."""
         if a is None:
             return 0.0
         srv, v = a
+        c = rp.c["pi"]
         if srv == "onboard":
-            return rp.e_onb(v)
+            return c["infer_j"][v] / (c["infer_ms"][v] / 1e3) * rp.onboard_ms(v) / 1e3
         m, res, q = variant(srv, v)
-        return rp.e_off(res, q, rp.nbytes[(res, q)], rp.links[srv].est(t)[0])
+        L_ = rp.links[srv]
+        r, b = L_.est(t)[0], rp.nbytes[(res, q)]
+        enc = c["encode_j"].get(f"{res}q{q}", c["encode_j"]["640q90"])
+        on_s = min(b * 8 / (r * 1e6) + L_.rtt / 1e3, R.STALL_S)
+        return enc + (c["radio_tx_w"]["a"] + c["radio_tx_w"]["b_per_mbps"] * r) * on_s
 
     def reward(self, rp, t):
         """Accuracy of the newest result if it is fresh (the newest result's frame is found from its age)."""
