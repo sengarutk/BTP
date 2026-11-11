@@ -18,7 +18,8 @@
 % minnen2018joint, in references.bib, checked against arXiv). Sixth revision (12 Nov 2026): a second detector,
 % YOLO11s (sd_metrics.tex from evaluation/second_detector.py, experiments/results/second_detector/yolo11s/);
 % inter-frame coding of the codes (video_inter_metrics.tex from evaluation/video_codecs.py analyse --inter, after
-% evaluation/interframe_codes.py extract).
+% evaluation/interframe_codes.py extract); region-of-interest JPEG (Vc*Roi* macros in video_metrics.tex, after
+% evaluation/roi_jpeg.py eval).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -264,6 +265,13 @@ on the DET frames, with the JPEG rows' method. They need a median \LicSaveMedian
 accuracy. Their encoders, however, cost \LicEncFracMin--\LicEncFracMax\,\% of the detector's MACs, more than running
 the whole detector onboard. On the Pi and the Jetson they never fit within a code's frame time, so the codes'
 $B_{\mathrm{be}}$ there is unchanged.
+\item \textbf{Region-of-interest JPEG.} The server returns the boxes it detected two frames earlier. The camera
+sends the frame at a low quality, plus the boxed regions (grown by 16 pixels) at a high quality, and the server
+rebuilds the mask from its own boxes. The regions cover \VcRoiArea\,\% of the frame. At equal accuracy this saves a
+median \VcSaveRoi\,\% over JPEG (\VcSaveRoiMin{} to \VcSaveRoiMax\,\%): the background layer is about half of the
+bytes, and objects the delayed feedback misses fall in it. The smallest jointly trained code's $B_{\mathrm{be}}$ on
+the Jetson falls only from \VcJpegJointFastBe{} to \VcJpegRoiJointFastBe~Mbit/s. With video available, region coding
+changes nothing (\VcAllWins{} winning cells, as with video and JPEG).
 \end{itemize}
 No winning cell lies at or above its $B_{\mathrm{be}}$ with any of these families (\VcBothExc{} and \LicBothExc{}
 exceptions). A stronger image codec, where the board can run it, removes most of the room a split had. This is the

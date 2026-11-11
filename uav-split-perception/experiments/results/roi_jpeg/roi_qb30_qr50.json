@@ -1,0 +1,17 @@
+{
+ "option": "roi_qb30_qr50",
+ "family": "roi",
+ "qb": 30,
+ "qr": 50,
+ "lag": 2,
+ "margin": 16,
+ "frames": 2558,
+ "payload_bytes_mean": 31819.783815480845,
+ "payload_bytes_p95": 42992.8,
+ "encode_ms_median": 2.9630094941239804,
+ "decode_ms_median": 1.8931794911623,
+ "roi_area_mean": 0.30097667448527493,
+ "map50_95": 0.18306131504114098,
+ "map50": 0.37000201032625624,
+ "num_images": 2558
+}

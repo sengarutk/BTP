@@ -448,7 +448,12 @@ def cmd_analyse(a):
                 m[f"Vc{tag}{cn}{dn}Qstar"] = str(r["q_star"]).replace("jpeg_q", "Q").replace("_", " ")
                 m[f"Vc{tag}{cn}{dn}Win"] = "--" if r["max_win_mbps"] is None else f"{r['max_win_mbps']:.2f}"
     if rois:
-        sv = [1 - env["roi"][q] / env["jpeg"][q] for q in env["jpeg"] if env["roi"].get(q) and env["jpeg"][q]]
+        # only the JPEG accuracies inside the ROI grid's range: below its lowest point (q_b 10 with a region layer) the
+        # envelope would charge ROI for bytes it need not send
+        lo_roi = min(r["map50_95"] for r in rois.values())
+        sv = [1 - env["roi"][q] / env["jpeg"][q] for q in env["jpeg"]
+              if env["roi"].get(q) and env["jpeg"][q] and jp[q]["map50_95"] >= lo_roi]
+        m["VcSaveRoiMin"] = f"{100 * min(sv):.0f}" if sv else "--"
         m["VcSaveRoi"] = f"{100 * float(np.median(sv)):.0f}" if sv else "--"
         m["VcSaveRoiMax"] = f"{100 * max(sv):.0f}" if sv else "--"
         m["VcRoiArea"] = f"{100 * float(np.mean([r['roi_area_mean'] for r in rois.values()])):.0f}"

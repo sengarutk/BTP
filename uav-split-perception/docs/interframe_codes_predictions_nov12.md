@@ -1,4 +1,4 @@
-# Inter-frame coding of the split codes (paper 1, roadmap P1-10): predictions before the runs (12 Nov 2026, ~04:25 IST)
+# Inter-frame coding of the split codes (paper 1, roadmap P1-10): predictions before the runs (12 Nov 2026, 03:57 IST, committed 28d99918)
 
 Why. With low-delay video as the image family (P1-1), the image side uses the previous frame and the split codes did
 not. The fair comparison is video against video: the codes are also coded against the previous frame.
@@ -30,7 +30,7 @@ Predictions:
    with video and JPEG together. There are 0 exceptions.
 4. Conclusion: video against video does not reverse P1-1. The joint code's B_be on the Jetson stays near 1.5 Mbit/s.
 
-## Results (12 Nov 2026, ~05:05 IST; experiments/results/interframe_codes/, video_codecs.py analyse --inter)
+## Results (12 Nov 2026, 04:07 IST; experiments/results/interframe_codes/, video_codecs.py analyse --inter)
 
 1. **Held.** For all 12 codes the recorded intra sizes equal the P1-1 payload means exactly, and the mAP equals the
    P1-1 row's. Every frame decoded bit-exact.
