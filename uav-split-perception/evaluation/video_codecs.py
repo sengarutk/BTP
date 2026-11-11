@@ -275,6 +275,8 @@ def cmd_codes(a):
     ecs = [json.load(open(f))["config"] for f in sorted((REPO / "experiments" / "results" / "entropy_bottleneck")
                                                         .glob("eval_ec_*.json"))]
     from evaluation import joint_bottleneck as J
+    import __main__                    # the joint checkpoints were saved by joint_bottleneck.py run as a script, so
+    __main__.CutWithBottleneck = J.CutWithBottleneck      # their wrapper is pickled as __main__.CutWithBottleneck
     joints = [json.load(open(f))["config"] for f in sorted((REPO / "experiments" / "results" / "joint_bottleneck")
                                                            .glob("eval_joint_*.json"))]
     for kind, tag in ([("learned", t) for t in tags] + [("entropy", t) for t in ecs]
