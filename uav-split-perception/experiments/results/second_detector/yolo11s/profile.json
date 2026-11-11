@@ -1,0 +1,43 @@
+{
+ "yolov8s": {
+  "full_ms": 11.842074502055766,
+  "prefix_ms": 1.8766504981613252,
+  "suffix_ms": 9.32013549754629,
+  "macs_total": 14331008000.0,
+  "macs_prefix": 3080192000.0,
+  "cut_channels": 128,
+  "cut_hw": [
+   80,
+   80
+  ]
+ },
+ "yolo11s": {
+  "full_ms": 16.784848496172344,
+  "prefix_ms": 1.95400300071924,
+  "suffix_ms": 15.487432494410314,
+  "macs_total": 10781772800.0,
+  "macs_prefix": 2874572800.0,
+  "cut_channels": 256,
+  "cut_hw": [
+   80,
+   80
+  ]
+ },
+ "check_yolov8s_edge_fraction": {
+  "topology_file": 0.21377012770682954,
+  "thop_here": 0.21493198524486204
+ },
+ "pi_onboard_640": {
+  "yolov8s": {
+   "phases": 24,
+   "median_ms": 729.5719580815785
+  },
+  "yolo11s": {
+   "phases": 24,
+   "median_ms": 739.9925241625169
+  }
+ },
+ "ratio_host": 1.4173908881639379,
+ "ratio_pi": 1.0142831230908866,
+ "method": "Timings. The YOLOv8s rows take their host times from the measured table (visdrone_ft_split/split_pareto_analysis.csv)\nand their device times from the boards. For the YOLO11s the same quantities are obtained as ratios to the YOLOv8s,\neach measured the same way for both detectors:\n  host            `profile`: this laptop's GPU, FP32, batch 1, 640 x 640, median of 100 timed passes after 20 warm-up\n                  passes, CUDA-synchronised: the full network, layers 0..k (onboard) and layers k+1.. (server).\n                  host full time = the table's YOLOv8s value x (YOLO11s / YOLOv8s full time); the server part of a\n                  split at k = the table's YOLOv8s k-split server time - YOLOv8s suffix + YOLO11s suffix\n  laptop, Jetson  the YOLOv8s device time x the host ratio (the Jetson was not run with the YOLO11s)\n  Pi 5            measured: median per-phase latency of onboard inference at 640 in the matched onboard campaigns of\n                  both detectors on both Pis (hardware/vid_campaign_onboard_vd{,_y11}_pi{2,3}), as a ratio\n  edge fraction   MACs of layers 0..k (+ the bottleneck encoder) / MACs of the network (thop, 640 x 640), as for the\n                  YOLOv8s rows; checked against the YOLOv8s topology file (yolov8s_graph_topology.json)\n  learned codes   quantise + zstd on the host CPU and the decoder on the host GPU, median of 50 (as\n                  learned_bottleneck_system.learned_rows)\nusage: second_detector.py profile | analyse     -> experiments/results/second_detector/yolo11s/\n"
+}

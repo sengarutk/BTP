@@ -1,0 +1,22 @@
+{
+ "k4_c16_w128_d2": {
+  "encoder_macs": 502169600.0,
+  "host_quant_zstd_ms": 0.29542550328187644,
+  "host_decoder_ms": 0.7658160029677674
+ },
+ "k4_c32_w128_d2": {
+  "encoder_macs": 531660800.0,
+  "host_quant_zstd_ms": 0.28180699882796034,
+  "host_decoder_ms": 0.7541914965258911
+ },
+ "k4_c4_w128_d2": {
+  "encoder_macs": 480051200.0,
+  "host_quant_zstd_ms": 0.2412570029264316,
+  "host_decoder_ms": 0.7222565036499873
+ },
+ "k4_c8_w128_d2": {
+  "encoder_macs": 487424000.0,
+  "host_quant_zstd_ms": 0.25241999537684023,
+  "host_decoder_ms": 0.7427735035889782
+ }
+}
