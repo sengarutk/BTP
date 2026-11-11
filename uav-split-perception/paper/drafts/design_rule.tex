@@ -13,7 +13,9 @@
 % experiments/results/entropy_bottleneck/); also \input sim_entropy_metrics.tex and sim_entropy_tuned_metrics.tex.
 % Fifth revision (11 Nov 2026): Corollaries cor:coder and cor:switch (needs \newtheorem{corollary}{Corollary} in the
 % preamble), bootstrap intervals on B_be (b_be_ci_metrics.tex from evaluation/break_even_ci.py), the energy version
-% (energy_be_metrics.tex from evaluation/energy_break_even.py).
+% (energy_be_metrics.tex from evaluation/energy_break_even.py), stronger image codecs (video_metrics.tex from
+% evaluation/video_codecs.py, lic_metrics.tex from evaluation/learned_image_codecs.py; cites balle2018variational and
+% minnen2018joint, in references.bib, checked against arXiv).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -235,6 +237,29 @@ trained code it is \BeEnJointPi~kbit/s (\BeEnTunedJointPi{} against the tuned de
 \BeEnJointSplitJ~J per frame against \BeEnJointImageJ~J for its JPEG setting, \BeEnJointRatio{} times as much. On a
 board like the Pi, then, a split is never the energy-saving choice: the onboard layers cost more than the radio time
 they save.
+
+\textbf{Stronger image codecs.} JPEG is the weakest codec the camera could use. The proposition holds for any image
+family, so we repeated the analysis with two stronger ones.
+\begin{itemize}
+\item \textbf{Video.} We used low-delay H.264 and H.265 (x264, x265; no B-frames, periodic intra refresh,
+constant quality, two speed presets) on the \VcFrames{} scored frames of the \VcSeqs{} VisDrone-VID validation
+sequences. The JPEG grid and the codes ran on the same frames. At equal accuracy, video needs
+\VcSaveHtfUltra\,\% (x264 ultrafast) to \VcSaveHtfMedium\,\% (x264 medium) fewer bytes per frame than JPEG. Encode
+times were measured single-threaded on the host and scaled like every host time. With video available, the smallest
+jointly trained code's $B_{\mathrm{be}}$ falls from \VcJpegJointFastBe{} to \VcVideoJointFastBe~Mbit/s on the Jetson,
+and from \VcJpegJointPiBe{} to \VcVideoJointPiBe~Mbit/s on the Pi. The cells where any code wins fall from
+\VcJpegWins{} to \VcBothWins{} (\VcBothTunedWins{} with the JPEG-tuned detector). If encoding were free onboard, as
+with a dedicated encoder (neither board has one), \VcBothFreeWins{} would remain. The video options assume an
+error-free stream, which favours video.
+\item \textbf{Learned image codecs.} We also tested pretrained hyperprior codecs~\cite{balle2018variational,minnen2018joint}
+on the DET frames, with the JPEG rows' method. They need a median \LicSaveMedian\,\% fewer bytes than JPEG at equal
+accuracy. Their encoders, however, cost \LicEncFracMin--\LicEncFracMax\,\% of the detector's MACs, more than running
+the whole detector onboard. On the Pi and the Jetson they never fit within a code's frame time, so the codes'
+$B_{\mathrm{be}}$ there is unchanged.
+\end{itemize}
+No winning cell lies at or above its $B_{\mathrm{be}}$ with any of these families (\VcBothExc{} and \LicBothExc{}
+exceptions). A stronger image codec, where the board can run it, removes most of the room a split had. This is the
+same reasoning as Corollary~\ref{cor:coder}, applied to the image side.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
