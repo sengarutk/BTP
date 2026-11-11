@@ -59,6 +59,10 @@ SWEEP = {**{f"th_eta{v:g}": {"mu_step": v} for v in ETAS if v != 0.1},
 DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0, "no_exempt": False, "hold_max_c": 85.0, "mu_max": 5.0}
 for name, ov in SWEEP.items():
     R.POLICIES[name] = dict(BASE, **ov)
+# addendum 5: the floor (no onboard inference: the fixed offload policy) at each room temperature, for Theorem 3's
+# floor temperature theta_f; run with --only, not part of the summary tables
+FLOOR = {f"th_floor_amb{d}": dict(R.POLICIES["fixed_laptop_m640q90"], ambient_c=float(d)) for d in (0, 5, 10, 15)}
+R.POLICIES.update(FLOOR)
 ETA_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["mu_step"]]
 BUDGET_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["energy"]]
 AMB_POLS = [n for n in SWEEP if n.startswith("th_amb")]

@@ -112,3 +112,9 @@ keeps T <= 78 C plus the rise during one inference already started; the ambient 
     22.5 % to near 0 (< 5 %); at +10 C the budget (~2.1 W) is below the floor, so power settles near the floor
     (2.5-2.7 W), the temperature near 76-79 C and the hot share far below 52.5 % (< 15 %); freshness below
     th_adapt_amb10's 97.9 %, as in the cap runs.
+(c) th_floor_amb{0,5,10,15} (added 11 Nov, ~22:00 IST, before the runs): the fixed offload policy (laptop, m640 Q90,
+    no onboard inference) at each room temperature: the floor temperature theta_f of Theorem 3 measured directly.
+    The hardware's 24-min offload-only runs average 2.26 W and 62.7-63.6 C, the controller's fit gives 62.8 C.
+13. th_floor: mean temperature 34.4 + 12.73 x P + ambient with P = 2.2-2.5 W, i.e. 62-67 C in the lab, and the
+    maximum within 5 C above the mean; at +15 C the mean exceeds 78 C, which is why th_guard_amb15 cannot hold the
+    guard (Theorem 3: the temperature is never below the floor's).
