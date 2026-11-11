@@ -14,14 +14,19 @@ Options (every one decoded to lossless PNG, then scored by the VisDrone YOLOv8s,
   jpeg_qQ     OpenCV JPEG at the 18 qualities of the rule (as benchmark_codecs.make_codec_hook), per frame
   x264 / x265 libx264 / libx265, low delay: -tune zerolatency, no B-frames, periodic intra refresh instead of key
               frames (keyint 60, no I-frame bursts), 30 fps, constant quality (CRF grid); presets ultrafast and medium
-  nvenc       h264_nvenc low latency (p1, no B-frames, constant quality), the hardware encoder of Jetson-class boards
+  nvenc       h264_nvenc low latency (p1, no B-frames, constant quality): the laptop GPU's hardware encoder, a
+              stand-in for a dedicated encoder (neither the Pi 5 nor the Jetson Orin Nano has one)
   codes       the learned (uint8 + zstd) and entropy-coded split codes at k4, on the raw frames
+  tuned       the JPEG-tuned detector (mixed qualities) on the same JPEG frames (jpeg_tuned)
+  joint       the jointly trained codes (their own server side). Their epoch, like the tuned detector's, was chosen
+              on the 288 excluded frames, which come from the same 7 sequences: these two are not fully held out here
 Payload: mean bytes per frame (video: per-packet sizes from ffprobe; p95 also kept, since a frame must arrive by its
-deadline). Encode time: single-thread wall time per frame on this laptop's CPU, for JPEG and the software video
+deadline). Encode time: single-thread wall time per frame on this laptop's CPU (video: from raw YUV, so the source
+JPEG decode is not counted; decode to no output), for JPEG and the software video
 encoders alike (the rule scales host times to each device's speed, as it does for every option); decode time likewise.
 The video options assume an error-free stream (a lost frame would corrupt the frames that reference it); this favours
 video and is stated.
-usage: video_codecs.py prepare | jpeg | video | codes | analyse        -> experiments/results/video_codecs/
+usage: video_codecs.py prepare | raw | jpeg | video | codes | jpeg_tuned | analyse  -> experiments/results/video_codecs/
 """
 import argparse
 import json
@@ -97,14 +102,17 @@ def cmd_prepare(a):
     print(f"{n} scored frames", flush=True)
 
 
-def evaluate(opt, name, hook=None, layer=None):
-    """mAP of the decoded frames of option `opt` (cached per-image stats under the given name)."""
+def evaluate(opt, name, hook=None, layer=None, weights=None, prep=None):
+    """mAP of the decoded frames of option `opt` (cached per-image stats under the given name). weights: another
+    checkpoint (the JPEG-tuned or a jointly trained detector); prep(yolo): adapts its model before scoring."""
     from ultralytics import YOLO
     from evaluation.detection_eval import run_validation
-    yolo = YOLO(str(REPO / "weights" / "yolov8s_visdrone.pt"))
+    yolo = YOLO(str(weights or REPO / "weights" / "yolov8s_visdrone.pt"))
+    if prep:
+        prep(yolo)
     h = yolo.model.model[layer].register_forward_hook(hook) if hook else None
     try:
-        return run_validation(yolo, str(yaml_for(opt)), "cuda", name=name, cache=hook is None)
+        return run_validation(yolo, str(yaml_for(opt)), "cuda", name=name, cache=hook is None and prep is None)
     finally:
         if h:
             h.remove()
@@ -117,6 +125,51 @@ def timed(fn, reps=1):
     return r, (time.perf_counter() - t0) / reps * 1e3
 
 
+def jpeg_frames(q, d):
+    """Encode every scored frame at quality q (OpenCV, single thread), decode, write the decoded PNGs to d."""
+    d.mkdir(parents=True, exist_ok=True)
+    sizes, enc_ms, dec_ms = [], [], []
+    for seq, nf in sequences():
+        for f in range(1, nf + 1):
+            if not scored(f):
+                continue
+            img = cv2.imread(str(SRC / seq / f"{f:07d}.jpg"))
+            (ok, buf), te = timed(lambda: cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, q]))
+            dec, td = timed(lambda: cv2.imdecode(buf, cv2.IMREAD_COLOR))
+            sizes.append(len(buf))
+            enc_ms.append(te)
+            dec_ms.append(td)
+            cv2.imwrite(str(d / f"{seq}_{f:07d}.png"), dec, [cv2.IMWRITE_PNG_COMPRESSION, 1])
+    return sizes, enc_ms, dec_ms
+
+
+def cmd_jpeg_tuned(a):
+    """The JPEG-tuned detector (jpeg_tuned_detector.py, mixed qualities) on the same JPEG frames. Its first layer's
+    in-model JPEG round trip is removed: the frames are already the decoded JPEGs, as for the untuned rows."""
+    from evaluation.jpeg_tuned_detector import CKPT as JT, JpegInput
+    run = "jpegtuned_qmix_r1"
+
+    def prep(yolo):
+        w = yolo.model.model[0]
+        assert isinstance(w, JpegInput), type(w)
+        yolo.model.model[0] = w.layer
+    cv2.setNumThreads(1)
+    for q in a.q or JPEG_Q:
+        opt, f_out = f"jpeg_q{q}", OUT / f"tuned_jpeg_q{q}.json"
+        if f_out.exists():
+            continue
+        ref = json.load(open(OUT / f"{opt}.json"))
+        sizes, _, _ = jpeg_frames(q, WORK / opt / "images")
+        assert abs(np.mean(sizes) - ref["payload_bytes_mean"]) < 1e-6 * ref["payload_bytes_mean"], q
+        res = evaluate(opt, f"vc_tuned_{opt}", weights=JT / f"{run}.pt", prep=prep)
+        row = {"option": opt, "detector": run, "q": q, "payload_bytes_mean": float(np.mean(sizes)),
+               "map50_95": res["map50_95"], "map50": res["map50"], "map50_95_untuned": ref["map50_95"],
+               "num_images": res["num_images"]}
+        json.dump(row, open(f_out, "w"), indent=1)
+        shutil.rmtree(WORK / opt / "images")
+        print(json.dumps(row), flush=True)
+
+
 def cmd_jpeg(a):
     cv2.setNumThreads(1)
     for q in a.q or JPEG_Q:
@@ -125,19 +178,7 @@ def cmd_jpeg(a):
         if f_out.exists():
             continue
         d = WORK / opt / "images"
-        d.mkdir(parents=True, exist_ok=True)
-        sizes, enc_ms, dec_ms = [], [], []
-        for seq, nf in sequences():
-            for f in range(1, nf + 1):
-                if not scored(f):
-                    continue
-                img = cv2.imread(str(SRC / seq / f"{f:07d}.jpg"))
-                (ok, buf), te = timed(lambda: cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, q]))
-                dec, td = timed(lambda: cv2.imdecode(buf, cv2.IMREAD_COLOR))
-                sizes.append(len(buf))
-                enc_ms.append(te)
-                dec_ms.append(td)
-                cv2.imwrite(str(d / f"{seq}_{f:07d}.png"), dec, [cv2.IMWRITE_PNG_COMPRESSION, 1])
+        sizes, enc_ms, dec_ms = jpeg_frames(q, d)
         res = evaluate(opt, f"vc_{opt}")
         row = {"option": opt, "family": "jpeg", "q": q, "frames": len(sizes), "payload_bytes_mean": float(np.mean(sizes)),
                "payload_bytes_p95": float(np.percentile(sizes, 95)), "encode_ms_median": float(np.median(enc_ms)),
@@ -181,17 +222,23 @@ def cmd_video(a):
             tmp.mkdir(exist_ok=True)
             sizes, enc_s, dec_s, frames_all = [], 0.0, 0.0, 0
             for seq, nf in sequences():
-                bs = tmp / f"{seq}.bit"
+                bs, y4m = tmp / f"{seq}.bit", tmp / f"{seq}.y4m"
+                # the source frames as raw YUV first (untimed), so the timed encode does not include decoding the
+                # stored JPEGs; the timed decode writes nothing (-f null), the PNGs for scoring come from a third pass
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "30", "-start_number", "1",
+                                "-i", str(SRC / seq / "%07d.jpg"), "-pix_fmt", "yuv420p", str(y4m)], check=True)
                 t0 = time.perf_counter()
-                subprocess.run(["ffmpeg", "-v", "error", "-y", "-threads", "1", "-framerate", "30", "-start_number", "1",
-                                "-i", str(SRC / seq / "%07d.jpg"), *encode_args(codec, preset, crf), str(bs)], check=True)
+                subprocess.run(["ffmpeg", "-v", "error", "-y", "-threads", "1", "-i", str(y4m),
+                                *encode_args(codec, preset, crf), str(bs)], check=True)
                 enc_s += time.perf_counter() - t0
+                y4m.unlink()
                 s = ffprobe_sizes(bs)
                 assert len(s) == nf, (seq, len(s), nf)
                 t0 = time.perf_counter()
+                subprocess.run(["ffmpeg", "-v", "error", "-threads", "1", "-i", str(bs), "-f", "null", "-"], check=True)
+                dec_s += time.perf_counter() - t0
                 subprocess.run(["ffmpeg", "-v", "error", "-y", "-threads", "1", "-i", str(bs), "-start_number", "1",
                                 "-compression_level", "1", str(tmp / f"{seq}_%07d.png")], check=True)
-                dec_s += time.perf_counter() - t0
                 for f in range(1, nf + 1):
                     p = tmp / f"{seq}_{f:07d}.png"
                     if scored(f):
@@ -206,7 +253,8 @@ def cmd_video(a):
                    "payload_bytes_mean": float(np.mean(sizes)), "payload_bytes_p95": float(np.percentile(sizes, 95)),
                    "payload_bytes_max": int(np.max(sizes)),
                    "encode_ms_per_frame": 1e3 * enc_s / frames_all, "decode_ms_per_frame": 1e3 * dec_s / frames_all,
-                   "timing_note": "single-thread wall time incl. ffmpeg start-up and PNG I/O for decode (upper bound)",
+                   "timing_note": "single-thread wall time per frame, from raw YUV input (encode) and to no output (decode), "
+                                  "incl. one ffmpeg start-up per sequence (upper bound)",
                    "map50_95": res["map50_95"], "map50": res["map50"], "num_images": res["num_images"]}
             json.dump(row, open(f_out, "w"), indent=1)
             shutil.rmtree(WORK / opt / "images")
@@ -226,11 +274,31 @@ def cmd_codes(a):
             if json.load(open(f)).get("width") == 128 and json.load(open(f)).get("dec_layers") == 2]
     ecs = [json.load(open(f))["config"] for f in sorted((REPO / "experiments" / "results" / "entropy_bottleneck")
                                                         .glob("eval_ec_*.json"))]
-    for kind, tag in [("learned", t) for t in tags] + [("entropy", t) for t in ecs]:
+    from evaluation import joint_bottleneck as J
+    joints = [json.load(open(f))["config"] for f in sorted((REPO / "experiments" / "results" / "joint_bottleneck")
+                                                           .glob("eval_joint_*.json"))]
+    for kind, tag in ([("learned", t) for t in tags] + [("entropy", t) for t in ecs]
+                      + [("joint", t) for t in joints]):
         f_out = OUT / f"code_{tag}.json"
         if f_out.exists():
             continue
         sizes = []
+        if kind == "joint":       # the whole detector of the joint run (bottleneck + its trained server side)
+            ck_path = J.JCKPT / f"{tag[len('joint_'):]}.pt"
+            rec = {"bytes": [], "values": [], "enc_ms": []}
+
+            def prep(yolo, rec=rec):
+                w = [m for m in yolo.model.model if isinstance(m, J.CutWithBottleneck)]
+                assert len(w) == 1
+                w[0].record = rec
+            res = evaluate("raw", f"vc_code_{tag}", weights=ck_path, prep=prep)
+            sizes = L.drop_warmup(rec["bytes"], res["num_images"])
+            row = {"option": tag, "family": kind, "frames": len(sizes), "payload_bytes_mean": float(np.mean(sizes)),
+                   "payload_bytes_p95": float(np.percentile(sizes, 95)), "map50_95": res["map50_95"],
+                   "map50": res["map50"], "num_images": res["num_images"]}
+            json.dump(row, open(f_out, "w"), indent=1)
+            print(json.dumps(row), flush=True)
+            continue
         if kind == "learned":
             bn, ck = L.load_bottleneck(L.CKPT / f"{tag}.pt", "cuda")
 
@@ -266,6 +334,104 @@ def cmd_codes(a):
         print(json.dumps(row), flush=True)
 
 
+def cmd_analyse(a):
+    """Break-even goodput (Proposition prop:be-family, break_even_rule.analyse) on these frames with three image
+    families: per-frame JPEG, low-delay video (x264/x265), and both. Options are the rule's configurations with the
+    payload and accuracy measured here. Timings: JPEG and video encode = this laptop's single-thread CPU time, scaled
+    to each device like every host time in the rule ("scaled"); server side = the rule's JPEG server time with the
+    decode measured here. Second timing ("free"): encode costs nothing onboard (a dedicated encoder; NVENC joins),
+    the most favourable case for the image side. Codes keep the rule's timings (same network, same 640 input)."""
+    import math
+    from dataclasses import replace
+    from evaluation import break_even_rule as b
+    from evaluation.learned_bottleneck_system import measured_configs
+    raw = json.load(open(OUT / "raw.json"))
+    rows = {f.stem: json.load(open(f)) for f in OUT.glob("*.json") if f.stem not in ("raw", "names", "analysis")}
+    base = measured_configs()
+    det_jpeg = {c.name: c for c in b.jpeg_grid(base)}
+    det_codes = {c.name: c for c in b.learned_and_joint() + b.entropy_codes()}
+    onboard = next(c for c in base if c.kind == "onboard")
+    A0 = raw["map50_95"]
+
+    def opt(c, r, **kw):   # an option with this run's payload and accuracy, deltas against the raw frames
+        return replace(c, payload_bytes=r["payload_bytes_mean"], map50_95=r["map50_95"], map50=r["map50"],
+                       delta_map50_95=r["map50_95"] - A0, **kw)
+    jp = {r["option"]: r for k, r in rows.items() if k.startswith("jpeg_q")}
+    tuned = {r["option"]: r for k, r in rows.items() if k.startswith("tuned_jpeg_q")}
+    vids = {k: r for k, r in rows.items() if "_crf" in k}
+    codes = {r["option"]: r for k, r in rows.items() if k.startswith("code_")}
+    q50 = jp["jpeg_q50"]
+
+    def image_family(mode, which, best_tuned=False):
+        out = []
+        if which in ("jpeg", "both"):
+            for n, r in jp.items():
+                c = det_jpeg[n]
+                if best_tuned and n in tuned and tuned[n]["map50_95"] > r["map50_95"]:
+                    r = {**r, "map50_95": tuned[n]["map50_95"], "map50": tuned[n]["map50"]}
+                out.append(opt(c, r, host_edge_proc_ms=r["encode_ms_median"] if mode == "scaled" else 0.0,
+                               cloud_ms=c.cloud_ms - q50["decode_ms_median"] + r["decode_ms_median"]))
+        if which in ("video", "both"):
+            proto = det_jpeg["jpeg_q50"]
+            for n, r in vids.items():
+                if r["codec"] == "h264_nvenc" and mode == "scaled":
+                    continue
+                out.append(opt(proto, r, name=n, dtype=n,
+                               host_edge_proc_ms=r["encode_ms_per_frame"] if mode == "scaled" else 0.0,
+                               cloud_ms=proto.cloud_ms - q50["decode_ms_median"] + r["decode_ms_per_frame"]))
+        return out
+    splits = [opt(det_codes[n], r) for n, r in codes.items() if n in det_codes]
+    others = [opt(onboard, raw | {"payload_bytes_mean": 0.0})] + splits
+    res = {"frames": raw["num_images"], "raw_map50_95": A0, "method": cmd_analyse.__doc__, "cases": {}}
+    for mode in ("scaled", "free"):
+        for which in ("jpeg", "video", "both"):
+            for bt in ((False, True) if tuned and which != "video" else (False,)):
+                key = f"{which}_{mode}" + ("_best_of_both" if bt else "")
+                fam_ = image_family(mode, which, bt)
+                ar, viol, checked, wins = b.analyse(fam_, others)
+                res["cases"][key] = {"rows": ar, "violations": viol, "wins_checked": checked, "wins_total": wins,
+                                     "image_options": [c.name for c in fam_]}
+                print(f"{key:28s} wins {wins:4d} exceptions {len(viol)}", flush=True)
+    # rate-accuracy: the bytes each family needs for the accuracy of each JPEG quality (lower envelope of each family)
+    env = {}
+    fams = {"jpeg": list(jp.values())} | {f: [r for r in vids.values() if r["family"] == f] for f in VIDEO}
+    for f, rs in fams.items():
+        env[f] = {}
+        for qn, rq in sorted(jp.items(), key=lambda kv: kv[1]["q"]):
+            ok = [r["payload_bytes_mean"] for r in rs if r["map50_95"] >= rq["map50_95"]]
+            env[f][qn] = min(ok) if ok else None
+    res["bytes_for_jpeg_accuracy"] = env
+    json.dump(res, open(OUT / "analysis.json", "w"), indent=1)
+    by = lambda key: {(r["device"], r["code"]): r for r in res["cases"][key]["rows"]}
+    m = {"VcFrames": str(raw["num_images"]), "VcRawMap": f"{A0:.3f}", "VcSeqs": str(len(sequences()))}
+    pi = "Pi 5 (throttled)"
+    for tag, key in (("Jpeg", "jpeg_scaled"), ("Video", "video_scaled"), ("Both", "both_scaled"),
+                     ("BothFree", "both_free"), ("JpegTuned", "jpeg_scaled_best_of_both"),
+                     ("BothTuned", "both_scaled_best_of_both")):
+        if key not in res["cases"]:
+            continue
+        r_ = by(key)
+        c = res["cases"][key]
+        m[f"Vc{tag}Wins"], m[f"Vc{tag}Exc"] = str(c["wins_total"]), str(len(c["violations"]))
+        for dn, dev in (("Pi", pi), ("Fast", "Jetson Orin Nano")):
+            for cn, code in (("Joint", "joint_k4_c4_w128_d2"), ("Frozen", "learned_k4_c4_w128_d2")):
+                r = r_.get((dev, code))
+                if r is None:
+                    continue
+                m[f"Vc{tag}{cn}{dn}Be"] = "--" if r["b_be_mbps"] is None else f"{r['b_be_mbps']:.2f}"
+                m[f"Vc{tag}{cn}{dn}Qstar"] = str(r["q_star"]).replace("jpeg_q", "Q").replace("_", " ")
+                m[f"Vc{tag}{cn}{dn}Win"] = "--" if r["max_win_mbps"] is None else f"{r['max_win_mbps']:.2f}"
+    for f in VIDEO:      # median byte saving over JPEG at equal accuracy, across the JPEG qualities each family reaches
+        sv = [1 - env[f][q] / env["jpeg"][q] for q in env["jpeg"] if env[f].get(q) and env["jpeg"][q]]
+        m["VcSave" + {"x264_ultrafast": "HtfUltra", "x264_medium": "HtfMedium", "x265_ultrafast": "HfvUltra",
+                      "x265_medium": "HfvMedium", "nvenc": "Nvenc"}[f]] = \
+            f"{100 * float(np.median(sv)):.0f}" if sv else "--"
+    (OUT / "video_metrics.tex").write_text("% Generated by evaluation/video_codecs.py analyse -- do not edit.\n"
+                                          + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
+    for k, v in m.items():
+        print(k, v)
+
+
 def cmd_raw(a):
     res = evaluate("raw", "vc_raw")
     row = {"option": "raw", "map50_95": res["map50_95"], "map50": res["map50"], "num_images": res["num_images"]}
@@ -285,8 +451,12 @@ def main():
     v.add_argument("--only", nargs="+")
     v.add_argument("--crf", type=int, nargs="+")
     sub.add_parser("codes")
+    t = sub.add_parser("jpeg_tuned")
+    t.add_argument("--q", type=int, nargs="+")
+    sub.add_parser("analyse")
     a = ap.parse_args()
-    {"prepare": cmd_prepare, "raw": cmd_raw, "jpeg": cmd_jpeg, "video": cmd_video, "codes": cmd_codes}[a.cmd](a)
+    {"prepare": cmd_prepare, "raw": cmd_raw, "jpeg": cmd_jpeg, "video": cmd_video, "codes": cmd_codes,
+     "jpeg_tuned": cmd_jpeg_tuned, "analyse": cmd_analyse}[a.cmd](a)
 
 
 if __name__ == "__main__":

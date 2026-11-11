@@ -44,6 +44,22 @@ OUT = REPO / "experiments" / "results" / "learned_bottleneck"
 CKPT = REPO / "weights" / "learned_bottleneck"
 NECK = (15, 18, 21)
 N_HOLD = 471
+DET = "yolov8s_visdrone"        # the detector's tag in cache names; --detector changes it (second detector, P1-4)
+
+
+def use_detector(name):
+    """Point the script at another VisDrone detector (roadmap P1-4, 11 Nov 2026): its weights, the inputs of its
+    Detect head as the distillation targets, and separate result, checkpoint and cache names. yolov8s (the default)
+    leaves every path and name as it was."""
+    global WEIGHTS, OUT, CKPT, NECK, DET
+    if name == "yolov8s":
+        return
+    from ultralytics import YOLO
+    WEIGHTS = REPO / "weights" / f"{name}_visdrone.pt"
+    NECK = tuple(YOLO(str(WEIGHTS)).model.model[-1].f)
+    OUT = REPO / "experiments" / "results" / "second_detector" / name / "learned_bottleneck"
+    CKPT = REPO / "weights" / f"learned_bottleneck_{name}"
+    DET = f"{name}_visdrone"
 
 
 def conv(ci, co, k=3, s=1):
@@ -242,10 +258,10 @@ def cmd_eval(a):
                 rec.append(r.to(out.dtype))
             return torch.cat(rec)
 
-    base = run_validation(yolo, "visdrone_val", dev, name="lb_base_yolov8s_visdrone_full_fp32")
+    base = run_validation(yolo, "visdrone_val", dev, name=f"lb_base_{DET}_full_fp32")
     h = yolo.model.model[a.cut].register_forward_hook(hook)
     try:
-        res = run_validation(yolo, "visdrone_val", dev, name=f"lb_yolov8s_visdrone_{tag(a)}", cache=False)
+        res = run_validation(yolo, "visdrone_val", dev, name=f"lb_{DET}_{tag(a)}", cache=False)
     finally:
         h.remove()
     for k in log:
@@ -269,11 +285,11 @@ def cmd_jpeg(a):
     from evaluation.benchmark_codecs import make_codec_hook
     from evaluation.detection_eval import paired_bootstrap, run_validation
     yolo = YOLO(str(WEIGHTS))
-    base = run_validation(yolo, "visdrone_val", "cuda", name="lb_base_yolov8s_visdrone_full_fp32")
+    base = run_validation(yolo, "visdrone_val", "cuda", name=f"lb_base_{DET}_full_fp32")
     OUT.mkdir(parents=True, exist_ok=True)
     for q in a.q:
         log = {"bytes": [], "pixels": [], "enc_ms": []}
-        res = run_validation(yolo, "visdrone_val", "cuda", name=f"lb_jpeg_q{q}_yolov8s_visdrone",
+        res = run_validation(yolo, "visdrone_val", "cuda", name=f"lb_jpeg_q{q}_{DET}",
                              pre_forward_hook=make_codec_hook("JPEG", q, log), cache=False)
         pb = paired_bootstrap(base, res, n_boot=a.n_boot)
         log["bytes"] = drop_warmup(log["bytes"], res["num_images"])
@@ -307,7 +323,7 @@ def cmd_posthoc(a):
 
         h = yolo.model.model[cut].register_forward_hook(hook)
         try:
-            res = run_validation(yolo, "visdrone_val", "cuda", name=f"lb_posthoc_k{cut}_bytes", cache=False)
+            res = run_validation(yolo, "visdrone_val", "cuda", name=f"lb_posthoc_k{cut}_bytes" + ("" if DET == "yolov8s_visdrone" else f"_{DET}"), cache=False)
         finally:
             h.remove()
         sizes = drop_warmup(sizes, res["num_images"])
@@ -403,6 +419,9 @@ def cmd_summary(a):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--detector", default="yolov8s", choices=["yolov8s", "yolo11s"],
+                    help="VisDrone detector (default yolov8s; yolo11s: the second detector, results under "
+                    "experiments/results/second_detector/yolo11s/)")
     sub = ap.add_subparsers(dest="cmd", required=True)
     for name in ("train", "eval"):
         p = sub.add_parser(name)
@@ -430,6 +449,7 @@ def main():
     sub.add_parser("figure")
     sub.add_parser("summary")
     a = ap.parse_args()
+    use_detector(a.detector)
     {"train": cmd_train, "eval": cmd_eval, "jpeg": cmd_jpeg, "posthoc": cmd_posthoc, "figure": cmd_figure,
      "summary": cmd_summary}[a.cmd](a)
 

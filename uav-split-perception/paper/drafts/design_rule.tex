@@ -202,6 +202,24 @@ This is what Proposition~\ref{prop:be-family} says. $B_{\mathrm{be}}$ is set by 
 matches the code's accuracy and by the device's onboard time, not by the code's own payload. A better coder
 therefore helps only below the bound.
 
+\textbf{How precise the bound is.} $B_{\mathrm{be}}$ depends on measured accuracies: the code's, and the JPEG curve's
+through the choice of the matching setting. We resampled the test frames \BeCiBoot{} times. Each resample rescored
+every option on the same frames and recomputed $B_{\mathrm{be}}$; payloads and timings were held at their means.
+\begin{itemize}
+\item For the smallest jointly trained code, the 95\,\% interval is \BeCiJointPiLo--\BeCiJointPiHi~Mbit/s on the Pi
+and \BeCiJointFastLo--\BeCiJointFastHi~Mbit/s on the Jetson. The matching setting is \BeJointPiQstar{} in
+\BeCiJointPiQShare\,\% of the resamples.
+\item For the frozen code of the same size, the Pi interval is \BeCiFrozenPiLo--\BeCiFrozenPiHi~Mbit/s, so the shift
+from joint training is larger than the resampling noise. The same holds against the tuned detector: \BeCiTunedJointPiLo--\BeCiTunedJointPiHi{}
+against \BeCiTunedFrozenPiLo~Mbit/s.
+\item For the entropy-coded code above, the Jetson interval is \BeCiEcPairFastLo--\BeCiEcPairFastHi~Mbit/s, or
+\BeCiTunedEcPairFastLo--\BeCiTunedEcPairFastHi{} against the tuned detector.
+\end{itemize}
+Across all codes and devices, the interval's width is a median \BeCiRelWidthMedian\,\% of $B_{\mathrm{be}}$ (at most
+\BeCiRelWidthMax\,\%). $B_{\mathrm{be}}$ moves in steps, since it changes only when the matching quality does. The
+frozen code against the tuned detector is matched by Q10, the grid's lowest quality, in every resample. Its interval
+is therefore a single point, and its $B_{\mathrm{be}}$ is an upper bound limited by the grid.
+
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
 \item the code's size and accuracy;
