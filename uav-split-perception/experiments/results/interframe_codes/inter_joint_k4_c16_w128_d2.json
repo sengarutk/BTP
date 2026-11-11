@@ -1,0 +1,21 @@
+{
+ "option": "joint_k4_c16_w128_d2",
+ "family": "joint",
+ "frames": 2558,
+ "keyint": 60,
+ "payload_bytes_mean": 9346.749022673965,
+ "payload_bytes_p95": 12605.15,
+ "payload_bytes_max": 14053,
+ "intra_payload_bytes_mean": 13076.062939796717,
+ "p1_intra_payload_bytes_mean": 13076.062939796717,
+ "saving_vs_intra": 0.2852015881456692,
+ "modes": {
+  "intra": 92,
+  "residual": 2466
+ },
+ "code_ms_median": 0.13312299415702,
+ "map50_95": 0.22734110528910348,
+ "map50": 0.4353768289524245,
+ "p1_map50_95": 0.22734110528910348,
+ "num_images": 2558
+}

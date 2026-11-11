@@ -1,0 +1,21 @@
+{
+ "option": "learned_k4_c8_w128_d2",
+ "family": "learned",
+ "frames": 2558,
+ "keyint": 60,
+ "payload_bytes_mean": 4698.551993745114,
+ "payload_bytes_p95": 6424.15,
+ "payload_bytes_max": 7234,
+ "intra_payload_bytes_mean": 6759.606724003127,
+ "p1_intra_payload_bytes_mean": 6759.606724003127,
+ "saving_vs_intra": 0.3049074915762895,
+ "modes": {
+  "intra": 86,
+  "residual": 2472
+ },
+ "code_ms_median": 0.06723049591528252,
+ "map50_95": 0.17897266954707977,
+ "map50": 0.36634009697866565,
+ "p1_map50_95": 0.17897266954707977,
+ "num_images": 2558
+}

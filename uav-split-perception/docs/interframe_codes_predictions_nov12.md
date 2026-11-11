@@ -29,3 +29,31 @@ Predictions:
    bytes; the added coding time is well under 1 ms. The winning cells grow only below B_be: from 204 to at most 260
    with video and JPEG together. There are 0 exceptions.
 4. Conclusion: video against video does not reverse P1-1. The joint code's B_be on the Jetson stays near 1.5 Mbit/s.
+
+## Results (12 Nov 2026, ~05:05 IST; experiments/results/interframe_codes/, video_codecs.py analyse --inter)
+
+1. **Held.** For all 12 codes the recorded intra sizes equal the P1-1 payload means exactly, and the mAP equals the
+   P1-1 row's. Every frame decoded bit-exact.
+2. **Held in direction; the range was exceeded by 2 points at the top.** Inter coding saves 26-32 % (median 29 %) over intra. The c4 joint code goes
+   from 3,292 to 2,242 bytes, a 32 % saving. Almost every frame uses the residual mode (2,465-2,509 of 2,558); the
+   dictionary mode wins on at most 5 frames. The added CPU time is 0.04-0.55 ms per frame. The saving is smaller
+   than video's over JPEG (46-91 %).
+3. **Held.** B_be is unchanged in every reported cell but one: the joint c4 code on the Pi, against video with free
+   encoding, goes from 0.16 to 0.15 Mbit/s. This comes from the added coding time, which raises the code's frame time
+   m_k and so lowers b_q/m_k.
+
+   | Image family | Winning cells (intra, P1-1) | Winning cells (inter) |
+   |---|---|---|
+   | JPEG | 1,118 | 1,338 |
+   | Video + JPEG | 204 | 260 (the predicted maximum) |
+   | Video + JPEG, tuned detector | 168 | 214 |
+   | Free encoding | 64 | 81 |
+
+   There are 0 exceptions in every case.
+4. **Held.** Video against video does not reverse P1-1. The joint c4 code's B_be against video + JPEG stays 1.51 Mbit/s
+   on the Jetson and 1.06 on the Pi. Smaller codes add wins only below B_be, which the rule predicts: B_be bounds a
+   win by the image side's bytes, not the code's.
+
+Not inter-coded: the entropy-coded codes (their learned prior is for intra symbols; a residual prior would need
+training). They stay intra in the --inter analysis. Reproducibility: a plain analyse afterwards gives an unchanged
+video_metrics.tex.

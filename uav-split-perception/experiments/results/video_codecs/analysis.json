@@ -24472,6 +24472,7 @@
    ]
   }
  },
+ "inter_coded": [],
  "bytes_for_jpeg_accuracy": {
   "jpeg": {
    "jpeg_q10": 10120.388975762315,

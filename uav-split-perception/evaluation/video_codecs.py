@@ -350,7 +350,7 @@ def cmd_analyse(a):
     from evaluation import break_even_rule as b
     from evaluation.learned_bottleneck_system import measured_configs
     raw = json.load(open(OUT / "raw.json"))
-    rows = {f.stem: json.load(open(f)) for f in OUT.glob("*.json") if f.stem not in ("raw", "names", "analysis")}
+    rows = {f.stem: json.load(open(f)) for f in OUT.glob("*.json") if f.stem not in ("raw", "names", "analysis", "analysis_inter")}
     base = measured_configs()
     det_jpeg = {c.name: c for c in b.jpeg_grid(base)}
     det_codes = {c.name: c for c in b.learned_and_joint() + b.entropy_codes()}
@@ -365,17 +365,24 @@ def cmd_analyse(a):
     vids = {k: r for k, r in rows.items() if "_crf" in k}
     codes = {r["option"]: r for k, r in rows.items() if k.startswith("code_")}
     q50 = jp["jpeg_q50"]
+    rois = {f.stem: json.load(open(f)) for f in (REPO / "experiments" / "results" / "roi_jpeg").glob("roi_*.json")}
 
     def image_family(mode, which, best_tuned=False):
         out = []
-        if which in ("jpeg", "both"):
+        if which in ("jpeg", "both", "jpegroi", "all"):
             for n, r in jp.items():
                 c = det_jpeg[n]
                 if best_tuned and n in tuned and tuned[n]["map50_95"] > r["map50_95"]:
                     r = {**r, "map50_95": tuned[n]["map50_95"], "map50": tuned[n]["map50"]}
                 out.append(opt(c, r, host_edge_proc_ms=r["encode_ms_median"] if mode == "scaled" else 0.0,
                                cloud_ms=c.cloud_ms - q50["decode_ms_median"] + r["decode_ms_median"]))
-        if which in ("video", "both"):
+        if which in ("jpegroi", "all"):      # P1-9: ROI JPEG with server feedback (evaluation/roi_jpeg.py)
+            proto = det_jpeg["jpeg_q50"]
+            for n, r in rois.items():
+                out.append(opt(proto, r, name=n, dtype=n,
+                               host_edge_proc_ms=r["encode_ms_median"] if mode == "scaled" else 0.0,
+                               cloud_ms=proto.cloud_ms - q50["decode_ms_median"] + r["decode_ms_median"]))
+        if which in ("video", "both", "all"):
             proto = det_jpeg["jpeg_q50"]
             for n, r in vids.items():
                 if r["codec"] == "h264_nvenc" and mode == "scaled":
@@ -384,12 +391,23 @@ def cmd_analyse(a):
                                host_edge_proc_ms=r["encode_ms_per_frame"] if mode == "scaled" else 0.0,
                                cloud_ms=proto.cloud_ms - q50["decode_ms_median"] + r["decode_ms_per_frame"]))
         return out
-    splits = [opt(det_codes[n], r) for n, r in codes.items() if n in det_codes]
+    inter = {}
+    if getattr(a, "inter", False):     # P1-10: the codes coded against the previous frame (evaluation/interframe_codes.py)
+        for f in (REPO / "experiments" / "results" / "interframe_codes").glob("inter_*.json"):
+            r = json.load(open(f))
+            inter[r["option"]] = r
+        codes = {n: (r | {"payload_bytes_mean": inter[n]["payload_bytes_mean"]} if n in inter else r)
+                 for n, r in codes.items()}
+    # the inter coder's CPU time (all three candidates, per frame) is added to the code's onboard processing time
+    splits = [opt(det_codes[n], r, **({"host_edge_proc_ms": det_codes[n].host_edge_proc_ms
+                                       + inter[n]["code_ms_median"]} if n in inter else {}))
+              for n, r in codes.items() if n in det_codes]
     others = [opt(onboard, raw | {"payload_bytes_mean": 0.0})] + splits
-    res = {"frames": raw["num_images"], "raw_map50_95": A0, "method": cmd_analyse.__doc__, "cases": {}}
+    res = {"frames": raw["num_images"], "raw_map50_95": A0, "method": cmd_analyse.__doc__, "cases": {},
+           "inter_coded": sorted(inter)}
     for mode in ("scaled", "free"):
-        for which in ("jpeg", "video", "both"):
-            for bt in ((False, True) if tuned and which != "video" else (False,)):
+        for which in ("jpeg", "video", "both") + (("jpegroi", "all") if rois else ()):
+            for bt in ((False, True) if tuned and which in ("jpeg", "both") else (False,)):
                 key = f"{which}_{mode}" + ("_best_of_both" if bt else "")
                 fam_ = image_family(mode, which, bt)
                 ar, viol, checked, wins = b.analyse(fam_, others)
@@ -399,19 +417,23 @@ def cmd_analyse(a):
     # rate-accuracy: the bytes each family needs for the accuracy of each JPEG quality (lower envelope of each family)
     env = {}
     fams = {"jpeg": list(jp.values())} | {f: [r for r in vids.values() if r["family"] == f] for f in VIDEO}
+    if rois:
+        fams["roi"] = list(rois.values())
     for f, rs in fams.items():
         env[f] = {}
         for qn, rq in sorted(jp.items(), key=lambda kv: kv[1]["q"]):
             ok = [r["payload_bytes_mean"] for r in rs if r["map50_95"] >= rq["map50_95"]]
             env[f][qn] = min(ok) if ok else None
     res["bytes_for_jpeg_accuracy"] = env
-    json.dump(res, open(OUT / "analysis.json", "w"), indent=1)
+    sfx = "_inter" if inter else ""
+    json.dump(res, open(OUT / f"analysis{sfx}.json", "w"), indent=1)
     by = lambda key: {(r["device"], r["code"]): r for r in res["cases"][key]["rows"]}
     m = {"VcFrames": str(raw["num_images"]), "VcRawMap": f"{A0:.3f}", "VcSeqs": str(len(sequences()))}
     pi = "Pi 5 (throttled)"
     for tag, key in (("Jpeg", "jpeg_scaled"), ("Video", "video_scaled"), ("Both", "both_scaled"),
                      ("BothFree", "both_free"), ("JpegTuned", "jpeg_scaled_best_of_both"),
-                     ("BothTuned", "both_scaled_best_of_both")):
+                     ("BothTuned", "both_scaled_best_of_both"), ("JpegRoi", "jpegroi_scaled"),
+                     ("All", "all_scaled"), ("AllFree", "all_free")):
         if key not in res["cases"]:
             continue
         r_ = by(key)
@@ -425,13 +447,31 @@ def cmd_analyse(a):
                 m[f"Vc{tag}{cn}{dn}Be"] = "--" if r["b_be_mbps"] is None else f"{r['b_be_mbps']:.2f}"
                 m[f"Vc{tag}{cn}{dn}Qstar"] = str(r["q_star"]).replace("jpeg_q", "Q").replace("_", " ")
                 m[f"Vc{tag}{cn}{dn}Win"] = "--" if r["max_win_mbps"] is None else f"{r['max_win_mbps']:.2f}"
+    if rois:
+        sv = [1 - env["roi"][q] / env["jpeg"][q] for q in env["jpeg"] if env["roi"].get(q) and env["jpeg"][q]]
+        m["VcSaveRoi"] = f"{100 * float(np.median(sv)):.0f}" if sv else "--"
+        m["VcSaveRoiMax"] = f"{100 * max(sv):.0f}" if sv else "--"
+        m["VcRoiArea"] = f"{100 * float(np.mean([r['roi_area_mean'] for r in rois.values()])):.0f}"
+        m["VcRoiMapMax"] = f"{max(r['map50_95'] for r in rois.values()):.3f}"
+        m["VcRoiEncRatio"] = f"{float(np.median([r['encode_ms_median'] for r in rois.values()])) / q50['encode_ms_median']:.1f}"
     for f in VIDEO:      # median byte saving over JPEG at equal accuracy, across the JPEG qualities each family reaches
         sv = [1 - env[f][q] / env["jpeg"][q] for q in env["jpeg"] if env[f].get(q) and env["jpeg"][q]]
         m["VcSave" + {"x264_ultrafast": "HtfUltra", "x264_medium": "HtfMedium", "x265_ultrafast": "HfvUltra",
                       "x265_medium": "HfvMedium", "nvenc": "Nvenc"}[f]] = \
             f"{100 * float(np.median(sv)):.0f}" if sv else "--"
-    (OUT / "video_metrics.tex").write_text("% Generated by evaluation/video_codecs.py analyse -- do not edit.\n"
-                                          + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
+    if inter:     # the same macros with prefix Vi, and the inter coder's byte savings over intra
+        m = {"Vi" + k[2:]: v for k, v in m.items()}
+        sv = {n: r["saving_vs_intra"] for n, r in inter.items() if n in det_codes}
+        m["ViSaveMin"], m["ViSaveMax"] = f"{100 * min(sv.values()):.0f}", f"{100 * max(sv.values()):.0f}"
+        m["ViSaveMedian"] = f"{100 * float(np.median(list(sv.values()))):.0f}"
+        m["ViCodes"] = str(len(sv))
+        for cn, code in (("Joint", "joint_k4_c4_w128_d2"), ("Frozen", "learned_k4_c4_w128_d2")):
+            if code in sv:
+                m[f"Vi{cn}Save"] = f"{100 * sv[code]:.0f}"
+        m["ViCodeMsMax"] = f"{max(r['code_ms_median'] for r in inter.values()):.2f}"
+    (OUT / f"video{sfx}_metrics.tex").write_text("% Generated by evaluation/video_codecs.py analyse"
+                                                + (" --inter" if inter else "") + " -- do not edit.\n"
+                                                + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
     for k, v in m.items():
         print(k, v)
 
@@ -457,7 +497,8 @@ def main():
     sub.add_parser("codes")
     t = sub.add_parser("jpeg_tuned")
     t.add_argument("--q", type=int, nargs="+")
-    sub.add_parser("analyse")
+    an = sub.add_parser("analyse")
+    an.add_argument("--inter", action="store_true", help="codes coded against the previous frame (P1-10)")
     a = ap.parse_args()
     {"prepare": cmd_prepare, "raw": cmd_raw, "jpeg": cmd_jpeg, "video": cmd_video, "codes": cmd_codes,
      "jpeg_tuned": cmd_jpeg_tuned, "analyse": cmd_analyse}[a.cmd](a)
