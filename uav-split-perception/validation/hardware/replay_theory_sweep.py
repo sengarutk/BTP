@@ -50,14 +50,19 @@ SWEEP = {**{f"th_eta{v:g}": {"mu_step": v} for v in ETAS if v != 0.1},
          # addendum 4: the price cap at +10 C, and a self-calibrating budget (P2-6), both with the capped hold
          "th_hold78_amb5": {"hold_max_c": 78.0, "ambient_c": 5.0},
          **{f"th_hold78_amb10_cap{m}": {"hold_max_c": 78.0, "ambient_c": 10.0, "mu_max": float(m)} for m in (10, 20, 50)},
-         **{f"th_adapt_amb{d}": {"hold_max_c": 78.0, "ambient_c": float(d), "budget_rule": BUDGET_RULE} for d in (0, 5, 10)}}
+         **{f"th_adapt_amb{d}": {"hold_max_c": 78.0, "ambient_c": float(d), "budget_rule": BUDGET_RULE} for d in (0, 5, 10)},
+         # addendum 5: the adaptive budget with a raised price cap; the hard guard (Theorem 3) from the lab to +15 C
+         **{f"th_adapt_amb{d}_cap50": {"hold_max_c": 78.0, "ambient_c": float(d), "budget_rule": BUDGET_RULE,
+                                       "mu_max": 50.0} for d in (5, 10)},
+         "th_hold78_amb15": {"hold_max_c": 78.0, "ambient_c": 15.0},
+         **{f"th_guard_amb{d}": {"hold_max_c": 78.0, "ambient_c": float(d), "guard_hard_c": 78.0} for d in (0, 5, 10, 15)}}
 DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0, "no_exempt": False, "hold_max_c": 85.0, "mu_max": 5.0}
 for name, ov in SWEEP.items():
     R.POLICIES[name] = dict(BASE, **ov)
 ETA_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["mu_step"]]
 BUDGET_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["energy"]]
 AMB_POLS = [n for n in SWEEP if n.startswith("th_amb")]
-HOLD_POLS = [n for n in SWEEP if n.startswith(("th_nohold", "th_hold78", "th_adapt"))]
+HOLD_POLS = [n for n in SWEEP if n.startswith(("th_nohold", "th_hold78", "th_adapt", "th_guard"))]
 METRICS = ("sAP", "pi_w", "temp_mean_c", "temp_max_c", "hot_share", "fresh_share")
 
 

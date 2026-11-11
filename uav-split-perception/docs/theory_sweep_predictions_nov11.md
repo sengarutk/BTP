@@ -84,3 +84,31 @@ and th_hold78_amb10. 24-min missions, seeds 1-5.
     at +5 and +10 C lowers the budget (to ~2.4 and ~2.0 W, clipped at 2.2) and the hot time below th_hold78_amb5 and
     th_hold78_amb10. If the board's floor power (idle + forecaster + radio, ~2.4 W) already exceeds the budget at +10 C,
     the hot time stays high and we say so: no budget can then help, only less onboard work or cooling.
+
+Results of addendum 4 (11 Nov 2026, 20:50 IST). 9: partly right. A higher cap lowers the hot time at +10 C (57 % -> 42 %,
+sAP 0.045 vs 0.046), but caps 10, 20 and 50 give identical runs: the price never passes 7.0, so any cap above 7 is
+the same. The cost is freshness (98.7 % -> 89.4 %). 42 % is still hot because the 2.8 W budget itself is too high at
++10 C: the plant (34.4 C + 12.73 C/W x P + 10 C) crosses 80 C at 2.81 W. 10: in the lab right (budget 2.65 W, hot 0 %,
+sAP 0.047 vs 0.046). At +5 and +10 C the budget falls as predicted (final estimates 2.43 and 2.10 W; the estimated
+offset is 41.5 and 45.2 C against 42.3 and 47.3 C, i.e. 2 C low at +10 C, where the temperature sits at the 85 C
+limit and dT/dt reads zero), but the hot time barely moves (22.5 % vs 24.5 % at +5 C, 52.5 % vs 56.7 % at +10 C)
+because the price is at its cap of 5 in 73-74 % of the updates: the budget cannot be enforced. Both failures point to
+the same pair of changes, tested next.
+
+Addendum 5 (11 Nov 2026, 21:00 IST, before these runs): a raised cap with the adaptive budget, and the hard guard
+Replay plant (from the replay's own fit): steady temperature 34.4 C + ambient + 12.73 C/W x P. With no onboard
+inference the Pi draws its floor, idle 1.89 + forecaster 0.29 + radio ~0.2-0.3 W, about 2.45 W -> 65.6 C + ambient.
+(a) th_adapt_amb{5,10}_cap50: adaptive budget as in addendum 4, price cap 50.
+(b) th_guard_amb{0,5,10,15}: the hold capped at 78 C and the hard guard: no onboard inference while T >= 78 C
+    (guard_hard_c 78). Baseline th_hold78_amb15 (no hard guard).
+Theorem 3 (to be written in paper 2): if the floor's steady temperature is below the guard temperature, the guard
+keeps T <= 78 C plus the rise during one inference already started; the ambient margin is 78 - 65.6 = 12.4 C.
+11. th_guard: temp_max <= 78.5 C and hot share 0 % at +0, +5 and +10 C; at +15 C the floor alone reaches ~80.6 C, so
+    temp_max is 80-81.5 C and the hot share is large (most of the mission after warm-up, > 50 %), but no run reaches
+    the 85 C limit. th_hold78_amb15: hot share above th_hold78_amb10's 57 %, temp_max 85 C.
+    sAP within 0.003 of th_hold78_amb{0,5,10} (onboard share is ~6 %); freshness lower than without the guard at
+    +5 and +10 C (the guard removes onboard inference during outages), by an amount we report.
+12. th_adapt_cap50: at +5 C the budget (~2.4 W) is met within 0.15 W and the hot share falls below th_adapt_amb5's
+    22.5 % to near 0 (< 5 %); at +10 C the budget (~2.1 W) is below the floor, so power settles near the floor
+    (2.5-2.7 W), the temperature near 76-79 C and the hot share far below 52.5 % (< 15 %); freshness below
+    th_adapt_amb10's 97.9 %, as in the cap runs.

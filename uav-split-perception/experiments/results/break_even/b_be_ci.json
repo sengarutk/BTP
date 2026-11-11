@@ -1,0 +1,1870 @@
+{
+ "n_boot": 200,
+ "images": 548,
+ "method": "B_be (Proposition prop:be-family, break_even_rule.analyse) depends on measured accuracies: the code's A_k and, through\nthe choice of the matching JPEG setting q*, the JPEG curve. Both are estimates on the 548 VisDrone-DET val frames.\nHere each bootstrap resample draws the images once and recomputes the mAP of every option on that same resample (so\nthe options stay paired, as in detection_eval.paired_bootstrap), then recomputes q* and B_be for every code and device.\nPayloads and timings are held at their measured means (their sampling error is far smaller: payloads are means over\n548 frames, timings medians of 50 runs).",
+ "rows": [
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.935,
+   "q_star_counts": {
+    "jpeg_q80": 187,
+    "jpeg_q85": 9,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 7.782891678832117,
+   "q_star": "jpeg_q55",
+   "ci_low": 7.299497956204379,
+   "ci_high": 9.124329635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.615,
+   "q_star_counts": {
+    "jpeg_q60": 58,
+    "jpeg_q55": 123,
+    "jpeg_q50": 9,
+    "jpeg_q65": 10
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 10.040935182481752,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q75": 132,
+    "jpeg_q80": 54,
+    "jpeg_q70": 14
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 4.056100729927007,
+   "q_star": "jpeg_q20",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.895,
+   "q_star_counts": {
+    "jpeg_q15": 21,
+    "jpeg_q20": 179
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 11.093669343065693,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.83,
+   "q_star_counts": {
+    "jpeg_q80": 166,
+    "jpeg_q75": 34
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 5.833522773722627,
+   "q_star": "jpeg_q35",
+   "ci_low": 5.271609635036496,
+   "ci_high": 6.308239270072993,
+   "share_defined": 1.0,
+   "q_star_share": 0.705,
+   "q_star_counts": {
+    "jpeg_q30": 47,
+    "jpeg_q35": 141,
+    "jpeg_q40": 9,
+    "jpeg_q25": 3
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q80": 64,
+    "jpeg_q85": 132,
+    "jpeg_q90": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 10.040935182481752,
+   "q_star": "jpeg_q70",
+   "ci_low": 9.124329635036496,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q65": 58,
+    "jpeg_q70": 117,
+    "jpeg_q75": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 26.17448233576642,
+   "q_star": "jpeg_q95",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 5.833522773722627,
+   "q_star": "jpeg_q35",
+   "ci_low": 5.271609635036496,
+   "ci_high": 6.308239270072993,
+   "share_defined": 1.0,
+   "q_star_share": 0.73,
+   "q_star_counts": {
+    "jpeg_q30": 24,
+    "jpeg_q35": 146,
+    "jpeg_q40": 26,
+    "jpeg_q45": 3,
+    "jpeg_q25": 1
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 11.093669343065693,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.765,
+   "q_star_counts": {
+    "jpeg_q80": 153,
+    "jpeg_q75": 47
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 10.040935182481752,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q75": 144,
+    "jpeg_q70": 17,
+    "jpeg_q80": 39
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 7.782891678832117,
+   "q_star": "jpeg_q55",
+   "ci_low": 7.299497956204379,
+   "ci_high": 9.124329635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.71,
+   "q_star_counts": {
+    "jpeg_q55": 142,
+    "jpeg_q60": 45,
+    "jpeg_q65": 6,
+    "jpeg_q50": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 4.686896934306569,
+   "q_star": "jpeg_q25",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.271609635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.745,
+   "q_star_counts": {
+    "jpeg_q25": 149,
+    "jpeg_q30": 49,
+    "jpeg_q35": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 3.3797084671532844,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q15": 200
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.935,
+   "q_star_counts": {
+    "jpeg_q80": 187,
+    "jpeg_q85": 9,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 7.782891678832117,
+   "q_star": "jpeg_q55",
+   "ci_low": 7.299497956204379,
+   "ci_high": 9.124329635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.615,
+   "q_star_counts": {
+    "jpeg_q60": 58,
+    "jpeg_q55": 123,
+    "jpeg_q50": 9,
+    "jpeg_q65": 10
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 10.040935182481752,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q75": 132,
+    "jpeg_q80": 54,
+    "jpeg_q70": 14
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 4.056100729927007,
+   "q_star": "jpeg_q20",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.895,
+   "q_star_counts": {
+    "jpeg_q15": 21,
+    "jpeg_q20": 179
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 11.093669343065693,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.83,
+   "q_star_counts": {
+    "jpeg_q80": 166,
+    "jpeg_q75": 34
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 5.833522773722627,
+   "q_star": "jpeg_q35",
+   "ci_low": 5.271609635036496,
+   "ci_high": 6.308239270072993,
+   "share_defined": 1.0,
+   "q_star_share": 0.705,
+   "q_star_counts": {
+    "jpeg_q30": 47,
+    "jpeg_q35": 141,
+    "jpeg_q40": 9,
+    "jpeg_q25": 3
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q80": 64,
+    "jpeg_q85": 132,
+    "jpeg_q90": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 10.040935182481752,
+   "q_star": "jpeg_q70",
+   "ci_low": 9.124329635036496,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q65": 58,
+    "jpeg_q70": 117,
+    "jpeg_q75": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 26.17448233576642,
+   "q_star": "jpeg_q95",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 5.833522773722627,
+   "q_star": "jpeg_q35",
+   "ci_low": 5.271609635036496,
+   "ci_high": 6.308239270072993,
+   "share_defined": 1.0,
+   "q_star_share": 0.73,
+   "q_star_counts": {
+    "jpeg_q30": 24,
+    "jpeg_q35": 146,
+    "jpeg_q40": 26,
+    "jpeg_q45": 3,
+    "jpeg_q25": 1
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 11.093669343065693,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.765,
+   "q_star_counts": {
+    "jpeg_q80": 153,
+    "jpeg_q75": 47
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 10.040935182481752,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q75": 144,
+    "jpeg_q70": 17,
+    "jpeg_q80": 39
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 7.782891678832117,
+   "q_star": "jpeg_q55",
+   "ci_low": 7.299497956204379,
+   "ci_high": 9.124329635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.71,
+   "q_star_counts": {
+    "jpeg_q55": 142,
+    "jpeg_q60": 45,
+    "jpeg_q65": 6,
+    "jpeg_q50": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 4.686896934306569,
+   "q_star": "jpeg_q25",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.271609635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.745,
+   "q_star_counts": {
+    "jpeg_q25": 149,
+    "jpeg_q30": 49,
+    "jpeg_q35": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 3.3797084671532844,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q15": 200
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 5.07557531200452,
+   "q_star": "jpeg_q90",
+   "ci_low": 5.07557531200452,
+   "ci_high": 7.117731246550066,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 3.6730643364156346,
+   "q_star": "jpeg_q80",
+   "ci_low": 3.6730643364156346,
+   "ci_high": 4.3182316392749165,
+   "share_defined": 1.0,
+   "q_star_share": 0.935,
+   "q_star_counts": {
+    "jpeg_q80": 187,
+    "jpeg_q85": 9,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 1.5654472198511815,
+   "q_star": "jpeg_q55",
+   "ci_low": 1.4617053500412132,
+   "ci_high": 1.8517636131344037,
+   "share_defined": 1.0,
+   "q_star_share": 0.615,
+   "q_star_counts": {
+    "jpeg_q60": 58,
+    "jpeg_q55": 123,
+    "jpeg_q50": 9,
+    "jpeg_q65": 10
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q90",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 2.2718624759198964,
+   "q_star": "jpeg_q75",
+   "ci_low": 2.0469886565606834,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q75": 132,
+    "jpeg_q80": 54,
+    "jpeg_q70": 14
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q90",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 0.812223549182726,
+   "q_star": "jpeg_q20",
+   "ci_low": 0.676777769876428,
+   "ci_high": 0.812223549182726,
+   "share_defined": 1.0,
+   "q_star_share": 0.895,
+   "q_star_counts": {
+    "jpeg_q15": 21,
+    "jpeg_q20": 179
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 2.6472500410386766,
+   "q_star": "jpeg_q80",
+   "ci_low": 2.2718624759198964,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.83,
+   "q_star_counts": {
+    "jpeg_q80": 166,
+    "jpeg_q75": 34
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 1.1681476587975463,
+   "q_star": "jpeg_q35",
+   "ci_low": 1.055626024295568,
+   "ci_high": 1.2632083940195293,
+   "share_defined": 1.0,
+   "q_star_share": 0.705,
+   "q_star_counts": {
+    "jpeg_q30": 47,
+    "jpeg_q35": 141,
+    "jpeg_q40": 9,
+    "jpeg_q25": 3
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 3.16700743415615,
+   "q_star": "jpeg_q85",
+   "ci_low": 2.6472500410386766,
+   "ci_high": 3.16700743415615,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 4.3182316392749165,
+   "q_star": "jpeg_q85",
+   "ci_low": 3.6730643364156346,
+   "ci_high": 4.3182316392749165,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q80": 64,
+    "jpeg_q85": 132,
+    "jpeg_q90": 4
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 2.0469886565606834,
+   "q_star": "jpeg_q70",
+   "ci_low": 1.8517636131344037,
+   "ci_high": 2.2718624759198964,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q65": 58,
+    "jpeg_q70": 117,
+    "jpeg_q75": 25
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 5.782101231966782,
+   "q_star": "jpeg_q95",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 1.1681476587975463,
+   "q_star": "jpeg_q35",
+   "ci_low": 1.055626024295568,
+   "ci_high": 1.2632083940195293,
+   "share_defined": 1.0,
+   "q_star_share": 0.73,
+   "q_star_counts": {
+    "jpeg_q30": 24,
+    "jpeg_q35": 146,
+    "jpeg_q40": 26,
+    "jpeg_q45": 3,
+    "jpeg_q25": 1
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 2.6472500410386766,
+   "q_star": "jpeg_q80",
+   "ci_low": 2.2718624759198964,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.765,
+   "q_star_counts": {
+    "jpeg_q80": 153,
+    "jpeg_q75": 47
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 2.2718624759198964,
+   "q_star": "jpeg_q75",
+   "ci_low": 2.0469886565606834,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q75": 144,
+    "jpeg_q70": 17,
+    "jpeg_q80": 39
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 1.5654472198511815,
+   "q_star": "jpeg_q55",
+   "ci_low": 1.4617053500412132,
+   "ci_high": 1.8517636131344037,
+   "share_defined": 1.0,
+   "q_star_share": 0.71,
+   "q_star_counts": {
+    "jpeg_q55": 142,
+    "jpeg_q60": 45,
+    "jpeg_q65": 6,
+    "jpeg_q50": 7
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 0.9385388372010737,
+   "q_star": "jpeg_q25",
+   "ci_low": 0.9385388372010737,
+   "ci_high": 1.055626024295568,
+   "share_defined": 1.0,
+   "q_star_share": 0.745,
+   "q_star_counts": {
+    "jpeg_q25": 149,
+    "jpeg_q30": 49,
+    "jpeg_q35": 2
+   }
+  },
+  {
+   "detector": "untuned",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 0.676777769876428,
+   "q_star": "jpeg_q15",
+   "ci_low": 0.676777769876428,
+   "ci_high": 0.676777769876428,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q15": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 9.124329635036496,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.625,
+   "q_star_counts": {
+    "jpeg_q75": 27,
+    "jpeg_q80": 125,
+    "jpeg_q70": 27,
+    "jpeg_q85": 9,
+    "jpeg_q65": 11,
+    "jpeg_q60": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 5.271609635036496,
+   "q_star": "jpeg_q30",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.833522773722627,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q30": 132,
+    "jpeg_q35": 12,
+    "jpeg_q25": 54,
+    "jpeg_q40": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 9.124329635036496,
+   "q_star": "jpeg_q65",
+   "ci_low": 6.835269197080292,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.295,
+   "q_star_counts": {
+    "jpeg_q65": 53,
+    "jpeg_q70": 46,
+    "jpeg_q60": 26,
+    "jpeg_q55": 59,
+    "jpeg_q45": 6,
+    "jpeg_q50": 3,
+    "jpeg_q80": 3,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 2.6331687591240875,
+   "q_star": "jpeg_q10",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 2.6331687591240875,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 8.383864379562045,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q80": 56,
+    "jpeg_q75": 47,
+    "jpeg_q70": 70,
+    "jpeg_q55": 3,
+    "jpeg_q65": 18,
+    "jpeg_q45": 1,
+    "jpeg_q60": 5
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.87,
+   "q_star_counts": {
+    "jpeg_q15": 174,
+    "jpeg_q20": 26
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 24,
+    "jpeg_q75": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.655,
+   "q_star_counts": {
+    "jpeg_q80": 61,
+    "jpeg_q85": 131,
+    "jpeg_q90": 4,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 6.835269197080292,
+   "q_star": "jpeg_q45",
+   "ci_low": 5.833522773722627,
+   "ci_high": 7.782891678832117,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q40": 35,
+    "jpeg_q45": 117,
+    "jpeg_q35": 15,
+    "jpeg_q55": 24,
+    "jpeg_q50": 5,
+    "jpeg_q60": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 26.17448233576642,
+   "q_star": "jpeg_q95",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.78,
+   "q_star_counts": {
+    "jpeg_q15": 156,
+    "jpeg_q20": 44
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 10.040935182481752,
+   "q_star": "jpeg_q70",
+   "ci_low": 7.782891678832117,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.39,
+   "q_star_counts": {
+    "jpeg_q70": 78,
+    "jpeg_q75": 36,
+    "jpeg_q65": 33,
+    "jpeg_q55": 7,
+    "jpeg_q80": 36,
+    "jpeg_q60": 10
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 9.124329635036496,
+   "q_star": "jpeg_q65",
+   "ci_low": 6.835269197080292,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q65": 54,
+    "jpeg_q60": 26,
+    "jpeg_q55": 70,
+    "jpeg_q70": 30,
+    "jpeg_q45": 10,
+    "jpeg_q75": 4,
+    "jpeg_q50": 4,
+    "jpeg_q80": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 5.271609635036496,
+   "q_star": "jpeg_q30",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.271609635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q30": 144,
+    "jpeg_q25": 53,
+    "jpeg_q35": 3
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 3.3797084671532844,
+   "share_defined": 1.0,
+   "q_star_share": 0.915,
+   "q_star_counts": {
+    "jpeg_q10": 17,
+    "jpeg_q15": 183
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "laptop GPU",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 2.6331687591240875,
+   "q_star": "jpeg_q10",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 2.6331687591240875,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 12.706950656934305,
+   "q_star": "jpeg_q80",
+   "ci_low": 9.124329635036496,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.625,
+   "q_star_counts": {
+    "jpeg_q75": 27,
+    "jpeg_q80": 125,
+    "jpeg_q70": 27,
+    "jpeg_q85": 9,
+    "jpeg_q65": 11,
+    "jpeg_q60": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 5.271609635036496,
+   "q_star": "jpeg_q30",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.833522773722627,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q30": 132,
+    "jpeg_q35": 12,
+    "jpeg_q25": 54,
+    "jpeg_q40": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 9.124329635036496,
+   "q_star": "jpeg_q65",
+   "ci_low": 6.835269197080292,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.295,
+   "q_star_counts": {
+    "jpeg_q65": 53,
+    "jpeg_q70": 46,
+    "jpeg_q60": 26,
+    "jpeg_q55": 59,
+    "jpeg_q45": 6,
+    "jpeg_q50": 3,
+    "jpeg_q80": 3,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 18.664733430656934,
+   "q_star": "jpeg_q90",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 2.6331687591240875,
+   "q_star": "jpeg_q10",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 2.6331687591240875,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 11.093669343065693,
+   "q_star": "jpeg_q75",
+   "ci_low": 8.383864379562045,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q80": 56,
+    "jpeg_q75": 47,
+    "jpeg_q70": 70,
+    "jpeg_q55": 3,
+    "jpeg_q65": 18,
+    "jpeg_q45": 1,
+    "jpeg_q60": 5
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.87,
+   "q_star_counts": {
+    "jpeg_q15": 174,
+    "jpeg_q20": 26
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 24,
+    "jpeg_q75": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 14.938904233576642,
+   "q_star": "jpeg_q85",
+   "ci_low": 12.706950656934305,
+   "ci_high": 14.938904233576642,
+   "share_defined": 1.0,
+   "q_star_share": 0.655,
+   "q_star_counts": {
+    "jpeg_q80": 61,
+    "jpeg_q85": 131,
+    "jpeg_q90": 4,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 6.835269197080292,
+   "q_star": "jpeg_q45",
+   "ci_low": 5.833522773722627,
+   "ci_high": 7.782891678832117,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q40": 35,
+    "jpeg_q45": 117,
+    "jpeg_q35": 15,
+    "jpeg_q55": 24,
+    "jpeg_q50": 5,
+    "jpeg_q60": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 26.17448233576642,
+   "q_star": "jpeg_q95",
+   "ci_low": 18.664733430656934,
+   "ci_high": 26.17448233576642,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 3.3797084671532844,
+   "ci_high": 4.056100729927007,
+   "share_defined": 1.0,
+   "q_star_share": 0.78,
+   "q_star_counts": {
+    "jpeg_q15": 156,
+    "jpeg_q20": 44
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 10.040935182481752,
+   "q_star": "jpeg_q70",
+   "ci_low": 7.782891678832117,
+   "ci_high": 12.706950656934305,
+   "share_defined": 1.0,
+   "q_star_share": 0.39,
+   "q_star_counts": {
+    "jpeg_q70": 78,
+    "jpeg_q75": 36,
+    "jpeg_q65": 33,
+    "jpeg_q55": 7,
+    "jpeg_q80": 36,
+    "jpeg_q60": 10
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 9.124329635036496,
+   "q_star": "jpeg_q65",
+   "ci_low": 6.835269197080292,
+   "ci_high": 11.093669343065693,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q65": 54,
+    "jpeg_q60": 26,
+    "jpeg_q55": 70,
+    "jpeg_q70": 30,
+    "jpeg_q45": 10,
+    "jpeg_q75": 4,
+    "jpeg_q50": 4,
+    "jpeg_q80": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 5.271609635036496,
+   "q_star": "jpeg_q30",
+   "ci_low": 4.686896934306569,
+   "ci_high": 5.271609635036496,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q30": 144,
+    "jpeg_q25": 53,
+    "jpeg_q35": 3
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 3.3797084671532844,
+   "q_star": "jpeg_q15",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 3.3797084671532844,
+   "share_defined": 1.0,
+   "q_star_share": 0.915,
+   "q_star_counts": {
+    "jpeg_q10": 17,
+    "jpeg_q15": 183
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Jetson Orin Nano",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 2.6331687591240875,
+   "q_star": "jpeg_q10",
+   "ci_low": 2.6331687591240875,
+   "ci_high": 2.6331687591240875,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k2_c16_w128_d2",
+   "b_be_mbps": 5.07557531200452,
+   "q_star": "jpeg_q90",
+   "ci_low": 5.07557531200452,
+   "ci_high": 7.117731246550066,
+   "share_defined": 1.0,
+   "q_star_share": 0.885,
+   "q_star_counts": {
+    "jpeg_q90": 177,
+    "jpeg_q95": 23
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k2_c8_w128_d2",
+   "b_be_mbps": 3.6730643364156346,
+   "q_star": "jpeg_q80",
+   "ci_low": 2.6374738268038986,
+   "ci_high": 4.3182316392749165,
+   "share_defined": 1.0,
+   "q_star_share": 0.625,
+   "q_star_counts": {
+    "jpeg_q75": 27,
+    "jpeg_q80": 125,
+    "jpeg_q70": 27,
+    "jpeg_q85": 9,
+    "jpeg_q65": 11,
+    "jpeg_q60": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c16_w128_d2",
+   "b_be_mbps": 1.055626024295568,
+   "q_star": "jpeg_q30",
+   "ci_low": 0.9385388372010737,
+   "ci_high": 1.1681476587975463,
+   "share_defined": 1.0,
+   "q_star_share": 0.66,
+   "q_star_counts": {
+    "jpeg_q30": 132,
+    "jpeg_q35": 12,
+    "jpeg_q25": 54,
+    "jpeg_q40": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c16_w128_s1_d2",
+   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q90",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 1.0,
+   "q_star_share": 0.965,
+   "q_star_counts": {
+    "jpeg_q90": 193,
+    "jpeg_q95": 7
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c32_w128_d2",
+   "b_be_mbps": 1.8517636131344037,
+   "q_star": "jpeg_q65",
+   "ci_low": 1.368744756733846,
+   "ci_high": 2.2718624759198964,
+   "share_defined": 1.0,
+   "q_star_share": 0.295,
+   "q_star_counts": {
+    "jpeg_q65": 53,
+    "jpeg_q70": 46,
+    "jpeg_q60": 26,
+    "jpeg_q55": 59,
+    "jpeg_q45": 6,
+    "jpeg_q50": 3,
+    "jpeg_q80": 3,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c32_w128_s1_d2",
+   "b_be_mbps": 4.02775814957451,
+   "q_star": "jpeg_q90",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 1.0,
+   "q_star_share": 0.565,
+   "q_star_counts": {
+    "jpeg_q95": 87,
+    "jpeg_q90": 113
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c4_w128_d2",
+   "b_be_mbps": 0.5272851483575777,
+   "q_star": "jpeg_q10",
+   "ci_low": 0.5272851483575777,
+   "ci_high": 0.5272851483575777,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c64_w128_d2",
+   "b_be_mbps": 2.2718624759198964,
+   "q_star": "jpeg_q75",
+   "ci_low": 1.693873239598771,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q80": 56,
+    "jpeg_q75": 47,
+    "jpeg_q70": 70,
+    "jpeg_q55": 3,
+    "jpeg_q65": 18,
+    "jpeg_q45": 1,
+    "jpeg_q60": 5
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c8_w128_d2",
+   "b_be_mbps": 0.676777769876428,
+   "q_star": "jpeg_q15",
+   "ci_low": 0.676777769876428,
+   "ci_high": 0.812223549182726,
+   "share_defined": 1.0,
+   "q_star_share": 0.87,
+   "q_star_counts": {
+    "jpeg_q15": 174,
+    "jpeg_q20": 26
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "learned_k4_c8_w128_s1_d2",
+   "b_be_mbps": 3.16700743415615,
+   "q_star": "jpeg_q85",
+   "ci_low": 2.6472500410386766,
+   "ci_high": 3.16700743415615,
+   "share_defined": 1.0,
+   "q_star_share": 0.86,
+   "q_star_counts": {
+    "jpeg_q85": 172,
+    "jpeg_q90": 3,
+    "jpeg_q80": 24,
+    "jpeg_q75": 1
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k2_c8_w128_d2",
+   "b_be_mbps": 4.3182316392749165,
+   "q_star": "jpeg_q85",
+   "ci_low": 3.6730643364156346,
+   "ci_high": 4.3182316392749165,
+   "share_defined": 1.0,
+   "q_star_share": 0.655,
+   "q_star_counts": {
+    "jpeg_q80": 61,
+    "jpeg_q85": 131,
+    "jpeg_q90": 4,
+    "jpeg_q75": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c16_w128_d2",
+   "b_be_mbps": 1.368744756733846,
+   "q_star": "jpeg_q45",
+   "ci_low": 1.1681476587975463,
+   "ci_high": 1.5654472198511815,
+   "share_defined": 1.0,
+   "q_star_share": 0.585,
+   "q_star_counts": {
+    "jpeg_q40": 35,
+    "jpeg_q45": 117,
+    "jpeg_q35": 15,
+    "jpeg_q55": 24,
+    "jpeg_q50": 5,
+    "jpeg_q60": 4
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c32_w128_s1_d2",
+   "b_be_mbps": 5.782101231966782,
+   "q_star": "jpeg_q95",
+   "ci_low": 4.02775814957451,
+   "ci_high": 5.782101231966782,
+   "share_defined": 0.99,
+   "q_star_share": 0.79,
+   "q_star_counts": {
+    "jpeg_q95": 158,
+    "jpeg_q90": 40,
+    "None": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "joint_k4_c4_w128_d2",
+   "b_be_mbps": 0.676777769876428,
+   "q_star": "jpeg_q15",
+   "ci_low": 0.676777769876428,
+   "ci_high": 0.812223549182726,
+   "share_defined": 1.0,
+   "q_star_share": 0.78,
+   "q_star_counts": {
+    "jpeg_q15": 156,
+    "jpeg_q20": 44
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.003",
+   "b_be_mbps": 2.0469886565606834,
+   "q_star": "jpeg_q70",
+   "ci_low": 1.5654472198511815,
+   "ci_high": 2.6472500410386766,
+   "share_defined": 1.0,
+   "q_star_share": 0.39,
+   "q_star_counts": {
+    "jpeg_q70": 78,
+    "jpeg_q75": 36,
+    "jpeg_q65": 33,
+    "jpeg_q55": 7,
+    "jpeg_q80": 36,
+    "jpeg_q60": 10
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.01",
+   "b_be_mbps": 1.8517636131344037,
+   "q_star": "jpeg_q65",
+   "ci_low": 1.368744756733846,
+   "ci_high": 2.2718624759198964,
+   "share_defined": 1.0,
+   "q_star_share": 0.35,
+   "q_star_counts": {
+    "jpeg_q65": 54,
+    "jpeg_q60": 26,
+    "jpeg_q55": 70,
+    "jpeg_q70": 30,
+    "jpeg_q45": 10,
+    "jpeg_q75": 4,
+    "jpeg_q50": 4,
+    "jpeg_q80": 2
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.03",
+   "b_be_mbps": 1.055626024295568,
+   "q_star": "jpeg_q30",
+   "ci_low": 0.9385388372010737,
+   "ci_high": 1.055626024295568,
+   "share_defined": 1.0,
+   "q_star_share": 0.72,
+   "q_star_counts": {
+    "jpeg_q30": 144,
+    "jpeg_q25": 53,
+    "jpeg_q35": 3
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.1",
+   "b_be_mbps": 0.676777769876428,
+   "q_star": "jpeg_q15",
+   "ci_low": 0.5272851483575777,
+   "ci_high": 0.676777769876428,
+   "share_defined": 1.0,
+   "q_star_share": 0.915,
+   "q_star_counts": {
+    "jpeg_q10": 17,
+    "jpeg_q15": 183
+   }
+  },
+  {
+   "detector": "best_of_both",
+   "device": "Pi 5 (throttled)",
+   "code": "ec_k4_c32_l0.3",
+   "b_be_mbps": 0.5272851483575777,
+   "q_star": "jpeg_q10",
+   "ci_low": 0.5272851483575777,
+   "ci_high": 0.5272851483575777,
+   "share_defined": 1.0,
+   "q_star_share": 1.0,
+   "q_star_counts": {
+    "jpeg_q10": 200
+   }
+  }
+ ]
+}

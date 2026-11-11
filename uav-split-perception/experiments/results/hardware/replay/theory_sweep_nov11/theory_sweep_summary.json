@@ -4,7 +4,8 @@
   "energy": 2.8,
   "ambient_c": 0.0,
   "no_exempt": false,
-  "hold_max_c": 85.0
+  "hold_max_c": 85.0,
+  "mu_max": 5.0
  },
  "predictions": "docs/theory_sweep_predictions_nov11.md",
  "scenarios": {
@@ -28,7 +29,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.054140255730738364,
@@ -63,7 +65,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.051962668251419174,
@@ -110,7 +113,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.05337070246378256,
@@ -157,7 +161,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.05486532262549605,
@@ -204,7 +209,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.05474805552977492,
@@ -251,7 +257,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.055049244472669775,
@@ -309,7 +316,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.0459704230680008,
@@ -344,7 +352,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04635613231921768,
@@ -391,7 +400,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04605192719945578,
@@ -438,7 +448,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04629932934896984,
@@ -485,7 +496,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.046072078260516666,
@@ -532,7 +544,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.0461769826842232,
@@ -579,7 +592,8 @@
       "energy": 2.4,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04669169363542465,
@@ -626,7 +640,8 @@
       "energy": 3.2,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04431202746472617,
@@ -673,7 +688,8 @@
       "energy": 3.6,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04310603753942379,
@@ -720,7 +736,8 @@
       "energy": 4.0,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04332024318979079,
@@ -767,7 +784,8 @@
       "energy": 4.5,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04333368129474869,
@@ -814,7 +832,8 @@
       "energy": 3.2,
       "ambient_c": 5.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04479823119302127,
@@ -861,7 +880,8 @@
       "energy": 3.6,
       "ambient_c": 5.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04467513212588321,
@@ -908,7 +928,8 @@
       "energy": 2.8,
       "ambient_c": 10.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04637243808725909,
@@ -955,7 +976,8 @@
       "energy": 3.6,
       "ambient_c": 10.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04611645690183854,
@@ -1002,7 +1024,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": true,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04581425588643638,
@@ -1049,7 +1072,8 @@
       "energy": 3.6,
       "ambient_c": 0.0,
       "no_exempt": true,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.042523990847389795,
@@ -1096,7 +1120,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 78.0
+      "hold_max_c": 78.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.0460165976903337,
@@ -1143,7 +1168,8 @@
       "energy": 2.8,
       "ambient_c": 10.0,
       "no_exempt": false,
-      "hold_max_c": 78.0
+      "hold_max_c": 78.0,
+      "mu_max": 5.0
      },
      "n": 5,
      "sAP": 0.04629776533939717,
@@ -1183,6 +1209,360 @@
       "n": 5,
       "wins": 5
      }
+    },
+    "th_hold78_amb5": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 5.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 5.0
+     },
+     "n": 5,
+     "sAP": 0.04565396834151786,
+     "pi_w": 3.3472602981054154,
+     "temp_mean_c": 78.16221873968473,
+     "temp_max_c": 85.0,
+     "hot_share": 0.24512037037037038,
+     "fresh_share": 0.9870648148148149,
+     "eta": 0.1,
+     "budget": 2.800000000000073,
+     "updates": 1439.0,
+     "mean_p_updates": 3.2578122472680797,
+     "excess": 0.4578122472680068,
+     "price_term": 0.019057605281079706,
+     "hold_term": 0.003268372326218562,
+     "cap_term": 0.4359881197053691,
+     "other_neg": 4.321818205773372e-14,
+     "mu_final": 2.74238939994737,
+     "mu_max": 5.0,
+     "held_share": 0.0018068102849200835,
+     "cap_share": 0.2835302293259208,
+     "msq": 1.1681943190170767,
+     "gap_term": 0.058409715950853834,
+     "bound": 3.2583140973127405,
+     "excess_max": 0.5267509179359853,
+     "bound_holds_all": true,
+     "onboard_share": 0.06286111111111112,
+     "sAP_minus_v41": {
+      "mean": -0.000316454726482944,
+      "ci95": 0.00013908652261971935,
+      "n": 5,
+      "wins": 0
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.06553387832921276,
+      "ci95": 0.04512039689302975,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_hold78_amb10_cap10": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 10.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 10.0
+     },
+     "n": 5,
+     "sAP": 0.04514999303801797,
+     "pi_w": 2.850322324660017,
+     "temp_mean_c": 79.6902067532635,
+     "temp_max_c": 82.97743907961598,
+     "hot_share": 0.4215324074074074,
+     "fresh_share": 0.8936527777777779,
+     "eta": 0.1,
+     "budget": 2.800000000000073,
+     "updates": 1439.0,
+     "mean_p_updates": 2.7614378564483157,
+     "excess": -0.038562143551757265,
+     "price_term": 0.029325005407388017,
+     "hold_term": 0.0,
+     "cap_term": 0.0,
+     "other_neg": 9.46464179816045e-14,
+     "mu_final": 4.219868278123135,
+     "mu_max": 6.967985875559295,
+     "held_share": 0.0,
+     "cap_share": 0.0,
+     "msq": 0.3214806418704259,
+     "gap_term": 0.016074032093521297,
+     "bound": 2.829325005407461,
+     "excess_max": -0.029619090966968464,
+     "bound_holds_all": true,
+     "onboard_share": 0.025374999999999998,
+     "sAP_minus_v41": {
+      "mean": -0.0008204300299828341,
+      "ci95": 0.00027647249998707674,
+      "n": 5,
+      "wins": 0
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.5624718517746113,
+      "ci95": 0.015684524279723947,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_hold78_amb10_cap20": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 10.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 20.0
+     },
+     "n": 5,
+     "sAP": 0.04514999303801797,
+     "pi_w": 2.850322324660017,
+     "temp_mean_c": 79.6902067532635,
+     "temp_max_c": 82.97743907961598,
+     "hot_share": 0.4215324074074074,
+     "fresh_share": 0.8936527777777779,
+     "eta": 0.1,
+     "budget": 2.800000000000073,
+     "updates": 1439.0,
+     "mean_p_updates": 2.7614378564483157,
+     "excess": -0.038562143551757265,
+     "price_term": 0.029325005407388017,
+     "hold_term": 0.0,
+     "cap_term": 0.0,
+     "other_neg": 9.46464179816045e-14,
+     "mu_final": 4.219868278123135,
+     "mu_max": 6.967985875559295,
+     "held_share": 0.0,
+     "cap_share": 0.0,
+     "msq": 0.3214806418704259,
+     "gap_term": 0.016074032093521297,
+     "bound": 2.829325005407461,
+     "excess_max": -0.029619090966968464,
+     "bound_holds_all": true,
+     "onboard_share": 0.025374999999999998,
+     "sAP_minus_v41": {
+      "mean": -0.0008204300299828341,
+      "ci95": 0.00027647249998707674,
+      "n": 5,
+      "wins": 0
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.5624718517746113,
+      "ci95": 0.015684524279723947,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_hold78_amb10_cap50": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 10.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 50.0
+     },
+     "n": 5,
+     "sAP": 0.04514999303801797,
+     "pi_w": 2.850322324660017,
+     "temp_mean_c": 79.6902067532635,
+     "temp_max_c": 82.97743907961598,
+     "hot_share": 0.4215324074074074,
+     "fresh_share": 0.8936527777777779,
+     "eta": 0.1,
+     "budget": 2.800000000000073,
+     "updates": 1439.0,
+     "mean_p_updates": 2.7614378564483157,
+     "excess": -0.038562143551757265,
+     "price_term": 0.029325005407388017,
+     "hold_term": 0.0,
+     "cap_term": 0.0,
+     "other_neg": 9.46464179816045e-14,
+     "mu_final": 4.219868278123135,
+     "mu_max": 6.967985875559295,
+     "held_share": 0.0,
+     "cap_share": 0.0,
+     "msq": 0.3214806418704259,
+     "gap_term": 0.016074032093521297,
+     "bound": 2.829325005407461,
+     "excess_max": -0.029619090966968464,
+     "bound_holds_all": true,
+     "onboard_share": 0.025374999999999998,
+     "sAP_minus_v41": {
+      "mean": -0.0008204300299828341,
+      "ci95": 0.00027647249998707674,
+      "n": 5,
+      "wins": 0
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.5624718517746113,
+      "ci95": 0.015684524279723947,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_adapt_amb0": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 0.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 5.0,
+      "budget_rule": {
+       "target_c": 68.93425508467678,
+       "lo_w": 2.2,
+       "hi_w": 4.5,
+       "smooth_s": 120.0
+      }
+     },
+     "n": 5,
+     "sAP": 0.04672493897395539,
+     "pi_w": 3.0510357468206606,
+     "temp_mean_c": 72.0593599213184,
+     "temp_max_c": 78.01650162066025,
+     "hot_share": 0.0,
+     "fresh_share": 0.9930046296296297,
+     "eta": 0.1,
+     "budget": 2.649594625611294,
+     "updates": 1439.0,
+     "mean_p_updates": 2.960982272615987,
+     "excess": 0.31138764700469296,
+     "price_term": 0.03303579225730148,
+     "hold_term": 0.16302692474012925,
+     "cap_term": 0.11574825669062432,
+     "other_neg": 6.026816280193734e-14,
+     "mu_final": 4.7538505058256835,
+     "mu_max": 5.0,
+     "held_share": 0.16997915218902016,
+     "cap_share": 0.2077831827658096,
+     "msq": 0.3783621874101758,
+     "gap_term": 0.01891810937050879,
+     "bound": 2.961405599299349,
+     "excess_max": 0.33196747102848567,
+     "bound_holds_all": true,
+     "onboard_share": 0.053328703703703705,
+     "sAP_minus_v41": {
+      "mean": 0.0007545159059545809,
+      "ci95": 0.0007113509081172352,
+      "n": 5,
+      "wins": 5
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.36175842961396737,
+      "ci95": 0.03305295798432301,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_adapt_amb5": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 5.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 5.0,
+      "budget_rule": {
+       "target_c": 68.93425508467678,
+       "lo_w": 2.2,
+       "hi_w": 4.5,
+       "smooth_s": 120.0
+      }
+     },
+     "n": 5,
+     "sAP": 0.046557587548505294,
+     "pi_w": 3.2263358702519036,
+     "temp_mean_c": 77.06718677777228,
+     "temp_max_c": 85.0,
+     "hot_share": 0.22507407407407407,
+     "fresh_share": 0.9818564814814815,
+     "eta": 0.1,
+     "budget": 2.3948798127362894,
+     "updates": 1439.0,
+     "mean_p_updates": 3.136350987313614,
+     "excess": 0.7414711745773245,
+     "price_term": 0.03474635163307853,
+     "hold_term": 0.004677718709088237,
+     "cap_term": 0.702460055799311,
+     "other_neg": 2.6718448146220014e-14,
+     "mu_final": 5.0,
+     "mu_max": 5.0,
+     "held_share": 0.0020847810979847115,
+     "cap_share": 0.7309242529534399,
+     "msq": 1.2789039315443052,
+     "gap_term": 0.06394519657721527,
+     "bound": 3.136763938877767,
+     "excess_max": 0.7742586243942635,
+     "bound_holds_all": true,
+     "onboard_share": 0.051722222222222225,
+     "sAP_minus_v41": {
+      "mean": 0.0005871644805044915,
+      "ci95": 0.00026114813846570966,
+      "n": 5,
+      "wins": 5
+     },
+     "pi_w_minus_v41": {
+      "mean": -0.18645830618272452,
+      "ci95": 0.048527343597640216,
+      "n": 5,
+      "wins": 0
+     }
+    },
+    "th_adapt_amb10": {
+     "setting": {
+      "mu_step": 0.1,
+      "energy": 2.8,
+      "ambient_c": 10.0,
+      "no_exempt": false,
+      "hold_max_c": 78.0,
+      "mu_max": 5.0,
+      "budget_rule": {
+       "target_c": 68.93425508467678,
+       "lo_w": 2.2,
+       "hi_w": 4.5,
+       "smooth_s": 120.0
+      }
+     },
+     "n": 5,
+     "sAP": 0.04622333111174633,
+     "pi_w": 3.5392642348587815,
+     "temp_mean_c": 81.21404284719874,
+     "temp_max_c": 85.0,
+     "hot_share": 0.5245740740740741,
+     "fresh_share": 0.9793842592592593,
+     "eta": 0.1,
+     "budget": 2.556624717684696,
+     "updates": 1439.0,
+     "mean_p_updates": 3.4510261930163795,
+     "excess": 0.8944014753316842,
+     "price_term": 0.03474635163307853,
+     "hold_term": 0.00048371700034709013,
+     "cap_term": 0.870363159205572,
+     "other_neg": 2.3673741461095744e-14,
+     "mu_final": 5.0,
+     "mu_max": 5.0,
+     "held_share": 0.0002779708130646282,
+     "cap_share": 0.7437109103544128,
+     "msq": 1.9542209274135096,
+     "gap_term": 0.09771104637067549,
+     "bound": 3.462217945523693,
+     "excess_max": 0.9495998125708529,
+     "bound_holds_all": true,
+     "onboard_share": 0.06079629629629631,
+     "sAP_minus_v41": {
+      "mean": 0.00025290804374552,
+      "ci95": 0.0006735065925941736,
+      "n": 5,
+      "wins": 3
+     },
+     "pi_w_minus_v41": {
+      "mean": 0.12647005842415276,
+      "ci95": 0.08778178658820937,
+      "n": 5,
+      "wins": 5
+     }
     }
    }
   },
@@ -1206,7 +1586,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.050387007896837865,
@@ -1241,7 +1622,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.047470782017279126,
@@ -1288,7 +1670,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.04927446398092857,
@@ -1335,7 +1718,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.05088616936343675,
@@ -1382,7 +1766,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.051843185798249994,
@@ -1429,7 +1814,8 @@
       "energy": 2.8,
       "ambient_c": 0.0,
       "no_exempt": false,
-      "hold_max_c": 85.0
+      "hold_max_c": 85.0,
+      "mu_max": 5.0
      },
      "n": 10,
      "sAP": 0.051802237381741056,
