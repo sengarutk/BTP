@@ -178,13 +178,14 @@ def b_be_fading(dev_t, k, jpeg, rel_std, hfull, cfgs):
     return best
 
 
-def analyse(jpeg, others):
-    """Break-even goodput of every split in `others` against the JPEG options `jpeg`, on every device and goodput."""
+def analyse(jpeg, others, devs=None, hfull=None):
+    """Break-even goodput of every split in `others` against the JPEG options `jpeg`, on every device and goodput.
+    devs, hfull: other devices and host full-model time (the second detector, evaluation/second_detector.py)."""
     cfgs = others + jpeg
-    hfull = host_full_ms(None, VD)
+    hfull = host_full_ms(None, VD) if hfull is None else hfull
     splits = [c for c in cfgs if c.kind == "split"]
     rows, viol, checked, wins_total = [], [], 0, 0
-    for dev, t in devices():
+    for dev, t in (devices() if devs is None else devs):
         pol = AdaptivePolicy(cfgs, EdgeHardware(name=dev, t_full_ms=t, host_full_ms=hfull))
         e = {c.name: pol.hw.onboard_ms(c) for c in cfgs}
 
