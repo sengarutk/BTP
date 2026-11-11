@@ -144,3 +144,22 @@ policy; paired with v4.1 on the same seeds, mean difference +- 95 % interval):
     scenarios. Caveat for the paper: v4.1 spends about 1 W more than the RL policy (its hold and cap let it exceed the
     budget, Theorem 1), so part of the gap is power v4.1 is allowed to spend; the comparison is at the same nominal
     budget, not at equal power.
+
+Results of addendum 5 (12 Nov 2026, ~01:55 IST; 24-min missions, seeds 1-5; after a memory-watchdog stop at 23:29 IST
+the runs resumed, finished rows kept). Note first: the replay starts the board at 70 C + the room offset (T0_C), so at
++10 and +15 C every run starts above the 78 C guard, outside Theorem 3's start condition theta(0) <= theta_g, and the
+offload-only floor's maximum is its starting temperature.
+11. Mostly right. th_guard: temp_max 78.0 C and hot 0 % in the lab and at +5 C (sAP -0.0000 and -0.0005 vs v4.1). At
+    +10 C hot 0 %, temp_max 80.0 C = the start (predicted <= 78.5: wrong only because of the start), sAP +0.0001.
+    At +15 C hot 83.6 % (predicted > 50 %, right); the floor alone averages 79.9 C, above the guard, as (a) says;
+    temp_max 85.0 C = the start (predicted no run at 85 C: wrong, from the start); sAP -0.0035 +- 0.0003 (predicted
+    within 0.003: narrowly wrong). th_hold78_amb15: hot 100 %, temp_max 85 C (right). Freshness falls with the guard
+    as predicted: 94.2, 86.1 and 78.9 % at +5, +10, +15 C (98.7-98.0 % without it).
+    Theorem 3 (b) holds on all 20 guard runs (paper2/guard_theorem.py; the replay's radio model at the traces' peak
+    goodput makes its bound loose, 84-86 C).
+12. Mostly right. th_adapt_amb5_cap50: hot 0 % (predicted < 5 %), but power 2.76 W against a mean budget of 2.28 W
+    (predicted within 0.15 W: wrong; the price reached 27.8 and the floor plus the hold keep power up). +10 C: power
+    2.63 W, mean temperature 77.1 C, hot 0 % (predicted 2.5-2.7 W, 76-79 C, < 15 %: right); freshness 88.8 %
+    (predicted below 97.9 %: right); sAP -0.0016 +- 0.0015 vs v4.1.
+13. Mostly right. th_floor mean 64.9 C in the lab (predicted 62-67 C) and 79.9 C at +15 C (predicted above 78 C);
+    the maximum is 5.1 C above the mean (predicted within 5 C: just over), and it is the start temperature.
