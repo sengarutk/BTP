@@ -134,3 +134,13 @@ learning, and the argmax policy always skipped (availability 0). Attempt 3, befo
 20 (about twice the price at which one s640 inference stops paying for the ticks its result is shown), its step 0.1,
 600 iterations; the stochastic policy is evaluated, as trained. Predictions 14 and 15 stand. Attempt 2 is archived
 (experiments/results/hardware/replay/rl_baseline/_superseded/attempt2/).
+Results of addendum 6, attempt 3 (11 Nov 2026, ~22:35 IST; checkpoint of iteration 571, multiplier 18.5; stochastic
+policy; paired with v4.1 on the same seeds, mean difference +- 95 % interval):
+  24-min mission (5 seeds): sAP 0.036 vs 0.046 (-0.010 +- 0.001), power 2.43 vs 3.41 W, fresh 77.7 %, hot 0 %
+  2-min mission (10 seeds): sAP 0.042 vs 0.054 (-0.012 +- 0.003), power 2.42 vs 3.48 W
+  2-min random (10 seeds):  sAP 0.047 vs 0.050 (-0.004 +- 0.003), power 2.47 vs 3.16 W
+14: missed narrowly. The policy keeps the budget but undershoots it: 2.43 W, 0.37 W below 2.8 W (predicted within 0.3).
+15: right. It does not beat v4.1 anywhere and is below it by more than the replay's bias (0.003) in all three
+    scenarios. Caveat for the paper: v4.1 spends about 1 W more than the RL policy (its hold and cap let it exceed the
+    budget, Theorem 1), so part of the gap is power v4.1 is allowed to spend; the comparison is at the same nominal
+    budget, not at equal power.

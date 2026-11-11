@@ -1,0 +1,14 @@
+{
+ "policy": "rl_ppo_lag",
+ "scenario": "random",
+ "phase_s": 20.0,
+ "seed": 5,
+ "pi_w": 2.495907810368052,
+ "edge_w": 4.3415596832210115,
+ "availability": 0.8941666666666667,
+ "temp_mean_c": 68.6125390886233,
+ "temp_max_c": 69.99827306501442,
+ "hot_share": 0.0,
+ "duration_s": 120.0,
+ "sAP": 0.049305162186269416
+}
