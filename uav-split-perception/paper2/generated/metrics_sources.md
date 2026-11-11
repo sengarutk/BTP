@@ -320,7 +320,7 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TsVHold` | 0.43 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.hold_term |
 | `\TsVOnb` | 7.0 | replay/theory_sweep_nov11/theory_sweep_summary.json mission_240s.v41.onboard_share x 100 |
 | `\TsBoundAll` | every | replay/theory_sweep_nov11/theory_sweep_summary.json all scenarios and policies: bound_holds_all |
-| `\TsRuns` | 215 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |
+| `\TsRuns` | 250 | replay/theory_sweep_nov11/theory_sweep_summary.json sum of n |
 | `\HwLongWifiRuns` | 2 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): number of 24-min Wi-Fi v4.1 runs |
 | `\HwLongWifiHotMin` | 19 | vid_campaign_long/a2_*__v41__r*.json measured_energy (log_t_w_c, mu_log): share of log samples >= 80 C, min x 100 |
 | `\HwLongWifiHotMax` | 27 | ... max x 100 |
@@ -331,3 +331,20 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\HwLongHotLo` | 27 | ... its hot share x 100 |
 | `\HwLongMeshRuns` | 5 | vid_campaign_mesh2_long v4.1 runs |
 | `\HwLongMeshHotMax` | 0.1 | vid_campaign_mesh2_long v4.1: hot share, max x 100 |
+| `\TgFloorRuns` | 62 | theory_check/guard_theorem.json hardware.floor_runs (offload-only runs) |
+| `\TgFloorLongRuns` | 2 | theory_check/guard_theorem.json hardware.floor_long_runs (24-min) |
+| `\TgFloorPower` | 2.52 | theory_check/guard_theorem.json hardware.floor_p1s_mean_w |
+| `\TgPhat` | 4.05 | theory_check/guard_theorem.json hardware.p_hat_w (largest 1-s mean power) |
+| `\TgThetaF` | 67.2 | theory_check/guard_theorem.json hardware.theta_f_c |
+| `\TgFloorMaxAny` | 77.7 | theory_check/guard_theorem.json hardware.floor_max_any_c |
+| `\TgFloorMean` | 61.8 | theory_check/guard_theorem.json hardware.floor_long_mean_c, max |
+| `\TgThetaLo` | 58.7 | theory_check/guard_theorem.json hardware.theta_lo_c |
+| `\TgH` | 83.0 | theory_check/guard_theorem.json hardware.H_c |
+| `\TgPinf` | 3.1 | theory_check/guard_theorem.json hardware.p_inf_w |
+| `\TgE` | 0.76 | theory_check/guard_theorem.json hardware.e_s |
+| `\TgDi` | 0.18 | theory_check/guard_theorem.json hardware.d_i_c |
+| `\TgDn` | 1.8 | theory_check/guard_theorem.json hardware.d_n_c |
+| `\TgBoundLab` | 79.9 | theory_check/guard_theorem.json hardware.bound_lab_c |
+| `\TgMarginThrottle` | 14.5 | theory_check/guard_theorem.json hardware.margin_throttle_c |
+| `\TgConverseMax` | 10.8 | theory_check/guard_theorem.json hardware.converse_margin_max_c |
+| `\TgConverseMean` | 16.2 | theory_check/guard_theorem.json hardware.converse_margin_mean_c |

@@ -301,6 +301,52 @@ temperature: 2.8~W predicts \ThPredBudget~$^\circ$C, and keeping the mean below 
 throttle, needs $B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below
 80~$^\circ$C). Peaks and the onset of throttling are not bounded by this rule.
 
+Peaks need a different guard. Under v4.1's guard, a price of at least 1 makes onboard inference costlier, but it can
+still be chosen. A hard guard forbids it: no onboard inference starts while $\theta \ge \theta_g$.
+\begin{theorem}[Peak temperature under a hard guard]\label{thm:guard}
+In Proposition~\ref{prop:temp}'s model, write the power as $P = P_n + P_i$, where $P_i \ge 0$ is the extra power of
+onboard inference. Let $\theta_n$ be the temperature the model gives with $P_n$ alone, from the same start, and
+suppose $\theta_{\mathrm{lo}} \le \theta_n \le \theta_f$ and $P_n \le \hat P$ throughout.
+\begin{enumerate}
+\item[(a)] Under any schedule, $\theta \ge \theta_n$.
+\item[(b)] Suppose that inferences run one at a time, that none starts while $\theta \ge \theta_g$, that each lasts at most $e$ with
+$P_i \le \hat P_i$, that $H = a + b\hat P > \theta_g$, and that $\theta(0) \le \theta_g$. Then
+\begin{equation*}
+\theta \le \theta_g + b\hat P_i\big(1 - e^{-e/\tau}\big) + \frac{(\theta_f - \theta_{\mathrm{lo}})(H - \theta_g)}{H - \theta_{\mathrm{lo}}}.
+\end{equation*}
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The model is linear, so $\theta = \theta_n + \theta_i$, where $\theta_i \ge 0$ solves
+$\dot\theta_i = (bP_i - \theta_i)/\tau$ from $\theta_i(0) = 0$; this gives (a). For (b), fix $t$. If no inference
+started before $t$, then $\theta(t) = \theta_n(t) \le \theta_f$, which is below the bound (the bound minus $\theta_f$
+is at least $(H - \theta_f)(\theta_g - \theta_{\mathrm{lo}})/(H - \theta_{\mathrm{lo}}) \ge 0$, because
+$\theta_{\mathrm{lo}} \le \theta(0) \le \theta_g < H$ and so $\theta_n \le H$). Otherwise let $s$ be the last
+start and $x = e^{-(t-s)/\tau}$. At $s$ we had $\theta(s) < \theta_g$, so $\theta_i(s) < \theta_g - \theta_n(s)$.
+After $s$, only the inference started at $s$ adds heat, for at most $e$, so
+$\theta_i(t) \le \theta_i(s)x + b\hat P_i(1 - e^{-e/\tau})$. Two bounds on $\theta_n(t)$ follow from the model:
+$\theta_n(t) \le \theta_f$, and $\theta_n(t) \le \theta_n(s)x + (1-x)H$. Writing $\delta_i$ for the inference term,
+the second gives (i) $\theta(t) \le \theta_g x + (1-x)H + \delta_i$, and the first gives
+(ii) $\theta(t) \le \theta_f + (\theta_g - \theta_{\mathrm{lo}})x + \delta_i$. As $x$ grows, (i) falls and (ii)
+rises, so their minimum is largest where they meet, at $x = (H - \theta_f)/(H - \theta_{\mathrm{lo}})$. Its value
+there is the bound.
+\end{proof}
+The two added terms are the inference already running when the guard trips ($\delta_i$), and radio bursts that push
+the power above its mean afterwards. Part (a) is the converse. A room warmer by $\Delta$ raises $\theta_n$,
+$\theta_{\mathrm{lo}}$, $\theta_f$ and $H$ by $\Delta$. Once $\theta_f + \Delta > \theta_g$, no controller keeps the
+board below $\theta_g$, since the load that remains without onboard inference already heats it more.
+
+On the hardware, the floor is measured directly by the \TgFloorRuns{} offload-only runs (no onboard inference). Their
+1-s mean power averages \TgFloorPower~W and reaches $\hat P = \TgPhat$~W. Their \TgFloorLongRuns{} 24-minute runs
+peak at $\theta_f = \TgThetaF$~$^\circ$C after the first $2\tau$, with a second-half mean of at most \TgFloorMean.
+The shorter runs start as hot as the previous run left the board (up to \TgFloorMaxAny), which is why (b) assumes the
+start. With the controller's fit, $\theta_g = 78$~$^\circ$C, $\theta_{\mathrm{lo}} = a + bP_{\mathrm{idle}} =
+\TgThetaLo$, $\hat P_i = \TgPinf$~W and $e = \TgE$~s (the throttled full-model time), the terms are
+$\delta_i = \TgDi$ and \TgDn~$^\circ$C. The bound is then \TgBoundLab~$^\circ$C in the lab: just below the 80~$^\circ$C
+mark. It stays below the 85~$^\circ$C throttling limit for a room up to \TgMarginThrottle~$^\circ$C warmer. By (a), no
+controller can hold 78~$^\circ$C in a room more than \TgConverseMax~$^\circ$C warmer (\TgConverseMean{} on the
+floor's mean). The hard guard has not been run on the board; the replay check follows.
+
 \textbf{The settings, swept in the replay.} We swept the step size, the budget, the room temperature and the hold in
 the trace replay (Section~\ref{sec:method}). Each change is to one setting of v4.1, on the same seeds and link draws.
 There are \TsEtaN{} step sizes from \TsEtaMin{} to \TsEtaMax{} and budgets from \TsBudMin{} to \TsBudMax~W, on

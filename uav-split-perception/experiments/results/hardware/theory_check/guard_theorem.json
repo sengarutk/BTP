@@ -1,0 +1,47 @@
+{
+ "method": "Model (Proposition prop:temp): d theta/dt = (a + b P - theta) / tau. Split the board's power into P = P_n + P_i, with\nP_i >= 0 the extra power of onboard inference, and let theta_n be the temperature the model gives with P_n alone.\n  (a) theta(t) >= theta_n(t) for every schedule (inference only adds heat).\n  (b) If no inference starts while theta >= theta_g, each inference lasts at most e with P_i <= Pi_hat, theta_lo <=\n      theta_n <= theta_f, P_n <= P_hat and H = a + b P_hat > theta_g, then\n          theta(t) <= theta_g + d_i + d_n,   d_i = b Pi_hat (1 - exp(-e / tau)),\n                                             d_n = (theta_f - theta_lo) (H - theta_g) / (H - theta_lo).\n      d_i: the inference already running when the guard trips; d_n: radio bursts (P_n above its mean) after it.\n  (c) A room warmer by D shifts theta_n, theta_lo, theta_f and H by D. By (a) no controller keeps theta below theta_g\n      once theta_f + D > theta_g; by (b) the guard keeps theta below theta_max as long as\n      theta_g + d_i + (theta_f - theta_lo)(H + D - theta_g)/(H - theta_lo) <= theta_max.",
+ "hardware": {
+  "a": 37.258256766379546,
+  "b": 11.312856542249014,
+  "tau_s": 148.8346237016964,
+  "theta_g": 78.0,
+  "p_idle_w": 1.8940683349559901,
+  "p_inf_w": 3.102792742139806,
+  "e_s": 0.757588298499968,
+  "floor_runs": 62,
+  "floor_p1s_mean_w": 2.515227984727436,
+  "p_hat_w": 4.0472,
+  "theta_f_c": 67.2,
+  "floor_long_runs": 2,
+  "floor_max_any_c": 77.65,
+  "floor_long_mean_c": [
+   61.787964169381105,
+   61.01042077580539
+  ],
+  "theta_lo_c": 58.68558012095312,
+  "H_c": 83.04364976416976,
+  "d_i_c": 0.17821714873747227,
+  "d_n_c": 1.7630195021203705,
+  "bound_lab_c": 79.94123665085785,
+  "margin_throttle_c": 14.47212044007749,
+  "margin_hot_c": 0.16811030830130402,
+  "converse_margin_max_c": 10.799999999999997,
+  "converse_margin_mean_c": 16.212035830618895
+ },
+ "replay": {
+  "a": 34.432490323226915,
+  "b": 12.730655368216782,
+  "tau_s": 148.8,
+  "rmax_mbps": {
+   "laptop": 160.44342603365382,
+   "jetson": 117.06264954517339
+  },
+  "p_base_w": 2.1882305031159377,
+  "p_hat_w": 7.0649542014762865,
+  "p_inf_w": 4.2158749814473815,
+  "e_s": 0.7183216454996,
+  "d_i_c": 0.2584679307454268,
+  "ambient": {},
+  "guard_runs": 0
+ }
+}
