@@ -32,6 +32,11 @@ import replay_accumo as A  # noqa: E402
 BASE = dict(R.POLICIES["v41"])
 ETAS = (0.02, 0.05, 0.1, 0.2, 0.5, 1.0)
 BUDGETS = (2.4, 2.8, 3.2, 3.6, 4.0, 4.5)
+# self-calibrating budget (replay.py budget_rule): the target is the mean temperature that the controller's own
+# thermal fit (energy_constants.json pi.thermal_steady) gives at v4.1's 2.8 W, so in the lab the budget stays near 2.8 W
+_TS = json.load(open(HERE.parent.parent / "experiments" / "results" / "hardware" / "energy" / "energy_constants.json"))
+_TS = _TS["pi"]["thermal_steady"]
+BUDGET_RULE = {"target_c": _TS["intercept_c"] + _TS["c_per_w"] * 2.8, "lo_w": 2.2, "hi_w": 4.5, "smooth_s": 120.0}
 # a hotter room than the measured one (ambient extrapolation, docs/theory_sweep_predictions_nov11.md, addendum):
 # +5 and +10 C with the lab's 80-C budget kept (3.6 W) or with the budget the rule gives for that room (80 - a - dT)/b
 AMBIENT = {(5, 3.6), (5, 3.2), (10, 3.6), (10, 2.8)}
@@ -41,14 +46,18 @@ SWEEP = {**{f"th_eta{v:g}": {"mu_step": v} for v in ETAS if v != 0.1},
          # diagnostic (addendum 2 of the predictions): the blackout hold switched off, onboard priced in blackouts too
          **{f"th_nohold_b{b:g}": {"no_exempt": True, "energy": b} for b in (2.8, 3.6)},
          # addendum 3: the hold allowed only below the thermal guard's 78 C, in the lab and in a room 10 C hotter
-         "th_hold78": {"hold_max_c": 78.0}, "th_hold78_amb10": {"hold_max_c": 78.0, "ambient_c": 10.0}}
-DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0, "no_exempt": False, "hold_max_c": 85.0}
+         "th_hold78": {"hold_max_c": 78.0}, "th_hold78_amb10": {"hold_max_c": 78.0, "ambient_c": 10.0},
+         # addendum 4: the price cap at +10 C, and a self-calibrating budget (P2-6), both with the capped hold
+         "th_hold78_amb5": {"hold_max_c": 78.0, "ambient_c": 5.0},
+         **{f"th_hold78_amb10_cap{m}": {"hold_max_c": 78.0, "ambient_c": 10.0, "mu_max": float(m)} for m in (10, 20, 50)},
+         **{f"th_adapt_amb{d}": {"hold_max_c": 78.0, "ambient_c": float(d), "budget_rule": BUDGET_RULE} for d in (0, 5, 10)}}
+DEFAULT = {"mu_step": 0.1, "energy": 2.8, "ambient_c": 0.0, "no_exempt": False, "hold_max_c": 85.0, "mu_max": 5.0}
 for name, ov in SWEEP.items():
     R.POLICIES[name] = dict(BASE, **ov)
 ETA_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["mu_step"]]
 BUDGET_POLS = ["v41"] + [n for n, ov in SWEEP.items() if list(ov) == ["energy"]]
 AMB_POLS = [n for n in SWEEP if n.startswith("th_amb")]
-HOLD_POLS = [n for n in SWEEP if n.startswith(("th_nohold", "th_hold78"))]
+HOLD_POLS = [n for n in SWEEP if n.startswith(("th_nohold", "th_hold78", "th_adapt"))]
 METRICS = ("sAP", "pi_w", "temp_mean_c", "temp_max_c", "hot_share", "fresh_share")
 
 
@@ -59,7 +68,8 @@ def setting(pol):
 def terms(row):
     """Theorem 1's and Theorem 2's terms of one run, from the replay's price log."""
     s, pr = setting(row["policy"]), row["price"]
-    eta, B, n = s["mu_step"], s["energy"], pr["n"]
+    eta, n = s["mu_step"], pr["n"]
+    B = pr["sum_b"] / n if pr.get("sum_b") is not None else s["energy"]     # the mean budget (moving under budget_rule)
     mean_p = pr["sum_p"] / n
     t = {"eta": eta, "budget": B, "updates": n, "mean_p_updates": mean_p, "excess": mean_p - B,
          "price_term": pr["mu_final"] / (eta * n), "hold_term": pr["neg_held"] / (eta * n),

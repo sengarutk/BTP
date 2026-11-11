@@ -71,3 +71,16 @@ Result of addendum 3 (11 Nov 2026, ~16:00 IST): prediction 8 held in the lab (ho
 0.75 W). The replay's hot-share level differs from the hardware's by 16 points on average (r 0.98 between
 policies), so all shares are comparisons between settings. Paper 2: Section "Guarantees", "The settings, swept in
 the replay".
+
+Addendum 4 (11 Nov 2026, ~20:00 IST, before these runs): the price cap at +10 C, and a self-calibrating budget
+Both with the hold capped at 78 C. (a) th_hold78_amb10_cap{10,20,50}: the price cap raised from 5. (b) th_adapt_amb{0,5,10}:
+the budget follows an online estimate of the room's offset, a_hat = T + tau dT/dt - b P (the controller's own fit,
+b = 11.31 C/W, tau = 149 s, smoothed over 120 s), B = (68.9 C - a_hat) / b clipped to [2.2, 4.5] W; 68.9 C is what
+the controller's fit gives at 2.8 W, so in the lab B stays near 2.8 W. Compared with th_hold78 (lab), th_hold78_amb5
+and th_hold78_amb10. 24-min missions, seeds 1-5.
+9. A higher cap lowers the hot time at +10 C (the cap term was 0.75 W at cap 5), by more at higher caps, with sAP within
+   the replay's bias of th_hold78_amb10.
+10. The adaptive budget stays within 0.2 W of 2.8 W in the lab (th_adapt_amb0 ~ th_hold78 in hot time and sAP), and
+    at +5 and +10 C lowers the budget (to ~2.4 and ~2.0 W, clipped at 2.2) and the hot time below th_hold78_amb5 and
+    th_hold78_amb10. If the board's floor power (idle + forecaster + radio, ~2.4 W) already exceeds the budget at +10 C,
+    the hot time stays high and we say so: no budget can then help, only less onboard work or cooling.

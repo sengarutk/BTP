@@ -342,6 +342,7 @@ class Replay:
         # ambient_c: a hotter (or cooler) room than the measured one, as a shift of the plant's intercept and of the
         # starting temperature (paper 2's ambient extrapolation, replay_theory_sweep.py; default 0 = as measured)
         amb = float(cf.get("ambient_c", 0.0))
+        self.budget, self.a_hat = cf.get("energy"), None    # the budget may move (budget_rule); default: fixed
         self.temp, self.n_active, self.aoi = T0_C + amb, 1, float("inf")
         self.onb_free, self.last_onboard_det, self.rewards, self.exempt_t = 0.0, None, [], -10.0
         self.price = {"n": 0, "sum_p": 0.0, "sum_sq": 0.0, "mu_max": 0.0,
@@ -389,19 +390,30 @@ class Replay:
                 last_dual = t
                 pbar = float(np.mean([x[1] for x in p_log[-30:]]))
                 mu_prev = self.mu
+                if "budget_rule" in cf:          # self-calibrating budget (paper 2, P2-6): the room's offset, estimated
+                    br = cf["budget_rule"]       # online by inverting the controller's own first-order model
+                    if len(temps) > 30 / PERIOD:
+                        dT = (temps[-1] - temps[-int(30 / PERIOD)]) / 30.0
+                        a_inst = temps[-1] + TAU_COOL * dT - th["c_per_w"] * pbar
+                        self.a_hat = a_inst if self.a_hat is None else self.a_hat + (a_inst - self.a_hat) / br["smooth_s"]
+                        self.budget = min(br["hi_w"], max(br["lo_w"], (br["target_c"] - self.a_hat) / th["c_per_w"]))
+                    pr_b = self.price
+                    pr_b["a_hat_last"] = self.a_hat
+                mu_cap = cf.get("mu_max", 5.0)
                 if "energy" in cf and "mu_fixed" not in cf and t - self.exempt_t > 1.0:   # anti-windup
-                    self.mu = min(5.0, max(0.0, self.mu + cf.get("mu_step", 0.1) * (pbar - cf["energy"])))
+                    self.mu = min(mu_cap, max(0.0, self.mu + cf.get("mu_step", 0.1) * (pbar - self.budget)))
                     if self.temp >= (84.0 if "heat" in cf else 78.0):
                         self.mu = max(self.mu, 1.0)
-                    kind = "cap" if mu_prev + cf.get("mu_step", 0.1) * (pbar - cf["energy"]) > 5.0 else "step"
+                    kind = "cap" if mu_prev + cf.get("mu_step", 0.1) * (pbar - self.budget) > mu_cap else "step"
                 else:
                     kind = "held"
                 if "energy" in cf and "mu_fixed" not in cf:   # Theorem 1's terms (paper 2), logging only
-                    st = self.mu - mu_prev - cf.get("mu_step", 0.1) * (pbar - cf["energy"])
+                    st = self.mu - mu_prev - cf.get("mu_step", 0.1) * (pbar - self.budget)
                     pr = self.price
                     pr["n"] += 1
                     pr["sum_p"] += pbar
-                    pr["sum_sq"] += (pbar - cf["energy"]) ** 2
+                    pr["sum_b"] = pr.get("sum_b", 0.0) + self.budget
+                    pr["sum_sq"] += (pbar - self.budget) ** 2
                     pr[f"neg_{kind}"] += max(0.0, -st)
                     pr[f"n_{kind}"] += 1
                     pr["mu_max"] = max(pr["mu_max"], self.mu)
