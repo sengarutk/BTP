@@ -184,7 +184,11 @@ E_{\mathrm{edge}}$ for the Jetson's energy, with $\mu_e$ following the Jetson's 
 budget in the same way. The heat price $\lambda_T$ follows a measured thermal model's 60~s prediction $\hat\theta$ of
 the board temperature: $\lambda_T \leftarrow \min(2, \max(0, \lambda_T + 0.01(\hat\theta - 75\,^\circ\mathrm{C})))$; it
 was tested in two ways: on top of the energy price (camera joules priced at $\mu + \lambda_T$; Wi-Fi) and instead of it
-($\lambda_T$ alone, no energy price and no exceptions; mesh).
+($\lambda_T$ alone, no energy price and no exceptions; mesh). Every logged update of the three other prices follows these rules (\texttt{price\_rules\_check.py}): \PrFUpdates{}
+updates of $\lambda_F$ in \PrFRuns{} runs, \PrTUpdates{} of $\lambda_T$ in \PrTRuns{} and \PrEUpdates{} of $\mu_e$ in
+\PrERuns, with \PrFUnexplained, \PrTUnexplained{} and \PrEUnexplained{} exceptions. The caps on $\lambda_F$ and
+$\mu_e$ were added on 13 October; in \PrFPreCapRuns{} and \PrEPreCapRuns{} runs of the two Wi-Fi campaigns before that,
+the same rules ran uncapped, and the prices reached \PrFPreCapMax{} and \PrEPreCapMax.
 
 \section{Guarantees}\label{sec:theory}
 The price update is a projected dual-ascent step on the power constraint $\bar P \le B$, and the standard virtual-queue

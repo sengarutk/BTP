@@ -585,20 +585,34 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\RlLongSap` | 0.036 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 240s mean sAP |
 | `\RlLongVSap` | 0.046 | ... v4.1 mean sAP |
 | `\RlLongDiff` | −0.0100 | ... paired difference RL - v4.1, mean |
-| `\RlLongDiffCi` | 0.0010 | ... 95 % half-width |
+| `\RlLongDiffCi` | 0.0014 | ... 95 % Student-t half-width (12 Nov: was 1.96, too narrow for 5-10 pairs) |
 | `\RlLongPower` | 2.43 | ... RL mean power |
 | `\RlLongVPower` | 3.41 | ... v4.1 mean power |
 | `\RlMisN` | 10 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 20s runs |
 | `\RlMisSap` | 0.042 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 20s mean sAP |
 | `\RlMisVSap` | 0.054 | ... v4.1 mean sAP |
 | `\RlMisDiff` | −0.0124 | ... paired difference RL - v4.1, mean |
-| `\RlMisDiffCi` | 0.0033 | ... 95 % half-width |
+| `\RlMisDiffCi` | 0.0039 | ... 95 % Student-t half-width (12 Nov: was 1.96, too narrow for 5-10 pairs) |
 | `\RlMisPower` | 2.42 | ... RL mean power |
 | `\RlMisVPower` | 3.48 | ... v4.1 mean power |
 | `\RlRndN` | 10 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): random 20s runs |
 | `\RlRndSap` | 0.047 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): random 20s mean sAP |
 | `\RlRndVSap` | 0.050 | ... v4.1 mean sAP |
 | `\RlRndDiff` | −0.0038 | ... paired difference RL - v4.1, mean |
-| `\RlRndDiffCi` | 0.0030 | ... 95 % half-width |
+| `\RlRndDiffCi` | 0.0034 | ... 95 % Student-t half-width (12 Nov: was 1.96, too narrow for 5-10 pairs) |
 | `\RlRndPower` | 2.47 | ... RL mean power |
 | `\RlRndVPower` | 3.16 | ... v4.1 mean power |
+| `\PrFRuns` | 158 | theory_check/price_rules_check.json: lam_F runs |
+| `\PrFUpdates` | 53{,}758 | theory_check/price_rules_check.json: lam_F updates |
+| `\PrFUnexplained` | 0 | theory_check/price_rules_check.json: lam_F updates not following the rule |
+| `\PrFPreCapRuns` | 8 | theory_check/price_rules_check.json: lam_F runs of the code before the cap |
+| `\PrTRuns` | 170 | theory_check/price_rules_check.json: lam_T runs |
+| `\PrTUpdates` | 34{,}929 | theory_check/price_rules_check.json: lam_T updates |
+| `\PrTUnexplained` | 0 | theory_check/price_rules_check.json: lam_T updates not following the rule |
+| `\PrTPreCapRuns` | 0 | theory_check/price_rules_check.json: lam_T runs of the code before the cap |
+| `\PrERuns` | 239 | theory_check/price_rules_check.json: mu_e runs |
+| `\PrEUpdates` | 43{,}355 | theory_check/price_rules_check.json: mu_e updates |
+| `\PrEUnexplained` | 0 | theory_check/price_rules_check.json: mu_e updates not following the rule |
+| `\PrEPreCapRuns` | 28 | theory_check/price_rules_check.json: mu_e runs of the code before the cap |
+| `\PrFPreCapMax` | 4.1 | theory_check/price_rules_check.json: largest price in the runs before the cap |
+| `\PrEPreCapMax` | 6.4 | theory_check/price_rules_check.json: largest price in the runs before the cap |

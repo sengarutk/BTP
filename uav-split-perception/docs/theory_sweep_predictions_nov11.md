@@ -163,3 +163,7 @@ offload-only floor's maximum is its starting temperature.
     (predicted below 97.9 %: right); sAP -0.0016 +- 0.0015 vs v4.1.
 13. Mostly right. th_floor mean 64.9 C in the lab (predicted 62-67 C) and 79.9 C at +15 C (predicted above 78 C);
     the maximum is 5.1 C above the mean (predicted within 5 C: just over), and it is the start temperature.
+
+Correction (12 Nov 2026, ~13:00 IST): the RL intervals above were computed with the normal quantile 1.96 instead of
+Student's t for 5 and 10 pairs (paper2/make_metrics.py), too narrow by 13-30 %. With t: 24-min -0.0100 +- 0.0014,
+2-min mission -0.0124 +- 0.0039, random -0.0038 +- 0.0034. All three still exclude zero; prediction 15 stands.
