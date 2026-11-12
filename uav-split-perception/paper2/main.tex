@@ -101,14 +101,20 @@ cooperative perception in~\cite{Zaki_2024}; Phoenix~\cite{Jeon_2026} manages on-
 \textbf{Heat on edge devices.} Throttling cuts the throughput of continuous inference on a Raspberry Pi by up to
 about 90\,\% without cooling~\cite{BenoitCattin_2020}; thermal-aware schedulers choose between on-device
 processors~\cite{Tan_2024}, and a threshold policy jointly sets offloading, DVFS and model size under heat and memory
-limits~\cite{Choi_2024}. These measure frame rate or latency on one device; we measure the streaming-accuracy cost of
+limits~\cite{Choi_2024}; Lotus~\cite{Gong_2024} scales a Jetson's clocks to avoid throttling, and J-DOB~\cite{Xu_2025}
+jointly sets offloading, batching and DVFS for energy. These measure frame rate or latency on one device; we measure the streaming-accuracy cost of
 heat in a distributed offloading system and price it with a guarantee. Freshness under an energy budget is also studied
 as age of information, e.g.\ with a safe DQN for UAV-aided edge computing~\cite{Zhao_2024}; our freshness price plays
-that role inside an accuracy objective.
+that role inside an accuracy objective; age-based timeliness also drives multi-task remote-inference
+scheduling~\cite{Shisher_2025}. Distribution-free deadline and reliability guarantees for edge inference use conformal
+prediction~\cite{Kalor_2025,Binucci_2025}; our deadline probabilities are Gaussian, and we report their calibration.
 \textbf{Why a few watts matter.} The camera board draws a few watts against the motors' far larger flight power; on
 drones, compute matters through mission time~\cite{Boroujerdian_2018}, and here through heat, which the board must
 shed without a fan. \textbf{UAV offloading.} A$^2$-UAV~\cite{Coletta_2023} optimises DNN offloading over a multi-hop UAV testbed; Qu et al.~\cite{Qu_2024} orchestrate
-video analytics across a drone network edge; multi-UAV edge computing is mostly studied analytically~\cite{Sun_2024,Hao_2024}.
+video analytics across a drone network edge; multi-UAV edge computing is mostly studied analytically~\cite{Sun_2024,Hao_2024,Du_2026}. IntUNe~\cite{Varshney_2026}
+jointly sets a surveillance UAV's speed, frame rate and offloading under delay and accuracy constraints, without
+heat; a measurement study on a 5G operator network compares edge, cloud and onboard processing for a drone
+service~\cite{CandalVentureira_2023}.
 \textbf{Split computing.} Splitting the detector between drone and server~\cite{kang2017neurosurgeon,matsubara2022survey}
 and learned feature compression~\cite{Matsubara_2022,Furutanpey_2024} are alternatives to sending the image; on our
 hardware the image is the better payload (companion study), so the controller sends JPEG frames.

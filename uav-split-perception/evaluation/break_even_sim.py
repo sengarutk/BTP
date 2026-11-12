@@ -40,7 +40,36 @@ import numpy as np
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "experiments" / "results" / "break_even"
 PROFILES_ = ("moderate", "vehicular_fading")
+REAL = ("mesh_jetson",)        # --real: traces measured on the AegisSwarm mesh (roadmap L4, 12 Nov 2026)
 _STATE = {}
+
+
+def real_traces(duration, n=5, start_s=30.0, delay_ms=20.0):
+    """The direct Pi -> Jetson mesh link of mesh campaign 2, scenario static_good (no injected faults): per-transfer
+    goodput samples, sample-and-hold into 10-ms slots. n runs with >= 600 samples, sorted by name, evenly spaced (the
+    first and the last included); a window of `duration` s starting `start_s` s into each. Loss 0 (the samples are
+    goodput), one-way delay constant (the rule's 20 ms). The laptop path is not used: the ground radio's SSH port
+    forward acknowledges data early, so its samples exceed the mesh's capacity."""
+    import glob
+    hw = REPO / "experiments" / "results" / "hardware" / "vid_campaign_mesh2"
+    runs = []
+    for f in sorted(glob.glob(str(hw / "a2_static_good__*.json"))):
+        g = json.load(open(f))["link_goodput_samples"].get("jetson") or []
+        if len(g) >= 600:
+            runs.append((Path(f).name, np.array(g, float)))
+    idx = sorted({round(i * (len(runs) - 1) / (n - 1)) for i in range(n)})
+    out = []
+    for i in idx:
+        name, g = runs[i]
+        t0 = g[0, 0] + start_s
+        slots = int(duration * 100)
+        ts = t0 + np.arange(slots) * 0.01
+        j = np.searchsorted(g[:, 0], ts, side="right") - 1
+        bw = g[np.clip(j, 0, len(g) - 1), 1]
+        rec = [{"timestamp_ms": round(k * 10.0, 1), "sinr_db": 0.0, "bandwidth_mbps": round(float(bw[k]), 3),
+                "delay_ms": delay_ms, "packet_loss_pct": 0.0} for k in range(slots)]
+        out.append((name, rec))
+    return out
 
 
 def jpeg_options(base, tuned):
@@ -49,7 +78,7 @@ def jpeg_options(base, tuned):
     return jpeg if not tuned else b.tuned_jpeg(jpeg, tuned, best=True)
 
 
-def _setup(seeds, duration, tuned=None, entropy=False):
+def _setup(seeds, duration, tuned=None, entropy=False, real=False):
     import simulation.stream_sim as ss
     from evaluation import break_even_rule as b
     from evaluation.learned_bottleneck_system import VD, family, measured_configs
@@ -60,14 +89,20 @@ def _setup(seeds, duration, tuned=None, entropy=False):
     splits = [c for c in base if c.kind == "split"] + b.learned_and_joint() + (b.entropy_codes() if entropy else [])
     full = next(c for c in base if family(c) == "onboard")
     traces = {}
-    for prof in PROFILES_:
+    if real:
+        for k, (name, rec) in enumerate(real_traces(duration, n=seeds)):
+            g = np.array([r["bandwidth_mbps"] for r in rec])
+            traces[(REAL[0], k)] = (rec, float(g.mean()), float(g.std() / g.mean()))
+            _STATE.setdefault("trace_runs", []).append(name)
+    for prof in (() if real else PROFILES_):
         pr = PROFILES[prof]
         for k in range(seeds):
             rec = generate_trace(pr, duration_s=duration, seed=pr.seed * 100_003 + 7_919 * (k + 1))
             g = np.array([r["bandwidth_mbps"] * (1 - r["packet_loss_pct"] / 100) for r in rec])
             traces[(prof, k)] = (rec, float(g.mean()), float(g.std() / g.mean()))
     _STATE.update(ss=ss, jpeg=jpeg, splits=splits, full=full, traces=traces, hfull=host_full_ms(None, VD),
-                  cfgs={c.name: c for c in jpeg + splits + [full]}, duration=duration, seeds=seeds)
+                  cfgs={c.name: c for c in jpeg + splits + [full]}, duration=duration, seeds=seeds,
+                  profiles=REAL if real else PROFILES_)
     current = {}
     ss.generate_trace = lambda *a, **k: current["rec"]       # the simulator draws its trace through this name
     _STATE["current"] = current
@@ -85,7 +120,9 @@ def _cell(job):
         f = B / mean_g
         s["current"]["rec"] = [{**r, "bandwidth_mbps": r["bandwidth_mbps"] * f} for r in rec]
         for c in s["jpeg"] + s["splits"]:
-            r = StreamSimulator(SimParams(hw, s["cfgs"], profile=prof, duration_s=s["duration"], seed=0,
+            # the real traces are injected through the patched generate_trace; the profile name only seeds the run
+            r = StreamSimulator(SimParams(hw, s["cfgs"], profile="moderate" if prof in REAL else prof,
+                                          duration_s=s["duration"], seed=0,
                                           mode=c.name)).run()
             acc = r["mean_map50_95_on_time"]
             u = 0.0 if not np.isfinite(acc) else r["on_time_fps_per_uav"] * acc / s["full"].map50_95
@@ -101,29 +138,32 @@ def main():
     ap.add_argument("--analyse-only", action="store_true")
     ap.add_argument("--tuned", default=None, help="a jpeg_tuned_detector.py run: JPEG with the tuned detector")
     ap.add_argument("--entropy", action="store_true", help="add the entropy-coded codes (entropy_bottleneck.py)")
+    ap.add_argument("--real", action="store_true", help="traces measured on the mesh (Pi -> Jetson), not synthetic")
     a = ap.parse_args()
     if a.analyse_only:
-        out = json.load(open(OUT / f"sim_check{'_entropy' if a.entropy else ''}{'_tuned' if a.tuned else ''}.json"))
+        out = json.load(open(OUT / f"sim_check{'_entropy' if a.entropy else ''}{'_tuned' if a.tuned else ''}"
+                             f"{'_real' if a.real else ''}.json"))
         fading(out)
         return
     from evaluation import break_even_rule as b
     from evaluation.learned_bottleneck_system import GOODPUT
-    _setup(a.seeds, a.duration, a.tuned, a.entropy)
+    _setup(a.seeds, a.duration, a.tuned, a.entropy, a.real)
+    PROF = _STATE["profiles"]
     jpeg, splits = _STATE["jpeg"], _STATE["splits"]
     rows, *_ = b.analyse(jpeg, [c for c in splits])
     bbe = {(r["device"], r["t_full_ms"], r["code"]): r for r in rows}
-    jobs = [(d, t, p, float(B)) for d, t in b.devices() for p in PROFILES_ for B in GOODPUT]
+    jobs = [(d, t, p, float(B)) for d, t in b.devices() for p in PROF for B in GOODPUT]
     t0 = time.time()
-    with mp.get_context("fork").Pool(a.workers, initializer=_setup, initargs=(a.seeds, a.duration, a.tuned, a.entropy)) as pool:
+    with mp.get_context("fork").Pool(a.workers, initializer=_setup, initargs=(a.seeds, a.duration, a.tuned, a.entropy, a.real)) as pool:
         res = dict(pool.map(_cell, jobs, chunksize=4))
-    out = {"setting": {"profiles": PROFILES_, "seeds": a.seeds, "duration_s": a.duration, "goodputs": len(GOODPUT),
+    out = {"setting": {"profiles": PROF, "real_traces": _STATE.get("trace_runs"), "seeds": a.seeds, "duration_s": a.duration, "goodputs": len(GOODPUT),
                        "devices": [{"device": d, "t_full_ms": t} for d, t in b.devices()],
                        "jpeg_tuned_run": a.tuned, "entropy_codes": a.entropy, "jpeg_options": [c.name for c in jpeg],
                        "jpeg_map50_95": [c.map50_95 for c in jpeg], "codes": [c.name for c in splits],
-                       "trace_rel_std": {f"{p}_{k}": _STATE["traces"][(p, k)][2] for p in PROFILES_ for k in range(a.seeds)},
+                       "trace_rel_std": {f"{p}_{k}": _STATE["traces"][(p, k)][2] for p in PROF for k in range(a.seeds)},
                        "minutes": (time.time() - t0) / 60},
            "profiles": {}}
-    for p in PROFILES_:
+    for p in PROF:
         wins, exc, agree, cells, per = 0, [], 0, 0, []
         for d, t in b.devices():
             for c in splits:
@@ -181,7 +221,8 @@ def fading(out):
         v["constant_rule_exception_margin_median"] = (float(np.median([e["u_code"] / e["u_best_jpeg"] - 1 for e in ex]))
                                                       if ex else None)
         v["constant_rule_exception_tfull_max"] = max((e["t_full_ms"] for e in ex), default=None)
-        tag = ("E" if ent else "") + ("T" if tuned else "") + {"moderate": "Mod", "vehicular_fading": "Veh"}[p]
+        tag = ("E" if ent else "") + ("T" if tuned else "") + {"moderate": "Mod", "vehicular_fading": "Veh",
+                                                                "mesh_jetson": "Mesh"}[p]
         m.update({f"BeSim{tag}Wins": str(v["split_win_cells"]), f"BeSim{tag}Exc": str(len(ex)),
                   f"BeSim{tag}ExcPct": f"{100 * len(ex) / max(1, v['split_win_cells']):.0f}",
                   f"BeSim{tag}Ratio": f"{v['constant_rule_exception_ratio_max']:.1f}" if ex else "none",
@@ -196,7 +237,11 @@ def fading(out):
     m.update({f"BeSim{t}Seeds": str(out["setting"]["seeds"]), f"BeSim{t}Duration": f"{out['setting']['duration_s']:.0f}",
               f"BeSim{t}ExcTfullMax": f"{max(v['constant_rule_exception_tfull_max'] or 0 for v in out['profiles'].values()):.0f}"})
     OUT.mkdir(parents=True, exist_ok=True)
-    sfx = ("_entropy" if ent else "") + ("_tuned" if tuned else "")
+    real = bool(out["setting"].get("real_traces"))
+    if real:   # own macro names (BeSimMesh...; seeds/duration as BeSimReal...)
+        m = {(k.replace("BeSim" + t, "BeSim" + t + "Real", 1) if k in (f"BeSim{t}Seeds", f"BeSim{t}Duration",
+              f"BeSim{t}ExcTfullMax") else k): v for k, v in m.items()}
+    sfx = ("_entropy" if ent else "") + ("_tuned" if tuned else "") + ("_real" if real else "")
     json.dump(out, open(OUT / f"sim_check{sfx}.json", "w"), indent=1)
     (OUT / f"sim{sfx}_metrics.tex").write_text("% Generated by evaluation/break_even_sim.py -- do not edit.\n"
                                          + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in m.items()))
