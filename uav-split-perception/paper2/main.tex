@@ -407,7 +407,12 @@ and the board is hot \TsAdaptTenHot\,\% of the time. With both changes the hot t
 \item \textbf{The hard guard} (Theorem~\ref{thm:guard}), with the hold capped at 78~$^\circ$C. The peak is
 \TgRpLabMax~$^\circ$C in the lab and \TgRpFiveMax~$^\circ$C at +5~$^\circ$C, and there is no time at or above
 80~$^\circ$C up to +10~$^\circ$C. At +15~$^\circ$C the floor alone averages \TgRpFifteenFloor~$^\circ$C, above the
-guard. The board is then hot \TsGuardFifteenHot\,\% of the time, which by part (a) no controller can avoid. The replay
+guard. The board is then hot \TsGuardFifteenHot\,\% of the time, which by part (a) no controller can avoid. Part (a)
+also bounds the \emph{time} above any threshold from below: a controller is at or above 80~$^\circ$C at least as long
+as its load without onboard inference would keep it there. With the offload-only policy as that load, this is
+\TgRpLabFloorHot, \TgRpFiveFloorHot, \TgRpTenFloorHot{} and \TgRpFifteenFloorHot\,\% of the time from the lab to
++15~$^\circ$C. The guard is hot \TsGuardTenHot\,\% up to +10~$^\circ$C and \TsGuardFifteenHot\,\% at +15~$^\circ$C, so it is
+above this lower bound, as it must be; part (b) gives zero wherever its bound is below 80~$^\circ$C. The replay
 starts the board at 70~$^\circ$C plus the room's offset, so at +10 and +15~$^\circ$C every run starts above the guard
 (the peaks there, \TgRpTenMax{} and \TgRpFifteenMax~$^\circ$C, are the start). The bound of part (b) holds on all
 \TgReplayRuns{} runs; the replay's radio model makes it loose (\TgRpLabBound--\TgRpFifteenBound~$^\circ$C). The cost

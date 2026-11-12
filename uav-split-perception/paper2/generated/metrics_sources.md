@@ -579,6 +579,10 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\TgRpFifteenBound` | 85.9 | theory_check/guard_theorem.json replay.ambient.15.bound_c |
 | `\TgRpFifteenMax` | 85.0 | theory_check/guard_theorem.json replay.ambient.15.guard_temp_max_c |
 | `\TgRpFifteenHot` | 84 | theory_check/guard_theorem.json replay.ambient.15.guard_hot_share_mean x 100 |
+| `\TgRpLabFloorHot` | 0 | replay/theory_sweep_nov11/rows th_floor_amb0 (24-min): hot_share mean x 100 |
+| `\TgRpFiveFloorHot` | 0 | replay/theory_sweep_nov11/rows th_floor_amb5 (24-min): hot_share mean x 100 |
+| `\TgRpTenFloorHot` | 0 | replay/theory_sweep_nov11/rows th_floor_amb10 (24-min): hot_share mean x 100 |
+| `\TgRpFifteenFloorHot` | 38 | replay/theory_sweep_nov11/rows th_floor_amb15 (24-min): hot_share mean x 100 |
 | `\RlIter` | 571 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): checkpoint iteration |
 | `\RlLambda` | 18.5 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): multiplier at the checkpoint |
 | `\RlLongN` | 5 | replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds): mission 240s runs |

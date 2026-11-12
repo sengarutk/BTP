@@ -562,6 +562,16 @@ def main():
                 if v["guard_temp_max_c"] is not None:
                     put(f"TgRp{w}Max", v["guard_temp_max_c"], f"{src} replay.ambient.{D}.guard_temp_max_c", "{:.1f}")
                     put(f"TgRp{w}Hot", 100 * v["guard_hot_share_mean"], f"{src} replay.ambient.{D}.guard_hot_share_mean x 100", "{:.0f}")
+            # corollary of Theorem 3 (a) (12 Nov 2026): the offload-only floor's time at or above 80 C bounds any
+            # controller's from below (the floor policy as the proxy of the load without onboard inference)
+            for D in rp["ambient"]:
+                w = {"0": "Lab", "5": "Five", "10": "Ten", "15": "Fifteen"}[D]
+                fr = [json.load(open(f)) for f in (HW / "replay" / "theory_sweep_nov11" / "rows").glob(
+                      f"*__th_floor_amb{D}__*.json")]
+                fr = [r for r in fr if r.get("phase_s") == 240.0]
+                if fr:
+                    put(f"TgRp{w}FloorHot", 100 * float(np.mean([r["hot_share"] for r in fr])),
+                        f"replay/theory_sweep_nov11/rows th_floor_amb{D} (24-min): hot_share mean x 100", "{:.0f}")
 
     # ---- constrained deep-RL baseline (validation/hardware/rl_baseline.py, PPO-Lagrangian), paired with v4.1
     rlf = HW / "replay" / "rl_baseline" / "summary.json"
