@@ -69,6 +69,8 @@ POLICIES = {   # name -> controller settings (the same switches as adaptive2.py)
     "stream_fc2": dict(obj="stream"),            # v3 + forecaster v2
     "v4": dict(obj="stream", energy=2.8),
     "v41": dict(obj="stream", energy=2.8, fresh=0.95),
+    # L8 (12 Nov 2026): v4.1 with a conformal (distribution-free) deadline probability instead of the Gaussian
+    "v41_conf": dict(obj="stream", energy=2.8, fresh=0.95, pon="conformal"),
     "v42": dict(obj="stream", energy=2.8, edge=0.5),
     "v5": dict(obj="stream", energy=2.8, edge=0.5, heat=75.0),
     "v51": dict(obj="stream", energy=2.8, edge=0.5, heat=75.0, fresh=0.95),
@@ -116,6 +118,8 @@ class Link:
         self.last_probe = -1.0
         self.edge_w = None
         self.peer = None          # the other path (SHARED_RADIO: both share the camera drone's one radio)
+        self.ratios = []          # L8: (goodput estimate at the start) / (goodput achieved), last 200 transfers > 20 KB
+        self.send_est = None
 
     def sample(self):
         if self.seq is None or self.k >= len(self.seq):
@@ -162,6 +166,7 @@ class Link:
             g = min(g, c)
         t_done = float("inf") if g <= 0 else t + nbytes * 8 / (g * 1e6) + self.rtt / 1e3
         self.inflight = (t, nbytes, t_done)
+        self.send_est = self.rate
         return t_done
 
     def tick(self, t):
@@ -185,6 +190,8 @@ class Link:
                 self.rate += 0.15 * d
                 self.var = 0.85 * (self.var + 0.15 * d * d)
                 self.last_good = mb if mb > 0.5 else self.last_good
+                if self.send_est is not None and mb > 0:
+                    self.ratios = (self.ratios + [self.send_est / mb])[-200:]
             return t_done
         if t - t0 > STALL_S:                       # stalled: the live sender drops the connection
             self.inflight, self.up, self.rate = None, False, 1e-3
@@ -257,8 +264,18 @@ class Replay:
         p_on = phi((r - b * 8 / ((D - te - rem - rtt) * 1e3)) / s) if D - te - rem - rtt > 0 else 0.0
         lb = LATE_MS - te - rem - rtt
         p_late = phi((r - b * 8 / (lb * 1e3)) / s) if lb > 0 else 0.0
-        busy = max(tx + rtt, 1000 * PERIOD)
         cf = self.cfg
+        if cf.get("pon") == "conformal" and len(L_.ratios) >= 20:
+            # share of recent (estimate / achieved) ratios under which the frame would make it, as k / (n + 1)
+            rs, n_ = np.sort(L_.ratios), len(L_.ratios)
+
+            def conf(budget_ms):
+                if budget_ms <= 0:
+                    return 0.0
+                need = b * 8 / (budget_ms * 1e3)          # Mbit/s
+                return float(np.searchsorted(rs, r / need, side="right")) / (n_ + 1)
+            p_on, p_late = conf(D - te - rem - rtt), conf(lb)
+        busy = max(tx + rtt, 1000 * PERIOD)
         if cf["obj"] == "stream":
             L = te + tx + rem + rtt
             v = self.acc_of(model, res, q) / self.ref * self.H(L, busy / max(1, self.n_active)) * p_late

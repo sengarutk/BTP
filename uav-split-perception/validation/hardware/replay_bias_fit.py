@@ -28,14 +28,29 @@ GRID = [(d, sr) for sr in (False, True) for d in (0.0, 10.0, 20.0, 40.0)]
 GROUPS = (["mission"], ["mission_mirror"], ["random"], ["static_good"])
 
 
+def dump(obj, path):
+    """Atomic write: a restart mid-write leaves the old file, never an empty one (13 Nov 2026)."""
+    tmp = Path(str(path) + ".tmp")
+    json.dump(obj, open(tmp, "w"), indent=1)
+    tmp.replace(path)
+
+
+def load_ok(path):
+    try:
+        return json.load(open(path))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
 def tag(d, sr):
     return f"c{d:g}_{'sr' if sr else 'ind'}"
 
 
 def run(policies, d, sr, out):
     out.mkdir(parents=True, exist_ok=True)
-    if (out / "replay_summary_20s.json").exists():
-        return json.load(open(out / "replay_summary_20s.json"))
+    done = load_ok(out / "replay_summary_20s.json")
+    if done is not None:
+        return done
     procs = []
     for k, scs in enumerate(GROUPS):
         g = out / f"g{k}"
@@ -48,7 +63,7 @@ def run(policies, d, sr, out):
         if p.wait() != 0:
             raise SystemExit(f"replay failed in {out}")
     rows = [r for k in range(len(GROUPS)) for r in json.load(open(out / f"g{k}" / "replay_summary_20s.json"))]
-    json.dump(rows, open(out / "replay_summary_20s.json", "w"), indent=1)
+    dump(rows, out / "replay_summary_20s.json")
     return rows
 
 
@@ -84,17 +99,17 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     res_f = OUT / "fit.json"
     if a.cmd == "fit":
-        res = json.load(open(res_f)) if res_f.exists() else {}
+        res = load_ok(res_f) or {}
         for d, sr in GRID:
             t = tag(d, sr)
             if t in res:
                 continue
             res[t] = compare(run(FIT, d, sr, OUT / "fit" / t), FIT)
-            json.dump(res, open(res_f, "w"), indent=1)
+            dump(res, res_f)
             print(f"{t}: mean |diff| {res[t]['mean_abs_diff']:.4f}  r {res[t]['pearson']:.3f}", flush=True)
         best = min(res, key=lambda k: res[k]["mean_abs_diff"])
         print("chosen:", best)
-        json.dump(res, open(res_f, "w"), indent=1)
+        dump(res, res_f)
     else:
         res = json.load(open(res_f))
         best = min(res, key=lambda k: res[k]["mean_abs_diff"])
@@ -102,7 +117,7 @@ def main():
         stored = [r for r in json.load(open(STORED)) if r["policy"] in HELD]
         out = {"chosen": best, "uncorrected": compare(stored, HELD),
                "corrected": compare(run(HELD, d, sr, OUT / "test" / best), HELD)}
-        json.dump(out, open(OUT / "test.json", "w"), indent=1)
+        dump(out, OUT / "test.json")
         for k in ("uncorrected", "corrected"):
             c = out[k]
             print(f"{k}: mean |diff| {c['mean_abs_diff']:.4f}  r {c['pearson']:.3f}  leaf - v5 replay "

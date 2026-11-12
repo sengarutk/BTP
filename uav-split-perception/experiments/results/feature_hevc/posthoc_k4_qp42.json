@@ -1,0 +1,20 @@
+{
+ "option": "posthoc_k4_qp42",
+ "kind": "posthoc",
+ "code": null,
+ "qp": 42,
+ "n": 548,
+ "payload_bytes_mean": 13595.37591240876,
+ "payload_bytes_p95": 20067.0,
+ "picture": [
+  384,
+  1344
+ ],
+ "encode_ms_single_thread": 222.78240207488125,
+ "decode_ms_single_thread": 9.94432527513709,
+ "timed_pictures": 40,
+ "map50_95": 0.12942300169301368,
+ "map50": 0.2400357344058962,
+ "base_map50_95": null,
+ "num_images": 548
+}

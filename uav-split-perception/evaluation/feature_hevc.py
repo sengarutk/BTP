@@ -100,7 +100,11 @@ def cmd_eval(a):
         tag = f"posthoc_k4_qp{qp}" if kind == "posthoc" else f"learned_{code}_qp{qp}"
         f_out = OUT / f"{tag}.json"
         if f_out.exists():
-            continue
+            try:
+                json.load(open(f_out))
+                continue
+            except json.JSONDecodeError:          # left empty by a restart mid-write: redo it
+                pass
         yolo = YOLO(str(REPO / "weights" / "yolov8s_visdrone.pt"))
         sizes, mosaics = [], []
         if kind == "posthoc":
