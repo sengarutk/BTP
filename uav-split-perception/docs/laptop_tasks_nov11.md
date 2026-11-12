@@ -25,3 +25,17 @@ Status: [x] done and pushed, [~] running or in progress, [ ] to do. Board items 
 
 ## Afterwards
 - [ ] rewrite both papers around the results; fresh-context audit
+
+## Round 2 (from the literature check of 12 Nov 2026; roadmap in the 12 Nov chat, items L1-L12)
+- [x] L2  eight new related works in paper 2, each checked on arXiv's API or Crossref (2073da56)
+- [x] L3  every controller's equations (v1-v5.1) against the code (docs/controller_equations_check_nov12.md)
+- [x] L4  the break-even rule on measured mesh traces: all 4 predictions held (95ce9f55)
+- [~] L5  FCM-style feature coding with HEVC (evaluation/feature_hevc.py; VVC needs the user's OK to build VVenC)
+- [~] L7  replay bias: contention + shared-radio switches, fit/held-out calibration (replay_bias_fit.py)
+- [ ] L6  second dataset (needs a download: the user's OK)
+- [ ] L8  conformal deadline guarantee (replay)
+- [ ] L9  theory: time above 80 C under the guard; Theorem 2 with Markov states
+- [ ] L10 frame rate as a knob (IntUNe)
+- [ ] L11 coordinator for many cameras (simulator)
+- [ ] L12 benchmark release with DOI, artifact badges
+- [ ] L1  rewrite + fresh-reader audit of both papers (last, with board results)

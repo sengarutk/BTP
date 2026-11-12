@@ -58,6 +58,9 @@ NETEM_LEGACY = True   # set by --netem: legacy (rate limits persist, campaigns u
 # With "power" the board's temperature is also held at its throttle limit (energy_constants pi.thermal.throttle_c, 85 C;
 # measured peak 89.2 C): the firmware lowers the clock to stay there, which the linear thermal fit does not know.
 ONB_POWER = "energy"
+# replay bias (roadmap L7, 12 Nov 2026), both off by default (every stored result reproduces):
+CONTENTION_MS = 0.0   # an offload dispatched while onboard inference runs starts this much later (Pi CPU contention)
+SHARED_RADIO = False  # a transfer that starts while the other path is transmitting gets half the drawn goodput
 T0_C = 70.0   # starting Pi temperature: campaign runs are back to back, measured run-mean temperatures 68-81 C
 TAU_HEAT, TAU_COOL, P_SD = 148.8, 148.8, 0.07   # one time constant: heating steps of the 24-min heat run fit 137-146 s
 
@@ -112,6 +115,7 @@ class Link:
         self.rate_cap = None      # netem keeps a phase's rate limit until a later phase sets another (as on the Pi)
         self.last_probe = -1.0
         self.edge_w = None
+        self.peer = None          # the other path (SHARED_RADIO: both share the camera drone's one radio)
 
     def sample(self):
         if self.seq is None or self.k >= len(self.seq):
@@ -152,6 +156,8 @@ class Link:
         """Start a transfer at t; returns the time the bytes are acknowledged (inf if the link is cut)."""
         c = self.cap(t)
         g = self.sample()
+        if SHARED_RADIO and self.peer is not None and self.peer.inflight is not None and self.peer.inflight[2] > t:
+            g *= 0.5
         if c is not None:
             g = min(g, c)
         t_done = float("inf") if g <= 0 else t + nbytes * 8 / (g * 1e6) + self.rtt / 1e3
@@ -201,6 +207,7 @@ class Replay:
         self.lag, self.rat = np.array(dec["lag_ms"], float), np.array(dec["ratio"], float)
         self.links = {p: Link(p, gp[p], random.Random(seed * 7919 + {"laptop": 1, "jetson": 2}[p]),
                               {"laptop": 20.0, "jetson": 12.0}[p], PRIOR_REMOTE_MS[p]) for p in ("laptop", "jetson")}
+        self.links["laptop"].peer, self.links["jetson"].peer = self.links["jetson"], self.links["laptop"]
         seqs = json.load(open(VID / "sequences.json"))
         self.keys = [(sq, i) for sq, n in seqs for i in range(1, n + 1)]
         self.nbytes = {(r, q): float(PRIOR_BYTES[r][q]) for r in PRIOR_BYTES for q in PRIOR_BYTES[r]}
@@ -473,7 +480,7 @@ class Replay:
                     model, res, q = (dict(PATH_VARIANTS, **(LAPTOP_EXTRA if srv == "laptop" else {})))[var]
                     L_ = self.links[srv]
                     b = self.nbytes[(res, q)]
-                    t_ack = L_.send(t + ENC_MS[res] / 1e3, b)
+                    t_ack = L_.send(t + ENC_MS[res] / 1e3 + (CONTENTION_MS / 1e3 if t < onb_until else 0.0), b)
                     e_j += c["pi"]["encode_j"].get(f"{res}q{q}", 0.006)
                     r_ = L_.est(t)[0]
                     radio_until[srv] = (min(t_ack, t + STALL_S), c["pi"]["radio_tx_w"]["a"] +
@@ -546,10 +553,13 @@ def main():
                          "rate limit persists, as in every campaign up to 13 Oct (use it to validate against those)")
     ap.add_argument("--onboard-power", default="energy", choices=["energy", "power"],
                     help="onboard inference power model (see ONB_POWER); energy reproduces every result before 29 Oct")
+    ap.add_argument("--contention-ms", type=float, default=0.0, help="L7: offload delay while onboard runs (ms)")
+    ap.add_argument("--shared-radio", action="store_true", help="L7: both paths share the camera drone's radio")
     a = ap.parse_args()
-    global NETEM_LEGACY, ONB_POWER
+    global NETEM_LEGACY, ONB_POWER, CONTENTION_MS, SHARED_RADIO
     NETEM_LEGACY = a.netem == "legacy"
     ONB_POWER = a.onboard_power
+    CONTENTION_MS, SHARED_RADIO = a.contention_ms, a.shared_radio
     lo, hi = (int(x) for x in a.seeds.split("-"))
     gp = load_goodput()
     c, decays, accs, vd = load_all()
