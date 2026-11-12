@@ -25,3 +25,19 @@ Predictions:
    wins, and holds on the Pi (758 ms) and at 360 ms.
 3. The fading version, with the traces' own spread, has 0 exceptions (at most 1 % of wins).
 4. Model and simulator agree on who wins in 88-96 % of the cells.
+
+## Results (12 Nov 2026; break_even_sim.py --real --seeds 5; sim_check_real.json, sim_real_metrics.tex)
+
+Traces: aoithr r1, heat r2, heate r3, v41 r2 and v41e r3 of mesh campaign 2. Mean goodput 29.3-34.2 Mbit/s, spread
+0.37-0.40.
+
+1. **Held.** The spread is 0.38 (per trace 0.37-0.40), between the synthetic moderate (0.38) and vehicular (0.54)
+   profiles.
+2. **Held.** The constant-goodput B_be fails for 91 of 709 simulated wins (13 %), only on devices of 180 ms per
+   inference or faster (the laptop GPU, the Jetson and the 40/90/180 ms sweep points). The wins are up to 1.4x above
+   B_be, by a median 4 % over the best JPEG. On the Pi and at 360 ms the bound holds.
+3. **Held.** The fading version, with the traces' own spread and nothing fitted, has 0 exceptions (median slack 121 %).
+4. **Held.** Model and simulator agree on who wins in 95 % of 3,472 cells.
+
+The rule therefore behaves on the real mesh link exactly as on the synthetic profiles. This answers "checked only on
+synthetic channels"; it is still the simulator, not a live crossover measurement (that is board item B3).

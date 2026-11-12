@@ -19,7 +19,7 @@
 % YOLO11s (sd_metrics.tex from evaluation/second_detector.py, experiments/results/second_detector/yolo11s/);
 % inter-frame coding of the codes (video_inter_metrics.tex from evaluation/video_codecs.py analyse --inter, after
 % evaluation/interframe_codes.py extract); region-of-interest JPEG (Vc*Roi* macros in video_metrics.tex, after
-% evaluation/roi_jpeg.py eval).
+% evaluation/roi_jpeg.py eval); measured mesh links (sim_real_metrics.tex from evaluation/break_even_sim.py --real).
 \subsection{When can a split pay off? A design rule}\label{sec:design-rule}
 Proposition~\ref{prop:dominance} settles splits that need at least an image's bits, onboard time and onboard-plus-server
 time. Learned codes are smaller, so we ask where, in onboard speed and goodput, \emph{any} code can beat every
@@ -128,6 +128,17 @@ closed form for the frame rate under a varying goodput. With the traces' own spr
 split win lies at or above $B_{\mathrm{be,f}}$ on either profile (\BeSimModFadingExc{} and \BeSimVehFadingExc{}
 exceptions). It is conservative: the bound is a median \BeSimModFadingSlack\,\% and \BeSimVehFadingSlack\,\% above the
 largest winning goodput.
+
+\textbf{On measured links.} The same test ran on goodput measured on our mesh: the direct camera-to-edge link in
+\BeSimRealSeeds{} fault-free runs, \BeSimRealDuration~s each, held between samples and rescaled to each mean goodput
+as above. Its relative spread is \BeSimMeshSpread. The result is the same as on the synthetic profiles:
+\begin{itemize}
+\item Model and simulator agree in \BeSimMeshAgree\,\% of the cells.
+\item The constant bound fails for \BeSimMeshExc{} of the \BeSimMeshWins{} simulated wins (\BeSimMeshExcPct\,\%), only on
+devices of at most \BeSimRealExcTfullMax~ms per inference, at up to \BeSimMeshRatio$\times$ the bound and by a median
+\BeSimMeshMargin\,\% over the best JPEG setting.
+\item The fading version has \BeSimMeshFadingExc{} exceptions.
+\end{itemize}
 
 \textbf{Post-hoc splits.} The \BeSurveyRows{} rows of the \BeSurveyModels-detector survey all meet the bit and onboard
 conditions of Proposition~\ref{prop:dominance}: more bits and more onboard work than a Q95 JPEG. The server-time
