@@ -33,3 +33,36 @@ Not covered by these checks:
   themselves were not re-derived.
 - Whether the board-side copy of energy_constants.json equals the repository's (needs the boards; md5 to be compared
   at the next session).
+
+## Mathematical verification (13 Nov 2026)
+
+Beyond "the code matches the paper": each formula's derivation, units and signs were checked, each proof was
+re-derived line by line, and each statement was tested on random cases (`paper2/theorem_random_checks.py`, seed
+20261113, results in `experiments/results/hardware/theory_check/random_checks.json`). Each test was also run with one
+assumption broken (negative control), to show that it can fail.
+
+| Item | Derivation / proof | Units and signs | Random test | Negative control |
+|---|---|---|---|---|
+| p_on, p_late (Gaussian deadline probability) | P(g >= R_need) = Phi((r - R_need)/sigma) for g ~ N(r, sigma²); R_need = 8b / (1000 (X - t_enc - t_rem - rtt)) Mbit/s | bits / (ms·10³) = Mbit/s; argument dimensionless | (calibration in the replay: ECE 0.042, cautious) | - |
+| Value V (stream) | expected held accuracy: A/A_ref × 5-point mean of rho over [L, L+T] × p_late; a modelled objective, not a theorem | dimensionless; mu·E: (1/J)·J; lambda_F·p_on dimensionless | - | - |
+| Rate value (v1, v2) | accuracy-weighted on-time results per second; energy term J × 1/s = W, times a price per J | value per second throughout | - | - |
+| E_cam(path) | encode J + radio power (a + b r) W × airtime 8b/(10⁶ r) s | J | - | - |
+| mu update (energy price) | projected dual ascent on E[P] <= B: rises when P̄ > B | correct sign | (Theorem 1) | - |
+| lambda_F update | multiplier of F >= 0.95: rises when F̂ < 0.95 | correct sign | - | - |
+| mu_e, lambda_T updates | multipliers of the Jetson budget and of θ̂ <= 75 °C | correct signs | - | - |
+| θ̂ (60-s prediction) | exact solution of the first-order model for constant input | °C | - | - |
+| Theorem 1 | telescoping sum of the update; s_t >= 0 for plain, clipped and guard-raised steps, so only held/capped steps can loosen it | W | 20,000 random sequences: 0 violations | without the hold/cap term: 2,130 of 3,000 fail |
+| Theorem 2 | drift-plus-penalty with L = mu²/2: ΔL <= eta mu (P - B) + eta² (P - B)²/2; greedy >= best stationary policy | value units | 100 random i.i.d. problems, U* exact by duality: 0 violations | - |
+| Proposition (budget, temperature) | integrate θ' = (a + bP - θ)/τ over the window | °C | 2,000 profiles: error <= 1.4·10⁻¹² °C | - |
+| Theorem 3 (a) | superposition, θ_i >= 0 | °C | 3,000 cases: 0 violations | - |
+| Theorem 3 (b) | bounds (i) and (ii) re-derived; their crossing x* = (H - θ_f)/(H - θ_lo) gives the stated bound (algebraic identity checked) | °C | 3,000 cases: 0 violations, closest 0.28 °C below the bound | without the guard: 425 of 600 fail, by up to 16 °C |
+| Theorem 3 constants | δ_i = 11.31·3.1·(1 - e^(-0.76/149)) = 0.18; δ_n = 8.5·5/24.3 = 1.75; bound 79.93 °C; room margin 14.5 °C; converse 10.8 °C | - | - | - |
+| Paper 1 proposition (break-even goodput) | proof re-derived (frame rate and on-time probability of the qualifying image setting) | Mbit/s | 20,000 random options: 0 violations | image less accurate than required: 1,853 of 5,000 fail |
+
+What remains a model, not a mathematical fact (stated as such in the papers):
+- The deadline probability assumes Gaussian goodput: calibrated in the replay; on hardware from the next session.
+- V is the controller's chosen objective: an estimate of held accuracy, not a proved optimum. Its 5-point average,
+  T = T_busy / n_active, and the freshness bonus are approximations.
+- Theorem 2 is idealised; the hardware breaks six of its assumptions (listed in paper 2).
+- The Proposition and Theorem 3 rest on the first-order thermal model: mean temperature checked within 1.6 °C on 16
+  long runs; the guard's peak is checked only in the replay.

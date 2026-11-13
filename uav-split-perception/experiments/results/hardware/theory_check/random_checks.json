@@ -1,0 +1,29 @@
+{
+ "method": "Randomised checks of paper 2's mathematics, independent of the hardware data (13 Nov 2026).\n\nA proof can be read; these test the statements on thousands of random cases that meet each result's assumptions.\nA violation would mean the statement (or its proof) is wrong.\n  thm1   Theorem 1: random power sequences and random holds, caps, clips and guard raises in the price update\n         (the coded rule); the bound must hold on every sequence.\n  prop   Proposition (budget and temperature): random power profiles, first-order model integrated finely; the mean\n         temperature identity must hold to integration error.\n  thm3   Theorem 3: random load P_n(t) <= P_hat, random inference schedules that obey the guard (one at a time, none\n         started at or above theta_g, each at most e long, P_i <= P_hat_i); theta from the model; checks (a) and (b).\n  thm2   Theorem 2: random finite i.i.d. problems; the greedy controller with a plain projected dual step; U* of the\n         best power-feasible randomised stationary policy by Lagrangian duality; checks the gap bound in expectation.\n  rule   paper 1's Proposition (break-even goodput): random options in the paper's model; a qualifying image setting\n         must never lose to the code at any goodput at or above B_be.\nusage: python paper2/theorem_random_checks.py -> experiments/results/hardware/theory_check/random_checks.json\n",
+ "seed": 20261113,
+ "thm1": {
+  "cases": 20000,
+  "violations": 0,
+  "largest_lhs_minus_rhs": 3.1086244689504383e-15
+ },
+ "prop": {
+  "cases": 2000,
+  "largest_abs_error_c": 1.4352963262354024e-12
+ },
+ "thm3": {
+  "cases": 3000,
+  "violations_a": 0,
+  "violations_b": 0,
+  "largest_peak_minus_bound_c": -0.27926637950465505,
+  "note": "the guard is checked on the model temperature every 10 ms; an inference that has started runs to its end"
+ },
+ "thm2": {
+  "cases": 100,
+  "violations": 0,
+  "largest_excess_in_standard_errors": -2.7990753113752707
+ },
+ "rule": {
+  "cases": 20000,
+  "violations": 0
+ }
+}
