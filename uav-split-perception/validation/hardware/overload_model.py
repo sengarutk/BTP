@@ -18,6 +18,10 @@ Jetson-served frames on the mesh, and the multihop fixed-offload row of vid_camp
 Sending rules per camera:
   stopwait  one frame in flight (our system): a camera sends its newest frame when its previous result is back
   fifo      open loop at the camera rate into unbounded first-in-first-out queues (a naive system)
+  ackwait   v4.1's actual rule (adaptive2.py, added 13 Nov 2026): a camera sends its newest frame once its previous
+            frame has LEFT THE RADIO (bytes acknowledged), not when its result is back; the radio is first-come
+            (a frame handed to it cannot be recalled); at the server a newer frame of the same camera replaces its
+            waiting one (edge_node.py). stopwait, which 19.13 called "our system", waits for the result.
   latest    open loop, but each queue holds one waiting frame per camera and a newer frame replaces it (edge_node.py's
             rule). At the radio this needs a coordinator that grants send slots: a frame already handed to the radio
             cannot be replaced.
@@ -41,7 +45,7 @@ from pathlib import Path
 
 H = Path(__file__).resolve().parents[2] / "experiments" / "results" / "hardware"
 DL, T, WARM, SEEDS, CV_SERVER = 300.0, 120000.0, 10000.0, 5, 0.25
-PIS, FPS, MODES = (1, 2, 3, 4, 5, 6, 8, 10), (10, 15, 30), ("stopwait", "fifo", "latest")
+PIS, FPS, MODES = (1, 2, 3, 4, 5, 6, 8, 10), (10, 15, 30), ("stopwait", "fifo", "latest", "ackwait")
 
 
 def sigma_of_cv(cv):
@@ -122,7 +126,7 @@ def sim(n, fps, mode, stages, enc, s_enc, seed):
 
     def arrive(j, fr, t):
         q = S[j]["q"]
-        if mode == "latest":
+        if mode == "latest" or (mode == "ackwait" and j > 0):
             for f in [f for f in q if f[0] == fr[0]]:
                 q.remove(f)
         q.append(fr)
@@ -133,7 +137,7 @@ def sim(n, fps, mode, stages, enc, s_enc, seed):
             break
         if k == "cam":
             push(t + per, "cam", d)
-            if mode == "stopwait" and infl[d]:
+            if mode in ("stopwait", "ackwait") and infl[d]:
                 skipped += 1
                 continue
             infl[d] = True
@@ -147,11 +151,14 @@ def sim(n, fps, mode, stages, enc, s_enc, seed):
             if j == len(stages) - 1:
                 lat = t - fr[1]
                 done.append((t, lat))
-                infl[fr[0]] = False
+                if mode != "ackwait":                   # ackwait frees the camera when its bytes leave the radio
+                    infl[fr[0]] = False
                 if t > WARM:
                     work[0] += dd
                     work[1] += dd * (lat > DL)
             else:
+                if mode == "ackwait" and j == 0:       # the bytes have left the radio: the camera may send again
+                    infl[fr[0]] = False
                 arrive(j + 1, fr, t)
             start(j, t)
     lat = sorted(l for tt, l in done if tt > WARM)

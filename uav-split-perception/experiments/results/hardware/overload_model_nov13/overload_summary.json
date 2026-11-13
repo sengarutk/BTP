@@ -1,0 +1,2987 @@
+{
+ "inputs": {
+  "encode_ms": 7.7,
+  "sigma_encode": 0.24622067706923975,
+  "cases": {
+   "wifi_jetson": {
+    "stages": [
+     [
+      "wifi_air",
+      58.7,
+      0.24622067706923975
+     ],
+     [
+      "jetson_server",
+      38.0,
+      0.24622067706923975
+     ]
+    ],
+    "source": "placements.csv pi>jetson jpeg stages_ms"
+   },
+   "mesh_jetson": {
+    "stages": [
+     [
+      "mesh_air",
+      22.105861633242977,
+      0.45236456005019393
+     ],
+     [
+      "jetson_server",
+      38.0,
+      0.24622067706923975
+     ]
+    ],
+    "link": {
+     "goodput_mbps_median": 26.982888516003758,
+     "bytes_median": 74560,
+     "air_ms": 22.105861633242977,
+     "log_sigma": 0.45236456005019393,
+     "n_goodput_samples": 26703
+    },
+    "source": "vid_campaign_mesh2 static_good, path jetson"
+   },
+   "mesh_relayed": {
+    "stages": [
+     [
+      "mesh_air_two_hops",
+      83.72808183802414,
+      0.42976001859640856
+     ],
+     [
+      "laptop_server",
+      11.4,
+      0.24622067706923975
+     ]
+    ],
+    "link": {
+     "goodput_mbps_median": 6.419160551650389,
+     "bytes_median": 67183.0,
+     "air_ms": 83.72808183802414,
+     "log_sigma": 0.42976001859640856,
+     "n_goodput_samples": 16969
+    },
+    "source": "vid_campaign_mesh2 multihop, path laptop"
+   }
+  },
+  "calibration_targets": {
+   "wifi_jetson_live_fps": 10.85,
+   "wifi_jetson_live_lat_p50_ms": 149.6,
+   "mesh_jetson_live_lat_p50_ms": 74.2392,
+   "mesh_jetson_live_frames": 21675,
+   "mesh_relayed_fixed_live_on_time_share": 0.12472222222222225,
+   "mesh_relayed_fixed_live_lat_p50_ms": 308.8181666666667,
+   "mesh_relayed_fixed_live_on_time_fps": 1.8888888888888886,
+   "mesh_relayed_fixed_runs": 3
+  }
+ },
+ "assumptions": {
+  "deadline_ms": 300.0,
+  "run_ms": 120000.0,
+  "warmup_ms": 10000.0,
+  "seeds": 5,
+  "server_cv": 0.25,
+  "radio": "one shared first-come queue, no collisions",
+  "return_path": "ignored (< 1 KB of detections)"
+ },
+ "bottleneck_capacity_fps": {
+  "wifi_jetson": 17.035775127768314,
+  "mesh_jetson": 26.31578947368421,
+  "mesh_relayed": 11.943424213808534
+ },
+ "max_cameras_at_30fps_95pct_on_time": {
+  "wifi_jetson|stopwait": 4,
+  "wifi_jetson|fifo": 0,
+  "wifi_jetson|latest": 10,
+  "wifi_jetson|ackwait": 3,
+  "mesh_jetson|stopwait": 6,
+  "mesh_jetson|fifo": 0,
+  "mesh_jetson|latest": 10,
+  "mesh_jetson|ackwait": 5,
+  "mesh_relayed|stopwait": 2,
+  "mesh_relayed|fifo": 0,
+  "mesh_relayed|latest": 10,
+  "mesh_relayed|ackwait": 2
+ },
+ "grid": {
+  "wifi_jetson|1|10|stopwait": {
+   "fps": 6.421818181818182,
+   "on_time_fps": 6.421818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.48012751074857,
+   "lat_p95_ms": 135.37086006391328,
+   "server_busy_share": 0.24342650814418917,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.421818181818182
+  },
+  "wifi_jetson|1|10|fifo": {
+   "fps": 10.001818181818182,
+   "on_time_fps": 10.001818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.921780552977,
+   "lat_p95_ms": 135.8957717928566,
+   "server_busy_share": 0.38000583729630844,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.001818181818182
+  },
+  "wifi_jetson|1|10|latest": {
+   "fps": 10.001818181818182,
+   "on_time_fps": 10.001818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.921780552977,
+   "lat_p95_ms": 135.8957717928566,
+   "server_busy_share": 0.38000583729630844,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.001818181818182
+  },
+  "wifi_jetson|1|10|ackwait": {
+   "fps": 9.765454545454546,
+   "on_time_fps": 9.765454545454546,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.76553542776965,
+   "lat_p95_ms": 136.12020143202972,
+   "server_busy_share": 0.37127797721782674,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.765454545454546
+  },
+  "wifi_jetson|1|15|stopwait": {
+   "fps": 7.290909090909091,
+   "on_time_fps": 7.290909090909091,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.54936417837307,
+   "lat_p95_ms": 135.25775318543782,
+   "server_busy_share": 0.27640511536062223,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 7.290909090909091
+  },
+  "wifi_jetson|1|15|fifo": {
+   "fps": 14.996363636363636,
+   "on_time_fps": 14.996363636363636,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 109.32846721205496,
+   "lat_p95_ms": 152.15112523406134,
+   "server_busy_share": 0.5704600151644443,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 14.996363636363636
+  },
+  "wifi_jetson|1|15|latest": {
+   "fps": 14.940000000000001,
+   "on_time_fps": 14.940000000000001,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 109.03730497247162,
+   "lat_p95_ms": 149.15967185650226,
+   "server_busy_share": 0.5669845440559339,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 14.940000000000001
+  },
+  "wifi_jetson|1|15|ackwait": {
+   "fps": 10.429090909090908,
+   "on_time_fps": 10.429090909090908,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.79784268830699,
+   "lat_p95_ms": 136.00277548926823,
+   "server_busy_share": 0.39637652029111725,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.429090909090908
+  },
+  "wifi_jetson|1|30|stopwait": {
+   "fps": 8.289090909090909,
+   "on_time_fps": 8.289090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.58443750236002,
+   "lat_p95_ms": 135.45880627127772,
+   "server_busy_share": 0.3146816685928953,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.289090909090909
+  },
+  "wifi_jetson|1|30|fifo": {
+   "fps": 17.06,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 27968.007498559135,
+   "lat_p95_ms": 49443.335804802184,
+   "server_busy_share": 0.6485907695750652,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 17.06
+  },
+  "wifi_jetson|1|30|latest": {
+   "fps": 17.045454545454547,
+   "on_time_fps": 17.045454545454547,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 120.95210655424162,
+   "lat_p95_ms": 155.84041326557636,
+   "server_busy_share": 0.6474127141622645,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 17.045454545454547
+  },
+  "wifi_jetson|1|30|ackwait": {
+   "fps": 12.203636363636363,
+   "on_time_fps": 12.203636363636363,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 102.69439417588983,
+   "lat_p95_ms": 136.00912499405823,
+   "server_busy_share": 0.46456013109055405,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 12.203636363636363
+  },
+  "wifi_jetson|2|10|stopwait": {
+   "fps": 11.803636363636363,
+   "on_time_fps": 11.803636363636363,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 109.93054702676018,
+   "lat_p95_ms": 148.83842053725166,
+   "server_busy_share": 0.4483079320804671,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.901818181818181
+  },
+  "wifi_jetson|2|10|fifo": {
+   "fps": 17.01090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 9871.36136203595,
+   "lat_p95_ms": 17195.350145464712,
+   "server_busy_share": 0.644804911515663,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.505454545454546
+  },
+  "wifi_jetson|2|10|latest": {
+   "fps": 17.01090909090909,
+   "on_time_fps": 17.01090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 175.25359938007168,
+   "lat_p95_ms": 215.7536567302137,
+   "server_busy_share": 0.6444232667058217,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.505454545454546
+  },
+  "wifi_jetson|2|10|ackwait": {
+   "fps": 15.665454545454546,
+   "on_time_fps": 15.665454545454546,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 123.82610691435949,
+   "lat_p95_ms": 172.06016615372465,
+   "server_busy_share": 0.5966725763840467,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 7.832727272727273
+  },
+  "wifi_jetson|2|15|stopwait": {
+   "fps": 13.521818181818182,
+   "on_time_fps": 13.521818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 113.52472676257894,
+   "lat_p95_ms": 157.67322077306417,
+   "server_busy_share": 0.5147306633523031,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.760909090909091
+  },
+  "wifi_jetson|2|15|fifo": {
+   "fps": 17.06,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 27968.007498558865,
+   "lat_p95_ms": 49443.33580480499,
+   "server_busy_share": 0.6485907695750652,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.53
+  },
+  "wifi_jetson|2|15|latest": {
+   "fps": 17.06,
+   "on_time_fps": 17.06,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 154.38625231299594,
+   "lat_p95_ms": 189.23425475418517,
+   "server_busy_share": 0.6485907695750652,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.53
+  },
+  "wifi_jetson|2|15|ackwait": {
+   "fps": 16.19818181818182,
+   "on_time_fps": 16.19818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 126.08301571532793,
+   "lat_p95_ms": 175.0547508824249,
+   "server_busy_share": 0.6175474043266763,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.09909090909091
+  },
+  "wifi_jetson|2|30|stopwait": {
+   "fps": 15.183636363636364,
+   "on_time_fps": 15.183636363636364,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 112.28924643881729,
+   "lat_p95_ms": 156.56976565793957,
+   "server_busy_share": 0.5765165888056686,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 7.591818181818182
+  },
+  "wifi_jetson|2|30|fifo": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 46562.600856166464,
+   "lat_p95_ms": 81864.01836274957,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.535454545454545
+  },
+  "wifi_jetson|2|30|latest": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 17.07090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 128.43216427700318,
+   "lat_p95_ms": 161.19419381919323,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.535454545454545
+  },
+  "wifi_jetson|2|30|ackwait": {
+   "fps": 17.063636363636363,
+   "on_time_fps": 17.063636363636363,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 138.32042509229942,
+   "lat_p95_ms": 180.5376332117841,
+   "server_busy_share": 0.6495112517444805,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.531818181818181
+  },
+  "wifi_jetson|3|10|stopwait": {
+   "fps": 15.65090909090909,
+   "on_time_fps": 15.65090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 135.60011984999875,
+   "lat_p95_ms": 196.56095498628127,
+   "server_busy_share": 0.5942086409626849,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.216969696969697
+  },
+  "wifi_jetson|3|10|fifo": {
+   "fps": 17.06,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 27968.007498558953,
+   "lat_p95_ms": 49443.33580480405,
+   "server_busy_share": 0.6485907695750652,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.6866666666666665
+  },
+  "wifi_jetson|3|10|latest": {
+   "fps": 17.06,
+   "on_time_fps": 17.06,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 187.7195856463906,
+   "lat_p95_ms": 222.5675880875744,
+   "server_busy_share": 0.6485907695750652,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.6866666666666665
+  },
+  "wifi_jetson|3|10|ackwait": {
+   "fps": 16.983636363636364,
+   "on_time_fps": 16.98,
+   "on_time_share": 0.9997849909714699,
+   "lat_p50_ms": 165.0248117359457,
+   "lat_p95_ms": 228.8193468903293,
+   "server_busy_share": 0.6461948548915807,
+   "server_work_late_pct": 0.031006594903758823,
+   "per_camera_fps": 5.661212121212121
+  },
+  "wifi_jetson|3|15|stopwait": {
+   "fps": 16.7,
+   "on_time_fps": 16.7,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 144.8230056297354,
+   "lat_p95_ms": 203.31468747678082,
+   "server_busy_share": 0.6331662136909825,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.566666666666666
+  },
+  "wifi_jetson|3|15|fifo": {
+   "fps": 17.027272727272727,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 40357.14740841888,
+   "lat_p95_ms": 71144.463103973,
+   "server_busy_share": 0.6455511012901085,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.675757575757576
+  },
+  "wifi_jetson|3|15|latest": {
+   "fps": 17.027272727272727,
+   "on_time_fps": 17.027272727272727,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 159.55780035517563,
+   "lat_p95_ms": 193.44491040902284,
+   "server_busy_share": 0.6455511012901085,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.675757575757576
+  },
+  "wifi_jetson|3|15|ackwait": {
+   "fps": 17.02,
+   "on_time_fps": 17.01090909090909,
+   "on_time_share": 0.9994650655481424,
+   "lat_p50_ms": 181.00120541857467,
+   "lat_p95_ms": 238.06219424518787,
+   "server_busy_share": 0.6461107755179208,
+   "server_work_late_pct": 0.062222679524125704,
+   "per_camera_fps": 5.673333333333333
+  },
+  "wifi_jetson|3|30|stopwait": {
+   "fps": 17.072727272727274,
+   "on_time_fps": 17.072727272727274,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 158.07360379596065,
+   "lat_p95_ms": 210.22270781791448,
+   "server_busy_share": 0.6498554564782131,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.690909090909091
+  },
+  "wifi_jetson|3|30|fifo": {
+   "fps": 17.054545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 52818.87701697508,
+   "lat_p95_ms": 92883.43620336508,
+   "server_busy_share": 0.6460594715655947,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.684848484848485
+  },
+  "wifi_jetson|3|30|latest": {
+   "fps": 17.047272727272727,
+   "on_time_fps": 17.047272727272727,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 131.2682001097768,
+   "lat_p95_ms": 163.64287746278168,
+   "server_busy_share": 0.6443220274061104,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.682424242424243
+  },
+  "wifi_jetson|3|30|ackwait": {
+   "fps": 17.025454545454544,
+   "on_time_fps": 17.005454545454548,
+   "on_time_share": 0.9988245454973839,
+   "lat_p50_ms": 196.75634221246,
+   "lat_p95_ms": 248.00396355353297,
+   "server_busy_share": 0.6448017558606642,
+   "server_work_late_pct": 0.14537141713006957,
+   "per_camera_fps": 5.675151515151515
+  },
+  "wifi_jetson|4|10|stopwait": {
+   "fps": 17.063636363636363,
+   "on_time_fps": 16.99818181818182,
+   "on_time_share": 0.9961605818298486,
+   "lat_p50_ms": 183.22074321245236,
+   "lat_p95_ms": 254.66010462134653,
+   "server_busy_share": 0.6498306356973673,
+   "server_work_late_pct": 0.44843905277791835,
+   "per_camera_fps": 4.265909090909091
+  },
+  "wifi_jetson|4|10|fifo": {
+   "fps": 17.043636363636363,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 37126.179071426246,
+   "lat_p95_ms": 65598.17359302027,
+   "server_busy_share": 0.6493206237916099,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.260909090909091
+  },
+  "wifi_jetson|4|10|latest": {
+   "fps": 17.043636363636363,
+   "on_time_fps": 17.043636363636363,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 191.67171580211507,
+   "lat_p95_ms": 226.44081749819816,
+   "server_busy_share": 0.6493206237916099,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 4.260909090909091
+  },
+  "wifi_jetson|4|10|ackwait": {
+   "fps": 17.03636363636364,
+   "on_time_fps": 16.414545454545454,
+   "on_time_share": 0.9634758396879477,
+   "lat_p50_ms": 223.39388528286509,
+   "lat_p95_ms": 293.6614364270732,
+   "server_busy_share": 0.6484766317876374,
+   "server_work_late_pct": 4.172282047599994,
+   "per_camera_fps": 4.25909090909091
+  },
+  "wifi_jetson|4|15|stopwait": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 16.954545454545453,
+   "on_time_share": 0.9931824643548097,
+   "lat_p50_ms": 200.03097011019344,
+   "lat_p95_ms": 263.9016164077795,
+   "server_busy_share": 0.6489088493308799,
+   "server_work_late_pct": 0.8211052524555033,
+   "per_camera_fps": 4.267727272727273
+  },
+  "wifi_jetson|4|15|fifo": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 46562.60085616654,
+   "lat_p95_ms": 81864.01836274887,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.267727272727273
+  },
+  "wifi_jetson|4|15|latest": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 17.07090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 161.7654976091544,
+   "lat_p95_ms": 194.5275271500879,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 4.267727272727273
+  },
+  "wifi_jetson|4|15|ackwait": {
+   "fps": 17.063636363636366,
+   "on_time_fps": 16.132727272727273,
+   "on_time_share": 0.9454030112416726,
+   "lat_p50_ms": 238.67366909901466,
+   "lat_p95_ms": 301.4837480015485,
+   "server_busy_share": 0.6481858457247791,
+   "server_work_late_pct": 6.241720864495737,
+   "per_camera_fps": 4.2659090909090915
+  },
+  "wifi_jetson|4|30|stopwait": {
+   "fps": 17.032727272727275,
+   "on_time_fps": 16.861818181818183,
+   "on_time_share": 0.9899646795397056,
+   "lat_p50_ms": 216.95447130097529,
+   "lat_p95_ms": 275.18011991292735,
+   "server_busy_share": 0.647694395728829,
+   "server_work_late_pct": 1.2201612793007062,
+   "per_camera_fps": 4.258181818181819
+  },
+  "wifi_jetson|4|30|fifo": {
+   "fps": 17.087272727272726,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 55930.28995716998,
+   "lat_p95_ms": 98123.4143211591,
+   "server_busy_share": 0.6467588905633453,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.2718181818181815
+  },
+  "wifi_jetson|4|30|latest": {
+   "fps": 17.087272727272726,
+   "on_time_fps": 17.087272727272726,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 132.64104992842766,
+   "lat_p95_ms": 165.30043416241534,
+   "server_busy_share": 0.6467588905633453,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 4.2718181818181815
+  },
+  "wifi_jetson|4|30|ackwait": {
+   "fps": 17.014545454545456,
+   "on_time_fps": 15.427272727272728,
+   "on_time_share": 0.9066498280947389,
+   "lat_p50_ms": 255.49479938167934,
+   "lat_p95_ms": 311.75138970958506,
+   "server_busy_share": 0.6461223003642507,
+   "server_work_late_pct": 10.578779410972398,
+   "per_camera_fps": 4.253636363636364
+  },
+  "wifi_jetson|5|10|stopwait": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 15.274545454545455,
+   "on_time_share": 0.8947260192304004,
+   "lat_p50_ms": 241.5288244373136,
+   "lat_p95_ms": 317.9199240025344,
+   "server_busy_share": 0.6488572496190677,
+   "server_work_late_pct": 11.610135382428558,
+   "per_camera_fps": 3.414181818181818
+  },
+  "wifi_jetson|5|10|fifo": {
+   "fps": 17.01636363636364,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 42883.04588483413,
+   "lat_p95_ms": 75567.18242073152,
+   "server_busy_share": 0.6443610495109967,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.4032727272727277
+  },
+  "wifi_jetson|5|10|latest": {
+   "fps": 17.01636363636364,
+   "on_time_fps": 17.01636363636364,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 193.83168060243406,
+   "lat_p95_ms": 227.30803151145955,
+   "server_busy_share": 0.6443610495109967,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 3.4032727272727277
+  },
+  "wifi_jetson|5|10|ackwait": {
+   "fps": 17.047272727272727,
+   "on_time_fps": 11.247272727272726,
+   "on_time_share": 0.6597499566510999,
+   "lat_p50_ms": 281.06819509863925,
+   "lat_p95_ms": 356.6525214889625,
+   "server_busy_share": 0.6484600662533222,
+   "server_work_late_pct": 35.975341575292155,
+   "per_camera_fps": 3.4094545454545453
+  },
+  "wifi_jetson|5|15|stopwait": {
+   "fps": 17.027272727272727,
+   "on_time_fps": 14.24181818181818,
+   "on_time_share": 0.8363629368172859,
+   "lat_p50_ms": 259.3248624356136,
+   "lat_p95_ms": 328.35552984852404,
+   "server_busy_share": 0.6469273558251263,
+   "server_work_late_pct": 17.845659745663422,
+   "per_camera_fps": 3.4054545454545453
+  },
+  "wifi_jetson|5|15|fifo": {
+   "fps": 17.06909090909091,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 50310.86147937807,
+   "lat_p95_ms": 88449.7105261834,
+   "server_busy_share": 0.6470821386885898,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.413818181818182
+  },
+  "wifi_jetson|5|15|latest": {
+   "fps": 17.06909090909091,
+   "on_time_fps": 17.06909090909091,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 163.8158895433291,
+   "lat_p95_ms": 196.12853872676752,
+   "server_busy_share": 0.6470821386885898,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 3.413818181818182
+  },
+  "wifi_jetson|5|15|ackwait": {
+   "fps": 17.083636363636366,
+   "on_time_fps": 9.023636363636365,
+   "on_time_share": 0.52812944295853,
+   "lat_p50_ms": 296.85297168451217,
+   "lat_p95_ms": 364.4777549013088,
+   "server_busy_share": 0.6490522745713744,
+   "server_work_late_pct": 49.48150732666857,
+   "per_camera_fps": 3.416727272727273
+  },
+  "wifi_jetson|5|30|stopwait": {
+   "fps": 17.061818181818182,
+   "on_time_fps": 12.783636363636365,
+   "on_time_share": 0.7492439341117393,
+   "lat_p50_ms": 274.74269473002204,
+   "lat_p95_ms": 339.2992561692787,
+   "server_busy_share": 0.6481026758590317,
+   "server_work_late_pct": 27.270361739526656,
+   "per_camera_fps": 3.4123636363636365
+  },
+  "wifi_jetson|5|30|fifo": {
+   "fps": 16.996363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 57685.11835579747,
+   "lat_p95_ms": 101568.3294090622,
+   "server_busy_share": 0.645429508897589,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.3992727272727272
+  },
+  "wifi_jetson|5|30|latest": {
+   "fps": 16.996363636363636,
+   "on_time_fps": 16.996363636363636,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 133.8595539860922,
+   "lat_p95_ms": 166.34383406726266,
+   "server_busy_share": 0.645429508897589,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 3.3992727272727272
+  },
+  "wifi_jetson|5|30|ackwait": {
+   "fps": 17.07272727272727,
+   "on_time_fps": 5.898181818181818,
+   "on_time_share": 0.345424451431794,
+   "lat_p50_ms": 313.17383144141934,
+   "lat_p95_ms": 376.64125311241696,
+   "server_busy_share": 0.6498067505351848,
+   "server_work_late_pct": 67.9276488662189,
+   "per_camera_fps": 3.414545454545454
+  },
+  "wifi_jetson|6|10|stopwait": {
+   "fps": 17.065454545454546,
+   "on_time_fps": 8.543636363636363,
+   "on_time_share": 0.5005784025991687,
+   "lat_p50_ms": 299.9583747512908,
+   "lat_p95_ms": 382.6022779843159,
+   "server_busy_share": 0.6489721230177106,
+   "server_work_late_pct": 51.84147620615895,
+   "per_camera_fps": 2.8442424242424242
+  },
+  "wifi_jetson|6|10|fifo": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 46562.600856166515,
+   "lat_p95_ms": 81864.0183627491,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.845151515151515
+  },
+  "wifi_jetson|6|10|latest": {
+   "fps": 17.07090909090909,
+   "on_time_fps": 17.07090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 195.09883094288017,
+   "lat_p95_ms": 227.86086048423167,
+   "server_busy_share": 0.6472245142146573,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 2.845151515151515
+  },
+  "wifi_jetson|6|10|ackwait": {
+   "fps": 17.083636363636366,
+   "on_time_fps": 3.4327272727272726,
+   "on_time_share": 0.20092411968979312,
+   "lat_p50_ms": 339.144456687849,
+   "lat_p95_ms": 419.22427611411257,
+   "server_busy_share": 0.6496100015795981,
+   "server_work_late_pct": 81.23041962850874,
+   "per_camera_fps": 2.8472727272727276
+  },
+  "wifi_jetson|6|15|stopwait": {
+   "fps": 17.058181818181815,
+   "on_time_fps": 5.941818181818182,
+   "on_time_share": 0.3482836075374266,
+   "lat_p50_ms": 316.9852376021023,
+   "lat_p95_ms": 391.58660494385003,
+   "server_busy_share": 0.6505677024999044,
+   "server_work_late_pct": 67.33750036214765,
+   "per_camera_fps": 2.8430303030303024
+  },
+  "wifi_jetson|6|15|fifo": {
+   "fps": 17.054545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 52818.87701697515,
+   "lat_p95_ms": 92883.43620336498,
+   "server_busy_share": 0.6460594715655947,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.8424242424242423
+  },
+  "wifi_jetson|6|15|latest": {
+   "fps": 17.054545454545455,
+   "on_time_fps": 17.054545454545455,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 164.6924190644022,
+   "lat_p95_ms": 196.94998922498272,
+   "server_busy_share": 0.6460594715655947,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 2.8424242424242423
+  },
+  "wifi_jetson|6|15|ackwait": {
+   "fps": 17.01818181818182,
+   "on_time_fps": 1.2363636363636363,
+   "on_time_share": 0.07262911372660874,
+   "lat_p50_ms": 356.76212130610946,
+   "lat_p95_ms": 430.29720170601576,
+   "server_busy_share": 0.6459978811839928,
+   "server_work_late_pct": 93.5236643839168,
+   "per_camera_fps": 2.8363636363636364
+  },
+  "wifi_jetson|6|30|stopwait": {
+   "fps": 17.043636363636363,
+   "on_time_fps": 3.174545454545455,
+   "on_time_share": 0.18621345224075925,
+   "lat_p50_ms": 333.44327160646134,
+   "lat_p95_ms": 403.83409954658345,
+   "server_busy_share": 0.6473636388027577,
+   "server_work_late_pct": 83.11607561959192,
+   "per_camera_fps": 2.8406060606060604
+  },
+  "wifi_jetson|6|30|fifo": {
+   "fps": 17.096363636363638,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 59083.78931862133,
+   "lat_p95_ms": 103669.28121487824,
+   "server_busy_share": 0.648770072045387,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.8493939393939396
+  },
+  "wifi_jetson|6|30|latest": {
+   "fps": 17.094545454545454,
+   "on_time_fps": 17.094545454545454,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 133.99917629592238,
+   "lat_p95_ms": 166.45279559871923,
+   "server_busy_share": 0.6481603567308328,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 2.849090909090909
+  },
+  "wifi_jetson|6|30|ackwait": {
+   "fps": 17.02,
+   "on_time_fps": 0.2309090909090909,
+   "on_time_share": 0.013565413834103184,
+   "lat_p50_ms": 372.96732893182195,
+   "lat_p95_ms": 439.51222600562687,
+   "server_busy_share": 0.6447582884202604,
+   "server_work_late_pct": 98.89568736504125,
+   "per_camera_fps": 2.8366666666666664
+  },
+  "wifi_jetson|8|10|stopwait": {
+   "fps": 17.04909090909091,
+   "on_time_fps": 0.11636363636363636,
+   "on_time_share": 0.006820442313494557,
+   "lat_p50_ms": 418.04003308452627,
+   "lat_p95_ms": 506.531076116734,
+   "server_busy_share": 0.6481573810536974,
+   "server_work_late_pct": 99.43265028410681,
+   "per_camera_fps": 2.131136363636364
+  },
+  "wifi_jetson|8|10|fifo": {
+   "fps": 17.005454545454548,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 51165.7173366603,
+   "lat_p95_ms": 90110.06390129271,
+   "server_busy_share": 0.6438054980617219,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.1256818181818184
+  },
+  "wifi_jetson|8|10|latest": {
+   "fps": 17.005454545454548,
+   "on_time_fps": 17.005454545454548,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 197.55977131324835,
+   "lat_p95_ms": 229.8082871652954,
+   "server_busy_share": 0.6438054980617219,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 2.1256818181818184
+  },
+  "wifi_jetson|8|10|ackwait": {
+   "fps": 17.15090909090909,
+   "on_time_fps": 0.005454545454545454,
+   "on_time_share": 0.0003170722515924042,
+   "lat_p50_ms": 454.91764718413395,
+   "lat_p95_ms": 541.2613133954161,
+   "server_busy_share": 0.6553292396699131,
+   "server_work_late_pct": 99.96777383328393,
+   "per_camera_fps": 2.143863636363636
+  },
+  "wifi_jetson|8|15|stopwait": {
+   "fps": 17.016363636363636,
+   "on_time_fps": 0.012727272727272726,
+   "on_time_share": 0.000742924452814669,
+   "lat_p50_ms": 435.7634572949508,
+   "lat_p95_ms": 516.8780859582942,
+   "server_busy_share": 0.6488770631762509,
+   "server_work_late_pct": 99.93849685293416,
+   "per_camera_fps": 2.1270454545454545
+  },
+  "wifi_jetson|8|15|fifo": {
+   "fps": 17.087272727272726,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 55930.28995716995,
+   "lat_p95_ms": 98123.41432115927,
+   "server_busy_share": 0.6467588905633453,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.1359090909090908
+  },
+  "wifi_jetson|8|15|latest": {
+   "fps": 17.087272727272726,
+   "on_time_fps": 17.085454545454546,
+   "on_time_share": 0.9998935037273695,
+   "lat_p50_ms": 165.98277512690257,
+   "lat_p95_ms": 198.64801369734414,
+   "server_busy_share": 0.6467588905633453,
+   "server_work_late_pct": 0.010862000380204455,
+   "per_camera_fps": 2.1359090909090908
+  },
+  "wifi_jetson|8|15|ackwait": {
+   "fps": 17.061818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 474.0306344734694,
+   "lat_p95_ms": 554.3284437968956,
+   "server_busy_share": 0.6496064456451793,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.132727272727273
+  },
+  "wifi_jetson|8|30|stopwait": {
+   "fps": 17.080000000000002,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 450.8425939597961,
+   "lat_p95_ms": 527.2520204678578,
+   "server_busy_share": 0.6502293433901388,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.1350000000000002
+  },
+  "wifi_jetson|8|30|fifo": {
+   "fps": 17.10909090909091,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 60452.647351106396,
+   "lat_p95_ms": 106283.58818686719,
+   "server_busy_share": 0.65209808422962,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.1386363636363637
+  },
+  "wifi_jetson|8|30|latest": {
+   "fps": 17.10909090909091,
+   "on_time_fps": 17.10909090909091,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 135.0174335641219,
+   "lat_p95_ms": 167.26195791541832,
+   "server_busy_share": 0.65209808422962,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 2.1386363636363637
+  },
+  "wifi_jetson|8|30|ackwait": {
+   "fps": 17.081818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 489.7993365055954,
+   "lat_p95_ms": 564.6442216050898,
+   "server_busy_share": 0.6506041539599876,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.1352272727272728
+  },
+  "wifi_jetson|10|10|stopwait": {
+   "fps": 17.009090909090908,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 537.5116174986582,
+   "lat_p95_ms": 633.647771480825,
+   "server_busy_share": 0.6458220875203142,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7009090909090907
+  },
+  "wifi_jetson|10|10|fifo": {
+   "fps": 17.080000000000002,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 54038.65865545631,
+   "lat_p95_ms": 94989.40733079938,
+   "server_busy_share": 0.6494790527990965,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7080000000000002
+  },
+  "wifi_jetson|10|10|latest": {
+   "fps": 17.080000000000002,
+   "on_time_fps": 17.080000000000002,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 198.87865427394428,
+   "lat_p95_ms": 231.03843658853148,
+   "server_busy_share": 0.6494790527990965,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 1.7080000000000002
+  },
+  "wifi_jetson|10|10|ackwait": {
+   "fps": 17.023636363636363,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 575.8966104264721,
+   "lat_p95_ms": 668.4539567987853,
+   "server_busy_share": 0.6472224300658118,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7023636363636363
+  },
+  "wifi_jetson|10|15|stopwait": {
+   "fps": 17.01090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 553.6912053093813,
+   "lat_p95_ms": 639.1102722424788,
+   "server_busy_share": 0.6446982009083333,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7010909090909092
+  },
+  "wifi_jetson|10|15|fifo": {
+   "fps": 16.996363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 57685.118355797444,
+   "lat_p95_ms": 101568.32940906228,
+   "server_busy_share": 0.645429508897589,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.6996363636363636
+  },
+  "wifi_jetson|10|15|latest": {
+   "fps": 16.996363636363636,
+   "on_time_fps": 16.996363636363636,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 167.18854647317895,
+   "lat_p95_ms": 199.65219973891072,
+   "server_busy_share": 0.645429508897589,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 1.6996363636363636
+  },
+  "wifi_jetson|10|15|ackwait": {
+   "fps": 17.001818181818184,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 592.7189418513466,
+   "lat_p95_ms": 676.0970492731689,
+   "server_busy_share": 0.645012905362681,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7001818181818185
+  },
+  "wifi_jetson|10|30|stopwait": {
+   "fps": 16.994545454545452,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 570.1883205989012,
+   "lat_p95_ms": 654.4016384800852,
+   "server_busy_share": 0.6454572819535824,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.6994545454545453
+  },
+  "wifi_jetson|10|30|fifo": {
+   "fps": 16.954545454545453,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 61165.94481380224,
+   "lat_p95_ms": 107973.05265971851,
+   "server_busy_share": 0.6399797896849759,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.6954545454545453
+  },
+  "wifi_jetson|10|30|latest": {
+   "fps": 16.954545454545453,
+   "on_time_fps": 16.954545454545453,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 135.14374169400253,
+   "lat_p95_ms": 167.81577586149214,
+   "server_busy_share": 0.6399797896849759,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 1.6954545454545453
+  },
+  "wifi_jetson|10|30|ackwait": {
+   "fps": 17.025454545454544,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 607.9815652341385,
+   "lat_p95_ms": 690.9108318783125,
+   "server_busy_share": 0.6476500171877004,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.7025454545454544
+  },
+  "mesh_jetson|1|10|stopwait": {
+   "fps": 9.736363636363636,
+   "on_time_fps": 9.736363636363636,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 65.97976327446595,
+   "lat_p95_ms": 93.64528390584674,
+   "server_busy_share": 0.37019078977487585,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.736363636363636
+  },
+  "mesh_jetson|1|10|fifo": {
+   "fps": 10.0,
+   "on_time_fps": 10.0,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.02694342184404,
+   "lat_p95_ms": 93.80224700369362,
+   "server_busy_share": 0.38006711947862265,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.0
+  },
+  "mesh_jetson|1|10|latest": {
+   "fps": 10.0,
+   "on_time_fps": 10.0,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.02694342184404,
+   "lat_p95_ms": 93.80224700369362,
+   "server_busy_share": 0.38006711947862265,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.0
+  },
+  "mesh_jetson|1|10|ackwait": {
+   "fps": 9.998181818181818,
+   "on_time_fps": 9.998181818181818,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.02582642699126,
+   "lat_p95_ms": 93.80224700369362,
+   "server_busy_share": 0.38001812927860745,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.998181818181818
+  },
+  "mesh_jetson|1|15|stopwait": {
+   "fps": 10.13090909090909,
+   "on_time_fps": 10.13090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 65.98559892394478,
+   "lat_p95_ms": 93.62020790628594,
+   "server_busy_share": 0.38500840379006684,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.13090909090909
+  },
+  "mesh_jetson|1|15|fifo": {
+   "fps": 15.0,
+   "on_time_fps": 15.0,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.41586392747122,
+   "lat_p95_ms": 94.72403164734642,
+   "server_busy_share": 0.5704104850970478,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 15.0
+  },
+  "mesh_jetson|1|15|latest": {
+   "fps": 15.0,
+   "on_time_fps": 15.0,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.40117444260468,
+   "lat_p95_ms": 94.31181848183769,
+   "server_busy_share": 0.5704124913110525,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 15.0
+  },
+  "mesh_jetson|1|15|ackwait": {
+   "fps": 14.889090909090907,
+   "on_time_fps": 14.889090909090907,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 66.31337693152527,
+   "lat_p95_ms": 94.2507908012165,
+   "server_busy_share": 0.5662044027545908,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 14.889090909090907
+  },
+  "mesh_jetson|1|30|stopwait": {
+   "fps": 11.972727272727273,
+   "on_time_fps": 11.972727272727273,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 65.958985157598,
+   "lat_p95_ms": 93.83756817269023,
+   "server_busy_share": 0.45560022380757054,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 11.972727272727273
+  },
+  "mesh_jetson|1|30|fifo": {
+   "fps": 26.294545454545453,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 8195.809221209729,
+   "lat_p95_ms": 14195.85444066819,
+   "server_busy_share": 0.9999689264441891,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 26.294545454545453
+  },
+  "mesh_jetson|1|30|latest": {
+   "fps": 25.194545454545455,
+   "on_time_fps": 25.194545454545455,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 81.23045644557715,
+   "lat_p95_ms": 109.49794258564361,
+   "server_busy_share": 0.9568292972102652,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 25.194545454545455
+  },
+  "mesh_jetson|1|30|ackwait": {
+   "fps": 22.132727272727273,
+   "on_time_fps": 22.132727272727273,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 74.30945524639246,
+   "lat_p95_ms": 103.55273231351312,
+   "server_busy_share": 0.8413764848685441,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 22.132727272727273
+  },
+  "mesh_jetson|2|10|stopwait": {
+   "fps": 19.23818181818182,
+   "on_time_fps": 19.23818181818182,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 69.06186748210821,
+   "lat_p95_ms": 97.7339102120819,
+   "server_busy_share": 0.7306175117676125,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.61909090909091
+  },
+  "mesh_jetson|2|10|fifo": {
+   "fps": 20.00181818181818,
+   "on_time_fps": 20.00181818181818,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 70.00049602574873,
+   "lat_p95_ms": 99.63989095824509,
+   "server_busy_share": 0.7602035439594026,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.00090909090909
+  },
+  "mesh_jetson|2|10|latest": {
+   "fps": 20.0,
+   "on_time_fps": 20.0,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 69.87814560550468,
+   "lat_p95_ms": 99.58747927371732,
+   "server_busy_share": 0.7587656072407489,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.0
+  },
+  "mesh_jetson|2|10|ackwait": {
+   "fps": 19.990909090909092,
+   "on_time_fps": 19.990909090909092,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 69.9495506554209,
+   "lat_p95_ms": 99.42316340834842,
+   "server_busy_share": 0.7595759425562406,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.995454545454546
+  },
+  "mesh_jetson|2|15|stopwait": {
+   "fps": 18.07090909090909,
+   "on_time_fps": 18.07090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 72.79423019605747,
+   "lat_p95_ms": 102.99758323748611,
+   "server_busy_share": 0.6868937261114358,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 9.035454545454545
+  },
+  "mesh_jetson|2|15|fifo": {
+   "fps": 26.294545454545453,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 8195.809221211653,
+   "lat_p95_ms": 14195.854440663457,
+   "server_busy_share": 0.9999689264441891,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 13.147272727272727
+  },
+  "mesh_jetson|2|15|latest": {
+   "fps": 26.23272727272727,
+   "on_time_fps": 26.23272727272727,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 110.38100088071515,
+   "lat_p95_ms": 138.42156132556812,
+   "server_busy_share": 0.9969897618365821,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 13.116363636363635
+  },
+  "mesh_jetson|2|15|ackwait": {
+   "fps": 26.18,
+   "on_time_fps": 26.18,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 109.27671441437124,
+   "lat_p95_ms": 138.39445533248073,
+   "server_busy_share": 0.9951311589762669,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 13.09
+  },
+  "mesh_jetson|2|30|stopwait": {
+   "fps": 21.52909090909091,
+   "on_time_fps": 21.52909090909091,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 74.34544559755923,
+   "lat_p95_ms": 108.42386400405667,
+   "server_busy_share": 0.8192930151851268,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 10.764545454545456
+  },
+  "mesh_jetson|2|30|fifo": {
+   "fps": 26.374545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 36414.98766690512,
+   "lat_p95_ms": 64120.43939765706,
+   "server_busy_share": 0.9999922015801396,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 13.187272727272727
+  },
+  "mesh_jetson|2|30|latest": {
+   "fps": 26.27090909090909,
+   "on_time_fps": 26.27090909090909,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 116.89423655655337,
+   "lat_p95_ms": 153.03798723496658,
+   "server_busy_share": 0.9970354076963277,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 13.135454545454545
+  },
+  "mesh_jetson|2|30|ackwait": {
+   "fps": 26.290909090909093,
+   "on_time_fps": 26.290909090909093,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 110.26625456675974,
+   "lat_p95_ms": 147.55752755694556,
+   "server_busy_share": 0.9985174789184397,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 13.145454545454546
+  },
+  "mesh_jetson|3|10|stopwait": {
+   "fps": 23.04909090909091,
+   "on_time_fps": 23.04909090909091,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 88.91027764702304,
+   "lat_p95_ms": 125.93381871592938,
+   "server_busy_share": 0.8756001568361305,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 7.6830303030303035
+  },
+  "mesh_jetson|3|10|fifo": {
+   "fps": 26.294545454545453,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 8195.80922121101,
+   "lat_p95_ms": 14195.854440665029,
+   "server_busy_share": 0.9999689264441891,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.764848484848484
+  },
+  "mesh_jetson|3|10|latest": {
+   "fps": 26.314545454545453,
+   "on_time_fps": 26.314545454545453,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 143.14420820525083,
+   "lat_p95_ms": 171.82259306571723,
+   "server_busy_share": 0.9996385015586438,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.771515151515151
+  },
+  "mesh_jetson|3|10|ackwait": {
+   "fps": 26.3,
+   "on_time_fps": 26.3,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 143.30000861337686,
+   "lat_p95_ms": 171.5296048552911,
+   "server_busy_share": 0.9995803335658794,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.766666666666667
+  },
+  "mesh_jetson|3|15|stopwait": {
+   "fps": 23.754545454545458,
+   "on_time_fps": 23.754545454545458,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 89.6353138991486,
+   "lat_p95_ms": 129.76563865573698,
+   "server_busy_share": 0.9015855918055706,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 7.918181818181819
+  },
+  "mesh_jetson|3|15|fifo": {
+   "fps": 26.296363636363633,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 27150.581013359817,
+   "lat_p95_ms": 47670.60124272981,
+   "server_busy_share": 1.0000928190748262,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.765454545454544
+  },
+  "mesh_jetson|3|15|latest": {
+   "fps": 26.209090909090907,
+   "on_time_fps": 26.209090909090907,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 145.71219163096575,
+   "lat_p95_ms": 192.44274159645502,
+   "server_busy_share": 0.9999666730384558,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.736363636363636
+  },
+  "mesh_jetson|3|15|ackwait": {
+   "fps": 26.334545454545456,
+   "on_time_fps": 26.334545454545456,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 135.58910125013935,
+   "lat_p95_ms": 186.77849637848377,
+   "server_busy_share": 0.9998651794195468,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.77818181818182
+  },
+  "mesh_jetson|3|30|stopwait": {
+   "fps": 25.867272727272727,
+   "on_time_fps": 25.867272727272727,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 98.00107936198329,
+   "lat_p95_ms": 132.64657330429253,
+   "server_busy_share": 0.9818836076447331,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.622424242424243
+  },
+  "mesh_jetson|3|30|fifo": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 46139.54833653946,
+   "lat_p95_ms": 81074.05849026408,
+   "server_busy_share": 1.0001112204395632,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 8.762424242424244
+  },
+  "mesh_jetson|3|30|latest": {
+   "fps": 26.329090909090905,
+   "on_time_fps": 26.329090909090905,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 134.0123220234047,
+   "lat_p95_ms": 174.48536096568495,
+   "server_busy_share": 0.9988164910109525,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.776363636363635
+  },
+  "mesh_jetson|3|30|ackwait": {
+   "fps": 26.363636363636363,
+   "on_time_fps": 26.363636363636363,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 144.67656426584253,
+   "lat_p95_ms": 193.157904991159,
+   "server_busy_share": 0.9999071010431045,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 8.787878787878787
+  },
+  "mesh_jetson|4|10|stopwait": {
+   "fps": 24.892727272727274,
+   "on_time_fps": 24.892727272727274,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 109.38639434100769,
+   "lat_p95_ms": 160.32693923250264,
+   "server_busy_share": 0.9480470712844754,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.223181818181819
+  },
+  "mesh_jetson|4|10|fifo": {
+   "fps": 26.3,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 22368.36663671527,
+   "lat_p95_ms": 39329.74603283118,
+   "server_busy_share": 1.0000399365012533,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 6.575
+  },
+  "mesh_jetson|4|10|latest": {
+   "fps": 26.312727272727273,
+   "on_time_fps": 26.310909090909092,
+   "on_time_share": 0.9999308437067773,
+   "lat_p50_ms": 162.83143039823918,
+   "lat_p95_ms": 214.93437483075687,
+   "server_busy_share": 1.0000565982825151,
+   "server_work_late_pct": 0.014571788950732962,
+   "per_camera_fps": 6.578181818181818
+  },
+  "mesh_jetson|4|10|ackwait": {
+   "fps": 26.4,
+   "on_time_fps": 26.4,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 161.63298783739157,
+   "lat_p95_ms": 208.26173349688762,
+   "server_busy_share": 0.9999306452529202,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.6
+  },
+  "mesh_jetson|4|15|stopwait": {
+   "fps": 26.076363636363634,
+   "on_time_fps": 26.076363636363634,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 119.73086435011355,
+   "lat_p95_ms": 165.46108549371274,
+   "server_busy_share": 0.9916136004051201,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.519090909090909
+  },
+  "mesh_jetson|4|15|fifo": {
+   "fps": 26.374545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 36414.987666904635,
+   "lat_p95_ms": 64120.43939765826,
+   "server_busy_share": 0.9999922015801396,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 6.593636363636364
+  },
+  "mesh_jetson|4|15|latest": {
+   "fps": 26.334545454545456,
+   "on_time_fps": 26.332727272727272,
+   "on_time_share": 0.9999312950875987,
+   "lat_p50_ms": 184.13588471774855,
+   "lat_p95_ms": 228.65342796202714,
+   "server_busy_share": 0.9999665672495572,
+   "server_work_late_pct": 0.012947748541322196,
+   "per_camera_fps": 6.583636363636364
+  },
+  "mesh_jetson|4|15|ackwait": {
+   "fps": 26.31818181818182,
+   "on_time_fps": 26.307272727272725,
+   "on_time_share": 0.9995848163252873,
+   "lat_p50_ms": 175.59501366562182,
+   "lat_p95_ms": 232.78730380375563,
+   "server_busy_share": 1.0000711534708868,
+   "server_work_late_pct": 0.048054819889135,
+   "per_camera_fps": 6.579545454545455
+  },
+  "mesh_jetson|4|30|stopwait": {
+   "fps": 26.190909090909095,
+   "on_time_fps": 26.190909090909095,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 135.16103368222974,
+   "lat_p95_ms": 172.72468801181384,
+   "server_busy_share": 0.9991548634043085,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.547727272727274
+  },
+  "mesh_jetson|4|30|fifo": {
+   "fps": 26.376363636363635,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 50703.340914746674,
+   "lat_p95_ms": 89304.1769396913,
+   "server_busy_share": 1.0001195452849156,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 6.594090909090909
+  },
+  "mesh_jetson|4|30|latest": {
+   "fps": 26.223636363636366,
+   "on_time_fps": 26.223636363636366,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 148.4017185494751,
+   "lat_p95_ms": 194.6420891186528,
+   "server_busy_share": 0.999234838282109,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 6.555909090909092
+  },
+  "mesh_jetson|4|30|ackwait": {
+   "fps": 26.354545454545455,
+   "on_time_fps": 26.341818181818184,
+   "on_time_share": 0.9995172170813149,
+   "lat_p50_ms": 186.71182754404543,
+   "lat_p95_ms": 242.81334523494442,
+   "server_busy_share": 1.0000846466392321,
+   "server_work_late_pct": 0.06222907998671534,
+   "per_camera_fps": 6.588636363636364
+  },
+  "mesh_jetson|5|10|stopwait": {
+   "fps": 26.158181818181816,
+   "on_time_fps": 26.158181818181816,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 140.82336426868133,
+   "lat_p95_ms": 199.13317378206085,
+   "server_busy_share": 0.9948090565695988,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.231636363636364
+  },
+  "mesh_jetson|5|10|fifo": {
+   "fps": 26.29818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 31037.20650818137,
+   "lat_p95_ms": 54255.00454196204,
+   "server_busy_share": 0.9999777769722575,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.259636363636364
+  },
+  "mesh_jetson|5|10|latest": {
+   "fps": 26.434545454545457,
+   "on_time_fps": 26.130909090909093,
+   "on_time_share": 0.9885188699398391,
+   "lat_p50_ms": 232.50969251307615,
+   "lat_p95_ms": 278.1874690515157,
+   "server_busy_share": 1.0000540209361624,
+   "server_work_late_pct": 1.390410312736673,
+   "per_camera_fps": 5.2869090909090914
+  },
+  "mesh_jetson|5|10|ackwait": {
+   "fps": 26.23818181818182,
+   "on_time_fps": 25.95272727272727,
+   "on_time_share": 0.9891215849015781,
+   "lat_p50_ms": 200.0360473810877,
+   "lat_p95_ms": 273.9303717679031,
+   "server_busy_share": 1.000008820281145,
+   "server_work_late_pct": 1.342990629576126,
+   "per_camera_fps": 5.247636363636364
+  },
+  "mesh_jetson|5|15|stopwait": {
+   "fps": 26.187272727272727,
+   "on_time_fps": 26.185454545454547,
+   "on_time_share": 0.9999304105775921,
+   "lat_p50_ms": 156.91716926930894,
+   "lat_p95_ms": 206.40943806642318,
+   "server_busy_share": 0.999610796024046,
+   "server_work_late_pct": 0.012492488782787747,
+   "per_camera_fps": 5.237454545454545
+  },
+  "mesh_jetson|5|15|fifo": {
+   "fps": 26.341818181818184,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 42268.98548706334,
+   "lat_p95_ms": 74292.69742695599,
+   "server_busy_share": 1.000025422736986,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.268363636363636
+  },
+  "mesh_jetson|5|15|latest": {
+   "fps": 26.338181818181816,
+   "on_time_fps": 26.323636363636364,
+   "on_time_share": 0.9994472226479187,
+   "lat_p50_ms": 197.08122353719153,
+   "lat_p95_ms": 246.482851807712,
+   "server_busy_share": 0.9999523821877571,
+   "server_work_late_pct": 0.07258848630128503,
+   "per_camera_fps": 5.267636363636363
+  },
+  "mesh_jetson|5|15|ackwait": {
+   "fps": 26.385454545454547,
+   "on_time_fps": 25.905454545454546,
+   "on_time_share": 0.9818070445594795,
+   "lat_p50_ms": 214.95389758191013,
+   "lat_p95_ms": 280.6065867856567,
+   "server_busy_share": 1.0000352284085627,
+   "server_work_late_pct": 2.122399197807664,
+   "per_camera_fps": 5.2770909090909095
+  },
+  "mesh_jetson|5|30|stopwait": {
+   "fps": 26.225454545454546,
+   "on_time_fps": 26.225454545454546,
+   "on_time_share": 1.0,
+   "lat_p50_ms": 173.05683000943537,
+   "lat_p95_ms": 213.88018574931522,
+   "server_busy_share": 0.9998831845783827,
+   "server_work_late_pct": 0.0,
+   "per_camera_fps": 5.2450909090909095
+  },
+  "mesh_jetson|5|30|fifo": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 53405.70007644752,
+   "lat_p95_ms": 94453.8219258365,
+   "server_busy_share": 1.0001165928671658,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.257454545454546
+  },
+  "mesh_jetson|5|30|latest": {
+   "fps": 26.274545454545454,
+   "on_time_fps": 26.272727272727273,
+   "on_time_share": 0.9999301432064268,
+   "lat_p50_ms": 159.9170845781511,
+   "lat_p95_ms": 211.58489262988442,
+   "server_busy_share": 0.9994925868679075,
+   "server_work_late_pct": 0.022379751314790412,
+   "per_camera_fps": 5.2549090909090905
+  },
+  "mesh_jetson|5|30|ackwait": {
+   "fps": 26.310909090909092,
+   "on_time_fps": 25.46,
+   "on_time_share": 0.9676528130790885,
+   "lat_p50_ms": 229.2602349443092,
+   "lat_p95_ms": 291.1745367085823,
+   "server_busy_share": 0.9999802667613471,
+   "server_work_late_pct": 3.690685787613134,
+   "per_camera_fps": 5.262181818181818
+  },
+  "mesh_jetson|6|10|stopwait": {
+   "fps": 26.26181818181818,
+   "on_time_fps": 26.256363636363638,
+   "on_time_share": 0.9997925069176864,
+   "lat_p50_ms": 178.10900624155474,
+   "lat_p95_ms": 239.98034102014282,
+   "server_busy_share": 0.9998423730359063,
+   "server_work_late_pct": 0.02771358942750752,
+   "per_camera_fps": 4.376969696969697
+  },
+  "mesh_jetson|6|10|fifo": {
+   "fps": 26.374545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 36414.987666904795,
+   "lat_p95_ms": 64120.43939765785,
+   "server_busy_share": 0.9999922015801396,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.3957575757575755
+  },
+  "mesh_jetson|6|10|latest": {
+   "fps": 26.374545454545455,
+   "on_time_fps": 25.03636363636364,
+   "on_time_share": 0.9492633805415019,
+   "lat_p50_ms": 250.30104284902046,
+   "lat_p95_ms": 300.37452143574774,
+   "server_busy_share": 0.9999922015801396,
+   "server_work_late_pct": 5.90267303486016,
+   "per_camera_fps": 4.3957575757575755
+  },
+  "mesh_jetson|6|10|ackwait": {
+   "fps": 26.32909090909091,
+   "on_time_fps": 23.23818181818182,
+   "on_time_share": 0.8826132192121865,
+   "lat_p50_ms": 245.23142261742032,
+   "lat_p95_ms": 320.7868745217078,
+   "server_busy_share": 1.0000747283501612,
+   "server_work_late_pct": 12.863308953387582,
+   "per_camera_fps": 4.388181818181819
+  },
+  "mesh_jetson|6|15|stopwait": {
+   "fps": 26.34727272727273,
+   "on_time_fps": 26.334545454545456,
+   "on_time_share": 0.9995161638656116,
+   "lat_p50_ms": 193.49083059286204,
+   "lat_p95_ms": 245.7099165089894,
+   "server_busy_share": 0.9999979125999641,
+   "server_work_late_pct": 0.06499665290258869,
+   "per_camera_fps": 4.391212121212122
+  },
+  "mesh_jetson|6|15|fifo": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 46139.548336539505,
+   "lat_p95_ms": 81074.05849026344,
+   "server_busy_share": 1.0001112204395632,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.381212121212122
+  },
+  "mesh_jetson|6|15|latest": {
+   "fps": 26.23818181818182,
+   "on_time_fps": 26.134545454545457,
+   "on_time_share": 0.9960502016349798,
+   "lat_p50_ms": 210.28276600562677,
+   "lat_p95_ms": 263.4959410404226,
+   "server_busy_share": 0.9998102378749912,
+   "server_work_late_pct": 0.5011208573285456,
+   "per_camera_fps": 4.373030303030303
+  },
+  "mesh_jetson|6|15|ackwait": {
+   "fps": 26.28909090909091,
+   "on_time_fps": 22.00181818181818,
+   "on_time_share": 0.8369402689101492,
+   "lat_p50_ms": 257.92004887560176,
+   "lat_p95_ms": 329.3929123814487,
+   "server_busy_share": 1.000026290895056,
+   "server_work_late_pct": 17.769529809502902,
+   "per_camera_fps": 4.381515151515152
+  },
+  "mesh_jetson|6|30|stopwait": {
+   "fps": 26.40181818181818,
+   "on_time_fps": 26.378181818181815,
+   "on_time_share": 0.9991050633738878,
+   "lat_p50_ms": 209.4943223273236,
+   "lat_p95_ms": 254.1945949891073,
+   "server_busy_share": 0.999890006467767,
+   "server_work_late_pct": 0.11038590199827973,
+   "per_camera_fps": 4.4003030303030295
+  },
+  "mesh_jetson|6|30|fifo": {
+   "fps": 26.28181818181818,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 55615.90066871033,
+   "lat_p95_ms": 97762.63876193238,
+   "server_busy_share": 1.0000540330788035,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.38030303030303
+  },
+  "mesh_jetson|6|30|latest": {
+   "fps": 26.278181818181814,
+   "on_time_fps": 26.26909090909091,
+   "on_time_share": 0.99965424075772,
+   "lat_p50_ms": 173.76536838676694,
+   "lat_p95_ms": 227.8673243825906,
+   "server_busy_share": 0.9995513075092939,
+   "server_work_late_pct": 0.0438581628271876,
+   "per_camera_fps": 4.379696969696969
+  },
+  "mesh_jetson|6|30|ackwait": {
+   "fps": 26.290909090909093,
+   "on_time_fps": 19.705454545454547,
+   "on_time_share": 0.7494956668368221,
+   "lat_p50_ms": 273.9250537850115,
+   "lat_p95_ms": 342.3085817463776,
+   "server_busy_share": 1.000068257794334,
+   "server_work_late_pct": 27.084907683956523,
+   "per_camera_fps": 4.381818181818182
+  },
+  "mesh_jetson|8|10|stopwait": {
+   "fps": 26.3,
+   "on_time_fps": 22.910909090909094,
+   "on_time_share": 0.8710968982719727,
+   "lat_p50_ms": 253.78311867896338,
+   "lat_p95_ms": 320.08914390402424,
+   "server_busy_share": 1.0000315550571792,
+   "server_work_late_pct": 14.333796629765814,
+   "per_camera_fps": 3.2875
+  },
+  "mesh_jetson|8|10|fifo": {
+   "fps": 26.274545454545454,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 43754.977448330465,
+   "lat_p95_ms": 76851.92180792509,
+   "server_busy_share": 1.00002836809171,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.2843181818181817
+  },
+  "mesh_jetson|8|10|latest": {
+   "fps": 26.274545454545454,
+   "on_time_fps": 20.572727272727274,
+   "on_time_share": 0.7829290286256618,
+   "lat_p50_ms": 271.2435527840847,
+   "lat_p95_ms": 334.4983394952636,
+   "server_busy_share": 1.00002836809171,
+   "server_work_late_pct": 23.66312964372819,
+   "per_camera_fps": 3.2843181818181817
+  },
+  "mesh_jetson|8|10|ackwait": {
+   "fps": 26.310909090909092,
+   "on_time_fps": 7.514545454545454,
+   "on_time_share": 0.28560457184221755,
+   "lat_p50_ms": 329.0686819329541,
+   "lat_p95_ms": 416.9288558332846,
+   "server_busy_share": 1.0000585663684813,
+   "server_work_late_pct": 73.20034660225454,
+   "per_camera_fps": 3.2888636363636365
+  },
+  "mesh_jetson|8|15|stopwait": {
+   "fps": 26.35090909090909,
+   "on_time_fps": 21.525454545454544,
+   "on_time_share": 0.8168359412949977,
+   "lat_p50_ms": 269.6590656834422,
+   "lat_p95_ms": 324.8951103732164,
+   "server_busy_share": 0.9999852825651615,
+   "server_work_late_pct": 20.19553565146521,
+   "per_camera_fps": 3.2938636363636364
+  },
+  "mesh_jetson|8|15|fifo": {
+   "fps": 26.376363636363635,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 50703.34091474679,
+   "lat_p95_ms": 89304.17693969101,
+   "server_busy_share": 1.0001195452849156,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.2970454545454544
+  },
+  "mesh_jetson|8|15|latest": {
+   "fps": 26.376363636363635,
+   "on_time_fps": 25.20909090909091,
+   "on_time_share": 0.9557433256739157,
+   "lat_p50_ms": 236.68280278051898,
+   "lat_p95_ms": 297.81244536771663,
+   "server_busy_share": 1.0001195452849156,
+   "server_work_late_pct": 5.117365870869935,
+   "per_camera_fps": 3.2970454545454544
+  },
+  "mesh_jetson|8|15|ackwait": {
+   "fps": 26.323636363636364,
+   "on_time_fps": 3.863636363636364,
+   "on_time_share": 0.14676342652200447,
+   "lat_p50_ms": 346.83334435540746,
+   "lat_p95_ms": 428.23974493861095,
+   "server_busy_share": 1.000045115979718,
+   "server_work_late_pct": 86.51658050432707,
+   "per_camera_fps": 3.2904545454545455
+  },
+  "mesh_jetson|8|30|stopwait": {
+   "fps": 26.26727272727273,
+   "on_time_fps": 17.863636363636363,
+   "on_time_share": 0.6800381468716498,
+   "lat_p50_ms": 287.0149648994251,
+   "lat_p95_ms": 336.6424846260219,
+   "server_busy_share": 1.0002060079378599,
+   "server_work_late_pct": 35.016858963704394,
+   "per_camera_fps": 3.283409090909091
+  },
+  "mesh_jetson|8|30|fifo": {
+   "fps": 26.23818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 57877.84646370677,
+   "lat_p95_ms": 101929.39325634987,
+   "server_busy_share": 0.999958399631055,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.2797727272727273
+  },
+  "mesh_jetson|8|30|latest": {
+   "fps": 26.316363636363633,
+   "on_time_fps": 26.165454545454548,
+   "on_time_share": 0.9942653637244998,
+   "lat_p50_ms": 201.0012531991335,
+   "lat_p95_ms": 262.6131897461113,
+   "server_busy_share": 0.9998981783156239,
+   "server_work_late_pct": 0.6792256755188154,
+   "per_camera_fps": 3.289545454545454
+  },
+  "mesh_jetson|8|30|ackwait": {
+   "fps": 26.35090909090909,
+   "on_time_fps": 1.5618181818181818,
+   "on_time_share": 0.059261233639401154,
+   "lat_p50_ms": 362.7815524742997,
+   "lat_p95_ms": 438.53558988065345,
+   "server_busy_share": 0.9999093845090655,
+   "server_work_late_pct": 94.75757210569827,
+   "per_camera_fps": 3.2938636363636364
+  },
+  "mesh_jetson|10|10|stopwait": {
+   "fps": 26.28545454545455,
+   "on_time_fps": 6.427272727272728,
+   "on_time_share": 0.2444713201545127,
+   "lat_p50_ms": 330.024959635469,
+   "lat_p95_ms": 399.4006735901261,
+   "server_busy_share": 0.9998918431069125,
+   "server_work_late_pct": 77.31659180557725,
+   "per_camera_fps": 2.628545454545455
+  },
+  "mesh_jetson|10|10|fifo": {
+   "fps": 26.345454545454544,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 47890.36146875697,
+   "lat_p95_ms": 84387.23037942224,
+   "server_busy_share": 1.0001365402860263,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.6345454545454543
+  },
+  "mesh_jetson|10|10|latest": {
+   "fps": 26.345454545454544,
+   "on_time_fps": 13.218181818181819,
+   "on_time_share": 0.5016501037380453,
+   "lat_p50_ms": 299.9700833776831,
+   "lat_p95_ms": 366.73781265595863,
+   "server_busy_share": 1.0001365402860263,
+   "server_work_late_pct": 52.013081411492145,
+   "per_camera_fps": 2.6345454545454543
+  },
+  "mesh_jetson|10|10|ackwait": {
+   "fps": 26.32,
+   "on_time_fps": 0.24363636363636365,
+   "on_time_share": 0.009255205232665722,
+   "lat_p50_ms": 417.3866040851368,
+   "lat_p95_ms": 511.6231183855285,
+   "server_busy_share": 0.9999374148913815,
+   "server_work_late_pct": 99.19107845048029,
+   "per_camera_fps": 2.632
+  },
+  "mesh_jetson|10|15|stopwait": {
+   "fps": 26.30181818181818,
+   "on_time_fps": 2.390909090909091,
+   "on_time_share": 0.09090383921903152,
+   "lat_p50_ms": 346.0254745182341,
+   "lat_p95_ms": 408.4660814972798,
+   "server_busy_share": 1.0000011032860885,
+   "server_work_late_pct": 91.90698385625076,
+   "per_camera_fps": 2.630181818181818
+  },
+  "mesh_jetson|10|15|fifo": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 53405.70007644757,
+   "lat_p95_ms": 94453.82192583647,
+   "server_busy_share": 1.0001165928671658,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.628727272727273
+  },
+  "mesh_jetson|10|15|latest": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 21.596363636363638,
+   "on_time_share": 0.8215503908648973,
+   "lat_p50_ms": 261.2300331808339,
+   "lat_p95_ms": 330.7071976891992,
+   "server_busy_share": 1.0001165928671658,
+   "server_work_late_pct": 19.24765332100169,
+   "per_camera_fps": 2.628727272727273
+  },
+  "mesh_jetson|10|15|ackwait": {
+   "fps": 26.325454545454544,
+   "on_time_fps": 0.02727272727272727,
+   "on_time_share": 0.00103687141965323,
+   "lat_p50_ms": 433.89076999816314,
+   "lat_p95_ms": 525.0837773017618,
+   "server_busy_share": 1.0000701802605891,
+   "server_work_late_pct": 99.91579080919016,
+   "per_camera_fps": 2.6325454545454545
+  },
+  "mesh_jetson|10|30|stopwait": {
+   "fps": 26.245454545454542,
+   "on_time_fps": 0.39636363636363636,
+   "on_time_share": 0.015102978338034003,
+   "lat_p50_ms": 363.2439726804707,
+   "lat_p95_ms": 418.82534256074433,
+   "server_busy_share": 0.999973509914833,
+   "server_work_late_pct": 98.76250872830386,
+   "per_camera_fps": 2.624545454545454
+  },
+  "mesh_jetson|10|30|fifo": {
+   "fps": 26.367272727272727,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 59362.805435787515,
+   "lat_p95_ms": 104342.04722244384,
+   "server_busy_share": 0.9999842903093832,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.636727272727273
+  },
+  "mesh_jetson|10|30|latest": {
+   "fps": 26.310909090909092,
+   "on_time_fps": 25.361818181818183,
+   "on_time_share": 0.9639229215312989,
+   "lat_p50_ms": 226.26030748097182,
+   "lat_p95_ms": 293.47369412605406,
+   "server_busy_share": 0.9999862258804668,
+   "server_work_late_pct": 4.0850140561693635,
+   "per_camera_fps": 2.631090909090909
+  },
+  "mesh_jetson|10|30|ackwait": {
+   "fps": 26.28727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 450.2551014843906,
+   "lat_p95_ms": 536.8245885467732,
+   "server_busy_share": 0.9999142507012468,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.628727272727273
+  },
+  "mesh_relayed|1|10|stopwait": {
+   "fps": 6.88,
+   "on_time_fps": 6.878181818181818,
+   "on_time_share": 0.9997336884154461,
+   "lat_p50_ms": 94.94585872376811,
+   "lat_p95_ms": 172.20629887930482,
+   "server_busy_share": 0.07818654050159592,
+   "server_work_late_pct": 0.0195557584532979,
+   "per_camera_fps": 6.88
+  },
+  "mesh_relayed|1|10|fifo": {
+   "fps": 9.99090909090909,
+   "on_time_fps": 9.763636363636364,
+   "on_time_share": 0.9772539873070348,
+   "lat_p50_ms": 116.7789793346863,
+   "lat_p95_ms": 255.42501668349468,
+   "server_busy_share": 0.11401620847558114,
+   "server_work_late_pct": 2.3403421284466277,
+   "per_camera_fps": 9.99090909090909
+  },
+  "mesh_relayed|1|10|latest": {
+   "fps": 9.756363636363636,
+   "on_time_fps": 9.747272727272726,
+   "on_time_share": 0.9990711359508943,
+   "lat_p50_ms": 107.76090872613786,
+   "lat_p95_ms": 194.47220259961833,
+   "server_busy_share": 0.1108937440718798,
+   "server_work_late_pct": 0.08396345160747265,
+   "per_camera_fps": 9.756363636363636
+  },
+  "mesh_relayed|1|10|ackwait": {
+   "fps": 7.449090909090908,
+   "on_time_fps": 7.447272727272727,
+   "on_time_share": 0.9997536945812808,
+   "lat_p50_ms": 94.99947128827189,
+   "lat_p95_ms": 171.89565706040085,
+   "server_busy_share": 0.08463410957969486,
+   "server_work_late_pct": 0.018076024589442595,
+   "per_camera_fps": 7.449090909090908
+  },
+  "mesh_relayed|1|15|stopwait": {
+   "fps": 7.287272727272727,
+   "on_time_fps": 7.285454545454546,
+   "on_time_share": 0.99975,
+   "lat_p50_ms": 95.01219722502319,
+   "lat_p95_ms": 172.23348200036926,
+   "server_busy_share": 0.08285633997967042,
+   "server_work_late_pct": 0.018324742316004432,
+   "per_camera_fps": 7.287272727272727
+  },
+  "mesh_relayed|1|15|fifo": {
+   "fps": 11.967272727272727,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 12664.57892930617,
+   "lat_p95_ms": 23470.425693486195,
+   "server_busy_share": 0.1360248221854436,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 11.967272727272727
+  },
+  "mesh_relayed|1|15|latest": {
+   "fps": 11.72909090909091,
+   "on_time_fps": 11.714545454545455,
+   "on_time_share": 0.9987636170448793,
+   "lat_p50_ms": 123.53201209164544,
+   "lat_p95_ms": 202.89532215688814,
+   "server_busy_share": 0.13378367463243993,
+   "server_work_late_pct": 0.13457987371324248,
+   "per_camera_fps": 11.72909090909091
+  },
+  "mesh_relayed|1|15|ackwait": {
+   "fps": 8.069090909090908,
+   "on_time_fps": 8.067272727272726,
+   "on_time_share": 0.999774011299435,
+   "lat_p50_ms": 94.66810797400686,
+   "lat_p95_ms": 172.3404848429549,
+   "server_busy_share": 0.091848696012518,
+   "server_work_late_pct": 0.0165385289218177,
+   "per_camera_fps": 8.069090909090908
+  },
+  "mesh_relayed|1|30|stopwait": {
+   "fps": 8.430909090909092,
+   "on_time_fps": 8.429090909090908,
+   "on_time_share": 0.9997835497835498,
+   "lat_p50_ms": 94.78711267879116,
+   "lat_p95_ms": 172.5610804353608,
+   "server_busy_share": 0.09599446692490232,
+   "server_work_late_pct": 0.01584476107710681,
+   "per_camera_fps": 8.430909090909092
+  },
+  "mesh_relayed|1|30|fifo": {
+   "fps": 11.91090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 39102.380516396915,
+   "lat_p95_ms": 68964.81596665522,
+   "server_busy_share": 0.1358031232160773,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 11.91090909090909
+  },
+  "mesh_relayed|1|30|latest": {
+   "fps": 11.959999999999999,
+   "on_time_fps": 11.94909090909091,
+   "on_time_share": 0.9990855865311505,
+   "lat_p50_ms": 112.4757039289605,
+   "lat_p95_ms": 191.91400765058498,
+   "server_busy_share": 0.1361823803338886,
+   "server_work_late_pct": 0.09472791320008038,
+   "per_camera_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|30|ackwait": {
+   "fps": 9.314545454545454,
+   "on_time_fps": 9.312727272727273,
+   "on_time_share": 0.9998041136141038,
+   "lat_p50_ms": 94.89066556100079,
+   "lat_p95_ms": 172.19667192629421,
+   "server_busy_share": 0.1062308280703798,
+   "server_work_late_pct": 0.014328948115600556,
+   "per_camera_fps": 9.314545454545454
+  },
+  "mesh_relayed|2|10|stopwait": {
+   "fps": 10.961818181818181,
+   "on_time_fps": 10.885454545454547,
+   "on_time_share": 0.9930286133672649,
+   "lat_p50_ms": 125.45974119477032,
+   "lat_p95_ms": 230.0393486860812,
+   "server_busy_share": 0.12486701593102581,
+   "server_work_late_pct": 0.7265846075162539,
+   "per_camera_fps": 5.4809090909090905
+  },
+  "mesh_relayed|2|10|fifo": {
+   "fps": 11.943636363636363,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 25699.350542113087,
+   "lat_p95_ms": 46224.37485260134,
+   "server_busy_share": 0.135883604648828,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.971818181818182
+  },
+  "mesh_relayed|2|10|latest": {
+   "fps": 11.943636363636363,
+   "on_time_fps": 11.818181818181818,
+   "on_time_share": 0.989491714237734,
+   "lat_p50_ms": 170.15944558287484,
+   "lat_p95_ms": 249.39393348060185,
+   "server_busy_share": 0.135883604648828,
+   "server_work_late_pct": 1.0150044415358794,
+   "per_camera_fps": 5.971818181818182
+  },
+  "mesh_relayed|2|10|ackwait": {
+   "fps": 11.336363636363636,
+   "on_time_fps": 11.245454545454546,
+   "on_time_share": 0.9919752409515448,
+   "lat_p50_ms": 131.4766765899596,
+   "lat_p95_ms": 238.27170446484962,
+   "server_busy_share": 0.1290183718695143,
+   "server_work_late_pct": 0.8030585109247548,
+   "per_camera_fps": 5.668181818181818
+  },
+  "mesh_relayed|2|15|stopwait": {
+   "fps": 11.547272727272727,
+   "on_time_fps": 11.445454545454545,
+   "on_time_share": 0.9911690937944995,
+   "lat_p50_ms": 132.09354148373822,
+   "lat_p95_ms": 237.13661134466528,
+   "server_busy_share": 0.1314187020628882,
+   "server_work_late_pct": 0.8800387459335898,
+   "per_camera_fps": 5.7736363636363635
+  },
+  "mesh_relayed|2|15|fifo": {
+   "fps": 11.91090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 39102.38051639659,
+   "lat_p95_ms": 68964.8159666559,
+   "server_busy_share": 0.1358031232160773,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.955454545454545
+  },
+  "mesh_relayed|2|15|latest": {
+   "fps": 11.91090909090909,
+   "on_time_fps": 11.856363636363636,
+   "on_time_share": 0.9954268553090488,
+   "lat_p50_ms": 146.2773492267057,
+   "lat_p95_ms": 225.1065645599505,
+   "server_busy_share": 0.1358031232160773,
+   "server_work_late_pct": 0.4545290800975047,
+   "per_camera_fps": 5.955454545454545
+  },
+  "mesh_relayed|2|15|ackwait": {
+   "fps": 11.783636363636365,
+   "on_time_fps": 11.647272727272727,
+   "on_time_share": 0.9884103577191118,
+   "lat_p50_ms": 140.09640399775964,
+   "lat_p95_ms": 244.22298174859824,
+   "server_busy_share": 0.13437974310972184,
+   "server_work_late_pct": 1.161803055066835,
+   "per_camera_fps": 5.8918181818181825
+  },
+  "mesh_relayed|2|30|stopwait": {
+   "fps": 11.941818181818181,
+   "on_time_fps": 11.787272727272727,
+   "on_time_share": 0.9870385056226816,
+   "lat_p50_ms": 143.5533080231151,
+   "lat_p95_ms": 247.19212220318005,
+   "server_busy_share": 0.13617522370149995,
+   "server_work_late_pct": 1.312323237508669,
+   "per_camera_fps": 5.970909090909091
+  },
+  "mesh_relayed|2|30|fifo": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 52320.7289587724,
+   "lat_p95_ms": 91742.44050554054,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 5.950909090909091
+  },
+  "mesh_relayed|2|30|latest": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 11.883636363636365,
+   "on_time_share": 0.9984695412034057,
+   "lat_p50_ms": 121.20348498870153,
+   "lat_p95_ms": 199.3991517496921,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 0.17027707199030312,
+   "per_camera_fps": 5.950909090909091
+  },
+  "mesh_relayed|2|30|ackwait": {
+   "fps": 11.996363636363636,
+   "on_time_fps": 11.789090909090909,
+   "on_time_share": 0.9827117416520075,
+   "lat_p50_ms": 155.04542581234273,
+   "lat_p95_ms": 259.7152261767595,
+   "server_busy_share": 0.136849423447837,
+   "server_work_late_pct": 1.7271298736025216,
+   "per_camera_fps": 5.998181818181818
+  },
+  "mesh_relayed|3|10|stopwait": {
+   "fps": 11.843636363636364,
+   "on_time_fps": 10.701818181818181,
+   "on_time_share": 0.9034773817327754,
+   "lat_p50_ms": 196.2424890439419,
+   "lat_p95_ms": 329.90519000597413,
+   "server_busy_share": 0.1349269008959016,
+   "server_work_late_pct": 9.774439926929752,
+   "per_camera_fps": 3.9478787878787878
+  },
+  "mesh_relayed|3|10|fifo": {
+   "fps": 11.91090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 39102.3805163967,
+   "lat_p95_ms": 68964.81596665566,
+   "server_busy_share": 0.1358031232160773,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.9703030303030302
+  },
+  "mesh_relayed|3|10|latest": {
+   "fps": 11.91090909090909,
+   "on_time_fps": 11.743636363636364,
+   "on_time_share": 0.9859579661088983,
+   "lat_p50_ms": 179.61068256060972,
+   "lat_p95_ms": 258.4398978934172,
+   "server_busy_share": 0.1358031232160773,
+   "server_work_late_pct": 1.4604867862990039,
+   "per_camera_fps": 3.9703030303030302
+  },
+  "mesh_relayed|3|10|ackwait": {
+   "fps": 11.878181818181819,
+   "on_time_fps": 10.530909090909091,
+   "on_time_share": 0.8864771297312588,
+   "lat_p50_ms": 206.47711910625367,
+   "lat_p95_ms": 338.4283726832611,
+   "server_busy_share": 0.1351153571023799,
+   "server_work_late_pct": 11.474882243972655,
+   "per_camera_fps": 3.9593939393939395
+  },
+  "mesh_relayed|3|15|stopwait": {
+   "fps": 11.883636363636365,
+   "on_time_fps": 10.505454545454546,
+   "on_time_share": 0.8840004566788696,
+   "lat_p50_ms": 211.4475637872485,
+   "lat_p95_ms": 343.9874573263998,
+   "server_busy_share": 0.1352812330959525,
+   "server_work_late_pct": 11.864085469258194,
+   "per_camera_fps": 3.9612121212121214
+  },
+  "mesh_relayed|3|15|fifo": {
+   "fps": 11.84909090909091,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 48093.14393664127,
+   "lat_p95_ms": 84033.1469217333,
+   "server_busy_share": 0.13524163605243272,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 3.9496969696969697
+  },
+  "mesh_relayed|3|15|latest": {
+   "fps": 11.84909090909091,
+   "on_time_fps": 11.785454545454545,
+   "on_time_share": 0.9946327731529852,
+   "lat_p50_ms": 152.07396193499298,
+   "lat_p95_ms": 230.55558188740324,
+   "server_busy_share": 0.13524163605243272,
+   "server_work_late_pct": 0.5632325025052098,
+   "per_camera_fps": 3.9496969696969697
+  },
+  "mesh_relayed|3|15|ackwait": {
+   "fps": 11.883636363636365,
+   "on_time_fps": 10.190909090909091,
+   "on_time_share": 0.8574171535481913,
+   "lat_p50_ms": 221.86187775412182,
+   "lat_p95_ms": 354.61677853212893,
+   "server_busy_share": 0.13499617136338632,
+   "server_work_late_pct": 14.630474470739998,
+   "per_camera_fps": 3.9612121212121214
+  },
+  "mesh_relayed|3|30|stopwait": {
+   "fps": 11.9,
+   "on_time_fps": 10.103636363636364,
+   "on_time_share": 0.8488982093844694,
+   "lat_p50_ms": 227.47743269238563,
+   "lat_p95_ms": 356.1683094115382,
+   "server_busy_share": 0.13530863745655256,
+   "server_work_late_pct": 15.46164794273145,
+   "per_camera_fps": 3.966666666666667
+  },
+  "mesh_relayed|3|30|fifo": {
+   "fps": 12.001818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 56704.917011997524,
+   "lat_p95_ms": 99337.83359735389,
+   "server_busy_share": 0.13676701498939903,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 4.000606060606061
+  },
+  "mesh_relayed|3|30|latest": {
+   "fps": 12.001818181818182,
+   "on_time_fps": 11.987272727272728,
+   "on_time_share": 0.9987859792538805,
+   "lat_p50_ms": 123.41917774164794,
+   "lat_p95_ms": 200.60820277972743,
+   "server_busy_share": 0.13676701498939903,
+   "server_work_late_pct": 0.1283329597949206,
+   "per_camera_fps": 4.000606060606061
+  },
+  "mesh_relayed|3|30|ackwait": {
+   "fps": 11.912727272727272,
+   "on_time_fps": 9.649090909090908,
+   "on_time_share": 0.8098102394266545,
+   "lat_p50_ms": 238.1085338305871,
+   "lat_p95_ms": 367.60706852935584,
+   "server_busy_share": 0.135411468842292,
+   "server_work_late_pct": 19.376867990697015,
+   "per_camera_fps": 3.9709090909090907
+  },
+  "mesh_relayed|4|10|stopwait": {
+   "fps": 11.918181818181818,
+   "on_time_fps": 7.207272727272728,
+   "on_time_share": 0.6045831073032837,
+   "lat_p50_ms": 278.5005191455304,
+   "lat_p95_ms": 430.5560667217134,
+   "server_busy_share": 0.13544975869422368,
+   "server_work_late_pct": 40.125812411800446,
+   "per_camera_fps": 2.9795454545454545
+  },
+  "mesh_relayed|4|10|fifo": {
+   "fps": 11.870909090909091,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 45083.3399616549,
+   "lat_p95_ms": 80172.01858679447,
+   "server_busy_share": 0.13550844194137285,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.9677272727272728
+  },
+  "mesh_relayed|4|10|latest": {
+   "fps": 11.870909090909091,
+   "on_time_fps": 11.676363636363636,
+   "on_time_share": 0.9836119055771579,
+   "lat_p50_ms": 183.5161135821483,
+   "lat_p95_ms": 265.103409861651,
+   "server_busy_share": 0.13550844194137285,
+   "server_work_late_pct": 1.6748489329223712,
+   "per_camera_fps": 2.9677272727272728
+  },
+  "mesh_relayed|4|10|ackwait": {
+   "fps": 11.876363636363637,
+   "on_time_fps": 6.501818181818182,
+   "on_time_share": 0.5470050369827395,
+   "lat_p50_ms": 291.06032444886733,
+   "lat_p95_ms": 441.17680750084435,
+   "server_busy_share": 0.13501558988776816,
+   "server_work_late_pct": 45.92533728661736,
+   "per_camera_fps": 2.9690909090909092
+  },
+  "mesh_relayed|4|15|stopwait": {
+   "fps": 11.86909090909091,
+   "on_time_fps": 6.236363636363636,
+   "on_time_share": 0.5252007333478638,
+   "lat_p50_ms": 295.73821281837843,
+   "lat_p95_ms": 446.1021177285118,
+   "server_busy_share": 0.13515943995800023,
+   "server_work_late_pct": 47.98464107097947,
+   "per_camera_fps": 2.9672727272727273
+  },
+  "mesh_relayed|4|15|fifo": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 52320.72895877248,
+   "lat_p95_ms": 91742.44050554038,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.9754545454545456
+  },
+  "mesh_relayed|4|15|latest": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 11.834545454545454,
+   "on_time_share": 0.9943387175757312,
+   "lat_p50_ms": 154.5368183198676,
+   "lat_p95_ms": 232.73248508316865,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 0.5729873881058363,
+   "per_camera_fps": 2.9754545454545456
+  },
+  "mesh_relayed|4|15|ackwait": {
+   "fps": 11.9,
+   "on_time_fps": 5.572727272727272,
+   "on_time_share": 0.4681711071021589,
+   "lat_p50_ms": 305.712661400429,
+   "lat_p95_ms": 456.11596053667597,
+   "server_busy_share": 0.13577754374910073,
+   "server_work_late_pct": 53.618236382112116,
+   "per_camera_fps": 2.975
+  },
+  "mesh_relayed|4|30|stopwait": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 5.270909090909091,
+   "on_time_share": 0.44248829181716953,
+   "lat_p50_ms": 310.56162546275266,
+   "lat_p95_ms": 457.92930977744834,
+   "server_busy_share": 0.13571860944761868,
+   "server_work_late_pct": 56.22089442672401,
+   "per_camera_fps": 2.9754545454545456
+  },
+  "mesh_relayed|4|30|fifo": {
+   "fps": 11.916363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 58222.29433675944,
+   "lat_p95_ms": 102973.26479488095,
+   "server_busy_share": 0.13602484179677857,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.979090909090909
+  },
+  "mesh_relayed|4|30|latest": {
+   "fps": 11.916363636363636,
+   "on_time_fps": 11.874545454545455,
+   "on_time_share": 0.9964919509642179,
+   "lat_p50_ms": 124.90397596662515,
+   "lat_p95_ms": 204.0264358843953,
+   "server_busy_share": 0.13602484179677857,
+   "server_work_late_pct": 0.3629346025423126,
+   "per_camera_fps": 2.979090909090909
+  },
+  "mesh_relayed|4|30|ackwait": {
+   "fps": 11.925454545454546,
+   "on_time_fps": 4.470909090909091,
+   "on_time_share": 0.3743937091739966,
+   "lat_p50_ms": 321.49757280795603,
+   "lat_p95_ms": 468.57216332657845,
+   "server_busy_share": 0.13622925874128675,
+   "server_work_late_pct": 63.014269233078856,
+   "per_camera_fps": 2.9813636363636364
+  },
+  "mesh_relayed|5|10|stopwait": {
+   "fps": 11.963636363636365,
+   "on_time_fps": 2.6836363636363636,
+   "on_time_share": 0.22421415651561957,
+   "lat_p50_ms": 359.1410381314312,
+   "lat_p95_ms": 521.988366774343,
+   "server_busy_share": 0.13601708902802176,
+   "server_work_late_pct": 77.85646076235484,
+   "per_camera_fps": 2.392727272727273
+  },
+  "mesh_relayed|5|10|fifo": {
+   "fps": 11.836363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 49253.55019635391,
+   "lat_p95_ms": 87285.81108718058,
+   "server_busy_share": 0.13480975708851728,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.367272727272727
+  },
+  "mesh_relayed|5|10|latest": {
+   "fps": 11.836363636363636,
+   "on_time_fps": 11.618181818181819,
+   "on_time_share": 0.9815506256442633,
+   "lat_p50_ms": 186.74910891410872,
+   "lat_p95_ms": 264.63900586770035,
+   "server_busy_share": 0.13480975708851728,
+   "server_work_late_pct": 1.8765408977865952,
+   "per_camera_fps": 2.367272727272727
+  },
+  "mesh_relayed|5|10|ackwait": {
+   "fps": 11.983636363636364,
+   "on_time_fps": 2.2072727272727275,
+   "on_time_share": 0.1841020682799766,
+   "lat_p50_ms": 371.87230809499306,
+   "lat_p95_ms": 533.6447969454806,
+   "server_busy_share": 0.13627294064240422,
+   "server_work_late_pct": 81.8149143858841,
+   "per_camera_fps": 2.396727272727273
+  },
+  "mesh_relayed|5|15|stopwait": {
+   "fps": 12.047272727272727,
+   "on_time_fps": 2.0036363636363634,
+   "on_time_share": 0.1662558216748654,
+   "lat_p50_ms": 372.90055317825465,
+   "lat_p95_ms": 536.4747658853223,
+   "server_busy_share": 0.13759458044219114,
+   "server_work_late_pct": 83.49267067568636,
+   "per_camera_fps": 2.4094545454545453
+  },
+  "mesh_relayed|5|15|fifo": {
+   "fps": 11.932727272727274,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 54432.749611382744,
+   "lat_p95_ms": 96095.28443858869,
+   "server_busy_share": 0.13600662561608018,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.3865454545454545
+  },
+  "mesh_relayed|5|15|latest": {
+   "fps": 11.932727272727274,
+   "on_time_fps": 11.863636363636363,
+   "on_time_share": 0.9942097613165266,
+   "lat_p50_ms": 155.95402646627372,
+   "lat_p95_ms": 230.65022614858754,
+   "server_busy_share": 0.13600662561608018,
+   "server_work_late_pct": 0.6162989596863795,
+   "per_camera_fps": 2.3865454545454545
+  },
+  "mesh_relayed|5|15|ackwait": {
+   "fps": 12.014545454545454,
+   "on_time_fps": 1.4272727272727272,
+   "on_time_share": 0.11878838980452888,
+   "lat_p50_ms": 386.78005327108406,
+   "lat_p95_ms": 545.8754032567958,
+   "server_busy_share": 0.1370869426376975,
+   "server_work_late_pct": 88.30672221944,
+   "per_camera_fps": 2.4029090909090907
+  },
+  "mesh_relayed|5|30|stopwait": {
+   "fps": 12.003636363636364,
+   "on_time_fps": 1.24,
+   "on_time_share": 0.10327496601300608,
+   "lat_p50_ms": 392.9161993510046,
+   "lat_p95_ms": 546.0065597744979,
+   "server_busy_share": 0.13701827014730378,
+   "server_work_late_pct": 89.78233163982998,
+   "per_camera_fps": 2.4007272727272726
+  },
+  "mesh_relayed|5|30|fifo": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 59974.308780483654,
+   "lat_p95_ms": 105187.73249251698,
+   "server_busy_share": 0.1363036113111928,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.3905454545454545
+  },
+  "mesh_relayed|5|30|latest": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 11.914545454545454,
+   "on_time_share": 0.9968059098730387,
+   "lat_p50_ms": 125.78937121046548,
+   "lat_p95_ms": 202.47713160598215,
+   "server_busy_share": 0.1363036113111928,
+   "server_work_late_pct": 0.317475614751599,
+   "per_camera_fps": 2.3905454545454545
+  },
+  "mesh_relayed|5|30|ackwait": {
+   "fps": 12.012727272727272,
+   "on_time_fps": 0.9036363636363636,
+   "on_time_share": 0.07518213008196986,
+   "lat_p50_ms": 404.3039032148678,
+   "lat_p95_ms": 559.3090838246575,
+   "server_busy_share": 0.13710472014180863,
+   "server_work_late_pct": 92.61539302852242,
+   "per_camera_fps": 2.4025454545454545
+  },
+  "mesh_relayed|6|10|stopwait": {
+   "fps": 11.870909090909091,
+   "on_time_fps": 0.45636363636363636,
+   "on_time_share": 0.03839259464918361,
+   "lat_p50_ms": 447.6872017076195,
+   "lat_p95_ms": 629.210932002549,
+   "server_busy_share": 0.13460257206759002,
+   "server_work_late_pct": 96.25973029053492,
+   "per_camera_fps": 1.9784848484848485
+  },
+  "mesh_relayed|6|10|fifo": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 52320.72895877245,
+   "lat_p95_ms": 91742.44050554043,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.9836363636363636
+  },
+  "mesh_relayed|6|10|latest": {
+   "fps": 11.901818181818182,
+   "on_time_fps": 11.714545454545455,
+   "on_time_share": 0.984269727672552,
+   "lat_p50_ms": 187.87015165392367,
+   "lat_p95_ms": 266.06581841645277,
+   "server_busy_share": 0.13615502447529143,
+   "server_work_late_pct": 1.5836563245519968,
+   "per_camera_fps": 1.9836363636363636
+  },
+  "mesh_relayed|6|10|ackwait": {
+   "fps": 11.856363636363636,
+   "on_time_fps": 0.26545454545454544,
+   "on_time_share": 0.022369915506777922,
+   "lat_p50_ms": 460.21749998950327,
+   "lat_p95_ms": 638.1525592259816,
+   "server_busy_share": 0.1345278591649847,
+   "server_work_late_pct": 97.86953925737575,
+   "per_camera_fps": 1.9760606060606059
+  },
+  "mesh_relayed|6|15|stopwait": {
+   "fps": 11.889090909090909,
+   "on_time_fps": 0.20363636363636362,
+   "on_time_share": 0.017123064731676324,
+   "lat_p50_ms": 462.80873386342864,
+   "lat_p95_ms": 643.0383576050448,
+   "server_busy_share": 0.13518859086887164,
+   "server_work_late_pct": 98.41884995462917,
+   "per_camera_fps": 1.9815151515151515
+  },
+  "mesh_relayed|6|15|fifo": {
+   "fps": 12.001818181818182,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 56704.9170119975,
+   "lat_p95_ms": 99337.83359735404,
+   "server_busy_share": 0.13676701498939903,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 2.0003030303030305
+  },
+  "mesh_relayed|6|15|latest": {
+   "fps": 12.001818181818182,
+   "on_time_fps": 11.929090909090908,
+   "on_time_share": 0.9939311095649005,
+   "lat_p50_ms": 156.75251107243167,
+   "lat_p95_ms": 233.94153611175972,
+   "server_busy_share": 0.13676701498939903,
+   "server_work_late_pct": 0.6120161221859723,
+   "per_camera_fps": 2.0003030303030305
+  },
+  "mesh_relayed|6|15|ackwait": {
+   "fps": 11.9,
+   "on_time_fps": 0.14363636363636362,
+   "on_time_share": 0.012043046331881828,
+   "lat_p50_ms": 474.53627446291904,
+   "lat_p95_ms": 649.6607807178785,
+   "server_busy_share": 0.13544907948052254,
+   "server_work_late_pct": 98.81264069462833,
+   "per_camera_fps": 1.9833333333333334
+  },
+  "mesh_relayed|6|30|stopwait": {
+   "fps": 11.907272727272728,
+   "on_time_fps": 0.09454545454545454,
+   "on_time_share": 0.007957012663327634,
+   "lat_p50_ms": 477.0749271041859,
+   "lat_p95_ms": 657.0982242210987,
+   "server_busy_share": 0.13533267035812338,
+   "server_work_late_pct": 99.21983199110274,
+   "per_camera_fps": 1.9845454545454546
+  },
+  "mesh_relayed|6|30|fifo": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 60660.819581406526,
+   "lat_p95_ms": 106849.508083086,
+   "server_busy_share": 0.13616247707215728,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.9921212121212122
+  },
+  "mesh_relayed|6|30|latest": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 11.921818181818182,
+   "on_time_share": 0.9974124718029996,
+   "lat_p50_ms": 125.5460188749752,
+   "lat_p95_ms": 204.29217117698136,
+   "server_busy_share": 0.13616247707215728,
+   "server_work_late_pct": 0.2643476182216997,
+   "per_camera_fps": 1.9921212121212122
+  },
+  "mesh_relayed|6|30|ackwait": {
+   "fps": 11.919999999999998,
+   "on_time_fps": 0.039999999999999994,
+   "on_time_share": 0.0033627134817331623,
+   "lat_p50_ms": 488.1101296646008,
+   "lat_p95_ms": 667.7456802516193,
+   "server_busy_share": 0.13546973321808453,
+   "server_work_late_pct": 99.67637404095802,
+   "per_camera_fps": 1.9866666666666664
+  },
+  "mesh_relayed|8|10|stopwait": {
+   "fps": 11.954545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 612.6901650693108,
+   "lat_p95_ms": 809.864653080907,
+   "server_busy_share": 0.13586243334744494,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.4943181818181819
+  },
+  "mesh_relayed|8|10|fifo": {
+   "fps": 11.940000000000001,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 55553.574855862804,
+   "lat_p95_ms": 97400.3441624325,
+   "server_busy_share": 0.13594702377237394,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.4925000000000002
+  },
+  "mesh_relayed|8|10|latest": {
+   "fps": 11.940000000000001,
+   "on_time_fps": 11.719999999999999,
+   "on_time_share": 0.9815541880108505,
+   "lat_p50_ms": 189.51480779575505,
+   "lat_p95_ms": 266.7107777187281,
+   "server_busy_share": 0.13594702377237394,
+   "server_work_late_pct": 1.816145224418443,
+   "per_camera_fps": 1.4925000000000002
+  },
+  "mesh_relayed|8|10|ackwait": {
+   "fps": 11.95090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 625.1418143595365,
+   "lat_p95_ms": 812.0950935325054,
+   "server_busy_share": 0.13612981838562224,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.4938636363636362
+  },
+  "mesh_relayed|8|15|stopwait": {
+   "fps": 11.972727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 629.1692765385436,
+   "lat_p95_ms": 815.6614334178106,
+   "server_busy_share": 0.13623841089482397,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.496590909090909
+  },
+  "mesh_relayed|8|15|fifo": {
+   "fps": 11.916363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 58222.29433675941,
+   "lat_p95_ms": 102973.26479488099,
+   "server_busy_share": 0.13602484179677857,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.4895454545454545
+  },
+  "mesh_relayed|8|15|latest": {
+   "fps": 11.916363636363636,
+   "on_time_fps": 11.823636363636364,
+   "on_time_share": 0.9922218493544538,
+   "lat_p50_ms": 158.20084267273234,
+   "lat_p95_ms": 237.34034197681322,
+   "server_busy_share": 0.13602484179677857,
+   "server_work_late_pct": 0.8267033720412627,
+   "per_camera_fps": 1.4895454545454545
+  },
+  "mesh_relayed|8|15|ackwait": {
+   "fps": 11.99090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 638.3377564275586,
+   "lat_p95_ms": 830.650341131178,
+   "server_busy_share": 0.13684286256205286,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.4988636363636363
+  },
+  "mesh_relayed|8|30|stopwait": {
+   "fps": 12.016363636363636,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 642.3652333056659,
+   "lat_p95_ms": 831.6662055654145,
+   "server_busy_share": 0.13691080550094556,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.5020454545454545
+  },
+  "mesh_relayed|8|30|fifo": {
+   "fps": 11.987272727272728,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 61636.7305798698,
+   "lat_p95_ms": 108717.27858304598,
+   "server_busy_share": 0.13763288502971943,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.498409090909091
+  },
+  "mesh_relayed|8|30|latest": {
+   "fps": 11.987272727272728,
+   "on_time_fps": 11.963636363636363,
+   "on_time_share": 0.9980296726899283,
+   "lat_p50_ms": 126.29223725755291,
+   "lat_p95_ms": 204.48158384905256,
+   "server_busy_share": 0.13763288502971943,
+   "server_work_late_pct": 0.21959717922181476,
+   "per_camera_fps": 1.498409090909091
+  },
+  "mesh_relayed|8|30|ackwait": {
+   "fps": 12.010909090909092,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 654.4049916892021,
+   "lat_p95_ms": 844.0322069130095,
+   "server_busy_share": 0.1370694751841081,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.5013636363636365
+  },
+  "mesh_relayed|10|10|stopwait": {
+   "fps": 11.889090909090909,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 782.689284252446,
+   "lat_p95_ms": 1005.6716661876286,
+   "server_busy_share": 0.1349570845567903,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.188909090909091
+  },
+  "mesh_relayed|10|10|fifo": {
+   "fps": 11.876363636363637,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 57355.39560844053,
+   "lat_p95_ms": 100968.90978106875,
+   "server_busy_share": 0.13542150301915742,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1876363636363636
+  },
+  "mesh_relayed|10|10|latest": {
+   "fps": 11.876363636363637,
+   "on_time_fps": 11.625454545454545,
+   "on_time_share": 0.9788732540062025,
+   "lat_p50_ms": 190.92652588417877,
+   "lat_p95_ms": 269.96962209300216,
+   "server_busy_share": 0.13542150301915742,
+   "server_work_late_pct": 2.1390512519668974,
+   "per_camera_fps": 1.1876363636363636
+  },
+  "mesh_relayed|10|10|ackwait": {
+   "fps": 11.885454545454547,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 795.0411319446976,
+   "lat_p95_ms": 1023.6532500810688,
+   "server_busy_share": 0.13491594400253798,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1885454545454546
+  },
+  "mesh_relayed|10|15|stopwait": {
+   "fps": 11.898181818181817,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 798.1393562942067,
+   "lat_p95_ms": 1027.2578019356922,
+   "server_busy_share": 0.1354376744724977,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1898181818181817
+  },
+  "mesh_relayed|10|15|fifo": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 59974.308780483654,
+   "lat_p95_ms": 105187.73249251698,
+   "server_busy_share": 0.1363036113111928,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1952727272727273
+  },
+  "mesh_relayed|10|15|latest": {
+   "fps": 11.952727272727273,
+   "on_time_fps": 11.86,
+   "on_time_share": 0.9922400791168566,
+   "lat_p50_ms": 159.19063466671977,
+   "lat_p95_ms": 235.6928614407778,
+   "server_busy_share": 0.1363036113111928,
+   "server_work_late_pct": 0.7668867486257444,
+   "per_camera_fps": 1.1952727272727273
+  },
+  "mesh_relayed|10|15|ackwait": {
+   "fps": 11.927272727272726,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 809.4139688970303,
+   "lat_p95_ms": 1038.0745341904887,
+   "server_busy_share": 0.13609766551186508,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1927272727272726
+  },
+  "mesh_relayed|10|30|stopwait": {
+   "fps": 11.925454545454546,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 813.8816046769825,
+   "lat_p95_ms": 1036.409436422359,
+   "server_busy_share": 0.13619951215651258,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1925454545454546
+  },
+  "mesh_relayed|10|30|fifo": {
+   "fps": 11.854545454545455,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 62068.871740084105,
+   "lat_p95_ms": 109745.21873724053,
+   "server_busy_share": 0.1345686414687856,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1854545454545455
+  },
+  "mesh_relayed|10|30|latest": {
+   "fps": 11.854545454545455,
+   "on_time_fps": 11.80181818181818,
+   "on_time_share": 0.9955705078813681,
+   "lat_p50_ms": 127.6143283155856,
+   "lat_p95_ms": 206.8928817658394,
+   "server_busy_share": 0.1345686414687856,
+   "server_work_late_pct": 0.4302991809367807,
+   "per_camera_fps": 1.1854545454545455
+  },
+  "mesh_relayed|10|30|ackwait": {
+   "fps": 11.925454545454546,
+   "on_time_fps": 0.0,
+   "on_time_share": 0.0,
+   "lat_p50_ms": 826.5592003614751,
+   "lat_p95_ms": 1047.3721640332951,
+   "server_busy_share": 0.13624813222402052,
+   "server_work_late_pct": 100.0,
+   "per_camera_fps": 1.1925454545454546
+  }
+ }
+}
