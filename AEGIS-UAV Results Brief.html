@@ -135,7 +135,7 @@ dl.gl dd{margin:0}
 <div class="box state"><b class="h">State on 26 Oct 2026: VisDrone detectors (YOLOv8 and YOLO11), onboard study, relay campaign, standard-metric rescoring, all three mesh campaigns, the VisDrone replay of the earlier campaigns (19.5), R2–R4 (19.6) and the Pareto analysis (19.7) done</b>
 <ul>
 <li><b>Clock speed (19.14, 10 Nov):</b> the Pi's clock is often below 2.4 GHz with v4.1 (40 % of the time) only because the governor slows an idle CPU, which is harmless; pinning it at full clock would save at most about 6 ms on offloaded frames, about +0.0009 sAP at most, while throttling (12–27 % slower onboard inference) is the effect that matters, and v4.1 prevents it (0 % against 86 % without prices).</li>
-<li><b>Overload (19.13, 10 Nov):</b> when cameras offer a Jetson more frames than it can process, a naive queue delivers no on-time result at full power; our one-frame-in-flight rule serves about 4 cameras per Jetson on Wi-Fi and 6 on one mesh hop (queueing model from measured timings), and a relayed mesh path already saturates with one camera (measured), so the edge drone must compute rather than forward.</li>
+<li><b>Overload (19.13, rewritten 13 Nov):</b> one Jetson serves about 17 frames/s over Wi-Fi and 26 over a mesh hop, however fast the cameras send. v4.1 never overloads it from one Pi. It handles up to 3 Pis per Jetson on Wi-Fi and 5 on a mesh hop, then collapses; a "pull one ahead" coordinator on the Jetson keeps it at full capacity with any number of Pis. With several Jetsons, give each its own channel (on one shared channel more than two add nothing). Relays need computing at the relay. Model results; the 10 Nov version had mislabelled stop-and-wait as v4.1's rule.</li>
 <li><b>Laptop-only additions, part 5 (19.12, 30 Oct):</b> a learned feature-compression baseline: a small bottleneck trained at layer 2 or 4 with the detector frozen beats JPEG on bits (fewer bytes for the same accuracy), but on the Pi it wins end to end only at the lowest goodputs, so "send the image" stands for the drone computers measured; the second paper's first draft is in <code>paper2/</code>.</li>
 <li><b>Laptop-only additions, part 4 (19.11, 30 Oct):</b> v4.1 is flat in its own settings except the energy target, and a tighter target gains nothing beyond the replay's error on fresh seeds (2.8 W stays); the replay's onboard power model was corrected (power error halved) but its pro-LEAF bias is not in the power model; the AccuMO-style planner runs on the board code (<code>--policy accumo</code>, same decisions as the replay's); the next mesh campaign and the 160 px test are scripted; the paper has a hardware section.</li>
 <li><b>A published scheduler (19.10, 29 Oct):</b> in the replay an AccuMO-style 30-frame planner ties v4.1 or is slightly ahead (random links, 24-min mission), but so is a LEAF-style fixed weight, and these differences are within the replay's known error; the claim narrows to "a greedy priced choice does as well as planning". The board test is listed under "What is left".</li>
@@ -2391,113 +2391,125 @@ relative effect sizes, sign and wording fixes); 5 pages, a testbed figure, the d
 number generated from the result files (<code>paper2/make_metrics.py</code>, sources in
 <code>paper2/generated/metrics_sources.md</code>), every new citation verified via doi.org. What it still needs is listed in
 <code>paper2/README.md</code>; chiefly the planner's board campaign.</p>
-<h3>19.13 Overload: more frames than the edge computer can take (10 Nov 2026, laptop only)</h3>
-<p>Question: what happens when two or more Pis send to the same Jetson, or one Pi sends faster than the Jetson can
-process, on the Wi-Fi and on the mesh (one hop, and relayed)? No new board runs: a queueing model is fed with timings
-already measured (<code>validation/hardware/overload_model.py</code>, results
-<code>experiments/results/hardware/overload_model/overload_summary.json</code>) and checked against the runs that exist.</p>
+<h3>19.13 Overload: more frames than the edge computer can take (10 Nov 2026; rewritten 13 Nov 2026, laptop only)</h3>
+<p><b>The question.</b> What happens if a camera Pi sends frames faster, or if more Pis share one Jetson, and how should the system handle it?</p>
+<p><b>The answer.</b> The Jetson can only serve so many frames per second: about 17 over the Wi-Fi access point (the radio is the limit), 26 over one mesh hop (the Jetson's GPU is the limit) and 12 relayed through the Jetson (the shared channel is the limit). A faster camera or more Pis cannot raise that; they only decide how it is shared.</p>
 <ul>
-<li><b>Model.</b> Every frame passes through shared stages in tandem: the radio channel into the edge computer (shared
-by all cameras), then the server that runs the detector. Three sending rules: a <i>naive queue</i> (each camera sends
-every frame at its camera rate into first-in-first-out queues); <i>one frame in flight</i> per camera (our system: the
-camera sends its newest frame only when the previous result is back, and skips the rest); and <i>latest frame wins</i>
-(a newer frame replaces a waiting older one, the rule <code>edge_node.py</code> already applies inside the Jetson).
-Deadline 300 ms, 30 frames/s cameras, 5 seeds of 120 s.</li>
-<li><b>Assumptions.</b> Server times vary by ±25 % (coefficient of variation);
-the radio's spread is taken from the measured goodput samples; the radio is one shared first-come queue (collisions and
-rate adaptation are not modelled, so real behaviour is probably somewhat worse); the returned detections (under 1 KB)
-are ignored; the Jetson's heating under sustained load is not modelled.</li>
+<li><b>A faster camera is safe with v4.1.</b> It never sends more than the path can carry, so latency stays flat; above the path's limit the extra frames are simply skipped.</li>
+<li><b>More Pis are fine up to 3 per Jetson on Wi-Fi and 5 over a mesh hop.</b> Beyond that, v4.1 alone collapses: frames wait behind the other Pis' frames at the shared radio and arrive too late.</li>
+<li><b>The fix is a coordinator on the Jetson that pulls the next frame ("pull one ahead").</b> It stays at full capacity with any number of Pis. With several Jetsons, give each its own radio channel. On one shared channel, more than two Jetsons add nothing.</li>
+<li><b>Why it matters for the main topic (paper 2).</b> v4.1 keeps a Pi cool by offloading whenever a server can answer on time. An overloaded Jetson stops answering on time, so every Pi falls back to onboard detection and heats up. The coordinator protects the condition the heat solution relies on. This last step is reasoned, not yet measured.</li>
 </ul>
+<p><b>How it was answered.</b> No new board runs. A queueing model (<code>validation/hardware/overload_model.py</code>) is fed with measured timings: radio time per frame and server time, with their measured spreads (placements.csv; mesh campaign 2, 26,703 goodput samples). Settings: cameras at 30 frames/s, deadline 300 ms, 5 seeds of 120 s. The model assumes one shared radio with no collisions, so real behaviour is probably somewhat worse; it ignores the small returned results and the Jetson's heating. Four sending rules:</p>
 <div class="tbl"><table>
-<tr><th>Link</th><th>time on air per Q90 frame</th><th>server time per frame</th><th>limit of the path (frames/s)</th><th>bottleneck</th><th>source</th></tr>
-<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">58.7 ms</td><td class="n">38.0 ms</td><td class="n">17</td><td class="n">the radio</td><td class="n">placements.csv (measured stages)</td></tr>
-<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">22.1 ms (27 Mbit/s, 75 kB)</td><td class="n">38.0 ms</td><td class="n">26</td><td class="n">the Jetson's GPU</td><td class="n">mesh campaign 2, 26,703 goodput samples</td></tr>
-<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">83.7 ms (6.4 Mbit/s, 67 kB)</td><td class="n">11.4 ms (laptop)</td><td class="n">12</td><td class="n">the shared channel, both hops</td><td class="n">mesh campaign 2, 16,969 samples</td></tr>
+<tr><th>Rule</th><th>What the camera does</th></tr>
+<tr><td>Naive queue</td><td class="n">Sends every frame, 30 per second, into first-come queues</td></tr>
+<tr><td>Stop-and-wait</td><td class="n">Sends its newest frame only when its previous <i>result</i> is back</td></tr>
+<tr><td><b>v4.1's rule</b></td><td class="n">Sends its newest frame once its previous frame has <i>left the radio</i>; at the Jetson a newer frame of the same Pi replaces its waiting one (<code>adaptive2.py</code>, <code>edge_node.py</code>)</td></tr>
+<tr><td>Latest frame wins</td><td class="n">Each Pi has only its newest frame waiting anywhere, also at the radio; at the radio this needs a coordinator</td></tr>
 </table></div>
-<p><b>Check against the boards.</b> One hop on Wi-Fi or the mesh: the model agrees with the measurements. Relayed
-on the mesh it does not: the real boards are much worse, because the model leaves out contention between the two hops,
-the mesh routing overhead and the Jetson's forwarding cost. For the relayed mesh, the measurements are the answer.</p>
+<p><b>Correction (13 Nov).</b> The 10 Nov version called stop-and-wait "our system". It is not: v4.1 sends once the bytes have left the radio. With one Pi, v4.1 is better than stated then. With many Pis it reaches one fewer Pi per Jetson. Every number below uses v4.1's actual rule (<code>overload_model_nov13/</code>; the three original rules reproduce the 10 Nov numbers exactly, all 216 cells).</p>
+<p><b>Check against the boards.</b> One hop: v4.1's rule gives a median of 74 ms on the mesh. The boards measured 74 ms over 21,675 Jetson-served frames; stop-and-wait gives 66 ms, so v4.1's rule is the better fit. Relayed: the model gives 100 % on time with one Pi, but the boards measured 12.5 % (median 309 ms, 3 runs of fixed offloading through the Jetson). The model omits contention between the two hops, routing overhead and the Jetson's forwarding cost, so for relays the board measurements are the answer.</p>
+<p><b>Result 1: one Pi, faster camera.</b> On-time results per second of results delivered, and the median latency:</p>
 <div class="tbl"><table>
-<tr><th>One camera, one frame in flight</th><th>model</th><th>measured on the boards</th><th>verdict</th></tr>
-<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">8.3 frames/s, median 103 ms</td><td class="n">10.8 frames/s, median 150 ms (live placement runs)</td><td class="n">right in direction and size, not exact</td></tr>
-<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">median 66 ms</td><td class="n">median 74 ms (21,675 Jetson-served frames)</td><td class="n">close</td></tr>
-<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">100 % on time, median 95 ms</td><td class="n"><b>12.5 % on time</b>, median 309 ms (fixed offload to the laptop, 3 runs)</td><td class="n"><b>model far too optimistic: trust the boards</b></td></tr>
-</table></div>
-<p><b>Results.</b></p>
-<div class="tbl"><table>
-<tr><th>Link</th><th>cameras at 30 frames/s</th><th>naive queue: on time of total · median latency · server work wasted on late results</th><th>one frame in flight (ours): on time of total · median / 95th-percentile</th><th>latest frame wins: on time of total · median</th></tr>
-<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">1</td><td class="n">0.0 of 17.1 · 28 s · 100 % wasted</td><td class="n">8.3 of 8.3 · 103 ms / 135 ms</td><td class="n">17.0 of 17.0 · 121 ms</td></tr>
-<tr><td></td><td class="n">2</td><td class="n">0.0 of 17.1 · 47 s · 100 % wasted</td><td class="n">15.2 of 15.2 · 112 ms / 157 ms</td><td class="n">17.1 of 17.1 · 128 ms</td></tr>
-<tr><td></td><td class="n">4</td><td class="n">0.0 of 17.1 · 56 s · 100 % wasted</td><td class="n">16.9 of 17.0 · 217 ms / 275 ms</td><td class="n">17.1 of 17.1 · 133 ms</td></tr>
-<tr><td></td><td class="n">6</td><td class="n">0.0 of 17.1 · 59 s · 100 % wasted</td><td class="n">3.2 of 17.0 · 333 ms / 404 ms</td><td class="n">17.1 of 17.1 · 134 ms</td></tr>
-<tr><td></td><td class="n">8</td><td class="n">0.0 of 17.1 · 60 s · 100 % wasted</td><td class="n">0.0 of 17.1 · 451 ms / 527 ms</td><td class="n">17.1 of 17.1 · 135 ms</td></tr>
-<tr><td></td><td class="n">10</td><td class="n">0.0 of 17.0 · 61 s · 100 % wasted</td><td class="n">0.0 of 17.0 · 570 ms / 654 ms</td><td class="n">17.0 of 17.0 · 135 ms</td></tr>
-<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">1</td><td class="n">0.0 of 26.3 · 8 s · 100 % wasted</td><td class="n">12.0 of 12.0 · 66 ms / 94 ms</td><td class="n">25.2 of 25.2 · 81 ms</td></tr>
-<tr><td></td><td class="n">2</td><td class="n">0.0 of 26.4 · 36 s · 100 % wasted</td><td class="n">21.5 of 21.5 · 74 ms / 108 ms</td><td class="n">26.3 of 26.3 · 117 ms</td></tr>
-<tr><td></td><td class="n">4</td><td class="n">0.0 of 26.4 · 51 s · 100 % wasted</td><td class="n">26.2 of 26.2 · 135 ms / 173 ms</td><td class="n">26.2 of 26.2 · 148 ms</td></tr>
-<tr><td></td><td class="n">6</td><td class="n">0.0 of 26.3 · 56 s · 100 % wasted</td><td class="n">26.4 of 26.4 · 209 ms / 254 ms</td><td class="n">26.3 of 26.3 · 174 ms</td></tr>
-<tr><td></td><td class="n">8</td><td class="n">0.0 of 26.2 · 58 s · 100 % wasted</td><td class="n">17.9 of 26.3 · 287 ms / 337 ms</td><td class="n">26.2 of 26.3 · 201 ms</td></tr>
-<tr><td></td><td class="n">10</td><td class="n">0.0 of 26.4 · 59 s · 100 % wasted</td><td class="n">0.4 of 26.2 · 363 ms / 419 ms</td><td class="n">25.4 of 26.3 · 226 ms</td></tr>
-<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">1</td><td class="n">0.0 of 11.9 · 39 s · 100 % wasted</td><td class="n">8.4 of 8.4 · 95 ms / 173 ms</td><td class="n">11.9 of 12.0 · 112 ms</td></tr>
-<tr><td></td><td class="n">2</td><td class="n">0.0 of 11.9 · 52 s · 100 % wasted</td><td class="n">11.8 of 11.9 · 144 ms / 247 ms</td><td class="n">11.9 of 11.9 · 121 ms</td></tr>
-<tr><td></td><td class="n">4</td><td class="n">0.0 of 11.9 · 58 s · 100 % wasted</td><td class="n">5.3 of 11.9 · 311 ms / 458 ms</td><td class="n">11.9 of 11.9 · 125 ms</td></tr>
-<tr><td></td><td class="n">6</td><td class="n">0.0 of 12.0 · 61 s · 100 % wasted</td><td class="n">0.1 of 11.9 · 477 ms / 657 ms</td><td class="n">11.9 of 12.0 · 126 ms</td></tr>
-<tr><td></td><td class="n">8</td><td class="n">0.0 of 12.0 · 62 s · 100 % wasted</td><td class="n">0.0 of 12.0 · 642 ms / 832 ms</td><td class="n">12.0 of 12.0 · 126 ms</td></tr>
-<tr><td></td><td class="n">10</td><td class="n">0.0 of 11.9 · 62 s · 100 % wasted</td><td class="n">0.0 of 11.9 · 814 ms / 1 s</td><td class="n">11.8 of 11.9 · 128 ms</td></tr>
-<tr><td><i>The relayed rows are the model's; it is far too optimistic there (see the check above).</i></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
-</table></div>
-<figure class="chart"><svg viewBox="0 0 640 370" width="100%" role="img" aria-label="On-time results per second against the number of cameras sending 30 frames per second to one Jetson, for three links and two sending rules" xmlns="http://www.w3.org/2000/svg"><line class="ax" x1="64" x2="584" y1="260.0" y2="260.0"/><text x="56" y="264.0" text-anchor="end">0</text><line class="ax" x1="64" x2="584" y1="220.7" y2="220.7"/><text x="56" y="224.7" text-anchor="end">5</text><line class="ax" x1="64" x2="584" y1="181.3" y2="181.3"/><text x="56" y="185.3" text-anchor="end">10</text><line class="ax" x1="64" x2="584" y1="142.0" y2="142.0"/><text x="56" y="146.0" text-anchor="end">15</text><line class="ax" x1="64" x2="584" y1="102.7" y2="102.7"/><text x="56" y="106.7" text-anchor="end">20</text><line class="ax" x1="64" x2="584" y1="63.3" y2="63.3"/><text x="56" y="67.3" text-anchor="end">25</text><line class="ax" x1="64" x2="584" y1="24.0" y2="24.0"/><text x="56" y="28.0" text-anchor="end">30</text><line class="ax" x1="64.0" x2="64.0" y1="260" y2="264"/><text x="64.0" y="278" text-anchor="middle">1</text><line class="ax" x1="121.8" x2="121.8" y1="260" y2="264"/><text x="121.8" y="278" text-anchor="middle">2</text><line class="ax" x1="179.6" x2="179.6" y1="260" y2="264"/><text x="179.6" y="278" text-anchor="middle">3</text><line class="ax" x1="237.3" x2="237.3" y1="260" y2="264"/><text x="237.3" y="278" text-anchor="middle">4</text><line class="ax" x1="295.1" x2="295.1" y1="260" y2="264"/><text x="295.1" y="278" text-anchor="middle">5</text><line class="ax" x1="352.9" x2="352.9" y1="260" y2="264"/><text x="352.9" y="278" text-anchor="middle">6</text><line class="ax" x1="468.4" x2="468.4" y1="260" y2="264"/><text x="468.4" y="278" text-anchor="middle">8</text><line class="ax" x1="584.0" x2="584.0" y1="260" y2="264"/><text x="584.0" y="278" text-anchor="middle">10</text><text x="324" y="298" text-anchor="middle">cameras sending 30 frames/s to one Jetson</text><text x="14" y="142" text-anchor="middle" transform="rotate(-90 14 142)">on-time results/s (≤ 300 ms)</text><polyline points="64.0,194.8 121.8,140.6 179.6,125.7 237.3,127.4 295.1,159.4 352.9,235.0 468.4,260.0 584.0,260.0" fill="none" stroke="var(--c-heat)" stroke-width="2"/><circle cx="64.0" cy="194.8" r="2.5" fill="var(--c-heat)"/><circle cx="121.8" cy="140.6" r="2.5" fill="var(--c-heat)"/><circle cx="179.6" cy="125.7" r="2.5" fill="var(--c-heat)"/><circle cx="237.3" cy="127.4" r="2.5" fill="var(--c-heat)"/><circle cx="295.1" cy="159.4" r="2.5" fill="var(--c-heat)"/><circle cx="352.9" cy="235.0" r="2.5" fill="var(--c-heat)"/><circle cx="468.4" cy="260.0" r="2.5" fill="var(--c-heat)"/><circle cx="584.0" cy="260.0" r="2.5" fill="var(--c-heat)"/><polyline points="64.0,125.9 121.8,125.7 179.6,125.9 237.3,125.6 295.1,126.3 352.9,125.5 468.4,125.4 584.0,126.6" fill="none" stroke="var(--c-heat)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="125.9" r="2.5" fill="var(--c-heat)"/><circle cx="121.8" cy="125.7" r="2.5" fill="var(--c-heat)"/><circle cx="179.6" cy="125.9" r="2.5" fill="var(--c-heat)"/><circle cx="237.3" cy="125.6" r="2.5" fill="var(--c-heat)"/><circle cx="295.1" cy="126.3" r="2.5" fill="var(--c-heat)"/><circle cx="352.9" cy="125.5" r="2.5" fill="var(--c-heat)"/><circle cx="468.4" cy="125.4" r="2.5" fill="var(--c-heat)"/><circle cx="584.0" cy="126.6" r="2.5" fill="var(--c-heat)"/><polyline points="64.0,165.8 121.8,90.6 179.6,56.5 237.3,54.0 295.1,53.7 352.9,52.5 468.4,119.5 584.0,256.9" fill="none" stroke="var(--c-hier)" stroke-width="2"/><circle cx="64.0" cy="165.8" r="2.5" fill="var(--c-hier)"/><circle cx="121.8" cy="90.6" r="2.5" fill="var(--c-hier)"/><circle cx="179.6" cy="56.5" r="2.5" fill="var(--c-hier)"/><circle cx="237.3" cy="54.0" r="2.5" fill="var(--c-hier)"/><circle cx="295.1" cy="53.7" r="2.5" fill="var(--c-hier)"/><circle cx="352.9" cy="52.5" r="2.5" fill="var(--c-hier)"/><circle cx="468.4" cy="119.5" r="2.5" fill="var(--c-hier)"/><circle cx="584.0" cy="256.9" r="2.5" fill="var(--c-hier)"/><polyline points="64.0,61.8 121.8,53.3 179.6,52.9 237.3,53.7 295.1,53.3 352.9,53.3 468.4,54.2 584.0,60.5" fill="none" stroke="var(--c-hier)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="61.8" r="2.5" fill="var(--c-hier)"/><circle cx="121.8" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="179.6" cy="52.9" r="2.5" fill="var(--c-hier)"/><circle cx="237.3" cy="53.7" r="2.5" fill="var(--c-hier)"/><circle cx="295.1" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="352.9" cy="53.3" r="2.5" fill="var(--c-hier)"/><circle cx="468.4" cy="54.2" r="2.5" fill="var(--c-hier)"/><circle cx="584.0" cy="60.5" r="2.5" fill="var(--c-hier)"/><polyline points="64.0,193.7 121.8,167.3 179.6,180.5 237.3,218.5 295.1,250.2 352.9,259.3 468.4,260.0 584.0,260.0" fill="none" stroke="var(--c-fixed)" stroke-width="2"/><circle cx="64.0" cy="193.7" r="2.5" fill="var(--c-fixed)"/><circle cx="121.8" cy="167.3" r="2.5" fill="var(--c-fixed)"/><circle cx="179.6" cy="180.5" r="2.5" fill="var(--c-fixed)"/><circle cx="237.3" cy="218.5" r="2.5" fill="var(--c-fixed)"/><circle cx="295.1" cy="250.2" r="2.5" fill="var(--c-fixed)"/><circle cx="352.9" cy="259.3" r="2.5" fill="var(--c-fixed)"/><circle cx="468.4" cy="260.0" r="2.5" fill="var(--c-fixed)"/><circle cx="584.0" cy="260.0" r="2.5" fill="var(--c-fixed)"/><polyline points="64.0,166.0 121.8,166.5 179.6,165.7 237.3,166.6 295.1,166.3 352.9,166.2 468.4,165.9 584.0,167.2" fill="none" stroke="var(--c-fixed)" stroke-width="2" stroke-dasharray="5 4"/><circle cx="64.0" cy="166.0" r="2.5" fill="var(--c-fixed)"/><circle cx="121.8" cy="166.5" r="2.5" fill="var(--c-fixed)"/><circle cx="179.6" cy="165.7" r="2.5" fill="var(--c-fixed)"/><circle cx="237.3" cy="166.6" r="2.5" fill="var(--c-fixed)"/><circle cx="295.1" cy="166.3" r="2.5" fill="var(--c-fixed)"/><circle cx="352.9" cy="166.2" r="2.5" fill="var(--c-fixed)"/><circle cx="468.4" cy="165.9" r="2.5" fill="var(--c-fixed)"/><circle cx="584.0" cy="167.2" r="2.5" fill="var(--c-fixed)"/><line x1="64" x2="84" y1="318" y2="318" stroke="var(--c-heat)" stroke-width="2"/><text class="ink" x="90" y="322">Wi-Fi (access point), Pi → Jetson</text><line x1="64" x2="84" y1="333" y2="333" stroke="var(--c-hier)" stroke-width="2"/><text class="ink" x="90" y="337">Mesh, one hop, Pi → Jetson</text><line x1="64" x2="84" y1="348" y2="348" stroke="var(--c-fixed)" stroke-width="2"/><text class="ink" x="90" y="352">Mesh, relayed, Pi → Jetson → laptop</text><line x1="370" x2="390" y1="318" y2="318" stroke="var(--muted)" stroke-width="2"/><text class="ink" x="396" y="322">solid: one frame in flight (our system)</text><line x1="370" x2="390" y1="333" y2="333" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/><text class="ink" x="396" y="337">dashed: latest frame wins</text></svg><figcaption>Model prediction from measured timings. A first-in-first-out queue delivers no on-time result in any overloaded cell and is left out. Data: <code>experiments/results/hardware/overload_model/overload_summary.json</code>.</figcaption></figure>
-<p><b>How many cameras one Jetson can serve</b> (the largest number sending 30 frames/s that keeps at
-least 95 % of results on time):</p>
-<div class="tbl"><table>
-<tr><th>Link</th><th>naive queue</th><th>one frame in flight (ours)</th><th>latest frame wins (needs a coordinator at the radio)</th></tr>
-<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">0</td><td class="n">4</td><td class="n">10 or more</td></tr>
-<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">0</td><td class="n">6</td><td class="n">10 or more</td></tr>
-<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">0</td><td class="n">2 in the model; <b>fails with 1 on the boards</b></td><td class="n">10 or more (model only)</td></tr>
+<tr><th>Camera rate</th><th>Wi-Fi, v4.1</th><th>Mesh hop, v4.1</th><th>Wi-Fi, naive queue</th></tr>
+<tr><td>10 frames/s</td><td class="n">9.8 of 9.8, 103 ms</td><td class="n">10.0 of 10.0, 66 ms</td><td class="n">10.0 of 10.0, 103 ms</td></tr>
+<tr><td>15 frames/s</td><td class="n">10.4 of 10.4, 103 ms</td><td class="n">14.9 of 14.9, 66 ms</td><td class="n">15.0 of 15.0, 109 ms</td></tr>
+<tr><td>30 frames/s</td><td class="n">12.2 of 12.2, 103 ms</td><td class="n">22.1 of 22.1, 74 ms</td><td class="n">0.0 of 17.1, 27968 ms</td></tr>
 </table></div>
 <ul>
-<li><b>Which part saturates first depends on the link.</b> Over the access-point Wi-Fi the radio fills first (about
-17 frames/s in total), before the Jetson's GPU (about 26).
-On the mesh's direct hop the radio is faster, so the GPU itself is the limit: one Pi sending 30 frames/s already
-overloads the Nano. Relayed on the mesh, the shared channel carries both hops and limits everything to about
-12 frames/s.</li>
-<li><b>A naive queue turns overload into zero useful output.</b> One Pi at 30 frames/s on Wi-Fi: 17
-frames/s processed, <b>0 on time</b>, median latency 28 s, and
-100.0 % of the Jetson's work spent on results that arrive too late. On the mesh's direct hop:
-26 frames/s processed, 0 on time, the GPU busy 100 % of
-the time. Latency keeps growing for as long as the overload lasts, so the board runs at full power for nothing.</li>
-<li><b>One frame in flight (our system) caps the load but not the waiting.</b> Each camera limits itself, but its frame
-still waits behind the other cameras' frames, so from about 5 cameras on Wi-Fi and
-7 on the mesh's direct hop that wait alone breaks the deadline. On the relayed mesh the
-model puts the limit at 3 cameras, but the boards already miss most deadlines with one
-(below).</li>
-<li><b>Latest frame wins removes the problem in the model:</b> the path stays at its full rate, on time, with
-10 cameras. At the radio this needs a coordinator that tells the cameras when to send (a frame
-already handed to the radio cannot be replaced).</li>
+<li><b>v4.1 never overloads the Jetson, at any camera rate:</b> latency stays flat and every result is on time. The gain stops at the path's limit: going from 15 to 30 frames/s adds 1.8 results/s on Wi-Fi.</li>
+<li><b>On Wi-Fi v4.1 reaches 12.2 of the radio's 17/s.</b> The radio idles while v4.1 waits for the next camera tick and encodes. Keeping the newest frame encoded and ready ("encode ahead") would close most of the gap: latest frame wins reaches 17.0.</li>
+<li><b>A naive queue at 30 frames/s collapses:</b> 0 on time, a median latency of 28 s, and 100 % of the Jetson's work spent on results that are already late.</li>
+</ul>
+<p><b>Result 2: more Pis per Jetson</b> (each at 30 frames/s). On-time results of results delivered, per second, in total:</p>
+<div class="tbl"><table>
+<tr><th>Path</th><th>Pis</th><th>v4.1</th><th>Stop-and-wait</th><th>Latest frame wins (coordinator)</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">1</td><td class="n">12.2 of 12.2</td><td class="n">8.3 of 8.3</td><td class="n">17.0 of 17.0</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">17.1 of 17.1</td><td class="n">15.2 of 15.2</td><td class="n">17.1 of 17.1</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">15.4 of 17.0</td><td class="n">16.9 of 17.0</td><td class="n">17.1 of 17.1</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">0.2 of 17.0</td><td class="n">3.2 of 17.0</td><td class="n">17.1 of 17.1</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 17.0</td><td class="n">0.0 of 17.0</td><td class="n">17.0 of 17.0</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">1</td><td class="n">22.1 of 22.1</td><td class="n">12.0 of 12.0</td><td class="n">25.2 of 25.2</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">26.3 of 26.3</td><td class="n">21.5 of 21.5</td><td class="n">26.3 of 26.3</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">26.3 of 26.4</td><td class="n">26.2 of 26.2</td><td class="n">26.2 of 26.2</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">19.7 of 26.3</td><td class="n">26.4 of 26.4</td><td class="n">26.3 of 26.3</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 26.3</td><td class="n">0.4 of 26.2</td><td class="n">25.4 of 26.3</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">1</td><td class="n">9.3 of 9.3</td><td class="n">8.4 of 8.4</td><td class="n">11.9 of 12.0</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">11.8 of 12.0</td><td class="n">11.8 of 11.9</td><td class="n">11.9 of 11.9</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">4.5 of 11.9</td><td class="n">5.3 of 11.9</td><td class="n">11.9 of 11.9</td></tr>
+<tr><td></td><td class="n">6</td><td class="n">0.0 of 11.9</td><td class="n">0.1 of 11.9</td><td class="n">11.9 of 12.0</td></tr>
+<tr><td></td><td class="n">10</td><td class="n">0.0 of 11.9</td><td class="n">0.0 of 11.9</td><td class="n">11.8 of 11.9</td></tr>
+</table></div>
+<p>Largest number of Pis a Jetson can serve with at least 95 % of results on time:</p>
+<div class="tbl"><table>
+<tr><th>Path</th><th>v4.1</th><th>Stop-and-wait</th><th>Latest frame wins</th><th>Naive</th></tr>
+<tr><td>Wi-Fi (access point), Pi → Jetson</td><td class="n">3</td><td class="n">4</td><td class="n">10 or more</td><td class="n">0</td></tr>
+<tr><td>Mesh, one hop, Pi → Jetson</td><td class="n">5</td><td class="n">6</td><td class="n">10 or more</td><td class="n">0</td></tr>
+<tr><td>Mesh, relayed, Pi → Jetson → laptop</td><td class="n">2</td><td class="n">2</td><td class="n">10 or more</td><td class="n">0</td></tr>
+</table></div>
+<ul>
+<li><b>The Pis share a fixed capacity.</b> Two Pis on Wi-Fi get about 8.5 on-time results/s each instead of 12.2.</li>
+<li><b>v4.1 collapses past about 4 Pis on Wi-Fi and 6 on a mesh hop.</b> Each Pi keeps one frame at the radio, so a frame waits behind all the other Pis' frames, and once that wait passes 300 ms almost nothing is on time.</li>
+<li><b>A lower camera rate barely helps,</b> because the limit is the shared capacity. At 10 frames/s, 20 % of results are on time with 6 Pis on Wi-Fi and 29 % with 8 on the mesh.</li>
+</ul>
+<p><b>Result 3: ways to handle many Pis on one Jetson</b> (<code>validation/hardware/overload_handling.py</code>, same inputs). Each cell: total on-time results per second / the worst-served Pi / the mean age of each Pi's newest detection in ms (its age of information).</p>
+<div class="tbl"><table>
+<tr><th>Method</th><th>Wi-Fi, 4 Pis</th><th>Wi-Fi, 10 Pis</th><th>Mesh hop, 6 Pis</th><th>Mesh hop, 10 Pis</th></tr>
+<tr><td>v4.1 today</td><td class="n">15.4 / 3.8 / 377</td><td class="n">0.0 / 0.0 / 905</td><td class="n">19.7 / 3.2 / 435</td><td class="n">0.0 / 0.0 / 717</td></tr>
+<tr><td>Coordinator: send turns, first come</td><td class="n">17.1 / 4.3 / 241</td><td class="n">17.0 / 1.7 / 418</td><td class="n">26.2 / 4.2 / 365</td><td class="n">15.3 / 1.4 / 555</td></tr>
+<tr><td><b>Pull one ahead</b>: the Jetson asks for the next frame while one may be on its way</td><td class="n">16.8 / 4.2 / 242</td><td class="n">16.9 / 1.7 / 419</td><td class="n">25.6 / 4.3 / 220</td><td class="n">25.5 / 2.6 / 298</td></tr>
+<tr><td>Fair-share rate limit (capacity / number of Pis)</td><td class="n">15.0 / 3.7 / 293</td><td class="n">6.5 / 0.2 / 648</td><td class="n">24.6 / 3.5 / 301</td><td class="n">17.0 / 0.0 / 437</td></tr>
+<tr><td>Jetson drops frames that can no longer be on time</td><td class="n">15.2 / 3.7 / 398</td><td class="n">0.0 / 0.0 / –</td><td class="n">25.0 / 4.0 / 423</td><td class="n">21.9 / 2.0 / 577</td></tr>
+<tr><td>Two Jetsons, v4.1</td><td class="n">15.4 / 3.8 / 376</td><td class="n">0.0 / 0.0 / 904</td><td class="n">45.4 / 7.6 / 234</td><td class="n">41.5 / 4.1 / 367</td></tr>
+<tr><td>Two Jetsons + pull one ahead</td><td class="n">17.1 / 4.3 / 240</td><td class="n">17.1 / 1.7 / 416</td><td class="n">43.9 / 7.3 / 161</td><td class="n">43.9 / 4.4 / 206</td></tr>
+</table></div>
+<ul>
+<li><b>Pull one ahead is the best single-Jetson method.</b> It stays near capacity for every number of Pis and gives the freshest detections on the mesh. A frame is granted only when the Jetson can take it, and one more may be on its way, so the radio and the GPU work in parallel and no queue builds.</li>
+<li><b>Send turns at radio speed</b> fix Wi-Fi, where the radio is the limit, but not the mesh at 8-10 Pis: the turns outpace the GPU, so the queue moves to the Jetson.</li>
+<li><b>A rate limit helps only a little.</b> Dropping late frames is useless where the radio is the limit (on Wi-Fi it makes things worse) and helps a little where the GPU is.</li>
+<li><b>A second Jetson does nothing on Wi-Fi,</b> because the radio is the limit. It nearly doubles capacity on the mesh.</li>
+<li>Giving the turn to the Pi with the oldest detection was the same as first come here, because all Pis are alike. It would matter if their links differed.</li>
+<li>Three faults in the first version of this code were found and fixed before these results: the oldest-first rule kept choosing a Pi whose frame was already on its way; the first pull version let the radio and the GPU work only in turn; and "pull one ahead" was running as v4.1. The v4.1 and coordinator rows reproduce the overload model.</li>
+</ul>
+<p><b>Result 4: many Pis and several Jetsons</b> (<code>validation/hardware/overload_multi.py</code>, mesh-hop timings). Two radio settings: all drones on one shared channel (the testbed's mesh today), or each Jetson's group on its own channel. Same cells as Result 3.</p>
+<div class="tbl"><table>
+<tr><th>Radio</th><th>Jetsons</th><th>Pis</th><th>v4.1, Pis fixed to Jetsons</th><th>v4.1, each frame to the least-loaded Jetson</th><th>Global pull one ahead</th></tr>
+<tr><td>One shared channel</td><td class="n">1</td><td class="n">8</td><td class="n">1.6 / 0.1 / 576</td><td class="n">1.6 / 0.1 / 576</td><td class="n">25.5 / 3.2 / 260</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">8</td><td class="n">44.6 / 5.5 / 307</td><td class="n">44.9 / 5.6 / 307</td><td class="n">43.8 / 5.5 / 209</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">16</td><td class="n">0.1 / 0.0 / 575</td><td class="n">0.1 / 0.0 / 575</td><td class="n">43.7 / 2.7 / 300</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">16</td><td class="n">1.5 / 0.1 / 555</td><td class="n">1.5 / 0.1 / 558</td><td class="n">44.9 / 2.8 / 382</td></tr>
+<tr><td>A channel per Jetson</td><td class="n">1</td><td class="n">8</td><td class="n">1.6 / 0.1 / 576</td><td class="n">1.6 / 0.1 / 576</td><td class="n">25.5 / 3.2 / 260</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">8</td><td class="n">52.5 / 6.4 / 295</td><td class="n">50.8 / 6.2 / 323</td><td class="n">51.1 / 6.4 / 182</td></tr>
+<tr><td></td><td class="n">2</td><td class="n">16</td><td class="n">3.0 / 0.1 / 575</td><td class="n">0.5 / 0.0 / 628</td><td class="n">51.1 / 3.2 / 260</td></tr>
+<tr><td></td><td class="n">4</td><td class="n">16</td><td class="n">105.2 / 6.3 / 294</td><td class="n">35.4 / 2.0 / 420</td><td class="n">102.2 / 6.4 / 181</td></tr>
+</table></div>
+<ul>
+<li><b>On one shared channel, Jetsons stop helping after two:</b> about 44 results/s with two, and the same with four (the channel's airtime).</li>
+<li><b>With a channel per Jetson, capacity grows with each one:</b> about 26, 51, 77 and 102/s for one to four Jetsons.</li>
+<li><b>Sending each frame to the least-loaded Jetson, decided by the Pis, backfires under load</b>: with three Jetsons and 16 Pis it gives 9.7/s against 70.4 with fixed assignment. All Pis rush to the same free Jetson. The Jetsons should pull; the Pis should not push.</li>
+<li><b>Global pull one ahead never collapses</b> and keeps detections fresh. With four Jetsons on their own channels and 16 Pis: 102 on-time results/s in total, about 6.4 per Pi.</li>
 </ul>
 <p><b>What the boards already show.</b></p>
 <ul>
-<li><b>Relaying saturates with a single camera.</b> In mesh campaign 2's multihop scenario, fixed offload to the laptop
-through the Jetson delivered only 12.5 % of results on time (1.9 per
-second, median latency 309 ms, 3 runs). Adding cameras can only make this worse.</li>
-<li><b>Computing at the relay is the fix:</b> in the same scenario the hierarchical mode, where the Jetson runs the
-detector instead of forwarding, scored 0.151 sAP against 0.137 for v4.1 and
-0.067 for fixed offload, with 100.0 % of results on time.</li>
-<li><b>Two cameras sharing a path</b> (the Pi and the Jetson's own camera, mission scenario): with fixed offload the Pi's
-detections were available 19 % of the time (information age
-3.0 s); with the adaptive controller 68 % without the
-coordinator and 70 % with it (alone: 76 %). So with two
-cameras the adaptivity avoids the overload, and the coordinator adds little; the model says coordination starts to matter
-from about 5–7 cameras per Jetson.</li>
+<li><b>Relaying saturates with one Pi.</b> In mesh campaign 2's multihop scenario, fixed offloading to the laptop through the Jetson delivered 12.5 % of results on time (1.9/s).</li>
+<li><b>Computing at the relay is the fix.</b> The hierarchical mode, where the Jetson runs the detector instead of forwarding, scored 0.151 sAP against 0.137 for v4.1 and 0.067 for fixed offloading, with 100 % of results on time.</li>
+<li><b>Two cameras sharing a path</b> (the Pi and the Jetson's own camera, mission scenario). The Pi's detections were available 19 % of the time with fixed offloading, 68 % with v4.1 alone and 70 % with the coordinator (76 % for the Pi alone). With two cameras, adaptivity avoids the overload; coordination starts to matter from about 4-6 Pis per Jetson.</li>
 </ul>
-<p><b>What it means.</b> A shared edge drone needs admission control: our one-frame-in-flight rule already prevents
-the naive collapse and serves about 4 cameras per Jetson over Wi-Fi and about
-6 over one mesh hop; beyond that, or on a relay path, the edge drone must compute rather than
-forward, and a coordinator that grants send slots (latest frame wins) is needed. The naive case, full power for no
-on-time output, also supports the second paper's argument that an edge computer's work must be priced.
-<b>Limits:</b> model results from measured timings, not overload measurements; the relayed case is reliable only where
-measured; heat on the Jetson under sustained full load is not modelled. Two short board runs would confirm it directly
-(one Pi at 30 frames/s with a naive queue, and two Pis on one Jetson), about 1 h in the planned board session.</p>
+<p><b>Inferences.</b></p>
+<ul>
+<li><b>Fix the bottleneck that exists.</b> Wi-Fi is limited by the radio: use a coordinator; a second Jetson does not help. A mesh hop is limited by the GPU: pull according to the GPU, or add a Jetson on its own channel. Relays are limited by the shared channel: compute at the relay.</li>
+<li><b>Coordination does not create capacity; it decides how capacity is shared and prevents the collapse.</b> With 10 Pis on one Jetson, each gets about 1.7 (Wi-Fi) or 2.6 (mesh) on-time results per second.</li>
+<li><b>The recommended design for a large swarm.</b> v4.1 on every Pi; a "pull one ahead" coordinator shared by the Jetsons; a radio channel per Jetson group; about 5 Pis per Jetson; compute at the relay. With our one camera Pi, v4.1 is not overloaded, and all of this matters only from about 4 (Wi-Fi) or 6 (mesh) Pis per Jetson.</li>
+<li><b>How it ties to paper 2.</b> v4.1 keeps each Pi cool by offloading when a server can answer on time. Overload makes offloads late, so the Pis fall back onboard and heat up. Keeping the edge on time is what lets the per-Pi heat solution scale to a swarm. In paper 2 this is a supporting section and future work, not the main claim.</li>
+</ul>
+<p><b>Limits.</b> These are model results from measured timings, not overload measurements. The model assumes ideal turn-taking, no radio collisions and no interference between channels; real numbers will be lower, and relays much lower. It counts on-time results and their age, not streaming AP, and it does not model v4.1's own choice between servers, its prices, or the Jetsons' heating. The step "overload pushes the Pis onboard and heats them" is reasoned, not measured.</p>
+<p><b>Board tests that would confirm it.</b></p>
+<ul>
+<li>One Pi at 30 frames/s with a naive queue against v4.1.</li>
+<li>Two Pis on one Jetson, v4.1 against pull one ahead, logging each Pi's temperature and onboard share (about 1 h; needs the second Pi on the mesh).</li>
+<li>For several Jetsons: two Jetsons on separate channels.</li>
+</ul>
 <h3>19.14 Clock speed: does the camera Pi need to run at its full 2.4 GHz? (10 Nov 2026, laptop only)</h3>
 <p>Question: the clock-against-temperature graph of 18.11 shows many samples below the Pi's full clock. Does that cost
 latency, accuracy, speed or energy, and should every board on the mesh be kept at full capability, for example by
