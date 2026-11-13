@@ -1,0 +1,27 @@
+{
+ "method": "Recompute the inputs of two prices from each run's own logs (13 Nov 2026). price_rules_check.py checks that\nevery price update follows its rule GIVEN its logged input; this checks the inputs themselves.\n  heat price (v5, v5.1, heat): the 60-s prediction  T_hat = T + (a + b * P_10s - T) * (1 - exp(-60 / tau)),\n      P_10s = mean of the logged board power over the last 10 s, tau = 148.83 s; computed with both thermal fits:\n      34.43 + 12.73 P (Results Brief Part 16: the fit the v5 runs used) and 37.26 + 11.31 P (the corrected fit).\n  Jetson price (v4.2, v5, v5.1): P_extra = measured Jetson power - 4.079 W idle, on the runs that log the Jetson's\n      power reports (edge_w_log).\nusage: python paper2/price_input_checks.py -> experiments/results/hardware/theory_check/price_input_checks.json\n",
+ "heat": {
+  "runs": 170,
+  "part16_34.43+12.73P": {
+   "predictions": 34929,
+   "median_abs_c": 0.002554999288804538,
+   "p95_abs_c": 0.006269446049748239,
+   "share_within_0.05c": 0.9845973260041799
+  },
+  "corrected_37.26+11.31P": {
+   "predictions": 34929,
+   "median_abs_c": 0.507667561119888,
+   "p95_abs_c": 1.2723429299607714,
+   "share_within_0.05c": 0.0013169572561481863
+  }
+ },
+ "edge": {
+  "runs_with_power_log": 9,
+  "updates_measured": 33366,
+  "updates_modelled": 9989,
+  "checked": 1874,
+  "median_abs_w": 0.00020032989690654812,
+  "p95_abs_w": 0.0007996701030938969,
+  "share_within_0.01w": 1.0
+ }
+}

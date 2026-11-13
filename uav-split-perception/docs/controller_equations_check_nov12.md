@@ -29,8 +29,11 @@ Not covered by these checks:
 - Per-frame decisions. Their inputs (goodput estimate, predicted latency) were not logged in the hardware campaigns, so
   the decisions cannot be recomputed from the logs. The `pred` logging added on 29 Oct makes this possible from the
   next board session.
-- The inputs of lambda_T (θ̂) and mu_e (P_extra). Each update follows its rule given its logged input; the inputs
-  themselves were not re-derived.
+- ~~The inputs of lambda_T and mu_e~~ Checked on 13 Nov (`paper2/price_input_checks.py`): all 34,929 logged θ̂ of
+  the heat-priced runs recompute from the logged power and temperature with the fit Part 16 names
+  (34.43 + 12.73 P: median 0.003 °C, 98.5 % within 0.05 °C; the corrected fit misses by a median 0.5 °C, so the runs
+  did use the fit Part 16 says). P_extra equals the Jetson's reported power − 4.079 W to 0.0002 W on the 9 runs that
+  log those reports; elsewhere the logged updates use the modelled value.
 - Whether the board-side copy of energy_constants.json equals the repository's (needs the boards; md5 to be compared
   at the next session).
 
