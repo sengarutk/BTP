@@ -1,0 +1,2309 @@
+{
+ "method": "Ways to handle many camera Pis on one Jetson, in the overload model's setting (13 Nov 2026; follows 19.13).\n\nSame measured inputs as overload_model.py (encode, radio and server times with their spreads; deadline 300 ms; cameras\nat 30 frames/s; 120 s after a 10 s warm-up; 5 seeds). One shared radio (first come, one frame at a time), then the\nserver. Methods:\n  v41        v4.1's rule: a camera sends its newest frame once its previous frame has left the radio; at the server a\n             newer frame of the same camera replaces its waiting one (edge_node.py). Baseline; must reproduce\n             overload_model.py's \"ackwait\".\n  coord      a coordinator grants the radio to one camera at a time (first come); the camera then sends its newest\n             encoded frame, so nothing waits at the radio. Must reproduce overload_model.py's \"latest\".\n  coord_age  the same, but the turn goes to the camera whose newest delivered detection is oldest (age-of-information\n             scheduling).\n  ratecap    v4.1's rule, but each camera sends at most C / N frames/s (C the path's capacity): its fair share.\n  dropold    v4.1's rule, but the server skips a frame that can no longer meet the deadline (age + server time > D).\n  twojet     v4.1's rule with two Jetsons behind the same radio channel (the server stage has two units).\n  coord2     coordinator with two Jetsons.\n  pull       the coordinator grants a turn only when the server can take the frame at once (the Jetson pulls the\n             next frame when a GPU unit is free): nothing waits at the radio or at the server.\n  pull_age   pull, with the turn to the camera whose detection is oldest (counting a granted frame from its grant).\n  pull2      pull with two Jetsons.\n  pull1      pull one frame ahead: a turn is granted while at most one frame waits for each GPU unit, so the radio\n             and the GPU work in parallel but no queue builds.\n  pull1x2    pull1 with two Jetsons.\n  (coord_age counts a granted frame from its grant too: a camera whose frame is on its way is not chosen again.)\nPer camera: on-time results per second and the mean age of its newest delivered detection (its age of information,\nAoI); reported as the total, the worst camera and the mean over cameras.\nusage: overload_handling.py -> experiments/results/hardware/overload_handling/summary.json\n",
+ "grid": {
+  "wifi_jetson|1|v41": {
+   "on_time_fps_total": 12.203636363636363,
+   "on_time_fps_worst_cam": 12.203636363636363,
+   "aoi_mean_ms": 147.3009847119227,
+   "aoi_worst_ms": 147.3009847119227,
+   "lat_p50_ms": 102.69439417588983,
+   "delivered_fps": 12.203636363636363
+  },
+  "wifi_jetson|1|coord": {
+   "on_time_fps_total": 17.045454545454547,
+   "on_time_fps_worst_cam": 17.045454545454547,
+   "aoi_mean_ms": 152.9534485696818,
+   "aoi_worst_ms": 152.9534485696818,
+   "lat_p50_ms": 120.95210655424162,
+   "delivered_fps": 17.045454545454547
+  },
+  "wifi_jetson|1|coord_age": {
+   "on_time_fps_total": 17.045454545454547,
+   "on_time_fps_worst_cam": 17.045454545454547,
+   "aoi_mean_ms": 152.9534485696818,
+   "aoi_worst_ms": 152.9534485696818,
+   "lat_p50_ms": 120.95210655424162,
+   "delivered_fps": 17.045454545454547
+  },
+  "wifi_jetson|1|pull": {
+   "on_time_fps_total": 10.350909090909092,
+   "on_time_fps_worst_cam": 10.350909090909092,
+   "aoi_mean_ms": 170.76814431951578,
+   "aoi_worst_ms": 170.76814431951578,
+   "lat_p50_ms": 120.01308825568776,
+   "delivered_fps": 10.350909090909092
+  },
+  "wifi_jetson|1|pull_age": {
+   "on_time_fps_total": 10.350909090909092,
+   "on_time_fps_worst_cam": 10.350909090909092,
+   "aoi_mean_ms": 170.76814431951578,
+   "aoi_worst_ms": 170.76814431951578,
+   "lat_p50_ms": 120.01308825568776,
+   "delivered_fps": 10.350909090909092
+  },
+  "wifi_jetson|1|ratecap": {
+   "on_time_fps_total": 12.201818181818181,
+   "on_time_fps_worst_cam": 12.201818181818181,
+   "aoi_mean_ms": 147.28469571149847,
+   "aoi_worst_ms": 147.28469571149847,
+   "lat_p50_ms": 102.69208297302794,
+   "delivered_fps": 12.201818181818181
+  },
+  "wifi_jetson|1|dropold": {
+   "on_time_fps_total": 12.203636363636363,
+   "on_time_fps_worst_cam": 12.203636363636363,
+   "aoi_mean_ms": 147.3009847119227,
+   "aoi_worst_ms": 147.3009847119227,
+   "lat_p50_ms": 102.69439417588983,
+   "delivered_fps": 12.203636363636363
+  },
+  "wifi_jetson|1|twojet": {
+   "on_time_fps_total": 12.205454545454547,
+   "on_time_fps_worst_cam": 12.205454545454547,
+   "aoi_mean_ms": 147.24478497369637,
+   "aoi_worst_ms": 147.24478497369637,
+   "lat_p50_ms": 102.61997749912443,
+   "delivered_fps": 12.205454545454547
+  },
+  "wifi_jetson|1|coord2": {
+   "on_time_fps_total": 17.054545454545455,
+   "on_time_fps_worst_cam": 17.054545454545455,
+   "aoi_mean_ms": 152.08859375717563,
+   "aoi_worst_ms": 152.08859375717563,
+   "lat_p50_ms": 119.81485323561647,
+   "delivered_fps": 17.054545454545455
+  },
+  "wifi_jetson|1|pull2": {
+   "on_time_fps_total": 16.85818181818182,
+   "on_time_fps_worst_cam": 16.85818181818182,
+   "aoi_mean_ms": 152.43693622903433,
+   "aoi_worst_ms": 152.43693622903433,
+   "lat_p50_ms": 120.08814840567939,
+   "delivered_fps": 16.85818181818182
+  },
+  "wifi_jetson|1|pull1": {
+   "on_time_fps_total": 16.78909090909091,
+   "on_time_fps_worst_cam": 16.78909090909091,
+   "aoi_mean_ms": 153.2611132227763,
+   "aoi_worst_ms": 153.2611132227763,
+   "lat_p50_ms": 120.71134257955455,
+   "delivered_fps": 16.78909090909091
+  },
+  "wifi_jetson|1|pull1x2": {
+   "on_time_fps_total": 17.054545454545455,
+   "on_time_fps_worst_cam": 17.054545454545455,
+   "aoi_mean_ms": 152.08859375717563,
+   "aoi_worst_ms": 152.08859375717563,
+   "lat_p50_ms": 119.81485323561647,
+   "delivered_fps": 17.054545454545455
+  },
+  "wifi_jetson|2|v41": {
+   "on_time_fps_total": 17.063636363636363,
+   "on_time_fps_worst_cam": 8.52909090909091,
+   "aoi_mean_ms": 200.2866290806905,
+   "aoi_worst_ms": 200.46286677367206,
+   "lat_p50_ms": 138.32042509229942,
+   "delivered_fps": 17.063636363636363
+  },
+  "wifi_jetson|2|coord": {
+   "on_time_fps_total": 17.07090909090909,
+   "on_time_fps_worst_cam": 8.534545454545455,
+   "aoi_mean_ms": 182.21195567180445,
+   "aoi_worst_ms": 182.70761001532446,
+   "lat_p50_ms": 120.80629035873498,
+   "delivered_fps": 17.07090909090909
+  },
+  "wifi_jetson|2|coord_age": {
+   "on_time_fps_total": 17.07090909090909,
+   "on_time_fps_worst_cam": 8.534545454545455,
+   "aoi_mean_ms": 182.21195567180445,
+   "aoi_worst_ms": 182.70761001532446,
+   "lat_p50_ms": 120.80629035873498,
+   "delivered_fps": 17.07090909090909
+  },
+  "wifi_jetson|2|pull": {
+   "on_time_fps_total": 10.312727272727273,
+   "on_time_fps_worst_cam": 5.154545454545454,
+   "aoi_mean_ms": 219.93133472383929,
+   "aoi_worst_ms": 220.27836340054736,
+   "lat_p50_ms": 120.01785693618876,
+   "delivered_fps": 10.312727272727273
+  },
+  "wifi_jetson|2|pull_age": {
+   "on_time_fps_total": 10.312727272727273,
+   "on_time_fps_worst_cam": 5.154545454545454,
+   "aoi_mean_ms": 219.93133472383929,
+   "aoi_worst_ms": 220.27836340054736,
+   "lat_p50_ms": 120.01785693618876,
+   "delivered_fps": 10.312727272727273
+  },
+  "wifi_jetson|2|ratecap": {
+   "on_time_fps_total": 14.958181818181817,
+   "on_time_fps_worst_cam": 7.4781818181818185,
+   "aoi_mean_ms": 181.33827146186627,
+   "aoi_worst_ms": 183.16370643993497,
+   "lat_p50_ms": 111.97385339713438,
+   "delivered_fps": 14.958181818181817
+  },
+  "wifi_jetson|2|dropold": {
+   "on_time_fps_total": 17.063636363636363,
+   "on_time_fps_worst_cam": 8.52909090909091,
+   "aoi_mean_ms": 200.2866290806905,
+   "aoi_worst_ms": 200.46286677367206,
+   "lat_p50_ms": 138.32042509229942,
+   "delivered_fps": 17.063636363636363
+  },
+  "wifi_jetson|2|twojet": {
+   "on_time_fps_total": 17.056363636363635,
+   "on_time_fps_worst_cam": 8.525454545454545,
+   "aoi_mean_ms": 198.95728110186548,
+   "aoi_worst_ms": 199.1868873880188,
+   "lat_p50_ms": 137.09763974514644,
+   "delivered_fps": 17.056363636363635
+  },
+  "wifi_jetson|2|coord2": {
+   "on_time_fps_total": 17.01636363636364,
+   "on_time_fps_worst_cam": 8.505454545454546,
+   "aoi_mean_ms": 181.68085366288423,
+   "aoi_worst_ms": 182.1526195504782,
+   "lat_p50_ms": 120.00539394483349,
+   "delivered_fps": 17.01636363636364
+  },
+  "wifi_jetson|2|pull2": {
+   "on_time_fps_total": 16.816363636363636,
+   "on_time_fps_worst_cam": 8.407272727272728,
+   "aoi_mean_ms": 182.20026845584383,
+   "aoi_worst_ms": 182.37249159821675,
+   "lat_p50_ms": 120.29347494749018,
+   "delivered_fps": 16.816363636363636
+  },
+  "wifi_jetson|2|pull1": {
+   "on_time_fps_total": 16.810909090909092,
+   "on_time_fps_worst_cam": 8.403636363636362,
+   "aoi_mean_ms": 182.7715002464529,
+   "aoi_worst_ms": 183.17729509842124,
+   "lat_p50_ms": 120.5171607512093,
+   "delivered_fps": 16.810909090909092
+  },
+  "wifi_jetson|2|pull1x2": {
+   "on_time_fps_total": 17.01636363636364,
+   "on_time_fps_worst_cam": 8.505454545454546,
+   "aoi_mean_ms": 181.68085366288423,
+   "aoi_worst_ms": 182.1526195504782,
+   "lat_p50_ms": 120.00539394483349,
+   "delivered_fps": 17.01636363636364
+  },
+  "wifi_jetson|3|v41": {
+   "on_time_fps_total": 17.005454545454548,
+   "on_time_fps_worst_cam": 5.661818181818182,
+   "aoi_mean_ms": 288.3065709731147,
+   "aoi_worst_ms": 288.8061207248669,
+   "lat_p50_ms": 196.75634221246,
+   "delivered_fps": 17.025454545454544
+  },
+  "wifi_jetson|3|coord": {
+   "on_time_fps_total": 17.054545454545455,
+   "on_time_fps_worst_cam": 5.683636363636364,
+   "aoi_mean_ms": 211.53470499195842,
+   "aoi_worst_ms": 212.13150310883663,
+   "lat_p50_ms": 120.62159214562125,
+   "delivered_fps": 17.054545454545455
+  },
+  "wifi_jetson|3|coord_age": {
+   "on_time_fps_total": 17.054545454545455,
+   "on_time_fps_worst_cam": 5.683636363636364,
+   "aoi_mean_ms": 211.53470499195842,
+   "aoi_worst_ms": 212.13150310883663,
+   "lat_p50_ms": 120.62159214562125,
+   "delivered_fps": 17.054545454545455
+  },
+  "wifi_jetson|3|pull": {
+   "on_time_fps_total": 10.34,
+   "on_time_fps_worst_cam": 3.4454545454545453,
+   "aoi_mean_ms": 267.68598622864107,
+   "aoi_worst_ms": 268.2896717206875,
+   "lat_p50_ms": 119.92076641119237,
+   "delivered_fps": 10.34
+  },
+  "wifi_jetson|3|pull_age": {
+   "on_time_fps_total": 10.34,
+   "on_time_fps_worst_cam": 3.4454545454545453,
+   "aoi_mean_ms": 267.68598622864107,
+   "aoi_worst_ms": 268.2896717206875,
+   "lat_p50_ms": 119.92076641119237,
+   "delivered_fps": 10.34
+  },
+  "wifi_jetson|3|ratecap": {
+   "on_time_fps_total": 14.996363636363636,
+   "on_time_fps_worst_cam": 4.996363636363637,
+   "aoi_mean_ms": 227.24718569111414,
+   "aoi_worst_ms": 242.9037037046925,
+   "lat_p50_ms": 123.95604492124986,
+   "delivered_fps": 14.996363636363636
+  },
+  "wifi_jetson|3|dropold": {
+   "on_time_fps_total": 17.005454545454548,
+   "on_time_fps_worst_cam": 5.661818181818182,
+   "aoi_mean_ms": 288.39002466397403,
+   "aoi_worst_ms": 288.95194791703403,
+   "lat_p50_ms": 196.6890786578646,
+   "delivered_fps": 17.016363636363636
+  },
+  "wifi_jetson|3|twojet": {
+   "on_time_fps_total": 17.016363636363636,
+   "on_time_fps_worst_cam": 5.667272727272727,
+   "aoi_mean_ms": 287.1232038226957,
+   "aoi_worst_ms": 287.5623430141292,
+   "lat_p50_ms": 195.81481024779933,
+   "delivered_fps": 17.034545454545455
+  },
+  "wifi_jetson|3|coord2": {
+   "on_time_fps_total": 17.03636363636364,
+   "on_time_fps_worst_cam": 5.676363636363637,
+   "aoi_mean_ms": 211.20449780530436,
+   "aoi_worst_ms": 212.203900003496,
+   "lat_p50_ms": 120.1410403912756,
+   "delivered_fps": 17.03636363636364
+  },
+  "wifi_jetson|3|pull2": {
+   "on_time_fps_total": 16.863636363636363,
+   "on_time_fps_worst_cam": 5.618181818181818,
+   "aoi_mean_ms": 211.38581821658028,
+   "aoi_worst_ms": 212.37639974864345,
+   "lat_p50_ms": 119.59174049698922,
+   "delivered_fps": 16.863636363636363
+  },
+  "wifi_jetson|3|pull1": {
+   "on_time_fps_total": 16.78909090909091,
+   "on_time_fps_worst_cam": 5.592727272727273,
+   "aoi_mean_ms": 212.6696194343724,
+   "aoi_worst_ms": 213.56250603648414,
+   "lat_p50_ms": 120.5272494726858,
+   "delivered_fps": 16.78909090909091
+  },
+  "wifi_jetson|3|pull1x2": {
+   "on_time_fps_total": 17.03636363636364,
+   "on_time_fps_worst_cam": 5.676363636363637,
+   "aoi_mean_ms": 211.20449780530436,
+   "aoi_worst_ms": 212.203900003496,
+   "lat_p50_ms": 120.1410403912756,
+   "delivered_fps": 17.03636363636364
+  },
+  "wifi_jetson|4|v41": {
+   "on_time_fps_total": 15.427272727272728,
+   "on_time_fps_worst_cam": 3.810909090909091,
+   "aoi_mean_ms": 376.57849937820845,
+   "aoi_worst_ms": 377.3280223609137,
+   "lat_p50_ms": 255.49479938167934,
+   "delivered_fps": 17.014545454545456
+  },
+  "wifi_jetson|4|coord": {
+   "on_time_fps_total": 17.087272727272726,
+   "on_time_fps_worst_cam": 4.2672727272727276,
+   "aoi_mean_ms": 240.70489121703153,
+   "aoi_worst_ms": 241.7161171745231,
+   "lat_p50_ms": 120.65450580782053,
+   "delivered_fps": 17.087272727272726
+  },
+  "wifi_jetson|4|coord_age": {
+   "on_time_fps_total": 17.087272727272726,
+   "on_time_fps_worst_cam": 4.2672727272727276,
+   "aoi_mean_ms": 240.70489121703153,
+   "aoi_worst_ms": 241.7161171745231,
+   "lat_p50_ms": 120.65450580782053,
+   "delivered_fps": 17.087272727272726
+  },
+  "wifi_jetson|4|pull": {
+   "on_time_fps_total": 10.31090909090909,
+   "on_time_fps_worst_cam": 2.5745454545454547,
+   "aoi_mean_ms": 316.85661607185085,
+   "aoi_worst_ms": 318.3156712775567,
+   "lat_p50_ms": 120.30868727802991,
+   "delivered_fps": 10.31090909090909
+  },
+  "wifi_jetson|4|pull_age": {
+   "on_time_fps_total": 10.31090909090909,
+   "on_time_fps_worst_cam": 2.5745454545454547,
+   "aoi_mean_ms": 316.85661607185085,
+   "aoi_worst_ms": 318.3156712775567,
+   "lat_p50_ms": 120.30868727802991,
+   "delivered_fps": 10.31090909090909
+  },
+  "wifi_jetson|4|ratecap": {
+   "on_time_fps_total": 14.994545454545454,
+   "on_time_fps_worst_cam": 3.736363636363636,
+   "aoi_mean_ms": 293.0955681305355,
+   "aoi_worst_ms": 328.5225209676432,
+   "lat_p50_ms": 160.6240642307006,
+   "delivered_fps": 15.007272727272726
+  },
+  "wifi_jetson|4|dropold": {
+   "on_time_fps_total": 15.170909090909092,
+   "on_time_fps_worst_cam": 3.7399999999999998,
+   "aoi_mean_ms": 398.3645674771416,
+   "aoi_worst_ms": 401.27180493663997,
+   "lat_p50_ms": 252.25058982845002,
+   "delivered_fps": 15.541818181818181
+  },
+  "wifi_jetson|4|twojet": {
+   "on_time_fps_total": 15.434545454545454,
+   "on_time_fps_worst_cam": 3.810909090909091,
+   "aoi_mean_ms": 375.56396976468375,
+   "aoi_worst_ms": 376.6133622775575,
+   "lat_p50_ms": 254.83974980045713,
+   "delivered_fps": 17.03090909090909
+  },
+  "wifi_jetson|4|coord2": {
+   "on_time_fps_total": 17.05090909090909,
+   "on_time_fps_worst_cam": 4.258181818181819,
+   "aoi_mean_ms": 240.0628899529034,
+   "aoi_worst_ms": 241.06305882216103,
+   "lat_p50_ms": 119.89719028985019,
+   "delivered_fps": 17.05090909090909
+  },
+  "wifi_jetson|4|pull2": {
+   "on_time_fps_total": 16.85272727272727,
+   "on_time_fps_worst_cam": 4.209090909090909,
+   "aoi_mean_ms": 241.1975289748504,
+   "aoi_worst_ms": 242.26302027911365,
+   "lat_p50_ms": 119.69933600424629,
+   "delivered_fps": 16.85272727272727
+  },
+  "wifi_jetson|4|pull1": {
+   "on_time_fps_total": 16.836363636363636,
+   "on_time_fps_worst_cam": 4.207272727272727,
+   "aoi_mean_ms": 242.2448101858015,
+   "aoi_worst_ms": 243.29725679764238,
+   "lat_p50_ms": 120.52419073301135,
+   "delivered_fps": 16.836363636363636
+  },
+  "wifi_jetson|4|pull1x2": {
+   "on_time_fps_total": 17.05090909090909,
+   "on_time_fps_worst_cam": 4.258181818181819,
+   "aoi_mean_ms": 240.0628899529034,
+   "aoi_worst_ms": 241.06305882216103,
+   "lat_p50_ms": 119.89719028985019,
+   "delivered_fps": 17.05090909090909
+  },
+  "wifi_jetson|5|v41": {
+   "on_time_fps_total": 5.898181818181818,
+   "on_time_fps_worst_cam": 1.109090909090909,
+   "aoi_mean_ms": 463.50806384188326,
+   "aoi_worst_ms": 464.13784620287015,
+   "lat_p50_ms": 313.17383144141934,
+   "delivered_fps": 17.07272727272727
+  },
+  "wifi_jetson|5|coord": {
+   "on_time_fps_total": 16.996363636363636,
+   "on_time_fps_worst_cam": 3.396363636363636,
+   "aoi_mean_ms": 271.17258740869784,
+   "aoi_worst_ms": 272.32931413567184,
+   "lat_p50_ms": 121.32634318041637,
+   "delivered_fps": 16.996363636363636
+  },
+  "wifi_jetson|5|coord_age": {
+   "on_time_fps_total": 16.996363636363636,
+   "on_time_fps_worst_cam": 3.396363636363636,
+   "aoi_mean_ms": 271.17258740869784,
+   "aoi_worst_ms": 272.32931413567184,
+   "lat_p50_ms": 121.32634318041637,
+   "delivered_fps": 16.996363636363636
+  },
+  "wifi_jetson|5|pull": {
+   "on_time_fps_total": 10.361818181818183,
+   "on_time_fps_worst_cam": 2.0690909090909093,
+   "aoi_mean_ms": 363.91889573924396,
+   "aoi_worst_ms": 365.6332379557597,
+   "lat_p50_ms": 120.18137429454946,
+   "delivered_fps": 10.361818181818183
+  },
+  "wifi_jetson|5|pull_age": {
+   "on_time_fps_total": 10.361818181818183,
+   "on_time_fps_worst_cam": 2.0690909090909093,
+   "aoi_mean_ms": 363.91889573924396,
+   "aoi_worst_ms": 365.6332379557597,
+   "lat_p50_ms": 120.18137429454946,
+   "delivered_fps": 10.361818181818183
+  },
+  "wifi_jetson|5|ratecap": {
+   "on_time_fps_total": 16.05818181818182,
+   "on_time_fps_worst_cam": 3.1618181818181816,
+   "aoi_mean_ms": 321.97680168732825,
+   "aoi_worst_ms": 331.9525410528177,
+   "lat_p50_ms": 160.4865576774144,
+   "delivered_fps": 16.654545454545456
+  },
+  "wifi_jetson|5|dropold": {
+   "on_time_fps_total": 5.318181818181818,
+   "on_time_fps_worst_cam": 1.0127272727272727,
+   "aoi_mean_ms": 960.0606195003105,
+   "aoi_worst_ms": 1011.0211747544352,
+   "lat_p50_ms": 281.83084758475235,
+   "delivered_fps": 5.992727272727273
+  },
+  "wifi_jetson|5|twojet": {
+   "on_time_fps_total": 6.1054545454545455,
+   "on_time_fps_worst_cam": 1.1436363636363636,
+   "aoi_mean_ms": 462.3287898940912,
+   "aoi_worst_ms": 463.0352017881225,
+   "lat_p50_ms": 312.63298558701933,
+   "delivered_fps": 17.074545454545454
+  },
+  "wifi_jetson|5|coord2": {
+   "on_time_fps_total": 16.98909090909091,
+   "on_time_fps_worst_cam": 3.396363636363636,
+   "aoi_mean_ms": 270.1000434877542,
+   "aoi_worst_ms": 271.15642438888415,
+   "lat_p50_ms": 120.16171108549243,
+   "delivered_fps": 16.98909090909091
+  },
+  "wifi_jetson|5|pull2": {
+   "on_time_fps_total": 16.803636363636365,
+   "on_time_fps_worst_cam": 3.358181818181818,
+   "aoi_mean_ms": 271.63993401501114,
+   "aoi_worst_ms": 272.4326893903202,
+   "lat_p50_ms": 119.93906013670058,
+   "delivered_fps": 16.803636363636365
+  },
+  "wifi_jetson|5|pull1": {
+   "on_time_fps_total": 16.845454545454544,
+   "on_time_fps_worst_cam": 3.3654545454545457,
+   "aoi_mean_ms": 271.93930321061964,
+   "aoi_worst_ms": 273.0911508080079,
+   "lat_p50_ms": 120.69420208353912,
+   "delivered_fps": 16.845454545454544
+  },
+  "wifi_jetson|5|pull1x2": {
+   "on_time_fps_total": 16.98909090909091,
+   "on_time_fps_worst_cam": 3.396363636363636,
+   "aoi_mean_ms": 270.1000434877542,
+   "aoi_worst_ms": 271.15642438888415,
+   "lat_p50_ms": 120.16171108549243,
+   "delivered_fps": 16.98909090909091
+  },
+  "wifi_jetson|6|v41": {
+   "on_time_fps_total": 0.2309090909090909,
+   "on_time_fps_worst_cam": 0.019999999999999997,
+   "aoi_mean_ms": 552.7724144499405,
+   "aoi_worst_ms": 553.7554654573468,
+   "lat_p50_ms": 372.96732893182195,
+   "delivered_fps": 17.02
+  },
+  "wifi_jetson|6|coord": {
+   "on_time_fps_total": 17.096363636363638,
+   "on_time_fps_worst_cam": 2.8454545454545452,
+   "aoi_mean_ms": 299.2810300128739,
+   "aoi_worst_ms": 301.18142882387735,
+   "lat_p50_ms": 120.56324397803401,
+   "delivered_fps": 17.096363636363638
+  },
+  "wifi_jetson|6|coord_age": {
+   "on_time_fps_total": 17.096363636363638,
+   "on_time_fps_worst_cam": 2.8454545454545452,
+   "aoi_mean_ms": 299.29008024949275,
+   "aoi_worst_ms": 301.18142882387735,
+   "lat_p50_ms": 120.57853038859248,
+   "delivered_fps": 17.096363636363638
+  },
+  "wifi_jetson|6|pull": {
+   "on_time_fps_total": 10.36,
+   "on_time_fps_worst_cam": 1.721818181818182,
+   "aoi_mean_ms": 411.20373808564307,
+   "aoi_worst_ms": 412.753540169999,
+   "lat_p50_ms": 119.5811546180601,
+   "delivered_fps": 10.36
+  },
+  "wifi_jetson|6|pull_age": {
+   "on_time_fps_total": 10.36,
+   "on_time_fps_worst_cam": 1.721818181818182,
+   "aoi_mean_ms": 411.20373808564307,
+   "aoi_worst_ms": 412.753540169999,
+   "lat_p50_ms": 119.5811546180601,
+   "delivered_fps": 10.36
+  },
+  "wifi_jetson|6|ratecap": {
+   "on_time_fps_total": 14.492727272727274,
+   "on_time_fps_worst_cam": 2.1145454545454547,
+   "aoi_mean_ms": 400.29569840146405,
+   "aoi_worst_ms": 442.10613201194235,
+   "lat_p50_ms": 216.99784737901172,
+   "delivered_fps": 16.365454545454547
+  },
+  "wifi_jetson|6|dropold": {
+   "on_time_fps_total": 0.1909090909090909,
+   "on_time_fps_worst_cam": 0.016363636363636365,
+   "aoi_mean_ms": 20111.580126871733,
+   "aoi_worst_ms": 31625.00051591488,
+   "lat_p50_ms": 287.19933838489743,
+   "delivered_fps": 0.22181818181818183
+  },
+  "wifi_jetson|6|twojet": {
+   "on_time_fps_total": 0.3054545454545454,
+   "on_time_fps_worst_cam": 0.030909090909090907,
+   "aoi_mean_ms": 551.3483572546411,
+   "aoi_worst_ms": 552.2755222881668,
+   "lat_p50_ms": 371.3846177458821,
+   "delivered_fps": 17.03272727272727
+  },
+  "wifi_jetson|6|coord2": {
+   "on_time_fps_total": 17.041818181818183,
+   "on_time_fps_worst_cam": 2.8363636363636364,
+   "aoi_mean_ms": 298.8566645577288,
+   "aoi_worst_ms": 300.41441630680185,
+   "lat_p50_ms": 119.78563579594484,
+   "delivered_fps": 17.041818181818183
+  },
+  "wifi_jetson|6|pull2": {
+   "on_time_fps_total": 16.827272727272724,
+   "on_time_fps_worst_cam": 2.8,
+   "aoi_mean_ms": 300.9672831367101,
+   "aoi_worst_ms": 301.93950267066185,
+   "lat_p50_ms": 120.11642291776516,
+   "delivered_fps": 16.827272727272724
+  },
+  "wifi_jetson|6|pull1": {
+   "on_time_fps_total": 16.856363636363636,
+   "on_time_fps_worst_cam": 2.8054545454545456,
+   "aoi_mean_ms": 301.2092939761199,
+   "aoi_worst_ms": 302.7313900248485,
+   "lat_p50_ms": 120.6282283941,
+   "delivered_fps": 16.856363636363636
+  },
+  "wifi_jetson|6|pull1x2": {
+   "on_time_fps_total": 17.041818181818183,
+   "on_time_fps_worst_cam": 2.8363636363636364,
+   "aoi_mean_ms": 298.8566645577288,
+   "aoi_worst_ms": 300.41441630680185,
+   "lat_p50_ms": 119.78563579594484,
+   "delivered_fps": 17.041818181818183
+  },
+  "wifi_jetson|8|v41": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 726.4339571676971,
+   "aoi_worst_ms": 727.4862789085468,
+   "lat_p50_ms": 489.7993365055954,
+   "delivered_fps": 17.081818181818182
+  },
+  "wifi_jetson|8|coord": {
+   "on_time_fps_total": 17.10909090909091,
+   "on_time_fps_worst_cam": 2.1363636363636362,
+   "aoi_mean_ms": 357.5680326589976,
+   "aoi_worst_ms": 359.78946403558814,
+   "lat_p50_ms": 120.85976317611748,
+   "delivered_fps": 17.10909090909091
+  },
+  "wifi_jetson|8|coord_age": {
+   "on_time_fps_total": 17.10909090909091,
+   "on_time_fps_worst_cam": 2.1363636363636362,
+   "aoi_mean_ms": 357.54875879956006,
+   "aoi_worst_ms": 359.78946403558814,
+   "lat_p50_ms": 120.86168449687538,
+   "delivered_fps": 17.10909090909091
+  },
+  "wifi_jetson|8|pull": {
+   "on_time_fps_total": 10.36,
+   "on_time_fps_worst_cam": 1.290909090909091,
+   "aoi_mean_ms": 508.31326147448607,
+   "aoi_worst_ms": 509.99145464181265,
+   "lat_p50_ms": 119.51305244423638,
+   "delivered_fps": 10.36
+  },
+  "wifi_jetson|8|pull_age": {
+   "on_time_fps_total": 10.36,
+   "on_time_fps_worst_cam": 1.290909090909091,
+   "aoi_mean_ms": 508.31326147448607,
+   "aoi_worst_ms": 509.99145464181265,
+   "lat_p50_ms": 119.51305244423638,
+   "delivered_fps": 10.36
+  },
+  "wifi_jetson|8|ratecap": {
+   "on_time_fps_total": 7.889090909090909,
+   "on_time_fps_worst_cam": 0.021818181818181816,
+   "aoi_mean_ms": 539.4463817267142,
+   "aoi_worst_ms": 654.6579914408942,
+   "lat_p50_ms": 302.99951871674205,
+   "delivered_fps": 15.994545454545454
+  },
+  "wifi_jetson|8|dropold": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": Infinity,
+   "aoi_worst_ms": Infinity,
+   "lat_p50_ms": Infinity,
+   "delivered_fps": 0.0
+  },
+  "wifi_jetson|8|twojet": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 725.9090055185382,
+   "aoi_worst_ms": 727.1355151558231,
+   "lat_p50_ms": 489.07686240699115,
+   "delivered_fps": 17.06909090909091
+  },
+  "wifi_jetson|8|coord2": {
+   "on_time_fps_total": 17.04,
+   "on_time_fps_worst_cam": 2.1254545454545455,
+   "aoi_mean_ms": 357.7323675171481,
+   "aoi_worst_ms": 359.1691628002328,
+   "lat_p50_ms": 120.07782309284521,
+   "delivered_fps": 17.04
+  },
+  "wifi_jetson|8|pull2": {
+   "on_time_fps_total": 16.76909090909091,
+   "on_time_fps_worst_cam": 2.090909090909091,
+   "aoi_mean_ms": 361.17325794588925,
+   "aoi_worst_ms": 363.2040830912214,
+   "lat_p50_ms": 119.99812318071926,
+   "delivered_fps": 16.76909090909091
+  },
+  "wifi_jetson|8|pull1": {
+   "on_time_fps_total": 16.812727272727273,
+   "on_time_fps_worst_cam": 2.0981818181818186,
+   "aoi_mean_ms": 361.51681021319894,
+   "aoi_worst_ms": 363.4533098864155,
+   "lat_p50_ms": 120.86021273939113,
+   "delivered_fps": 16.812727272727273
+  },
+  "wifi_jetson|8|pull1x2": {
+   "on_time_fps_total": 17.04,
+   "on_time_fps_worst_cam": 2.1254545454545455,
+   "aoi_mean_ms": 357.7323675171481,
+   "aoi_worst_ms": 359.1691628002328,
+   "lat_p50_ms": 120.07782309284521,
+   "delivered_fps": 17.04
+  },
+  "wifi_jetson|10|v41": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 905.0381323670492,
+   "aoi_worst_ms": 906.7808621919396,
+   "lat_p50_ms": 607.9815652341385,
+   "delivered_fps": 17.025454545454544
+  },
+  "wifi_jetson|10|coord": {
+   "on_time_fps_total": 16.954545454545457,
+   "on_time_fps_worst_cam": 1.6927272727272726,
+   "aoi_mean_ms": 418.39207665896566,
+   "aoi_worst_ms": 420.65435049465987,
+   "lat_p50_ms": 120.54301725758997,
+   "delivered_fps": 16.954545454545453
+  },
+  "wifi_jetson|10|coord_age": {
+   "on_time_fps_total": 16.954545454545457,
+   "on_time_fps_worst_cam": 1.6927272727272726,
+   "aoi_mean_ms": 418.40803843853126,
+   "aoi_worst_ms": 420.63270722667784,
+   "lat_p50_ms": 120.46924637269294,
+   "delivered_fps": 16.954545454545453
+  },
+  "wifi_jetson|10|pull": {
+   "on_time_fps_total": 10.321818181818182,
+   "on_time_fps_worst_cam": 1.0272727272727273,
+   "aoi_mean_ms": 606.4096789449476,
+   "aoi_worst_ms": 609.5316416857802,
+   "lat_p50_ms": 120.07595182924379,
+   "delivered_fps": 10.321818181818182
+  },
+  "wifi_jetson|10|pull_age": {
+   "on_time_fps_total": 10.321818181818182,
+   "on_time_fps_worst_cam": 1.0272727272727273,
+   "aoi_mean_ms": 606.4096789449476,
+   "aoi_worst_ms": 609.5316416857802,
+   "lat_p50_ms": 120.07595182924379,
+   "delivered_fps": 10.321818181818182
+  },
+  "wifi_jetson|10|ratecap": {
+   "on_time_fps_total": 6.541818181818182,
+   "on_time_fps_worst_cam": 0.23454545454545453,
+   "aoi_mean_ms": 648.3520657706858,
+   "aoi_worst_ms": 743.5947192957757,
+   "lat_p50_ms": 353.40032533850024,
+   "delivered_fps": 16.665454545454544
+  },
+  "wifi_jetson|10|dropold": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": Infinity,
+   "aoi_worst_ms": Infinity,
+   "lat_p50_ms": Infinity,
+   "delivered_fps": 0.0
+  },
+  "wifi_jetson|10|twojet": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 904.0087762249716,
+   "aoi_worst_ms": 905.6873315502547,
+   "lat_p50_ms": 607.3044069625546,
+   "delivered_fps": 17.02
+  },
+  "wifi_jetson|10|coord2": {
+   "on_time_fps_total": 17.052727272727275,
+   "on_time_fps_worst_cam": 1.7,
+   "aoi_mean_ms": 415.79247813182974,
+   "aoi_worst_ms": 417.93011647852643,
+   "lat_p50_ms": 119.94461385640025,
+   "delivered_fps": 17.052727272727275
+  },
+  "wifi_jetson|10|pull2": {
+   "on_time_fps_total": 16.81818181818182,
+   "on_time_fps_worst_cam": 1.6781818181818182,
+   "aoi_mean_ms": 419.7299366644418,
+   "aoi_worst_ms": 422.02597430554425,
+   "lat_p50_ms": 119.89784803420625,
+   "delivered_fps": 16.81818181818182
+  },
+  "wifi_jetson|10|pull1": {
+   "on_time_fps_total": 16.86,
+   "on_time_fps_worst_cam": 1.681818181818182,
+   "aoi_mean_ms": 419.3817459149235,
+   "aoi_worst_ms": 421.3156810669352,
+   "lat_p50_ms": 120.19566716950939,
+   "delivered_fps": 16.86
+  },
+  "wifi_jetson|10|pull1x2": {
+   "on_time_fps_total": 17.052727272727275,
+   "on_time_fps_worst_cam": 1.7,
+   "aoi_mean_ms": 415.79247813182974,
+   "aoi_worst_ms": 417.93011647852643,
+   "lat_p50_ms": 119.94461385640025,
+   "delivered_fps": 17.052727272727275
+  },
+  "mesh_jetson|1|v41": {
+   "on_time_fps_total": 22.132727272727273,
+   "on_time_fps_worst_cam": 22.132727272727273,
+   "aoi_mean_ms": 99.99064894401246,
+   "aoi_worst_ms": 99.99064894401246,
+   "lat_p50_ms": 74.30945524639246,
+   "delivered_fps": 22.132727272727273
+  },
+  "mesh_jetson|1|coord": {
+   "on_time_fps_total": 25.194545454545455,
+   "on_time_fps_worst_cam": 25.194545454545455,
+   "aoi_mean_ms": 102.54062068586798,
+   "aoi_worst_ms": 102.54062068586798,
+   "lat_p50_ms": 81.23045644557715,
+   "delivered_fps": 25.194545454545455
+  },
+  "mesh_jetson|1|coord_age": {
+   "on_time_fps_total": 25.194545454545455,
+   "on_time_fps_worst_cam": 25.194545454545455,
+   "aoi_mean_ms": 102.54062068586798,
+   "aoi_worst_ms": 102.54062068586798,
+   "lat_p50_ms": 81.23045644557715,
+   "delivered_fps": 25.194545454545455
+  },
+  "mesh_jetson|1|pull": {
+   "on_time_fps_total": 16.618181818181817,
+   "on_time_fps_worst_cam": 16.618181818181817,
+   "aoi_mean_ms": 116.1934922347436,
+   "aoi_worst_ms": 116.1934922347436,
+   "lat_p50_ms": 83.4438088157971,
+   "delivered_fps": 16.618181818181817
+  },
+  "mesh_jetson|1|pull_age": {
+   "on_time_fps_total": 16.618181818181817,
+   "on_time_fps_worst_cam": 16.618181818181817,
+   "aoi_mean_ms": 116.1934922347436,
+   "aoi_worst_ms": 116.1934922347436,
+   "lat_p50_ms": 83.4438088157971,
+   "delivered_fps": 16.618181818181817
+  },
+  "mesh_jetson|1|ratecap": {
+   "on_time_fps_total": 14.945454545454547,
+   "on_time_fps_worst_cam": 14.945454545454547,
+   "aoi_mean_ms": 101.67595787306448,
+   "aoi_worst_ms": 101.67595787306448,
+   "lat_p50_ms": 66.31209929015714,
+   "delivered_fps": 14.945454545454547
+  },
+  "mesh_jetson|1|dropold": {
+   "on_time_fps_total": 22.132727272727273,
+   "on_time_fps_worst_cam": 22.132727272727273,
+   "aoi_mean_ms": 99.99064894401246,
+   "aoi_worst_ms": 99.99064894401246,
+   "lat_p50_ms": 74.30945524639246,
+   "delivered_fps": 22.132727272727273
+  },
+  "mesh_jetson|1|twojet": {
+   "on_time_fps_total": 23.074545454545454,
+   "on_time_fps_worst_cam": 23.074545454545454,
+   "aoi_mean_ms": 92.35632078168487,
+   "aoi_worst_ms": 92.35632078168487,
+   "lat_p50_ms": 66.03923760360412,
+   "delivered_fps": 23.074545454545454
+  },
+  "mesh_jetson|1|coord2": {
+   "on_time_fps_total": 29.78363636363636,
+   "on_time_fps_worst_cam": 29.78363636363636,
+   "aoi_mean_ms": 86.32900018808854,
+   "aoi_worst_ms": 86.32900018808854,
+   "lat_p50_ms": 67.65061082213796,
+   "delivered_fps": 29.78363636363636
+  },
+  "mesh_jetson|1|pull2": {
+   "on_time_fps_total": 29.02,
+   "on_time_fps_worst_cam": 29.02,
+   "aoi_mean_ms": 91.89058024962715,
+   "aoi_worst_ms": 91.89058024962715,
+   "lat_p50_ms": 72.38669020418456,
+   "delivered_fps": 29.02
+  },
+  "mesh_jetson|1|pull1": {
+   "on_time_fps_total": 25.48909090909091,
+   "on_time_fps_worst_cam": 25.48909090909091,
+   "aoi_mean_ms": 120.00622004270758,
+   "aoi_worst_ms": 120.00622004270758,
+   "lat_p50_ms": 98.49360660995589,
+   "delivered_fps": 25.48909090909091
+  },
+  "mesh_jetson|1|pull1x2": {
+   "on_time_fps_total": 29.78363636363636,
+   "on_time_fps_worst_cam": 29.78363636363636,
+   "aoi_mean_ms": 86.32900018808854,
+   "aoi_worst_ms": 86.32900018808854,
+   "lat_p50_ms": 67.65061082213796,
+   "delivered_fps": 29.78363636363636
+  },
+  "mesh_jetson|2|v41": {
+   "on_time_fps_total": 26.29090909090909,
+   "on_time_fps_worst_cam": 13.025454545454545,
+   "aoi_mean_ms": 159.35892852438946,
+   "aoi_worst_ms": 160.01207500465563,
+   "lat_p50_ms": 110.26625456675974,
+   "delivered_fps": 26.290909090909093
+  },
+  "mesh_jetson|2|coord": {
+   "on_time_fps_total": 26.274545454545454,
+   "on_time_fps_worst_cam": 12.972727272727273,
+   "aoi_mean_ms": 169.05277153137777,
+   "aoi_worst_ms": 169.52932532168964,
+   "lat_p50_ms": 115.60204907884254,
+   "delivered_fps": 26.274545454545454
+  },
+  "mesh_jetson|2|coord_age": {
+   "on_time_fps_total": 26.274545454545454,
+   "on_time_fps_worst_cam": 12.972727272727273,
+   "aoi_mean_ms": 169.05277153137777,
+   "aoi_worst_ms": 169.52932532168964,
+   "lat_p50_ms": 115.60204907884254,
+   "delivered_fps": 26.274545454545454
+  },
+  "mesh_jetson|2|pull": {
+   "on_time_fps_total": 16.585454545454546,
+   "on_time_fps_worst_cam": 8.290909090909091,
+   "aoi_mean_ms": 146.58318616066998,
+   "aoi_worst_ms": 146.91270024845704,
+   "lat_p50_ms": 83.53163859130655,
+   "delivered_fps": 16.585454545454546
+  },
+  "mesh_jetson|2|pull_age": {
+   "on_time_fps_total": 16.585454545454546,
+   "on_time_fps_worst_cam": 8.290909090909091,
+   "aoi_mean_ms": 146.58318616066998,
+   "aoi_worst_ms": 146.91270024845704,
+   "lat_p50_ms": 83.53163859130655,
+   "delivered_fps": 16.585454545454546
+  },
+  "mesh_jetson|2|ratecap": {
+   "on_time_fps_total": 19.994545454545452,
+   "on_time_fps_worst_cam": 9.996363636363636,
+   "aoi_mean_ms": 126.2284136826984,
+   "aoi_worst_ms": 131.77106800551906,
+   "lat_p50_ms": 73.96227566237212,
+   "delivered_fps": 19.994545454545452
+  },
+  "mesh_jetson|2|dropold": {
+   "on_time_fps_total": 26.29090909090909,
+   "on_time_fps_worst_cam": 13.025454545454545,
+   "aoi_mean_ms": 159.35892852438946,
+   "aoi_worst_ms": 160.01207500465563,
+   "lat_p50_ms": 110.26625456675974,
+   "delivered_fps": 26.290909090909093
+  },
+  "mesh_jetson|2|twojet": {
+   "on_time_fps_total": 38.61636363636364,
+   "on_time_fps_worst_cam": 19.256363636363638,
+   "aoi_mean_ms": 105.29067286026313,
+   "aoi_worst_ms": 105.54355198603893,
+   "lat_p50_ms": 75.4623580098596,
+   "delivered_fps": 38.61636363636364
+  },
+  "mesh_jetson|2|coord2": {
+   "on_time_fps_total": 44.38181818181818,
+   "on_time_fps_worst_cam": 22.134545454545453,
+   "aoi_mean_ms": 113.90587658270663,
+   "aoi_worst_ms": 114.05908682430368,
+   "lat_p50_ms": 89.59517185044896,
+   "delivered_fps": 44.38181818181818
+  },
+  "mesh_jetson|2|pull2": {
+   "on_time_fps_total": 31.01636363636364,
+   "on_time_fps_worst_cam": 15.5,
+   "aoi_mean_ms": 118.12505679708079,
+   "aoi_worst_ms": 118.32429174435406,
+   "lat_p50_ms": 83.58557371544593,
+   "delivered_fps": 31.01636363636364
+  },
+  "mesh_jetson|2|pull1": {
+   "on_time_fps_total": 25.561818181818182,
+   "on_time_fps_worst_cam": 12.778181818181817,
+   "aoi_mean_ms": 141.75898621430298,
+   "aoi_worst_ms": 141.91740842887444,
+   "lat_p50_ms": 100.78534828631818,
+   "delivered_fps": 25.561818181818182
+  },
+  "mesh_jetson|2|pull1x2": {
+   "on_time_fps_total": 43.78,
+   "on_time_fps_worst_cam": 21.874545454545455,
+   "aoi_mean_ms": 113.56005343236465,
+   "aoi_worst_ms": 113.74981838428516,
+   "lat_p50_ms": 88.87337225926312,
+   "delivered_fps": 43.78
+  },
+  "mesh_jetson|3|v41": {
+   "on_time_fps_total": 26.363636363636363,
+   "on_time_fps_worst_cam": 8.692727272727272,
+   "aoi_mean_ms": 222.75683996538527,
+   "aoi_worst_ms": 224.47985732490014,
+   "lat_p50_ms": 144.67656426584253,
+   "delivered_fps": 26.363636363636363
+  },
+  "mesh_jetson|3|coord": {
+   "on_time_fps_total": 26.187272727272727,
+   "on_time_fps_worst_cam": 8.559999999999999,
+   "aoi_mean_ms": 218.4997140458614,
+   "aoi_worst_ms": 220.88019690934235,
+   "lat_p50_ms": 138.73880394465377,
+   "delivered_fps": 26.187272727272727
+  },
+  "mesh_jetson|3|coord_age": {
+   "on_time_fps_total": 26.187272727272727,
+   "on_time_fps_worst_cam": 8.559999999999999,
+   "aoi_mean_ms": 218.50082424149846,
+   "aoi_worst_ms": 220.88596044233037,
+   "lat_p50_ms": 138.73880394465377,
+   "delivered_fps": 26.187272727272727
+  },
+  "mesh_jetson|3|pull": {
+   "on_time_fps_total": 16.694545454545455,
+   "on_time_fps_worst_cam": 5.5618181818181816,
+   "aoi_mean_ms": 175.66052860386577,
+   "aoi_worst_ms": 176.12720699136247,
+   "lat_p50_ms": 83.21088485831861,
+   "delivered_fps": 16.694545454545455
+  },
+  "mesh_jetson|3|pull_age": {
+   "on_time_fps_total": 16.694545454545455,
+   "on_time_fps_worst_cam": 5.5618181818181816,
+   "aoi_mean_ms": 175.66052860386577,
+   "aoi_worst_ms": 176.12720699136247,
+   "lat_p50_ms": 83.21088485831861,
+   "delivered_fps": 16.694545454545455
+  },
+  "mesh_jetson|3|ratecap": {
+   "on_time_fps_total": 22.492727272727272,
+   "on_time_fps_worst_cam": 7.494545454545455,
+   "aoi_mean_ms": 163.27007288826283,
+   "aoi_worst_ms": 185.1329144491735,
+   "lat_p50_ms": 94.61025280579342,
+   "delivered_fps": 22.492727272727272
+  },
+  "mesh_jetson|3|dropold": {
+   "on_time_fps_total": 26.363636363636363,
+   "on_time_fps_worst_cam": 8.692727272727272,
+   "aoi_mean_ms": 222.75683996538527,
+   "aoi_worst_ms": 224.47985732490014,
+   "lat_p50_ms": 144.67656426584253,
+   "delivered_fps": 26.363636363636363
+  },
+  "mesh_jetson|3|twojet": {
+   "on_time_fps_total": 44.08181818181818,
+   "on_time_fps_worst_cam": 14.674545454545456,
+   "aoi_mean_ms": 132.9746584343809,
+   "aoi_worst_ms": 133.26828431184396,
+   "lat_p50_ms": 95.73279690980272,
+   "delivered_fps": 44.08181818181818
+  },
+  "mesh_jetson|3|coord2": {
+   "on_time_fps_total": 44.92727272727272,
+   "on_time_fps_worst_cam": 14.930909090909092,
+   "aoi_mean_ms": 128.3506376466343,
+   "aoi_worst_ms": 128.62743794791328,
+   "lat_p50_ms": 92.62812043848571,
+   "delivered_fps": 44.92727272727272
+  },
+  "mesh_jetson|3|pull2": {
+   "on_time_fps_total": 31.094545454545454,
+   "on_time_fps_worst_cam": 10.354545454545455,
+   "aoi_mean_ms": 133.85309705916043,
+   "aoi_worst_ms": 134.3817063517725,
+   "lat_p50_ms": 83.20635985303889,
+   "delivered_fps": 31.094545454545454
+  },
+  "mesh_jetson|3|pull1": {
+   "on_time_fps_total": 25.583636363636362,
+   "on_time_fps_worst_cam": 8.523636363636363,
+   "aoi_mean_ms": 161.35334266282803,
+   "aoi_worst_ms": 161.61289875591007,
+   "lat_p50_ms": 100.78571835467483,
+   "delivered_fps": 25.583636363636366
+  },
+  "mesh_jetson|3|pull1x2": {
+   "on_time_fps_total": 44.08,
+   "on_time_fps_worst_cam": 14.674545454545456,
+   "aoi_mean_ms": 125.9093758560033,
+   "aoi_worst_ms": 126.15115581285947,
+   "lat_p50_ms": 89.74308103719814,
+   "delivered_fps": 44.08
+  },
+  "mesh_jetson|4|v41": {
+   "on_time_fps_total": 26.341818181818176,
+   "on_time_fps_worst_cam": 6.441818181818182,
+   "aoi_mean_ms": 292.9499315837358,
+   "aoi_worst_ms": 296.5246864053009,
+   "lat_p50_ms": 186.71182754404543,
+   "delivered_fps": 26.354545454545455
+  },
+  "mesh_jetson|4|coord": {
+   "on_time_fps_total": 26.376363636363635,
+   "on_time_fps_worst_cam": 6.423636363636364,
+   "aoi_mean_ms": 266.8683295963991,
+   "aoi_worst_ms": 270.6829614284541,
+   "lat_p50_ms": 160.4983402193866,
+   "delivered_fps": 26.376363636363635
+  },
+  "mesh_jetson|4|coord_age": {
+   "on_time_fps_total": 26.376363636363635,
+   "on_time_fps_worst_cam": 6.414545454545454,
+   "aoi_mean_ms": 266.96504171068443,
+   "aoi_worst_ms": 272.2512558588295,
+   "lat_p50_ms": 160.94818700805735,
+   "delivered_fps": 26.376363636363635
+  },
+  "mesh_jetson|4|pull": {
+   "on_time_fps_total": 16.665454545454544,
+   "on_time_fps_worst_cam": 4.161818181818182,
+   "aoi_mean_ms": 206.0981820889568,
+   "aoi_worst_ms": 206.88397238508952,
+   "lat_p50_ms": 83.23503246932815,
+   "delivered_fps": 16.665454545454544
+  },
+  "mesh_jetson|4|pull_age": {
+   "on_time_fps_total": 16.665454545454544,
+   "on_time_fps_worst_cam": 4.161818181818182,
+   "aoi_mean_ms": 206.0981820889568,
+   "aoi_worst_ms": 206.88397238508952,
+   "lat_p50_ms": 83.23503246932815,
+   "delivered_fps": 16.665454545454544
+  },
+  "mesh_jetson|4|ratecap": {
+   "on_time_fps_total": 23.994545454545452,
+   "on_time_fps_worst_cam": 5.994545454545454,
+   "aoi_mean_ms": 204.5076319261457,
+   "aoi_worst_ms": 248.32645649888713,
+   "lat_p50_ms": 119.53021865618211,
+   "delivered_fps": 23.994545454545452
+  },
+  "mesh_jetson|4|dropold": {
+   "on_time_fps_total": 26.316363636363633,
+   "on_time_fps_worst_cam": 6.436363636363636,
+   "aoi_mean_ms": 292.81473785247573,
+   "aoi_worst_ms": 296.7631573858903,
+   "lat_p50_ms": 186.67110463673635,
+   "delivered_fps": 26.330909090909092
+  },
+  "mesh_jetson|4|twojet": {
+   "on_time_fps_total": 45.20181818181818,
+   "on_time_fps_worst_cam": 11.285454545454545,
+   "aoi_mean_ms": 166.81101837700095,
+   "aoi_worst_ms": 167.2379987911771,
+   "lat_p50_ms": 119.35114256391535,
+   "delivered_fps": 45.20181818181818
+  },
+  "mesh_jetson|4|coord2": {
+   "on_time_fps_total": 45.229090909090914,
+   "on_time_fps_worst_cam": 11.290909090909091,
+   "aoi_mean_ms": 140.6559161380364,
+   "aoi_worst_ms": 141.20105845783553,
+   "lat_p50_ms": 93.63293086493067,
+   "delivered_fps": 45.229090909090914
+  },
+  "mesh_jetson|4|pull2": {
+   "on_time_fps_total": 31.143636363636364,
+   "on_time_fps_worst_cam": 7.781818181818181,
+   "aoi_mean_ms": 149.86602995119625,
+   "aoi_worst_ms": 150.58596240155737,
+   "lat_p50_ms": 83.24939987333782,
+   "delivered_fps": 31.143636363636364
+  },
+  "mesh_jetson|4|pull1": {
+   "on_time_fps_total": 25.554545454545455,
+   "on_time_fps_worst_cam": 6.383636363636364,
+   "aoi_mean_ms": 181.05743609880247,
+   "aoi_worst_ms": 181.77992220264437,
+   "lat_p50_ms": 100.67735550762809,
+   "delivered_fps": 25.554545454545455
+  },
+  "mesh_jetson|4|pull1x2": {
+   "on_time_fps_total": 43.990909090909085,
+   "on_time_fps_worst_cam": 10.987272727272728,
+   "aoi_mean_ms": 137.64298375984362,
+   "aoi_worst_ms": 138.242909187698,
+   "lat_p50_ms": 89.97569484235137,
+   "delivered_fps": 43.990909090909085
+  },
+  "mesh_jetson|5|v41": {
+   "on_time_fps_total": 25.46,
+   "on_time_fps_worst_cam": 4.8581818181818175,
+   "aoi_mean_ms": 363.8153690476498,
+   "aoi_worst_ms": 372.08721576641665,
+   "lat_p50_ms": 229.2602349443092,
+   "delivered_fps": 26.310909090909092
+  },
+  "mesh_jetson|5|coord": {
+   "on_time_fps_total": 26.28363636363637,
+   "on_time_fps_worst_cam": 5.14,
+   "aoi_mean_ms": 316.76091981686824,
+   "aoi_worst_ms": 321.8523486451245,
+   "lat_p50_ms": 182.81103816032845,
+   "delivered_fps": 26.28727272727273
+  },
+  "mesh_jetson|5|coord_age": {
+   "on_time_fps_total": 26.28363636363636,
+   "on_time_fps_worst_cam": 5.089090909090909,
+   "aoi_mean_ms": 317.5514945575841,
+   "aoi_worst_ms": 325.0692676205018,
+   "lat_p50_ms": 183.33841339427454,
+   "delivered_fps": 26.28727272727273
+  },
+  "mesh_jetson|5|pull": {
+   "on_time_fps_total": 16.667272727272728,
+   "on_time_fps_worst_cam": 3.330909090909091,
+   "aoi_mean_ms": 236.1840726008858,
+   "aoi_worst_ms": 237.07520167834687,
+   "lat_p50_ms": 83.37812412247585,
+   "delivered_fps": 16.667272727272728
+  },
+  "mesh_jetson|5|pull_age": {
+   "on_time_fps_total": 16.667272727272728,
+   "on_time_fps_worst_cam": 3.330909090909091,
+   "aoi_mean_ms": 236.1840726008858,
+   "aoi_worst_ms": 237.07520167834687,
+   "lat_p50_ms": 83.37812412247585,
+   "delivered_fps": 16.667272727272728
+  },
+  "mesh_jetson|5|ratecap": {
+   "on_time_fps_total": 24.919999999999998,
+   "on_time_fps_worst_cam": 4.927272727272728,
+   "aoi_mean_ms": 248.69220537884712,
+   "aoi_worst_ms": 309.09060048456223,
+   "lat_p50_ms": 147.03548605173418,
+   "delivered_fps": 24.98181818181818
+  },
+  "mesh_jetson|5|dropold": {
+   "on_time_fps_total": 26.0,
+   "on_time_fps_worst_cam": 5.012727272727273,
+   "aoi_mean_ms": 361.84706532520283,
+   "aoi_worst_ms": 368.8210213964427,
+   "lat_p50_ms": 229.38127606413764,
+   "delivered_fps": 26.26909090909091
+  },
+  "mesh_jetson|5|twojet": {
+   "on_time_fps_total": 45.192727272727275,
+   "on_time_fps_worst_cam": 9.030909090909091,
+   "aoi_mean_ms": 200.2754842620812,
+   "aoi_worst_ms": 200.7218129504883,
+   "lat_p50_ms": 141.5813363971509,
+   "delivered_fps": 45.192727272727275
+  },
+  "mesh_jetson|5|coord2": {
+   "on_time_fps_total": 45.232727272727274,
+   "on_time_fps_worst_cam": 9.036363636363635,
+   "aoi_mean_ms": 153.02349768851235,
+   "aoi_worst_ms": 153.5377564285681,
+   "lat_p50_ms": 94.3385816235841,
+   "delivered_fps": 45.232727272727274
+  },
+  "mesh_jetson|5|pull2": {
+   "on_time_fps_total": 31.058181818181815,
+   "on_time_fps_worst_cam": 6.205454545454545,
+   "aoi_mean_ms": 166.29647165896057,
+   "aoi_worst_ms": 167.19912446735896,
+   "lat_p50_ms": 83.33515294011595,
+   "delivered_fps": 31.058181818181815
+  },
+  "mesh_jetson|5|pull1": {
+   "on_time_fps_total": 25.59090909090909,
+   "on_time_fps_worst_cam": 5.114545454545454,
+   "aoi_mean_ms": 200.20337226004287,
+   "aoi_worst_ms": 200.95659133616954,
+   "lat_p50_ms": 100.56064682992728,
+   "delivered_fps": 25.59090909090909
+  },
+  "mesh_jetson|5|pull1x2": {
+   "on_time_fps_total": 43.79090909090909,
+   "on_time_fps_worst_cam": 8.750909090909092,
+   "aoi_mean_ms": 149.3515693069094,
+   "aoi_worst_ms": 150.08988379836643,
+   "lat_p50_ms": 90.07370177505508,
+   "delivered_fps": 43.79090909090909
+  },
+  "mesh_jetson|6|v41": {
+   "on_time_fps_total": 19.705454545454547,
+   "on_time_fps_worst_cam": 3.1636363636363636,
+   "aoi_mean_ms": 435.1954582577987,
+   "aoi_worst_ms": 443.4397642867304,
+   "lat_p50_ms": 273.9250537850115,
+   "delivered_fps": 26.290909090909093
+  },
+  "mesh_jetson|6|coord": {
+   "on_time_fps_total": 26.221818181818186,
+   "on_time_fps_worst_cam": 4.178181818181818,
+   "aoi_mean_ms": 364.5742180961975,
+   "aoi_worst_ms": 373.80359152844585,
+   "lat_p50_ms": 204.55126660212554,
+   "delivered_fps": 26.28181818181818
+  },
+  "mesh_jetson|6|coord_age": {
+   "on_time_fps_total": 26.223636363636366,
+   "on_time_fps_worst_cam": 4.221818181818182,
+   "aoi_mean_ms": 366.2067444472922,
+   "aoi_worst_ms": 371.6414851920047,
+   "lat_p50_ms": 204.84565438712053,
+   "delivered_fps": 26.28181818181818
+  },
+  "mesh_jetson|6|pull": {
+   "on_time_fps_total": 16.683636363636364,
+   "on_time_fps_worst_cam": 2.7781818181818183,
+   "aoi_mean_ms": 265.7071463192002,
+   "aoi_worst_ms": 266.6761210048256,
+   "lat_p50_ms": 83.24262973228323,
+   "delivered_fps": 16.683636363636364
+  },
+  "mesh_jetson|6|pull_age": {
+   "on_time_fps_total": 16.683636363636364,
+   "on_time_fps_worst_cam": 2.7781818181818183,
+   "aoi_mean_ms": 265.7792339098797,
+   "aoi_worst_ms": 266.6761210048256,
+   "lat_p50_ms": 83.31809426268447,
+   "delivered_fps": 16.683636363636364
+  },
+  "mesh_jetson|6|ratecap": {
+   "on_time_fps_total": 24.55818181818182,
+   "on_time_fps_worst_cam": 3.458181818181818,
+   "aoi_mean_ms": 300.69551993436096,
+   "aoi_worst_ms": 381.75754315263976,
+   "lat_p50_ms": 182.0862561599344,
+   "delivered_fps": 25.665454545454544
+  },
+  "mesh_jetson|6|dropold": {
+   "on_time_fps_total": 24.96181818181818,
+   "on_time_fps_worst_cam": 3.969090909090909,
+   "aoi_mean_ms": 423.0194958067642,
+   "aoi_worst_ms": 434.619819364713,
+   "lat_p50_ms": 265.68887500751333,
+   "delivered_fps": 26.27090909090909
+  },
+  "mesh_jetson|6|twojet": {
+   "on_time_fps_total": 45.42909090909091,
+   "on_time_fps_worst_cam": 7.56,
+   "aoi_mean_ms": 234.1231738921766,
+   "aoi_worst_ms": 234.9509431393657,
+   "lat_p50_ms": 164.0594577472206,
+   "delivered_fps": 45.43090909090909
+  },
+  "mesh_jetson|6|coord2": {
+   "on_time_fps_total": 45.42727272727273,
+   "on_time_fps_worst_cam": 7.563636363636364,
+   "aoi_mean_ms": 163.78586946335403,
+   "aoi_worst_ms": 164.31549472001365,
+   "lat_p50_ms": 94.38040455013106,
+   "delivered_fps": 45.42727272727272
+  },
+  "mesh_jetson|6|pull2": {
+   "on_time_fps_total": 30.970909090909096,
+   "on_time_fps_worst_cam": 5.156363636363636,
+   "aoi_mean_ms": 182.7361866873725,
+   "aoi_worst_ms": 183.59663188966647,
+   "lat_p50_ms": 83.35227747750032,
+   "delivered_fps": 30.97090909090909
+  },
+  "mesh_jetson|6|pull1": {
+   "on_time_fps_total": 25.610909090909093,
+   "on_time_fps_worst_cam": 4.265454545454546,
+   "aoi_mean_ms": 219.65986880098018,
+   "aoi_worst_ms": 220.7233864913011,
+   "lat_p50_ms": 100.39114567654615,
+   "delivered_fps": 25.610909090909093
+  },
+  "mesh_jetson|6|pull1x2": {
+   "on_time_fps_total": 43.874545454545455,
+   "on_time_fps_worst_cam": 7.3054545454545465,
+   "aoi_mean_ms": 160.93961503404816,
+   "aoi_worst_ms": 161.4852027296476,
+   "lat_p50_ms": 90.19819493355935,
+   "delivered_fps": 43.874545454545455
+  },
+  "mesh_jetson|8|v41": {
+   "on_time_fps_total": 1.5618181818181818,
+   "on_time_fps_worst_cam": 0.1490909090909091,
+   "aoi_mean_ms": 575.6284670542008,
+   "aoi_worst_ms": 594.0570022455807,
+   "lat_p50_ms": 362.7815524742997,
+   "delivered_fps": 26.35090909090909
+  },
+  "mesh_jetson|8|coord": {
+   "on_time_fps_total": 24.236363636363638,
+   "on_time_fps_worst_cam": 2.887272727272727,
+   "aoi_mean_ms": 461.64288985845405,
+   "aoi_worst_ms": 478.61811173339186,
+   "lat_p50_ms": 248.76651638668045,
+   "delivered_fps": 26.23818181818182
+  },
+  "mesh_jetson|8|coord_age": {
+   "on_time_fps_total": 24.125454545454545,
+   "on_time_fps_worst_cam": 2.8236363636363633,
+   "aoi_mean_ms": 464.65549033016424,
+   "aoi_worst_ms": 483.6079465454976,
+   "lat_p50_ms": 249.4688192296253,
+   "delivered_fps": 26.23818181818182
+  },
+  "mesh_jetson|8|pull": {
+   "on_time_fps_total": 16.605454545454545,
+   "on_time_fps_worst_cam": 2.0727272727272728,
+   "aoi_mean_ms": 326.95689051194483,
+   "aoi_worst_ms": 328.7117050881971,
+   "lat_p50_ms": 83.56005570902417,
+   "delivered_fps": 16.605454545454545
+  },
+  "mesh_jetson|8|pull_age": {
+   "on_time_fps_total": 16.605454545454545,
+   "on_time_fps_worst_cam": 2.0727272727272728,
+   "aoi_mean_ms": 326.9693742936787,
+   "aoi_worst_ms": 329.03974754307194,
+   "lat_p50_ms": 83.57585673541398,
+   "delivered_fps": 16.605454545454545
+  },
+  "mesh_jetson|8|ratecap": {
+   "on_time_fps_total": 21.345454545454547,
+   "on_time_fps_worst_cam": 1.1727272727272726,
+   "aoi_mean_ms": 358.95261860228624,
+   "aoi_worst_ms": 475.55140864271834,
+   "lat_p50_ms": 191.38341600091698,
+   "delivered_fps": 23.992727272727272
+  },
+  "mesh_jetson|8|dropold": {
+   "on_time_fps_total": 23.556363636363635,
+   "on_time_fps_worst_cam": 2.7800000000000002,
+   "aoi_mean_ms": 495.13951118325775,
+   "aoi_worst_ms": 517.2240036991262,
+   "lat_p50_ms": 280.4922641131194,
+   "delivered_fps": 26.258181818181818
+  },
+  "mesh_jetson|8|twojet": {
+   "on_time_fps_total": 44.94,
+   "on_time_fps_worst_cam": 5.587272727272728,
+   "aoi_mean_ms": 300.5308694725014,
+   "aoi_worst_ms": 301.48277148529996,
+   "lat_p50_ms": 207.23321259116273,
+   "delivered_fps": 45.269090909090906
+  },
+  "mesh_jetson|8|coord2": {
+   "on_time_fps_total": 45.221818181818186,
+   "on_time_fps_worst_cam": 5.649090909090909,
+   "aoi_mean_ms": 185.6494213817178,
+   "aoi_worst_ms": 186.24095336353065,
+   "lat_p50_ms": 93.74810958901362,
+   "delivered_fps": 45.22181818181818
+  },
+  "mesh_jetson|8|pull2": {
+   "on_time_fps_total": 30.992727272727272,
+   "on_time_fps_worst_cam": 3.8727272727272726,
+   "aoi_mean_ms": 214.93811079577026,
+   "aoi_worst_ms": 216.26512936494768,
+   "lat_p50_ms": 83.53215077059868,
+   "delivered_fps": 30.992727272727272
+  },
+  "mesh_jetson|8|pull1": {
+   "on_time_fps_total": 25.48181818181818,
+   "on_time_fps_worst_cam": 3.181818181818182,
+   "aoi_mean_ms": 259.67828431652845,
+   "aoi_worst_ms": 260.53608102101134,
+   "lat_p50_ms": 100.78740656894806,
+   "delivered_fps": 25.48181818181818
+  },
+  "mesh_jetson|8|pull1x2": {
+   "on_time_fps_total": 43.85818181818182,
+   "on_time_fps_worst_cam": 5.4781818181818185,
+   "aoi_mean_ms": 183.66091348374775,
+   "aoi_worst_ms": 184.9534786982457,
+   "lat_p50_ms": 90.12728982010594,
+   "delivered_fps": 43.85818181818182
+  },
+  "mesh_jetson|10|v41": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 716.6756235390571,
+   "aoi_worst_ms": 742.1590189067124,
+   "lat_p50_ms": 450.2551014843906,
+   "delivered_fps": 26.28727272727273
+  },
+  "mesh_jetson|10|coord": {
+   "on_time_fps_total": 15.316363636363636,
+   "on_time_fps_worst_cam": 1.3818181818181818,
+   "aoi_mean_ms": 554.853195748486,
+   "aoi_worst_ms": 580.6867648916029,
+   "lat_p50_ms": 292.3446042059193,
+   "delivered_fps": 26.367272727272727
+  },
+  "mesh_jetson|10|coord_age": {
+   "on_time_fps_total": 15.10909090909091,
+   "on_time_fps_worst_cam": 1.3927272727272728,
+   "aoi_mean_ms": 560.3657328242645,
+   "aoi_worst_ms": 589.6896812734531,
+   "lat_p50_ms": 293.5560265299828,
+   "delivered_fps": 26.367272727272727
+  },
+  "mesh_jetson|10|pull": {
+   "on_time_fps_total": 16.632727272727273,
+   "on_time_fps_worst_cam": 1.6581818181818182,
+   "aoi_mean_ms": 386.4235895120152,
+   "aoi_worst_ms": 388.68029288118174,
+   "lat_p50_ms": 83.35771954376541,
+   "delivered_fps": 16.632727272727273
+  },
+  "mesh_jetson|10|pull_age": {
+   "on_time_fps_total": 16.632727272727273,
+   "on_time_fps_worst_cam": 1.6581818181818182,
+   "aoi_mean_ms": 386.4120436766425,
+   "aoi_worst_ms": 388.68029288118174,
+   "lat_p50_ms": 83.33614154210372,
+   "delivered_fps": 16.632727272727273
+  },
+  "mesh_jetson|10|ratecap": {
+   "on_time_fps_total": 17.021818181818183,
+   "on_time_fps_worst_cam": 0.005454545454545454,
+   "aoi_mean_ms": 437.40904415942157,
+   "aoi_worst_ms": 589.4433628983645,
+   "lat_p50_ms": 236.98186665844696,
+   "delivered_fps": 25.005454545454548
+  },
+  "mesh_jetson|10|dropold": {
+   "on_time_fps_total": 21.85090909090909,
+   "on_time_fps_worst_cam": 2.023636363636364,
+   "aoi_mean_ms": 576.7382400387421,
+   "aoi_worst_ms": 613.6278663791801,
+   "lat_p50_ms": 281.90708764911653,
+   "delivered_fps": 24.674545454545456
+  },
+  "mesh_jetson|10|twojet": {
+   "on_time_fps_total": 41.53636363636364,
+   "on_time_fps_worst_cam": 4.098181818181819,
+   "aoi_mean_ms": 366.9560275208919,
+   "aoi_worst_ms": 368.0771174269992,
+   "lat_p50_ms": 251.36882883976324,
+   "delivered_fps": 45.372727272727275
+  },
+  "mesh_jetson|10|coord2": {
+   "on_time_fps_total": 45.35090909090909,
+   "on_time_fps_worst_cam": 4.530909090909091,
+   "aoi_mean_ms": 208.04339112087868,
+   "aoi_worst_ms": 209.2654139745095,
+   "lat_p50_ms": 94.16420838929844,
+   "delivered_fps": 45.35090909090909
+  },
+  "mesh_jetson|10|pull2": {
+   "on_time_fps_total": 31.007272727272728,
+   "on_time_fps_worst_cam": 3.096363636363636,
+   "aoi_mean_ms": 247.10669651801558,
+   "aoi_worst_ms": 248.7298584911699,
+   "lat_p50_ms": 83.55995586210847,
+   "delivered_fps": 31.007272727272728
+  },
+  "mesh_jetson|10|pull1": {
+   "on_time_fps_total": 25.54909090909091,
+   "on_time_fps_worst_cam": 2.550909090909091,
+   "aoi_mean_ms": 298.3285606246276,
+   "aoi_worst_ms": 299.8558984087531,
+   "lat_p50_ms": 100.95335832555938,
+   "delivered_fps": 25.54909090909091
+  },
+  "mesh_jetson|10|pull1x2": {
+   "on_time_fps_total": 43.910909090909094,
+   "on_time_fps_worst_cam": 4.387272727272728,
+   "aoi_mean_ms": 206.42679743325752,
+   "aoi_worst_ms": 207.75472741389186,
+   "lat_p50_ms": 90.09912782450665,
+   "delivered_fps": 43.910909090909094
+  },
+  "mesh_relayed|1|v41": {
+   "on_time_fps_total": 9.312727272727273,
+   "on_time_fps_worst_cam": 9.312727272727273,
+   "aoi_mean_ms": 162.15419157712654,
+   "aoi_worst_ms": 162.15419157712654,
+   "lat_p50_ms": 94.89066556100079,
+   "delivered_fps": 9.314545454545454
+  },
+  "mesh_relayed|1|coord": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|coord_age": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|pull": {
+   "on_time_fps_total": 10.469090909090909,
+   "on_time_fps_worst_cam": 10.469090909090909,
+   "aoi_mean_ms": 174.7667540456392,
+   "aoi_worst_ms": 174.7667540456392,
+   "lat_p50_ms": 113.26928723750025,
+   "delivered_fps": 10.483636363636364
+  },
+  "mesh_relayed|1|pull_age": {
+   "on_time_fps_total": 10.469090909090909,
+   "on_time_fps_worst_cam": 10.469090909090909,
+   "aoi_mean_ms": 174.7667540456392,
+   "aoi_worst_ms": 174.7667540456392,
+   "lat_p50_ms": 113.26928723750025,
+   "delivered_fps": 10.483636363636364
+  },
+  "mesh_relayed|1|ratecap": {
+   "on_time_fps_total": 8.54909090909091,
+   "on_time_fps_worst_cam": 8.54909090909091,
+   "aoi_mean_ms": 164.22576888818537,
+   "aoi_worst_ms": 164.22576888818537,
+   "lat_p50_ms": 94.82767472493724,
+   "delivered_fps": 8.55090909090909
+  },
+  "mesh_relayed|1|dropold": {
+   "on_time_fps_total": 9.312727272727273,
+   "on_time_fps_worst_cam": 9.312727272727273,
+   "aoi_mean_ms": 162.16330132485388,
+   "aoi_worst_ms": 162.16330132485388,
+   "lat_p50_ms": 94.89066556100079,
+   "delivered_fps": 9.312727272727273
+  },
+  "mesh_relayed|1|twojet": {
+   "on_time_fps_total": 9.312727272727273,
+   "on_time_fps_worst_cam": 9.312727272727273,
+   "aoi_mean_ms": 162.15419157712654,
+   "aoi_worst_ms": 162.15419157712654,
+   "lat_p50_ms": 94.89066556100079,
+   "delivered_fps": 9.314545454545454
+  },
+  "mesh_relayed|1|coord2": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|pull2": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|pull1": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|1|pull1x2": {
+   "on_time_fps_total": 11.94909090909091,
+   "on_time_fps_worst_cam": 11.94909090909091,
+   "aoi_mean_ms": 169.65197004895293,
+   "aoi_worst_ms": 169.65197004895293,
+   "lat_p50_ms": 112.4757039289605,
+   "delivered_fps": 11.959999999999999
+  },
+  "mesh_relayed|2|v41": {
+   "on_time_fps_total": 11.789090909090909,
+   "on_time_fps_worst_cam": 5.881818181818182,
+   "aoi_mean_ms": 252.67272848466095,
+   "aoi_worst_ms": 252.81919413278547,
+   "lat_p50_ms": 155.04542581234273,
+   "delivered_fps": 11.996363636363636
+  },
+  "mesh_relayed|2|coord": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|2|coord_age": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|2|pull": {
+   "on_time_fps_total": 10.55090909090909,
+   "on_time_fps_worst_cam": 5.269090909090909,
+   "aoi_mean_ms": 220.6985905427494,
+   "aoi_worst_ms": 221.6968744545884,
+   "lat_p50_ms": 113.22432300834262,
+   "delivered_fps": 10.565454545454546
+  },
+  "mesh_relayed|2|pull_age": {
+   "on_time_fps_total": 10.55090909090909,
+   "on_time_fps_worst_cam": 5.269090909090909,
+   "aoi_mean_ms": 220.6985905427494,
+   "aoi_worst_ms": 221.6968744545884,
+   "lat_p50_ms": 113.22432300834262,
+   "delivered_fps": 10.565454545454546
+  },
+  "mesh_relayed|2|ratecap": {
+   "on_time_fps_total": 9.821818181818182,
+   "on_time_fps_worst_cam": 4.903636363636364,
+   "aoi_mean_ms": 224.55851847617367,
+   "aoi_worst_ms": 226.2581546333869,
+   "lat_p50_ms": 112.3327751124918,
+   "delivered_fps": 9.85090909090909
+  },
+  "mesh_relayed|2|dropold": {
+   "on_time_fps_total": 11.778181818181817,
+   "on_time_fps_worst_cam": 5.876363636363637,
+   "aoi_mean_ms": 255.43406311154573,
+   "aoi_worst_ms": 255.9409775653723,
+   "lat_p50_ms": 154.02060595259246,
+   "delivered_fps": 11.781818181818181
+  },
+  "mesh_relayed|2|twojet": {
+   "on_time_fps_total": 11.789090909090909,
+   "on_time_fps_worst_cam": 5.881818181818182,
+   "aoi_mean_ms": 252.67236544825727,
+   "aoi_worst_ms": 252.81846805997822,
+   "lat_p50_ms": 155.04542581234273,
+   "delivered_fps": 11.996363636363636
+  },
+  "mesh_relayed|2|coord2": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|2|pull2": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|2|pull1": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|2|pull1x2": {
+   "on_time_fps_total": 11.883636363636363,
+   "on_time_fps_worst_cam": 5.936363636363636,
+   "aoi_mean_ms": 212.30901600036503,
+   "aoi_worst_ms": 213.44827857618603,
+   "lat_p50_ms": 113.95626804842178,
+   "delivered_fps": 11.901818181818182
+  },
+  "mesh_relayed|3|v41": {
+   "on_time_fps_total": 9.649090909090908,
+   "on_time_fps_worst_cam": 3.189090909090909,
+   "aoi_mean_ms": 381.06642626725346,
+   "aoi_worst_ms": 381.55048942467886,
+   "lat_p50_ms": 238.1085338305871,
+   "delivered_fps": 11.912727272727272
+  },
+  "mesh_relayed|3|coord": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|3|coord_age": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|3|pull": {
+   "on_time_fps_total": 10.487272727272728,
+   "on_time_fps_worst_cam": 3.4872727272727273,
+   "aoi_mean_ms": 269.7036320211926,
+   "aoi_worst_ms": 271.3407997947165,
+   "lat_p50_ms": 112.99264848250277,
+   "delivered_fps": 10.50909090909091
+  },
+  "mesh_relayed|3|pull_age": {
+   "on_time_fps_total": 10.487272727272728,
+   "on_time_fps_worst_cam": 3.4872727272727273,
+   "aoi_mean_ms": 269.7036320211926,
+   "aoi_worst_ms": 271.3407997947165,
+   "lat_p50_ms": 112.99264848250277,
+   "delivered_fps": 10.50909090909091
+  },
+  "mesh_relayed|3|ratecap": {
+   "on_time_fps_total": 10.58,
+   "on_time_fps_worst_cam": 3.5054545454545454,
+   "aoi_mean_ms": 297.7189420192071,
+   "aoi_worst_ms": 300.5230809341675,
+   "lat_p50_ms": 148.8125711970737,
+   "delivered_fps": 11.058181818181819
+  },
+  "mesh_relayed|3|dropold": {
+   "on_time_fps_total": 9.623636363636363,
+   "on_time_fps_worst_cam": 3.1763636363636367,
+   "aoi_mean_ms": 441.6631397004289,
+   "aoi_worst_ms": 450.66646647288616,
+   "lat_p50_ms": 224.2084868413702,
+   "delivered_fps": 9.667272727272728
+  },
+  "mesh_relayed|3|twojet": {
+   "on_time_fps_total": 9.649090909090908,
+   "on_time_fps_worst_cam": 3.189090909090909,
+   "aoi_mean_ms": 381.06642626725346,
+   "aoi_worst_ms": 381.55048942467886,
+   "lat_p50_ms": 238.1085338305871,
+   "delivered_fps": 11.912727272727272
+  },
+  "mesh_relayed|3|coord2": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|3|pull2": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|3|pull1": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|3|pull1x2": {
+   "on_time_fps_total": 11.987272727272728,
+   "on_time_fps_worst_cam": 3.985454545454546,
+   "aoi_mean_ms": 251.70085617799623,
+   "aoi_worst_ms": 254.26259496872257,
+   "lat_p50_ms": 112.68256225354563,
+   "delivered_fps": 12.001818181818182
+  },
+  "mesh_relayed|4|v41": {
+   "on_time_fps_total": 4.470909090909091,
+   "on_time_fps_worst_cam": 1.0745454545454547,
+   "aoi_mean_ms": 506.88898298645154,
+   "aoi_worst_ms": 507.84254006759545,
+   "lat_p50_ms": 321.49757280795603,
+   "delivered_fps": 11.925454545454546
+  },
+  "mesh_relayed|4|coord": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|4|coord_age": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|4|pull": {
+   "on_time_fps_total": 10.534545454545455,
+   "on_time_fps_worst_cam": 2.6272727272727274,
+   "aoi_mean_ms": 316.4779516619111,
+   "aoi_worst_ms": 319.0591245895199,
+   "lat_p50_ms": 112.08362109922018,
+   "delivered_fps": 10.554545454545455
+  },
+  "mesh_relayed|4|pull_age": {
+   "on_time_fps_total": 10.534545454545455,
+   "on_time_fps_worst_cam": 2.6272727272727274,
+   "aoi_mean_ms": 316.4779516619111,
+   "aoi_worst_ms": 319.0591245895199,
+   "lat_p50_ms": 112.08362109922018,
+   "delivered_fps": 10.554545454545455
+  },
+  "mesh_relayed|4|ratecap": {
+   "on_time_fps_total": 10.058181818181819,
+   "on_time_fps_worst_cam": 2.478181818181818,
+   "aoi_mean_ms": 352.04275061133933,
+   "aoi_worst_ms": 359.7489034295158,
+   "lat_p50_ms": 151.2924101270706,
+   "delivered_fps": 10.86909090909091
+  },
+  "mesh_relayed|4|dropold": {
+   "on_time_fps_total": 4.378181818181818,
+   "on_time_fps_worst_cam": 1.049090909090909,
+   "aoi_mean_ms": 1093.834074711635,
+   "aoi_worst_ms": 1149.0896005928723,
+   "lat_p50_ms": 261.71749454064627,
+   "delivered_fps": 4.443636363636363
+  },
+  "mesh_relayed|4|twojet": {
+   "on_time_fps_total": 4.470909090909091,
+   "on_time_fps_worst_cam": 1.0745454545454547,
+   "aoi_mean_ms": 506.88898298645154,
+   "aoi_worst_ms": 507.84254006759545,
+   "lat_p50_ms": 321.49757280795603,
+   "delivered_fps": 11.925454545454546
+  },
+  "mesh_relayed|4|coord2": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|4|pull2": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|4|pull1": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|4|pull1x2": {
+   "on_time_fps_total": 11.881818181818181,
+   "on_time_fps_worst_cam": 2.956363636363636,
+   "aoi_mean_ms": 295.34594212555294,
+   "aoi_worst_ms": 298.57454012117677,
+   "lat_p50_ms": 112.94416266256886,
+   "delivered_fps": 11.916363636363636
+  },
+  "mesh_relayed|5|v41": {
+   "on_time_fps_total": 0.9036363636363636,
+   "on_time_fps_worst_cam": 0.15454545454545454,
+   "aoi_mean_ms": 626.8839387136061,
+   "aoi_worst_ms": 627.64744283462,
+   "lat_p50_ms": 404.3039032148678,
+   "delivered_fps": 12.012727272727272
+  },
+  "mesh_relayed|5|coord": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.75594331147323,
+   "aoi_worst_ms": 340.35190485556416,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|5|coord_age": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.7559397993238,
+   "aoi_worst_ms": 340.3678113888483,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|5|pull": {
+   "on_time_fps_total": 10.459999999999999,
+   "on_time_fps_worst_cam": 2.0854545454545454,
+   "aoi_mean_ms": 365.9421298818275,
+   "aoi_worst_ms": 369.1934334250849,
+   "lat_p50_ms": 113.25226783424368,
+   "delivered_fps": 10.48181818181818
+  },
+  "mesh_relayed|5|pull_age": {
+   "on_time_fps_total": 10.459999999999999,
+   "on_time_fps_worst_cam": 2.0854545454545454,
+   "aoi_mean_ms": 365.9421298818275,
+   "aoi_worst_ms": 369.1934334250849,
+   "lat_p50_ms": 113.25226783424368,
+   "delivered_fps": 10.48181818181818
+  },
+  "mesh_relayed|5|ratecap": {
+   "on_time_fps_total": 8.772727272727272,
+   "on_time_fps_worst_cam": 1.709090909090909,
+   "aoi_mean_ms": 438.81616449705945,
+   "aoi_worst_ms": 448.5831499235652,
+   "lat_p50_ms": 198.9280733038657,
+   "delivered_fps": 11.458181818181817
+  },
+  "mesh_relayed|5|dropold": {
+   "on_time_fps_total": 0.8709090909090909,
+   "on_time_fps_worst_cam": 0.14727272727272728,
+   "aoi_mean_ms": 5010.269274524535,
+   "aoi_worst_ms": 6174.921487016521,
+   "lat_p50_ms": 280.02528852341493,
+   "delivered_fps": 0.9036363636363637
+  },
+  "mesh_relayed|5|twojet": {
+   "on_time_fps_total": 0.9,
+   "on_time_fps_worst_cam": 0.15272727272727274,
+   "aoi_mean_ms": 626.885422038293,
+   "aoi_worst_ms": 627.6247549151292,
+   "lat_p50_ms": 404.3024317581556,
+   "delivered_fps": 12.010909090909092
+  },
+  "mesh_relayed|5|coord2": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.75594331147323,
+   "aoi_worst_ms": 340.35190485556416,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|5|pull2": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.75594331147323,
+   "aoi_worst_ms": 340.35190485556416,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|5|pull1": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.75594331147323,
+   "aoi_worst_ms": 340.35190485556416,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|5|pull1x2": {
+   "on_time_fps_total": 11.921818181818182,
+   "on_time_fps_worst_cam": 2.3745454545454545,
+   "aoi_mean_ms": 336.75594331147323,
+   "aoi_worst_ms": 340.35190485556416,
+   "lat_p50_ms": 112.95887131051168,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|v41": {
+   "on_time_fps_total": 0.039999999999999994,
+   "on_time_fps_worst_cam": 0.0018181818181818182,
+   "aoi_mean_ms": 757.9565518530717,
+   "aoi_worst_ms": 758.8984029997803,
+   "lat_p50_ms": 488.1101296646008,
+   "delivered_fps": 11.919999999999998
+  },
+  "mesh_relayed|6|coord": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.9565418409913,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.54025770944645,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|coord_age": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.90534650094395,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.52312064662037,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|pull": {
+   "on_time_fps_total": 10.50909090909091,
+   "on_time_fps_worst_cam": 1.7418181818181817,
+   "aoi_mean_ms": 411.9084607243688,
+   "aoi_worst_ms": 416.9095022542959,
+   "lat_p50_ms": 112.5250474897377,
+   "delivered_fps": 10.529090909090908
+  },
+  "mesh_relayed|6|pull_age": {
+   "on_time_fps_total": 10.50909090909091,
+   "on_time_fps_worst_cam": 1.7418181818181817,
+   "aoi_mean_ms": 411.9084607243688,
+   "aoi_worst_ms": 416.9095022542959,
+   "lat_p50_ms": 112.5250474897377,
+   "delivered_fps": 10.529090909090908
+  },
+  "mesh_relayed|6|ratecap": {
+   "on_time_fps_total": 8.132727272727273,
+   "on_time_fps_worst_cam": 1.2345454545454546,
+   "aoi_mean_ms": 503.1549807863509,
+   "aoi_worst_ms": 528.4872142505731,
+   "lat_p50_ms": 216.678066196046,
+   "delivered_fps": 11.238181818181818
+  },
+  "mesh_relayed|6|dropold": {
+   "on_time_fps_total": 0.03636363636363636,
+   "on_time_fps_worst_cam": 0.0018181818181818182,
+   "aoi_mean_ms": Infinity,
+   "aoi_worst_ms": Infinity,
+   "lat_p50_ms": 285.41965348212545,
+   "delivered_fps": 0.03636363636363636
+  },
+  "mesh_relayed|6|twojet": {
+   "on_time_fps_total": 0.039999999999999994,
+   "on_time_fps_worst_cam": 0.0018181818181818182,
+   "aoi_mean_ms": 757.9565518530717,
+   "aoi_worst_ms": 758.8984029997803,
+   "lat_p50_ms": 488.1101296646008,
+   "delivered_fps": 11.919999999999998
+  },
+  "mesh_relayed|6|coord2": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.9565418409913,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.54025770944645,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|pull2": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.9565418409913,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.54025770944645,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|pull1": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.9565418409913,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.54025770944645,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|6|pull1x2": {
+   "on_time_fps_total": 11.927272727272728,
+   "on_time_fps_worst_cam": 1.978181818181818,
+   "aoi_mean_ms": 378.9565418409913,
+   "aoi_worst_ms": 382.6426101356084,
+   "lat_p50_ms": 112.54025770944645,
+   "delivered_fps": 11.952727272727273
+  },
+  "mesh_relayed|8|v41": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 1001.2171456202801,
+   "aoi_worst_ms": 1002.9532134441712,
+   "lat_p50_ms": 654.4049916892021,
+   "delivered_fps": 12.010909090909092
+  },
+  "mesh_relayed|8|coord": {
+   "on_time_fps_total": 11.969090909090909,
+   "on_time_fps_worst_cam": 1.481818181818182,
+   "aoi_mean_ms": 460.76113154938173,
+   "aoi_worst_ms": 465.06458299396655,
+   "lat_p50_ms": 112.9783187392597,
+   "delivered_fps": 11.987272727272728
+  },
+  "mesh_relayed|8|coord_age": {
+   "on_time_fps_total": 11.969090909090909,
+   "on_time_fps_worst_cam": 1.481818181818182,
+   "aoi_mean_ms": 460.7713866646656,
+   "aoi_worst_ms": 464.97321002147294,
+   "lat_p50_ms": 113.0788123639708,
+   "delivered_fps": 11.987272727272728
+  },
+  "mesh_relayed|8|pull": {
+   "on_time_fps_total": 10.514545454545456,
+   "on_time_fps_worst_cam": 1.3036363636363637,
+   "aoi_mean_ms": 505.57752237672776,
+   "aoi_worst_ms": 510.07470542261444,
+   "lat_p50_ms": 112.91211036525928,
+   "delivered_fps": 10.540000000000001
+  },
+  "mesh_relayed|8|pull_age": {
+   "on_time_fps_total": 10.514545454545456,
+   "on_time_fps_worst_cam": 1.3036363636363637,
+   "aoi_mean_ms": 505.57752237672776,
+   "aoi_worst_ms": 510.07470542261444,
+   "lat_p50_ms": 112.91211036525928,
+   "delivered_fps": 10.540000000000001
+  },
+  "mesh_relayed|8|ratecap": {
+   "on_time_fps_total": 5.158181818181818,
+   "on_time_fps_worst_cam": 0.42727272727272725,
+   "aoi_mean_ms": 693.8410340388646,
+   "aoi_worst_ms": 746.036307014793,
+   "lat_p50_ms": 321.49545803785696,
+   "delivered_fps": 11.39090909090909
+  },
+  "mesh_relayed|8|dropold": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": Infinity,
+   "aoi_worst_ms": Infinity,
+   "lat_p50_ms": Infinity,
+   "delivered_fps": 0.0
+  },
+  "mesh_relayed|8|twojet": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 1001.1669197102852,
+   "aoi_worst_ms": 1002.9112006097018,
+   "lat_p50_ms": 654.4175844563921,
+   "delivered_fps": 12.010909090909092
+  },
+  "mesh_relayed|8|coord2": {
+   "on_time_fps_total": 11.959999999999999,
+   "on_time_fps_worst_cam": 1.48,
+   "aoi_mean_ms": 460.95712848201913,
+   "aoi_worst_ms": 464.96845590852973,
+   "lat_p50_ms": 112.80667891438353,
+   "delivered_fps": 11.978181818181818
+  },
+  "mesh_relayed|8|pull2": {
+   "on_time_fps_total": 11.954545454545455,
+   "on_time_fps_worst_cam": 1.48,
+   "aoi_mean_ms": 461.255705504283,
+   "aoi_worst_ms": 465.2386194989941,
+   "lat_p50_ms": 112.92343466116726,
+   "delivered_fps": 11.972727272727273
+  },
+  "mesh_relayed|8|pull1": {
+   "on_time_fps_total": 11.972727272727273,
+   "on_time_fps_worst_cam": 1.481818181818182,
+   "aoi_mean_ms": 460.7089652352355,
+   "aoi_worst_ms": 464.47408797752195,
+   "lat_p50_ms": 112.80765964325838,
+   "delivered_fps": 11.99090909090909
+  },
+  "mesh_relayed|8|pull1x2": {
+   "on_time_fps_total": 11.959999999999999,
+   "on_time_fps_worst_cam": 1.48,
+   "aoi_mean_ms": 460.95712848201913,
+   "aoi_worst_ms": 464.96845590852973,
+   "lat_p50_ms": 112.80667891438353,
+   "delivered_fps": 11.978181818181818
+  },
+  "mesh_relayed|10|v41": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 1261.546182453399,
+   "aoi_worst_ms": 1263.3416942783285,
+   "lat_p50_ms": 826.5592003614751,
+   "delivered_fps": 11.925454545454546
+  },
+  "mesh_relayed|10|coord": {
+   "on_time_fps_total": 11.814545454545454,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.621495394697,
+   "aoi_worst_ms": 554.280476506225,
+   "lat_p50_ms": 113.33144321623259,
+   "delivered_fps": 11.854545454545455
+  },
+  "mesh_relayed|10|coord_age": {
+   "on_time_fps_total": 11.816363636363636,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.6468890407854,
+   "aoi_worst_ms": 553.8702387630432,
+   "lat_p50_ms": 113.37514636143024,
+   "delivered_fps": 11.854545454545455
+  },
+  "mesh_relayed|10|pull": {
+   "on_time_fps_total": 10.379999999999999,
+   "on_time_fps_worst_cam": 1.029090909090909,
+   "aoi_mean_ms": 607.8907509024051,
+   "aoi_worst_ms": 614.5537997103872,
+   "lat_p50_ms": 113.60737893460609,
+   "delivered_fps": 10.40909090909091
+  },
+  "mesh_relayed|10|pull_age": {
+   "on_time_fps_total": 10.379999999999999,
+   "on_time_fps_worst_cam": 1.029090909090909,
+   "aoi_mean_ms": 607.9089169597097,
+   "aoi_worst_ms": 614.7732107503807,
+   "lat_p50_ms": 113.63080381929903,
+   "delivered_fps": 10.40909090909091
+  },
+  "mesh_relayed|10|ratecap": {
+   "on_time_fps_total": 4.683636363636364,
+   "on_time_fps_worst_cam": 0.25636363636363635,
+   "aoi_mean_ms": 820.5154331643565,
+   "aoi_worst_ms": 901.236215455089,
+   "lat_p50_ms": 349.80853339802997,
+   "delivered_fps": 11.51818181818182
+  },
+  "mesh_relayed|10|dropold": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": Infinity,
+   "aoi_worst_ms": Infinity,
+   "lat_p50_ms": Infinity,
+   "delivered_fps": 0.0
+  },
+  "mesh_relayed|10|twojet": {
+   "on_time_fps_total": 0.0,
+   "on_time_fps_worst_cam": 0.0,
+   "aoi_mean_ms": 1261.546182453399,
+   "aoi_worst_ms": 1263.3416942783285,
+   "lat_p50_ms": 826.5592003614751,
+   "delivered_fps": 11.925454545454546
+  },
+  "mesh_relayed|10|coord2": {
+   "on_time_fps_total": 11.814545454545454,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.621495394697,
+   "aoi_worst_ms": 554.280476506225,
+   "lat_p50_ms": 113.33144321623259,
+   "delivered_fps": 11.854545454545455
+  },
+  "mesh_relayed|10|pull2": {
+   "on_time_fps_total": 11.814545454545454,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.621495394697,
+   "aoi_worst_ms": 554.280476506225,
+   "lat_p50_ms": 113.33144321623259,
+   "delivered_fps": 11.854545454545455
+  },
+  "mesh_relayed|10|pull1": {
+   "on_time_fps_total": 11.814545454545454,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.621495394697,
+   "aoi_worst_ms": 554.280476506225,
+   "lat_p50_ms": 113.33144321623259,
+   "delivered_fps": 11.854545454545455
+  },
+  "mesh_relayed|10|pull1x2": {
+   "on_time_fps_total": 11.814545454545454,
+   "on_time_fps_worst_cam": 1.170909090909091,
+   "aoi_mean_ms": 549.621495394697,
+   "aoi_worst_ms": 554.280476506225,
+   "lat_p50_ms": 113.33144321623259,
+   "delivered_fps": 11.854545454545455
+  }
+ }
+}
