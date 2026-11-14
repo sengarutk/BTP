@@ -116,6 +116,12 @@ budget +0.0008 in the lab.
   at least half of v4.1+'s onboard frames use YOLO11n.
 - **T8.3 (accuracy)** mission: v4.1+'s sAP (forecaster) is at least v4.1's in the mean of 4 pairs; random: the two
   differ by less than 0.01, and v4.1+ is never more than 0.005 below in the mean.
+- *Note, 15 Nov 2026 02:45, before any T8 run:* two board smoke tests showed that the replay's derivative estimator
+  (a = T + τ dT/dt − c P) does not work on the Pi (first estimate 108 °C, then pinned at its 15 °C clip). It was
+  replaced by a model-based observer (a = T − T_m, T_m the controller's model driven by the measured power; commit
+  18d181f1). Replayed on tonight's 6-minute energy-run logs it moves from 37.3 to 30-33 °C, budget 2.8 → 3.0-3.4 W, still
+  drifting at 6 minutes and dipping briefly to 2.2 W after a hot start. T8.1 is kept as written; whether 6 minutes is
+  long enough to reach 3.1-3.7 W is part of what it tests.
 - **T8.4 (heat)** Neither strategy is at or above 80 °C for more than 2 % of any run (6-minute runs: one 40-s total
   blackout), and neither throttles.
 
