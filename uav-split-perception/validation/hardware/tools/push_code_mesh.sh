@@ -7,9 +7,11 @@
 # Ends with an md5 table of the pushed files on every target against the repository (MD5_OK / MD5_MISMATCH).
 D=$(cd "$(dirname "$0")" && pwd); HW=$(cd "$D/.." && pwd); RES=$(cd "$HW/../../experiments/results/hardware" && pwd)
 CODE="adaptive.py adaptive2.py energy_profile.py power_logger.py hwbench.py egomotion.py forecast.py relay.py pipeline_node.py
-      thermal_steady.py edge_node.py mpc_planner.py decay_context.py bench_planner.py egomotion_bench.py"
+      thermal_steady.py edge_node.py mpc_planner.py decay_context.py bench_planner.py egomotion_bench.py
+      split_live.py pull_bench.py"
 CONF="staleness_decay.json staleness_decay_forecast_v2.json forecast_tuning_v2.json
-      variant_accuracy_visdrone.json variant_accuracy_visdrone_ft.json decay_context_train.json"
+      variant_accuracy_visdrone.json variant_accuracy_visdrone_ft.json variant_accuracy_visdrone_ft11.json
+      decay_context_train.json"
 for f in $CODE; do
   [ -f $HW/$f ] || { echo "missing code $f"; exit 1; }
   for t in ${TARGETS:-camera jetson}; do $D/mesh_scp.sh $t $HW/$f REMOTE:hwbench/ || { echo "copy failed: $f -> $t"; exit 1; }; done
@@ -18,6 +20,13 @@ for f in $CONF energy/energy_constants.json; do
   [ -f $RES/$f ] || { echo "missing config $f"; exit 1; }
   b=$(basename $f)
   for t in ${TARGETS:-camera jetson}; do $D/mesh_scp.sh $t $RES/$f REMOTE:hwbench/$b || { echo "copy failed: $f -> $t"; exit 1; }; done
+done
+# T10: the learned split codes split_live.py loads (weights/learned_bottleneck/<tag>.pt next to the code; ~2 MB each)
+LB="k4_c4_w128_d2 k4_c8_w128_d2 k2_c8_w128_d2"
+for t in ${TARGETS:-camera jetson}; do
+  $D/mesh_ssh.sh $t "mkdir -p ~/hwbench/weights/learned_bottleneck" || { echo "mkdir failed on $t"; exit 1; }
+  for c in $LB; do $D/mesh_scp.sh $t $HW/../../weights/learned_bottleneck/$c.pt REMOTE:hwbench/weights/learned_bottleneck/$c.pt \
+    || { echo "copy failed: $c.pt -> $t"; exit 1; }; done
 done
 # the copies must import on the camera Pis (catches a missing file before a campaign starts)
 for t in camera camera2; do [[ " ${TARGETS:-camera jetson} " == *" $t "* ]] && \

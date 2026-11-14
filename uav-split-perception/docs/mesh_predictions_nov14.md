@@ -99,6 +99,26 @@ ahead 25.5-25.6 at every count (p50 98-101 ms).
 - Two radios (Pi and Nano2) instead of the model's one shared queue, so the collapse may come at a different count;
   the direction (v4.1 collapses, pull does not) is the claim tested.
 
+## T8 / D2. v4.1+ against v4.1 (`tools/campaign_plus_nov.sh`)
+
+v4.1+ = v4.1 with the hold capped at 78 °C, the room-following budget (`--budget-rule`, target = the controller fit at
+2.8 W = 37.26 + 11.31 × 2.8 = 68.9 °C), contention-aware latency (10 ms while onboard inference runs) and YOLO11n
+allowed onboard (`n640y11`). mission and random, 40-s phases, × 4 reps, camera below 60 °C at each start.
+Inputs: tonight's energy test on this board (`vid_campaign_energy_nov`: v41 at 2.8 W held a second-half mean of
+60.9-63.8 °C, so its room-and-board offset is about 62 − 11.31 × 2.8 ≈ 30 °C against the fit's 37.3); YOLO11n onboard
+sAP 0.047 against YOLOv8s's 0.017 (brief 17.7, 296 ms per frame); replay (19.21): capped hold +0.0000, room-following
+budget +0.0008 in the lab.
+
+- **T8.1 (room-following budget on hardware)** v4.1+'s budget settles at 3.1-3.7 W (from the offset ≈ 30 °C: (68.9 −
+  30) / 11.31 ≈ 3.4 W), so its mean power is 0.3-0.9 W above v4.1's, while its second-half mean temperature stays at
+  or below 72 °C (the target + 3). This is the proposition's own correction: a cooler board gets a larger budget.
+- **T8.2 (YOLO11n)** In the mission's blackout phases (`ground_blackout` excluded: the Jetson is up; `total_blackout`),
+  at least half of v4.1+'s onboard frames use YOLO11n.
+- **T8.3 (accuracy)** mission: v4.1+'s sAP (forecaster) is at least v4.1's in the mean of 4 pairs; random: the two
+  differ by less than 0.01, and v4.1+ is never more than 0.005 below in the mean.
+- **T8.4 (heat)** Neither strategy is at or above 80 °C for more than 2 % of any run (6-minute runs: one 40-s total
+  blackout), and neither throttles.
+
 ## After the runs
 
 One line per prediction: held / did not hold, the measured value and the result file.

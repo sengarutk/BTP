@@ -16,6 +16,8 @@
 #     v41cap   v41 with the blackout hold allowed only below 78 C (--hold-max-c 78; brief 19.21; plan T4)
 #     v41guard v41cap + hard guard: no onboard inference starts at >= 78 C (--guard-hard-c 78; paper 2 Theorem 3; T4)
 #     v41ea    v41 + encode ahead (--encode-ahead; brief 19.13; plan T7)
+#     v41plus  v4.1+ (plan T8): capped hold (78 C), room-following budget (--budget-rule), contention-aware latency
+#              (10 ms), YOLO11n allowed onboard (accuracy table _ft11: the same values as _ft for every shared entry)
 #   (v41cap, v41guard, v41ea need the adaptive2.py of 14 Nov 2026 or later on the camera)
 #   SCENARIO static_good | mesh_mission | multihop | multihop_loss2 | multihop_loss5 (multihop*: the direct camera <-> pi-sender radio link is blocked by a
 #     temporary nftables rule on both boards, so batman-adv relays through the Jetson; removed at every cleanup. Since
@@ -51,6 +53,7 @@ case $ST in
   v41cap)  POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78";;   # T4: capped hold
   v41guard) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --guard-hard-c 78";;  # T4: + hard guard (Theorem 3)
   v41ea)   POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --encode-ahead";;   # T7: encode ahead
+  v41plus) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --budget-rule --contention-ms 10 --onboard-variants s320,s640,n640y11 --acc variant_accuracy_visdrone_ft11.json";;   # T8: v4.1+
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson
