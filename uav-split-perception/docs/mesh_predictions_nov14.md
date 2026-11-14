@@ -42,6 +42,24 @@ Reference: direct link (18.8) v41 0.193 against the chain 0.146 sAP with forecas
   repetitions (permutation p = 1/32 one-sided).
 - **T9.4** Power: the two strategies' camera power differs by less than 0.1 W in each topology (both priced at 2.8 W).
 
+## T7. Camera frame rate and encode ahead (`tools/campaign_fps_nov.sh`)
+
+static_good, one camera (pi-relayyy), paths laptop and Nano1; v41 at 15, 30 and 60 frames/s and v41ea (encode ahead)
+at 30 frames/s × 3 reps. References: today's v41 static_good run (`vid_campaign_mesh4/a2_static_good__v41__r1.json`:
+26.3 on-time results/s, median latency 47 ms, 7,186 of 7,200 ticks run; forecaster steps 6.1 + 3.2 + 0.2 ms per
+tick); the 19.13 model for one mesh hop (v4.1 14.9 / 22.1 results/s at 15 / 30 frames/s on one path; latest frame
+wins 25.2 at 30, +14 %).
+
+- **T7.1** 15 frames/s: on-time results per second between 13.5 and 15 (the camera rate binds), median latency within
+  10 ms of the 30 frames/s runs.
+- **T7.2** 60 frames/s: on-time results per second within ±5 % of the 30 frames/s runs (the paths bind, not the
+  camera), and no queue builds: median latency within 10 ms of 30 frames/s. The camera loop cannot keep 60 ticks per
+  second with the live forecaster (about 10 ms of 16.7 ms per tick, plus the decision and encode), so fewer than 90 %
+  of the 60-per-second ticks run.
+- **T7.3** Encode ahead at 30 frames/s: on-time results per second 0-14 % above v41 (the model's one-path gain is
+  the upper bound; with two paths the radio idles less), median latency not more than 5 ms higher, and the
+  encode-ahead sends are at least 5 % of all sends.
+
 ## After the runs
 
 One line per prediction: held / did not hold, the measured value and the result file.
