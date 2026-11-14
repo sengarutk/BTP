@@ -8,7 +8,7 @@
 set -e
 REPO=$(cd "$(dirname "$0")/../../.." && pwd); S=${1:-$(mktemp -d)}; T=$S/validation/hardware/tools
 rm -rf "$S/validation" "$S/experiments"; mkdir -p $T $S/experiments/results/hardware
-cp $REPO/validation/hardware/tools/campaign_{energy_nov,relaynoise_nov,mesh4}.sh $T/
+cp $REPO/validation/hardware/tools/campaign_{energy_nov,relaynoise_nov,mesh4}.sh $REPO/validation/hardware/tools/mesh_hosts.sh $T/
 printf '#!/bin/bash\nexit 0\n' > $T/mesh_ssh.sh
 { sed -n '1,/^esac$/p' $REPO/validation/hardware/tools/arun_mesh.sh; cat <<'EOS'
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson

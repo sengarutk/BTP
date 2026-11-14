@@ -69,6 +69,32 @@ same day]: see that file for how relay loss changes the relayed frames' on-time 
 - **P3.3** Every strategy loses streaming AP against the noise-free multihop runs, more at 5 % than at 2 %; the
   adaptive strategies lose less than fixed offloading in absolute terms.
 
+## Testbed changes since these predictions were written (14 Nov 2026, before any run of this session)
+
+Recorded before the first run; the predictions above are unchanged. Full log: `docs/mesh_session_nov14.md`.
+- **Five boards instead of three.** pi-receiver (a second camera Pi) and Nano2 (Jetson Orin Nano Super) joined the
+  mesh. During these three campaigns they run nothing; their only traffic is batman-adv's own messages. Every board
+  hears every other directly (batman-adv neighbour tables, 14 Nov).
+- **New addresses, same boards.** Camera pi-relayyy is now 10.1.0.11 (was .12), Nano1 10.1.0.14 (was .13), pi-sender
+  10.1.0.12 (was .11). The radios (MACs) are unchanged, so the route checks name the same boards. All scripts read the
+  map from `tools/mesh_hosts.sh`.
+- **Multihop relay kept on Nano1.** With five boards, blocking only the camera ↔ pi-sender link would let batman-adv
+  relay through pi-receiver or Nano2 (better link quality than Nano1). `arun_mesh.sh` now also blocks the camera's
+  links to those two (temporary nftables rules on four boards, removed at every cleanup). Tested 14 Nov: route via
+  Nano1 after 5 s, 20/20 pings at 10.6 ms mean over two hops; direct route back at once after removal; no rule left.
+- **Code pushed** (`push_code_mesh.sh`, md5 of every file equal to the repository on all four drones). The boards'
+  previous copies are in `~/hwbench/_prev_20261114/`.
+- **energy_constants.json.** The boards had the 8 Oct version (Pi thermal fit 34.43 + 12.73 P), the one every earlier
+  heat-priced run used; the repository's has the 28 Oct fit (37.26 + 11.31 P). The repository's was pushed. It
+  changes only the heat price's forecast, which no strategy of these campaigns uses. P2.2 is about the board's real
+  temperature and keeps its stated fit.
+- **Wi-Fi power save** reads "on" on the camera Pis, as during mesh campaigns 1-3 (`arun_mesh.sh` never changed it).
+  Switching it off on pi-receiver changed nothing in a ping test (mean RTT 5.6 vs 5.6 ms), so in this ad-hoc mode it
+  has no effect; it was left as found.
+- **Clocks.** The mesh has no time source: pi-sender is 25 min behind the laptop, Nano1 36 s ahead, the others within
+  0.4 s. Every latency is measured on one board's clock, so no measurement is affected; the offsets are logged by
+  `tools/mesh_health.sh` and not changed.
+
 ## After the session
 
 Add one line per prediction: held / did not hold, the measured value, and the result file. A prediction that did
