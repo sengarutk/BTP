@@ -13,10 +13,15 @@
 #     leaf     LEAF-style fixed energy weight mu = 2.0 (as campaign_main.sh's leaf: v3+fc2 objective, no dual ascent)
 #     freshonly  v41 without the energy price (freshness price kept): the energy test (campaign_energy_nov.sh)
 #     v41b36   v41 with a 3.6 W budget (the 80 C budget of paper 2's Proposition 1): the energy test
+#     v41cap   v41 with the blackout hold allowed only below 78 C (--hold-max-c 78; brief 19.21; plan T4)
+#     v41guard v41cap + hard guard: no onboard inference starts at >= 78 C (--guard-hard-c 78; paper 2 Theorem 3; T4)
+#     v41ea    v41 + encode ahead (--encode-ahead; brief 19.13; plan T7)
+#   (v41cap, v41guard, v41ea need the adaptive2.py of 14 Nov 2026 or later on the camera)
 #   SCENARIO static_good | mesh_mission | multihop | multihop_loss2 | multihop_loss5 (multihop*: the direct camera <-> pi-sender radio link is blocked by a
 #     temporary nftables rule on both boards, so batman-adv relays through the Jetson; removed at every cleanup. Since
 #     14 Nov the mesh has five boards: the camera's links to pi-receiver and Nano2 are blocked too, so the relay is
 #     still Nano1, as in every earlier multihop run)
+# Optional env FPS=15|60: the camera frame rate (adaptive2.py --fps; unset = its default 30, as in every earlier run; T7).
 # Optional env EGO_W=160: the live forecaster's camera-motion step at that tracking width (env EGO_W_SMALL -> egomotion.W_SMALL; the
 #   cheaper step of 19.9); unset = 320 px, as in every run before 29 Oct 2026.
 # Needs mesh_tunnel.sh running. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
@@ -25,7 +30,7 @@ L=$1; ST=$2; SC=$3; PS=$4; SEED=$5; R=$6; mkdir -p $R; R=$(cd $R && pwd)
 TOT=$((PS*6+60)); PY=/home/sengar/btp_env/bin/python; JPY=/home/nano/hwbench_env/bin/python
 S="printf '%s\n' \"\$PW\" | sudo -S -p ''"
 . $D/mesh_hosts.sh; GND_MAC=$SENDER_MAC   # board map and radio MACs (CAM_MAC, JET_MAC, ... unchanged since 23 Oct)
-COMMON="--scenario $SC --phase-s $PS --seed $SEED --vid visdrone_vid_640 --conf 0.01 --live-forecast forecast_tuning_v2.json --power-log --energy-constants energy_constants.json --weight-suffix _visdrone --acc variant_accuracy_visdrone_ft.json --onboard-variants s320,s640 --wlan bat0"
+COMMON="${FPS:+--fps $FPS }--scenario $SC --phase-s $PS --seed $SEED --vid visdrone_vid_640 --conf 0.01 --live-forecast forecast_tuning_v2.json --power-log --energy-constants energy_constants.json --weight-suffix _visdrone --acc variant_accuracy_visdrone_ft.json --onboard-variants s320,s640 --wlan bat0"
 DEC="--decay staleness_decay_forecast_v2.json --objective stream"
 EDGE="--edge-energy-aware --edge-power-budget 0.5"
 HEAT="--thermal-aware --thermal-target-c 75 --thermal-guard-c 84"
@@ -43,6 +48,9 @@ case $ST in
   leaf)    POL=A_full; X="$DEC --energy-aware --mu-fixed 2.0";;
   freshonly) POL=A_full; X="$DEC --fresh-target 0.95";;                     # energy test: v41 without the energy price
   v41b36)  POL=A_full; X="$DEC --energy-aware --power-budget 3.6 --fresh-target 0.95";;  # energy test: the 80 C budget
+  v41cap)  POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78";;   # T4: capped hold
+  v41guard) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --guard-hard-c 78";;  # T4: + hard guard (Theorem 3)
+  v41ea)   POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --encode-ahead";;   # T7: encode ahead
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson

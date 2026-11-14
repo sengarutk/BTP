@@ -78,7 +78,11 @@ import cv2
 import numpy as np
 import torch
 
-from adaptive import P_COMPUTE_W, P_RADIO_W, PORT, Path, phi, tc_phase, tc_setup, tc_teardown
+from adaptive import P_COMPUTE_W, P_RADIO_W, PORT, Path, phi, tc, tc_phase, tc_setup, tc_teardown
+# Second edge drone (14 Nov 2026, plan S4): path "jetson2" (Nano2's worker connects to the camera's port 48105). Only
+# when --paths names it: its netem band (band 4 of a 5-band prio qdisc; the unshaped default band moves to 5) and its
+# power log. Without jetson2 the ports, tc layout and every decision are exactly as before.
+PORT = dict(PORT, jetson2=48105)
 from hwbench import fast_nms, load_model
 from pipeline_node import send_msg  # noqa: F401
 
@@ -103,6 +107,8 @@ PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, 
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 PRIOR_REMOTE_MS["relay"] = dict(PRIOR_REMOTE_MS["laptop"])        # the laptop computes; the extra hop is in the RTT
+PRIOR_REMOTE_MS["jetson2"] = dict(PRIOR_REMOTE_MS["jetson"])      # Nano2: Nano1's priors until its own are measured;
+                                                                  # the live estimate (remote_est) replaces them
 
 
 def write_json_atomic(obj, path):
@@ -309,6 +315,18 @@ def main():
                     help="drone class of the edge drone that serves the jetson path (for --mission-min)")
     ap.add_argument("--thermal-guard-c", type=float, default=78.0,
                     help="hard guard: at or above this measured temperature the camera energy price is at least 1")
+    ap.add_argument("--hold-max-c", type=float, default=85.0,
+                    help="capped hold (brief 19.21): the blackout hold (onboard unpriced while no link can deliver) is "
+                         "allowed only below this measured temperature. 85 = the hold as in every run before 14 Nov "
+                         "2026; 78 = the capped hold of the replay's th_hold78 policies")
+    ap.add_argument("--guard-hard-c", type=float, default=-1.0,
+                    help="hard thermal guard (paper 2, Theorem 3): at or above this measured temperature no onboard "
+                         "inference starts (its value is set to 0, as replay.py's guard_hard_c); -1 = off")
+    ap.add_argument("--encode-ahead", action="store_true",
+                    help="encode ahead (brief 19.13, plan S7): v4.1's decision at each camera tick is unchanged; when it "
+                         "sends nothing because the paths it values are busy, the tick's frame is encoded at once for "
+                         "the highest-valued busy path and sent the moment that path frees (polled every 1 ms until "
+                         "the next tick, which replaces it). Policies A_* only; off = every run before 14 Nov 2026")
     ap.add_argument("--thermal-aware", action="store_true",
                     help="controller v5: a smooth, predictive heat price. The board's temperature --thermal-horizon-s "
                          "ahead is predicted from the measured thermal model (steady T = intercept + c_per_w x P, "
@@ -393,7 +411,7 @@ def main():
     cv2.setNumThreads(1)
 
     servers, paths = {}, {}
-    priors = {"laptop": (20.0, 12.0), "jetson": (12.0, 32.0), "relay": (12.0, 20.0)}
+    priors = {"laptop": (20.0, 12.0), "jetson": (12.0, 32.0), "relay": (12.0, 20.0), "jetson2": (12.0, 32.0)}
     for p in a.paths.split(","):
         srv = socket.socket()
         srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -581,6 +599,9 @@ def main():
     energy = {"mu": 0.0, "mu_edge": 0.0, "log": [], "mu_log": [], "mu_edge_log": [], "temp": 50.0,
               "edge_served": [], "soc": 1.0, "clk_log": [], "lam_t": 0.0, "t_log": [], "t0w": time.time(), "e_perc_j": 0.0, "t_last": None}
     fresh = {"lam": 0.0, "aoi_ms": float("inf"), "hist": [], "log": [], "last": 0.0}
+    guard_n = [0]                      # decisions at which the hard guard (--guard-hard-c) blocked onboard
+    props_now = [None]                 # this tick's path values (A_* policies), for --encode-ahead
+    ahead = {"cur": None, "sent": 0, "replaced": 0, "wait_ms": []}   # --encode-ahead: the frame waiting for its path
 
     def read_board():
         import glob as _g
@@ -637,6 +658,9 @@ def main():
                 jw_ = paths.get("jetson")
                 if jw_ is not None and getattr(jw_, "edge_w", None) is not None and now - jw_.edge_w_t <= 2.0:
                     energy.setdefault("edge_w_log", []).append((now, jw_.edge_w))
+                jw2 = paths.get("jetson2")
+                if jw2 is not None and getattr(jw2, "edge_w", None) is not None and now - jw2.edge_w_t <= 2.0:
+                    energy.setdefault("edge2_w_log", []).append((now, jw2.edge_w))
             energy["temp"] = tp
             if pw == pw:                               # measured perception energy since the SoC origin
                 if energy["t_last"] is not None:
@@ -710,6 +734,12 @@ def main():
 
     phases = scenario_phases(a.scenario, a.phase_s, a.seed)
     tc_setup(a.wlan)
+    if "jetson2" in paths:             # a fifth band for the second edge drone's path (unshaped traffic: band 5)
+        tc(f"qdisc del dev {a.wlan} root")
+        tc(f"qdisc add dev {a.wlan} root handle 1: prio bands 5 priomap " + " ".join(["4"] * 16))
+        for band, pth in ((1, "laptop"), (2, "jetson"), (3, "relay"), (4, "jetson2")):
+            tc(f"qdisc add dev {a.wlan} parent 1:{band} handle {band}0: netem")
+            tc(f"filter add dev {a.wlan} parent 1: protocol ip prio 1 u32 match ip sport {PORT[pth]} 0xffff flowid 1:{band}")
     t_start = time.perf_counter() + 1.0
     bounds = np.cumsum([0.0] + [ph[3] for ph in phases])
     total = bounds[-1]
@@ -829,7 +859,7 @@ def main():
     mpc = {"sent": {}, "plan_ms": [], "tertile": []}          # accumo: what it sent, planner time per frame
     if pol == "accumo":
         import mpc_planner
-        mpc_opts = {"laptop": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "jetson": list(PATH_VARIANTS),
+        mpc_opts = {"laptop": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "jetson": list(PATH_VARIANTS), "jetson2": list(PATH_VARIANTS),
                     "relay": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "onboard": list(ONBOARD_VARIANTS)}
         if a.mpc_context:
             from decay_context import ego_speed
@@ -931,6 +961,9 @@ def main():
             if ph != cur_phase:
                 cur_phase = ph
                 tc_phase(a.wlan, phases[ph][1], legacy=a.netem_legacy)
+                if "jetson2" in paths:         # band 4: the second edge drone's impairment of this phase
+                    tc(f"qdisc del dev {a.wlan} parent 1:4 handle 40:")
+                    tc(f"qdisc add dev {a.wlan} parent 1:4 handle 40: netem " + (phases[ph][1].get("jetson2") or ""))
                 if "jetson" in paths:          # the edge node applies the edge drone's own uplink condition
                     paths["jetson"].hdr_extra = {"edge_impair": phases[ph][1].get("uplink", "")}
             tick = int(el / period)
@@ -989,16 +1022,20 @@ def main():
                         break
             else:
                 props = {}
+                props_now[0] = props
                 for srv in tuple(paths) + ("onboard",):
                     props[srv] = best_variant(srv)
                 n_active[0] = sum(1 for k in props if props[k][2] > 0.2) or 1
                 if a.energy_aware and not any(props[p][2] > 0.2 for p in paths) \
-                        and not (energy["temp"] == energy["temp"] and energy["temp"] >= 85.0):
+                        and not (energy["temp"] == energy["temp"] and energy["temp"] >= a.hold_max_c):
                     # no link can deliver: onboard is the only source of perception, so it is not priced
                     energy["exempt_t"] = time.time()      # (and mu is frozen meanwhile: anti-windup)
                     vals = {v: onboard_value(v, penalize=False) for v in ONBOARD_VARIANTS}
                     bv = max(vals, key=lambda k: vals[k][0])
                     props["onboard"] = (bv, vals[bv][0], vals[bv][1])
+                if a.guard_hard_c > 0 and energy["temp"] == energy["temp"] and energy["temp"] >= a.guard_hard_c:
+                    props["onboard"] = (props["onboard"][0], 0.0, 0.0)    # hard guard: no onboard start while hot
+                    guard_n[0] += 1
                 if pol == "A_paths":
                     if max(props["laptop"][2], props["jetson"][2]) > 0.2:
                         props.pop("onboard")
@@ -1052,6 +1089,20 @@ def main():
                                           "return_dets": bool(a.vid),
                                           "metas": [{"k": -1, "jpeg": True}]}, [buf.tobytes()]))
             log.append(rec)
+            if a.encode_ahead and pol.startswith("A_"):
+                if ahead["cur"] is not None:
+                    ahead["replaced"] += 1             # a newer frame replaces the one still waiting
+                ahead["cur"] = None
+                pv = props_now[0]
+                if choice is None and pv:
+                    busy = [p_ for p_ in paths if p_ in pv and pv[p_][1] > 0 and paths[p_].sock is not None]
+                    if busy:
+                        srv_a = max(busy, key=lambda k: pv[k][1])
+                        var_a = pv[srv_a][0]
+                        model_a, res_a, q_a = path_variants(srv_a)[var_a]
+                        ok, buf_a = cv2.imencode(".jpg", lbs[res_a](image=img), [cv2.IMWRITE_JPEG_QUALITY, q_a])
+                        ahead["cur"] = (srv_a, var_a, model_a, res_a, q_a, buf_a, rec, tick, cap_t, path_pred(srv_a, var_a))
+                props_now[0] = None
             if lf is not None:
                 if "server" in rec:
                     lf["rec"][tick] = rec
@@ -1064,6 +1115,24 @@ def main():
                 for m in remote_ms[p]:
                     remote_ms[p][m] = paths[p].remote_est(m, PRIOR_REMOTE_MS[p][m])
             nxt = t_start + (int((time.perf_counter() - t_start) / period) + 1) * period
+            while ahead["cur"] is not None and time.perf_counter() < nxt - 0.002:
+                srv_a, var_a, model_a, res_a, q_a, buf_a, rec_a, tick_a, cap_a, pred_a = ahead["cur"]
+                if paths[srv_a].sock is None:
+                    ahead["cur"] = None                # the link dropped: nothing to wait for
+                    break
+                if idle(srv_a):                        # the path just freed: send the waiting frame now
+                    rec_a.update(server=srv_a, variant=var_a, res=res_a, acc=acc_of(model_a, res_a, q_a),
+                                 pred=pred_a, bytes=len(buf_a), ahead=True)
+                    ahead["wait_ms"].append(round((time.perf_counter() - cap_a) * 1e3, 1))
+                    paths[srv_a].slot.put(({"id": tick_a, "t_cap": cap_a, "cut": -1, "model": model_a, "conf": a.conf,
+                                            "res": res_a, "q": q_a, "return_dets": bool(a.vid),
+                                            "metas": [{"k": -1, "jpeg": True}]}, [buf_a.tobytes()]))
+                    if lf is not None:
+                        lf["rec"][tick_a] = rec_a
+                    ahead["sent"] += 1
+                    ahead["cur"] = None
+                    break
+                time.sleep(0.001)
             time.sleep(max(0.0, nxt - time.perf_counter()))
         time.sleep(3.0)
     finally:
@@ -1124,6 +1193,12 @@ def main():
            "onboard_ms": onboard.ms, "link_events": {p: paths[p].events for p in paths},
            "link_goodput_samples": {p: paths[p].samples for p in paths},   # (unix time, Mbit/s) per frame/probe
            "frames": [{k: (round(v, 4) if isinstance(v, float) else v) for k, v in r.items() if k != "t_cap"} for r in log]}
+    if a.encode_ahead:
+        w_ = ahead["wait_ms"]
+        out["encode_ahead"] = {"sent": ahead["sent"], "replaced": ahead["replaced"],
+                               "wait_ms_median": float(np.median(w_)) if w_ else None}
+    if a.hold_max_c != 85.0 or a.guard_hard_c > 0:   # recorded only when set (older runs: hold 85, no guard)
+        out["thermal_rules"] = {"hold_max_c": a.hold_max_c, "guard_hard_c": a.guard_hard_c, "guard_blocks": guard_n[0]}
     if mpc["plan_ms"]:                 # accumo: planner time per frame on this board
         pm = np.array(mpc["plan_ms"])
         out["mpc"] = {"horizon": a.mpc_horizon, "context": bool(a.mpc_context), "plan_ms_median": float(np.median(pm)),
@@ -1147,6 +1222,8 @@ def main():
                                   "log_t_w_c": [(round(x[0] - t0_, 2), round(x[1], 3), round(x[2], 2)) for x in lg]}
         if energy.get("edge_w_log"):       # (t, Jetson board W) once per second, every strategy
             out["measured_energy"]["edge_w_log"] = [(round(x[0] - t0_, 2), round(x[1], 3)) for x in energy["edge_w_log"]]
+        if energy.get("edge2_w_log"):      # the same for the second edge drone (jetson2)
+            out["measured_energy"]["edge2_w_log"] = [(round(x[0] - t0_, 2), round(x[1], 3)) for x in energy["edge2_w_log"]]
         if energy["clk_log"]:              # (t, ARM MHz, throttle flags) once per second (bit 2 = throttled now,
             out["measured_energy"]["clock_log_t_mhz_flags"] = [   # bit 1 = frequency capped, bit 3 = soft temp limit)
                 (round(x[0] - t0_, 2), round(x[1], 1), x[2]) for x in energy["clk_log"]]
