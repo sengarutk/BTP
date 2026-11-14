@@ -20,4 +20,14 @@ variables.
 | 19:34 | Multihop | arun_mesh.sh's rules applied and removed | Route camera → pi-sender via Nano1 after 5 s; 20/20 pings, 10.6 ms mean; direct route back at once; HEALTH_OK after |
 | 19:36 | Laptop | `mesh_tunnel.sh` (48101 → 10.1.0.11, 48104 → 10.1.0.14), keep-awake ping, 1-s ping log | both ports listening |
 
+## Board session (B1-B3) and parallel work
+
+| Time | Item | What was done | Check |
+|---|---|---|---|
+| 20:19 | Session chain | `tools/session_nov14.sh` started from Windows (`wsl.exe`, passwords through WSLENV), so it does not depend on the chat session (whose restart at ~19:58 had killed the first tunnel and pings) | parent `/init`; HEALTH_OK at start |
+| 20:19 | B1 planner | `REPS=2 campaign_mesh4.sh`; planner 1.65 ms median on the Pi | first run v41 static_good 26.3 on-time/s, 2.82 W, availability 0.999 (24 Oct: 26.4-26.7, 2.81-2.85 W) |
+| 20:58 | Multihop | first multihop run: route via Nano1 after 5 s (checked on the board during the run: 3 drop rules, next hop Nano1) | — |
+| 20:30-21:00 | Code (laptop) | S5 `--hold-max-c`, `--guard-hard-c`; S7 `--encode-ahead`; S4 `jetson2` path; T4/T7/T9 campaign scripts and predictions; T10 `split_live.py`, `t10_predict.py`; `energy_profile.py --no-radio` | defaults reproduce earlier runs; not on the camera Pi until the session ends |
+| 21:05 | S3 profiles | `energy_profile.py --no-radio` on pi-receiver and Nano2 (compute only, no radio traffic; the campaign's boards are pi-relayyy and Nano1) | both running |
+
 Open decisions (plan A7-A9): pi-sender's cable address and Nano2's mesh setup stay runtime-only (lost on reboot).

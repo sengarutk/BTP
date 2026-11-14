@@ -121,6 +121,8 @@ def main():
     ap.add_argument("--heat-s", type=float, default=300.0)
     ap.add_argument("--cool-s", type=float, default=150.0)
     ap.add_argument("--radio-port", type=int, default=48120)
+    ap.add_argument("--no-radio", action="store_true",
+                    help="skip the radio states (no laptop peer, or the channel is in use by a campaign); 14 Nov 2026")
     a = ap.parse_args()
     import torch
     from hwbench import fast_nms, load_model
@@ -192,27 +194,28 @@ def main():
                 b = np.concatenate([xy, xy + 30, rng.uniform(0, 1, (100, 1)), rng.integers(0, 10, (100, 1))], 1)
                 fc.observe(k, k / 30, "s", b.astype(np.float32))
         state("forecaster_30fps", lambda stop: paced(stop, 30, fwork))
-        # radio: the laptop connects and drains
-        srv = socket.socket()
-        srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        srv.bind(("0.0.0.0", a.radio_port))
-        srv.listen(1)
-        print("radio: waiting for the laptop", flush=True)
-        c, _ = srv.accept()
-        c.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        chunk = os.urandom(87000)
-        for mbps in (2, 5, 10, 0):
-            def send(stop, mbps=mbps):
-                sent, t0 = 0, time.time()
-                while time.time() < stop:
-                    c.sendall(chunk)
-                    sent += len(chunk)
-                    if mbps:
-                        time.sleep(max(0.0, t0 + sent * 8 / (mbps * 1e6) - time.time()))
-                return {"mbit_s": sent * 8 / 1e6 / max(1e-6, time.time() - t0)}
-            state(f"radio_tx_{mbps or 'max'}mbps", send)
-        c.close()
-        srv.close()
+        if not a.no_radio:           # radio states need a peer (and the channel): skipped with --no-radio
+            # radio: the laptop connects and drains
+            srv = socket.socket()
+            srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            srv.bind(("0.0.0.0", a.radio_port))
+            srv.listen(1)
+            print("radio: waiting for the laptop", flush=True)
+            c, _ = srv.accept()
+            c.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            chunk = os.urandom(87000)
+            for mbps in (2, 5, 10, 0):
+                def send(stop, mbps=mbps):
+                    sent, t0 = 0, time.time()
+                    while time.time() < stop:
+                        c.sendall(chunk)
+                        sent += len(chunk)
+                        if mbps:
+                            time.sleep(max(0.0, t0 + sent * 8 / (mbps * 1e6) - time.time()))
+                    return {"mbit_s": sent * 8 / 1e6 / max(1e-6, time.time() - t0)}
+                state(f"radio_tx_{mbps or 'max'}mbps", send)
+            c.close()
+            srv.close()
         heat_model, heat_res = "yolov8s", 640
     else:
         for name, m, res in (("n320", "yolov8n", 320), ("s320", "yolov8s", 320), ("s480", "yolov8s", 480),
@@ -221,43 +224,44 @@ def main():
                 state(f"infer_{name}_fp16", lambda stop, w=infer(m, res): back_to_back(stop, w))
         w = infer("yolov8s", 640)
         state("serve_s640_15fps", lambda stop: paced(stop, 15, w))
-        srv = socket.socket()
-        srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        srv.bind(("0.0.0.0", a.radio_port))
-        srv.listen(1)
-        print("radio: waiting for the laptop", flush=True)
-        c, _ = srv.accept()
+        if not a.no_radio:           # radio states need a peer (and the channel): skipped with --no-radio
+            srv = socket.socket()
+            srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            srv.bind(("0.0.0.0", a.radio_port))
+            srv.listen(1)
+            print("radio: waiting for the laptop", flush=True)
+            c, _ = srv.accept()
 
-        def recv(stop):
-            got, t0 = 0, time.time()
-            c.settimeout(1.0)
-            while time.time() < stop:
-                try:
-                    d = c.recv(1 << 16)
-                except socket.timeout:
-                    continue
-                if not d:
-                    break
-                got += len(d)
-            return {"mbit_s": got * 8 / 1e6 / max(1e-6, time.time() - t0)}
-        state("radio_rx_max", recv)
-        c.close()
-        print("radio: waiting for the laptop (transmit test)", flush=True)
-        c, _ = srv.accept()
-        c.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        chunk = os.urandom(87000)
-        for mbps in (5, 0):
-            def send(stop, mbps=mbps):
-                sent, t0 = 0, time.time()
+            def recv(stop):
+                got, t0 = 0, time.time()
+                c.settimeout(1.0)
                 while time.time() < stop:
-                    c.sendall(chunk)
-                    sent += len(chunk)
-                    if mbps:
-                        time.sleep(max(0.0, t0 + sent * 8 / (mbps * 1e6) - time.time()))
-                return {"mbit_s": sent * 8 / 1e6 / max(1e-6, time.time() - t0)}
-            state(f"radio_tx_{mbps or 'max'}mbps", send)
-        c.close()
-        srv.close()
+                    try:
+                        d = c.recv(1 << 16)
+                    except socket.timeout:
+                        continue
+                    if not d:
+                        break
+                    got += len(d)
+                return {"mbit_s": got * 8 / 1e6 / max(1e-6, time.time() - t0)}
+            state("radio_rx_max", recv)
+            c.close()
+            print("radio: waiting for the laptop (transmit test)", flush=True)
+            c, _ = srv.accept()
+            c.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            chunk = os.urandom(87000)
+            for mbps in (5, 0):
+                def send(stop, mbps=mbps):
+                    sent, t0 = 0, time.time()
+                    while time.time() < stop:
+                        c.sendall(chunk)
+                        sent += len(chunk)
+                        if mbps:
+                            time.sleep(max(0.0, t0 + sent * 8 / (mbps * 1e6) - time.time()))
+                    return {"mbit_s": sent * 8 / 1e6 / max(1e-6, time.time() - t0)}
+                state(f"radio_tx_{mbps or 'max'}mbps", send)
+            c.close()
+            srv.close()
         heat_model, heat_res = ("yolov8m" if os.path.exists(os.path.join(HERE, "yolov8m.pt")) else "yolov8s"), 640
     # thermal: heat up under sustained inference, then cool down; 1 Hz log
     w = infer(heat_model, heat_res)
