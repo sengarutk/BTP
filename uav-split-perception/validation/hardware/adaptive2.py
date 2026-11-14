@@ -696,13 +696,19 @@ def main():
                 if recent:
                     pbar = sum(recent) / len(recent)
                     if a.energy_aware and a.budget_rule and th and tp == tp:   # room-following budget
+                        # a = T + tau dT/dt - c P, with dT/dt AND P over the same last 30 s. Hardware adaptation of the
+                        # replay's rule (15 Nov 2026, from a board smoke test before any T8 run): with the 1-s power the
+                        # Pi's onboard bursts (2-6 W) swung a_inst by ~45 C and the first estimate was 108 C, pinning the
+                        # budget at its floor. The estimate also starts 60 s into the run and is kept in 15-55 C.
                         old = None
                         for x in reversed(energy["log"]):
                             if now - x[0] >= 30.0 and x[2] == x[2]:
                                 old = x
                                 break
-                        if old is not None:
-                            a_inst = tp + tau_th * (tp - old[2]) / max(1e-6, now - old[0]) - th["c_per_w"] * pbar
+                        p30 = [x[1] for x in energy["log"] if now - x[0] <= 30.0 and x[1] == x[1]]
+                        if old is not None and p30 and now - energy["t0w"] >= 60.0:
+                            a_inst = tp + tau_th * (tp - old[2]) / max(1e-6, now - old[0]) - th["c_per_w"] * (sum(p30) / len(p30))
+                            a_inst = min(55.0, max(15.0, a_inst))
                             ah = energy.get("a_hat")
                             energy["a_hat"] = a_inst if ah is None else ah + (a_inst - ah) / a.budget_smooth_s
                             tgt = a.budget_target_c if a.budget_target_c > 0 else th["intercept_c"] + th["c_per_w"] * 2.8

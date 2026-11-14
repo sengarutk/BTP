@@ -21,9 +21,12 @@ import numpy as np
 from mesh_summary import score
 from report_rescore import HW, perm_p, tci
 
-ORDER = ["v41", "v41e", "v41e12", "heat", "heate", "noprice", "fixlap", "aoithr", "hier"]
+ORDER = ["v41", "v41e", "v41e12", "heat", "heate", "noprice", "fixlap", "aoithr", "hier",
+         "accumo", "leaf", "freshonly", "v41b36"]      # the last four: the board session of 14-15 Nov 2026
 PAIRS = [(m, "v41") for m in ORDER[1:]] + [("heate", "heat")]
-CAMPAIGNS = {"short": "vid_campaign_mesh2", "long": "vid_campaign_mesh2_long", "mesh3": "vid_campaign_mesh3"}
+CAMPAIGNS = {"short": "vid_campaign_mesh2", "long": "vid_campaign_mesh2_long", "mesh3": "vid_campaign_mesh3",
+             "mesh4": "vid_campaign_mesh4", "energy_nov": "vid_campaign_energy_nov",
+             "relaynoise_nov": "vid_campaign_relaynoise_nov"}  # 14-15 Nov 2026: planner, energy test, noisy relay
 KEYS = ["sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300",
         "deadline_met_fps", "lat_median_ms", "pi_w", "pi_temp_c", "pi_throttled", "jetson_w"]
 
@@ -31,7 +34,8 @@ KEYS = ["sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_pe
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--long", action="store_true")
-    ap.add_argument("--campaign", choices=list(CAMPAIGNS), help="short (default), long or mesh3; overrides --long")
+    ap.add_argument("--campaign", choices=list(CAMPAIGNS), help="short (default), long, mesh3, mesh4, energy_nov or "
+                    "relaynoise_nov; overrides --long")
     ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
     name = CAMPAIGNS[a.campaign] if a.campaign else ("vid_campaign_mesh2_long" if a.long else "vid_campaign_mesh2")
