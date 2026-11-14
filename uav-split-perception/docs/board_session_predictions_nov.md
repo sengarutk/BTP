@@ -113,6 +113,29 @@ not hold is reported as such in the papers.
 - **P2.3 partly held.** freshonly 4.66 / 4.76 / 4.59 / 4.83 W (predicted about 4.2); second-half mean 83.3 / 81.9 /
   79.2 / 81.2 °C (above 80 °C in 3 of 4); throttled 7 / 2 / 0 / 2 % of the time (firmware flag), not a "sizeable
   share" (the unpriced reference had 13 %); v41 never throttled (0 % in all 4 runs; peaks 67.8-72.2 °C).
-- **P2.4** pending the sAP scoring.
+- **P2.4 held.** sAP with forecaster: v41 0.1922, freshonly 0.1880 (−0.0041 ± 0.0063, 0 of 4 pairs ahead), v41b36
+  0.1837 (−0.0085 ± 0.0177, 0 of 4 ahead); all within 0.01, and v41 was ahead in every pair (`vid_campaign_energy_nov_summary.json`).
 - Run 4 (`static_good__freshonly__r2`) was lost when the laptop shut down on a critical battery at 22:35 (archived
   with the reason in `_superseded/vid_campaign_energy_nov_wsl_down/`) and re-run at 23:07.
+
+### Results: planner campaign (`vid_campaign_mesh4/`, 18 runs, 14 Nov 2026; `vid_campaign_mesh4_summary.json`)
+
+- **P1.1 held.** accumo − v41 (sAP with forecaster): mesh_mission −0.0042 ± 0.0188, multihop +0.0093 ± 0.1224,
+  static_good −0.0020 ± 0.0073; every |Δ| < 0.01 and none significant (p ≥ 0.5; Holm not needed).
+- **P1.2 held.** The replay's small lead does not appear: accumo ahead in 1 of 6 pairs (+0.0011 overall), leaf in 3 of 6
+  (+0.0008 overall, p 0.81).
+- Observation (not predicted): accumo and leaf drew 2.14-2.54 W against v41's 2.81 W at the same sAP; v41 sits at its
+  budget, the other two below it. Two low-availability multihop runs (0.914, 0.848) are kept as measured.
+
+### Results: noisy relay (`vid_campaign_relaynoise_nov/`, 12 runs, 15 Nov 2026; `vid_campaign_relaynoise_nov_summary.json`)
+
+sAP with forecaster (2 % / 5 % loss): hier 0.1177 / 0.0814, v41 0.0996 / 0.0842, fixed laptop 0.0436 / 0.0243;
+noise-free multihop (24 Oct): hier 0.1506, v41 0.1373, fixed laptop 0.0672.
+- **P3.1 partly held.** At 2 %: hier ≥ v41 > fixed laptop. At 5 %: v41 slightly above hier (+0.0028, 1 of 2 pairs, within
+  noise), both far above fixed laptop. Overall hier − v41 +0.0076 ± 0.0216 (3 of 4 pairs ahead).
+- **P3.2 did not hold as written.** Share of delivered results within 300 ms: fixed laptop 12.7 / 17.8 % at 2 % loss (not
+  below its noise-free 12.5 %) and 2.1 / 0.9 % at 5 %; hier 98.0 / 98.0 % (2 %) and 94.7 / 94.7 % (5 %); v41 91.8 / 93.5 %
+  (2 %) and 90.3 / 92.8 % (5 %), below the predicted 95 %.
+- **P3.3 partly held.** Every strategy loses against noise-free multihop, more at 5 % than at 2 %. But the adaptive
+  strategies lose more in absolute terms (v41 −0.038 / −0.053, hier −0.033 / −0.069) than fixed laptop (−0.024 / −0.043),
+  which had little left to lose; that part of the prediction failed.
