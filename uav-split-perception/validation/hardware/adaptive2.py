@@ -328,15 +328,16 @@ def main():
                          "40 ms against Nano1's 56 ms, while YOLOv8s is equally fast on both (plan D1/T6); off = jetson2 "
                          "offers the jetson path's variants only")
     ap.add_argument("--budget-rule", action="store_true",
-                    help="room-following budget (paper 2 P2-6; replay.py budget_rule, ported 14 Nov 2026): the room's "
-                         "offset a is estimated online by inverting the controller's first-order thermal model, "
-                         "a_inst = T + tau dT/dt - c_per_w P (dT/dt over 30 s), smoothed over --budget-smooth-s, and the "
-                         "power budget becomes (target - a) / c_per_w within [--budget-lo-w, --budget-hi-w]; target = "
-                         "the controller fit at 2.8 W unless --budget-target-c. Needs --energy-aware")
+                    help="room-following budget (paper 2 P2-6; 15 Nov 2026): the room-and-board offset a is estimated "
+                         "online as T - T_m, T_m the controller's first-order thermal model driven by the measured "
+                         "power (an observer; the replay's derivative form failed on the board), smoothed over "
+                         "--budget-smooth-s, and the power budget becomes (target - a) / c_per_w within "
+                         "[--budget-lo-w, --budget-hi-w]; target = the controller fit at 2.8 W unless --budget-target-c. "
+                         "Needs --energy-aware")
     ap.add_argument("--budget-target-c", type=float, default=-1.0)
     ap.add_argument("--budget-lo-w", type=float, default=2.2)
     ap.add_argument("--budget-hi-w", type=float, default=4.5)
-    ap.add_argument("--budget-smooth-s", type=float, default=120.0)
+    ap.add_argument("--budget-smooth-s", type=float, default=30.0, help="smoothing of the offset estimate (s)")
     ap.add_argument("--contention-ms", type=float, default=0.0,
                     help="contention-aware latency (brief 19.8, L7): an offload dispatched while onboard inference runs "
                          "is predicted this much later (the Pi's CPU is shared); 0 = as every run before 14 Nov 2026")
@@ -696,24 +697,24 @@ def main():
                 if recent:
                     pbar = sum(recent) / len(recent)
                     if a.energy_aware and a.budget_rule and th and tp == tp:   # room-following budget
-                        # a = T + tau dT/dt - c P, with dT/dt AND P over the same last 30 s. Hardware adaptation of the
-                        # replay's rule (15 Nov 2026, from a board smoke test before any T8 run): with the 1-s power the
-                        # Pi's onboard bursts (2-6 W) swung a_inst by ~45 C and the first estimate was 108 C, pinning the
-                        # budget at its floor. The estimate also starts 60 s into the run and is kept in 15-55 C.
-                        old = None
-                        for x in reversed(energy["log"]):
-                            if now - x[0] >= 30.0 and x[2] == x[2]:
-                                old = x
-                                break
-                        p30 = [x[1] for x in energy["log"] if now - x[0] <= 30.0 and x[1] == x[1]]
-                        if old is not None and p30 and now - energy["t0w"] >= 60.0:
-                            a_inst = tp + tau_th * (tp - old[2]) / max(1e-6, now - old[0]) - th["c_per_w"] * (sum(p30) / len(p30))
-                            a_inst = min(55.0, max(15.0, a_inst))
-                            ah = energy.get("a_hat")
-                            energy["a_hat"] = a_inst if ah is None else ah + (a_inst - ah) / a.budget_smooth_s
-                            tgt = a.budget_target_c if a.budget_target_c > 0 else th["intercept_c"] + th["c_per_w"] * 2.8
-                            a.power_budget = min(a.budget_hi_w, max(a.budget_lo_w, (tgt - energy["a_hat"]) / th["c_per_w"]))
-                            energy.setdefault("budget_log", []).append((now, a.power_budget, energy["a_hat"]))
+                        # Observer (15 Nov 2026, from two board smoke tests before any T8 run): the controller's own
+                        # first-order model driven by the measured 1-s power, T_m' = (c P - T_m) / tau, gives the
+                        # board's heating above the room; the room-and-board offset is a = T - T_m, smoothed over
+                        # --budget-smooth-s. No derivative: the replay's a = T + tau dT/dt - c P amplified sensor noise
+                        # and the Pi's fast die response (~20 s) by tau = 149 s (first estimate 108 C, then pinned at
+                        # its clip). T_m starts at T - intercept, so the budget starts at the fit's 2.8 W and the
+                        # estimate converges with the board's time constant.
+                        if energy.get("tm") is None:
+                            energy["tm"], energy["tm_t"] = tp - th["intercept_c"], now
+                        dt_ = now - energy["tm_t"]
+                        energy["tm"] += (th["c_per_w"] * pbar - energy["tm"]) * (1.0 - math.exp(-dt_ / tau_th))
+                        energy["tm_t"] = now
+                        a_inst = tp - energy["tm"]
+                        ah = energy.get("a_hat")
+                        energy["a_hat"] = a_inst if ah is None else ah + (a_inst - ah) * min(1.0, dt_ / a.budget_smooth_s)
+                        tgt = a.budget_target_c if a.budget_target_c > 0 else th["intercept_c"] + th["c_per_w"] * 2.8
+                        a.power_budget = min(a.budget_hi_w, max(a.budget_lo_w, (tgt - energy["a_hat"]) / th["c_per_w"]))
+                        energy.setdefault("budget_log", []).append((now, a.power_budget, energy["a_hat"]))
                     if a.energy_aware:                 # camera drone: dual ascent on the power budget
                         if a.mu_fixed >= 0:
                             mu = a.mu_fixed            # LEAF-style baseline: fixed weight
