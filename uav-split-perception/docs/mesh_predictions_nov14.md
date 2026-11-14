@@ -60,6 +60,29 @@ wins 25.2 at 30, +14 %).
   the upper bound; with two paths the radio idles less), median latency not more than 5 ms higher, and the
   encode-ahead sends are at least 5 % of all sends.
 
+## T6 / D1. Two sense drones, one or two edge drones (`tools/campaign_two_nov.sh`)
+
+pi-relayyy and pi-receiver run v4.1 at the same time; v41j1 = laptop + Nano1 (both cameras share Nano1's GPU, one
+worker each), v41j2 = laptop + Nano1 + Nano2 (Nano2 also offers YOLOv8m). static_good and mesh_mission × 3 reps.
+References: one camera, v4.1, static_good today: 26.3 on-time results/s (`vid_campaign_mesh4`). The overload model on
+one shared channel, Jetson paths only (`overload_multi/summary.json`): 2 Pis on 1 Jetson 26.3 in total, on 2 Jetsons
+38.4, the channel's limit about 45 (4 Pis, 2 Jetsons: 45.1). Profiles (14 Nov): YOLOv8s equally fast on both Nanos
+(29.1 / 27.6 ms), YOLOv8m 56.4 against 40.3 ms. Here the laptop is already a second server, so Nano2 adds less
+than in the model.
+
+- **T6.1** v41j1, static_good: the two cameras together deliver 30-46 on-time results per second, each camera less
+  than its single-camera 26.3 (they share the channel and Nano1).
+- **T6.2** v41j2 against v41j1, static_good: the total changes by −5 % to +20 % (the shared channel, not the servers,
+  binds); per-camera sAP (forecaster) differs by less than 0.01.
+- **T6.3** mesh_mission (Nano1's link slowed to 2 Mbit/s in `edge_link_slow`; the laptop link cut in
+  `camera_out_of_range`, where v41j1's two cameras both depend on Nano1): in `edge_link_slow` v41j2 sends a larger
+  share of its frames to Nano2 than in `good`; in `camera_out_of_range` v41j2 delivers more on-time results per second
+  (both cameras together) than v41j1 in every pair; over the whole mission v41j2's mean sAP (forecaster) is at least
+  v41j1's for each camera (mean of 3 pairs).
+- **T6.4** No overload-to-heat chain with two cameras: in static_good each Pi runs onboard on less than 5 % of its
+  frames and its mean temperature stays below 75 °C, in both strategies.
+- **T6.5** With `--jetson2-m`, a non-zero share of Nano2's frames use YOLOv8m when its link is good.
+
 ## After the runs
 
 One line per prediction: held / did not hold, the measured value and the result file.

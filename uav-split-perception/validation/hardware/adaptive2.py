@@ -107,8 +107,9 @@ PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, 
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 PRIOR_REMOTE_MS["relay"] = dict(PRIOR_REMOTE_MS["laptop"])        # the laptop computes; the extra hop is in the RTT
-PRIOR_REMOTE_MS["jetson2"] = dict(PRIOR_REMOTE_MS["jetson"])      # Nano2: Nano1's priors until its own are measured;
-                                                                  # the live estimate (remote_est) replaces them
+PRIOR_REMOTE_MS["jetson2"] = {"yolov8s": 32.0, "yolov8m": 43.0}  # Nano2 (energy_profile_nano2_20261114.json: s640
+# 27.6 ms as Nano1's 29.1, m640 40.3 ms against Nano1's 56.4; Nano1's prior/profile ratio 1.06 applied); the live
+# estimate (remote_est) replaces them
 
 
 def write_json_atomic(obj, path):
@@ -322,6 +323,10 @@ def main():
     ap.add_argument("--guard-hard-c", type=float, default=-1.0,
                     help="hard thermal guard (paper 2, Theorem 3): at or above this measured temperature no onboard "
                          "inference starts (its value is set to 0, as replay.py's guard_hard_c); -1 = off")
+    ap.add_argument("--jetson2-m", action="store_true",
+                    help="the jetson2 path (Nano2) also offers YOLOv8m (m640q90/q50, as the laptop): Nano2 runs it in "
+                         "40 ms against Nano1's 56 ms, while YOLOv8s is equally fast on both (plan D1/T6); off = jetson2 "
+                         "offers the jetson path's variants only")
     ap.add_argument("--encode-ahead", action="store_true",
                     help="encode ahead (brief 19.13, plan S7): v4.1's decision at each camera tick is unchanged; when it "
                          "sends nothing because the paths it values are busy, the tick's frame is encoded at once for "
@@ -433,7 +438,7 @@ def main():
 
     def path_variants(p):
         v = dict(PATH_VARIANTS)
-        if p in ("laptop", "relay"):
+        if p in ("laptop", "relay") or (p == "jetson2" and a.jetson2_m):
             v.update(LAPTOP_EXTRA)
         return v
 
@@ -859,7 +864,8 @@ def main():
     mpc = {"sent": {}, "plan_ms": [], "tertile": []}          # accumo: what it sent, planner time per frame
     if pol == "accumo":
         import mpc_planner
-        mpc_opts = {"laptop": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "jetson": list(PATH_VARIANTS), "jetson2": list(PATH_VARIANTS),
+        mpc_opts = {"laptop": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "jetson": list(PATH_VARIANTS),
+                    "jetson2": list(dict(PATH_VARIANTS, **(LAPTOP_EXTRA if a.jetson2_m else {}))),
                     "relay": list(dict(PATH_VARIANTS, **LAPTOP_EXTRA)), "onboard": list(ONBOARD_VARIANTS)}
         if a.mpc_context:
             from decay_context import ego_speed
