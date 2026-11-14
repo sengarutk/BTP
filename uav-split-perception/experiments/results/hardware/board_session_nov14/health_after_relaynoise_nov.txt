@@ -1,0 +1,6 @@
+sender pi-sender 10.1.0.12/24 neigh=3 temp=57.6C throttled=0x0 disk=18G clock=-1496.00s (clock offset: logged, not corrected)
+camera pi-relayyy 10.1.0.11/24 neigh=3 temp=59.3C throttled=0xe0000 disk=16G clock=+0.76s
+camera2: UNREACHABLE (optional: not a failure)
+jetson nano 10.1.0.14/24 neigh=3 temp=49.7C mode=15W disk=17G clock=+46.57s (clock offset: logged, not corrected)
+jetson2 nano2 10.1.0.15/24 neigh=3 temp=50.2C mode=25W disk=93G clock=-0.04s
+HEALTH_OK
