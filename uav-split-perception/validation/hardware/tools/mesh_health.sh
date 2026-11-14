@@ -17,7 +17,8 @@ check() {   # check TARGET HOSTNAME IP PWVAR KIND
     echo neigh=\$($S /usr/sbin/batctl n -H 2>/dev/null | awk '{print \$2}' | sort -u | wc -l)
     echo nft=\$($S /usr/sbin/nft list tables 2>/dev/null | grep -c aegis_mh)
     echo tc=\$(/usr/sbin/tc qdisc show dev bat0 | grep -cvE 'noqueue|pfifo_fast|fq_codel|mq ')
-    echo procs=\$(pgrep -fc '[a]daptive2.py|[e]dge_node.py|[a]daptive.py worker|[l]inklog.sh|[h]eat_run|[t]hermal_steady.py' )
+    echo procs=\$(pgrep -fc '[a]daptive2.py|[e]dge_node.py|[a]daptive.py worker|[l]inklog.sh|[s]plit_live.py' )
+    echo prof=\$(pgrep -fc '[h]eat_run|[t]hermal_steady.py|[e]nergy_profile.py' )
     echo disk=\$(df -BG --output=avail ~ | tail -1 | tr -dc 0-9)G
     echo clock=\$(date +%s.%N)
     if [ $kind = pi ]; then
@@ -38,10 +39,17 @@ check() {   # check TARGET HOSTNAME IP PWVAR KIND
   [ "$nft" = 0 ] || bad="$bad leftover-nft"
   [ "$tc" = 0 ] || bad="$bad leftover-tc"
   [ "$procs" = 0 ] || bad="$bad stray-processes($procs)"
+  # profiling (thermal_steady, energy_profile, heat_run) loads and heats a board: not allowed on the campaign's camera
+  # and Jetson; on pi-receiver / Nano2 it is reported only (14 Nov: S3 profiles there during the campaigns)
+  local info=""
+  if [ "$prof" != 0 ]; then case $t in camera|jetson) bad="$bad profiling-running($prof)";; *) info=" profiling-running";; esac; fi
   [ ${disk%G} -ge 3 ] || bad="$bad low-disk($disk)"
-  [ $kind = pi ] && [ "$throttled" != 0x0 ] && bad="$bad throttled($throttled)"
+  # vcgencmd get_throttled: bit 0 / 16 = under-voltage now / since boot (a power-supply fault: FAIL); bits 1-3 and
+  # 17-19 = frequency capped / throttled / soft temperature limit now / since boot: heat, which some strategies are
+  # expected to cause (P2.3), so reported, not a failure (fixed 14 Nov 2026 before the first between-campaign check)
+  [ $kind = pi ] && [ $(( throttled & 0x10001 )) != 0 ] && bad="$bad under-voltage($throttled)"
   local warn=""; python3 -c "import sys; sys.exit(abs($off) > 2.0)" || warn=" (clock offset: logged, not corrected)"
-  echo "$t $host $ip neigh=$neigh temp=${temp}C ${throttled:+throttled=$throttled }${mode:+mode=$mode }disk=$disk clock=${off}s$warn${bad:+ FAIL:$bad}"
+  echo "$t $host $ip neigh=$neigh temp=${temp}C ${throttled:+throttled=$throttled }${mode:+mode=$mode }disk=$disk clock=${off}s$warn$info${bad:+ FAIL:$bad}"
   [ -n "$bad" ] && fail=1
 }
 check sender  pi-sender   $SENDER_IP PI3_PW  pi
