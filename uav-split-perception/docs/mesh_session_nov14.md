@@ -29,5 +29,11 @@ variables.
 | 20:52 | Multihop | first multihop run: route via Nano1 after 5 s (checked on the board during the run: 3 drop rules, next hop Nano1) | — |
 | 20:25-20:58 | Code (laptop) | S5 `--hold-max-c`, `--guard-hard-c`; S7 `--encode-ahead`; S4 `jetson2` path; T4/T7/T9 campaign scripts and predictions; T10 `split_live.py`, `t10_predict.py`; `energy_profile.py --no-radio` | defaults reproduce earlier runs; not on the camera Pi until the session ends |
 | 20:59 | S3 profiles | `energy_profile.py --no-radio` on pi-receiver and Nano2 (compute only, no radio traffic; the campaign's boards are pi-relayyy and Nano1) | both running |
+| 21:13 | S3 pi-receiver | `thermal_steady.py` (7 levels × 6 min) started on pi-receiver; `mesh_health.sh` changed to fail on under-voltage only (throttling reported) and to allow profiling on pi-receiver/Nano2 | — |
+| 21:43-21:56 | Observation | multihop rep 2: availability 0.914 (leaf) and 0.848 (accumo) against 0.984-0.992 in the other multihop runs; batman-adv route quality via Nano1 normal (185-198), laptop link without loss, Nano1 cool and idle. Kept as measured (no discard rule applies); likely channel variation | — |
+| 22:01 | B1 done | planner campaign: 18 of 18 runs | — |
+| 22:01 | Session stopped | health after_mesh4 failed (file later overwritten by the passing check; content here): **pi-receiver unreachable** (not answering ping from pi-sender; absent from batman-adv tables; last seen 21:46), every other board 3 neighbours, no leftover rule or process | the chain stopped as designed |
+| 22:02-22:10 | pi-receiver | still unreachable after 8 min (it had also rebooted once before this session: uptime 2 h 20 min at 19:08). Its thermal_steady run was in progress (sustained YOLO load); its throttle bits showed heat, not under-voltage. Needs a physical check (power, LEDs) | — |
+| 22:10 | Session resumed | `mesh_health.sh` HEALTH_OPTIONAL (an absent board is reported, not a failure); session restarted with HEALTH_OPTIONAL=camera2; B2/B3 do not use pi-receiver. Multihop blocking on pi-receiver is moot while it is off | HEALTH_OK; energy campaign started 22:10 |
 
 Open decisions (plan A7-A9): pi-sender's cable address and Nano2's mesh setup stay runtime-only (lost on reboot).

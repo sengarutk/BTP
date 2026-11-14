@@ -8,6 +8,10 @@
 # printed (save this output with the campaign) and never corrected on the boards. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); . $D/mesh_hosts.sh
 fail=0
+# HEALTH_OPTIONAL="camera2 ...": boards that may be absent (reported, not a failure; the others then expect one
+# neighbour fewer per absent board). Added 14 Nov 2026 22:10 when pi-receiver dropped off the mesh during the session.
+OPT=" ${HEALTH_OPTIONAL:-} "; NEXP=4
+for b in $HEALTH_OPTIONAL; do NEXP=$((NEXP-1)); done
 check() {   # check TARGET HOSTNAME IP PWVAR KIND
   local t=$1 hn=$2 ip=$3 pw=${!4} kind=$5 S out
   S="printf '%s\n' '$pw' | sudo -S -p ''"
@@ -29,13 +33,16 @@ check() {   # check TARGET HOSTNAME IP PWVAR KIND
       echo mode=\$($S nvpmodel -q 2>/dev/null | head -1 | sed 's/NV Power Mode: //')
     fi" 2>/dev/null)
   local now=$(date +%s.%N)
-  [ -z "$out" ] && { echo "$t: UNREACHABLE"; fail=1; return; }
+  if [ -z "$out" ]; then
+    if [[ "$OPT" == *" $t "* ]]; then echo "$t: UNREACHABLE (optional: not a failure)"; else echo "$t: UNREACHABLE"; fail=1; fi
+    return
+  fi
   eval "$(echo "$out" | grep -E '^[a-z]+=' | sed 's/^/local /')"
   local off=$(python3 -c "print(f'{($clock)-($now):+.2f}')" 2>/dev/null)
   local bad=""
   [ "$host" = "$hn" ] || bad="$bad host($host)"
   [ "$ip" = "$3/24" ] || bad="$bad ip($ip)"
-  [ "$neigh" -ge 4 ] || bad="$bad neighbours($neigh)"
+  [ "$neigh" -ge $NEXP ] || bad="$bad neighbours($neigh)"
   [ "$nft" = 0 ] || bad="$bad leftover-nft"
   [ "$tc" = 0 ] || bad="$bad leftover-tc"
   [ "$procs" = 0 ] || bad="$bad stray-processes($procs)"

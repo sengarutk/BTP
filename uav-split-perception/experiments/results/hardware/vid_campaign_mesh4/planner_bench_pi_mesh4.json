@@ -1,0 +1,21 @@
+{
+ "host": "pi-relayyy",
+ "machine": "aarch64",
+ "python": "3.13.5",
+ "numpy": "2.5.2",
+ "threads": "1",
+ "horizon": 30,
+ "price": false,
+ "n": 2950,
+ "ms_median": 1.650609017815441,
+ "ms_p95": 2.2868716943776235,
+ "ms_p99": 2.3761958818067797,
+ "ms_max": 2.4077749985735863,
+ "frame_budget_ms": 33.333333333333336,
+ "chosen": {
+  "none": 1044,
+  "laptop": 961,
+  "jetson": 969,
+  "onboard": 26
+ }
+}
