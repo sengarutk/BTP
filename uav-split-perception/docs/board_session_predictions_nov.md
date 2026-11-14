@@ -99,3 +99,20 @@ Recorded before the first run; the predictions above are unchanged. Full log: `d
 
 Add one line per prediction: held / did not hold, the measured value, and the result file. A prediction that did
 not hold is reported as such in the papers.
+
+### Results: energy test (`vid_campaign_energy_nov/`, 12 runs, 14-15 Nov 2026, pi-relayyy)
+
+- **P2.1 held.** v41 2.87 / 2.80 / 2.81 / 2.80 W (limit 2.94); v41b36 3.58 / 3.59 / 3.59 / 3.57 W (limit 3.74).
+  The update-by-update check (`paper2/theory_check.py`) is to be run on these runs.
+- **P2.2 did not hold.** Second-half mean temperature: v41 63.3 / 63.8 / 61.4 / 60.9 °C against 69.7-71.6 °C from
+  34.43 + 12.73 P (second-half power); v41b36 73.3 / 72.1 / 71.8 / 68.7 °C against 80.2-80.4 °C. Every run is 7-11 °C
+  below, outside ±3 °C. Between the two budgets the measured rise (~9 °C) is close to the fit's (~10 °C): the
+  intercept, not the slope, differs. The fit is the original Pi's (Oct, Wi-Fi testbed, daytime); this is
+  pi-relayyy at night (22:10-00:15). pi-receiver's own levels (14 Nov) were also ~8-10 °C below the fit. So the
+  proposition needs a per-board (and room) intercept; as stated with the fixed fit, it failed.
+- **P2.3 partly held.** freshonly 4.66 / 4.76 / 4.59 / 4.83 W (predicted about 4.2); second-half mean 83.3 / 81.9 /
+  79.2 / 81.2 °C (above 80 °C in 3 of 4); throttled 7 / 2 / 0 / 2 % of the time (firmware flag), not a "sizeable
+  share" (the unpriced reference had 13 %); v41 never throttled (0 % in all 4 runs; peaks 67.8-72.2 °C).
+- **P2.4** pending the sAP scoring.
+- Run 4 (`static_good__freshonly__r2`) was lost when the laptop shut down on a critical battery at 22:35 (archived
+  with the reason in `_superseded/vid_campaign_energy_nov_wsl_down/`) and re-run at 23:07.
