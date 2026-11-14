@@ -7,7 +7,8 @@
 #   wsl.exe -d Ubuntu --exec bash -c 'export PI2_PW=... PI3_PW=... NANO_PW=... N2_PW=...; exec tools/session_nov14.sh'
 # Logs: experiments/results/hardware/board_session_nov14/. Passwords: env only.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-LOG=$H/board_session_nov14; mkdir -p $LOG
+# CAMPAIGNS (default: the 14 Nov session) and SESSION (log folder name) choose another list of campaign_<name>.sh
+LOG=$H/${SESSION:-board_session_nov14}; mkdir -p $LOG
 PINGLOG=$H/vid_campaign_mesh2_laptop_ping.txt
 say() { echo "$(TZ=Asia/Kolkata date '+%d %b %H:%M:%S') $*" >> $LOG/session.log; }
 infra() {   # tunnel, keep-awake ping (laptop Ethernet energy saving), 1-s ping log; each started only if not running
@@ -25,7 +26,7 @@ health() {
 say "session start (pid $$)"
 infra || { say SESSION_STOPPED; exit 1; }
 health start
-for c in mesh4 energy_nov relaynoise_nov; do
+for c in ${CAMPAIGNS:-mesh4 energy_nov relaynoise_nov}; do
   infra
   say "campaign $c start"
   if [ $c = mesh4 ]; then REPS=2 $D/campaign_mesh4.sh >> $LOG/campaign_$c.log 2>&1; else $D/campaign_$c.sh >> $LOG/campaign_$c.log 2>&1; fi
