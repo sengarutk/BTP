@@ -128,3 +128,16 @@ budget +0.0008 in the lab.
 ## After the runs
 
 One line per prediction: held / did not hold, the measured value and the result file.
+
+### Results: T7 (`vid_campaign_fps_nov/`, 12 runs, 15 Nov 2026 02:43-03:50 IST)
+
+On-time results per second (3 reps): 15 frames/s 14.9 / 15.0 / 14.9; 30 frames/s 24.2 / 26.3 / 26.4 (mean 25.6); 60 frames/s
+30.8 / 31.0 / 31.1 (mean 31.0); encode ahead at 30 frames/s 26.7 / 29.1 / 29.1 (mean 28.3). Median latency (median of the
+phase medians): 53-55 / 48-53 / 60-64 / 53-59 ms. Ticks run: 99.9 / 99.8 / 96.8-97.6 / 99.8 %.
+- **T7.1 held.** 14.9-15.0 results/s; latency within 10 ms of 30 frames/s.
+- **T7.2 did not hold.** 60 frames/s gives +20.8 % on-time results (not within ±5 %), latency +11 ms (just over the 10 ms
+  allowed), and the camera loop ran 97 % of the 60-per-second ticks (predicted < 90 %). At 30 frames/s v4.1 leaves the
+  radio idle while it waits for the next tick; a faster camera shortens that wait. The 19.13 model's assumption that
+  30 frames/s already saturates the paths is wrong on these boards.
+- **T7.3 mostly held.** Encode ahead +10.4 % (within 0-14 %), 17-20 % of sends encoded ahead (≥ 5 %), but latency
+  +5-6 ms, just over the 5 ms predicted.
