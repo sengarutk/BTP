@@ -83,6 +83,22 @@ than in the model.
   frames and its mean temperature stays below 75 °C, in both strategies.
 - **T6.5** With `--jetson2-m`, a non-zero share of Nano2's frames use YOLOv8m when its link is good.
 
+## S6 / E3-E4. Many camera streams on one Jetson: v4.1's rule against pull one ahead (`tools/campaign_pull_nov.sh`)
+
+Light JPEG streams (640 q90, 30 frames/s) from pi-relayyy and Nano2 to Nano1 (YOLOv8s FP16), 1-8 streams, 60 s,
+2 reps. Model (`overload_handling/summary.json`, mesh_jetson, one shared radio), total on-time results per second
+and median latency: v4.1 22.1 / 26.3 / 26.3 / 19.7 / 1.6 at 1 / 2 / 4 / 6 / 8 streams (p50 74 → 363 ms); pull one
+ahead 25.5-25.6 at every count (p50 98-101 ms).
+
+- **S6.1** v4.1's rule: the total stays within 20 % of its 2-stream value up to 4 streams, then falls; at 8 streams it
+  is below half of the 2-stream value, and its median latency rises with the count (at 8 streams above 250 ms).
+- **S6.2** Pull one ahead: the total at 6 and 8 streams is within 20 % of its 2-stream value, and its median latency
+  stays below 200 ms at every count.
+- **S6.3** At 8 streams pull one ahead delivers at least twice v4.1's on-time results per second.
+- **S6.4** With 1-2 streams the two differ by less than 25 % (the model: pull ahead at 1 stream, v4.1 at 2).
+- Two radios (Pi and Nano2) instead of the model's one shared queue, so the collapse may come at a different count;
+  the direction (v4.1 collapses, pull does not) is the claim tested.
+
 ## After the runs
 
 One line per prediction: held / did not hold, the measured value and the result file.
