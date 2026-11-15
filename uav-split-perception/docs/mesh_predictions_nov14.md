@@ -461,7 +461,7 @@ on-time rate = on-time results/s × mAP/base, measured | model:
   radio, a 4 KB code still gets through on time where a 20 KB JPEG does not. For paper 1: the codes' advantage depends
   on how the link is slow (rate-limited vs shared), which the model's t_tx = 8b/R does not distinguish.
 
-## Phase 4: the final controller, 5 reps against v4.1 and the published-style schedulers (written 16 Nov 2026 01:25 IST, before any of these runs)
+## Phase 4: the final controller, 5 reps against v4.1 and the published-style schedulers (written 16 Nov 2026 01:07 IST, commit 91648847, before any of these runs)
 
 Final controller `v41final` = v4.1 (energy price, budget 2.8 W fixed; freshness price, target 0.95) + capped hold and
 hard guard at 76.5 °C (G) + YOLO11n-480 onboard, timed at start-up and priced at the fail-safe energy + contention 10 ms;
