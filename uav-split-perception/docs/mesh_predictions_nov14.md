@@ -343,6 +343,27 @@ per-camera sAP static_good v41j1 0.1813 / v41j2 0.1436; mesh_mission 0.1667 / 0.
 - **C.2** v41j2cap is within 0.015 of T6's v41j1 in each scenario (the cap recovers most of the loss).
 - **C.3** v41j2cap's Jetson results' median latency is at least 25 ms below v41j2's.
 
+### Results: channel-aware follow-up (`vid_campaign_two_cap/`, 8 runs × 2 cameras on mains, 15 Nov 2026 22:16-23:43 IST)
+
+Runs 22:29-22:35 on laptop battery archived (`_superseded/vid_campaign_two_cap_laptop_on_battery/`) and re-run.
+Per-camera means of 4 (2 reps × 2 cameras); paired differences cap − no cap over the same rep and camera.
+
+| scenario | v41j2 sAP+fc | v41j2cap sAP+fc | Δ paired | deadline-met/s Δ | Jetson1 / Jetson2 / laptop median latency (no cap → cap) |
+|---|---|---|---|---|---|
+| static_good | 0.1348 | 0.1409 | +0.0061 ± 0.0266 (2/4) | −1.96 ± 2.92 (0/4) | 155 → 139, 160 → 141, 74 → 60 ms |
+| mesh_mission | 0.1262 | 0.1244 | −0.0018 ± 0.0499 (1/4) | −3.06 ± 3.07 (0/4) | 151 → 141, 158 → 153, 78 → 64 ms |
+| all | 0.1305 | 0.1326 | +0.0022 ± 0.0198 (3/8) | −2.51 ± 1.54 (0/8) | — |
+
+- **C.1 did not hold.** The cap moved sAP by +0.006 and −0.002, not +0.02.
+- **C.2 did not hold.** With the cap sAP is 0.141 / 0.124, still ~0.04 below T6's one-Jetson v41j1 (0.181 / 0.167).
+  (v41j2 tonight 0.135 / 0.126 against T6's 0.144 / 0.129: T6's loss reproduces.)
+- **C.3 did not hold.** Every path got faster (Jetsons 5-19 ms, laptop 14 ms), less than 25 ms; the cap delivered fewer
+  results (−2.5 deadline-met/s, 8/8 pairs).
+- Reading: limiting each camera to 2 paths in flight still leaves up to 4 in flight on the one channel across the two
+  cameras; a per-camera rule cannot see the other camera's traffic. With S6 (a pull-one-ahead coordinator holds the
+  channel at capacity with 8 streams) this points to swarm-wide coordination, not a per-camera cap, as the fix; not
+  tested here. The T6 finding stands: on one shared channel a second edge drone costs accuracy.
+
 ## T10: break-even goodput of paper 1's learned split codes, predict then measure (written 15 Nov 2026 21:25 IST, before any sweep run)
 
 Pair: camera pi-receiver (Pi 5, CPU, 4 threads) → server Nano2 (25 W, `jetson_clocks`, CUDA fp16), over the mesh.

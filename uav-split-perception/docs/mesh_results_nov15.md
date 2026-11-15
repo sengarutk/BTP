@@ -33,7 +33,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | T8R.4 | YOLO11n-480 replaces s320 onboard | held (192 ms; 78-83 % of onboard frames, 96-100 % in the blackout) | onboard accuracy upgrade works; 95th-pct AoI on the mission 367 → 500 ms |
 | G.1 | guard 76.5 °C keeps the peak ≤ 80.0 °C | **did not hold** (79.3 / 80.4 / 79.8 °C; ≥ 80 °C 0.02 % in r2; never throttled) | δ_fast is 3.9 °C, not 3.5: Theorem 3 (b) with the measured δ_fast, no fixed-guard claim |
 | G.2 | the 76.5 °C guard costs no accuracy | held (sAP 0.1228 vs 0.1263; freshness 0.841 vs 0.854) | the lower guard is free |
-| C.1-C.3 | channel-aware cap | 2 of 8 runs; paused at the charger drop, resumes after T10 | — |
+| C.1-C.3 | a per-camera cap on paths in flight recovers T6's loss | **none held** (sAP +0.002; −2.5 deadline-met/s; paths 5-19 ms faster) | per-camera rule cannot see the other camera; swarm-wide coordination (as S6's pull) is the open fix |
 
 ## Fixes found and made during the sessions (all before the runs that test them)
 
@@ -44,7 +44,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 - Room-following budget: per-board fit, steady-only updates (the replay's derivative estimator failed on the Pi).
 - Onboard variants timed at start-up (one cold inference had locked YOLO11n-480 out).
 - Theorem 3: fast-mode term; guard 76.5 °C under test.
-- Channel-aware sending (`--max-paths-busy`), from T6.
+- Channel-aware sending (`--max-paths-busy`), from T6 (tested: did not help).
 
 ## Runs lost and re-run
 
