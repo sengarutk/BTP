@@ -1,0 +1,2 @@
+{"label": "pull1_s1_r1", "mode": "pull1", "stream": 0, "sent": 1325, "results": 1325, "on_time_fps": 22.083333333333332, "lat_p50_ms": 100.8138656616211, "lat_p90_ms": 117.02656745910645, "aoi_mean_ms": 124.01284443450504, "server_ms_median": 29.81734275817871}
+{"label": "pull1_s1_r1", "mode": "pull1", "streams": 1, "fps": 30.0, "on_time_total": 22.083333333333332, "on_time_worst": 22.083333333333332, "aoi_mean_ms": 124.01284443450504}

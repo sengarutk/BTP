@@ -265,3 +265,20 @@ pi-relayyy and pi-receiver at the same time. Total on-time results per second (b
 - **T8R.4 (YOLO11n at 480 px, added 15 Nov 2026 19:02 before any re-test run)** v4.1+ now offers YOLO11n at 480 px onboard
   (mAP 0.1666 on DET val, against s320's 0.1367; expected ~175-200 ms on the Pi, inside the deadline) instead of 640 px.
   In the mission's total blackout at least half of v4.1+'s onboard frames use it.
+
+### Results: S6 fair re-run (`pull_nov_fair/`, 20 runs of 60 s on pi-relayyy + pi-receiver, 15 Nov 2026 18:40-19:16 IST)
+
+Total on-time results per second (rep 1 / rep 2) and median latency: v4.1 rule 1 stream 13.7 / 13.3 (98-100 ms), 2 21.4 /
+20.4 (127-129), 4 21.1 / 18.1 (232-234), 6 11.1 / 10.1 (311-321), 8 3.7 / 2.9 (391-411); pull one ahead 22.1 / 22.1 (100),
+21.0 / 20.9 (114-115), 22.0 / 21.5 (115-117), 21.6 / 21.5 (112-114), 19.9 / 21.6 (114-120).
+- **S6.1 held** on two camera Pis: v4.1's rule is flat to 4 streams, then collapses (2.9-3.7 at 8 streams, below half of
+  its 2-stream value), with latency above 250 ms.
+- **S6.2 held.** Pull one ahead stays at 20-22 on-time results per second at every count, latency 112-120 ms.
+- **S6.3 held** on two camera Pis: at 8 streams pull delivers 5.8-7.4× v4.1's on-time results (19.9-21.6 against 2.9-3.7);
+  with Nano2 as the second host (first runs) it was 1.44×.
+- **S6.4 partly held.** Within 25 % at 2 streams; at 1 stream pull is 63 % ahead (22.1 against 13.5).
+- **S6.5 did not hold.** With one stream per Pi pull is fair (worst/mean 0.98-1.0), but with 2-4 streams per Pi each
+  pi-relayyy stream got 1.2-1.6 on-time results/s against 3.7-9.2 for each pi-receiver stream (worst/mean 0.28-0.48), on
+  the server's clock: not a clock effect. pi-relayyy's streams hold their grants longer before sending; the cause (the
+  tool's multi-stream loop on that board or its radio timing) is not found. No fairness claim is made for pull one ahead.
+- **S6.6 held.** Under v4.1's rule the two Pis' streams got similar shares (worst/mean 0.46-1.0, no host pattern).

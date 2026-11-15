@@ -1,0 +1,2 @@
+{"label": "v41_s2_r2", "mode": "v41", "stream": 0, "sent": 644, "results": 644, "on_time_fps": 10.716666666666667, "lat_p50_ms": 121.4447021484375, "lat_p90_ms": 164.15739059448242, "aoi_mean_ms": 176.56879897469312, "server_ms_median": 29.883384704589844}
+{"label": "v41_s2_r2", "mode": "v41", "streams": 1, "fps": 30.0, "on_time_total": 10.716666666666667, "on_time_worst": 10.716666666666667, "aoi_mean_ms": 176.56879897469312}
