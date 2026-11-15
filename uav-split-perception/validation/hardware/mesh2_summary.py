@@ -22,12 +22,14 @@ from mesh_summary import score
 from report_rescore import HW, perm_p, tci
 
 ORDER = ["v41", "v41e", "v41e12", "heat", "heate", "noprice", "fixlap", "aoithr", "hier",
-         "accumo", "leaf", "freshonly", "v41b36"]      # the last four: the board session of 14-15 Nov 2026
+         "accumo", "leaf", "freshonly", "v41b36",      # the board session of 14-15 Nov 2026
+         "v41cap", "v41guard", "v41plus"]               # 15 Nov: T4, T8
 PAIRS = [(m, "v41") for m in ORDER[1:]] + [("heate", "heat")]
 CAMPAIGNS = {"short": "vid_campaign_mesh2", "long": "vid_campaign_mesh2_long", "mesh3": "vid_campaign_mesh3",
              "mesh4": "vid_campaign_mesh4", "energy_nov": "vid_campaign_energy_nov",
              "relaynoise_nov": "vid_campaign_relaynoise_nov",  # 14-15 Nov 2026: planner, energy test, noisy relay
-             "topology_nov": "vid_campaign_topology_nov", "fps_nov": "vid_campaign_fps_nov"}  # 15 Nov: T9, T7
+             "topology_nov": "vid_campaign_topology_nov", "fps_nov": "vid_campaign_fps_nov",  # 15 Nov: T9, T7
+             "heat_nov": "vid_campaign_heat_nov", "plus_nov": "vid_campaign_plus_nov"}  # 15 Nov: T4, T8
 KEYS = ["sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300",
         "deadline_met_fps", "lat_median_ms", "pi_w", "pi_temp_c", "pi_throttled", "jetson_w"]
 

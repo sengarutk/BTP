@@ -1,0 +1,15 @@
+mission__v41guard__r1 54.9
+mission__v41cap__r1 54.9
+mission__v41__r1 54.9
+mission__v41__r2 54.3
+mission__v41guard__r2 54.9
+mission__v41cap__r2 54.9
+mission__v41__r3 54.9
+mission__v41cap__r3 54.9
+mission__v41guard__r3 54.9
+mission__v41__r4 54.9
+mission__v41cap__r4 54.9
+mission__v41guard__r4 54.9
+mission__v41cap__r5 54.9
+mission__v41guard__r5 54.9
+mission__v41__r5 54.3

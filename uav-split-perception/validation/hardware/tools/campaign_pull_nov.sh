@@ -8,7 +8,9 @@
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware; . $D/mesh_hosts.sh
 R=$H/${PULL_OUT:-pull_nov}; mkdir -p $R   # PULL_OUT=pull_nov_fair: the re-run after the 15 Nov clock fix
 PY_PI=/home/sengar/btp_env/bin/python; PY_N2=/home/nano2/hwbench_env/bin/python; PY_N1=/home/nano/hwbench_env/bin/python
-for t in camera jetson jetson2; do $D/mesh_ssh.sh $t "test -f ~/hwbench/pull_bench.py" 2>/dev/null || { echo "pull_bench.py missing on $t: push first"; exit 1; }; done
+# HOST2=camera2 (15 Nov, the swarm re-run): the second half of the streams on pi-receiver instead of Nano2
+HOST2=${HOST2:-jetson2}; [ $HOST2 = camera2 ] && PY_H2=$PY_PI || PY_H2=$PY_N2
+for t in camera jetson $HOST2; do $D/mesh_ssh.sh $t "test -f ~/hwbench/pull_bench.py" 2>/dev/null || { echo "pull_bench.py missing on $t: push first"; exit 1; }; done
 stop_server() { $D/mesh_ssh.sh jetson "P=\$(pgrep -f '[p]ull_bench.py serve'); [ -n \"\$P\" ] && kill \$P; true" 2>/dev/null; }
 for rep in 1 2; do
   for c in $(python3 -c "import random;p=[f'{m}:{n}' for m in ('v41','pull1') for n in (1,2,4,6,8)];random.Random($rep*911).shuffle(p);print(' '.join(p))"); do
@@ -18,11 +20,11 @@ for rep in 1 2; do
     $D/mesh_ssh.sh jetson "cd ~/hwbench; nohup $PY_N1 -W ignore pull_bench.py serve --mode $m --listen 48200 > results/pull_serve_$L.log 2>&1 < /dev/null &" 2>/dev/null
     for i in $(seq 30); do sleep 2; $D/mesh_ssh.sh jetson "grep -q serving ~/hwbench/results/pull_serve_$L.log" 2>/dev/null && break; done
     n1=$(( (n + 1) / 2 )); n2=$(( n / 2 ))
-    echo "=== $(date +%T) $L: $n1 streams on pi-relayyy, $n2 on Nano2"
+    echo "=== $(date +%T) $L: $n1 streams on pi-relayyy, $n2 on $HOST2"
     $D/mesh_ssh.sh camera "cd ~/hwbench; $PY_PI -W ignore pull_bench.py run --to $JET_IP:48200 --mode $m --streams $n1 --seconds 60 --label $L" > $R/${L}_camera.jsonl 2>/dev/null &
     P1=$!
     if [ $n2 -gt 0 ]; then
-      $D/mesh_ssh.sh jetson2 "cd ~/hwbench; $PY_N2 -W ignore pull_bench.py run --to $JET_IP:48200 --mode $m --streams $n2 --seconds 60 --label $L" > $R/${L}_nano2.jsonl 2>/dev/null &
+      $D/mesh_ssh.sh $HOST2 "cd ~/hwbench; $PY_H2 -W ignore pull_bench.py run --to $JET_IP:48200 --mode $m --streams $n2 --seconds 60 --label $L" > $R/${L}_$HOST2.jsonl 2>/dev/null &
       P2=$!; wait $P2
     fi
     wait $P1

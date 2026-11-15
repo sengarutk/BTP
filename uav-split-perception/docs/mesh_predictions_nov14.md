@@ -191,3 +191,27 @@ throttled 1.4-2.7 %, peak 85.3-85.9 °C; mission v41plus 3.04-3.14 W, 72.7-73.2 
   a single 40-s total blackout (the hold); v4.1+ with the hold capped at 78 °C was hot 0-0.8 % and never throttled. This
   reproduces the hold's heat on a mesh board (pi-relayyy), not only on the original Pi, and shows the capped hold
   removing it.
+
+### Results: T4 (`vid_campaign_heat_nov/`, 15 runs of 24 minutes, 15 Nov 2026 08:12-15:08 IST; every run started at 54.3-54.9 °C)
+
+Per strategy (5 runs): v41 3.12-3.30 W, at or above 80 °C 16.4 / 16.7 / 16.9 / 17.3 / 26.2 % (mean 18.7 %), throttled
+3.2-10.9 %, peak 85.9-87.0 °C; v41cap 3.04-3.08 W, 0.2-0.8 % (mean 0.5 %), never throttled, peak 80.4-81.5 °C; v41guard
+3.04-3.08 W, 0.2-0.8 % (mean 0.4 %), never throttled, peak 80.4-81.5 °C. Availability 0.81-0.86 for all three.
+- **T4.1 held.** v4.1's hold heats the board: 18.7 % of the time at or above 80 °C (predicted 5-25 %), peaks 85.9-87.0 °C
+  (predicted 83-86; one run 1 °C above). This reproduces the original Pi's Wi-Fi result (19-27 %) on a mesh board.
+- **T4.2 partly held.** Capped hold: mean 0.5 % (below 2 % and far below a third of v4.1's), never throttled; but the peak
+  passed 80.5 °C in 4 of 5 runs (80.95-81.5 °C).
+- **T4.3 did not hold.** With the hard guard the peak was 80.4-81.5 °C in every run (bound 79.93 °C) and the board was at
+  or above 80 °C for 0.2-0.8 % of the time. The guard stops new onboard inference at 78 °C, but the board still rises
+  1-2 °C above the bound under offload-only load: the floor term of Theorem 3 (b) (from the original Pi) is too low for
+  this board, or the Pi's fast die response overshoots the first-order model.
+- **T4.4** freshness held (availability equal across the three); sAP pending the scoring. **T4.5** pending
+  `paper2/theory_check.py`.
+
+## S6 fair re-run with two camera Pis (`HOST2=camera2 PULL_OUT=pull_nov_fair tools/campaign_pull_nov.sh`; written 15 Nov 2026 15:25, before any of these runs)
+
+The same 20 runs as S6, with the streams split between pi-relayyy and pi-receiver (two camera Pis, as a swarm would
+have) and pull one ahead's turn order on the server's clock (commit cf8edb50). S6.1-S6.4 apply unchanged, plus:
+- **S6.5 (fairness)** With pull one ahead at 4, 6 and 8 streams, every stream gets at least half of the mean on-time rate
+  per stream (the first runs, with mixed board clocks, gave pi-relayyy's streams about a fifth of the mean).
+- **S6.6** Under v4.1's rule the two Pis' streams get similar shares (within a factor of 2), as in the first runs.

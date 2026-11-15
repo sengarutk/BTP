@@ -13,6 +13,9 @@ PINGLOG=$H/vid_campaign_mesh2_laptop_ping.txt
 say() { echo "$(TZ=Asia/Kolkata date '+%d %b %H:%M:%S') $*" >> $LOG/session.log; }
 infra() {   # tunnel, keep-awake ping (laptop Ethernet energy saving), 1-s ping log; each started only if not running
   pgrep -f "[m]esh_tunnel.sh" > /dev/null || { setsid nohup $D/mesh_tunnel.sh >> $LOG/tunnel.log 2>&1 < /dev/null & say "tunnel started"; }
+  if [[ " ${CAMPAIGNS:-} " == *" two_nov "* ]]; then    # T6: camera2's laptop path (localhost:48111)
+    pgrep -f "[m]esh_tunnel2.sh" > /dev/null || { setsid nohup $D/mesh_tunnel2.sh >> $LOG/tunnel2.log 2>&1 < /dev/null & say "tunnel2 started"; }
+  fi
   pgrep -f "[p]ing -i 0.05 10.230.3.10" > /dev/null || { setsid nohup ping -i 0.05 10.230.3.10 > /dev/null 2>&1 < /dev/null & say "keep-awake ping started"; }
   pgrep -f "[p]ing -D -O -i 1 10.230.3.10" > /dev/null || { setsid nohup ping -D -O -i 1 10.230.3.10 >> $PINGLOG 2>&1 < /dev/null & say "ping log started"; }
   for i in $(seq 30); do [ $(ss -ltn | grep -cE '127.0.0.1:4810[14]') = 2 ] && return 0; sleep 2; done
