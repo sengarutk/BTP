@@ -7,15 +7,15 @@
 # First: push_code_mesh.sh with TARGETS="camera camera2 jetson jetson2", mesh_tunnel.sh AND mesh_tunnel2.sh, the
 # keep-awake ping. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-R=$H/vid_campaign_two_nov; PS=40; mkdir -p $R
+R=$H/${TWO_OUT:-vid_campaign_two_nov}; PS=40; mkdir -p $R   # TWO_OUT / TWO_STRATS / TWO_REPS: the channel-aware follow-up
 for c in camera camera2; do
-  $D/mesh_ssh.sh $c "grep -q jetson2-m ~/hwbench/adaptive2.py" 2>/dev/null || { echo "$c has an adaptive2.py without --jetson2-m: push first"; exit 1; }
+  $D/mesh_ssh.sh $c "grep -q max-paths-busy ~/hwbench/adaptive2.py" 2>/dev/null || { echo "$c has an adaptive2.py without --jetson2-m: push first"; exit 1; }
 done
 jobs() {
-  for rep in 1 2 3; do
+  for rep in $(seq ${TWO_REPS:-3}); do
     python3 -c "
 import random
-c=[(s,m) for s in ('static_good','mesh_mission') for m in ('v41j1','v41j2')]
+c=[(s,m) for s in ('static_good','mesh_mission') for m in '${TWO_STRATS:-v41j1 v41j2}'.split()]
 random.Random($rep*5003).shuffle(c)
 print('\n'.join(f'$rep {s} {m}' for s,m in c))"
   done

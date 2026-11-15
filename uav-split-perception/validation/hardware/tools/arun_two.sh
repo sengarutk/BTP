@@ -7,6 +7,7 @@
 #   STRATEGY
 #     v41j1   v4.1 (energy + freshness price), paths laptop + Nano1 (the single-edge system of every earlier campaign)
 #     v41j2   v4.1, paths laptop + Nano1 + Nano2, Nano2 also offering YOLOv8m (--jetson2-m)
+#     v41j2cap  v41j2 with at most 2 of the camera's paths in flight at once (--max-paths-busy 2; channel-aware)
 #   Every frame's destination is in each camera's run JSON (frames[].server); both Jetsons' power (--report-power) and
 #   both Pis' power, temperature and clock are logged. Results: a2_<LABEL>_c1.* (camera), a2_<LABEL>_c2.* (camera2).
 # Needs mesh_tunnel.sh and mesh_tunnel2.sh running and the adaptive2.py of 14 Nov or later on both cameras.
@@ -20,6 +21,7 @@ X="--decay staleness_decay_forecast_v2.json --objective stream --energy-aware --
 case $ST in
   v41j1) PATHS=laptop,jetson; J2=0;;
   v41j2) PATHS=laptop,jetson,jetson2; J2=1; X="$X --jetson2-m";;
+  v41j2cap) PATHS=laptop,jetson,jetson2; J2=1; X="$X --jetson2-m --max-paths-busy 2";;   # channel-aware (15 Nov, from T6)
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 CAMS="camera:$CAM_IP:48101:c1 camera2:$CAM2_IP:48111:c2"

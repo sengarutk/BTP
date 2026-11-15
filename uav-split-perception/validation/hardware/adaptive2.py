@@ -344,6 +344,10 @@ def main():
     ap.add_argument("--contention-ms", type=float, default=0.0,
                     help="contention-aware latency (brief 19.8, L7): an offload dispatched while onboard inference runs "
                          "is predicted this much later (the Pi's CPU is shared); 0 = as every run before 14 Nov 2026")
+    ap.add_argument("--max-paths-busy", type=int, default=0,
+                    help="channel-aware sending (15 Nov 2026, from T6): at most this many of this camera's offload paths "
+                         "in flight at once (all paths share one radio channel; T6 showed that keeping laptop + Nano1 + "
+                         "Nano2 busy together made every result later and cost 21 %% sAP). 0 = no cap, as before")
     ap.add_argument("--encode-ahead", action="store_true",
                     help="encode ahead (brief 19.13, plan S7): v4.1's decision at each camera tick is unchanged; when it "
                          "sends nothing because the paths it values are busy, the tick's frame is encoded at once for "
@@ -1113,6 +1117,10 @@ def main():
                     cand = [a_single_cur] if idle(a_single_cur) else []
                 else:
                     cand = [s for s in props if idle(s)]
+                if a.max_paths_busy > 0:       # channel-aware: no new offload while K paths of this camera are in flight
+                    n_busy = sum(1 for p_ in paths if paths[p_].sock is not None and not idle(p_))
+                    if n_busy >= a.max_paths_busy:
+                        cand = [s for s in cand if s == "onboard"]
                 cand = [s for s in cand if props[s][1] > 0]
                 if cand:
                     srv = max(cand, key=lambda k: props[k][1])

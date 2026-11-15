@@ -282,3 +282,12 @@ Total on-time results per second (rep 1 / rep 2) and median latency: v4.1 rule 1
   the server's clock: not a clock effect. pi-relayyy's streams hold their grants longer before sending; the cause (the
   tool's multi-stream loop on that board or its radio timing) is not found. No fairness claim is made for pull one ahead.
 - **S6.6 held.** Under v4.1's rule the two Pis' streams got similar shares (worst/mean 0.46-1.0, no host pattern).
+
+## T6 follow-up: channel-aware sending (`TWO_OUT=vid_campaign_two_cap TWO_STRATS="v41j2 v41j2cap" TWO_REPS=2 tools/campaign_two_nov.sh`; written 15 Nov 2026 19:25, before any of these runs)
+
+`--max-paths-busy 2`: a camera starts no new offload while 2 of its paths are in flight (laptop, Nano1, Nano2 all
+available; Nano2 also YOLOv8m). Interleaved with plain v41j2, 2 reps × static_good and mesh_mission. References (T6):
+per-camera sAP static_good v41j1 0.1813 / v41j2 0.1436; mesh_mission 0.1667 / 0.1294.
+- **C.1** v41j2cap's per-camera sAP (forecaster) is at least 0.02 above v41j2's in each scenario (mean of the pairs).
+- **C.2** v41j2cap is within 0.015 of T6's v41j1 in each scenario (the cap recovers most of the loss).
+- **C.3** v41j2cap's Jetson results' median latency is at least 25 ms below v41j2's.
