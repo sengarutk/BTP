@@ -2,7 +2,7 @@
 
 Scope: what was published since the Novelty Brief's check (12 Nov 2026), and the prior work for the claims added by
 the 14-16 Nov mesh sessions (T6/C swarm sharing one channel, S6 pull-one-ahead, G guard overshoot, T10 break-even
-on a Pi 5). Web search, 16 Nov 2026 01:15-01:30 IST. Each entry: what it is, and what it changes for our claims.
+on a Pi 5). Web search, 16 Nov 2026 01:10-01:13 IST. Each entry: what it is, and what it changes for our claims.
 
 ## New closest work
 
