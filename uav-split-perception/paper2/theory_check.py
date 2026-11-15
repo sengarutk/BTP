@@ -58,13 +58,22 @@ def runs():
 
 
 def theorem1(f, me):
-    B = float(me["power_budget_w"])
     L = np.array([(x[1], x[2], x[3] if len(x) > 3 and x[3] is not None else np.nan) for x in me["mu_log"]], float)
     mu, P, T = L[:, 0], L[:, 1], L[:, 2]
+    # room-following budget (v4.1+, 15 Nov 2026): the budget is set on the same tick as each price update and logged
+    # one-to-one (budget_log); the identity then holds with B_t per step and the bound uses the mean budget
+    bl = me.get("budget_log") or []
+    if bl:
+        if len(bl) != len(mu) or any(abs(b[0] - m[0]) > 0.02 for b, m in zip(bl, me["mu_log"])):
+            raise ValueError(f"{f}: budget_log does not line up with mu_log")
+        Bt = np.array([b[1] for b in bl], float)
+    else:
+        Bt = np.full(len(mu), float(me["power_budget_w"]))
+    B = float(Bt.mean())
     if len(mu) > 5 and np.ptp(mu) == 0 and mu[0] > 0:       # a fixed weight, not the dual ascent
         return None
     prev = np.concatenate([[0.0], mu[:-1]])                 # the price starts at 0
-    s = mu - prev - ETA * (P - B)
+    s = mu - prev - ETA * (P - Bt)
     e = 1.5e-4                                              # mu is logged to 4 decimals
     zero = mu <= e                                          # clip at zero (s >= 0)
     capped = np.abs(mu - MU_MAX) <= e                       # at the cap: clipped or held there (the log cannot tell)
@@ -90,7 +99,8 @@ def theorem1(f, me):
             "held_or_capped_share": float((held | capped).mean()), "capped_steps": int(capped.sum()),
             "unexplained_neg_steps": int(unexpl_neg.sum()), "unexplained_pos_steps": int(unexpl_pos.sum()),
             "mu_max_reached": float(mu.max()),
-            "G_w": float(np.abs(P - B).max()), "msq_w2": float(((P - B) ** 2).mean()),
+            "G_w": float(np.abs(P - Bt).max()), "msq_w2": float(((P - Bt) ** 2).mean()),
+            "budget_varies": bool(bl),
             "holds": bool(avg <= bound + ROUND_W and not unexpl_neg.any())}
 
 

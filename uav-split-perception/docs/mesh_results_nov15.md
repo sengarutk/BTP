@@ -7,7 +7,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | Test | Claim it bears on | Verdict | What it means for the papers |
 |---|---|---|---|
 | P1.1-P1.2 planner | a greedy priced choice ties a 30-frame planner | held, held | the replay's small planner lead is within its bias; v4.1 needs no planner |
-| P2.1 | Theorem 1 (power ≤ budget + stated terms) | held (2.80-2.87 W; 3.57-3.59 W) | theorem confirmed on new runs; update-by-update check (T4.5) pending |
+| P2.1 | Theorem 1 (power ≤ budget + stated terms) | held (2.80-2.87 W; 3.57-3.59 W) | theorem confirmed on new runs; update by update in T4.5 |
 | P2.2 | budget → mean temperature (one fit) | **did not hold** (7-11 °C below the fit) | needs a per-board intercept (pi-relayyy 29.72 + 11.66 P) |
 | P2.3 | the price prevents throttling | partly (v4.1 never throttles; unpriced 4.7 W, 80-83 °C, throttles 0-7 %) | mechanism shown; "sizeable throttling" overstated for this board |
 | P2.4 | the energy price costs no accuracy | held (−0.004 / −0.009) | headline kept |
@@ -23,6 +23,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | T4.2 | the capped hold removes it | partly (0.5 %, never throttled; peaks 80.4-81.5) | paper 2's main heat result |
 | T4.3 | Theorem 3 (b): guard peak ≤ 79.9 °C | **did not hold** | a fast thermal mode overshoots 1.6-3.5 °C; corrected bound guard + 3.5 °C holds on every run |
 | T4.4 | no accuracy cost | held (−0.0014 / −0.0017) | — |
+| T4.5 | Theorem 1 holds update by update | **held** (15/15 heat runs, 121/121 new runs, 0 unexplained steps) | theorem confirmed on every mesh run; avg power ≤ budget + 0.52 W, inside the bound |
 | T6.1, T6.4, T6.5 | two camera drones share the channel; no heat chain; Nano2 uses YOLOv8m | held | — |
 | T6.2 | a second edge drone helps | **did not hold** (−21 % sAP) | on one shared channel more paths in flight make every result later: channel awareness needed |
 | T6.3 | v41j2 moves frames to Nano2 when Nano1 degrades | partly | the shift happens, the overall loss remains |

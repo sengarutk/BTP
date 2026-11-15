@@ -208,8 +208,13 @@ Per strategy (5 runs): v41 3.12-3.30 W, at or above 80 °C 16.4 / 16.7 / 16.9 / 
   this board, or the Pi's fast die response overshoots the first-order model.
 - **T4.4 held.** sAP with forecaster: v41 0.1281, v41cap 0.1267 (−0.0014 ± 0.0051), v41guard 0.1263 (−0.0017 ± 0.0031),
   both within 0.005; freshness (share of time with a detection younger than 300 ms) 0.854 for all three
-  (`vid_campaign_heat_nov_summary.json`). **T4.5** pending
-  `paper2/theory_check.py`.
+  (`vid_campaign_heat_nov_summary.json`).
+- **T4.5 held** (`paper2/theory_check.py`, 15 Nov 2026 21:10): every logged price update of the 15 heat runs is one the
+  coded rule allows (0 unexplained steps); average power exceeds the budget by at most 0.515 W, always inside the bound
+  (budget + price term + held term; the hold held the price in up to 28 % of the updates). The same holds on all 121
+  runs of the 14-15 Nov mesh campaigns and all 497 recorded runs (110,076 updates, identity error ~1e-15 W). The check
+  now uses the per-step budget B_t where the room-following budget varies it (14 v4.1+ runs), so the bound is
+  stated with the run's mean budget.
 
 ## S6 fair re-run with two camera Pis (`HOST2=camera2 PULL_OUT=pull_nov_fair tools/campaign_pull_nov.sh`; written 15 Nov 2026 15:25, before any of these runs)
 
