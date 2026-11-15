@@ -39,7 +39,7 @@ charger during campaigns.
 | T2 | Energy price on/off (Theorem 1, Proposition, mechanism) | `campaign_energy_nov.sh` | running (4/12 at 23:15) |
 | T3 | Noisy relay | `campaign_relaynoise_nov.sh` | queued tonight |
 | T4 | Capped hold + guard, 24-min `mission` runs, pre-cool | `campaign_heat_nov.sh`; T4.1-T4.5 | ready (after push + smoke test); ~7 h |
-| T5 | Airflow (fan over the camera Pi) | to write | **needs a bench fan** |
+| ~~T5~~ | ~~Airflow (fan over the camera Pi)~~ | **removed 15 Nov (no fan available): stated as a limitation in paper 2 (heat results are for a board without forced airflow; propeller wash untested)** | — |
 | T6 | Two sense + one/two edge drones, frame destinations, temperatures | `arun_two.sh`, `campaign_two_nov.sh`; T6.1-T6.5 | ready; needs pi-receiver back; ~1.4 h |
 | T7 | Frame rate 15/30/60, encode ahead | `campaign_fps_nov.sh`; T7.1-T7.3 | ready; ~1.2 h |
 | T8 | v4.1+ (capped hold, room budget, contention-aware, YOLO11n) | to write | after T4/T7 |
@@ -58,5 +58,11 @@ charger during campaigns.
 1. Tonight: T2, T3 (running), then commit and score T1-T3.
 2. Next board slot: push the new code to all drones; smoke tests of S4, S5, S7; T7; T9; T6 (once pi-receiver is back);
    T4 overnight.
-3. T10 and T11; S6 and an emulated many-camera test; T8; T5 when a fan is available.
+3. T10 and T11; S6 and an emulated many-camera test; T8.
 4. After each block: held / did-not-hold lines, the checks, the Results Brief, Final Report, Novelty Brief and papers.
+
+## Removed (15 Nov 2026, the user's decision: no extra fan, no drone to fly)
+
+- **T5 airflow** and **G1 outdoor or tethered flight**: not possible with the equipment available. Both are stated as
+  limitations in paper 2: every heat result is for a fanless board in still air, and no test was flown, so propeller
+  wash, real distances and in-flight vibration are untested.
