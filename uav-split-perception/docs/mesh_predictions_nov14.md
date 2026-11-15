@@ -206,7 +206,9 @@ Per strategy (5 runs): v41 3.12-3.30 W, at or above 80 °C 16.4 / 16.7 / 16.9 / 
   or above 80 °C for 0.2-0.8 % of the time. The guard stops new onboard inference at 78 °C, but the board still rises
   1-2 °C above the bound under offload-only load: the floor term of Theorem 3 (b) (from the original Pi) is too low for
   this board, or the Pi's fast die response overshoots the first-order model.
-- **T4.4** freshness held (availability equal across the three); sAP pending the scoring. **T4.5** pending
+- **T4.4 held.** sAP with forecaster: v41 0.1281, v41cap 0.1267 (−0.0014 ± 0.0051), v41guard 0.1263 (−0.0017 ± 0.0031),
+  both within 0.005; freshness (share of time with a detection younger than 300 ms) 0.854 for all three
+  (`vid_campaign_heat_nov_summary.json`). **T4.5** pending
   `paper2/theory_check.py`.
 
 ## S6 fair re-run with two camera Pis (`HOST2=camera2 PULL_OUT=pull_nov_fair tools/campaign_pull_nov.sh`; written 15 Nov 2026 15:25, before any of these runs)
