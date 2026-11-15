@@ -243,3 +243,22 @@ largest measured): 81.5 °C with the 78 °C guard, which every T4 guard run meet
 hold cap and guard at 76.5 °C (= 80 − 3.5).
 - **G.1** Peak at most 80.0 °C in every one of the 3 runs; 0 % of the time at or above 80 °C.
 - **G.2** sAP (forecaster) within 0.01 of T4's v41guard (0.1263) and freshness within 3 points of its 0.854.
+
+### Results: T6 / D1 (`vid_campaign_two_nov/`, 12 valid runs × 2 cameras, 15 Nov 2026; `vid_campaign_two_nov_summary.json`)
+
+pi-relayyy and pi-receiver at the same time. Total on-time results per second (both cameras): static_good v41j1 38.7 /
+38.5 / 42.6, v41j2 34.5 / 35.5 / 36.3; mesh_mission v41j1 33.7 / 34.8 / 34.2, v41j2 33.5 / 34.1 / 34.4. sAP with forecaster
+(per camera): static_good v41j1 0.1813, v41j2 0.1436; mesh_mission v41j1 0.1667, v41j2 0.1294. Freshness 0.994-0.998
+(one Jetson) against 0.972-0.975 (two). Pi 2.82-2.92 W, 66-69 °C; onboard 1.4-2.5 % of frames.
+- **T6.1 held.** 38.5-42.6 in total with one Jetson, each camera 18.5-21.7 (below its single-camera 26.3).
+- **T6.2 did not hold.** Adding Nano2 lowered the total by 11 % (static_good) and each camera's sAP by 0.038 (−21 %). On
+  the one shared channel v4.1 keeps more paths busy at once (laptop, Nano1, Nano2 per camera): Jetson results' median
+  latency rose from 125 to 170-175 ms and the laptop path's from 54 to 76 ms. This is the overload model's prediction
+  (one shared channel: a second Jetson adds nothing; per-Pi load spreading backfires), now on two real camera drones and
+  two edge drones. v4.1 values each path on its own and does not see that its paths share the air.
+- **T6.3 partly held.** In `edge_link_slow` v41j2 sent about twice as many frames to Nano2 as to Nano1 (as predicted), and
+  in `camera_out_of_range` it split them evenly between the two Jetsons; but over the mission its sAP was 0.037 lower.
+- **T6.4 held.** Onboard on 1.4-2.5 % of frames; mean Pi temperature 66-69 °C in both strategies.
+- **T6.5 held.** Nano2 ran YOLOv8m on 831 and 858 of its frames (the two cameras, mission rep 1).
+- Three runs made while the laptop ran on battery were archived and re-run on mains
+  (`_superseded/vid_campaign_two_nov_laptop_on_battery/`).
