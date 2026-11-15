@@ -1,0 +1,559 @@
+{
+ "host": "pi-receiver",
+ "orig_cpufreq": {
+  "scaling_governor": "ondemand",
+  "scaling_min_freq": "1500000",
+  "scaling_max_freq": "2400000"
+ },
+ "state_s": 15.0,
+ "cool_c": 55.0,
+ "rows": [
+  {
+   "power_w": 1.7682570002993856,
+   "power_sd_w": 0.06859825774049763,
+   "temp_c": 46.85743243243243,
+   "temp_end_c": 46.85,
+   "clock_mhz": 1633.7837837837837,
+   "n": 74,
+   "pass_": 0,
+   "freq_mhz": "ondemand",
+   "state": "idle",
+   "temp_start_c": 46.85
+  },
+  {
+   "power_w": 1.746985317069586,
+   "power_sd_w": 0.11261618270666697,
+   "temp_c": 46.567567567567565,
+   "temp_end_c": 45.75,
+   "clock_mhz": 1500.0,
+   "n": 74,
+   "pass_": 1,
+   "freq_mhz": 1500,
+   "state": "idle",
+   "temp_start_c": 46.85
+  },
+  {
+   "power_w": 1.8275366370263137,
+   "power_sd_w": 0.23812852743476853,
+   "temp_c": 46.79345794392524,
+   "temp_end_c": 46.85,
+   "clock_mhz": 1500.0,
+   "n": 107,
+   "iterations": 450,
+   "pass_": 1,
+   "freq_mhz": 1500,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 45.75
+  },
+  {
+   "power_w": 4.054738422166149,
+   "power_sd_w": 1.5706982189306324,
+   "temp_c": 54.45913043478261,
+   "temp_end_c": 57.85,
+   "clock_mhz": 1500.0,
+   "n": 115,
+   "frames": 72,
+   "ms_per_frame": 206.5968895003607,
+   "pass_": 1,
+   "freq_mhz": 1500,
+   "state": "onboard_s320",
+   "temp_start_c": 45.75
+  },
+  {
+   "power_w": 4.351393595779913,
+   "power_sd_w": 1.7673519485355493,
+   "temp_c": 56.288559322033905,
+   "temp_end_c": 57.3,
+   "clock_mhz": 1500.0,
+   "n": 118,
+   "frames": 77,
+   "ms_per_frame": 194.8345260025235,
+   "pass_": 1,
+   "freq_mhz": 1500,
+   "state": "onboard_n480y11",
+   "temp_start_c": 50.7
+  },
+  {
+   "power_w": 1.8108640731334602,
+   "power_sd_w": 0.13399980353378446,
+   "temp_c": 52.09857142857143,
+   "temp_end_c": 50.15,
+   "clock_mhz": 1800.0,
+   "n": 70,
+   "pass_": 1,
+   "freq_mhz": 1800,
+   "state": "idle",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 1.8599923491065442,
+   "power_sd_w": 0.20598370852482742,
+   "temp_c": 50.51330275229358,
+   "temp_end_c": 51.25,
+   "clock_mhz": 1800.0,
+   "n": 109,
+   "iterations": 450,
+   "pass_": 1,
+   "freq_mhz": 1800,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 51.25
+  },
+  {
+   "power_w": 4.140421639239015,
+   "power_sd_w": 1.041715240226871,
+   "temp_c": 59.180341880341885,
+   "temp_end_c": 63.35,
+   "clock_mhz": 1800.0,
+   "n": 117,
+   "frames": 82,
+   "ms_per_frame": 182.2704080004769,
+   "pass_": 1,
+   "freq_mhz": 1800,
+   "state": "onboard_s320",
+   "temp_start_c": 49.6
+  },
+  {
+   "power_w": 3.9164934665875193,
+   "power_sd_w": 0.8975403115346706,
+   "temp_c": 60.345798319327734,
+   "temp_end_c": 63.35,
+   "clock_mhz": 1800.0,
+   "n": 119,
+   "frames": 87,
+   "ms_per_frame": 173.32808500214014,
+   "pass_": 1,
+   "freq_mhz": 1800,
+   "state": "onboard_n480y11",
+   "temp_start_c": 53.45
+  },
+  {
+   "power_w": 1.900014361777367,
+   "power_sd_w": 0.039153022318432415,
+   "temp_c": 55.82816901408451,
+   "temp_end_c": 54.55,
+   "clock_mhz": 2100.0,
+   "n": 71,
+   "pass_": 1,
+   "freq_mhz": 2100,
+   "state": "idle",
+   "temp_start_c": 57.3
+  },
+  {
+   "power_w": 1.986825350943192,
+   "power_sd_w": 0.25380794124999917,
+   "temp_c": 53.78807339449541,
+   "temp_end_c": 54.0,
+   "clock_mhz": 2100.0,
+   "n": 109,
+   "iterations": 450,
+   "pass_": 1,
+   "freq_mhz": 2100,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 4.956479056735214,
+   "power_sd_w": 1.3713668742911187,
+   "temp_c": 64.68305084745764,
+   "temp_end_c": 69.4,
+   "clock_mhz": 2100.0,
+   "n": 118,
+   "frames": 90,
+   "ms_per_frame": 166.28981849862612,
+   "pass_": 1,
+   "freq_mhz": 2100,
+   "state": "onboard_s320",
+   "temp_start_c": 54.0
+  },
+  {
+   "power_w": 4.481643619740561,
+   "power_sd_w": 1.0282026428691777,
+   "temp_c": 64.08025210084033,
+   "temp_end_c": 67.2,
+   "clock_mhz": 2100.0,
+   "n": 119,
+   "frames": 94,
+   "ms_per_frame": 160.36125149548752,
+   "pass_": 1,
+   "freq_mhz": 2100,
+   "state": "onboard_n480y11",
+   "temp_start_c": 53.45
+  },
+  {
+   "power_w": 2.0643995429901003,
+   "power_sd_w": 0.17215360456174647,
+   "temp_c": 58.927083333333336,
+   "temp_end_c": 56.75,
+   "clock_mhz": 2400.0,
+   "n": 72,
+   "pass_": 1,
+   "freq_mhz": 2400,
+   "state": "idle",
+   "temp_start_c": 62.8
+  },
+  {
+   "power_w": 2.094376100629146,
+   "power_sd_w": 0.2667040129668807,
+   "temp_c": 56.522935779816514,
+   "temp_end_c": 56.75,
+   "clock_mhz": 2400.0,
+   "n": 109,
+   "iterations": 450,
+   "pass_": 1,
+   "freq_mhz": 2400,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 56.75
+  },
+  {
+   "power_w": 5.938861604301214,
+   "power_sd_w": 1.737785233782162,
+   "temp_c": 68.60504201680672,
+   "temp_end_c": 73.25,
+   "clock_mhz": 2400.0,
+   "n": 119,
+   "frames": 97,
+   "ms_per_frame": 153.97696999571053,
+   "pass_": 1,
+   "freq_mhz": 2400,
+   "state": "onboard_s320",
+   "temp_start_c": 53.45
+  },
+  {
+   "power_w": 5.236769798863008,
+   "power_sd_w": 1.319047762720293,
+   "temp_c": 66.77375,
+   "temp_end_c": 71.05,
+   "clock_mhz": 2400.0,
+   "n": 120,
+   "frames": 100,
+   "ms_per_frame": 150.72871350275818,
+   "pass_": 1,
+   "freq_mhz": 2400,
+   "state": "onboard_n480y11",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 2.053465768516012,
+   "power_sd_w": 0.09802660887317596,
+   "temp_c": 60.449315068493156,
+   "temp_end_c": 57.3,
+   "clock_mhz": 2400.0,
+   "n": 73,
+   "pass_": 2,
+   "freq_mhz": 2400,
+   "state": "idle",
+   "temp_start_c": 63.9
+  },
+  {
+   "power_w": 2.11980189213943,
+   "power_sd_w": 0.2919690237463183,
+   "temp_c": 57.57252252252253,
+   "temp_end_c": 57.85,
+   "clock_mhz": 2400.0,
+   "n": 111,
+   "iterations": 450,
+   "pass_": 2,
+   "freq_mhz": 2400,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 58.95
+  },
+  {
+   "power_w": 5.775370511191542,
+   "power_sd_w": 1.680763677481771,
+   "temp_c": 70.15798319327732,
+   "temp_end_c": 75.45,
+   "clock_mhz": 2400.0,
+   "n": 119,
+   "frames": 97,
+   "ms_per_frame": 154.66984399972716,
+   "pass_": 2,
+   "freq_mhz": 2400,
+   "state": "onboard_s320",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 5.5067071474182,
+   "power_sd_w": 1.4308651431273183,
+   "temp_c": 67.76422413793104,
+   "temp_end_c": 73.25,
+   "clock_mhz": 2400.0,
+   "n": 116,
+   "frames": 100,
+   "ms_per_frame": 150.6841760019597,
+   "pass_": 2,
+   "freq_mhz": 2400,
+   "state": "onboard_n480y11",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 1.9631934237594928,
+   "power_sd_w": 0.040376721484365025,
+   "temp_c": 60.90211267605631,
+   "temp_end_c": 58.4,
+   "clock_mhz": 2100.0,
+   "n": 71,
+   "pass_": 2,
+   "freq_mhz": 2100,
+   "state": "idle",
+   "temp_start_c": 65.55
+  },
+  {
+   "power_w": 1.961448331486781,
+   "power_sd_w": 0.13543221912742573,
+   "temp_c": 57.476605504587155,
+   "temp_end_c": 57.3,
+   "clock_mhz": 2100.0,
+   "n": 109,
+   "iterations": 450,
+   "pass_": 2,
+   "freq_mhz": 2100,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 57.3
+  },
+  {
+   "power_w": 5.211304244848522,
+   "power_sd_w": 1.4067060028923348,
+   "temp_c": 67.03361344537815,
+   "temp_end_c": 71.6,
+   "clock_mhz": 2100.0,
+   "n": 119,
+   "frames": 90,
+   "ms_per_frame": 167.80382600336452,
+   "pass_": 2,
+   "freq_mhz": 2100,
+   "state": "onboard_s320",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 4.563591628376715,
+   "power_sd_w": 1.1664676312611704,
+   "temp_c": 64.76625,
+   "temp_end_c": 67.2,
+   "clock_mhz": 2100.0,
+   "n": 120,
+   "frames": 93,
+   "ms_per_frame": 160.97087600064697,
+   "pass_": 2,
+   "freq_mhz": 2100,
+   "state": "onboard_n480y11",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 1.861397512549016,
+   "power_sd_w": 0.03902402505968848,
+   "temp_c": 59.33500000000001,
+   "temp_end_c": 58.4,
+   "clock_mhz": 1800.0,
+   "n": 70,
+   "pass_": 2,
+   "freq_mhz": 1800,
+   "state": "idle",
+   "temp_start_c": 62.8
+  },
+  {
+   "power_w": 1.9400071991014418,
+   "power_sd_w": 0.24840503986233692,
+   "temp_c": 56.80601851851852,
+   "temp_end_c": 55.1,
+   "clock_mhz": 1800.0,
+   "n": 108,
+   "iterations": 450,
+   "pass_": 2,
+   "freq_mhz": 1800,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 56.75
+  },
+  {
+   "power_w": 4.19260628925921,
+   "power_sd_w": 0.998670449076578,
+   "temp_c": 64.34279661016949,
+   "temp_end_c": 67.2,
+   "clock_mhz": 1800.0,
+   "n": 118,
+   "frames": 82,
+   "ms_per_frame": 182.59415899956366,
+   "pass_": 2,
+   "freq_mhz": 1800,
+   "state": "onboard_s320",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 3.977025350002985,
+   "power_sd_w": 0.9030319842986414,
+   "temp_c": 62.68347457627118,
+   "temp_end_c": 65.55,
+   "clock_mhz": 1800.0,
+   "n": 118,
+   "frames": 87,
+   "ms_per_frame": 173.56627200206276,
+   "pass_": 2,
+   "freq_mhz": 1800,
+   "state": "onboard_n480y11",
+   "temp_start_c": 54.55
+  },
+  {
+   "power_w": 1.833983605618694,
+   "power_sd_w": 0.11959784953700689,
+   "temp_c": 58.23024691358025,
+   "temp_end_c": 57.3,
+   "clock_mhz": 1500.0,
+   "n": 81,
+   "pass_": 2,
+   "freq_mhz": 1500,
+   "state": "idle",
+   "temp_start_c": 60.6
+  },
+  {
+   "power_w": 1.890377781827957,
+   "power_sd_w": 0.35769763755766504,
+   "temp_c": 55.76,
+   "temp_end_c": 54.55,
+   "clock_mhz": 1500.0,
+   "n": 110,
+   "iterations": 450,
+   "pass_": 2,
+   "freq_mhz": 1500,
+   "state": "encode_640q90_30fps",
+   "temp_start_c": 56.2
+  },
+  {
+   "power_w": 4.656142753188194,
+   "power_sd_w": 2.1513780408403305,
+   "temp_c": 61.552100840336124,
+   "temp_end_c": 63.9,
+   "clock_mhz": 1500.0,
+   "n": 119,
+   "frames": 73,
+   "ms_per_frame": 207.0926230007899,
+   "pass_": 2,
+   "freq_mhz": 1500,
+   "state": "onboard_s320",
+   "temp_start_c": 52.9
+  },
+  {
+   "power_w": 4.514558327309806,
+   "power_sd_w": 2.159087600124728,
+   "temp_c": 61.31779661016948,
+   "temp_end_c": 63.35,
+   "clock_mhz": 1500.0,
+   "n": 118,
+   "frames": 77,
+   "ms_per_frame": 194.76754399511265,
+   "pass_": 2,
+   "freq_mhz": 1500,
+   "state": "onboard_n480y11",
+   "temp_start_c": 54.55
+  }
+ ],
+ "summary": {
+  "1500": {
+   "idle_w": 1.79048446134414,
+   "clock_mhz": 1500.0,
+   "encode_640q90_extra_w": 0.06847274808299542,
+   "s320": {
+    "ms": 206.8447562505753,
+    "ms_by_pass": [
+     206.5968895003607,
+     207.0926230007899
+    ],
+    "power_w": 4.355440587677171,
+    "j_per_inference": 0.5305477247447755,
+    "j_vs_default_idle": 0.535145358506647,
+    "temp_end_c": 60.875
+   },
+   "n480y11": {
+    "ms": 194.80103499881807,
+    "ms_by_pass": [
+     194.8345260025235,
+     194.76754399511265
+    ],
+    "power_w": 4.43297596154486,
+    "j_per_inference": 0.5147600792146797,
+    "j_vs_default_idle": 0.5190900116315937,
+    "temp_end_c": 60.325
+   }
+  },
+  "1800": {
+   "idle_w": 1.8361307928412383,
+   "clock_mhz": 1800.0,
+   "encode_640q90_extra_w": 0.06386898126275486,
+   "s320": {
+    "ms": 182.43228350002028,
+    "ms_by_pass": [
+     182.2704080004769,
+     182.59415899956366
+    ],
+    "power_w": 4.166513964249113,
+    "j_per_inference": 0.4251371233899577,
+    "j_vs_default_idle": 0.43751949435317455,
+    "temp_end_c": 65.275
+   },
+   "n480y11": {
+    "ms": 173.44717850210145,
+    "ms_by_pass": [
+     173.32808500214014,
+     173.56627200206276
+    ],
+    "power_w": 3.946759408295252,
+    "j_per_inference": 0.36608257821629553,
+    "j_vs_default_idle": 0.3778550960269169,
+    "temp_end_c": 64.45
+   }
+  },
+  "2100": {
+   "idle_w": 1.9316038927684298,
+   "clock_mhz": 2100.0,
+   "encode_640q90_extra_w": 0.04253294844655664,
+   "s320": {
+    "ms": 167.04682225099532,
+    "ms_by_pass": [
+     166.28981849862612,
+     167.80382600336452
+    ],
+    "power_w": 5.083891650791868,
+    "j_per_inference": 0.5265796527985298,
+    "j_vs_default_idle": 0.5538662321100587,
+    "temp_end_c": 70.5
+   },
+   "n480y11": {
+    "ms": 160.66606374806724,
+    "ms_by_pass": [
+     160.36125149548752,
+     160.97087600064697
+    ],
+    "power_w": 4.522617624058638,
+    "j_per_inference": 0.41628797732359013,
+    "j_vs_default_idle": 0.4425322795620703,
+    "temp_end_c": 67.2
+   }
+  },
+  "2400": {
+   "idle_w": 2.058932655753056,
+   "clock_mhz": 2400.0,
+   "encode_640q90_extra_w": 0.0481563406312322,
+   "s320": {
+    "ms": 154.32340699771885,
+    "ms_by_pass": [
+     153.97696999571053,
+     154.66984399972716
+    ],
+    "power_w": 5.857116057746378,
+    "j_per_inference": 0.5861486029977958,
+    "j_vs_default_idle": 0.6310066604787012,
+    "temp_end_c": 74.35
+   },
+   "n480y11": {
+    "ms": 150.70644475235895,
+    "ms_by_pass": [
+     150.72871350275818,
+     150.6841760019597
+    ],
+    "power_w": 5.371738473140605,
+    "j_per_inference": 0.49926118689341,
+    "j_vs_default_idle": 0.5430678815028942,
+    "temp_end_c": 72.15
+   }
+  }
+ },
+ "idle_ondemand_w": 1.7682570002993856
+}
