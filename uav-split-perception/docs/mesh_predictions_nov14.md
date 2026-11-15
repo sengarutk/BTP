@@ -174,3 +174,20 @@ Total on-time results per second (rep 1 / rep 2), v4.1 rule: 1 stream 13.2 / 14.
   `pull_bench.py`'s oldest-first turn compares the streams' capture times (each board's clock; Nano1 is +40 s, the Pi
   +0.4 s against the laptop) with the server's grant times, or the Pi answers grants slowly while encoding several
   streams in Python. To be checked when the Pi is idle, before any fairness claim; the totals are unaffected.
+
+### Results: T8 (`vid_campaign_plus_nov/`, 16 valid runs, 15 Nov 2026 06:25-08:12 IST)
+
+Per strategy (4 runs each): mission v41 3.29-3.39 W, second-half 75.4-76.1 °C, at or above 80 °C 13.9-15.2 % of the time,
+throttled 1.4-2.7 %, peak 85.3-85.9 °C; mission v41plus 3.04-3.14 W, 72.7-73.2 °C, 0-0.8 %, 0 %, 79.8-82.6 °C; random v41
+2.85-3.06 W, 64.0-68.1 °C, 0 %, 0 %; random v41plus 2.75-3.06 W, 65.1-68.8 °C, 0 %, 0 %.
+- **T8.1 did not hold.** The room-following budget ended at 2.66-2.90 W (not 3.1-3.7), and v4.1+ drew less power than v41
+  on the mission. The observer took the blackout heating for a warmer room: at high power the board heats faster than
+  the controller's linear fit (11.3 °C/W) predicts, so T − T_m rose (offset estimate 38-40 °C, not ~30).
+- **T8.2 did not hold.** YOLO11n ran on 0 of the 135-141 onboard frames of each total blackout. With the hold on, the
+  freshness price adds λ_F·p_on only to an onboard setting that meets the 300 ms deadline: s320 (~180 ms) does, YOLO11n
+  (~305 ms) misses it by ~5 ms.
+- **T8.3** pending the sAP scoring.
+- **T8.4 did not hold for v41, held for v4.1+.** Plain v4.1 was hot 14-15 % of each 6-minute mission and throttled, from
+  a single 40-s total blackout (the hold); v4.1+ with the hold capped at 78 °C was hot 0-0.8 % and never throttled. This
+  reproduces the hold's heat on a mesh board (pi-relayyy), not only on the original Pi, and shows the capped hold
+  removing it.
