@@ -367,3 +367,21 @@ Paper 1's model (`t10_predict.py`, `t10/t10_prediction.json`), U = f · p_on · 
 Sweep (after the channel-aware test, so the channel is otherwise quiet): `split_live.py send` from pi-receiver to
 Nano2, rates 0.5, 0.75, 1, 2, 4, 8 Mbit/s (htb on the destination port only) × jpeg_q20, jpeg_q35, k4_c4, k4_c8, k2_c8
 × 45 s, order shuffled, 1 repetition (2 at 0.75-2 Mbit/s, where the options are closest).
+
+### T10 tool checks before the sweep (15 Nov 2026 21:00-21:25 IST; smoke tests of 5-8 s, not results)
+
+Found and fixed in `split_live.py` before any sweep run, none changing the prediction above:
+1. Server NMS: ultralytics' took 161 ms on the Jetson; now the campaigns' `fast_nms` (server bench re-run, 28-37 ms).
+2. Shaping: htb (any burst) passed each payload, one GSO packet on bat0, on credit: a 4.3 KB code at 0.5 Mbit/s arrived
+   in 264 ms against the serialised 327 ms. Default now `--shaper netem` (htb class on the server port, netem `rate`
+   leaf: every payload serialised at the goodput, the model's t_tx = 8 b / R); bulk goodput checked 0.96 of 1 and 3.73
+   of 4 Mbit/s. The htb token bucket stays as a second arm (`__htb`, 0.5-1 Mbit/s, jpeg_q20 and k4_c4): small payloads
+   leave at line rate, as on a shared radio whose low goodput comes from airtime sharing.
+3. Sender order: it took the newest payload and then waited for the previous one to leave, so a payload whose
+   transmission outlasts the frame period went out one transmission time stale (jpeg_q20 at 1 Mbit/s: 397 ms = 2 t_tx
+   + server). Now it waits first, then takes the newest: 227 ms (model 202; measured t_tx 171 vs 157).
+4. Warm-up: the server's first decode of an option took 3.4 s, so the first 3 s of a run had no results; now 3
+   uncounted warm-up payloads, each awaited.
+Also logged per run: `tx_ms_median` (send → acknowledged, when the sender waited), every latency, the capture times of
+frames without a result. One 8-s smoke test at 1 Mbit/s from pi-receiver may have overlapped the first seconds (worker
+start-up) of guard run 2 at 21:19; no other test traffic during a run.

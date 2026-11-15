@@ -199,16 +199,30 @@ def outq(s):
     return struct.unpack("i", fcntl.ioctl(s.fileno(), termios.TIOCOUTQ, b"\0\0\0\0"))[0]
 
 
-def shape(dev, port, rate, on):
+def shape(dev, port, rate, on, mode="netem"):
+    """Shape this board's traffic to the server port only (htb filter on the destination port; other traffic, ssh and
+    batman-adv, goes to an unshaped class). mode netem: the port's class feeds a netem leaf with `rate`, which delays
+    each packet by its size / rate - every payload is serialised at the goodput, the model's t_tx = 8 b / R. mode htb:
+    a token bucket (burst 15 KB) - a payload leaves at line rate when the average rate allows, as on a shared radio.
+    15 Nov 2026 smoke test: with htb (any burst; bat0 sends each payload as one GSO packet, which htb passes on credit)
+    a 4.3 KB code at 0.5 Mbit/s arrived in 264 ms, the model's serialised 327 ms."""
     def tc(a):
         return subprocess.run(["sudo", "-n", "tc"] + a.split(), capture_output=True, text=True)
     tc(f"qdisc del dev {dev} root")
     if not on:
         return
-    for a in (f"qdisc add dev {dev} root handle 1: htb default 30",
-              f"class add dev {dev} parent 1: classid 1:10 htb rate {rate}mbit ceil {rate}mbit burst 15k",
-              f"class add dev {dev} parent 1: classid 1:30 htb rate 1000mbit",
-              f"filter add dev {dev} parent 1: protocol ip prio 1 u32 match ip dport {port} 0xffff flowid 1:10"):
+    if mode == "netem":
+        steps = (f"qdisc add dev {dev} root handle 1: htb default 30",
+                 f"class add dev {dev} parent 1: classid 1:10 htb rate 1000mbit",
+                 f"class add dev {dev} parent 1: classid 1:30 htb rate 1000mbit",
+                 f"qdisc add dev {dev} parent 1:10 handle 10: netem rate {rate}mbit limit 1000",
+                 f"filter add dev {dev} parent 1: protocol ip prio 1 u32 match ip dport {port} 0xffff flowid 1:10")
+    else:
+        steps = (f"qdisc add dev {dev} root handle 1: htb default 30",
+                 f"class add dev {dev} parent 1: classid 1:10 htb rate {rate}mbit ceil {rate}mbit burst 15k",
+                 f"class add dev {dev} parent 1: classid 1:30 htb rate 1000mbit",
+                 f"filter add dev {dev} parent 1: protocol ip prio 1 u32 match ip dport {port} 0xffff flowid 1:10")
+    for a in steps:
         r = tc(a)
         if r.returncode:
             tc(f"qdisc del dev {dev} root")
@@ -303,11 +317,14 @@ def cmd_send(a, dev):
     for im in imgs[:3]:
         enc(im)
     if a.rate_mbit > 0:
-        shape(a.dev, port, a.rate_mbit, True)
+        shape(a.dev, port, a.rate_mbit, True, a.shaper)
     try:
         s = socket.create_connection((host, port), timeout=10)
         s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         s.settimeout(None)
+        for w in range(3):         # warm-up, not counted (15 Nov 2026: the server's first decode of an option took 3.4 s
+            send_msg(s, {"id": -1 - w, "opt": a.option}, enc(imgs[w]))   # on the Jetson; newer frames replaced the
+            recv_msg(s)                                                   # waiting ones, no result for the first 3 s)
         period, t_start = 1.0 / a.fps, time.perf_counter() + 0.5
         ready, sent, res = [None], {}, {}
         cv, stop = threading.Condition(), [False]
@@ -339,8 +356,17 @@ def cmd_send(a, dev):
         tc_ = threading.Thread(target=computer, daemon=True)
         tc_.start()
         threading.Thread(target=receiver, daemon=True).start()
-        last = -1
+        last, drain, t_sent = -1, {}, [0.0]
         while tc_.is_alive() or ready[0] is not None:
+            # first wait until the previous payload has left the radio, THEN take the newest payload (15 Nov 2026: the
+            # first version took the payload first and then waited, so a payload whose transmission outlasts the
+            # frame period was sent one transmission time stale: latency 2 t_tx + server for JPEG at 1 Mbit/s)
+            waited = False
+            while outq(s) > 0:
+                time.sleep(0.0005)
+                waited = True
+            if waited and last in sent and last not in drain:   # previous payload: send -> fully acknowledged
+                drain[last] = (time.perf_counter() - t_sent[0]) * 1e3   # (exact only when the sender waited for it)
             with cv:
                 while ready[0] is None and tc_.is_alive():
                     cv.wait(0.05)
@@ -350,9 +376,8 @@ def cmd_send(a, dev):
             tick, cap, p, e_s = item
             if tick <= last:
                 continue
-            while outq(s) > 0:                             # the previous payload has not left the radio yet
-                time.sleep(0.0005)
             send_msg(s, {"id": tick, "opt": a.option}, p)
+            t_sent[0] = time.perf_counter()
             sent[tick] = (cap, len(p), e_s * 1e3)
             last = tick
         time.sleep(2.0)
@@ -364,16 +389,20 @@ def cmd_send(a, dev):
             pass
     finally:
         if a.rate_mbit > 0:
-            shape(a.dev, port, a.rate_mbit, False)
+            shape(a.dev, port, a.rate_mbit, False, a.shaper)
     lat = [(res[k][0] - sent[k][0]) * 1e3 for k in sent if k in res]
     on = sum(1 for x in lat if x <= a.deadline_ms)
-    print(json.dumps({"option": a.option, "rate_mbit": a.rate_mbit, "seconds": a.seconds, "fps": a.fps,
+    print(json.dumps({"option": a.option, "rate_mbit": a.rate_mbit, "shaper": a.shaper, "seconds": a.seconds, "fps": a.fps,
                       "sent": len(sent), "results": len(lat), "on_time": on, "on_time_fps": on / a.seconds,
                       "lat_p50_ms": float(np.median(lat)) if lat else None,
                       "lat_p90_ms": float(np.percentile(lat, 90)) if lat else None,
                       "payload_kb_mean": float(np.mean([v[1] for v in sent.values()]) / 1024) if sent else None,
                       "onboard_ms_median": float(np.median([v[2] for v in sent.values()])) if sent else None,
-                      "server_ms_median": float(np.median([res[k][1] for k in res])) if res else None}))
+                      "server_ms_median": float(np.median([res[k][1] for k in res])) if res else None,
+                      "tx_ms_median": float(np.median(list(drain.values()))) if drain else None, "tx_n": len(drain),   # send -> acked
+                      "lat_ms_all": [round(x, 1) for x in lat],
+                      "missing_s": [round(sent[k][0] - t_start, 2) for k in sent if k not in res]}))   # capture time of
+                                                                                       # each sent frame with no result
 
 
 def main():
@@ -395,6 +424,7 @@ def main():
     ap.add_argument("--fps", type=float, default=30.0)
     ap.add_argument("--rate-mbit", type=float, default=0.0)
     ap.add_argument("--dev", default="bat0")
+    ap.add_argument("--shaper", choices=["netem", "htb"], default="netem", help="netem: each payload serialised at the rate (the model's link); htb: token bucket, burst 15 KB (shared radio). See shape()")
     ap.add_argument("--deadline-ms", type=float, default=300.0)
     a = ap.parse_args()
     torch.set_num_threads(a.threads)
