@@ -232,3 +232,14 @@ vs v41plus, 4 reps).
 - **T8R.2** On the mission v4.1+ stays at or above 80 °C for at most 3 % of the time and never throttles, although its
   budget is higher than v41's (the capped hold, not the budget, governs the blackout heat).
 - **T8R.3** sAP (forecaster): v4.1+ at least v41's in the mean of 4 pairs in each scenario, or within 0.005.
+
+## Theorem 3 re-test: the guard lowered by the measured fast-mode overshoot (`HEAT_OUT=vid_campaign_heat_nov2 HEAT_STRATS=v41guard765 HEAT_REPS=3 tools/campaign_heat_nov.sh`; written 15 Nov 2026 18:50, before any of these runs)
+
+Finding behind it (T4 guard runs, 24 crossings of 78 °C): after each crossing the measured temperature rose another
+1.6-3.5 °C (mean 2.1), peaking 16-27 s later, with the power right after the crossing at 3.7-4.2 W. A first-order plant
+with τ = 149 s cannot rise 2.5 °C in 20 s at that power; this is a fast thermal mode (heat stored near the die reaching
+the sensor), which Theorem 3's single time constant omits. Corrected bound: peak ≤ guard + δ_fast, δ_fast = 3.5 °C (the
+largest measured): 81.5 °C with the 78 °C guard, which every T4 guard run meets (80.4-81.5 °C). Strategy v41guard765:
+hold cap and guard at 76.5 °C (= 80 − 3.5).
+- **G.1** Peak at most 80.0 °C in every one of the 3 runs; 0 % of the time at or above 80 °C.
+- **G.2** sAP (forecaster) within 0.01 of T4's v41guard (0.1263) and freshness within 3 points of its 0.854.

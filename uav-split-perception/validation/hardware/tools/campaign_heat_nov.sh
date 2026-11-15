@@ -8,11 +8,11 @@
 # First: push_code_mesh.sh (adaptive2.py of 14 Nov or later), mesh_tunnel.sh, the keep-awake ping.
 # Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-R=$H/vid_campaign_heat_nov; PS=240; COOL=${COOL:-55}; mkdir -p $R
+R=$H/${HEAT_OUT:-vid_campaign_heat_nov}; PS=240; COOL=${COOL:-55}; mkdir -p $R   # HEAT_OUT / HEAT_STRATS: the 15 Nov guard re-test
 $D/mesh_ssh.sh camera "grep -q hold-max-c ~/hwbench/adaptive2.py" 2>/dev/null || { echo "camera has an adaptive2.py without --hold-max-c: push first"; exit 1; }
 jobs() {
-  for rep in 1 2 3 4 5; do
-    for m in $(python3 -c "import random;p=['v41','v41cap','v41guard'];random.Random($rep*4241).shuffle(p);print(' '.join(p))"); do echo "$rep mission $m"; done
+  for rep in $(seq ${HEAT_REPS:-5}); do
+    for m in $(python3 -c "import random;p='${HEAT_STRATS:-v41 v41cap v41guard}'.split();random.Random($rep*4241).shuffle(p);print(' '.join(p))"); do echo "$rep mission $m"; done
   done
 }
 for pass in 1 2; do
