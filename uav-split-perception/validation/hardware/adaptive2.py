@@ -208,9 +208,15 @@ class Onboard:
                 s = ONBOARD_VARIANTS[k][1]
                 z = torch.zeros(1, 3, s, s, device=self.dev)
                 m(z.half() if self.half else z)
-        if self.dev.type == "cuda":           # a GPU camera (Jetson): time each variant instead of the Pi priors
+        # a GPU camera (Jetson): time every variant instead of the Pi priors. On the Pi, time the variants added after
+        # the first campaigns (YOLO11 etc., 15 Nov 2026): with only a prior, one slow first inference above the deadline
+        # (YOLO11n-480: 596 ms) made the controller never choose it again, so its estimate never corrected itself.
+        # n320 / s320 / s640 keep their measured priors, as in every earlier run.
+        timed = list(ONBOARD_VARIANTS) if self.dev.type == "cuda" else \
+            [k for k in ONBOARD_VARIANTS if k not in ("n320", "s320", "s640")]
+        if timed:
             img = np.zeros((360, 640, 3), np.uint8)
-            for k in ONBOARD_VARIANTS:
+            for k in timed:
                 ts = []
                 for _ in range(6):
                     t0 = time.perf_counter()
