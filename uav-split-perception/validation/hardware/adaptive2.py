@@ -96,6 +96,9 @@ ONBOARD_EXTRA = {"m640": ("yolov8m", 640), "l640": ("yolov8l", 640),
                  "l640vd": ("yolov8l_visdrone", 640),
                  # YOLO11 n/s/m fine-tuned on VisDrone (25 Oct 2026; the professor's request)
                  "n640y11": ("yolo11n_visdrone", 640), "s640y11": ("yolo11s_visdrone", 640),
+                 # YOLO11n at 480 / 416 px (15 Nov 2026, plan Phase 3): 640 px misses the 300 ms deadline on the Pi
+                 # (~312 ms), so it never earns the freshness bonus; mAP on DET val 0.1666 / 0.1441 (640: 0.211)
+                 "n480y11": ("yolo11n_visdrone", 480), "n416y11": ("yolo11n_visdrone", 416),
                  "m640y11": ("yolo11m_visdrone", 640)}
 PATH_VARIANTS = {f"s{r}q{q}": ("yolov8s", r, q) for r in (640, 480, 320) for q in (90, 50)}
 LAPTOP_EXTRA = {"m640q90": ("yolov8m", 640, 90), "m640q50": ("yolov8m", 640, 50)}
@@ -103,7 +106,7 @@ LAPTOP_EXTRA = {"m640q90": ("yolov8m", 640, 90), "m640q50": ("yolov8m", 640, 50)
 # priors (measured: experiments/results/hardware/raw/variant_timing_*.json); learned online
 PRIOR_ONBOARD_MS = {"n320": 80.0, "s320": 170.0, "s640": 700.0, "m640": 2000.0, "l640": 4000.0,
                     "s640vd": 700.0, "m640vd": 2000.0, "l640vd": 4000.0,  # m/l: estimates, learned online
-                    "n640y11": 300.0, "s640y11": 750.0, "m640y11": 2000.0}  # YOLO11: estimates, learned online
+                    "n640y11": 300.0, "s640y11": 750.0, "m640y11": 2000.0, "n480y11": 180.0, "n416y11": 140.0}  # YOLO11: estimates, learned online
 PRIOR_BYTES = {640: {90: 87000, 50: 35800}, 480: {90: 50100, 50: 20800}, 320: {90: 25900, 50: 11000}}
 PRIOR_REMOTE_MS = {"laptop": {"yolov8s": 18.0, "yolov8m": 24.0}, "jetson": {"yolov8s": 32.0, "yolov8m": 60.0}}  # live worker stage times
 PRIOR_REMOTE_MS["relay"] = dict(PRIOR_REMOTE_MS["laptop"])        # the laptop computes; the extra hop is in the RTT

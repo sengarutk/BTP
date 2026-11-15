@@ -54,7 +54,7 @@ case $ST in
   v41guard) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --guard-hard-c 78";;  # T4: + hard guard (Theorem 3)
   v41guard765) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 76.5 --guard-hard-c 76.5";;  # Phase 3: guard lowered by the measured fast-mode overshoot (3.5 C)
   v41ea)   POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --encode-ahead";;   # T7: encode ahead
-  v41plus) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --budget-rule --contention-ms 10 --onboard-variants s320,s640,n640y11 --acc variant_accuracy_visdrone_ft11.json";;   # T8: v4.1+
+  v41plus) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 78 --budget-rule --contention-ms 10 --onboard-variants s320,s640,n480y11 --acc variant_accuracy_visdrone_ft11.json";;   # T8: v4.1+ (YOLO11n at 480 px since 15 Nov: 640 px misses the deadline)
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson
