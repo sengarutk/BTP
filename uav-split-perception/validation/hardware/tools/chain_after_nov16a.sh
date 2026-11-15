@@ -4,11 +4,13 @@
 # session nov16b (campaign_dvfs_nov.sh). Launched from Windows so a chat restart cannot kill it.
 # needs PI2_PW PI3_PW NANO_PW N2_PW in the environment (never written here)
 H=~/BTP/uav-split-perception/experiments/results/hardware; T=~/BTP/uav-split-perception/validation/hardware/tools
-SP=$H/board_session_nov16a     # smoke-test output
-
-while kill -0 2724626 2>/dev/null; do sleep 30; done
-echo "$(TZ=Asia/Kolkata date +%T) session nov16a ended: $(tail -1 $H/board_session_nov16a/session.log)"
-grep -q SESSION_DONE $H/board_session_nov16a/session.log || { echo "nov16a did not end with SESSION_DONE: DVFS not started"; exit 1; }
+WS=${WAIT_SESSION:-board_session_nov16a}   # the Phase 4 session to wait for (nov16a2 after the 04:40 charger drop)
+SP=$H/$WS     # smoke-test output
+until [ -f $H/$WS/session.log ] && grep -q "session start (pid" $H/$WS/session.log; do sleep 30; done
+SPID=$(grep -o "session start (pid [0-9]*" $H/$WS/session.log | tail -1 | grep -o "[0-9]*$")
+while kill -0 $SPID 2>/dev/null; do sleep 30; done
+echo "$(TZ=Asia/Kolkata date +%T) session $WS ended: $(tail -1 $H/$WS/session.log)"
+grep -q SESSION_DONE $H/$WS/session.log || { echo "$WS did not end with SESSION_DONE: DVFS not started"; exit 1; }
 s=$(cd /mnt/c && timeout 30 powershell.exe -NoProfile -Command "(Get-CimInstance Win32_Battery).BatteryStatus" | tr -d '\r')
 [ "$s" != 2 ] && { echo "laptop on battery: DVFS not started"; exit 1; }
 cd $T && TARGETS=camera timeout 600 ./push_code_mesh.sh 2>&1 | grep -E "MD5|rror"

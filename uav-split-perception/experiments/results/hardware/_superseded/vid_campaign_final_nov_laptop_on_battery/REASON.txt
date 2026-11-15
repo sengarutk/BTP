@@ -1,0 +1,1 @@
+16 Nov 2026 04:40 IST: the laptop charger dropped (on battery: weaker ground GPU). mesh_mission__leaf__r5 had started at 04:38:37 and was stopped at 04:41 before finishing; any partial files are here. Re-run on mains.
