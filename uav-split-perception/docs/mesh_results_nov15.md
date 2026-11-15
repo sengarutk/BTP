@@ -31,7 +31,8 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | T8R.2 | v4.1+ on the mission: ≤ 3 % at ≥ 80 °C, no throttling | partly (never throttled vs v41's 9-11 samples; 0.9-6.8 % vs v41's 20-22 %) | the capped hold cuts the hot time 3-23× at a higher budget |
 | T8R.3 | v4.1+ costs no accuracy | held (sAP +0.0022; mission 0.1342 vs 0.1312, random 0.1133 vs 0.1088) | 3 reps (4th cut) |
 | T8R.4 | YOLO11n-480 replaces s320 onboard | held (192 ms; 78-83 % of onboard frames, 96-100 % in the blackout) | onboard accuracy upgrade works; 95th-pct AoI on the mission 367 → 500 ms |
-| G.1-G.2, C.1-C.3 | guard 76.5 °C (Theorem 3); channel-aware cap | running 15 Nov 20:48-~23:20 | — |
+| G.1 | guard 76.5 °C keeps the peak ≤ 80.0 °C | **did not hold** (79.3 / 80.4 / 79.8 °C; ≥ 80 °C 0.02 % in r2; never throttled) | δ_fast is 3.9 °C, not 3.5: Theorem 3 (b) with the measured δ_fast, no fixed-guard claim |
+| G.2, C.1-C.3 | guard accuracy; channel-aware cap | G.2 scoring pending; C running 15 Nov 22:16-~23:20 | — |
 
 ## Fixes found and made during the sessions (all before the runs that test them)
 

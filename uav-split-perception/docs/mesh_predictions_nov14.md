@@ -249,6 +249,22 @@ hold cap and guard at 76.5 °C (= 80 − 3.5).
 - **G.1** Peak at most 80.0 °C in every one of the 3 runs; 0 % of the time at or above 80 °C.
 - **G.2** sAP (forecaster) within 0.01 of T4's v41guard (0.1263) and freshness within 3 points of its 0.854.
 
+### Results: guard re-test (`vid_campaign_heat_nov2/`, 3 runs of 24 min, 15 Nov 2026 20:48-22:16 IST)
+
+| run | peak °C | ≥ 80 °C | ≥ 78 °C | mean °C | mean W | throttled samples | onboard starts blocked |
+|---|---|---|---|---|---|---|---|
+| r1 | 79.3 | 0.00 % | 2.4 % | 68.5 | 3.00 | 0 | 4573 |
+| r2 | 80.4 | 0.02 % | 3.5 % | 69.9 | 2.99 | 0 | 5090 |
+| r3 | 79.8 | 0.00 % | 3.7 % | 70.1 | 2.98 | 0 | 5293 |
+
+- **G.1 did not hold** (narrowly): peak ≤ 80.0 °C in 2 of 3 runs; r2 reached 80.4 °C for one sample (0.02 % of the
+  time). The overshoot above the guard was 2.8-3.9 °C, so δ_fast = 3.5 °C (from T4) is not the largest: with the 4 T4
+  and 3 new guard runs, δ_fast = 3.9 °C. No run throttled (T4's 78 °C guard: peaks 80.4-81.5 °C). For paper 2:
+  Theorem 3 (b) states peak ≤ guard + δ_fast with δ_fast measured on the board (3.9 °C here) and makes no claim that
+  any particular guard keeps the peak below 80 °C; the 76.5 °C guard is reported as keeping the board out of
+  throttling in every run (T4 and re-test) and at ≥ 80 °C for at most 0.02 % of the time.
+- **G.2** pending (scored while T10 runs, when the laptop worker is idle).
+
 ### Results: T6 / D1 (`vid_campaign_two_nov/`, 12 valid runs × 2 cameras, 15 Nov 2026; `vid_campaign_two_nov_summary.json`)
 
 pi-relayyy and pi-receiver at the same time. Total on-time results per second (both cameras): static_good v41j1 38.7 /
