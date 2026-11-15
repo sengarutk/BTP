@@ -6,7 +6,7 @@
 #   Predictions: docs/mesh_predictions_nov14.md (S6). Results: pull_nov/<label>_<host>.jsonl.
 # First: push pull_bench.py to camera, jetson, jetson2. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware; . $D/mesh_hosts.sh
-R=$H/pull_nov; mkdir -p $R
+R=$H/${PULL_OUT:-pull_nov}; mkdir -p $R   # PULL_OUT=pull_nov_fair: the re-run after the 15 Nov clock fix
 PY_PI=/home/sengar/btp_env/bin/python; PY_N2=/home/nano2/hwbench_env/bin/python; PY_N1=/home/nano/hwbench_env/bin/python
 for t in camera jetson jetson2; do $D/mesh_ssh.sh $t "test -f ~/hwbench/pull_bench.py" 2>/dev/null || { echo "pull_bench.py missing on $t: push first"; exit 1; }; done
 stop_server() { $D/mesh_ssh.sh jetson "P=\$(pgrep -f '[p]ull_bench.py serve'); [ -n \"\$P\" ] && kill \$P; true" 2>/dev/null; }

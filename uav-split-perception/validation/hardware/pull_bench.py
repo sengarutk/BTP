@@ -153,7 +153,10 @@ def cmd_serve(a):
         srv_ms = (time.time() - t0) * 1e3
         with cv:
             st["busy"] = False
-            st["newest_res"][cid] = max(st["newest_res"].get(cid, -1e18), h["t_cap"])
+            # ages on the SERVER's clock only (fixed 15 Nov 2026): the arrival time of the frame whose result this is.
+            # The first version used h["t_cap"], stamped by each stream's own board clock; pi-relayyy's runs ~0.6 s
+            # ahead of Nano2's, so its streams always looked fresher and oldest-first starved them (~1 result/s each)
+            st["newest_res"][cid] = max(st["newest_res"].get(cid, -1e18), t_in)
             conn = st["conns"].get(cid)
             if conn:
                 try:
