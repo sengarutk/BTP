@@ -114,5 +114,15 @@
    "flight_w": 153.59711421240098,
    "battery_wh": 88.80000000000001
   }
- }
+ },
+ "boards": {
+  "pi-relayyy": {
+   "thermal_steady": {
+    "intercept_c": 29.72,
+    "c_per_w": 11.66,
+    "source": "15 Nov 2026: last 2 min of the 8 unthrottled 6-min static_good runs of vid_campaign_energy_nov (v41 2.8 W, v41b36 3.6 W budgets), residual sd 1.6 C; pi-relayyy, night room"
+   }
+  }
+ },
+ "boards_note": "per-board overrides by hostname (adaptive2.py); boards without an entry use the device's shared constants"
 }

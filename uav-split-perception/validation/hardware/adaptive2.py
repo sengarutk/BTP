@@ -337,7 +337,7 @@ def main():
     ap.add_argument("--budget-target-c", type=float, default=-1.0)
     ap.add_argument("--budget-lo-w", type=float, default=2.2)
     ap.add_argument("--budget-hi-w", type=float, default=4.5)
-    ap.add_argument("--budget-smooth-s", type=float, default=30.0, help="smoothing of the offset estimate (s)")
+    ap.add_argument("--budget-smooth-s", type=float, default=600.0, help="smoothing of the offset estimate (s)")
     ap.add_argument("--contention-ms", type=float, default=0.0,
                     help="contention-aware latency (brief 19.8, L7): an offload dispatched while onboard inference runs "
                          "is predicted this much later (the Pi's CPU is shared); 0 = as every run before 14 Nov 2026")
@@ -615,6 +615,10 @@ def main():
         print(f"warning: edge power budget {a.edge_power_budget} W <= 0: mu_edge can never fall", flush=True)
     ec = _ec_all[board] if (a.energy_aware or a.power_log or a.thermal_aware) and board in _ec_all else None
     th = (ec or {}).get("thermal_steady")           # v5: measured steady-state thermal model of this board
+    th_shared = dict(th) if th else None             # the device's shared fit: defines the budget rule's target
+    _bd = (_ec_all.get("boards") or {}).get(socket.gethostname(), {}) if ec else {}
+    if _bd.get("thermal_steady"):                  # per-board fit (15 Nov 2026): this board's own intercept and slope
+        th = dict(th or {}, **{k: v for k, v in _bd["thermal_steady"].items() if k in ("intercept_c", "c_per_w")})
     tau_th = (ec or {}).get("thermal", {}).get("tau_s", 150.0)
     ec_edge = _ec_all["jetson"] if a.edge_energy_aware and "jetson" in _ec_all else None   # the jetson-path server
     energy = {"mu": 0.0, "mu_edge": 0.0, "log": [], "mu_log": [], "mu_edge_log": [], "temp": 50.0,
@@ -709,10 +713,20 @@ def main():
                         dt_ = now - energy["tm_t"]
                         energy["tm"] += (th["c_per_w"] * pbar - energy["tm"]) * (1.0 - math.exp(-dt_ / tau_th))
                         energy["tm_t"] = now
-                        a_inst = tp - energy["tm"]
-                        ah = energy.get("a_hat")
-                        energy["a_hat"] = a_inst if ah is None else ah + (a_inst - ah) * min(1.0, dt_ / a.budget_smooth_s)
-                        tgt = a.budget_target_c if a.budget_target_c > 0 else th["intercept_c"] + th["c_per_w"] * 2.8
+                        # start at the board's own intercept; update only while the power is steady (30-s and 120-s
+                        # means within 0.3 W: the Pi's fast die response makes T - T_m unreliable after a power step,
+                        # 15 Nov 2026, from the T8 runs)
+                        if energy.get("a_hat") is None:
+                            energy["a_hat"] = th["intercept_c"]
+                        p30 = [x[1] for x in energy["log"] if now - x[0] <= 30.0 and x[1] == x[1]]
+                        p120 = [x[1] for x in energy["log"] if now - x[0] <= 120.0 and x[1] == x[1]]
+                        if now - energy["t0w"] >= 120.0 and p30 and p120 and \
+                                abs(sum(p30) / len(p30) - sum(p120) / len(p120)) <= 0.3:
+                            a_inst = tp - energy["tm"]
+                            energy["a_hat"] += (a_inst - energy["a_hat"]) * min(1.0, dt_ / a.budget_smooth_s)
+                        # target: the temperature the 2.8 W budget gives on the shared fit (68.9 C); this board's own
+                        # fit (th) turns it into this board's budget
+                        tgt = a.budget_target_c if a.budget_target_c > 0 else th_shared["intercept_c"] + th_shared["c_per_w"] * 2.8
                         a.power_budget = min(a.budget_hi_w, max(a.budget_lo_w, (tgt - energy["a_hat"]) / th["c_per_w"]))
                         energy.setdefault("budget_log", []).append((now, a.power_budget, energy["a_hat"]))
                     if a.energy_aware:                 # camera drone: dual ascent on the power budget

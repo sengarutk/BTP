@@ -218,3 +218,17 @@ have) and pull one ahead's turn order on the server's clock (commit cf8edb50). S
 - **S6.5 (fairness)** With pull one ahead at 4, 6 and 8 streams, every stream gets at least half of the mean on-time rate
   per stream (the first runs, with mixed board clocks, gave pi-relayyy's streams about a fifth of the mean).
 - **S6.6** Under v4.1's rule the two Pis' streams get similar shares (within a factor of 2), as in the first runs.
+
+## T8 re-test: room-following budget with the per-board fit (`PLUS_OUT=vid_campaign_plus_nov2 tools/campaign_plus_nov.sh`; written 15 Nov 2026 18:40, before any of these runs)
+
+Change (commit after 18:35): `energy_constants.json` has per-board thermal fits; pi-relayyy 29.72 + 11.66 P (from the
+energy test). The budget rule's target stays 68.9 °C (the shared fit at 2.8 W); this board's fit turns it into
+(68.9 − 29.7) / 11.66 = 3.36 W at the start, and the estimate then updates only while the power is steady (smoothing
+600 s). Offline on the T8 and energy logs the earlier observer settled at 34-41 °C against the board's 29.7, because the
+Pi never reaches thermal steady state in 6 minutes; hence the per-board start. Same design as T8 (mission, random, v41
+vs v41plus, 4 reps).
+- **T8R.1** v4.1+'s budget stays within 3.1-3.6 W in every run; its mean power is 0.2-0.7 W above v41's in the random
+  scenario, and its second-half mean temperature stays at or below 72 °C (target + 3).
+- **T8R.2** On the mission v4.1+ stays at or above 80 °C for at most 3 % of the time and never throttles, although its
+  budget is higher than v41's (the capped hold, not the budget, governs the blackout heat).
+- **T8R.3** sAP (forecaster): v4.1+ at least v41's in the mean of 4 pairs in each scenario, or within 0.005.

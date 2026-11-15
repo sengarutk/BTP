@@ -6,7 +6,7 @@
 # First: push_code_mesh.sh (adaptive2.py with --budget-rule, --contention-ms; the _ft11 table), mesh_tunnel.sh, the
 # keep-awake ping. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-R=$H/vid_campaign_plus_nov; PS=40; COOL=${COOL:-60}; mkdir -p $R
+R=$H/${PLUS_OUT:-vid_campaign_plus_nov}; PS=40; COOL=${COOL:-60}; mkdir -p $R   # PLUS_OUT: the 15 Nov re-test with the per-board fit
 $D/mesh_ssh.sh camera "grep -q budget-rule ~/hwbench/adaptive2.py && test -f ~/hwbench/yolo11n_visdrone.pt && test -f ~/hwbench/variant_accuracy_visdrone_ft11.json" 2>/dev/null \
   || { echo "camera lacks adaptive2.py --budget-rule, yolo11n_visdrone.pt or the _ft11 table: push first"; exit 1; }
 jobs() {
