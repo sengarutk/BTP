@@ -258,7 +258,7 @@ hold cap and guard at 76.5 °C (= 80 − 3.5).
 | r3 | 79.8 | 0.00 % | 3.7 % | 70.1 | 2.98 | 0 | 5293 |
 
 - **G.1 did not hold** (narrowly): peak ≤ 80.0 °C in 2 of 3 runs; r2 reached 80.4 °C for one sample (0.02 % of the
-  time). The overshoot above the guard was 2.8-3.9 °C, so δ_fast = 3.5 °C (from T4) is not the largest: with the 4 T4
+  time). The overshoot above the guard was 2.8-3.9 °C, so δ_fast = 3.5 °C (from T4) is not the largest: with the 5 T4
   and 3 new guard runs, δ_fast = 3.9 °C. No run throttled (T4's 78 °C guard: peaks 80.4-81.5 °C). For paper 2:
   Theorem 3 (b) states peak ≤ guard + δ_fast with δ_fast measured on the board (3.9 °C here) and makes no claim that
   any particular guard keeps the peak below 80 °C; the 76.5 °C guard is reported as keeping the board out of
