@@ -482,3 +482,17 @@ accumo 2.23-2.54 W, leaf 2.14-2.49 W.
   for at most 0.1 % of the time.
 - **FH.2** v41final's sAP+fc on the 24-min mission is at least v41guard765's 0.1228 − 0.005 (G, 3 runs; unpaired): the
   better onboard model costs nothing and, with the blackout, should add a little.
+
+## Phase 5: the CPU clock as a third knob (written 16 Nov 2026 before any of these runs; see the commit time)
+
+`v41dvfs` = v41final + `--onboard-clocks 1800`: every onboard variant also runs capped at 1.8 GHz, priced at E(v) × the
+measured energy ratio (pi-receiver profile: s320 0.725, n480y11 0.733; `docs/dvfs_design_nov16.md`), all options timed
+at start-up. `campaign_dvfs_nov.sh`: v41final vs v41dvfs, paired, scenario mission: 3 reps × 24 min (heat), then
+5 reps × 40-s phases. The clock is chosen by the existing prices: in the blackout hold (onboard unpriced) 2.4 GHz wins on
+latency; when μ > 0 or the hold is capped (≥ 76.5 °C), 1.8 GHz wins on energy.
+
+- **D.1** v41dvfs runs at least 25 % of its onboard inferences at 1.8 GHz over each 24-min mission.
+- **D.2** On the 24-min mission v41dvfs's mean Pi power is at least 0.1 W below v41final's and its second-half mean
+  temperature at least 1.0 °C lower (mean of the 3 pairs).
+- **D.3** sAP with forecaster: v41dvfs − v41final within ±0.005 (mean of the 5 short pairs and of the 3 heat pairs).
+- **D.4** No v41dvfs run throttles; its peak stays ≤ 80.4 °C; the clock cap is at the hardware maximum after every run.
