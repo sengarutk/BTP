@@ -1,0 +1,4 @@
+{"label": "v41_s6_r1", "mode": "v41", "stream": 0, "sent": 225, "results": 225, "on_time_fps": 0.6666666666666666, "lat_p50_ms": 377.7916431427002, "lat_p90_ms": 455.5697441101074, "aoi_mean_ms": 513.585050474022, "server_ms_median": 29.84142303466797}
+{"label": "v41_s6_r1", "mode": "v41", "stream": 1, "sent": 216, "results": 215, "on_time_fps": 0.5833333333333334, "lat_p50_ms": 377.74658203125, "lat_p90_ms": 476.91822052001953, "aoi_mean_ms": 533.7251499362185, "server_ms_median": 29.794931411743164}
+{"label": "v41_s6_r1", "mode": "v41", "stream": 2, "sent": 231, "results": 231, "on_time_fps": 0.75, "lat_p50_ms": 366.2405014038086, "lat_p90_ms": 441.21527671813965, "aoi_mean_ms": 504.0047921915821, "server_ms_median": 29.83546257019043}
+{"label": "v41_s6_r1", "mode": "v41", "streams": 3, "fps": 30.0, "on_time_total": 2.0, "on_time_worst": 0.5833333333333334, "aoi_mean_ms": 517.1049975339408}

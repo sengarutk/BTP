@@ -153,3 +153,20 @@ sAP with forecaster: direct link v41 0.2010 ± 0.0013, hier 0.1495 ± 0.0016; mu
 - **T9.4 held.** Camera power differs by 0.005 W (direct) and 0.012 W (multihop).
 - This replaces the brief's two-campaign evidence (23 and 24 Oct, 3 multihop pairs) with one campaign, the two topologies
   alternating in time.
+
+### Results: S6 pull test (`pull_nov/`, 20 runs of 60 s, 15 Nov 2026 05:49-06:25 IST)
+
+Total on-time results per second (rep 1 / rep 2), v4.1 rule: 1 stream 13.2 / 14.2, 2 30.2 / 30.1, 4 29.8 / 29.9, 6 21.2 / 21.2,
+8 19.5 / 20.2 (median latency 97-100, 128-139, 214-223, 317-366, 421-479 ms). Pull one ahead: 24.1 / 24.0, 27.1 / 27.3,
+29.1 / 29.1, 28.7 / 28.6, 28.5 / 28.6 (median latency 97, 125, 125, 125-129, 124-127 ms).
+- **S6.1 partly held.** v4.1 flat to 4 streams and falling beyond, latency above 250 ms at 8; but at 8 streams it keeps
+  66 % of its 2-stream total, not below half.
+- **S6.2 held.** Pull's total at 6 and 8 streams within 20 % of its 2-stream value; latency below 200 ms throughout.
+- **S6.3 did not hold.** At 8 streams pull delivers 1.44× v4.1's on-time results, not 2×.
+- **S6.4 partly held.** Within 25 % at 2 streams (v4.1 10 % ahead); at 1 stream pull is 76 % ahead (24.0 vs 13.7), as
+  the model's one-stream gap (25.5 vs 22.1) in direction but larger.
+- **Problem found (tool, not idea): pull is unfair across hosts.** With 4-8 streams, each pi-relayyy stream got about 1
+  on-time result per second against 6-13.5 for each Nano2 stream (v4.1: 6.2-6.8 against 7.5-9.2). Candidates:
+  `pull_bench.py`'s oldest-first turn compares the streams' capture times (each board's clock; Nano1 is +40 s, the Pi
+  +0.4 s against the laptop) with the server's grant times, or the Pi answers grants slowly while encoding several
+  streams in Python. To be checked when the Pi is idle, before any fairness claim; the totals are unaffected.

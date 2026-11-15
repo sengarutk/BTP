@@ -1,0 +1,5 @@
+{"label": "v41_s8_r1", "mode": "v41", "stream": 0, "sent": 1267, "results": 262, "on_time_fps": 4.35, "lat_p50_ms": 142.6832675933838, "lat_p90_ms": 194.04149055480957, "aoi_mean_ms": 361.48498900073065, "server_ms_median": 30.086994171142578}
+{"label": "v41_s8_r1", "mode": "v41", "stream": 1, "sent": 1201, "results": 286, "on_time_fps": 4.766666666666667, "lat_p50_ms": 143.73326301574707, "lat_p90_ms": 197.60465621948242, "aoi_mean_ms": 366.05592944243267, "server_ms_median": 30.08294105529785}
+{"label": "v41_s8_r1", "mode": "v41", "stream": 2, "sent": 1207, "results": 289, "on_time_fps": 4.733333333333333, "lat_p50_ms": 143.59068870544434, "lat_p90_ms": 195.03331184387207, "aoi_mean_ms": 368.20911326330304, "server_ms_median": 30.092239379882812}
+{"label": "v41_s8_r1", "mode": "v41", "stream": 3, "sent": 1146, "results": 292, "on_time_fps": 4.866666666666666, "lat_p50_ms": 154.51645851135254, "lat_p90_ms": 197.8018283843994, "aoi_mean_ms": 343.22705043360037, "server_ms_median": 30.07638454437256}
+{"label": "v41_s8_r1", "mode": "v41", "streams": 4, "fps": 30.0, "on_time_total": 18.716666666666665, "on_time_worst": 4.35, "aoi_mean_ms": 359.7442705350167}
