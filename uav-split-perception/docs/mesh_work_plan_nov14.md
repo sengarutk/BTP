@@ -66,3 +66,23 @@ charger during campaigns.
 - **T5 airflow** and **G1 outdoor or tethered flight**: not possible with the equipment available. Both are stated as
   limitations in paper 2: every heat result is for a fanless board in still air, and no test was flown, so propeller
   wash, real distances and in-flight vibration are untested.
+
+## Order of the remaining work (15 Nov 2026 15:45 IST, agreed with the user; highest return first)
+
+Board phases run as `tools/session_nov14.sh` chains (resumable, health check between campaigns). Laptop work runs while
+the boards are busy only when it cannot disturb a measurement (no scoring during runs that use the laptop worker).
+
+| Phase | Work | Why first | Board | Laptop |
+|---|---|---|---|---|
+| 0 | **A7** pi-sender's cable address persistent; **A9** Nano2 joins the mesh at boot (same settings) | protects every later test from a reboot; no runtime change | 5 min | — |
+| 1 | **T6** 2 sense + 1/2 edge drones; **S6 fair re-run** on two camera Pis (S6.5-S6.6) | the only real-swarm results; unblocked now | ~2.5 h | score T4/T8 meanwhile |
+| 2 | **T10** break-even goodput, predict then measure (bench → committed prediction → rate sweep) | paper 1's strongest open objection | ~0.5 day | prediction |
+| 3 | **Fixes of the failures**: room-following budget with a fit valid at high power; YOLO11n at a size that meets the deadline; Theorem 3 floor term from this board's data; then their board re-tests | turns three failed predictions into found-and-fixed results | ~3 h | ~1 day |
+| 4 | **5 repetitions** for every headline comparison still at 2-4 | statistical power | ~0.5 day | — |
+| 5 | **DVFS third knob** (D5): per-frequency power/latency on the Pi, frequency-aware price, board runs | the largest new novelty for paper 2 | ~1 h + 0.5 day | ~2 days |
+| 6 | **Joint fades** on the shared channel (D6, Nano2 as traffic source); C8 governor; D7 cheaper camera-motion step; D4 YOLO11m on the ground; **T11** board timings; pi-receiver's remaining profiles (watched) | cheap strengtheners | ~1 day | — |
+| 7 | Laptop: hardware calibration of the deadline probabilities (B4); theorem and price checks on every new run; paused L5 (HEVC features), L7 (bias fit), L8 (conformal); **second dataset** (L6); **reproducibility package**; **2025-2026 related-work check** | completes both papers' evidence | — | ~4 days |
+| 8 | **A8** layer-2 bridge on pi-sender instead of SSH tunnels, then re-run the key comparisons both ways; **G2** BATMAN-adv overhead vs raw IBSS (temporary, everything restored and verified) | removes a stated artefact; changes the network, so last | ~1 day | — |
+| 9 | Results Brief, Final Report, Novelty Brief; rewrite of both papers with every verdict (failures as written) and the limitations (indoor, no flight, no airflow, few boards); **independent audit** of every number | the deliverables | — | ~3 days |
+
+Totals: about 3.5 board days and 8-9 laptop days, partly in parallel.
