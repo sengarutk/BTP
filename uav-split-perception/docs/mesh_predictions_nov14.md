@@ -266,6 +266,34 @@ pi-relayyy and pi-receiver at the same time. Total on-time results per second (b
   (mAP 0.1666 on DET val, against s320's 0.1367; expected ~175-200 ms on the Pi, inside the deadline) instead of 640 px.
   In the mission's total blackout at least half of v4.1+'s onboard frames use it.
 
+### Results: T8 re-test (`vid_campaign_plus_nov2/`, 15 Nov 2026 19:17-20:48 IST, 12 runs)
+
+Reps: 3 per scenario and controller (mission v41 r1-r3, v41plus r2-r4; random r1-r3 each). The 4th repetition was cut as
+low value (the conclusions were already clear) to make room for the guard and channel-aware tests; mission v41plus r1 is
+the run archived before the onboard-timing fix (`_superseded/vid_campaign_plus_nov2_before_onboard_timing`), hence r4.
+Per run: budget, mean Pi power, second-half mean temperature, time at >= 80 °C, peak, throttled samples (bit 0x4).
+
+| run | budget W | mean W | 2nd-half °C | >= 80 °C | peak °C | throttled |
+|---|---|---|---|---|---|---|
+| mission v41 r1 / r2 / r3 | 2.8 | 3.37 / 3.27 / 3.31 | 77.8 / 78.3 / 78.6 | 20.0 / 20.9 / 21.6 % | 85.9 | 9 / 10 / 11 |
+| mission v41plus r2 / r3 / r4 | 3.29-3.36 | 3.35 / 3.29 / 3.52 | 76.7 / 77.2 / 72.1 | 5.5 / 6.8 / 0.9 % | 84.2 / 84.8 / 82.6 | 0 |
+| random v41 r1 / r2 / r3 | 2.8 | 2.81 / 3.33 / 3.11 | 66.8 / 73.1 / 67.7 | 0 / 18.1 / 1.1 % | 76.5 / 85.9 / 82.0 | 0 / 7 / 0 |
+| random v41plus r1 / r2 / r3 | 3.31-3.36 | 3.35 / 3.37 / 3.42 | 74.2 / 76.1 / 75.7 | 5.5 / 12.8 / 7.7 % | 84.2 / 85.3 / 83.2 | 0 / 1 / 0 |
+
+sAP (forecaster), mean of 3: mission v41 0.1312, v41plus 0.1342; random 0.1088, 0.1133. P(AoI <= 300 ms) mission 0.906 /
+0.890, 95th-pct AoI 367 / 500 ms (YOLO11n-480 at ~192 ms is slower than s320 onboard); random 0.940 / 0.947.
+
+- **T8R.1 partly held.** The budget stayed at 3.29-3.36 W in every run (held), and v4.1+'s mean power was +0.30 W above
+  v41's in the random scenario (paired +0.54 / +0.04 / +0.31; mean inside 0.2-0.7). Its second-half mean temperature
+  was 72.1-77.2 °C, above 72 °C in 5 of 6 runs: **not held.** The per-board fit (made from steady 2.8-3.6 W runs) does not
+  predict this board under bursty load, and the room-following budget should not be claimed as a temperature target.
+- **T8R.2 partly held.** v4.1+ never throttled on the mission (0 samples in 3 runs; v41 9-11 in each) and spent 0.9-6.8 %
+  of the time at >= 80 °C against v41's 20.0-21.6 % (3-23× less), but above the 3 % bound in 2 of 3 runs.
+- **T8R.3 held.** sAP (forecaster) v4.1+ − v41: mission −0.0012 (2 pairs), random +0.0045 (3/3 pairs positive), all
+  +0.0022; means 0.1342 vs 0.1312 and 0.1133 vs 0.1088. (3 reps, not 4.)
+- **T8R.4 held.** YOLO11n-480 timed 192 ms at start-up and took 78-83 % of v4.1+'s onboard frames on the mission
+  (273/352, 293/371, 395/478) and 96/96, 89/89 and 179/188 of those in the total blackout.
+
 ### Results: S6 fair re-run (`pull_nov_fair/`, 20 runs of 60 s on pi-relayyy + pi-receiver, 15 Nov 2026 18:40-19:16 IST)
 
 Total on-time results per second (rep 1 / rep 2) and median latency: v4.1 rule 1 stream 13.7 / 13.3 (98-100 ms), 2 21.4 /

@@ -26,7 +26,11 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | T6.1, T6.4, T6.5 | two camera drones share the channel; no heat chain; Nano2 uses YOLOv8m | held | — |
 | T6.2 | a second edge drone helps | **did not hold** (−21 % sAP) | on one shared channel more paths in flight make every result later: channel awareness needed |
 | T6.3 | v41j2 moves frames to Nano2 when Nano1 degrades | partly | the shift happens, the overall loss remains |
-| T8R.1-T8R.4, G.1-G.2, C.1-C.3 | fixes: per-board budget, YOLO11n-480, guard 76.5 °C, channel-aware cap | running 15 Nov evening | — |
+| T8R.1 | per-board room budget holds its power and its temperature target | partly (budget 3.29-3.36 W every run; 2nd-half 72-77 °C, > 72 in 5/6) | the budget is not a temperature target under bursty load; keep the fixed 2.8 W budget as the headline |
+| T8R.2 | v4.1+ on the mission: ≤ 3 % at ≥ 80 °C, no throttling | partly (never throttled vs v41's 9-11 samples; 0.9-6.8 % vs v41's 20-22 %) | the capped hold cuts the hot time 3-23× at a higher budget |
+| T8R.3 | v4.1+ costs no accuracy | held (sAP +0.0022; mission 0.1342 vs 0.1312, random 0.1133 vs 0.1088) | 3 reps (4th cut) |
+| T8R.4 | YOLO11n-480 replaces s320 onboard | held (192 ms; 78-83 % of onboard frames, 96-100 % in the blackout) | onboard accuracy upgrade works; 95th-pct AoI on the mission 367 → 500 ms |
+| G.1-G.2, C.1-C.3 | guard 76.5 °C (Theorem 3); channel-aware cap | running 15 Nov 20:48-~23:20 | — |
 
 ## Fixes found and made during the sessions (all before the runs that test them)
 
