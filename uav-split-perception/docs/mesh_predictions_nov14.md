@@ -460,3 +460,25 @@ on-time rate = on-time results/s × mAP/base, measured | model:
   JPEG ahead at 1 Mbit/s (3.46 / 2.09). A break-even appears only there: when low goodput comes from sharing a fast
   radio, a 4 KB code still gets through on time where a 20 KB JPEG does not. For paper 1: the codes' advantage depends
   on how the link is slow (rate-limited vs shared), which the model's t_tx = 8b/R does not distinguish.
+
+## Phase 4: the final controller, 5 reps against v4.1 and the published-style schedulers (written 16 Nov 2026 01:25 IST, before any of these runs)
+
+Final controller `v41final` = v4.1 (energy price, budget 2.8 W fixed; freshness price, target 0.95) + capped hold and
+hard guard at 76.5 °C (G) + YOLO11n-480 onboard, timed at start-up and priced at the fail-safe energy + contention 10 ms;
+no room-following budget (T8R.1). `campaign_final_nov.sh`: v41final, v41, accumo, leaf × mesh_mission, multihop × 5
+reps (40 runs, every run starts below 60 °C); then `HEAT_OUT=vid_campaign_heat_final HEAT_STRATS=v41final HEAT_REPS=3
+campaign_heat_nov.sh` (24-min mission with its 4-min total blackout). References, mesh4 (2 reps, 14 Nov): sAP+fc
+mesh_mission v41 0.1826 / accumo 0.1785 / leaf 0.1836, multihop 0.1291 / 0.1384 / 0.1320; Pi power v41 2.81 W,
+accumo 2.23-2.54 W, leaf 2.14-2.49 W.
+
+- **F.1** v41final − v41 (sAP with forecaster, mean of 5 pairs) is within ±0.005 in each scenario (neither has a total
+  blackout, so YOLO11n-480 and the guard rarely act).
+- **F.2** v41final against accumo and against leaf: |Δ sAP+fc| < 0.01 in each scenario and none significant after Holm
+  (4 tests): P1 replicated with 5 reps and the final controller.
+- **F.3** accumo and leaf draw at least 0.25 W less Pi power than v41 and v41final in each scenario (mesh4's
+  observation), and v41final is within ±0.1 W of v41: the fixed budget, not a better choice, sets v4.1's power.
+- **F.4** No run of v41final throttles; every one of its price updates passes `paper2/theory_check.py` (Theorem 1).
+- **FH.1** v41final on the 24-min mission, 3 of 3 runs: never throttles, peak ≤ 80.4 °C (guard + δ_fast 3.9 °C), ≥ 80 °C
+  for at most 0.1 % of the time.
+- **FH.2** v41final's sAP+fc on the 24-min mission is at least v41guard765's 0.1228 − 0.005 (G, 3 runs; unpaired): the
+  better onboard model costs nothing and, with the blackout, should add a little.
