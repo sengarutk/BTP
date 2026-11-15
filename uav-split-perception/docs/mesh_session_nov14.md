@@ -44,4 +44,4 @@ Open decisions (plan A7-A9): pi-sender's cable address and Nano2's mesh setup st
 |---|---|---|---|
 | 02:43-15:08 | Session 2 | T7, T9, S6, T8, T4 (`board_session_nov15/`) | SESSION_DONE, HEALTH_OK |
 | 14:50 | pi-receiver | power-cycled by the user, rejoined the mesh (10.1.0.13, 4 neighbours, 0x0 throttle flags); current code pushed (md5 OK) | HEALTH_OK with all five boards |
-| 15:50 | A7, A9 (user's decision) | boot-only systemd units, enabled but not started: pi-sender `aegis-eth0-addr.service` (ip addr replace 10.230.3.10/20 dev eth0, 10 s after network-online); Nano2 `aegisswarm-up.service` (runs ~/aegisswarm_up.sh, 20 s after network-online). Live interfaces untouched | both enabled, inactive; eth0 and bat0 unchanged; HEALTH_OK |
+| 15:27 | A7, A9 (user's decision) | boot-only systemd units, enabled but not started: pi-sender `aegis-eth0-addr.service` (ip addr replace 10.230.3.10/20 dev eth0, 10 s after network-online); Nano2 `aegisswarm-up.service` (runs ~/aegisswarm_up.sh, 20 s after network-online). Live interfaces untouched | both enabled, inactive; eth0 and bat0 unchanged; HEALTH_OK |

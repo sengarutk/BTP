@@ -186,7 +186,8 @@ throttled 1.4-2.7 %, peak 85.3-85.9 °C; mission v41plus 3.04-3.14 W, 72.7-73.2 
 - **T8.2 did not hold.** YOLO11n ran on 0 of the 135-141 onboard frames of each total blackout. With the hold on, the
   freshness price adds λ_F·p_on only to an onboard setting that meets the 300 ms deadline: s320 (~180 ms) does, YOLO11n
   (~305 ms) misses it by ~5 ms.
-- **T8.3** pending the sAP scoring.
+- **T8.3 held.** sAP with forecaster: mission v41 0.1354, v41plus 0.1357 (+0.0003 ± 0.0165, 2 of 4 pairs ahead); random
+  v41 0.1185, v41plus 0.1213 (+0.0027 ± 0.0116); overall +0.0015 ± 0.0070 (`vid_campaign_plus_nov_summary.json`).
 - **T8.4 did not hold for v41, held for v4.1+.** Plain v4.1 was hot 14-15 % of each 6-minute mission and throttled, from
   a single 40-s total blackout (the hold); v4.1+ with the hold capped at 78 °C was hot 0-0.8 % and never throttled. This
   reproduces the hold's heat on a mesh board (pi-relayyy), not only on the original Pi, and shows the capped hold
