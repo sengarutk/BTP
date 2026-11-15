@@ -168,6 +168,15 @@ class Decoder:
         return int(nms(out).shape[0])
 
 
+def board_temp():
+    """CPU temperature in C (thermal_zone0: the Pi's cpu-thermal), None if unavailable. 15 Nov 2026: the camera Pi
+    reached 83 C with its soft limit active during the first T10 sweep."""
+    try:
+        return int(open("/sys/class/thermal/thermal_zone0/temp").read()) / 1000.0
+    except (OSError, ValueError):
+        return None
+
+
 def frames_of(d):
     fs = sorted(glob.glob(os.path.join(d, "**", "*.jpg"), recursive=True))
     if not fs:
@@ -316,6 +325,7 @@ def cmd_send(a, dev):
     port = int(port)
     for im in imgs[:3]:
         enc(im)
+    temp0 = board_temp()
     if a.rate_mbit > 0:
         shape(a.dev, port, a.rate_mbit, True, a.shaper)
     try:
@@ -392,7 +402,7 @@ def cmd_send(a, dev):
             shape(a.dev, port, a.rate_mbit, False, a.shaper)
     lat = [(res[k][0] - sent[k][0]) * 1e3 for k in sent if k in res]
     on = sum(1 for x in lat if x <= a.deadline_ms)
-    print(json.dumps({"option": a.option, "rate_mbit": a.rate_mbit, "shaper": a.shaper, "seconds": a.seconds, "fps": a.fps,
+    print(json.dumps({"option": a.option, "rate_mbit": a.rate_mbit, "shaper": a.shaper, "temp_start_c": temp0, "temp_end_c": board_temp(), "seconds": a.seconds, "fps": a.fps,
                       "sent": len(sent), "results": len(lat), "on_time": on, "on_time_fps": on / a.seconds,
                       "lat_p50_ms": float(np.median(lat)) if lat else None,
                       "lat_p90_ms": float(np.percentile(lat, 90)) if lat else None,

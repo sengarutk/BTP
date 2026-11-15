@@ -403,3 +403,8 @@ Found and fixed in `split_live.py` before any sweep run, none changing the predi
 Also logged per run: `tx_ms_median` (send → acknowledged, when the sender waited), every latency, the capture times of
 frames without a result. One 8-s smoke test at 1 Mbit/s from pi-receiver may have overlapped the first seconds (worker
 start-up) of guard run 2 at 21:19; no other test traffic during a run.
+- **First sweep stopped 23:05 (camera heat).** pi-receiver reached 83.4 °C with its soft temperature limit active
+  (flag 0x8) after ~27 back-to-back runs; the code encoder's median time drifted from the bench's 226 ms to
+  229-247 ms. The 17 code runs are archived (`_superseded/t10_sweep_code_runs_no_precool/`) and re-run with a pre-cool
+  (each run starts below 60 °C) and the board's start and end temperature in every result. The 10 JPEG runs (2 ms
+  encode, not CPU-bound) are kept. Order changed: the channel-aware runs (they need the laptop on mains) first, T10 after.

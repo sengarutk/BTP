@@ -1,0 +1,6 @@
+sender pi-sender 10.1.0.12/24 neigh=4 temp=59.8C throttled=0x0 disk=18G clock=-1495.14s (clock offset: logged, not corrected)
+camera pi-relayyy 10.1.0.11/24 neigh=4 temp=56.5C throttled=0xe0000 disk=15G clock=+1.65s
+camera2 pi-receiver 10.1.0.13/24 neigh=4 temp=52.7C throttled=0xe0000 disk=46G clock=+1.10s
+jetson nano 10.1.0.14/24 neigh=4 temp=50.4C mode=15W disk=17G clock=+82.84s (clock offset: logged, not corrected)
+jetson2 nano2 10.1.0.15/24 neigh=4 temp=52.3C mode=25W disk=93G clock=-0.12s
+HEALTH_OK

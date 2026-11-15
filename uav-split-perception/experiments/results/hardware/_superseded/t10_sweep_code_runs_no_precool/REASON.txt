@@ -1,0 +1,1 @@
+15 Nov 2026 23:05 IST: code runs (onboard encoder on the Pi CPU) of the first sweep, made without pre-cool: pi-receiver reached 83.4 C with its soft temperature limit active (flag 0x8) and the encoder's median time drifted from the bench's 226 ms to 229-247 ms. Re-run with a pre-cool below 60 C and start/end temperatures logged. The JPEG runs (2 ms encode) were kept.

@@ -7,10 +7,10 @@
 #   Results: t10/sweep/<rate>__<option>__r<k>|htb.json (one JSON line from split_live send). Resumable.
 # Needs only camera2 and jetson2 on the mesh (no tunnel). Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); . $D/mesh_hosts.sh; H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-R=$H/${T10_OUT:-t10/sweep}; mkdir -p $R; PY=/home/sengar/btp_env/bin/python; PORT=48190; SEC=${T10_SEC:-45}
+R=$H/${T10_OUT:-t10/sweep}; mkdir -p $R; PY=/home/sengar/btp_env/bin/python; PORT=48190; SEC=${T10_SEC:-45}; COOL=${COOL:-60}
 S="printf '%s\n' \"\$PW\" | sudo -S -p ''"
 for c in camera2 jetson2; do
-  $D/mesh_ssh.sh $c "grep -q 'netem rate' ~/hwbench/split_live.py" 2>/dev/null || { echo "$c has a split_live.py without the netem shaper: push first"; exit 1; }
+  $D/mesh_ssh.sh $c "grep -q 'board_temp' ~/hwbench/split_live.py" 2>/dev/null || { echo "$c has a split_live.py without board_temp: push first"; exit 1; }
 done
 stop_server() { $D/mesh_ssh.sh jetson2 "P=\$(pgrep -f '^python -W ignore [s]plit_live.py serve'); [ -n \"\$P\" ] && kill \$P; true"; }
 cleanup() {
@@ -41,7 +41,12 @@ for pass in 1 2; do
     [ -s $R/$L.json ] && continue
     until $D/mesh_ssh.sh camera2 true 2>/dev/null && $D/mesh_ssh.sh jetson2 "pgrep -f '[s]plit_live.py serve'" >/dev/null 2>&1; do
       echo "$(date +%T) camera2 or the server unreachable/down, restarting server"; start_server || sleep 60; done
-    echo "=== $(date +%T) pass $pass $L  (done: $(ls $R/*.json 2>/dev/null | wc -l))"
+    for i in $(seq 90); do       # pre-cool (15 Nov 2026: the camera Pi reached 83 C, soft limit active, in the first sweep)
+      TC=$($D/mesh_ssh.sh camera2 "vcgencmd measure_temp | tr -dc 0-9." 2>/dev/null)
+      [ -n "$TC" ] && python3 -c "import sys; sys.exit(float('$TC') >= $COOL)" && break
+      sleep 20
+    done
+    echo "=== $(date +%T) pass $pass $L  start ${TC} C  (done: $(ls $R/*.json 2>/dev/null | wc -l))"
     out=$($D/mesh_ssh.sh camera2 "PW='$PI2_PW'; cd ~/hwbench; $S timeout $((SEC+120)) $PY -W ignore split_live.py send --to $JET2_IP:$PORT --option $opt --seconds $SEC --rate-mbit $rate --shaper $SH --dev bat0 2> results/t10_send.err | tail -1" 2>/dev/null)
     if echo "$out" | grep -q '"on_time"'; then echo "$out" > $R/$L.json; echo "$out" | cut -c1-220
     else echo "NO RESULT for $L: $(echo "$out" | tail -c 200)"; cleanup; fi
