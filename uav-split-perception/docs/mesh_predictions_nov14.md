@@ -262,6 +262,6 @@ pi-relayyy and pi-receiver at the same time. Total on-time results per second (b
 - **T6.5 held.** Nano2 ran YOLOv8m on 831 and 858 of its frames (the two cameras, mission rep 1).
 - Three runs made while the laptop ran on battery were archived and re-run on mains
   (`_superseded/vid_campaign_two_nov_laptop_on_battery/`).
-- **T8R.4 (YOLO11n at 480 px, added 15 Nov 2026 19:10 before any re-test run)** v4.1+ now offers YOLO11n at 480 px onboard
+- **T8R.4 (YOLO11n at 480 px, added 15 Nov 2026 19:02 before any re-test run)** v4.1+ now offers YOLO11n at 480 px onboard
   (mAP 0.1666 on DET val, against s320's 0.1367; expected ~175-200 ms on the Pi, inside the deadline) instead of 640 px.
   In the mission's total blackout at least half of v4.1+'s onboard frames use it.
