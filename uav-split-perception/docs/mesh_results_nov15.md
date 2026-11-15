@@ -35,6 +35,8 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | G.2 | the 76.5 °C guard costs no accuracy | held (sAP 0.1228 vs 0.1263; freshness 0.841 vs 0.854) | the lower guard is free |
 | C.1-C.3 | a per-camera cap on paths in flight recovers T6's loss | **none held** (sAP +0.002; −2.5 deadline-met/s; paths 5-19 ms faster) | per-camera rule cannot see the other camera; swarm-wide coordination (as S6's pull) is the open fix |
 
+| T10.1-T10.4 | paper 1: break-even goodput of the learned codes, predicted from board benches | **held, held, partly (3/4), held** | no break-even on a Pi 5 camera (rate-limited link); with a shared-radio (token-bucket) link the 4 KB code wins at 0.5 Mbit/s: the advantage depends on how the link is slow |
+
 ## Fixes found and made during the sessions (all before the runs that test them)
 
 - Multihop relay kept on Nano1 with five boards (`arun_mesh.sh`).

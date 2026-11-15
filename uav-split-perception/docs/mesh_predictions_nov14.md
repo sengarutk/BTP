@@ -429,3 +429,34 @@ start-up) of guard run 2 at 21:19; no other test traffic during a run.
   229-247 ms. The 17 code runs are archived (`_superseded/t10_sweep_code_runs_no_precool/`) and re-run with a pre-cool
   (each run starts below 60 °C) and the board's start and end temperature in every result. The 10 JPEG runs (2 ms
   encode, not CPU-bound) are kept. Order changed: the channel-aware runs (they need the laptop on mains) first, T10 after.
+
+### Results: T10 sweep (`experiments/results/hardware/t10/sweep/`, 51 runs of 45 s, 15-16 Nov 2026 22:36-00:48 IST)
+
+pi-receiver → Nano2, netem shaper (each payload serialised at the goodput). Code runs all with pre-cool (start
+58-68 °C; encoder median 229-237 ms for k4, 180-189 ms for k2, against the cold bench's 226 / 174). Accuracy-weighted
+on-time rate = on-time results/s × mAP/base, measured | model:
+
+| goodput | best measured | jpeg_q20 | jpeg_q35 | k4_c4 | k4_c8 | k2_c8 |
+|---|---|---|---|---|---|---|
+| 0.5 | jpeg_q20 | 0.15 \| 0.01 | 0 \| 0 | 0 \| 0 | 0 \| 0 | 0 \| 0 |
+| 0.75 | jpeg_q20 | 2.09 \| 2.44 | 0.69 \| 0.21 | 0 \| 0.48 | 0 \| 0 | 0 \| 0 |
+| 1 | jpeg_q20 | 3.33 \| 3.59 | 2.43 \| 2.82 | 0.22 \| 2.21 | 0 \| 0 | 0 \| 0 |
+| 2 | jpeg_q20 | 5.74 \| 5.98 | 5.41 \| 5.29 | 2.10 \| 2.27 | 0.43 \| 2.82 | 0 \| 0.10 |
+| 4 | jpeg_q20 | 9.46 \| 8.97 | 9.00 \| 10.58 | 2.26 \| 2.27 | 2.68 \| 2.91 | 4.37 \| 4.37 |
+| 8 | jpeg_q35 | 14.41 \| 17.93 | 14.70 \| 21.16 | 2.22 \| 2.27 | 2.79 \| 2.91 | 4.31 \| 4.37 |
+
+- **T10.1 held.** A JPEG option is best at every goodput from 0.5 to 8 Mbit/s; no learned code wins anywhere: on a
+  Pi 5 camera there is no break-even goodput, as paper 1's model predicted from the board benches.
+- **T10.2 held.** The codes never exceed 5.0 results/s (k4 4.0-4.3, k2 4.9-5.0); jpeg_q20 reaches 15.8 and 24.1 at
+  4 and 8 Mbit/s.
+- **T10.3 partly held** (3 of 4): jpeg_q20 measured 5.6 / 9.6 on-time/s against the model's 6.0 / 10.0, and k4_c4 4.0
+  against 4.3 at 2 Mbit/s; k4_c4 at 1 Mbit/s 0.4 against 4.2 (−90 %): its latency (306 ms) sits 6 ms past the
+  deadline, so the model's knife-edge p_on (0.97 at 292 ms) flips with an 8 ms slower warm encoder (235 vs 226.5 ms).
+- **T10.4 held.** At 0.75 Mbit/s k4_c4 met the deadline on 0 % of its frames, jpeg_q20 on 79-81 %.
+- The model's largest misses are at 8 Mbit/s (JPEG 20-30 % below the model: the Pi's sender, not the link, limits
+  near 30 frames/s) and on knife-edge deadlines; neither changes the ranking.
+- **Arm htb** (token bucket: small payloads leave at line rate, as on a shared radio with a low average goodput):
+  k4_c4 4.16 on-time/s at 0.5 Mbit/s against jpeg_q20 0.82 (weighted 2.21 against 0.49), a tie at 0.75 (2.13 / 2.15),
+  JPEG ahead at 1 Mbit/s (3.46 / 2.09). A break-even appears only there: when low goodput comes from sharing a fast
+  radio, a 4 KB code still gets through on time where a 20 KB JPEG does not. For paper 1: the codes' advantage depends
+  on how the link is slow (rate-limited vs shared), which the model's t_tx = 8b/R does not distinguish.
