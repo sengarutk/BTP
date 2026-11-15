@@ -263,7 +263,9 @@ hold cap and guard at 76.5 °C (= 80 − 3.5).
   Theorem 3 (b) states peak ≤ guard + δ_fast with δ_fast measured on the board (3.9 °C here) and makes no claim that
   any particular guard keeps the peak below 80 °C; the 76.5 °C guard is reported as keeping the board out of
   throttling in every run (T4 and re-test) and at ≥ 80 °C for at most 0.02 % of the time.
-- **G.2** pending (scored while T10 runs, when the laptop worker is idle).
+- **G.2 held.** sAP (forecaster) 0.1228 ± 0.0024 (3 runs) against T4's v41guard 0.1263: −0.0035, within 0.01;
+  P(AoI ≤ 300 ms) 0.841 against 0.854, 1.3 points lower, within 3. (Unpaired: the T4 runs were on 14-15 Nov;
+  `vid_campaign_heat_nov2_summary.md`.) The lower guard costs nothing measurable in accuracy.
 
 ### Results: T6 / D1 (`vid_campaign_two_nov/`, 12 valid runs × 2 cameras, 15 Nov 2026; `vid_campaign_two_nov_summary.json`)
 

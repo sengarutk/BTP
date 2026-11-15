@@ -1,0 +1,1 @@
+15 Nov 2026: laptop on battery from 22:34 IST (charger dropped; weaker ground GPU). mesh_mission__v41j2__r1 ran 22:29-22:35 (on battery for its last ~1.5 min); static_good__v41j2cap__r1 was stopped 21 s after start when the campaign was paused. Both re-run on mains.
