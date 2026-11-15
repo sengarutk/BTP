@@ -324,3 +324,46 @@ per-camera sAP static_good v41j1 0.1813 / v41j2 0.1436; mesh_mission 0.1667 / 0.
 - **C.1** v41j2cap's per-camera sAP (forecaster) is at least 0.02 above v41j2's in each scenario (mean of the pairs).
 - **C.2** v41j2cap is within 0.015 of T6's v41j1 in each scenario (the cap recovers most of the loss).
 - **C.3** v41j2cap's Jetson results' median latency is at least 25 ms below v41j2's.
+
+## T10: break-even goodput of paper 1's learned split codes, predict then measure (written 15 Nov 2026 21:25 IST, before any sweep run)
+
+Pair: camera pi-receiver (Pi 5, CPU, 4 threads) → server Nano2 (25 W, `jetson_clocks`, CUDA fp16), over the mesh.
+Inputs, board-measured only (`experiments/results/hardware/t10/`): `split_live.py bench` on each board (60 VisDrone-VID
+frames), one-way delay 1.9 ms (20 pings, RTT 3.8 ms); accuracy = mAP@[.5:.95] on DET val from the learned-bottleneck
+study. The first server bench used ultralytics' NMS (161 ms on the Jetson against 29.5 ms for the detector) and is
+archived (`t10/_superseded_ultralytics_nms/`); split_live now uses the campaigns' fast NMS.
+
+| option | onboard ms (Pi) | payload KB | server ms (Nano2) | mAP |
+|---|---|---|---|---|
+| jpeg_q20 | 2.3 | 19.7 | 36.4 | 0.1597 |
+| jpeg_q35 | 2.3 | 26.9 | 36.4 | 0.1883 |
+| jpeg_q90 | 2.7 | 80.6 | 37.5 | 0.2563 |
+| k4_c4 | 226.5 | 4.3 | 28.3 | 0.1417 |
+| k4_c8 | 227.8 | 8.3 | 28.3 | 0.1810 |
+| k2_c8 | 174.4 | 27.0 | 31.7 | 0.2332 |
+
+Paper 1's model (`t10_predict.py`, `t10/t10_prediction.json`), U = f · p_on · A/A_ref per goodput (Mbit/s):
+
+| goodput | best | jpeg_q20 | jpeg_q35 | jpeg_q90 | k4_c4 | k4_c8 | k2_c8 |
+|---|---|---|---|---|---|---|---|
+| 0.5 | (none useful) | 0.01 | 0 | 0 | 0 | 0 | 0 |
+| 0.75 | jpeg_q20 | 2.44 | 0.21 | 0 | 0.48 | 0 | 0 |
+| 1 | jpeg_q20 | 3.59 | 2.82 | 0 | 2.21 | 0 | 0 |
+| 2 | jpeg_q20 | 5.98 | 5.29 | 0.01 | 2.27 | 2.82 | 0.10 |
+| 4 | jpeg_q35 | 8.97 | 10.58 | 5.76 | 2.27 | 2.91 | 4.37 |
+| 8 | jpeg_q35 | 17.93 | 21.16 | 9.60 | 2.27 | 2.91 | 4.37 |
+
+- **T10.1** No learned code delivers the highest accuracy-weighted on-time rate (on-time results/s × mAP/base) at any
+  swept goodput: on a Pi 5 camera there is **no break-even goodput**; the code's encoder prefix (174-228 ms on the CPU)
+  caps it at 4.3-5 frames/s, and below ~0.7 Mbit/s, where its small payload would matter, the prefix plus transmission
+  already misses the 300 ms deadline.
+- **T10.2** The codes' measured frame rate stays at or below 5 frames/s at every goodput; jpeg_q20 reaches at least
+  12 frames/s at 4 Mbit/s or more.
+- **T10.3** At 1 and 2 Mbit/s the measured on-time rate of jpeg_q20 and k4_c4 is within 30 % of the model's f · p_on
+  (6.0 / 4.3 at 1 Mbit/s, 10.0 / 4.3 at 2 Mbit/s).
+- **T10.4** At 0.75 Mbit/s k4_c4 meets the deadline on fewer than half of its frames (model p_on 0.21) and jpeg_q20
+  on most (0.95).
+
+Sweep (after the channel-aware test, so the channel is otherwise quiet): `split_live.py send` from pi-receiver to
+Nano2, rates 0.5, 0.75, 1, 2, 4, 8 Mbit/s (htb on the destination port only) × jpeg_q20, jpeg_q35, k4_c4, k4_c8, k2_c8
+× 45 s, order shuffled, 1 repetition (2 at 0.75-2 Mbit/s, where the options are closest).

@@ -103,12 +103,12 @@ def run_layers(det, x, first, last, y=None):
 
 
 def nms(out):
-    try:
-        from ultralytics.utils.nms import non_max_suppression
-    except ImportError:
-        from ultralytics.utils.ops import non_max_suppression
+    """The campaigns' server NMS (hwbench.fast_nms, conf 0.01, IoU 0.45, 100 boxes; adaptive.py worker). 15 Nov 2026:
+    ultralytics' non_max_suppression took 161 ms on the Jetson against 29.5 ms for the whole detector, so the first
+    bench's server times measured that NMS, not the server the campaigns run."""
+    from hwbench import fast_nms
     p = out[0] if isinstance(out, (list, tuple)) else out
-    return non_max_suppression(p.float(), 0.01, 0.45, max_det=300)[0]
+    return fast_nms(p, 0.01, 0.45, 100)
 
 
 class Encoder:

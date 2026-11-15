@@ -1,0 +1,1 @@
+Server times measured ultralytics NMS (161 ms on the Jetson), not the campaigns' fast_nms; re-benched 15 Nov 2026 21:10
