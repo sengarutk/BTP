@@ -122,6 +122,10 @@ budget +0.0008 in the lab.
   18d181f1). Replayed on tonight's 6-minute energy-run logs it moves from 37.3 to 30-33 °C, budget 2.8 → 3.0-3.4 W, still
   drifting at 6 minutes and dipping briefly to 2.2 W after a hot start. T8.1 is kept as written; whether 6 minutes is
   long enough to reach 3.1-3.7 W is part of what it tests.
+- *Note, 15 Nov 2026 06:40, after the first T8 run and before any valid one:* that run priced onboard YOLO11n at 0 J
+  (no entry in `energy_constants.json`), ran it onboard throughout (4.68 W, peak 87 °C) and was archived
+  (`_superseded/vid_campaign_plus_nov_yolo11n_unpriced/`). YOLO11n is now priced at its measured 0.96 J (commit 99dd89c3).
+  The predictions are kept as written.
 - **T8.4 (heat)** Neither strategy is at or above 80 °C for more than 2 % of any run (6-minute runs: one 40-s total
   blackout), and neither throttles.
 
