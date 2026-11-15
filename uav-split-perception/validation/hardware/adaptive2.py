@@ -181,6 +181,19 @@ def scenario_phases(name, phase_s, seed):
     raise ValueError(name)
 
 
+ONBOARD_CLOCK = {}      # onboard option -> CPU clock cap in MHz (--onboard-clocks; DVFS, 16 Nov 2026); absent: default
+CPUFREQ_MAX = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"   # policy0: all four Pi 5 cores
+
+
+def set_max_clock(mhz):
+    """Cap the CPU clock (root: adaptive2.py runs under sudo). Errors are ignored: the option then runs at the default."""
+    try:
+        with open(CPUFREQ_MAX, "w") as h:
+            h.write(str(int(mhz) * 1000))
+    except OSError:
+        pass
+
+
 class Onboard:
     """The Pi's own inference engine, in its own thread (3 torch threads), one frame at a time."""
 
@@ -188,8 +201,28 @@ class Onboard:
         torch.set_num_threads(threads)
         self.dev, self.half = torch.device(device), device == "cuda"
         wf = lambda m: m if m.endswith("_visdrone") else m + suffix  # noqa: E731   (--weight-suffix)
-        self.models = {k: load_model(os.path.join(weights_dir, f"{wf(m)}.pt"), self.dev, self.half)
-                       for k, (m, _) in ONBOARD_VARIANTS.items()}
+        _loaded = {}
+        for k, (m, _) in ONBOARD_VARIANTS.items():      # a clock twin (v@f) shares its variant's model
+            if wf(m) not in _loaded:
+                _loaded[wf(m)] = load_model(os.path.join(weights_dir, f"{wf(m)}.pt"), self.dev, self.half)
+        self.models = {k: _loaded[wf(m)] for k, (m, _) in ONBOARD_VARIANTS.items()}
+        self.clock_default = None
+        if ONBOARD_CLOCK:
+            try:
+                self.clock_default = int(open(CPUFREQ_MAX).read()) // 1000
+            except (OSError, ValueError):
+                self.clock_default = None
+            if self.clock_default:          # never leave the clock capped: restore at exit and on SIGTERM / SIGINT
+                import atexit
+                import signal
+                cd = self.clock_default
+                atexit.register(set_max_clock, cd)
+
+                def _stop(signum, frame, cd=cd):
+                    set_max_clock(cd)
+                    raise SystemExit(128 + signum)
+                signal.signal(signal.SIGTERM, _stop)
+                signal.signal(signal.SIGINT, _stop)
         from ultralytics.data.augment import LetterBox
         try:
             from ultralytics.utils.nms import non_max_suppression
@@ -212,8 +245,10 @@ class Onboard:
         # the first campaigns (YOLO11 etc., 15 Nov 2026): with only a prior, one slow first inference above the deadline
         # (YOLO11n-480: 596 ms) made the controller never choose it again, so its estimate never corrected itself.
         # n320 / s320 / s640 keep their measured priors, as in every earlier run.
-        timed = list(ONBOARD_VARIANTS) if self.dev.type == "cuda" else \
+        timed = list(ONBOARD_VARIANTS) if self.dev.type == "cuda" or ONBOARD_CLOCK else \
             [k for k in ONBOARD_VARIANTS if k not in ("n320", "s320", "s640")]
+        # with clock twins every option is timed here, under the same conditions, so neither clock starts with an
+        # advantage from a prior measured elsewhere (DVFS, 16 Nov 2026)
         if timed:
             img = np.zeros((360, 640, 3), np.uint8)
             for k in timed:
@@ -226,6 +261,16 @@ class Onboard:
         threading.Thread(target=self._run, daemon=True).start()
 
     def _infer(self, img, var):
+        f = ONBOARD_CLOCK.get(var)
+        if f and self.clock_default:
+            set_max_clock(f)
+        try:
+            return self._infer_at(img, var)
+        finally:
+            if f and self.clock_default:
+                set_max_clock(self.clock_default)
+
+    def _infer_at(self, img, var):
         with torch.inference_mode():
             im = self.lb[var](image=img)
             x = (torch.from_numpy(np.ascontiguousarray(im[..., ::-1].transpose(2, 0, 1))).float() / 255).unsqueeze(0)
@@ -394,11 +439,28 @@ def main():
     ap.add_argument("--weight-suffix", default="", help="'_visdrone': every model is its VisDrone fine-tuned version "
                     "(onboard files <model>_visdrone.pt; accuracy keys <model>_visdrone_<res>_<q>, so --acc must hold "
                     "them, e.g. variant_accuracy_visdrone_ft.json; the workers must load the same weights)")
+    ap.add_argument("--onboard-clocks", default="",
+                    help="DVFS (16 Nov 2026): comma list of CPU clock caps in MHz, e.g. 1800; every onboard variant v gets a "
+                         "twin v@f run with the clock capped at f, priced at E(v) x the measured energy ratio of "
+                         "--dvfs-profile and timed at start-up; the existing prices choose the clock")
+    ap.add_argument("--dvfs-profile", default="dvfs_profile.json",
+                    help="dvfs_profile.py output (its 'summary'): per-clock J per inference of each variant")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
     global ONBOARD_VARIANTS
     _all = dict(ONBOARD_VARIANTS, **ONBOARD_EXTRA)
     ONBOARD_VARIANTS = {k: _all[k] for k in a.onboard_variants.split(",")}
+    DVFS_RATIO = {}
+    if a.onboard_clocks:
+        _dv = json.load(open(a.dvfs_profile))["summary"]
+        _top = str(max(int(f) for f in _dv))
+        for f in a.onboard_clocks.split(","):
+            for v in [k for k in ONBOARD_VARIANTS if "@" not in k]:
+                if v in _dv.get(str(int(f)), {}) and v in _dv[_top]:   # only variants the profile measured
+                    k = f"{v}@{int(f)}"
+                    ONBOARD_VARIANTS[k] = ONBOARD_VARIANTS[v]
+                    ONBOARD_CLOCK[k] = int(f)
+                    DVFS_RATIO[k] = _dv[str(int(f))][v]["j_per_inference"] / _dv[_top][v]["j_per_inference"]
     write_out = lambda obj: write_json_atomic(obj, a.out)  # noqa: E731
     acc_tab = json.load(open(a.acc))
     REF_ACC = acc_tab[f"yolov8s{a.weight_suffix}_640_raw"]
@@ -786,6 +848,8 @@ def main():
         had no entry and ran onboard unpriced in the first v4.1+ run, 4.7 W)."""
         if not ec:
             return 0.0
+        if var in DVFS_RATIO:                          # clock twin: its variant's energy x the measured ratio
+            return e_onboard(var.split("@")[0]) * DVFS_RATIO[var]
         if var in ec["infer_j"]:
             return ec["infer_j"][var]
         w = max(ec["infer_j"][v] / ec["infer_ms"][v] for v in ec["infer_j"] if v in ec.get("infer_ms", {}))
@@ -1279,6 +1343,8 @@ def main():
                                "wait_ms_median": float(np.median(w_)) if w_ else None}
     if a.hold_max_c != 85.0 or a.guard_hard_c > 0:   # recorded only when set (older runs: hold 85, no guard)
         out["thermal_rules"] = {"hold_max_c": a.hold_max_c, "guard_hard_c": a.guard_hard_c, "guard_blocks": guard_n[0]}
+    if ONBOARD_CLOCK:                                 # DVFS: the clock options, their energy ratios and default
+        out["dvfs"] = {"clocks": ONBOARD_CLOCK, "energy_ratio": DVFS_RATIO, "default_mhz": onboard.clock_default}
     if mpc["plan_ms"]:                 # accumo: planner time per frame on this board
         pm = np.array(mpc["plan_ms"])
         out["mpc"] = {"horizon": a.mpc_horizon, "context": bool(a.mpc_context), "plan_ms_median": float(np.median(pm)),

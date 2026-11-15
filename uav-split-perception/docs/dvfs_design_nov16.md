@@ -47,3 +47,11 @@ the inference, which the in-run start-up timing per (v, f) includes. Start-up ti
 Board test (after Phase 4, predictions committed first): v41final vs v41final + DVFS on the 24-min mission (heat) and on
 mesh_mission/random (40-s phases), paired reps; expected effect: lower Pi power and temperature in blackout-heavy
 phases at the same sAP.
+
+## Implementation and board test of the mechanism (16 Nov 2026, adaptive2.py `--onboard-clocks`, `--dvfs-profile`)
+
+`validation/hardware/tests/test_dvfs_onboard.py` on pi-receiver (as root): default clock 2400 MHz read at start; start-up
+timing s320 152 ms, s320@1800 180 ms (both timed under the same conditions); the twin shares its variant's model object;
+during s320 inferences the cap read 2400, during s320@1800 1800; after them 2400; a SIGTERM in the middle of a capped
+inference exits 143 with the cap restored to 2400. Not yet run in a campaign: the arun_mesh strategy and cleanup line
+(`cpuinfo_max_freq > scaling_max_freq` on the camera) are added before the DVFS campaign, after Phase 4.
