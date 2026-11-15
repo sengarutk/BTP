@@ -754,7 +754,15 @@ def main():
         return energy["mu"] + energy["lam_t"]
 
     def e_onboard(var):
-        return ec["infer_j"].get(var, 0.0) if ec else 0.0
+        """Measured J per onboard inference. A variant without a measured value is priced at the measured extra power
+        of the most expensive measured variant (J / ms) times its own learned time, never 0 (fixed 15 Nov 2026: YOLO11n
+        had no entry and ran onboard unpriced in the first v4.1+ run, 4.7 W)."""
+        if not ec:
+            return 0.0
+        if var in ec["infer_j"]:
+            return ec["infer_j"][var]
+        w = max(ec["infer_j"][v] / ec["infer_ms"][v] for v in ec["infer_j"] if v in ec.get("infer_ms", {}))
+        return w * onboard.ms.get(var, PRIOR_ONBOARD_MS.get(var, 1000.0))
 
     def e_offload(res, q, nb, r_mbps):
         if not ec:

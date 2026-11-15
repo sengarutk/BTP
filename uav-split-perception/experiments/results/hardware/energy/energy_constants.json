@@ -4,12 +4,14 @@
   "infer_j": {
    "n320": 0.32397567287325607,
    "s320": 0.7412595575824268,
-   "s640": 2.2288031881780817
+   "s640": 2.2288031881780817,
+   "n640y11": 0.96
   },
   "infer_ms": {
    "n320": 78.48049550011638,
    "s320": 175.82579199915926,
-   "s640": 718.3216454996
+   "s640": 718.3216454996,
+   "n640y11": 305.0
   },
   "encode_j": {
    "640q90": 0.005459144789806417,
@@ -60,6 +62,9 @@
    ],
    "p_at_85c_w": 4.220131587042058,
    "method": "linear fit of 6-min steady temperatures against mean power, levels below the throttle limit"
+  },
+  "notes": {
+   "n640y11": "added 15 Nov 2026: YOLO11n-640 (VisDrone) onboard, from the 25 Oct onboard runs (vid_campaign_onboard_*_vd_y11_pi2/pi3, 6 runs): 297-316 ms per frame, 4.80-5.24 W in the first 60 s (unthrottled); (5.05 - 1.894 W idle) x 0.305 s = 0.96 J, the same definition as the other infer_j entries"
   }
  },
  "jetson": {
