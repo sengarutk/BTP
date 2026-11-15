@@ -219,9 +219,9 @@ have) and pull one ahead's turn order on the server's clock (commit cf8edb50). S
   per stream (the first runs, with mixed board clocks, gave pi-relayyy's streams about a fifth of the mean).
 - **S6.6** Under v4.1's rule the two Pis' streams get similar shares (within a factor of 2), as in the first runs.
 
-## T8 re-test: room-following budget with the per-board fit (`PLUS_OUT=vid_campaign_plus_nov2 tools/campaign_plus_nov.sh`; written 15 Nov 2026 18:40, before any of these runs)
+## T8 re-test: room-following budget with the per-board fit (`PLUS_OUT=vid_campaign_plus_nov2 tools/campaign_plus_nov.sh`; written 15 Nov 2026 18:18, before any of these runs)
 
-Change (commit after 18:35): `energy_constants.json` has per-board thermal fits; pi-relayyy 29.72 + 11.66 P (from the
+Change (commit c7f90d3e): `energy_constants.json` has per-board thermal fits; pi-relayyy 29.72 + 11.66 P (from the
 energy test). The budget rule's target stays 68.9 °C (the shared fit at 2.8 W); this board's fit turns it into
 (68.9 − 29.7) / 11.66 = 3.36 W at the start, and the estimate then updates only while the power is steady (smoothing
 600 s). Offline on the T8 and energy logs the earlier observer settled at 34-41 °C against the board's 29.7, because the
@@ -233,7 +233,7 @@ vs v41plus, 4 reps).
   budget is higher than v41's (the capped hold, not the budget, governs the blackout heat).
 - **T8R.3** sAP (forecaster): v4.1+ at least v41's in the mean of 4 pairs in each scenario, or within 0.005.
 
-## Theorem 3 re-test: the guard lowered by the measured fast-mode overshoot (`HEAT_OUT=vid_campaign_heat_nov2 HEAT_STRATS=v41guard765 HEAT_REPS=3 tools/campaign_heat_nov.sh`; written 15 Nov 2026 18:50, before any of these runs)
+## Theorem 3 re-test: the guard lowered by the measured fast-mode overshoot (`HEAT_OUT=vid_campaign_heat_nov2 HEAT_STRATS=v41guard765 HEAT_REPS=3 tools/campaign_heat_nov.sh`; written 15 Nov 2026 18:20, before any of these runs)
 
 Finding behind it (T4 guard runs, 24 crossings of 78 °C): after each crossing the measured temperature rose another
 1.6-3.5 °C (mean 2.1), peaking 16-27 s later, with the power right after the crossing at 3.7-4.2 W. A first-order plant
