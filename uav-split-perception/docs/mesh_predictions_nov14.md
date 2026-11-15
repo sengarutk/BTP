@@ -141,3 +141,15 @@ phase medians): 53-55 / 48-53 / 60-64 / 53-59 ms. Ticks run: 99.9 / 99.8 / 96.8-
   30 frames/s already saturates the paths is wrong on these boards.
 - **T7.3 mostly held.** Encode ahead +10.4 % (within 0-14 %), 17-20 % of sends encoded ahead (≥ 5 %), but latency
   +5-6 ms, just over the 5 ms predicted.
+
+### Results: T9 (`vid_campaign_topology_nov/`, 20 runs, 15 Nov 2026 03:50-05:49 IST; `vid_campaign_topology_nov_summary.json`)
+
+sAP with forecaster: direct link v41 0.2010 ± 0.0013, hier 0.1495 ± 0.0016; multihop v41 0.1355 ± 0.0028, hier
+0.1497 ± 0.0017.
+- **T9.1 held.** Direct link: v41 ahead by 0.0515 ± 0.0024, 5 of 5 pairs.
+- **T9.2 held.** Multihop: hier ahead by 0.0142 ± 0.0013, 5 of 5 pairs.
+- **T9.3 held.** The reversal (hier − v41 in multihop minus on the direct link) is +0.064 to +0.069 in every one of the
+  5 repetitions (one-sided permutation p = 1/32).
+- **T9.4 held.** Camera power differs by 0.005 W (direct) and 0.012 W (multihop).
+- This replaces the brief's two-campaign evidence (23 and 24 Oct, 3 multihop pairs) with one campaign, the two topologies
+  alternating in time.
