@@ -24,7 +24,7 @@ from report_rescore import HW, perm_p, tci
 ORDER = ["v41", "v41e", "v41e12", "heat", "heate", "noprice", "fixlap", "aoithr", "hier",
          "accumo", "leaf", "freshonly", "v41b36",      # the board session of 14-15 Nov 2026
          "v41cap", "v41guard", "v41plus",               # 15 Nov: T4, T8
-         "v41j1", "v41j2", "v41j2cap", "v41guard765", "v41final", "v41dvfs"]                              # 15 Nov: T6 (per camera: repetition tag r<k>_c1 / r<k>_c2)
+         "v41j1", "v41j2", "v41j2cap", "v41guard765", "v41final", "v41dvfs", "v41final24", "v41dvfs24"]                              # 15 Nov: T6 (per camera: repetition tag r<k>_c1 / r<k>_c2)
 PAIRS = [(m, "v41") for m in ORDER[1:]] + [("heate", "heat")]
 CAMPAIGNS = {"short": "vid_campaign_mesh2", "long": "vid_campaign_mesh2_long", "mesh3": "vid_campaign_mesh3",
              "mesh4": "vid_campaign_mesh4", "energy_nov": "vid_campaign_energy_nov",
@@ -35,7 +35,8 @@ CAMPAIGNS = {"short": "vid_campaign_mesh2", "long": "vid_campaign_mesh2_long", "
              "plus_nov2": "vid_campaign_plus_nov2", "heat_nov2": "vid_campaign_heat_nov2",  # 15 Nov re-tests: T8R, G
              "two_cap": "vid_campaign_two_cap",
              "final_nov": "vid_campaign_final_nov", "heat_final": "vid_campaign_heat_final",  # 16 Nov: Phase 4
-             "dvfs_heat": "vid_campaign_dvfs_heat", "dvfs_short": "vid_campaign_dvfs_short"}  # 16 Nov: Phase 5  # 15 Nov: channel-aware follow-up (C)
+             "dvfs_heat": "vid_campaign_dvfs_heat", "dvfs_short": "vid_campaign_dvfs_short",  # 16 Nov: Phase 5
+             "budget_nov": "vid_campaign_budget_nov"}  # 16 Nov: budget follow-up  # 15 Nov: channel-aware follow-up (C)
 KEYS = ["sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300",
         "deadline_met_fps", "lat_median_ms", "pi_w", "pi_temp_c", "pi_throttled", "jetson_w"]
 
