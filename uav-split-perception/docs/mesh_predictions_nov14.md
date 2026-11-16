@@ -643,3 +643,20 @@ throttled.
   Pi's video break-even goodput in paper 1 (1.06 Mbit/s with x264 ultrafast) is therefore an upper bound, and with
   the measured times more video settings qualify, so it can only fall. Next (laptop): re-run the video analysis with
   these measured Pi encode times for the paper's number.
+
+## F.2 fix: no frame to a late path while a timely one exists (written 16 Nov 2026 before any of these runs; see the commit time)
+
+Cause (Phase 4 multihop runs): the controller predicts the two-hop laptop path's deadline probability honestly (median
+p_on 0.000; actual on-time 40 %, median 337 ms) but still sends it ~21 % of frames, because the value uses p_late
+(arrival within 1 s) and an idle path with positive value gets a frame; the laptop's traffic is relayed by Nano1, the
+Jetson path's radio (Jetson median latency 98-101 ms against the planner's 84). Fix `--late-path-skip 0.5`: while at
+least one path's best option has p_on ≥ 0.5, a path whose best option has p_on < 0.5 is re-picked among its own
+on-time options, or gets no frame. Fallback unchanged (no timely path: as before). `v41fix24` = v41final24 + the fix.
+`FINAL_OUT=vid_campaign_fix_nov FINAL_STRATS="v41final24 v41fix24" FINAL_REPS=5 campaign_final_nov.sh` (20 runs).
+References (Phase 4, unpaired): multihop accumo 0.1501, v41final 0.1339.
+
+- **FX.1** multihop: v41fix24 − v41final24 ≥ +0.008 sAP+fc (half of the planner's 0.016 lead), mean of 5 pairs, and
+  the laptop path takes < 5 % of frames.
+- **FX.2** mesh_mission: v41fix24 − v41final24 ≥ −0.003 (the fix costs nothing where the laptop is one hop away).
+- **FX.3** multihop: the Jetson path's median latency is ≥ 8 ms lower with the fix.
+- **FX.4** Theorem 1 holds update by update on all 20 runs; no run throttles.

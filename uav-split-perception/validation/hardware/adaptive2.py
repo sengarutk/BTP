@@ -439,6 +439,11 @@ def main():
     ap.add_argument("--weight-suffix", default="", help="'_visdrone': every model is its VisDrone fine-tuned version "
                     "(onboard files <model>_visdrone.pt; accuracy keys <model>_visdrone_<res>_<q>, so --acc must hold "
                     "them, e.g. variant_accuracy_visdrone_ft.json; the workers must load the same weights)")
+    ap.add_argument("--late-path-skip", type=float, default=0.0,
+                    help="F.2 fix (16 Nov 2026): while at least one path's best option is predicted on time (p_on >= this), "
+                         "a path predicted late (p_on below it) gets no frame: in multihop the two-hop laptop path's "
+                         "results arrived in a median 337 ms (predicted p_on 0) yet took 21 %% of the frames and shared "
+                         "the relay's airtime with the Jetson path. 0 = off (every earlier run)")
     ap.add_argument("--onboard-clocks", default="",
                     help="DVFS (16 Nov 2026): comma list of CPU clock caps in MHz, e.g. 1800; every onboard variant v gets a "
                          "twin v@f run with the clock capped at f, priced at E(v) x the measured energy ratio of "
@@ -700,6 +705,7 @@ def main():
               "edge_served": [], "soc": 1.0, "clk_log": [], "lam_t": 0.0, "t_log": [], "t0w": time.time(), "e_perc_j": 0.0, "t_last": None}
     fresh = {"lam": 0.0, "aoi_ms": float("inf"), "hist": [], "log": [], "last": 0.0}
     guard_n = [0]                      # decisions at which the hard guard (--guard-hard-c) blocked onboard
+    late_skip_n = [0]                  # path proposals removed by --late-path-skip (F.2 fix)
     props_now = [None]                 # this tick's path values (A_* policies), for --encode-ahead
     ahead = {"cur": None, "sent": 0, "replaced": 0, "wait_ms": []}   # --encode-ahead: the frame waiting for its path
 
@@ -1176,6 +1182,19 @@ def main():
                 if a.guard_hard_c > 0 and energy["temp"] == energy["temp"] and energy["temp"] >= a.guard_hard_c:
                     props["onboard"] = (props["onboard"][0], 0.0, 0.0)    # hard guard: no onboard start while hot
                     guard_n[0] += 1
+                if a.late_path_skip > 0:             # F.2 fix: no frame to a late path while a timely one exists
+                    timely = [p_ for p_ in paths if props[p_][2] >= a.late_path_skip and props[p_][1] > 0]
+                    if timely:
+                        for p_ in paths:
+                            if props[p_][2] < a.late_path_skip:    # re-pick among this path's on-time options
+                                ok_ = {v_: path_value(p_, v_) for v_ in path_variants(p_)}
+                                ok_ = {v_: r_ for v_, r_ in ok_.items() if r_[1] >= a.late_path_skip and r_[0] > 0}
+                                if ok_:
+                                    v_ = max(ok_, key=lambda k_: ok_[k_][0])
+                                    props[p_] = (v_, ok_[v_][0], ok_[v_][1])
+                                else:
+                                    props[p_] = (props[p_][0], 0.0, props[p_][2])
+                                late_skip_n[0] += 1
                 if pol == "A_paths":
                     if max(props["laptop"][2], props["jetson"][2]) > 0.2:
                         props.pop("onboard")
@@ -1343,6 +1362,8 @@ def main():
                                "wait_ms_median": float(np.median(w_)) if w_ else None}
     if a.hold_max_c != 85.0 or a.guard_hard_c > 0:   # recorded only when set (older runs: hold 85, no guard)
         out["thermal_rules"] = {"hold_max_c": a.hold_max_c, "guard_hard_c": a.guard_hard_c, "guard_blocks": guard_n[0]}
+    if a.late_path_skip > 0:
+        out["late_path_skip"] = {"threshold": a.late_path_skip, "skipped": late_skip_n[0]}
     if ONBOARD_CLOCK:                                 # DVFS: the clock options, their energy ratios and default
         out["dvfs"] = {"clocks": ONBOARD_CLOCK, "energy_ratio": DVFS_RATIO, "default_mhz": onboard.clock_default}
     if mpc["plan_ms"]:                 # accumo: planner time per frame on this board

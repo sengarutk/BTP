@@ -59,6 +59,7 @@ case $ST in
   v41dvfs) POL=A_full; X="$DEC --energy-aware --power-budget 2.8 --fresh-target 0.95 --hold-max-c 76.5 --guard-hard-c 76.5 --contention-ms 10 --onboard-variants s320,s640,n480y11 --acc variant_accuracy_visdrone_ft11.json --onboard-clocks 1800 --dvfs-profile dvfs_profile.json";;   # 16 Nov: v41final + the CPU clock as a third knob (1.8 GHz twins of the onboard variants)
   v41final24) POL=A_full; X="$DEC --energy-aware --power-budget 2.4 --fresh-target 0.95 --hold-max-c 76.5 --guard-hard-c 76.5 --contention-ms 10 --onboard-variants s320,s640,n480y11 --acc variant_accuracy_visdrone_ft11.json";;   # 16 Nov: v41final with a 2.4 W budget (F.3: is 2.8 W too generous?)
   v41dvfs24) POL=A_full; X="$DEC --energy-aware --power-budget 2.4 --fresh-target 0.95 --hold-max-c 76.5 --guard-hard-c 76.5 --contention-ms 10 --onboard-variants s320,s640,n480y11 --acc variant_accuracy_visdrone_ft11.json --onboard-clocks 1800 --dvfs-profile dvfs_profile.json";;   # 16 Nov: + DVFS at the tighter budget
+  v41fix24) POL=A_full; X="$DEC --energy-aware --power-budget 2.4 --fresh-target 0.95 --hold-max-c 76.5 --guard-hard-c 76.5 --contention-ms 10 --onboard-variants s320,s640,n480y11 --acc variant_accuracy_visdrone_ft11.json --late-path-skip 0.5";;   # 16 Nov: v41final24 + the F.2 fix (no frame to a late path while a timely one exists)
   *) echo "unknown strategy $ST"; exit 2;;
 esac
 [ $ST = hier ] && PATHS=jetson || PATHS=laptop,jetson
