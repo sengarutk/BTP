@@ -635,7 +635,7 @@ throttled.
 
 - **T11.1 held.** x264 ultrafast CRF 23: 2.99 ms per frame.
 - **T11.2 did not hold.** x265 medium CRF 23: 66.9 ms (predicted ≥ 100).
-- **T11.3 did not hold.** Pi/laptop ratio 1.5-3.2 for video (predicted 2.5-8; JPEG's 3.8 does not carry over).
+- **T11.3 did not hold.** Pi/laptop ratio 1.55-3.08 for video (predicted 2.5-8; JPEG's 3.8 does not carry over).
 - **T11.4 held.** `h264_v4l2m2m` fails to open (the Pi 5 has no hardware H.264 encoder).
 - **T11.5 did not hold.** x265 medium at CRF 18/23 (97 / 67 ms) fits within the codes' Pi frame time (174-226 ms):
   admitted. The rule scales host processing by the full-model time ratio (`evaluation/break_even_rule.py`, e_c =
