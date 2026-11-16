@@ -703,3 +703,13 @@ Paired v41fix24 − v41final24 (5 reps, t-test). Path shares and median latencie
 - For paper 2: the final controller gets `--late-path-skip 0.5`: it closes the planner's multihop lead (+0.015 vs
   +0.016) at no significant cost on the one-hop mission (−0.003 ± 0.016); the residual risk (a failed timely
   prediction with the late backup skipped) is stated. F.2's limitation becomes a found-and-fixed result.
+
+## Tunnel overhead (replaces A8's bridge re-run; written 16 Nov 2026 before the bench, see the commit time)
+
+The laptop path in every campaign is camera → mesh hop → pi-sender → Ethernet → laptop, inside an SSH tunnel.
+`validation/hardware/tunnel_bench.py`: echo server on the camera (port 48101, idle boards); clients from the laptop
+through the tunnel and from pi-sender directly over the mesh hop; 100 round trips each of 1 KB and 83 KB (a 640 q90
+frame) with a 1-byte reply.
+- **TB.1** The tunnel + cable adds 1-10 ms to the median 1 KB round trip.
+- **TB.2** The 83 KB transfer's goodput through the tunnel is within 30 % of the direct mesh hop's (the mesh hop, not
+  the tunnel, is the bottleneck).
