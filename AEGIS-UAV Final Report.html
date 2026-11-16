@@ -94,7 +94,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 
 <main>
 <header>
-  <div class="eyebrow">AEGIS-UAV · final report · 26 October 2026, updated 12 November 2026</div>
+  <div class="eyebrow">AEGIS-UAV · final report · 26 October 2026, updated 16 November 2026</div>
   <h1>Perception for small camera drones: where to compute, how fresh, at what energy and heat</h1>
   <p class="lede">A camera drone has to detect objects in its video, live. This project built a three-tier drone testbed, a family of adaptive controllers that decide per frame where to run detection, and measured them over shared Wi-Fi and a real drone mesh network, with the standard streaming-accuracy metric on aerial video.</p>
   <p class="meta">Hardware: Raspberry Pi 5 camera drones · Jetson Orin Nano edge drone · laptop ground station (RTX 4050) · Wi-Fi and an ad-hoc batman-adv mesh (AegisSwarm). Data: VisDrone2019. Detailed lab record: the AEGIS-UAV Results Brief (25 parts); code: <code>uav-split-perception/</code>.</p>
@@ -103,7 +103,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 <section id="summary">
   <h2>Summary</h2>
   <div class="facts">
-    <div><b>≈ 1,150</b><span>live hardware runs in 19 campaigns</span></div>
+    <div><b>≈ 1,150</b><span>live hardware runs in 19 campaigns, plus 237 on the mesh boards on 14–16 Nov</span></div>
     <div><b>≈ 4×</b><span>streaming accuracy of offloading over the best onboard detector (12× over onboard YOLOv8s)</span></div>
     <div><b>≈ 2×</b><span>streaming accuracy from the motion forecaster</span></div>
     <div><b>−1.5 W</b><span>Pi power from the energy price, same accuracy, no throttling</span></div>
@@ -111,10 +111,10 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   </div>
   <p style="margin-top:16px">The work answers four questions with measurements:</p>
   <ol class="find">
-    <li><b>Where should the drone compute?</b> Off the drone. A Pi 5 needs 0.3–3 s per frame and throttles within about a minute; the best onboard detector (YOLO11n) reaches 0.047 streaming AP with the forecaster, while offloading over the mesh reaches 0.18–0.21. Sending a JPEG beats splitting the network in every placement measured ; INT8 split computing is lossless, but its payload is 2–12× a JPEG. Learned and jointly trained codes beat JPEG only below a break-even goodput that a tested rule predicts (0 exceptions in every check): below about 2 Mbit/s on the Pi, and 1.5 Mbit/s even on the Jetson once the camera can use low-delay video (4.14).</li>
+    <li><b>Where should the drone compute?</b> Off the drone. A Pi 5 needs 0.3–3 s per frame and throttles within about a minute; the best onboard detector (YOLO11n) reaches 0.047 streaming AP with the forecaster, while offloading over the mesh reaches 0.18–0.21. Sending a JPEG beats splitting the network in every placement measured ; INT8 split computing is lossless, but its payload is 2–12× a JPEG. Learned and jointly trained codes beat JPEG only below a break-even goodput that a tested rule predicts (0 exceptions in every check): below about 2 Mbit/s on the Pi, and 1.5 Mbit/s even on the Jetson once the camera can use low-delay video (4.14). On the boards a JPEG was the best option at every goodput tested, and with measured Pi encode times no code wins once video is allowed (4.16).</li>
     <li><b>How should the drone decide?</b> Per frame, using every computer in parallel, with an objective that values a result by the accuracy it still has when it is used. Adaptive control beats fixed offloading once links fail (mesh mission: 0.186 against 0.105) and survives total blackouts on the Pi alone.</li>
     <li><b>How fast do aerial detections go stale, and can that be undone?</b> They lose 58 % of their accuracy within 100 ms. A cheap forecaster that follows the camera's and each object's motion keeps 60 % at 267 ms (7 % without) and roughly doubles streaming accuracy. The scheduler must use the decay curve after forecasting (+0.0045 sAP, 20 pairs).</li>
-    <li><b>What do energy and heat cost?</b> Onboard inference is about 80× the energy of sending a JPEG and drives the fanless Pi into throttling. Pricing the drone's measured power (dual ascent) and the freshness of its detections keeps the same or better accuracy with about 1–1.5 W less, no throttling and 98 % freshness. A heat price adds nothing beyond that; pricing the edge drone's energy saves only 0–10 % of its power (about 4 % at a budget that costs almost no accuracy).</li>
+    <li><b>What do energy and heat cost?</b> Onboard inference is about 80× the energy of sending a JPEG and drives the fanless Pi into throttling. Pricing the drone's measured power (dual ascent) and the freshness of its detections keeps the same or better accuracy with about 1–1.5 W less, no throttling and 98 % freshness. A heat price adds nothing beyond that; pricing the edge drone's energy saves only 0–10 % of its power (about 4 % at a budget that costs almost no accuracy). On the boards, capping the blackout hold takes the time at ≥ 80 °C from 16.0–25.6 % to 0.2–0.7 % at the same accuracy (4.16).</li>
   </ol>
 </section>
 
@@ -273,7 +273,28 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   <li><b>Noisy relays</b> (calibrated swarm simulator; 144 settings with 3–8 dB shadowing and 0–10 % loss per hop): the adaptive policy relays at most 1.9 % of frames, and relaying changes its rate by at most 4 %. The shared access point, not the relay link, limits the swarm.</li>
   <li><b>Calibration.</b> Over 44,524 offloaded frames, v4.1 predicted a 94.4 % chance of meeting the deadline and 98.5 % did: cautious, not optimistic.</li>
 </ul>
-<p>Paper 2 builds at 9 pages. The hard guard, the capped hold and the room-following budget are replay results until the board session confirms them.</p>
+<p>Paper 2 builds at 9 pages. The hard guard, the capped hold and the room-following budget are replay results until the board session confirms them. <b>16 Nov:</b> the boards confirmed the capped hold and the guard (with a measured overshoot term) but not the room-following budget, which was dropped (4.16).</p>
+<h3>4.16 On the mesh boards: heat, the final controller, two cameras and paper 1's rule (14–16 Nov)</h3>
+<p>Five boards on the batman-adv mesh, 237 controller runs in 17 campaigns plus the break-even sweep, the encoder bench, the pull bench and a clock profile; predictions committed before every first run (<code>docs/mesh_predictions_nov14.md</code>), every verdict in one table (<code>docs/mesh_results_nov15.md</code>). Details: Results Brief 19.24–19.31.</p>
+<div class="tbl"><table>
+  <tr><th>Question</th><th>Measured on the boards</th><th>Verdict</th></tr>
+  <tr><td>Does the blackout hold heat the board, and does the cap fix it? (24-min mission, 4-min total blackout)</td><td>v4.1: peak 85.9–87.0 °C, ≥ 80 °C for 16.0–25.6 % of the time, throttled. Capped hold (78 °C): peak 80.4–81.5 °C, 0.2–0.7 %, never throttled, at the same accuracy. Final controller: peak 79.3 °C, 0.0 %</td><td>Replay result confirmed</td></tr>
+  <tr><td>Theorem 3 (the guard's peak bound)</td><td>After the guard acts the die keeps heating: overshoot 2.4–3.9 °C over 8 guarded runs. With the guard at 76.5 °C the peak was 79.3–80.4 °C (one sample at 80.4), no run throttled</td><td>Holds as peak ≤ guard + δ<sub>fast</sub>, δ<sub>fast</sub> = 3.9 °C measured</td></tr>
+  <tr><td>Theorem 1 (power, update by update)</td><td>593 runs, 143,999 price updates, 0 unexplained</td><td>Holds on every run</td></tr>
+  <tr><td>Final controller against v4.1 (5 paired repetitions)</td><td>mesh mission +0.0006 ± 0.0032 (3/5, p 0.645); multihop −0.0032 ± 0.0032 (0/5, p 0.049)</td><td>Costs nothing on one hop</td></tr>
+  <tr><td>Against the AccuMO-style planner</td><td>mesh mission +0.0067 ± 0.0019 (5/5, p &lt; 0.001); multihop −0.0162 ± 0.0034 (0/5, p &lt; 0.001): v4.1 sent 24 % of its frames to the two-hop laptop, whose results arrived late (median 278 ms) and shared the relay's radio. The planner and the LEAF-style weight drew 0.36–0.60 W less</td><td>The planner won multihop: <b>not held</b> before the fix</td></tr>
+  <tr><td>The fixes: a 2.4 W budget and the late-path skip</td><td>Budget 2.4 − 2.8 W: Pi power −0.31 / −0.38 W, sAP −0.0004 / −0.0015 (n.s.). Skip of paths predicted late: multihop +0.0151 ± 0.0134 (5/5, p 0.036) (the planner's lead was 0.0162); laptop share 24.0 → 5.4 %; one-hop mission −0.0031 ± 0.0159 (3/5, p 0.614)</td><td>Power gap closed by the budget; multihop gap closed by the skip, with a small one-hop cost (narrowly not held)</td></tr>
+  <tr><td>v4.1+ (YOLO11n-480 onboard, room-following budget)</td><td>Never throttled; the room-following budget held its power but missed its temperature target under bursty load</td><td>Room-following budget dropped</td></tr>
+  <tr><td>The CPU clock as a third knob</td><td>1.8 GHz is the energy minimum (27 % less energy per inference than 2.4 GHz). The controller chose it for 57–67 % of its onboard inferences, yet power changed by −0.017 W and sAP by +0.0022 / −0.0047: the price spends the saving on more inferences</td><td>Implemented, measured, neutral</td></tr>
+  <tr><td>Two camera drones on one channel</td><td>A second Jetson costs accuracy (static 0.1813 → 0.1436; mission 0.1667 → 0.1294 per camera); a per-camera cap does not fix it. A swarm-wide pull-one-ahead coordinator holds 19.9–21.6 on-time results/s at 8 streams where the v4.1 rule collapses to 2.9–3.7</td><td>Receiver-driven scheduling works on the mesh; fairness across hosts not shown</td></tr>
+  <tr><td>Topology (5 repetitions, one campaign)</td><td>hier − v4.1: multihop +0.0142 (5/5), one hop −0.0515 (0/5)</td><td>Topology reversal confirmed</td></tr>
+  <tr><td>Frame rate</td><td>On-time results/s at 15 / 30 / 60 fps: 14.9 / 25.6 / 31.0; 30 fps with encode-ahead 28.3</td><td>The radio idles between 30-fps ticks</td></tr>
+  <tr><td>Paper 1: the break-even goodput, live (T10)</td><td>The best measured option at every goodput from 0.5 to 8 Mbit/s was a JPEG; with a token-bucket link the 4 KB code wins at 0.5 Mbit/s</td><td>The rule's prediction held</td></tr>
+  <tr><td>Paper 1: encode times measured on the Pi (T11)</td><td>Pi/laptop 1.55–3.08 for video, 4.5 for JPEG, against the rule's scale of 63.5. With measured times the headline code's Pi B<sub>be</sub> is 1.72 Mbit/s against JPEG (rule 1.88) and 0.27 against JPEG + video (rule 1.06); 0 winning cells with video. YOLO11s codes: 0.68–1.53 Mbit/s, 0 wins</td><td>Paper 1's Pi numbers replaced by measured ones; verdict unchanged and sharper</td></tr>
+  <tr><td>The deadline model on the hardware</td><td>1,482,492 offloaded frames of 241 runs: ECE 0.055; observed ≥ predicted in every bin; frames predicted near 0 arrived on time 64 % of the time</td><td>Never over-confident; pessimistic at the low end</td></tr>
+  <tr><td>The SSH tunnel on the laptop path</td><td>83 KB frame 20.0–20.3 ms through it against 16.0–16.3 ms over the direct hop</td><td>A small measured artefact (+2–4 ms)</td></tr>
+</table></div>
+<p><b>The final controller</b> (paper 2): v4.1 + the capped hold and guard at 76.5 °C + YOLO11n-480 onboard (timed at start-up, priced at its measured energy) + a 10 ms contention term + a 2.4 W budget + the late-path skip. Removed by decision (no equipment): airflow over the Pi and flight. Cut as redundant after these results: joint fades, a governor comparison, YOLO11m on the ground, the remaining board profiles, the batman-adv overhead test and the bridge re-run (the tunnel's cost was measured instead). Paper 2 builds at 10 pages and paper 1 at 19, every number generated.</p>
 </section>
 
 <section id="negative">
@@ -292,6 +313,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <li>The YOLO11s codes never win on the Pi: their onboard layers leave 12 ms of the deadline.</li>
     <li>The priced controller still left the board hot 19–27 % of the time on 24-minute missions with blackouts, through its blackout hold; at +10 °C the 2.8 W budget is too high and a higher price cap alone does not fix it.</li>
     <li>The constrained deep-RL baseline trails v4.1, and its first two training attempts failed (an under-charged radio; a multiplier that wound up until the policy only skipped).</li>
+    <li>On the mesh boards (14–16 Nov): the guard's peak bound needs a measured fast-mode term (3.9 °C); the room-following budget missed its temperature target under bursty load; the CPU clock is neutral under a power budget; a second edge drone on one shared channel costs accuracy and a per-camera cap does not fix it; the AccuMO-style planner beat the greedy controller in multihop until the late-path skip, which costs a little on one hop; pull-one-ahead fairness across hosts was not shown; the deadline probabilities are pessimistic at the low end.</li>
   </ul>
 </section>
 
@@ -304,14 +326,14 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td>Streaming AP measured on aerial video in a distributed drone system</td><td>Streaming perception; StreamYOLO; StreamFlow (streaming perception on UAV video, TCSVT 2025)</td><td><span class="chip lo">medium–low</span></td></tr>
     <tr><td>Topology decides direct vs hierarchical, measured on one mesh</td><td>A²-UAV multi-hop testbed; hierarchical air-ground DRL (simulated)</td><td><span class="chip mid">medium</span></td></tr>
     <tr><td>Measured negative results on heat and edge-energy pricing</td><td>None found</td><td><span class="chip mid">medium</span></td></tr>
-    <tr><td>Admission coordination with radio link health for drone swarms</td><td>JCAB (bandwidth and configuration); DroneCOCoNet</td><td><span class="chip mid">medium</span>, simulation only</td></tr>
+    <tr><td>Admission coordination with radio link health for drone swarms</td><td>JCAB (bandwidth and configuration); DroneCOCoNet; receiver-driven transport (NDP, Homa)</td><td><span class="chip mid">medium</span>: the pull-one-ahead coordinator measured on the mesh (4.16)</td></tr>
     <tr><td>Aerial staleness curves and a cheap camera-aligned forecaster</td><td>Liu et al. MobiCom 2019; PVT++ ICCV 2023</td><td><span class="chip mid">medium–low</span></td></tr>
     <tr><td>Parallel multi-server, per-frame adaptation</td><td>Odessa, Chameleon, Elf</td><td><span class="chip lo">low</span></td></tr>
     <tr><td>A tested break-even rule for when any split (post-hoc, learned, jointly trained, entropy-coded, inter-frame coded) can beat the image, against JPEG, a JPEG-tuned detector, video, learned and ROI image codecs, with an energy version</td><td>Auto-Split; SC2 benchmark; BottleFit; Matsubara and Levorato; learned feature compression (Yuan 2022, 2024); information limits of task-oriented coding</td><td><span class="chip mid">medium</span>: the rule is simple; testing it this widely is new</td></tr>
     <tr><td>A sample-path power guarantee checked on every logged update, a budget rule for the board's temperature, and a peak bound under a hard guard</td><td>Drift-plus-penalty (Neely); thermal virtual queues; heat-and-memory-constrained offloading</td><td><span class="chip mid">medium</span>: standard theory, new check on hardware</td></tr>
   </table></div>
   <div class="note">
-    <p><b>Verdict.</b> Novel as a whole, narrowly stated: no published work found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI, TMC 2024) and streaming perception on UAV video alone (StreamFlow, TCSVT 2025) are published, as an external review with Consensus confirmed on 26 October. Ready in substance for a UAV or edge-computing workshop or an IEEE networking conference. A top venue would additionally need two or more camera drones on the mesh, the published scheduler measured on the testbed, and ideally a flight or outdoor test. Since 30 October a learned feature-compression baseline is measured (it beats JPEG on bits, and on the Pi end to end only at the lowest goodputs) and an AccuMO-style planner is re-implemented (in the trace replay, where it ties v4.1, and in the board code, where its campaign is scripted). Fitting now: IEEE IoT Journal, ACM TECS, IEEE ICC/Globecom/WoWMoM, UAV and edge workshops. The closest single work is A²-UAV (INFOCOM 2023; Computer Networks 2025). Since 10 November both papers have been hardened on the laptop. Paper 1 has a tested break-even rule; paper 2 has a power guarantee checked on every logged update, a thermal budget rule, a hard-guard peak bound and a deep-RL baseline (4.14, 4.15). Honest venue view: paper 1 is realistic for IEEE TMC and a strong fit for IoT-J. Paper 2 is more realistic for TMC; INFOCOM only if the board session confirms the capped hold. Full analysis and sources: the AEGIS-UAV Novelty Brief.</p>
+    <p><b>Verdict.</b> Novel as a whole, narrowly stated: no published work found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI, TMC 2024) and streaming perception on UAV video alone (StreamFlow, TCSVT 2025) are published, as an external review with Consensus confirmed on 26 October. Ready in substance for a UAV or edge-computing workshop or an IEEE networking conference. A top venue would additionally need two or more camera drones on the mesh, the published scheduler measured on the testbed, and ideally a flight or outdoor test. Since 30 October a learned feature-compression baseline is measured (it beats JPEG on bits, and on the Pi end to end only at the lowest goodputs) and an AccuMO-style planner is re-implemented (in the trace replay, where it ties v4.1, and in the board code, where its campaign is scripted). Fitting now: IEEE IoT Journal, ACM TECS, IEEE ICC/Globecom/WoWMoM, UAV and edge workshops. The closest single work is A²-UAV (INFOCOM 2023; Computer Networks 2025). Since 10 November both papers have been hardened on the laptop. Paper 1 has a tested break-even rule; paper 2 has a power guarantee checked on every logged update, a thermal budget rule, a hard-guard peak bound and a deep-RL baseline (4.14, 4.15). Honest venue view: paper 1 is realistic for IEEE TMC and a strong fit for IoT-J. Paper 2 is more realistic for TMC; INFOCOM only if the board session confirms the capped hold. <b>Update 16 Nov:</b> the board sessions confirmed the capped hold and the guard (with a measured overshoot term), measured two camera drones on the mesh and the published-style planner on the testbed (it won multihop until the late-path skip), and replaced paper 1's Pi numbers with measured ones (4.16). The swarm coordinator is now a measured receiver-driven scheduler (as in datacentre transport, NDP and Homa), not a simulation; the CPU-clock knob is neutral. Full analysis and sources: the AEGIS-UAV Novelty Brief.</p>
   </div>
 </section>
 
@@ -319,15 +341,15 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   <h2><span class="n">07</span>Limitations</h2>
   <ul>
     <li>No flight: video is replayed and the boards sit in one room, one radio hop apart.</li>
-    <li>One camera drone on the mesh; results for larger swarms come from the calibrated simulator.</li>
-    <li>3 repetitions per mesh cell (in the 24-minute mesh runs 5 for v4.1 and heat, 3 for the Jetson-priced variants; 5 in the Wi-Fi energy campaigns); some controller variants differ only slightly.</li>
-    <li>The laptop joins the mesh through SSH port forwards on the ground radio, which acknowledges data before it reaches the laptop.</li>
+    <li>At most two camera drones and two edge drones on the mesh, on one shared channel; results for larger swarms come from the calibrated simulator.</li>
+    <li>3 repetitions per mesh cell (in the 24-minute mesh runs 5 for v4.1 and heat, 3 for the Jetson-priced variants; 5 in the Wi-Fi energy campaigns, and 5 paired repetitions in the 14–16 Nov final, late-path and topology campaigns); some controller variants differ only slightly.</li>
+    <li>The laptop joins the mesh through SSH port forwards on the ground radio, which acknowledges data before it reaches the laptop; measured cost +2–4 ms per frame.</li>
     <li>batman-adv is used as is; real flying-network studies found it can trail Babel and OLSR in throughput and loss, and its penalty here is not characterised.</li>
     <li>Pi power is the sum of its PMIC rails (a lower bound); the Jetson's power was modelled in the first energy campaign, logged live for every strategy on 11 October and, on the mesh, for the strategies that price it (model within 0.11 W of measurement).</li>
     <li>The forecaster assumes constant velocity and a similarity transform for the camera; an IMU-assisted or learned forecaster may add more.</li>
-    <li>Learned feature compression is now tested (4.14), but the MPEG feature-coding standard was not run, a learned per-region quality model (AccMPEG) was not tried, and the YOLO11s device times are scaled from YOLOv8s measurements.</li>
-    <li>The video options assume an error-free stream, and their encode times on the boards are scaled from the laptop, not measured.</li>
-    <li>The capped hold, the hard guard and the room-following budget are trace-replay results; the replay ranks hot time correctly but misses its level by 16 points.</li>
+    <li>Learned feature compression is now tested (4.14), but the MPEG feature-coding standard was not run, a learned per-region quality model (AccMPEG) was not tried, and the YOLO11s Jetson times are scaled from YOLOv8s measurements (on the Pi they are measured within 2 % of the rule).</li>
+    <li>The video options assume an error-free stream; their Pi encode times are now measured (4.16), their Jetson times are still scaled from the laptop.</li>
+    <li>The capped hold and the hard guard are measured on the boards (4.16); the guard's bound needs a measured fast-mode term (3.9 °C). No airflow or flight test (no equipment). The deadline probabilities are pessimistic at the low end; a recalibrated estimate is untested.</li>
   </ul>
 </section>
 
@@ -348,25 +370,25 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td>The RL baseline's cost under-charged the radio, which stays on until the acknowledgement</td><td>First training attempt invalid</td><td>Energy model matched to the billed power within 3 %; attempts archived and reported</td></tr>
     <tr><td>The YOLO11s analysis re-timed its codes on every run</td><td>Win count moved between runs (223 against 220)</td><td>Timings measured once and kept; re-runs identical</td></tr>
     <tr><td>Paper 2 build checks read a stale LaTeX log</td><td>Clean builds reported that were not checked</td><td>Built with pdflatex + bibtex; now builds clean at 9 pages</td></tr>
+    <tr><td>Windows-launched board sessions lost PATH and environment; a leftover link logger; a charger that dropped three times (14–16 Nov)</td><td>One session stopped at its health check; two paused; no result lost</td><td>Full paths, environment exported, exact-PID clean-up; sessions resumed on mains; battery runs archived and re-run</td></tr>
+    <tr><td>Four tool faults in the break-even sweep (slow NMS, token-bucket credit, sender order, warm-up)</td><td>Found by smoke tests before the sweep</td><td>Fixed before the first counted run</td></tr>
   </table></div>
 </section>
 
 <section id="next">
   <h2><span class="n">09</span>What is left</h2>
   <div class="cols">
-    <div class="card"><h3>Needs the boards</h3><ul>
-      <li>Two camera drones on the mesh (the third Pi), to measure contention and the coordinator.</li>
-      <li>A short outdoor or tethered flight with real distances.</li>
-      <li>The AccuMO-style planner against v4.1 and the LEAF-style weight on the mesh (ported and tested; <code>tools/campaign_mesh4.sh</code>, 45 runs, about 6 h).</li>
-      <li>5 repetitions for the headline mesh comparisons; runs with a fan on the Pi.</li><li>One mesh campaign with both topologies (direct and multihop) and 5 repetitions, to isolate the topology reversal.</li>
-      <li>The board session prepared on 10–12 Nov (predictions committed in <code>docs/board_session_predictions_nov.md</code>): the planner campaign (<code>REPS=2 tools/campaign_mesh4.sh</code>, 18 runs), the energy test (<code>campaign_energy_nov.sh</code>) and the noisy relay (<code>campaign_relaynoise_nov.sh</code>), about 5 h. Add the capped hold and the hard guard, the room-following budget, a run with airflow over the Pi, and video encode times measured on the Pi.</li>
+    <div class="card"><h3>Boards: done (14–16 Nov)</h3><ul>
+      <li>Every board test is done (4.16, Results Brief 19.24–19.31): two camera drones, the planner and the LEAF-style weight on the mesh with 5 repetitions, both topologies in one campaign, the capped hold and the guard, the energy test, the noisy relay, video encode times on the Pi and the live break-even sweep. Nothing more is planned on the mesh.</li>
+      <li>Not done, by decision: a flight or tethered test and airflow over the Pi (no equipment); stated as limitations.</li>
     </ul></div>
     <div class="card"><h3>Needs the team</h3><ul>
       <li><s>Commit and push the work</s> Done 30 Oct: <code>main</code> is on GitHub (<code>bf77b3ca</code>); the 29 Oct commit was split in two to fit GitHub's 2 GiB push limit.</li>
       <li>Turn off energy-efficient Ethernet on the laptop.</li>
       <li>Paper 1's arXiv version is merged into <code>main</code>; it still needs the authors, the repository URL and your approval. Its journal version (the break-even rule) is drafted in <code>paper/drafts/design_rule.tex</code>.</li>
-      <li>Both papers: a rewrite around the new results and a fresh audit (about 1–2 days). Paper 2 is now 9 pages: check the venue's limit.</li>
-      <li>Pick the board day and check the venue deadlines.</li>
+      <li>Both papers now include the board results (paper 1: 19 pages, paper 2: 10 pages, every number generated). Check each venue's page limit.</li>
+      <li>Verify the full title of one new paper 2 reference (Sun 2026) against the publisher's record.</li>
+      <li>Check the venue deadlines.</li>
     </ul></div>
   </div>
 </section>
@@ -386,6 +408,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td>Paper 2 (priced controller)</td><td><code>paper2/main.tex</code>, <code>paper2/make_metrics.py</code>, <code>paper2/theory_check.py</code>, <code>paper2/guard_theorem.py</code>; replay sweeps <code>validation/hardware/replay_theory_sweep.py</code>; RL baseline <code>validation/hardware/rl_baseline.py</code></td></tr>
     <tr><td>Predictions and their results</td><td><code>docs/*predictions*.md</code>; roadmap <code>docs/novelty_roadmap_nov11.md</code>, task list <code>docs/laptop_tasks_nov11.md</code></td></tr>
     <tr><td>Overload and clock (10 Nov)</td><td><code>validation/hardware/overload_model.py</code>, <code>clock_effect_analysis.py</code></td></tr>
+    <tr><td>Mesh board sessions (14–16 Nov)</td><td>predictions and verdicts <code>docs/mesh_predictions_nov14.md</code>, <code>docs/mesh_results_nov15.md</code>; session log <code>docs/mesh_session_nov14.md</code>; every number <code>scripts/report_mesh_nov16.py</code>; campaigns <code>tools/campaign_final_nov.sh</code>, <code>campaign_dvfs_nov.sh</code>, <code>campaign_t10_nov.sh</code>; paper 1 board numbers <code>evaluation/board_metrics_paper1.py</code>, <code>pi_measured_break_even.py</code></td></tr>
     <tr><td>Fine-tuned weights</td><td><code>weights/*_visdrone.pt</code>; training runs in <code>experiments/finetune/</code></td></tr>
   </table></div>
 </section>
@@ -408,10 +431,28 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <tr><td>Mesh campaign 2</td><td>Mesh</td><td class="num">82</td><td>Every pricing strategy; 24-min missions</td></tr>
     <tr><td>Mesh campaign 3</td><td>Mesh</td><td class="num">18</td><td>Jetson energy price at 1.2 W, Jetson power logged</td></tr>
     <tr><td>Onboard YOLO11</td><td>Mesh Pis</td><td class="num">30</td><td>YOLO11 n/s/m onboard sAP and throttling</td></tr>
-    <tr><td><b>Total</b></td><td></td><td class="num"><b>≈ 1,150</b></td><td>plus the 1,150-placement hardware sweep, simulation grids and re-scoring of every run</td></tr>
+    <tr><td>Capped hold and guard at 78 °C, 24-min mission with blackout (<code>heat_nov</code>)</td><td>Mesh</td><td class="num">15</td><td>14–16 Nov</td></tr>
+    <tr><td>Guard at 76.5 °C (<code>heat_nov2</code>)</td><td>Mesh</td><td class="num">3</td><td>14–16 Nov</td></tr>
+    <tr><td>Final controller, 24-min mission (<code>heat_final</code>)</td><td>Mesh</td><td class="num">3</td><td>14–16 Nov</td></tr>
+    <tr><td>AccuMO-style planner and LEAF-style weight, first pass (<code>mesh4</code>)</td><td>Mesh</td><td class="num">18</td><td>14–16 Nov</td></tr>
+    <tr><td>Final controller against v4.1, AccuMO, LEAF (5 paired repetitions) (<code>final_nov</code>)</td><td>Mesh</td><td class="num">40</td><td>14–16 Nov</td></tr>
+    <tr><td>2.4 W against 2.8 W budget (<code>budget_nov</code>)</td><td>Mesh</td><td class="num">18</td><td>14–16 Nov</td></tr>
+    <tr><td>The late-path skip (<code>fix_nov</code>)</td><td>Mesh</td><td class="num">20</td><td>14–16 Nov</td></tr>
+    <tr><td>v4.1+ re-test (<code>plus_nov</code>)</td><td>Mesh</td><td class="num">16</td><td>14–16 Nov</td></tr>
+    <tr><td>v4.1+ re-test, second part (<code>plus_nov2</code>)</td><td>Mesh</td><td class="num">12</td><td>14–16 Nov</td></tr>
+    <tr><td>CPU clock as a priced knob, 24-min mission (<code>dvfs_heat</code>)</td><td>Mesh</td><td class="num">6</td><td>14–16 Nov</td></tr>
+    <tr><td>CPU clock, short missions (<code>dvfs_short</code>)</td><td>Mesh</td><td class="num">10</td><td>14–16 Nov</td></tr>
+    <tr><td>Two camera drones, one or two Jetsons (<code>two_nov</code>)</td><td>Mesh</td><td class="num">12</td><td>14–16 Nov</td></tr>
+    <tr><td>Per-camera cap on paths in flight (<code>two_cap</code>)</td><td>Mesh</td><td class="num">8</td><td>14–16 Nov</td></tr>
+    <tr><td>Direct against multihop, 5 repetitions (<code>topology_nov</code>)</td><td>Mesh</td><td class="num">20</td><td>14–16 Nov</td></tr>
+    <tr><td>Frame rate and encode-ahead (<code>fps_nov</code>)</td><td>Mesh</td><td class="num">12</td><td>14–16 Nov</td></tr>
+    <tr><td>Lossy relay (2 %, 5 %) (<code>relaynoise_nov</code>)</td><td>Mesh</td><td class="num">12</td><td>14–16 Nov</td></tr>
+    <tr><td>Energy price and budget (<code>energy_nov</code>)</td><td>Mesh</td><td class="num">12</td><td>14–16 Nov</td></tr>
+    <tr><td><b>Total</b></td><td></td><td class="num"><b>≈ 1,387</b></td><td>plus the 1,150-placement hardware sweep, simulation grids and re-scoring of every run</td></tr>
   </table></div>
   <p class="src">Earlier-phase run counts are from the Results Brief; invalidated runs (for example 115 discarded in the task-level campaign's first attempts) are not counted.</p>
 </section>
 <!-- final-report-update-nov12 -->
+<!-- final-report-update-nov16 -->
 </main>
 </div>
