@@ -1,0 +1,55 @@
+{
+ "device": "Pi 5 (throttled)",
+ "t_full_ms": 768.4090254196584,
+ "scale": 45.43375763243202,
+ "jpeg_pi_over_laptop": 2.893544766279894,
+ "wins_total": 0,
+ "violations": 0,
+ "rows": [
+  {
+   "code": "k4_int8_zstd",
+   "onboard_ms_measured": 321.787923220602,
+   "onboard_ms_rule": 321.787923220602,
+   "b_be_mbps_measured": null,
+   "b_be_mbps_rule": null,
+   "max_win_measured": null,
+   "max_win_rule": null
+  },
+  {
+   "code": "learned_k4_c16_w128_d2",
+   "onboard_ms_measured": 252.14985699858516,
+   "onboard_ms_rule": 254.080240460738,
+   "b_be_mbps_measured": 1.2201631730605054,
+   "b_be_mbps_rule": 1.4013762425469225,
+   "max_win_measured": null,
+   "max_win_rule": null
+  },
+  {
+   "code": "learned_k4_c32_w128_d2",
+   "onboard_ms_measured": 254.28955250390572,
+   "onboard_ms_rule": 255.56331678505117,
+   "b_be_mbps_measured": 1.52572945368422,
+   "b_be_mbps_rule": 1.7680622645682516,
+   "max_win_measured": null,
+   "max_win_rule": null
+  },
+  {
+   "code": "learned_k4_c4_w128_d2",
+   "onboard_ms_measured": 253.69606900494546,
+   "onboard_ms_rule": 250.04279982803502,
+   "b_be_mbps_measured": 0.6775752362924596,
+   "b_be_mbps_rule": 0.7787005674089662,
+   "max_win_measured": null,
+   "max_win_rule": null
+  },
+  {
+   "code": "learned_k4_c8_w128_d2",
+   "onboard_ms_measured": 254.7472590013058,
+   "onboard_ms_rule": 251.07543056022672,
+   "b_be_mbps_measured": 0.9747541375472885,
+   "b_be_mbps_rule": 1.1199345865290389,
+   "max_win_measured": null,
+   "max_win_rule": null
+  }
+ ]
+}

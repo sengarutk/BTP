@@ -737,3 +737,20 @@ Bench: `split_live.py bench --weights yolo11s_visdrone.pt` on pi-receiver (idle,
 - **Y.1** The measured Pi onboard time of every YOLO11s code is 15-60 % above the rule's (≈ 290-410 ms).
 - **Y.2** With the measured times, the YOLO11s codes still have no winning cell on the Pi (the rule already finds
   none); if any code's measured time exceeds the 300 ms deadline, it cannot meet it at any goodput.
+
+### Results: YOLO11s codes on the Pi (`experiments/results/hardware/t11/y11_bench_camera2.json`, pi-receiver, 60 frames, 16 Nov 2026 ~19:00 IST; re-analysis `evaluation/pi_measured_second_detector.py` -> `experiments/results/second_detector/yolo11s/break_even_pi_measured.json`)
+
+| code | rule Pi ms | measured Pi ms | B_be rule → measured (Mbit/s) |
+|---|---|---|---|
+| k4_c4 | 250.0 | 253.7 | 0.78 → 0.68 |
+| k4_c8 | 251.1 | 254.7 | 1.12 → 0.97 |
+| k4_c16 | 254.1 | 252.1 | 1.40 → 1.22 |
+| k4_c32 | 255.6 | 254.3 | 1.77 → 1.53 |
+
+JPEG Q50 encode on the Pi 2.4 ms (the rule: ~50 ms); the Pi/laptop JPEG ratio of the second detector's options 2.89.
+Board 46.6 → 75.2 °C during the bench, no active throttling.
+- **Y.1 did not hold.** The YOLO11s codes' measured Pi times are within 2 % of the rule's (not 15-60 % above): the
+  second-detector analysis scales its Pi device from the matched onboard campaigns (ratio 1.01), so its network
+  times are right; only its JPEG encode time is overstated.
+- **Y.2 held.** With measured times: 0 winning cells, 0 exceptions; B_be falls 12-14 % (JPEG's onboard time, not the
+  codes', moved). For paper 1: the second detector's Pi numbers become 0.68-1.53 Mbit/s.

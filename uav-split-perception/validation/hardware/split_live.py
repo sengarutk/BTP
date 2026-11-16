@@ -58,6 +58,8 @@ class Bottleneck(nn.Module):
 def load_code(tag, dev):
     """tag 'k4_c4_w128_d2' (frozen-detector code) or 'joint:k4_c4_w128_d2' (jointly trained): (bottleneck, cut)."""
     sub, t = ("joint_bottleneck", tag.split(":", 1)[1]) if tag.startswith("joint:") else ("learned_bottleneck", tag)
+    if tag.startswith("y11:"):        # YOLO11s codes (paper 1's second detector; use with --weights yolo11s_visdrone.pt)
+        sub, t = "learned_bottleneck_yolo11s", tag.split(":", 1)[1]
     for base in (os.path.join(HERE, "weights", sub), os.path.join(HERE, "..", "..", "weights", sub)):
         p = os.path.join(base, f"{t}.pt")
         if os.path.exists(p):
