@@ -1,0 +1,10 @@
+mission__v41dvfs__r1 59.8
+mission__v41final__r1 58.7
+mission__v41dvfs__r2 59.3
+mission__v41final__r2 58.7
+mission__v41dvfs__r3 59.3
+mission__v41final__r3 59.8
+mission__v41final__r4 59.3
+mission__v41dvfs__r4 58.2
+mission__v41final__r5 59.3
+mission__v41dvfs__r5 59.3

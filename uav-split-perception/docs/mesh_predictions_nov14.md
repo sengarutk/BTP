@@ -541,3 +541,25 @@ latency; when μ > 0 or the hold is capped (≥ 76.5 °C), 1.8 GHz wins on energ
   temperature at least 1.0 °C lower (mean of the 3 pairs).
 - **D.3** sAP with forecaster: v41dvfs − v41final within ±0.005 (mean of the 5 short pairs and of the 3 heat pairs).
 - **D.4** No v41dvfs run throttles; its peak stays ≤ 80.4 °C; the clock cap is at the hardware maximum after every run.
+
+### Results: Phase 5 DVFS (`vid_campaign_dvfs_heat/` 3 pairs × 24 min, `vid_campaign_dvfs_short/` 5 pairs × 40-s phases; 16 Nov 2026 08:12-12:16 IST)
+
+Smoke test first (chain_after_nov16a.sh): 88 of 106 onboard inferences at 1.8 GHz, clock back at 2.4 GHz after it.
+Paired v41dvfs − v41final (t-test):
+
+| | onboard at 1.8 GHz | onboard inferences | Pi power | 2nd-half / mean °C | sAP+fc | P(AoI ≤ 300 ms) |
+|---|---|---|---|---|---|---|
+| heat (3 pairs) | 57-59 % | +16 % | −0.017 ± 0.168 W (p 0.71) | −0.39 °C 2nd half; −0.22 ± 1.80 mean | +0.0022 ± 0.0052 (3/3, p 0.22) | +0.013 (3/3) |
+| short (5 pairs) | 57-67 % | — | +0.018 ± 0.046 W (p 0.34) | +0.45 ± 1.08 | −0.0047 ± 0.0088 (1/5, p 0.22) | −0.005 |
+
+- **D.1 held** (57-67 % of onboard inferences at 1.8 GHz in every run).
+- **D.2 did not hold.** No power or temperature reduction (−0.017 W, −0.39 °C in the heat pairs; neither significant).
+  Reason: a rebound under the budget. The energy price holds mean power at the 2.8 W budget, so the 27 % cheaper
+  1.8 GHz inferences are spent on 16 % more onboard inferences, not on lower power.
+- **D.3 held** (heat +0.0022, short −0.0047; both within ±0.005, neither significant): the extra onboard inferences
+  buy no measurable accuracy.
+- **D.4 held.** No throttling in any run; peaks 78.2-79.8 °C (≤ 80.4); the clock cap at the hardware maximum after
+  all 16 runs (16 × clock_ok, 0 restores needed). Theorem 1 holds on all 19 new runs (555/555 recorded).
+- For paper 2: with a fixed power budget the clock knob changes how the budget is spent, not how much is spent; here
+  that buys nothing. DVFS is reported as implemented, measured (1.8 GHz −27 % J per inference) and neutral under the
+  budget price. It could only pay where the budget binds on accuracy (a lower budget), which is not tested.
