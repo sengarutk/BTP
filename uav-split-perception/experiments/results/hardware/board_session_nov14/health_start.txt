@@ -1,6 +1,6 @@
-sender pi-sender 10.1.0.12/24 neigh=3 temp=53.2C throttled=0x0 disk=18G clock=-1496.07s (clock offset: logged, not corrected)
-camera pi-relayyy 10.1.0.11/24 neigh=3 temp=46.6C throttled=0xe0000 disk=16G clock=+0.70s
-camera2: UNREACHABLE (optional: not a failure)
-jetson nano 10.1.0.14/24 neigh=3 temp=47.2C mode=15W disk=17G clock=+42.57s (clock offset: logged, not corrected)
-jetson2 nano2 10.1.0.15/24 neigh=3 temp=50.2C mode=25W disk=93G clock=-0.01s
-HEALTH_OK
+sender pi-sender 10.1.0.12/24 neigh=4 temp=52.1C throttled=0x0 disk=18G clock=-1494.24s (clock offset: logged, not corrected)
+camera pi-relayyy 10.1.0.11/24 neigh=4 temp=48.3C throttled=0xe0000 disk=15G clock=+2.55s (clock offset: logged, not corrected) FAIL: stray-processes(1)
+camera2 pi-receiver 10.1.0.13/24 neigh=4 temp=47.2C throttled=0xe0000 disk=46G clock=+1.99s
+jetson nano 10.1.0.14/24 neigh=4 temp=47.9C mode=15W disk=17G clock=+96.25s (clock offset: logged, not corrected)
+jetson2 nano2 10.1.0.15/24 neigh=4 temp=49.5C mode=25W disk=93G clock=+0.44s
+HEALTH_FAIL

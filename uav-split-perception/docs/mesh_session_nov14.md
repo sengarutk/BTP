@@ -45,3 +45,20 @@ Open decisions (plan A7-A9): pi-sender's cable address and Nano2's mesh setup st
 | 02:43-15:08 | Session 2 | T7, T9, S6, T8, T4 (`board_session_nov15/`) | SESSION_DONE, HEALTH_OK |
 | 14:50 | pi-receiver | power-cycled by the user, rejoined the mesh (10.1.0.13, 4 neighbours, 0x0 throttle flags); current code pushed (md5 OK) | HEALTH_OK with all five boards |
 | 15:27 | A7, A9 (user's decision) | boot-only systemd units, enabled but not started: pi-sender `aegis-eth0-addr.service` (ip addr replace 10.230.3.10/20 dev eth0, 10 s after network-online); Nano2 `aegisswarm-up.service` (runs ~/aegisswarm_up.sh, 20 s after network-online). Live interfaces untouched | both enabled, inactive; eth0 and bat0 unchanged; HEALTH_OK |
+
+## 16 Nov 2026 04:40-06:10 IST: charger drop, laptop shutdown, resume
+
+- 04:40 charger dropped (laptop on battery). Phase 4 stopped cleanly after 35/40 runs; mesh_mission__leaf__r5 (started
+  04:38) stopped and its partial log archived (`_superseded/vid_campaign_final_nov_laptop_on_battery/`). The laptop
+  shut down at ~05:30 (battery empty); the boards kept running, idle and clean.
+- 05:52 laptop back on mains. Two faults found and fixed in the resume path before any run:
+  1. a script started from Windows with `wsl.exe --exec` has no Windows folders on PATH: `powershell.exe` was not found,
+     so the mains check never passed (full path now);
+  2. the resume script set WSLENV only inside PowerShell, so the session it launched at 06:04 got none of its variables:
+     it started with the 14 Nov defaults (`board_session_nov14/`) and stopped at its first health check (HEALTH_FAIL),
+     before any campaign; nothing ran on the boards. WSLENV is now exported in the calling shell too.
+- The health check had failed on a real leftover: `linklog.sh` of the stopped leaf r5 run was still running on the
+  camera (the 04:41 cleanup killed the controller, not its link logger). Killed; HEALTH_OK on all five boards.
+- 06:09 Phase 4 resumed (`board_session_nov16a2/`, HEALTH_OK) at mesh_mission__leaf__r5. Its start temperature is
+  48.8 °C against 57-60 °C for the other runs (the camera idled through the outage); noted for the rep-5 pairs.
+- DVFS waiter relaunched for board_session_nov16a2; its environment checked from /proc.

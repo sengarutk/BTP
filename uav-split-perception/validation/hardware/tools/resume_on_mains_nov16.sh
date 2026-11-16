@@ -11,7 +11,8 @@ while [ $ok -lt 4 ]; do        # 4 consecutive checks 30 s apart on mains
   sleep 30
 done
 echo "$(TZ=Asia/Kolkata date +%T) on mains for 2 min: resuming"
-launch() {   # $1 WSLENV list, $2 command
+launch() {   # $1 WSLENV list, $2 command. WSLENV must be exported HERE too, or the variables never leave WSL
+  export WSLENV=$1                # (16 Nov 06:04: without it the session started with its defaults and no passwords)
   cd /mnt/c && /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command "\$env:WSLENV='$1'; Start-Process -WindowStyle Hidden wsl.exe -ArgumentList '-d Ubuntu --exec /bin/bash -c \"$2\"'"
 }
 export CAMPAIGNS='final_nov heat_nov' SESSION=board_session_nov16a2 HEAT_OUT=vid_campaign_heat_final HEAT_STRATS=v41final HEAT_REPS=3
