@@ -44,6 +44,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | T11.1-T11.5 | video encode on the Pi vs paper 1's scaled times | held, not, not, held, not | the Pi encodes video only ~2× slower than the laptop; the rule's scaling overstates it, so paper 1's Pi video break-even is an upper bound (conservative) |
 | T11 follow-up | paper 1's Pi break-even with measured onboard times | B_be falls (headline code 1.88 → 1.72 JPEG, 1.06 → 0.27 video); 0 winning cells with video | model and live sweep (T10) now agree: no split wins on a Pi 5 |
 | FX.1-FX.4 | the F.2 fix (`--late-path-skip 0.5`) | partly (+0.015 multihop, 5/5; laptop share 5.4 %), not narrowly (−0.003 mission, n.s.), held, held | closes the planner's multihop lead; adopted in the final controller with the backup caveat |
+| TB.1-TB.2 | the SSH tunnel's cost on the laptop path | held, held (+2.3 ms per 1 KB RTT, +4 ms per frame, −20 % peak goodput) | a small measured artefact; A8's bridge re-run not needed |
 | T10.1-T10.4 | paper 1: break-even goodput of the learned codes, predicted from board benches | **held, held, partly (3/4), held** | no break-even on a Pi 5 camera (rate-limited link); with a shared-radio (token-bucket) link the 4 KB code wins at 0.5 Mbit/s: the advantage depends on how the link is slow |
 
 ## Fixes found and made during the sessions (all before the runs that test them)

@@ -713,3 +713,16 @@ frame) with a 1-byte reply.
 - **TB.1** The tunnel + cable adds 1-10 ms to the median 1 KB round trip.
 - **TB.2** The 83 KB transfer's goodput through the tunnel is within 30 % of the direct mesh hop's (the mesh hop, not
   the tunnel, is the bottleneck).
+
+### Results: tunnel overhead (`experiments/results/hardware/tunnel_bench/tunnel_bench.jsonl`, 2 × 100 round trips each way, 16 Nov 2026 ~17:40 IST)
+
+| | laptop via SSH tunnel | pi-sender, direct mesh hop | tunnel + cable |
+|---|---|---|---|
+| 1 KB round trip (median) | 7.6-7.7 ms | 5.1-5.5 ms | +2.3 ms |
+| 83 KB round trip (median) | 20.0-20.3 ms | 16.0-16.3 ms | +4.0 ms |
+| 83 KB goodput (median) | 32.7-33.3 Mbit/s | 40.7-41.6 Mbit/s | −20 % |
+
+- **TB.1 held** (+2.3 ms, within 1-10). **TB.2 held** (−20 %, within 30 %).
+- For both papers: the SSH tunnel and cable add 2-4 ms per frame to the laptop path and take ~20 % of its peak goodput;
+  against the 300 ms deadline and the laptop path's 50-100 ms latency this is a small, measured artefact, stated with
+  these numbers instead of a bridge re-run (plan A8 replaced; G2 cut, stated as a limitation).
