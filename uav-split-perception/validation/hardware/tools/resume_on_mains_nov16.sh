@@ -6,13 +6,13 @@
 H=~/BTP/uav-split-perception/experiments/results/hardware; T=~/BTP/uav-split-perception/validation/hardware/tools
 ok=0
 while [ $ok -lt 4 ]; do        # 4 consecutive checks 30 s apart on mains
-  s=$(cd /mnt/c && timeout 30 powershell.exe -NoProfile -Command "(Get-CimInstance Win32_Battery).BatteryStatus" 2>/dev/null | tr -d '\r')
+  s=$(cd /mnt/c && timeout 30 /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command "(Get-CimInstance Win32_Battery).BatteryStatus" 2>/dev/null | tr -d '\r')
   [ "$s" = 2 ] && ok=$((ok+1)) || ok=0
   sleep 30
 done
 echo "$(TZ=Asia/Kolkata date +%T) on mains for 2 min: resuming"
 launch() {   # $1 WSLENV list, $2 command
-  cd /mnt/c && powershell.exe -NoProfile -Command "\$env:WSLENV='$1'; Start-Process -WindowStyle Hidden wsl.exe -ArgumentList '-d Ubuntu --exec /bin/bash -c \"$2\"'"
+  cd /mnt/c && /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command "\$env:WSLENV='$1'; Start-Process -WindowStyle Hidden wsl.exe -ArgumentList '-d Ubuntu --exec /bin/bash -c \"$2\"'"
 }
 export CAMPAIGNS='final_nov heat_nov' SESSION=board_session_nov16a2 HEAT_OUT=vid_campaign_heat_final HEAT_STRATS=v41final HEAT_REPS=3
 launch PI2_PW:PI3_PW:NANO_PW:N2_PW:CAMPAIGNS:SESSION:HEAT_OUT:HEAT_STRATS:HEAT_REPS "$T/session_nov14.sh"
