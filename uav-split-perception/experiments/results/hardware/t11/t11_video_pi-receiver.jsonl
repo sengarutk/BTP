@@ -1,0 +1,17 @@
+{"setting": "x264_ultrafast_crf18", "frames": 150, "size": "640x360", "rtime_s": 0.545, "utime_s": 0.555, "ms_per_frame": 3.633}
+{"setting": "x265_ultrafast_crf18", "frames": 150, "size": "640x360", "rtime_s": 5.718, "utime_s": 5.725, "ms_per_frame": 38.12}
+{"setting": "x264_ultrafast_crf23", "frames": 150, "size": "640x360", "rtime_s": 0.449, "utime_s": 0.449, "ms_per_frame": 2.993}
+{"setting": "x265_ultrafast_crf23", "frames": 150, "size": "640x360", "rtime_s": 4.580, "utime_s": 4.580, "ms_per_frame": 30.533}
+{"setting": "x264_ultrafast_crf28", "frames": 150, "size": "640x360", "rtime_s": 0.384, "utime_s": 0.394, "ms_per_frame": 2.56}
+{"setting": "x265_ultrafast_crf28", "frames": 150, "size": "640x360", "rtime_s": 3.446, "utime_s": 3.463, "ms_per_frame": 22.973}
+{"setting": "x264_ultrafast_crf33", "frames": 150, "size": "640x360", "rtime_s": 0.331, "utime_s": 0.335, "ms_per_frame": 2.207}
+{"setting": "x265_ultrafast_crf33", "frames": 150, "size": "640x360", "rtime_s": 2.396, "utime_s": 2.406, "ms_per_frame": 15.973}
+{"setting": "x264_medium_crf18", "frames": 150, "size": "640x360", "rtime_s": 4.229, "utime_s": 4.230, "ms_per_frame": 28.193}
+{"setting": "x265_medium_crf18", "frames": 150, "size": "640x360", "rtime_s": 14.600, "utime_s": 14.622, "ms_per_frame": 97.333}
+{"setting": "x264_medium_crf23", "frames": 150, "size": "640x360", "rtime_s": 2.811, "utime_s": 2.828, "ms_per_frame": 18.74}
+{"setting": "x265_medium_crf23", "frames": 150, "size": "640x360", "rtime_s": 10.033, "utime_s": 10.028, "ms_per_frame": 66.887}
+{"setting": "x264_medium_crf28", "frames": 150, "size": "640x360", "rtime_s": 1.899, "utime_s": 1.902, "ms_per_frame": 12.66}
+{"setting": "x265_medium_crf28", "frames": 150, "size": "640x360", "rtime_s": 6.658, "utime_s": 6.669, "ms_per_frame": 44.387}
+{"setting": "x264_medium_crf33", "frames": 150, "size": "640x360", "rtime_s": 1.392, "utime_s": 1.409, "ms_per_frame": 9.28}
+{"setting": "x265_medium_crf33", "frames": 150, "size": "640x360", "rtime_s": 4.407, "utime_s": 4.407, "ms_per_frame": 29.38}
+{"setting": "h264_v4l2m2m", "error": "bench: maxrss=56640KiBConversion failed!"}

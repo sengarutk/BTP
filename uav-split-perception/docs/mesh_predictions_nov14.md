@@ -607,3 +607,39 @@ CRF 18/23/28/33; the Pi 5's `h264_v4l2m2m` tried.
 - **T11.4** The Pi 5 has no working hardware H.264 encoder (`h264_v4l2m2m` fails to open).
 - **T11.5** With the measured times, V2's admission verdict on the Pi is unchanged against the codes' Pi frame time
   (k2 174 ms, k4 226 ms, T10 bench): x264 ultrafast admitted, x265 medium at CRF 18/23 not.
+
+### Results: T11 (`experiments/results/hardware/t11/t11_video_pi-receiver.jsonl`, pi-receiver, 150 frames per setting, 16 Nov 2026 ~14:45 IST)
+
+Same 640×360 VisDrone-VID frames, raw YUV input, the exact encoder arguments of `evaluation/video_codecs.py`
+(zerolatency, bframes=0, keyint=60, intra-refresh, one thread); utime ≈ rtime (one thread confirmed); 49-59 °C, never
+throttled.
+
+| setting | laptop ms | Pi ms | Pi/laptop |
+|---|---|---|---|
+| x264_medium_crf18 | 13.43 | 28.19 | 2.10 |
+| x264_medium_crf23 | 12.07 | 18.74 | 1.55 |
+| x264_medium_crf28 | 5.58 | 12.66 | 2.27 |
+| x264_medium_crf33 | 5.39 | 9.28 | 1.72 |
+| x264_ultrafast_crf18 | 2.22 | 3.63 | 1.64 |
+| x264_ultrafast_crf23 | 1.36 | 2.99 | 2.19 |
+| x264_ultrafast_crf28 | 1.52 | 2.56 | 1.69 |
+| x264_ultrafast_crf33 | 1.19 | 2.21 | 1.86 |
+| x265_medium_crf18 | 52.20 | 97.33 | 1.86 |
+| x265_medium_crf23 | 35.32 | 66.89 | 1.89 |
+| x265_medium_crf28 | 19.46 | 44.39 | 2.28 |
+| x265_medium_crf33 | 14.98 | 29.38 | 1.96 |
+| x265_ultrafast_crf18 | 17.61 | 38.12 | 2.16 |
+| x265_ultrafast_crf23 | 9.91 | 30.53 | 3.08 |
+| x265_ultrafast_crf28 | 8.40 | 22.97 | 2.73 |
+| x265_ultrafast_crf33 | 5.91 | 15.97 | 2.70 |
+
+- **T11.1 held.** x264 ultrafast CRF 23: 2.99 ms per frame.
+- **T11.2 did not hold.** x265 medium CRF 23: 66.9 ms (predicted ≥ 100).
+- **T11.3 did not hold.** Pi/laptop ratio 1.5-3.2 for video (predicted 2.5-8; JPEG's 3.8 does not carry over).
+- **T11.4 held.** `h264_v4l2m2m` fails to open (the Pi 5 has no hardware H.264 encoder).
+- **T11.5 did not hold.** x265 medium at CRF 18/23 (97 / 67 ms) fits within the codes' Pi frame time (174-226 ms):
+  admitted. The rule scales host processing by the full-model time ratio (`evaluation/break_even_rule.py`, e_c =
+  t_full φ_c + host_proc_c · t_full / t_host), which for CPU video encoding overstates the Pi's time several-fold; the
+  Pi's video break-even goodput in paper 1 (1.06 Mbit/s with x264 ultrafast) is therefore an upper bound, and with
+  the measured times more video settings qualify, so it can only fall. Next (laptop): re-run the video analysis with
+  these measured Pi encode times for the paper's number.
