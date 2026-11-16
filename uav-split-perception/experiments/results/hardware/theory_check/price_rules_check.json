@@ -3,18 +3,25 @@
  "prices": {
   "lam_F": {
    "runs_pre_cap": 8,
-   "runs": 283,
-   "updates": 102335,
-   "plain": 18935,
-   "clipped_zero": 71328,
-   "capped": 12072,
+   "runs": 379,
+   "updates": 139127,
+   "plain": 25297,
+   "clipped_zero": 93855,
+   "capped": 19975,
    "unexplained": 0,
    "unexplained_runs": [],
    "campaigns": [
     "vid_campaign_b",
+    "vid_campaign_budget_nov",
+    "vid_campaign_dvfs_heat",
+    "vid_campaign_dvfs_short",
     "vid_campaign_energy_nov",
+    "vid_campaign_final_nov",
+    "vid_campaign_fix_nov",
     "vid_campaign_fps_nov",
+    "vid_campaign_heat_final",
     "vid_campaign_heat_nov",
+    "vid_campaign_heat_nov2",
     "vid_campaign_long",
     "vid_campaign_mesh",
     "vid_campaign_mesh2",
@@ -26,6 +33,7 @@
     "vid_campaign_relaynoise_nov",
     "vid_campaign_table",
     "vid_campaign_topology_nov",
+    "vid_campaign_two_cap",
     "vid_campaign_two_nov",
     "vid_campaign_v42"
    ]
