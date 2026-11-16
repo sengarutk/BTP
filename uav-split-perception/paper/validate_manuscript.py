@@ -8,6 +8,12 @@ from pathlib import Path
 
 PAPER = Path(__file__).resolve().parent
 tex = (PAPER / "main.tex").read_text(encoding="utf-8")
+# expand included sections (\input{drafts/...}): their labels, citations and macros belong to the manuscript (16 Nov 2026)
+while True:
+    m = re.search(r"\\input\{(drafts/[^}]+?)(\.tex)?\}", tex)
+    if not m:
+        break
+    tex = tex[:m.start()] + (PAPER / (m.group(1) + ".tex")).read_text(encoding="utf-8") + tex[m.end():]
 bib = (PAPER / "references.bib").read_text(encoding="utf-8")
 errors = []
 
@@ -26,7 +32,9 @@ for t in re.findall(r"\\input\{([^}]+)\}", tex):
         errors.append(f"missing input {t} (run `make tables`)")
 
 defined = set()
-for macros_file in (PAPER / "generated_tables").glob("*metrics.tex"):  # autogen_metrics.tex, gen_metrics.tex
+metric_files = set((PAPER / "generated_tables").glob("*metrics.tex"))  # autogen_metrics.tex, gen_metrics.tex, ...
+metric_files |= {(PAPER / t).resolve() for t in re.findall(r"\\input\{([^}]+metrics\.tex)\}", tex)}  # result folders
+for macros_file in metric_files:
     defined |= set(re.findall(r"\\newcommand\{\\([A-Za-z]+)\}", macros_file.read_text()))
 used = set(re.findall(r"(?<!\\)\\([A-Z][A-Za-z]+)\b", tex))
 builtin = {"Pr", "Big", "Bigg", "Bigl", "Bigr", "Biggl", "Biggr", "Delta", "Gamma", "Lambda", "Theta", "Omega", "Sigma", "Phi", "Psi", "Pi"}

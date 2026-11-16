@@ -74,7 +74,7 @@ deadline term $R_q/(1 - z_P s)$ dominates.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/break_even_map.pdf}
+\includegraphics[width=\columnwidth]{break_even_map.pdf}
 \caption{Break-even goodput $B_{\mathrm{be}}$ of each learned code against the measured JPEG settings (lines,
 Proposition~\ref{prop:be-family} with $P = \BePOn$) and the largest goodput at which the model of
 Section~\ref{sec:model} has the code beat every one of them (dots). The x-axis is the onboard full-model time: the
@@ -262,7 +262,8 @@ sequences. The JPEG grid and the codes ran on the same frames. At equal accuracy
 \VcSaveHtfUltra\,\% (x264 ultrafast) to \VcSaveHtfMedium\,\% (x264 medium) fewer bytes per frame than JPEG. Encode
 times were measured single-threaded on the host and scaled like every host time. With video available, the smallest
 jointly trained code's $B_{\mathrm{be}}$ falls from \VcJpegJointFastBe{} to \VcVideoJointFastBe~Mbit/s on the Jetson,
-and from \VcJpegJointPiBe{} to \VcVideoJointPiBe~Mbit/s on the Pi. The cells where any code wins fall from
+and from \VcJpegJointPiBe{} to \VcVideoJointPiBe~Mbit/s on the Pi. These Pi values use the scaled host times; measured
+on the Pi itself they are lower (next paragraphs and \emph{On the boards}). The cells where any code wins fall from
 \VcJpegWins{} to \VcBothWins{} (\VcBothTunedWins{} with the JPEG-tuned detector). If encoding were free onboard, as
 with a dedicated encoder (neither board has one), \VcBothFreeWins{} would remain. The video options assume an
 error-free stream, which favours video. For a fair comparison of video with video, we also coded each split code
@@ -291,7 +292,10 @@ same reasoning as Corollary~\ref{cor:coder}, applied to the image side.
 \textbf{A second detector.} We repeated the analysis with a VisDrone YOLO11s (\SdBaseMap{} mAP$_{50:95}$). We used the
 same cut after the stride-8 block, the same bottleneck architecture and training, and \SdCodes{} codes of 4 to 32
 channels. The JPEG grid was evaluated with this detector, and its device times were scaled from the YOLOv8s
-measurements: by \SdPiRatio{} on the Pi (matched onboard runs) and \SdHostRatio{} elsewhere (host GPU profile). The
+measurements: by \SdPiRatio{} on the Pi (matched onboard runs) and \SdHostRatio{} elsewhere (host GPU profile). Timed
+on the Pi itself, the codes' onboard times are within \BpYelevenDev\,\% of these; with the Pi's measured JPEG encode
+time their $B_{\mathrm{be}}$ on the Pi is \BpYelevenBeMin--\BpYelevenBeMax~Mbit/s, with \BpYelevenWins{} winning
+cells. The
 post-hoc INT8 split needs \SdPosthocKib~KiB per frame, \SdPosthocOverQnf{} times a Q95 JPEG. The codes take
 \SdCodeKibMin--\SdCodeKibMax~KiB and reach \SdCodeMapMin--\SdCodeMapMax{} mAP$_{50:95}$, close to the YOLOv8s codes of
 the same widths. The onboard part is heavier: \SdEdgeFrac\,\% of the detector's MACs. On the Pi, $B_{\mathrm{be}}$ is
@@ -299,6 +303,26 @@ the same widths. The onboard part is heavier: \SdEdgeFrac\,\% of the detector's 
 \SdDeadlineMs~ms deadline, so a code is on time only where JPEG is better. On the Jetson, $B_{\mathrm{be}}$ is
 \SdFastBeMin--\SdFastBeMax~Mbit/s and the codes win up to \SdFastWinMax~Mbit/s. All \SdWins{} winning cells lie
 below their $B_{\mathrm{be}}$ (\SdExc{} exceptions).
+
+\textbf{On the boards: predicted, then measured.}\label{sec:board-be} We predicted the outcome on real boards before
+measuring it: a Raspberry Pi~5 camera sending to a Jetson Orin Nano over a batman-adv mesh, the codes and JPEG timed
+on each board (the codes take \BpCodeMsMin--\BpCodeMsMax~ms onboard on the Pi, JPEG \BpJpegOnb~ms), the link shaped
+to \BpRates~Mbit/s so that every payload is serialised at that goodput, every run started with the Pi below
+60~$^\circ$C. The model, from the board timings alone, predicted that no code beats JPEG at any of these goodputs,
+because the code's onboard part caps it at about 4--5 frames/s. That held: at every goodput the best option measured
+was a JPEG; no code exceeded \BpCodeFpsMax{} on-time results/s, while JPEG reached \BpJpegFpsFour{} at 4~Mbit/s and
+\BpJpegFpsEight{} at 8~Mbit/s. With a token-bucket link instead (a low \emph{average} goodput from a shared fast radio,
+on which a small payload goes out at the radio's rate), the smallest code delivered \BpHtbCode{} on-time results/s at
+0.5~Mbit/s against JPEG's \BpHtbJpeg: whether a split can help depends on how the link is slow, which a model with
+$t_{\mathrm{tx}} = 8b/B$ does not separate.
+
+The host-time scaling is right for network inference but not for CPU encoding. The rule scales every onboard host
+time by the full-model time ratio, \BpScale{} on the throttled Pi; the Pi encodes video only \BpRatioMin--\BpRatioMax{}
+times slower than the host (x264 ultrafast \BpXuf~ms, x265 medium \BpXmed~ms per frame at CRF~23) and JPEG \BpJpegRatio{}
+times slower, while the codes' measured onboard times are above the scaled ones. With every option at its measured Pi
+time, the smallest jointly trained code's $B_{\mathrm{be}}$ on the Pi is \BpHeadJpegMeas~Mbit/s against JPEG (scaled:
+\BpHeadJpegRule) and \BpHeadVideoMeas~Mbit/s with video (scaled: \BpHeadVideoRule); with video in the image family no
+code has a winning cell on the Pi (\BpWinsVideoMeas{} cells, \BpExc{} exceptions), as the live sweep found.
 
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
