@@ -103,4 +103,3 @@ experiments/video_codecs_work/
 # paused L7 replay bias fit (2.1 GB)
 experiments/jpeg_tuned_runs/
 experiments/results/hardware/replay/bias_fit_nov12/
-../venv_lic/
