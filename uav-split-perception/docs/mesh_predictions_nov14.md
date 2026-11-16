@@ -591,3 +591,19 @@ multihop 0.1359 / 2.79, 0.1344 / 2.42, 0.1325 / 2.44. Paired (t-test, 3 reps):
 - For paper 2: at 2.4 W the final controller draws 2.42-2.50 W, AccuMO's and LEAF's level (2.20-2.45 W, F.3), at the
   same accuracy: F.3's power gap was the budget setting, not the method. The final controller's budget is 2.4 W. DVFS
   adds nothing on these scenarios at either budget (onboard serves 1-3 % of frames at 2.4 W).
+
+## T11: video encoding on the camera Pi (paper 1, V2's "x264 ultrafast admitted, x265 medium not"; written 16 Nov 2026 before the bench, see the commit time)
+
+Paper 1's video family used this laptop's single-thread encode times, scaled to the Pi like every host time
+(`experiments/results/video_codecs/x26*.json`; e.g. CRF 23: x264 ultrafast 1.36 ms/frame, x264 medium 12.07, x265
+ultrafast 9.91, x265 medium 35.32). Measured Pi/laptop ratio for JPEG q90 encode: 2.71 / 0.71 ms ≈ 3.8 (T10 bench).
+Bench on pi-receiver (idle; no network): ffmpeg, one thread, low delay (`-tune zerolatency`, no B-frames), the same
+640-px VisDrone-VID frames, decoded to raw YUV first so only the encode is timed; x264/x265 ultrafast and medium at
+CRF 18/23/28/33; the Pi 5's `h264_v4l2m2m` tried.
+
+- **T11.1** x264 ultrafast at CRF 23 encodes in ≤ 15 ms per frame on the Pi.
+- **T11.2** x265 medium at CRF 23 takes ≥ 100 ms per frame on the Pi.
+- **T11.3** For every setting the Pi/laptop time ratio is within 2.5-8.
+- **T11.4** The Pi 5 has no working hardware H.264 encoder (`h264_v4l2m2m` fails to open).
+- **T11.5** With the measured times, V2's admission verdict on the Pi is unchanged against the codes' Pi frame time
+  (k2 174 ms, k4 226 ms, T10 bench): x264 ultrafast admitted, x265 medium at CRF 18/23 not.
