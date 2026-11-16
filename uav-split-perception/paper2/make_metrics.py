@@ -14,6 +14,8 @@ import glob
 import json
 import re
 import sys
+
+import numpy as np
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "validation" / "hardware"))
@@ -37,8 +39,9 @@ def put(name, value, src, fmt="{:.4f}"):
     SRC.append((name, s.replace("\\textminus{}", "−"), src))
 
 
-def signed(x):
-    return ("+" if x >= 0 else "-") + f"{abs(x):.4f}"
+def signed(x, fmt="{:.4f}"):
+    """Signed with an explicit +; fmt sets the digits (e.g. "{:+.2f}" or "{:.2f}": the sign is added here)."""
+    return ("+" if x >= 0 else "-") + fmt.replace("+", "").format(abs(x))
 
 
 def main():
@@ -325,6 +328,7 @@ def main():
     alt = [r for r in t1["per_run"] if abs(r["budget_w"] - 2.8) > 1e-6]
     put("ThmAltBudgetRuns", str(len(alt)), f"{src} theorem1.per_run with budget_w != 2.8")
     put("ThmAltBudget", min(r["budget_w"] for r in alt), "... min budget_w of those runs", "{:.1f}")
+    put("ThmAltBudgetMax", max(r["budget_w"] for r in alt), "... max budget_w of those runs", "{:.1f}")
     names = {"vid_campaign_main": "Wi-Fi, main$^\\dagger$", "vid_campaign_v42": "Wi-Fi, edge price$^\\dagger$",
              "vid_campaign_energy": "Wi-Fi, energy$^\\dagger$", "vid_campaign_b": "Wi-Fi, B",
              "vid_campaign_table": "Wi-Fi, table", "vid_campaign_long": "Wi-Fi, 24 min",
@@ -337,6 +341,19 @@ def main():
         rows.append(f"{names[c]} & {x['runs']} & {f2(x['max_avg_minus_budget_w'])} & {100 * x['mean_hold_only_share']:.1f}"
                     f" & {100 * x['mean_capped_share']:.1f} & {f2(x['max_term_hold_only_w'])} & {f2(x['max_term_cap_only_w'])}"
                     f" & {x['max_mu']:.1f} \\\\")
+    nov = [c for c in bc if c not in names and any(c.startswith(f"vid_campaign_{t}") for t in (
+        "mesh4", "energy_nov", "relaynoise_nov", "topology_nov", "fps_nov", "heat_nov", "plus_nov", "two_nov", "two_cap",
+        "final_nov", "heat_final", "dvfs_", "budget_nov", "fix_nov"))]
+    if nov:
+        xs = [bc[c] for c in nov]
+        n_ = sum(x["runs"] for x in xs)
+        wm = lambda k: sum(x[k] * x["runs"] for x in xs) / n_  # noqa: E731
+        rows.append(f"mesh, 14--16 Nov ({len(nov)} campaigns) & {n_} & {max(x['max_avg_minus_budget_w'] for x in xs):.2f}"
+                    f" & {100 * wm('mean_hold_only_share'):.1f} & {100 * wm('mean_capped_share'):.1f}"
+                    f" & {max(x['max_term_hold_only_w'] for x in xs):.2f} & {max(x['max_term_cap_only_w'] for x in xs):.2f}"
+                    f" & {max(x['max_mu'] for x in xs):.1f} \\\\")
+    left = [c for c in bc if c not in names and c not in nov]
+    put("ThmTableLeft", str(len(left)), f"{src} theorem1.by_campaign not in the table (other campaigns: {', '.join(left)})")
     put("ThmCampaignRows", "\n".join(rows), f"{src} theorem1.by_campaign (rows of Table tab:thm)")
     old = [bc[c] for c in ("vid_campaign_energy", "vid_campaign_v42", "vid_campaign_main")]
     put("ThmOldExcess", max(x["max_avg_minus_budget_w"] for x in old), f"{src} by_campaign[energy, v42, main]"
@@ -352,16 +369,28 @@ def main():
     pl, ct = tf["plant"], tf["controller"]
     put("ThPlantA", pl["intercept_c"], f"{src} temperature.fits.plant.intercept_c (6 levels below 84 C)", "{:.1f}")
     put("ThPlantB", pl["c_per_w"], "... .c_per_w", "{:.1f}")
-    put("ThRuns", str(pl["runs"]), "... .runs (runs of at least 20 minutes, second half)")
-    put("ThMae", pl["mean_abs_error_c"], "... .mean_abs_error_c", "{:.1f}")
-    put("ThMax", pl["max_abs_error_c"], "... .max_abs_error_c", "{:.1f}")
+    # the check of the proposition on the boards the plant was fitted on (the Oct 24-min campaigns); the Nov mesh
+    # campaigns ran on another camera board (pi-relayyy), reported separately: same slope, its own intercept (P2.2)
+    pr_t = j("theory_check/theory_check.json")["temperature"]["per_run"]
+    FIT = ("vid_campaign_long/", "vid_campaign_mesh2_long/")
+    e_fit = [r["pred_plant_c"] - r["mean_temp_c"] for r in pr_t if r["run"].startswith(FIT)]
+    e_nov = {}
+    for r in pr_t:
+        if not r["run"].startswith(FIT):
+            e_nov.setdefault(r["run"].split("/")[0], []).append(r["pred_plant_c"] - r["mean_temp_c"])
+    put("ThRuns", str(len(e_fit)), f"{src} temperature.per_run on the fit boards (vid_campaign_long, _mesh2_long)")
+    put("ThMae", float(np.mean(np.abs(e_fit))), "... mean |predicted - measured|", "{:.1f}")
+    put("ThMax", float(np.max(np.abs(e_fit))), "... max |predicted - measured|", "{:.1f}")
+    put("ThNovRuns", str(sum(len(v) for v in e_nov.values())), f"{src} temperature.per_run, Nov mesh campaigns (pi-relayyy)")
+    put("ThNovBiasMin", min(float(np.mean(v)) for v in e_nov.values()), "... per-campaign mean predicted - measured, min", "{:.1f}")
+    put("ThNovBiasMax", max(float(np.mean(v)) for v in e_nov.values()), "... max", "{:.1f}")
     put("ThBudgetEighty", pl["budget_for_80c_w"], "... .budget_for_80c_w", "{:.1f}")
     put("ThBudgetEightyCtl", ct["budget_for_80c_w"], f"{src} temperature.fits.controller.budget_for_80c_w", "{:.1f}")
     put("ThPredBudget", pl["intercept_c"] + pl["c_per_w"] * 2.8, "plant fit at the 2.8 W budget", "{:.0f}")
     put("ThTau", j("energy/energy_constants.json")["pi"]["thermal"]["tau_s"], "energy/energy_constants.json "
         "pi.thermal.tau_s (measured cool-down time constant)", "{:.0f}")
     sg1 = lambda v: ("+" if v >= 0 else "-") + f"{abs(v):.1f}"  # noqa: E731
-    put("ThMeanErr", sg1(pl["mean_error_c"]), f"{src} temperature.fits.plant.mean_error_c (predicted minus measured)")
+    put("ThMeanErr", sg1(float(np.mean(e_fit))), f"{src} temperature.per_run on the fit boards, mean predicted minus measured")
     be = pl["signed_error_by_campaign_c"]
     sg2 = lambda v: ("+" if v >= 0 else "-") + f"{abs(v):.2f}"  # noqa: E731
     put("ThBiasWifi", sg2(be["vid_campaign_long"]),
@@ -497,7 +526,6 @@ def main():
         # cross-check on the hardware's own 24-min v4.1 runs: time at or above 80 C, and how much of it falls within
         # 150 s (about one thermal time constant) of a held price update (held: unchanged, above 0, below the cap)
         import glob
-        import numpy as np
         hwx = {}
         for camp in ("vid_campaign_long", "vid_campaign_mesh2_long"):
             for f in sorted(glob.glob(str(HW / camp / "a2_*__v41__r*.json"))):
@@ -576,7 +604,6 @@ def main():
     # ---- constrained deep-RL baseline (validation/hardware/rl_baseline.py, PPO-Lagrangian), paired with v4.1
     rlf = HW / "replay" / "rl_baseline" / "summary.json"
     if rlf.exists():
-        import numpy as np
         src = "replay/rl_baseline/summary.json + replay/theory_sweep_nov11/rows (v4.1, same seeds)"
         rl = json.load(open(rlf))
         v41 = {}
@@ -618,6 +645,78 @@ def main():
                     if m_ > cap + 1e-3:
                         mx.append(m_)
             put(f"Pr{tag}PreCapMax", max(mx) if mx else 0.0, f"{src}: largest price in the runs before the cap", "{:.1f}")
+    # ---- the mesh board sessions of 14-16 Nov 2026 (scripts/report_mesh_nov16.py computes every number from the result
+    # files; the paper and the Results Brief 19.24-19.31 therefore share one source)
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import report_mesh_nov16 as rm
+    src = "scripts/report_mesh_nov16.py (Results Brief 19.24-19.31)"
+    h4 = [h["h80"] for h in rm.t4["v41"]]
+    put("BdHoldHotMin", min(h4), f"{src}: v4.1 24-min mission, time >= 80 C, min", "{:.0f}")
+    put("BdHoldHotMax", max(h4), f"{src}: ... max", "{:.0f}")
+    put("BdHoldThrMin", str(min(h["thr"] for h in rm.t4["v41"])), f"{src}: v4.1 throttled samples, min")
+    put("BdCapHotMax", max(h["h80"] for h in rm.t4["v41cap"]), f"{src}: capped hold, time >= 80 C, max", "{:.1f}")
+    put("BdCapPeakMax", max(h["peak"] for h in rm.t4["v41cap"]), f"{src}: capped hold, peak, max", "{:.1f}")
+    put("BdHeatReps", str(len(rm.t4["v41"])), f"{src}: 24-min runs per strategy (T4)")
+    put("BdGuardPeakMin", min(h["peak"] for h in rm.g), f"{src}: guard 76.5 C, peak, min", "{:.1f}")
+    put("BdGuardPeakMax", max(h["peak"] for h in rm.g), f"{src}: guard 76.5 C, peak, max", "{:.1f}")
+    put("BdGuardHotMax", max(h["h80"] for h in rm.g), f"{src}: guard 76.5 C, time >= 80 C, max", "{:.2f}")
+    put("BdFinPeak", max(h["peak"] for h in rm.fh), f"{src}: final controller 24-min, peak, max", "{:.1f}")
+    put("BdDeltaFastMin", min(rm.over), f"{src}: guard overshoot (peak - guard), min over the guarded runs", "{:.1f}")
+    put("BdDeltaFast", max(rm.over), f"{src}: ... max (delta_fast)", "{:.1f}")
+    put("BdGuardedRuns", str(len(rm.over)), f"{src}: guarded 24-min runs")
+    put("BdHoldSap", rm.cell("heat_nov", "mission|v41")[0], f"{src}: v4.1 24-min sAP+fc")
+    put("BdCapSap", rm.cell("heat_nov", "mission|v41cap")[0], f"{src}: capped hold 24-min sAP+fc")
+    put("BdGuardSap", rm.cell("heat_nov2", "mission|v41guard765")[0], f"{src}: guard 76.5 C 24-min sAP+fc")
+    put("BdFinSap", rm.cell("heat_final", "mission|v41final")[0], f"{src}: final controller 24-min sAP+fc")
+    for tag, sc in (("Mis", "mesh_mission"), ("Multi", "multihop")):
+        for o, ot in (("v41", "V"), ("accumo", "Acc"), ("leaf", "Leaf")):
+            p_ = rm.pF[(sc, o)]
+            put(f"BdFinVs{ot}{tag}", signed(p_["mean"]), f"{src}: final - {o}, {sc}, paired mean (5 reps)")
+            put(f"BdFinVs{ot}{tag}Ci", p_["ci"], f"{src}: ... 95 % t half-width")
+            put(f"BdFinVs{ot}{tag}Wins", str(p_["ahead"]), f"{src}: ... pairs with final ahead")
+        for o, ot in (("v41final", "Fin"), ("accumo", "Acc"), ("leaf", "Leaf")):
+            put(f"Bd{ot}Sap{tag}", rm.fin[(sc, o)][0], f"{src}: {o} {sc} sAP+fc (5 reps)")
+            put(f"Bd{ot}W{tag}", rm.finw[(sc, o)][0], f"{src}: {o} {sc} Pi W", "{:.2f}")
+        put(f"BdBudgetW{tag}", signed(rm.pB[sc][1]["mean"], "{:+.2f}"), f"{src}: 2.4 - 2.8 W budget, Pi W, paired (3 reps)")
+        put(f"BdBudgetSap{tag}", signed(rm.pB[sc][0]["mean"]), f"{src}: 2.4 - 2.8 W budget, sAP+fc, paired")
+        put(f"BdFix{tag}", signed(rm.pX[sc]["mean"]), f"{src}: late-path skip - none (2.4 W), {sc}, paired (5 reps)")
+        put(f"BdFix{tag}Ci", rm.pX[sc]["ci"], f"{src}: ... 95 % t half-width")
+        put(f"BdFix{tag}Wins", str(rm.pX[sc]["ahead"]), f"{src}: ... pairs with the skip ahead")
+    dW = [rm.paired("final_nov", sc, o, "v41", "pi_w")["mean"] for sc in ("mesh_mission", "multihop") for o in ("accumo", "leaf")]
+    put("BdLessWMin", -max(dW), f"{src}: accumo/leaf - v4.1 Pi W, smallest saving", "{:.2f}")
+    put("BdLessWMax", -min(dW), f"{src}: ... largest saving", "{:.2f}")
+    put("BdLapShare", rm.shF["laptop"][0], f"{src}: final, multihop, laptop share of frames", "{:.0f}")
+    put("BdLapLat", rm.shF["laptop"][1], f"{src}: ... laptop median latency ms", "{:.0f}")
+    put("BdFixLapBefore", rm.shX0["laptop"][0], f"{src}: fix campaign, final24 multihop laptop share", "{:.1f}")
+    put("BdFixLapAfter", rm.shX["laptop"][0], f"{src}: ... with the skip", "{:.1f}")
+    put("BdFixLapAfterMs", rm.shX["laptop"][1], f"{src}: ... with the skip, laptop median ms", "{:.0f}")
+    put("BdFixJetBefore", rm.shX0["jetson"][1], f"{src}: fix campaign, Jetson median ms without the skip", "{:.0f}")
+    put("BdFixJetAfter", rm.shX["jetson"][1], f"{src}: ... with the skip", "{:.0f}")
+    pr_ = rm.prof
+    sav = [1 - pr_["1800"][v]["j_per_inference"] / pr_["2400"][v]["j_per_inference"] for v in ("s320", "n480y11")]
+    put("BdDvfsSave", 100 * min(sav), f"{src}: J per inference saved at 1.8 vs 2.4 GHz, min of 2 models", "{:.0f}")
+    put("BdDvfsShareMin", min(rm.s18), f"{src}: onboard inferences at 1.8 GHz, min run", "{:.0f}")
+    put("BdDvfsShareMax", max(rm.s18), f"{src}: ... max run", "{:.0f}")
+    put("BdDvfsW", signed(rm.pDhw["mean"], "{:+.3f}"), f"{src}: DVFS - final, 24-min, Pi W, paired (3)")
+    put("BdDvfsSapHeat", signed(rm.pDh["mean"]), f"{src}: DVFS - final, 24-min, sAP+fc (3)")
+    put("BdDvfsSapShort", signed(rm.pDs["mean"]), f"{src}: DVFS - final, 40-s phases, sAP+fc (5)")
+    for sc, t in (("static_good", "Stat"), ("mesh_mission", "Mis")):
+        put(f"BdTwoOne{t}", rm.two[(sc, "v41j1")][0], f"{src}: two cameras, one Jetson, {sc}, per-camera sAP+fc")
+        put(f"BdTwoTwo{t}", rm.two[(sc, "v41j2")][0], f"{src}: two cameras, two Jetsons, {sc}")
+        put(f"BdCap{t}", signed(rm.pC[sc]["mean"]), f"{src}: per-camera cap - none, {sc}, paired (4)")
+        put(f"BdCap{t}Ci", rm.pC[sc]["ci"], f"{src}: ... 95 % t half-width")
+    r8 = [rm.pull[("v41", 8, r)]["on"] for r in (1, 2)]
+    p8 = [rm.pull[("pull1", 8, r)]["on"] for r in (1, 2)]
+    put("BdRuleEightMin", min(r8), f"{src}: v4.1 rule, 8 streams, on-time/s", "{:.1f}")
+    put("BdRuleEightMax", max(r8), f"{src}: ...", "{:.1f}")
+    put("BdPullEightMin", min(p8), f"{src}: pull one ahead, 8 streams, on-time/s", "{:.1f}")
+    put("BdPullEightMax", max(p8), f"{src}: ...", "{:.1f}")
+    put("BdCalRuns", str(rm.cal["runs"]), f"{src}: calibration, runs")
+    put("BdCalFrames", f"{sum(b_['n'] for b_ in rm.ca['bins']):,}".replace(",", "{,}"), f"{src}: calibration, offloaded frames")
+    put("BdCalEce", rm.ca["ece"], f"{src}: calibration, ECE", "{:.3f}")
+    put("BdCalLowObs", 100 * rm.ca["bins"][0]["observed"], f"{src}: frames predicted 0-0.1, observed on time %", "{:.0f}")
+    put("BdTunnelSmall", float(np.mean(rm.tun["laptop"]) - np.mean(rm.tun["pi-sender"])), f"{src}: tunnel - mesh hop, 1 KB RTT ms", "{:.1f}")
+    put("BdTunnelFrame", float(np.mean(rm.tunr["laptop"]) - np.mean(rm.tunr["pi-sender"])), f"{src}: tunnel - mesh hop, 83 KB RTT ms", "{:.1f}")
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "metrics.tex").write_text("% Generated by paper2/make_metrics.py from experiments/results -- do not edit.\n" +
                                      "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in M.items()))

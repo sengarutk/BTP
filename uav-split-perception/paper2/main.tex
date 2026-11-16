@@ -1,5 +1,5 @@
 \documentclass[conference]{IEEEtran}
-% Draft 1, 30 Oct 2026. Every measured number is a macro from generated/metrics.tex (make_metrics.py), traced in
+% Draft 3, 16 Nov 2026 (the mesh board sessions of 14-16 Nov added). Draft 1, 30 Oct 2026. Every measured number is a macro from generated/metrics.tex (make_metrics.py), traced in
 % generated/metrics_sources.md; design constants of the controller (deadline, frame rate, budgets, step sizes) are
 % the defaults of validation/hardware/adaptive2.py and are written out.
 \usepackage{amsmath,amssymb,amsthm}
@@ -32,15 +32,18 @@ streaming-accuracy objective, with online dual variables for power and freshness
 losing accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainPct\,\%, \EnPairs{} pairs) and \EnRepGain{}
 (\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and
 \MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
-\MeshVThrottle{}\,\%. It does not remove all of it: on 24-minute Wi-Fi missions with total blackouts the board
-still spent \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time at or above 80~$^\circ$C, which the replay traces to
-the controller's blackout hold. In a trace replay validated against the hardware, the greedy priced controller reaches
-\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. An AccuMO-style 30-frame planner is slightly
-ahead of it there, but that lead lies within the replay's known bias. The price update carries a sample-path guarantee:
+\MeshVThrottle{}\,\%. On 24-minute missions with total blackouts its blackout hold still kept the board at or above
+80~$^\circ$C for \BdHoldHotMin--\BdHoldHotMax\,\% of the time; capping the hold and adding a hard guard at 76.5~$^\circ$C
+removes this on five mesh boards (peak \BdFinPeak~$^\circ$C, never throttled, no loss of accuracy). With five paired
+repetitions on the boards the final controller ties its predecessor; against an AccuMO-style 30-frame planner it was
+\BdFinVsAccMis~sAP on the one-hop mission and \BdFinVsAccMulti{} in multihop, a gap that a rule against sending frames
+to paths it predicts late closes (\BdFixMulti). A 2.4~W budget closes its
+power gap to the planner at the same accuracy. The price update carries a sample-path guarantee:
 mean power stays below the budget plus a price term and a hold-and-cap term. All \ThmUpdates{} logged updates of the
 \ThmRuns{} priced runs follow the coded rule, so the bound holds on every run (an excess of at most \ThmMeshExcess~W on
 the mesh and \ThmLongExcess~W over 24 minutes, where the price sat at its cap). Through a measured thermal model the
-budget sets the board's mean temperature (within \ThMae~$^\circ$C). Its objective must use
+budget sets the board's mean temperature (within \ThMae~$^\circ$C on the boards the model was fitted on; another board
+needs its own intercept). Its objective must use
 the decay curve of the forecaster that runs: with the curve without forecasting it loses \MainNoFcLoss{}~sAP.
 \end{abstract}
 
@@ -65,23 +68,25 @@ streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRep
 pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
 removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
 \EnGainPct\,\% and \EnRepGainPct\,\%. On 24-minute Wi-Fi missions with total blackouts the board was still at or
-above 80~$^\circ$C \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time (Section~\ref{sec:theory}).
+above 80~$^\circ$C \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time (Section~\ref{sec:theory}); on the mesh boards a
+hold capped at the guard's temperature and a hard guard remove that (Section~\ref{sec:board}).
 \item \emph{The price has guarantees.} Mean power stays below the budget plus two named terms on every run: every one
 of the \ThmUpdates{} logged price updates of the \ThmRuns{} runs follows the coded rule. The budget sets the mean
 temperature, and an idealised version is within a small, stated gap of the best power-feasible policy
 (Section~\ref{sec:theory}).
-\item \emph{The greedy priced choice is near the best schedule we can construct} (trace replay):
-\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle, no gain from a clairvoyant link, and within the
-replay's bias of an AccuMO-style planner~\cite{Kong_2023};
-on hardware it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers (Section~\ref{sec:best}).
+\item \emph{The greedy priced choice is near the best schedule we can construct}: in a trace replay it reaches
+\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle with no gain from a clairvoyant link; on hardware
+it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers, and on five mesh boards it ties an
+AccuMO-style planner~\cite{Kong_2023} once it stops sending frames to paths it predicts late (Sections~\ref{sec:best}
+and~\ref{sec:board}).
 \item \emph{The objective must match the forecaster}: valuing a result by the decay measured \emph{after} motion
 forecasting beats the curve without forecasting and a flat one (Section~\ref{sec:decay}).
 \end{itemize}
-Supporting results: the best place to decide depends on the mesh topology (Section~\ref{sec:topology}); a first
-two-camera hardware swarm and a calibrated swarm simulation (Section~\ref{sec:swarm}); and negative results, a predictive
-heat price adds nothing on top of the energy price and does worse in its place, and pricing the edge drone's energy saves
-little
-(Section~\ref{sec:negative}).
+Supporting results: the best place to decide depends on the mesh topology (Section~\ref{sec:topology}); two camera
+drones and two edge drones on one mesh channel, and a calibrated swarm simulation (Section~\ref{sec:swarm}); and negative
+results: a predictive heat price adds nothing on top of the energy price and does worse in its place, pricing the edge
+drone's energy saves little, the CPU clock as a priced third knob is used but neutral under a power budget, and a second
+edge drone on one shared channel costs accuracy (Section~\ref{sec:negative}).
 
 \section{Related Work}
 \textbf{Offloading and adaptation.} Odessa~\cite{Ra_2011} adapts offloading and parallelism for interactive perception,
@@ -102,7 +107,9 @@ cooperative perception in~\cite{Zaki_2024}; Phoenix~\cite{Jeon_2026} manages on-
 about 90\,\% without cooling~\cite{BenoitCattin_2020}; thermal-aware schedulers choose between on-device
 processors~\cite{Tan_2024}, and a threshold policy jointly sets offloading, DVFS and model size under heat and memory
 limits~\cite{Choi_2024}; Lotus~\cite{Gong_2024} scales a Jetson's clocks to avoid throttling, and J-DOB~\cite{Xu_2025}
-jointly sets offloading, batching and DVFS for energy. These measure frame rate or latency on one device; we measure the streaming-accuracy cost of
+jointly sets offloading, batching and DVFS for energy. Real-time scheduling of AI inference on low-end embedded
+boards without a fan, where firmware throttling causes deadline misses, is studied in~\cite{Sun_2026}. These measure
+frame rate, latency or deadlines on one device; we measure the streaming-accuracy cost of
 heat in a distributed offloading system and price it with a guarantee. Freshness under an energy budget is also studied
 as age of information, e.g.\ with a safe DQN for UAV-aided edge computing~\cite{Zhao_2024}; our freshness price plays
 that role inside an accuracy objective; age-based timeliness also drives multi-task remote-inference
@@ -111,7 +118,9 @@ prediction~\cite{Kalor_2025,Binucci_2025}; our deadline probabilities are Gaussi
 \textbf{Why a few watts matter.} The camera board draws a few watts against the motors' far larger flight power; on
 drones, compute matters through mission time~\cite{Boroujerdian_2018}, and here through heat, which the board must
 shed without a fan. \textbf{UAV offloading.} A$^2$-UAV~\cite{Coletta_2023} optimises DNN offloading over a multi-hop UAV testbed; Qu et al.~\cite{Qu_2024} orchestrate
-video analytics across a drone network edge; multi-UAV edge computing is mostly studied analytically~\cite{Sun_2024,Hao_2024,Du_2026}. IntUNe~\cite{Varshney_2026}
+video analytics across a drone network edge; multi-UAV edge computing is mostly studied analytically~\cite{Sun_2024,Hao_2024,Du_2026}. Our swarm-wide
+coordinator applies receiver-driven scheduling, known from datacentre transport~\cite{Handley_2017,Montazeri_2018}, to a
+shared drone channel. IntUNe~\cite{Varshney_2026}
 jointly sets a surveillance UAV's speed, frame rate and offloading under delay and accuracy constraints, without
 heat; a measurement study on a 5G operator network compares edge, cloud and onboard processing for a drone
 service~\cite{CandalVentureira_2023}.
@@ -179,8 +188,9 @@ that runs.}
 \label{fig:decay}
 \end{figure} The energy price follows the measured board power
 $\bar P$ of the camera drone's board (mean of the last second): $\mu \leftarrow \min(5, \max(0, \mu + 0.1(\bar P -
-B)))$ once per second, with budget $B = 2.8$~W (\ThmAltBudget--3.6~W in \ThmAltBudgetRuns{} runs of two early Wi-Fi
-campaigns). Two exceptions: at a measured 78~$^\circ$C or more, $\mu$ is at least 1 (a thermal
+B)))$ once per second, with budget $B = 2.8$~W in most campaigns (\ThmAltBudgetRuns{} runs used
+\ThmAltBudget--\ThmAltBudgetMax~W: two early Wi-Fi campaigns, a room-following budget and the final controller's
+2.4~W). Two exceptions: at a measured 78~$^\circ$C or more, $\mu$ is at least 1 (a thermal
 guard); and while, for every link, the setting with the highest value has at most a 20\,\% chance of delivering in time
 (and the board is below 85~$^\circ$C), onboard inference is not priced and $\mu$ is held, also for 1~s after
 (anti-windup: the budget cannot be met then). The
@@ -195,6 +205,15 @@ updates of $\lambda_F$ in \PrFRuns{} runs, \PrTUpdates{} of $\lambda_T$ in \PrTR
 \PrERuns, with \PrFUnexplained, \PrTUnexplained{} and \PrEUnexplained{} exceptions. The caps on $\lambda_F$ and
 $\mu_e$ were added on 13 October; in \PrFPreCapRuns{} and \PrEPreCapRuns{} runs of the two Wi-Fi campaigns before that,
 the same rules ran uncapped, and the prices reached \PrFPreCapMax{} and \PrEPreCapMax.
+
+\textbf{The final controller} (v4.1 with four changes, each tested on the boards before it was kept,
+Section~\ref{sec:board}): the blackout hold applies only below $\theta_h = 76.5$~$^\circ$C (a capped hold); a hard guard
+starts no onboard inference at or above $\theta_g = 76.5$~$^\circ$C, which is 80~$^\circ$C minus the 3.5~$^\circ$C
+overshoot measured above a 78~$^\circ$C guard (Section~\ref{sec:theory}); the onboard models are YOLOv8s at 320~px and YOLO11n at 480~px, timed on the
+board at start-up and priced at their measured energy, with the encoder's time raised by 10~ms while an onboard
+inference shares the CPU; and while at least one path's best setting has $p_{\mathrm{on}} \ge 0.5$, a path whose best
+setting has $p_{\mathrm{on}} < 0.5$ is offered only its own settings with $p_{\mathrm{on}} \ge 0.5$, or no frame. Its
+budget is 2.4~W.
 
 \section{Guarantees}\label{sec:theory}
 The price update is a projected dual-ascent step on the power constraint $\bar P \le B$, and the standard virtual-queue
@@ -309,7 +328,11 @@ within \ThMae~$^\circ$C on average (at most \ThMax). The error is a campaign off
 on the 24-minute Wi-Fi runs and \ThBiasMesh~$^\circ$C on the mesh (mean \ThMeanErr). The budget therefore sets the mean
 temperature: 2.8~W predicts \ThPredBudget~$^\circ$C, and keeping the mean below 80~$^\circ$C, where the board starts to
 throttle, needs $B \le \ThBudgetEighty$~W (\ThBudgetEightyCtl~W with the fit the controller uses, levels below
-80~$^\circ$C). Peaks and the onset of throttling are not bounded by this rule.
+80~$^\circ$C). Peaks and the onset of throttling are not bounded by this rule. On the camera board of the November mesh
+sessions, which the model was not fitted on, the same model over-predicts the mean by \ThNovBiasMin--\ThNovBiasMax~$^\circ$C
+(\ThNovRuns{} runs of 24 minutes): the slope carries over, the intercept is per board. A budget that follows an online
+estimate of the board's offset held its power (3.3--3.4~W) but not its temperature target under bursty load, so the
+fixed budget is kept.
 
 Peaks need a different guard. Under v4.1's guard, a price of at least 1 makes onboard inference costlier, but it can
 still be chosen. A hard guard forbids it: no onboard inference starts while $\theta \ge \theta_g$.
@@ -355,7 +378,14 @@ start. With the controller's fit, $\theta_g = 78$~$^\circ$C, $\theta_{\mathrm{lo
 $\delta_i = \TgDi$ and \TgDn~$^\circ$C. The bound is then \TgBoundLab~$^\circ$C in the lab: just below the 80~$^\circ$C
 mark. It stays below the 85~$^\circ$C throttling limit for a room up to \TgMarginThrottle~$^\circ$C warmer. By (a), no
 controller can hold 78~$^\circ$C in a room more than \TgConverseMax~$^\circ$C warmer (\TgConverseMean{} on the
-floor's mean). The hard guard has not been run on the board; the replay check follows.
+floor's mean). \textbf{On the board} the guard's overshoot (peak minus $\theta_g$) was \BdDeltaFastMin--\BdDeltaFast~$^\circ$C
+over \BdGuardedRuns{} guarded 24-minute runs, more than $\delta_i + \delta_n$: the Pi's die has a fast thermal mode, seen
+as a rise that continues after the guard acts, which the model's single time constant omits. With the 78~$^\circ$C guard
+the peaks reached 80.4--81.5~$^\circ$C, just past the bound of (b); we therefore use (b) with the overshoot measured on
+the board, and set $\theta_g = 80 - 3.5$~$^\circ$C from the 78~$^\circ$C runs; over all \BdGuardedRuns{} runs the
+largest overshoot is $\delta_{\mathrm{fast}} = \BdDeltaFast$~$^\circ$C. With $\theta_g = 76.5$~$^\circ$C the peak
+stayed at \BdGuardPeakMin--\BdGuardPeakMax~$^\circ$C (at or above 80~$^\circ$C for at most \BdGuardHotMax\,\% of the
+time) and the board never throttled (Section~\ref{sec:board}). The replay check follows.
 
 \textbf{The settings, swept in the replay.} We swept the step size, the budget, the room temperature and the hold in
 the trace replay (Section~\ref{sec:method}). Each change is to one setting of v4.1, on the same seeds and link draws.
@@ -428,15 +458,16 @@ only \HwLongHeldLo\,\% were held, yet it was hot \HwLongHotLo\,\% of the time, s
 \HwLongMeshRuns{} 24-minute mesh missions, whose prices were almost never held, spent at most
 \HwLongMeshHotMax\,\% of the time at or above 80~$^\circ$C. The budget rule therefore sets the mean temperature, as
 stated. On long missions with blackouts, the hold explains the hot time in the replay and in one of the two hardware
-runs. Capping the hold at the guard's temperature removes that time in the replay; it has not yet been run on the
-board.
+runs. Capping the hold at the guard's temperature removes that time in the replay and on the board
+(Section~\ref{sec:board}).
 
 \section{Method}\label{sec:method}
 Strategies are compared in paired campaigns: every repetition runs all strategies on the same scenario, in shuffled
 order, with the same scripted link faults, following common advice on benchmarking with repetitions~\cite{Kalibera_2013}. Differences are reported as paired means with Student-$t$ 95\,\%
 intervals; $p$-values are exact sign-permutation tests, Holm-corrected over the comparisons of a campaign where
 stated. The board's power and temperature are measured (PMIC rails, about \PowerHz{} samples per second); the Jetson's power is logged from its
-INA3221 sensor. Comparisons that cannot be run on hardware (a published planner, hindsight oracles) use a trace replay
+INA3221 sensor. Comparisons that cannot be run on hardware (hindsight oracles, sweeps over settings), and the first
+comparison with a published planner, use a trace replay
 rebuilt from the recorded runs; against the 240 runs of the main campaign it reproduces per-policy streaming AP with
 $r=\ReplaySapR{}$, but it favours policies that run less onboard by about \ReplayLeafBias{}~sAP.
 
@@ -460,6 +491,10 @@ v5, flat decay $-$ v5 & Wi-Fi & \MainFlat{}$\pm$\MainFlatCi{} & \MainPairs{} & \
 camera decides $-$ chain, direct & mesh & \TopoDirectDiff{}$\pm$\TopoDirectDiffCi{} & \TopoDirectPairs{} & \\
 camera decides $-$ chain, multihop & mesh & \TopoMultiDiff{}$\pm$\TopoMultiDiffCi{} & \TopoMultiPairs{} & \\
 AccuMO-style $-$ v4.1, random faults & replay & \MpcRandom{}$\pm$\MpcRandomCi{} & \MpcRandomN{}$^\dagger$ & \\
+final $-$ AccuMO-style, one hop & 5 boards & \BdFinVsAccMis{}$\pm$\BdFinVsAccMisCi{} & 5 & \\
+final $-$ AccuMO-style, multihop & 5 boards & \BdFinVsAccMulti{}$\pm$\BdFinVsAccMultiCi{} & 5 & \\
+late-path rule $-$ none, multihop & 5 boards & \BdFixMulti{}$\pm$\BdFixMultiCi{} & 5 & \\
+2.4~W $-$ 2.8~W budget, multihop & 5 boards & \BdBudgetSapMulti & 3 & \BdBudgetWMulti~W \\
 \bottomrule
 \multicolumn{5}{@{}l}{$^\dagger$seeds of the trace replay, not hardware pairs.}
 \end{tabular}
@@ -492,6 +527,36 @@ strategy: \SysEffFixed{} sAP per watt against \SysEffMin--\SysEffMax{} for the p
 the time (the priced controllers at least \SysVAvailMin\,\%) and fails when its link fails, so the edge drone's case is
 robustness, not energy.
 
+\subsection{On the boards: the hold, the guard and the final controller}\label{sec:board}
+Five boards on one batman-adv mesh (the camera Pi, a second camera Pi, two Jetson edge drones and a ground radio cabled
+to the GPU), every prediction committed before its runs, every run started below a fixed board temperature.
+\textbf{Heat on 24-minute missions with a 4-minute total blackout} (\BdHeatReps{} runs per strategy): with v4.1's hold
+the board was at or above 80~$^\circ$C for \BdHoldHotMin--\BdHoldHotMax\,\% of the time and throttled in every run
+(sAP \BdHoldSap); capping the hold at 78~$^\circ$C cut this to at most \BdCapHotMax\,\% with no throttling (sAP
+\BdCapSap; peaks up to \BdCapPeakMax~$^\circ$C); with the guard at 76.5~$^\circ$C the peak was
+\BdGuardPeakMin--\BdGuardPeakMax~$^\circ$C (sAP \BdGuardSap), and the final controller kept it at \BdFinPeak~$^\circ$C
+in all three runs, never throttled, at sAP \BdFinSap.
+
+\textbf{Against v4.1 and the published-style schedulers} (two scenarios, five paired repetitions): the final controller
+reached \BdFinSapMis{} (mission) and \BdFinSapMulti{} (multihop), against v4.1 \BdFinVsVMis{} $\pm$ \BdFinVsVMisCi{} and
+\BdFinVsVMulti{} $\pm$ \BdFinVsVMultiCi. The AccuMO-style planner reached \BdAccSapMis{} and \BdAccSapMulti: the final controller minus the planner
+is \BdFinVsAccMis{} $\pm$ \BdFinVsAccMisCi{} on the mission and \BdFinVsAccMulti{} $\pm$ \BdFinVsAccMultiCi{} in
+multihop (the planner ahead in every pair). The cause was measured: in multihop the ground is
+two hops away and its results arrived in a median \BdLapLat~ms, past the deadline, yet the controller still sent it
+\BdLapShare\,\% of the frames, because a late result still has value; that traffic shared the relay's radio with the edge
+path. Its own deadline probability for those frames was near zero, so the fix uses it: no frame to a path predicted
+late while a timely one exists. With it, the ground's share fell from \BdFixLapBefore{} to \BdFixLapAfter\,\% (now
+arriving in a median \BdFixLapAfterMs~ms), the edge path's median latency from \BdFixJetBefore{} to \BdFixJetAfter~ms,
+and streaming AP rose by \BdFixMulti{} $\pm$ \BdFixMultiCi{} in multihop (\BdFixMultiWins{} of 5 pairs), the size of the
+planner's lead. On the one-hop mission it changed by \BdFixMis{} $\pm$ \BdFixMisCi{} (not significant): when a timely
+prediction fails, the skipped late path is no longer there as a backup.
+
+\textbf{Power.} The planner and a LEAF-style fixed weight drew \BdLessWMin--\BdLessWMax~W less than v4.1 at the same
+accuracy: v4.1 spends its 2.8~W budget on onboard work worth almost nothing in these scenarios. With a 2.4~W budget the
+final controller's power changed by \BdBudgetWMis{} and \BdBudgetWMulti~W, the board ran about 3~$^\circ$C cooler, and
+streaming AP changed by \BdBudgetSapMis{} and \BdBudgetSapMulti{} (three pairs each): the gap was the budget, not the
+method.
+
 \subsection{Near the best schedule}\label{sec:best}\label{sec:planner}
 \textbf{Distance from the best schedule (trace replay).} Knowing the exact goodput of every next transfer in advance
 changes v4.1's streaming AP by at most \ClairMax{} (inside the interval in every scenario), so a better link predictor
@@ -510,8 +575,8 @@ link faults and \MpcLong{}$\pm$\MpcLongCi{} over 24-minute missions; the LEAF-st
 difference was \MpcHeldRandom{}$\pm$\MpcHeldRandomCi{}. The planner and the LEAF-style weight both draw less power than v4.1 (the planner \MpcLessWMin--\MpcLessWMax~W less):
 they run less onboard. That is the direction the replay is known to favour; with the LEAF-style weight, the replay
 overstates the difference measured on hardware by \ReplayLeafBias{}. Their leads, including the significant ones, are
-within that bias, so the supported claim is that the greedy priced choice does about as well as a 30-frame planner here
-(the board session tests this); the planner takes \MpcMs{}~ms per frame on a laptop CPU, and its hardware comparison is future work.
+within that bias. The planner takes \MpcMs{}~ms per frame on a laptop CPU; on the boards (Section~\ref{sec:board}) it
+beat the greedy controller in multihop until the late-path rule, and lost to it on the one-hop mission.
 
 \textbf{A learned policy.} We also trained a constrained deep-RL policy in the replay: PPO with a Lagrange multiplier on
 the 2.8~W budget (PPO-Lagrangian). It was trained on 2-minute episodes from seeds not used for evaluation, with v4.1's
@@ -525,7 +590,10 @@ other the multiplier wound up until the policy only skipped.
 
 \textbf{Calibration (trace replay).} Over \CalFrames{} offloaded frames, v4.1 predicted on average a \CalPred\,\%
 chance of meeting the deadline and \CalObs\,\% met it (expected calibration error \CalEce{}); no probability bin was
-over-confident, so the controller is cautious rather than optimistic.
+over-confident, so the controller is cautious rather than optimistic. On the hardware (\BdCalFrames{} offloaded frames
+of \BdCalRuns{} mesh runs) the same holds (expected calibration error \BdCalEce): no bin is over-confident, but frames
+predicted to have almost no chance arrived in time \BdCalLowObs\,\% of the time, so the estimate is safe but pessimistic
+where the goodput estimate is low.
 
 \subsection{The objective must match the forecaster}\label{sec:decay}
 With the decay curve after forecasting, the streaming objective beat the rate objective of v2 by
@@ -544,9 +612,16 @@ $p=\TopoDirectP{}$). With the direct link blocked so that every packet crosses t
 With two real camera drones (the Pi and the Jetson as cameras) sharing the ground GPU, sharing cost the Pi
 \DuoShareLossMin--\DuoShareLossMax\,\% of its streaming AP, and adaptive control on both cameras beat fixed offloading
 by \DuoAdaptGain{}$\pm$\DuoAdaptCi{} (\DuoAdaptWins{} of \DuoPairs{} pairs). A ground-side admission coordinator
-rarely acted with two cameras (\DuoCoordGain{}$\pm$\DuoCoordCi{}). In a swarm simulation calibrated with the measured
+rarely acted with two cameras (\DuoCoordGain{}$\pm$\DuoCoordCi{}). On the mesh, with two camera Pis and up to two
+edge drones on one channel, a second edge drone cost accuracy: per camera \BdTwoOneStat{} with one Jetson against
+\BdTwoTwoStat{} with two on a clean link, \BdTwoOneMis{} against \BdTwoTwoMis{} on the mission, because more paths in
+flight make every result later; limiting each camera to two paths in flight did not help (\BdCapStat{} $\pm$
+\BdCapStatCi{} and \BdCapMis{} $\pm$ \BdCapMisCi), since a camera cannot see the other's traffic. A swarm-wide
+coordinator in which the server pulls one frame ahead from each stream held \BdPullEightMin--\BdPullEightMax{} on-time
+results/s with 8 streams over the two Pis, against \BdRuleEightMin--\BdRuleEightMax{} under v4.1's per-camera rule; it
+was not fair across hosts with several streams each. In a swarm simulation calibrated with the measured
 boards and links, 20 Pi camera drones on one Wi-Fi access point each delivered \SwarmTwentyAlone{} detections/s when
-every drone adapted alone and \SwarmTwentyCoord{} with the coordinator; larger hardware swarms are future work.
+every drone adapted alone and \SwarmTwentyCoord{} with the coordinator; hardware swarms beyond two camera drones are future work.
 The same simulation tested relaying over an imperfect relay link. Each drone could send through a neighbour, chosen by
 its uplink, over one or two air-to-air hops. The relay links had 3, 6 or 8~dB of shadowing and 0--10\,\% per-packet loss
 with retransmission. There were \RnSettings{} settings with 5--20 drones and \RnSeeds{} seeds each. The adaptive policy
@@ -564,26 +639,33 @@ price alone kept the same accuracy as v4.1 (\HeatSap{}) at \HeatW{}~W and \HeatC
 ($p=\HeatP{}$), because it stays at zero until the predicted temperature reaches 75~$^\circ$C, while the energy price acts
 on every joule. Pricing the measured power is the better signal. Pricing the Jetson's energy at a 0.5~W budget changed
 streaming AP by \JetHalfSap{}, and at 1.2~W by \JetTwelveSap{} ($p=\JetTwelveP{}$), for little saving, because the edge drone's power is
-dominated by its idle draw.
+dominated by its idle draw. The CPU clock as a third priced knob was used but bought nothing: at 1.8~GHz an onboard
+inference costs \BdDvfsSave\,\% less energy than at 2.4~GHz, and the controller ran \BdDvfsShareMin--\BdDvfsShareMax\,\%
+of its onboard inferences there, but under a power budget the price spent the saving on more onboard inferences: power
+changed by \BdDvfsW~W and streaming AP by \BdDvfsSapHeat{} and \BdDvfsSapShort{} (24-minute and short missions). The
+guard at 76.5~$^\circ$C kept the peak at 80~$^\circ$C in two of three runs, not all (one sample at 80.4~$^\circ$C).
 
 \section{Limitations}
-The boards were on a table, one hop apart, with recorded video replayed; the mesh runs batman-adv as is, one of several
-routing protocols compared for UAV meshes~\cite{Diniz_2025}, and its own effect was not characterised; there was one
-camera drone on the mesh; most
-mesh cells have 3 repetitions; the trace replay favours low-onboard policies by about \ReplayLeafBias{}~sAP, so the
-planner comparison is provisional; the throttling cost is measured against an emulated full clock, and the energy mechanism is not isolated by an
-ablation; whether the controller also survives correlated failures of both links under real interference is not yet
-measured; the step-size, budget, hold and room-temperature results come from the replay, whose thermal plant is
-the model of Proposition~\ref{prop:temp}, and the room temperature was not logged, so the capped hold still needs a
-board run.
+The boards were on a table in still air, with recorded video replayed: nothing was flown, so propeller wash, real
+distances and vibration are untested, and every heat result is for a fanless board without forced airflow. The mesh
+runs batman-adv as is, one of several routing protocols compared for UAV meshes~\cite{Diniz_2025}, and its own overhead
+was not characterised; the ground GPU was reached through an SSH tunnel, which adds \BdTunnelSmall~ms to a small round
+trip and \BdTunnelFrame~ms to a frame (measured). There were two camera drones and two edge drones on one channel; the
+board comparisons have three to five repetitions. The throttling cost is measured against an emulated full clock, and
+the energy mechanism is not isolated by an ablation. The step-size and room-temperature results come from the replay,
+whose thermal plant is the model of Proposition~\ref{prop:temp}; the room temperature was not logged, and the thermal
+intercept is per board. The deadline probabilities are pessimistic where the goodput estimate is low, which the
+late-path rule inherits.
 
 \section{Conclusion}
 On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and
 throttling alone costs a large share of onboard streaming accuracy. A greedy scheduler that values each frame by the
 accuracy its result will still have, and prices the camera drone's measured power and the freshness of its results,
 removes most of that cost while keeping or raising streaming accuracy; on long missions with total blackouts its
-blackout hold still lets the board run hot, which a hold capped at the guard's temperature removes in the replay. In a validated replay it reaches
-\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle. Its power budget holds on every run up to a price
+blackout hold still lets the board run hot, which a hold capped at the guard's temperature and a hard guard set by the
+measured overshoot remove on the boards. In a validated replay it reaches
+\OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle, and on five mesh boards it ties a 30-frame planner
+once it stops sending frames to paths it predicts late, at the planner's power with a 2.4~W budget. Its power budget holds on every run up to a price
 term and a hold-and-cap term, and it sets the board's mean temperature. Its objective must use the decay curve of the forecaster in use.
 
 \bibliographystyle{IEEEtran}

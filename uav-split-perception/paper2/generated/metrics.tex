@@ -130,8 +130,8 @@
 \newcommand{\MpcLessWMax}{0.53}
 \newcommand{\MpcMs}{0.64}
 \newcommand{\MpcPlanMsReplay}{1.5}
-\newcommand{\ThmRuns}{376}
-\newcommand{\ThmCamps}{10}
+\newcommand{\ThmRuns}{593}
+\newcommand{\ThmCamps}{27}
 \newcommand{\ThmEta}{0.1}
 \newcommand{\ThmMuMax}{5}
 \newcommand{\ThmMarginFour}{0.21}
@@ -143,14 +143,16 @@
 \newcommand{\ThmLongCapW}{0.11}
 \newcommand{\ThmLongHoldW}{0.00}
 \newcommand{\ThmLongRuns}{8}
-\newcommand{\ThmUpdates}{66{,}655}
+\newcommand{\ThmUpdates}{143{,}999}
 \newcommand{\ThmUnexplained}{0}
-\newcommand{\ThmOverRuns}{364}
-\newcommand{\ThmCapRuns}{15}
+\newcommand{\ThmOverRuns}{572}
+\newcommand{\ThmCapRuns}{44}
 \newcommand{\ThmWifiHoldExcess}{1.06}
 \newcommand{\ThmWifiHoldW}{0.74}
-\newcommand{\ThmAltBudgetRuns}{40}
-\newcommand{\ThmAltBudget}{3.5}
+\newcommand{\ThmAltBudgetRuns}{90}
+\newcommand{\ThmAltBudget}{2.4}
+\newcommand{\ThmAltBudgetMax}{3.6}
+\newcommand{\ThmTableLeft}{0}
 \newcommand{\ThmCampaignRows}{Wi-Fi, main$^\dagger$ & 120 & 1.28 & 0.2 & 0.0 & 0.00 & 0.00 & 14.1 \\
 Wi-Fi, edge price$^\dagger$ & 80 & 1.29 & 0.2 & 0.0 & 0.00 & 0.00 & 14.2 \\
 Wi-Fi, energy$^\dagger$ & 40 & 0.92 & 0.5 & 0.0 & 0.00 & 0.00 & 10.2 \\
@@ -160,7 +162,8 @@ Wi-Fi, 24 min & 8 & 0.55 & 15.8 & 19.0 & 0.42 & 0.48 & 5.0 \\
 mesh 1 & 12 & 0.07 & 0.2 & 0.0 & 0.00 & 0.00 & 3.3 \\
 mesh 2 & 21 & 0.07 & 0.1 & 0.0 & 0.00 & 0.00 & 2.9 \\
 mesh 3 & 18 & 0.04 & 0.5 & 0.0 & 0.00 & 0.00 & 3.3 \\
-mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\}
+mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\
+mesh, 14--16 Nov (17 campaigns) & 217 & 0.61 & 4.8 & 1.0 & 0.50 & 0.22 & 5.0 \\}
 \newcommand{\ThmOldExcess}{1.3}
 \newcommand{\ThmOldMu}{14}
 \newcommand{\ThmMsqMed}{0.70}
@@ -174,6 +177,9 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\}
 \newcommand{\ThRuns}{16}
 \newcommand{\ThMae}{1.6}
 \newcommand{\ThMax}{2.8}
+\newcommand{\ThNovRuns}{27}
+\newcommand{\ThNovBiasMin}{2.1}
+\newcommand{\ThNovBiasMax}{4.6}
 \newcommand{\ThBudgetEighty}{3.6}
 \newcommand{\ThBudgetEightyCtl}{3.8}
 \newcommand{\ThPredBudget}{70}
@@ -603,8 +609,8 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\}
 \newcommand{\RlRndDiffCi}{0.0034}
 \newcommand{\RlRndPower}{2.47}
 \newcommand{\RlRndVPower}{3.16}
-\newcommand{\PrFRuns}{158}
-\newcommand{\PrFUpdates}{53{,}758}
+\newcommand{\PrFRuns}{379}
+\newcommand{\PrFUpdates}{139{,}127}
 \newcommand{\PrFUnexplained}{0}
 \newcommand{\PrFPreCapRuns}{8}
 \newcommand{\PrTRuns}{170}
@@ -617,3 +623,93 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\}
 \newcommand{\PrEPreCapRuns}{28}
 \newcommand{\PrFPreCapMax}{4.1}
 \newcommand{\PrEPreCapMax}{6.4}
+\newcommand{\BdHoldHotMin}{16}
+\newcommand{\BdHoldHotMax}{26}
+\newcommand{\BdHoldThrMin}{42}
+\newcommand{\BdCapHotMax}{0.7}
+\newcommand{\BdCapPeakMax}{81.5}
+\newcommand{\BdHeatReps}{5}
+\newcommand{\BdGuardPeakMin}{79.3}
+\newcommand{\BdGuardPeakMax}{80.4}
+\newcommand{\BdGuardHotMax}{0.02}
+\newcommand{\BdFinPeak}{79.3}
+\newcommand{\BdDeltaFastMin}{2.4}
+\newcommand{\BdDeltaFast}{3.9}
+\newcommand{\BdGuardedRuns}{8}
+\newcommand{\BdHoldSap}{0.1281}
+\newcommand{\BdCapSap}{0.1267}
+\newcommand{\BdGuardSap}{0.1228}
+\newcommand{\BdFinSap}{0.1247}
+\newcommand{\BdFinVsVMis}{+0.0006}
+\newcommand{\BdFinVsVMisCi}{0.0032}
+\newcommand{\BdFinVsVMisWins}{3}
+\newcommand{\BdFinVsAccMis}{+0.0067}
+\newcommand{\BdFinVsAccMisCi}{0.0019}
+\newcommand{\BdFinVsAccMisWins}{5}
+\newcommand{\BdFinVsLeafMis}{+0.0012}
+\newcommand{\BdFinVsLeafMisCi}{0.0044}
+\newcommand{\BdFinVsLeafMisWins}{3}
+\newcommand{\BdFinSapMis}{0.1857}
+\newcommand{\BdFinWMis}{2.81}
+\newcommand{\BdAccSapMis}{0.1790}
+\newcommand{\BdAccWMis}{2.45}
+\newcommand{\BdLeafSapMis}{0.1845}
+\newcommand{\BdLeafWMis}{2.41}
+\newcommand{\BdBudgetWMis}{\textminus{}0.31}
+\newcommand{\BdBudgetSapMis}{\textminus{}0.0004}
+\newcommand{\BdFixMis}{\textminus{}0.0031}
+\newcommand{\BdFixMisCi}{0.0159}
+\newcommand{\BdFixMisWins}{3}
+\newcommand{\BdFinVsVMulti}{\textminus{}0.0032}
+\newcommand{\BdFinVsVMultiCi}{0.0032}
+\newcommand{\BdFinVsVMultiWins}{0}
+\newcommand{\BdFinVsAccMulti}{\textminus{}0.0162}
+\newcommand{\BdFinVsAccMultiCi}{0.0034}
+\newcommand{\BdFinVsAccMultiWins}{0}
+\newcommand{\BdFinVsLeafMulti}{\textminus{}0.0042}
+\newcommand{\BdFinVsLeafMultiCi}{0.0028}
+\newcommand{\BdFinVsLeafMultiWins}{0}
+\newcommand{\BdFinSapMulti}{0.1339}
+\newcommand{\BdFinWMulti}{2.83}
+\newcommand{\BdAccSapMulti}{0.1501}
+\newcommand{\BdAccWMulti}{2.25}
+\newcommand{\BdLeafSapMulti}{0.1381}
+\newcommand{\BdLeafWMulti}{2.20}
+\newcommand{\BdBudgetWMulti}{\textminus{}0.38}
+\newcommand{\BdBudgetSapMulti}{\textminus{}0.0015}
+\newcommand{\BdFixMulti}{+0.0151}
+\newcommand{\BdFixMultiCi}{0.0134}
+\newcommand{\BdFixMultiWins}{5}
+\newcommand{\BdLessWMin}{0.36}
+\newcommand{\BdLessWMax}{0.60}
+\newcommand{\BdLapShare}{21}
+\newcommand{\BdLapLat}{337}
+\newcommand{\BdFixLapBefore}{24.0}
+\newcommand{\BdFixLapAfter}{5.4}
+\newcommand{\BdFixLapAfterMs}{109}
+\newcommand{\BdFixJetBefore}{108}
+\newcommand{\BdFixJetAfter}{90}
+\newcommand{\BdDvfsSave}{27}
+\newcommand{\BdDvfsShareMin}{57}
+\newcommand{\BdDvfsShareMax}{67}
+\newcommand{\BdDvfsW}{\textminus{}0.017}
+\newcommand{\BdDvfsSapHeat}{+0.0022}
+\newcommand{\BdDvfsSapShort}{\textminus{}0.0047}
+\newcommand{\BdTwoOneStat}{0.1813}
+\newcommand{\BdTwoTwoStat}{0.1436}
+\newcommand{\BdCapStat}{+0.0061}
+\newcommand{\BdCapStatCi}{0.0266}
+\newcommand{\BdTwoOneMis}{0.1667}
+\newcommand{\BdTwoTwoMis}{0.1294}
+\newcommand{\BdCapMis}{\textminus{}0.0018}
+\newcommand{\BdCapMisCi}{0.0499}
+\newcommand{\BdRuleEightMin}{2.9}
+\newcommand{\BdRuleEightMax}{3.7}
+\newcommand{\BdPullEightMin}{19.9}
+\newcommand{\BdPullEightMax}{21.6}
+\newcommand{\BdCalRuns}{241}
+\newcommand{\BdCalFrames}{1{,}482{,}492}
+\newcommand{\BdCalEce}{0.055}
+\newcommand{\BdCalLowObs}{64}
+\newcommand{\BdTunnelSmall}{2.4}
+\newcommand{\BdTunnelFrame}{4.0}

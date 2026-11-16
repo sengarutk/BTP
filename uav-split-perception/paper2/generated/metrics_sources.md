@@ -133,8 +133,8 @@
 | `\MpcLessWMax` | 0.53 | ... max |
 | `\MpcMs` | 0.64 | planner_bench_laptop_oct30.json ms_median |
 | `\MpcPlanMsReplay` | 1.5 | replay/accumo_oct29/accumo_summary.json mission_20s.policies.accumo.plan_ms_median (replay, beside other jobs) |
-| `\ThmRuns` | 376 | theory_check/theory_check.json theorem1.runs (priced runs with a logged price, every campaign) |
-| `\ThmCamps` | 10 | theory_check/theory_check.json theorem1.by_campaign (number of campaigns) |
+| `\ThmRuns` | 593 | theory_check/theory_check.json theorem1.runs (priced runs with a logged price, every campaign) |
+| `\ThmCamps` | 27 | theory_check/theory_check.json theorem1.by_campaign (number of campaigns) |
 | `\ThmEta` | 0.1 | theory_check/theory_check.json eta (adaptive2.py default) |
 | `\ThmMuMax` | 5 | theory_check/theory_check.json mu_max (adaptive2.py default) |
 | `\ThmMarginFour` | 0.21 | mu_max / (eta x 240 updates): the price term's ceiling for a 4-minute run |
@@ -146,14 +146,16 @@
 | `\ThmLongCapW` | 0.11 | ... .max_term_cap_only_w |
 | `\ThmLongHoldW` | 0.00 | ... .max_term_hold_only_w |
 | `\ThmLongRuns` | 8 | ... .runs |
-| `\ThmUpdates` | 66{,}655 | theory_check/theory_check.json theorem1.updates |
+| `\ThmUpdates` | 143{,}999 | theory_check/theory_check.json theorem1.updates |
 | `\ThmUnexplained` | 0 | theory_check/theory_check.json theorem1.unexplained_neg_steps + unexplained_pos_steps (updates the controller as written cannot make) |
-| `\ThmOverRuns` | 364 | theory_check/theory_check.json theorem1.runs_over_budget |
-| `\ThmCapRuns` | 15 | theory_check/theory_check.json theorem1.runs_capped |
+| `\ThmOverRuns` | 572 | theory_check/theory_check.json theorem1.runs_over_budget |
+| `\ThmCapRuns` | 44 | theory_check/theory_check.json theorem1.runs_capped |
 | `\ThmWifiHoldExcess` | 1.06 | theory_check/theory_check.json by_campaign[table, b, long].max_avg_minus_budget_w, max (Wi-Fi campaigns with the cap and the hold) |
 | `\ThmWifiHoldW` | 0.74 | ... .max_term_hold_only_w, max |
-| `\ThmAltBudgetRuns` | 40 | theory_check/theory_check.json theorem1.per_run with budget_w != 2.8 |
-| `\ThmAltBudget` | 3.5 | ... min budget_w of those runs |
+| `\ThmAltBudgetRuns` | 90 | theory_check/theory_check.json theorem1.per_run with budget_w != 2.8 |
+| `\ThmAltBudget` | 2.4 | ... min budget_w of those runs |
+| `\ThmAltBudgetMax` | 3.6 | ... max budget_w of those runs |
+| `\ThmTableLeft` | 0 | theory_check/theory_check.json theorem1.by_campaign not in the table (other campaigns: ) |
 | `\ThmCampaignRows` | Wi-Fi, main$^\dagger$ & 120 & 1.28 & 0.2 & 0.0 & 0.00 & 0.00 & 14.1 \\
 Wi-Fi, edge price$^\dagger$ & 80 & 1.29 & 0.2 & 0.0 & 0.00 & 0.00 & 14.2 \\
 Wi-Fi, energy$^\dagger$ & 40 & 0.92 & 0.5 & 0.0 & 0.00 & 0.00 & 10.2 \\
@@ -163,7 +165,8 @@ Wi-Fi, 24 min & 8 & 0.55 & 15.8 & 19.0 & 0.42 & 0.48 & 5.0 \\
 mesh 1 & 12 & 0.07 & 0.2 & 0.0 & 0.00 & 0.00 & 3.3 \\
 mesh 2 & 21 & 0.07 & 0.1 & 0.0 & 0.00 & 0.00 & 2.9 \\
 mesh 3 & 18 & 0.04 & 0.5 & 0.0 & 0.00 & 0.00 & 3.3 \\
-mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theory_check.json theorem1.by_campaign (rows of Table tab:thm) |
+mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\
+mesh, 14--16 Nov (17 campaigns) & 217 & 0.61 & 4.8 & 1.0 & 0.50 & 0.22 & 5.0 \\ | theory_check/theory_check.json theorem1.by_campaign (rows of Table tab:thm) |
 | `\ThmOldExcess` | 1.3 | theory_check/theory_check.json by_campaign[energy, v42, main].max_avg_minus_budget_w, max (campaigns before the price cap and the blackout hold) |
 | `\ThmOldMu` | 14 | ... .max_mu, max |
 | `\ThmMsqMed` | 0.70 | theory_check/theory_check.json theorem2.msq_median_w2 (v4.1 mesh runs: mean (P-B)^2) |
@@ -174,14 +177,17 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\ThmGapPct` | 0.3 | ThmGapMax / 30 frames/s (the largest value rate: one full-accuracy result per frame) x 100 |
 | `\ThPlantA` | 34.4 | theory_check/theory_check.json temperature.fits.plant.intercept_c (6 levels below 84 C) |
 | `\ThPlantB` | 12.7 | ... .c_per_w |
-| `\ThRuns` | 16 | ... .runs (runs of at least 20 minutes, second half) |
-| `\ThMae` | 1.6 | ... .mean_abs_error_c |
-| `\ThMax` | 2.8 | ... .max_abs_error_c |
+| `\ThRuns` | 16 | theory_check/theory_check.json temperature.per_run on the fit boards (vid_campaign_long, _mesh2_long) |
+| `\ThMae` | 1.6 | ... mean |predicted - measured| |
+| `\ThMax` | 2.8 | ... max |predicted - measured| |
+| `\ThNovRuns` | 27 | theory_check/theory_check.json temperature.per_run, Nov mesh campaigns (pi-relayyy) |
+| `\ThNovBiasMin` | 2.1 | ... per-campaign mean predicted - measured, min |
+| `\ThNovBiasMax` | 4.6 | ... max |
 | `\ThBudgetEighty` | 3.6 | ... .budget_for_80c_w |
 | `\ThBudgetEightyCtl` | 3.8 | theory_check/theory_check.json temperature.fits.controller.budget_for_80c_w |
 | `\ThPredBudget` | 70 | plant fit at the 2.8 W budget |
 | `\ThTau` | 149 | energy/energy_constants.json pi.thermal.tau_s (measured cool-down time constant) |
-| `\ThMeanErr` | +0.8 | theory_check/theory_check.json temperature.fits.plant.mean_error_c (predicted minus measured) |
+| `\ThMeanErr` | +0.8 | theory_check/theory_check.json temperature.per_run on the fit boards, mean predicted minus measured |
 | `\ThBiasWifi` | +1.63 | ... .signed_error_by_campaign_c.vid_campaign_long |
 | `\ThBiasMesh` | −0.04 | ... .signed_error_by_campaign_c.vid_campaign_mesh2_long |
 | `\ThLevels` | 6 | energy/thermal_steady_pi.json levels with clock >= 1450 MHz and < 84 C (as replay.py) |
@@ -606,8 +612,8 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\RlRndDiffCi` | 0.0034 | ... 95 % Student-t half-width (12 Nov: was 1.96, too narrow for 5-10 pairs) |
 | `\RlRndPower` | 2.47 | ... RL mean power |
 | `\RlRndVPower` | 3.16 | ... v4.1 mean power |
-| `\PrFRuns` | 158 | theory_check/price_rules_check.json: lam_F runs |
-| `\PrFUpdates` | 53{,}758 | theory_check/price_rules_check.json: lam_F updates |
+| `\PrFRuns` | 379 | theory_check/price_rules_check.json: lam_F runs |
+| `\PrFUpdates` | 139{,}127 | theory_check/price_rules_check.json: lam_F updates |
 | `\PrFUnexplained` | 0 | theory_check/price_rules_check.json: lam_F updates not following the rule |
 | `\PrFPreCapRuns` | 8 | theory_check/price_rules_check.json: lam_F runs of the code before the cap |
 | `\PrTRuns` | 170 | theory_check/price_rules_check.json: lam_T runs |
@@ -620,3 +626,93 @@ mesh, 24 min & 8 & 0.15 & 0.2 & 18.3 & 0.00 & 0.11 & 5.0 \\ | theory_check/theor
 | `\PrEPreCapRuns` | 28 | theory_check/price_rules_check.json: mu_e runs of the code before the cap |
 | `\PrFPreCapMax` | 4.1 | theory_check/price_rules_check.json: largest price in the runs before the cap |
 | `\PrEPreCapMax` | 6.4 | theory_check/price_rules_check.json: largest price in the runs before the cap |
+| `\BdHoldHotMin` | 16 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v4.1 24-min mission, time >= 80 C, min |
+| `\BdHoldHotMax` | 26 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... max |
+| `\BdHoldThrMin` | 42 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v4.1 throttled samples, min |
+| `\BdCapHotMax` | 0.7 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): capped hold, time >= 80 C, max |
+| `\BdCapPeakMax` | 81.5 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): capped hold, peak, max |
+| `\BdHeatReps` | 5 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): 24-min runs per strategy (T4) |
+| `\BdGuardPeakMin` | 79.3 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guard 76.5 C, peak, min |
+| `\BdGuardPeakMax` | 80.4 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guard 76.5 C, peak, max |
+| `\BdGuardHotMax` | 0.02 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guard 76.5 C, time >= 80 C, max |
+| `\BdFinPeak` | 79.3 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final controller 24-min, peak, max |
+| `\BdDeltaFastMin` | 2.4 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guard overshoot (peak - guard), min over the guarded runs |
+| `\BdDeltaFast` | 3.9 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... max (delta_fast) |
+| `\BdGuardedRuns` | 8 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guarded 24-min runs |
+| `\BdHoldSap` | 0.1281 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v4.1 24-min sAP+fc |
+| `\BdCapSap` | 0.1267 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): capped hold 24-min sAP+fc |
+| `\BdGuardSap` | 0.1228 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): guard 76.5 C 24-min sAP+fc |
+| `\BdFinSap` | 0.1247 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final controller 24-min sAP+fc |
+| `\BdFinVsVMis` | +0.0006 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - v41, mesh_mission, paired mean (5 reps) |
+| `\BdFinVsVMisCi` | 0.0032 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsVMisWins` | 3 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinVsAccMis` | +0.0067 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - accumo, mesh_mission, paired mean (5 reps) |
+| `\BdFinVsAccMisCi` | 0.0019 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsAccMisWins` | 5 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinVsLeafMis` | +0.0012 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - leaf, mesh_mission, paired mean (5 reps) |
+| `\BdFinVsLeafMisCi` | 0.0044 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsLeafMisWins` | 3 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinSapMis` | 0.1857 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v41final mesh_mission sAP+fc (5 reps) |
+| `\BdFinWMis` | 2.81 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v41final mesh_mission Pi W |
+| `\BdAccSapMis` | 0.1790 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): accumo mesh_mission sAP+fc (5 reps) |
+| `\BdAccWMis` | 2.45 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): accumo mesh_mission Pi W |
+| `\BdLeafSapMis` | 0.1845 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): leaf mesh_mission sAP+fc (5 reps) |
+| `\BdLeafWMis` | 2.41 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): leaf mesh_mission Pi W |
+| `\BdBudgetWMis` | −0.31 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): 2.4 - 2.8 W budget, Pi W, paired (3 reps) |
+| `\BdBudgetSapMis` | −0.0004 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): 2.4 - 2.8 W budget, sAP+fc, paired |
+| `\BdFixMis` | −0.0031 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): late-path skip - none (2.4 W), mesh_mission, paired (5 reps) |
+| `\BdFixMisCi` | 0.0159 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFixMisWins` | 3 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with the skip ahead |
+| `\BdFinVsVMulti` | −0.0032 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - v41, multihop, paired mean (5 reps) |
+| `\BdFinVsVMultiCi` | 0.0032 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsVMultiWins` | 0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinVsAccMulti` | −0.0162 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - accumo, multihop, paired mean (5 reps) |
+| `\BdFinVsAccMultiCi` | 0.0034 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsAccMultiWins` | 0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinVsLeafMulti` | −0.0042 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final - leaf, multihop, paired mean (5 reps) |
+| `\BdFinVsLeafMultiCi` | 0.0028 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFinVsLeafMultiWins` | 0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with final ahead |
+| `\BdFinSapMulti` | 0.1339 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v41final multihop sAP+fc (5 reps) |
+| `\BdFinWMulti` | 2.83 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v41final multihop Pi W |
+| `\BdAccSapMulti` | 0.1501 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): accumo multihop sAP+fc (5 reps) |
+| `\BdAccWMulti` | 2.25 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): accumo multihop Pi W |
+| `\BdLeafSapMulti` | 0.1381 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): leaf multihop sAP+fc (5 reps) |
+| `\BdLeafWMulti` | 2.20 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): leaf multihop Pi W |
+| `\BdBudgetWMulti` | −0.38 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): 2.4 - 2.8 W budget, Pi W, paired (3 reps) |
+| `\BdBudgetSapMulti` | −0.0015 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): 2.4 - 2.8 W budget, sAP+fc, paired |
+| `\BdFixMulti` | +0.0151 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): late-path skip - none (2.4 W), multihop, paired (5 reps) |
+| `\BdFixMultiCi` | 0.0134 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdFixMultiWins` | 5 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... pairs with the skip ahead |
+| `\BdLessWMin` | 0.36 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): accumo/leaf - v4.1 Pi W, smallest saving |
+| `\BdLessWMax` | 0.60 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... largest saving |
+| `\BdLapShare` | 21 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): final, multihop, laptop share of frames |
+| `\BdLapLat` | 337 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... laptop median latency ms |
+| `\BdFixLapBefore` | 24.0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): fix campaign, final24 multihop laptop share |
+| `\BdFixLapAfter` | 5.4 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... with the skip |
+| `\BdFixLapAfterMs` | 109 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... with the skip, laptop median ms |
+| `\BdFixJetBefore` | 108 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): fix campaign, Jetson median ms without the skip |
+| `\BdFixJetAfter` | 90 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... with the skip |
+| `\BdDvfsSave` | 27 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): J per inference saved at 1.8 vs 2.4 GHz, min of 2 models |
+| `\BdDvfsShareMin` | 57 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): onboard inferences at 1.8 GHz, min run |
+| `\BdDvfsShareMax` | 67 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... max run |
+| `\BdDvfsW` | −0.017 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): DVFS - final, 24-min, Pi W, paired (3) |
+| `\BdDvfsSapHeat` | +0.0022 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): DVFS - final, 24-min, sAP+fc (3) |
+| `\BdDvfsSapShort` | −0.0047 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): DVFS - final, 40-s phases, sAP+fc (5) |
+| `\BdTwoOneStat` | 0.1813 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): two cameras, one Jetson, static_good, per-camera sAP+fc |
+| `\BdTwoTwoStat` | 0.1436 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): two cameras, two Jetsons, static_good |
+| `\BdCapStat` | +0.0061 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): per-camera cap - none, static_good, paired (4) |
+| `\BdCapStatCi` | 0.0266 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdTwoOneMis` | 0.1667 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): two cameras, one Jetson, mesh_mission, per-camera sAP+fc |
+| `\BdTwoTwoMis` | 0.1294 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): two cameras, two Jetsons, mesh_mission |
+| `\BdCapMis` | −0.0018 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): per-camera cap - none, mesh_mission, paired (4) |
+| `\BdCapMisCi` | 0.0499 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... 95 % t half-width |
+| `\BdRuleEightMin` | 2.9 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): v4.1 rule, 8 streams, on-time/s |
+| `\BdRuleEightMax` | 3.7 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... |
+| `\BdPullEightMin` | 19.9 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): pull one ahead, 8 streams, on-time/s |
+| `\BdPullEightMax` | 21.6 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): ... |
+| `\BdCalRuns` | 241 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): calibration, runs |
+| `\BdCalFrames` | 1{,}482{,}492 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): calibration, offloaded frames |
+| `\BdCalEce` | 0.055 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): calibration, ECE |
+| `\BdCalLowObs` | 64 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): frames predicted 0-0.1, observed on time % |
+| `\BdTunnelSmall` | 2.4 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): tunnel - mesh hop, 1 KB RTT ms |
+| `\BdTunnelFrame` | 4.0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): tunnel - mesh hop, 83 KB RTT ms |
