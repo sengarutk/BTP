@@ -17,7 +17,7 @@ RESULTS := experiments/results
 .PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help benchmark-check repro-check
 
 help:
-	@sed -n '2,12p' Makefile
+	@sed -n '2,13p' Makefile
 
 setup:
 	$(PYTHON) -m pip install -r requirements-dev.txt
