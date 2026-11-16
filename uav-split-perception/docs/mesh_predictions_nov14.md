@@ -681,3 +681,25 @@ Winning cells on the Pi: 11 with the JPEG family alone; **0 with video or both**
 For paper 1: the Pi numbers in the video section become 1.72 (JPEG) → 0.27 Mbit/s (video) for the headline code, and
 with low-delay video no split wins on a Pi 5 at any goodput, the same as the live sweep (T10.1). The host-time
 scaling is stated as valid for network inference only; CPU encoding is measured on the device.
+
+### Results: F.2 fix (`vid_campaign_fix_nov/`, 20 runs, 16 Nov 2026 15:28-17:27 IST; `vid_campaign_fix_nov_summary.md`)
+
+Paired v41fix24 − v41final24 (5 reps, t-test). Path shares and median latencies over the 5 runs of each:
+
+| scenario | sAP+fc Δ | final24 → fix24: laptop share (median ms) | Jetson median ms |
+|---|---|---|---|
+| multihop | **+0.0151 ± 0.0134** (5/5, p 0.036) | 24.0 % (278) → 5.4 % (109) | 108 → 90 |
+| mesh_mission | −0.0031 ± 0.0159 (3/5, p 0.61) | 60.4 % (52) → 62.9 % (52) | 87 → 91 |
+
+- **FX.1 partly held.** sAP +0.0151 (≥ +0.008: held; the planner's Phase 4 lead was +0.016); the laptop path's share
+  fell from 24.0 % to 5.4 %, just above the predicted < 5 %, and the frames it still gets now arrive in a median 109 ms
+  (they are sent only when the laptop link is timely).
+- **FX.2 did not hold (narrowly).** −0.0031 against the ≥ −0.003 bound, not significant (CI ±0.016). Per pair: the fix
+  ahead or equal in r1, r4, r5; behind in r2 and r3, where its availability was lower (0.979 / 0.958 against 0.997 /
+  0.998): when the timely path's prediction fails, the skipped late path is not there as a backup. Rep 4 was
+  disturbed for both runs (availability 0.84-0.85), equally, so the pairing absorbs it.
+- **FX.3 held.** Jetson median latency 108 → 90 ms in multihop (−18 ms): the relay's airtime is freed.
+- **FX.4 held.** Theorem 1 on all 20 runs (593/593 recorded); 0 throttled samples.
+- For paper 2: the final controller gets `--late-path-skip 0.5`: it closes the planner's multihop lead (+0.015 vs
+  +0.016) at no significant cost on the one-hop mission (−0.003 ± 0.016); the residual risk (a failed timely
+  prediction with the late backup skipped) is stated. F.2's limitation becomes a found-and-fixed result.
