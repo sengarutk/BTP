@@ -501,9 +501,10 @@ multihop −0.0162 ± 0.0034 (0/5, Holm 0.0007); v41final − leaf mesh_mission 
 - **F.1 held.** v41final − v41: mesh_mission +0.0006 ± 0.0032, multihop −0.0032 ± 0.0032; both within ±0.005.
 - **F.2 did not hold.** The AccuMO-style planner is ahead in multihop by 0.016 (5/5 pairs) and behind on mesh_mission
   by 0.007 (5/5); LEAF ahead in multihop by 0.004 (Holm 0.029). P1.1's "planner ties greedy" (mesh4, 2 reps: multihop
-  +0.0093 ± 0.1224) was underpowered: with 5 reps the planner's multihop lead is real. Mechanism (processed-at shares):
-  in multihop the laptop is two hops away (median latency 233-253 ms); v4.1 and v41final still send it 21 % of frames
-  and 5-6 % onboard, the planner sends 100 % to the one-hop Jetson. A per-frame greedy value scores each frame alone;
+  +0.0093 ± 0.1224) was underpowered: with 5 reps the planner's multihop lead is real. Mechanism (per-path latency of the
+  multihop runs): the laptop is two hops away and its results arrive in a median 337 ms, past the 300 ms deadline;
+  v4.1 and v41final still send it ~3,300 frames (21 %, plus 5-6 % onboard at 190-195 ms), the planner 54 (100 % to
+  the one-hop Jetson, 84 ms against their 98-101 ms). A per-frame greedy value scores each frame alone;
   the 30-frame plan sees that a slow path's frames arrive stale across the whole horizon.
 - **F.3 held.** accumo and leaf draw 0.36-0.60 W less than v41 in every scenario (paired, 0/10 above); v41final − v41
   +0.009 ± 0.028 W. v4.1's 2.8 W is set by its budget, not by a better use of energy: in these scenarios the energy
