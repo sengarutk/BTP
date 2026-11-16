@@ -660,3 +660,24 @@ References (Phase 4, unpaired): multihop accumo 0.1501, v41final 0.1339.
 - **FX.2** mesh_mission: v41fix24 − v41final24 ≥ −0.003 (the fix costs nothing where the laptop is one hop away).
 - **FX.3** multihop: the Jetson path's median latency is ≥ 8 ms lower with the fix.
 - **FX.4** Theorem 1 holds update by update on all 20 runs; no run throttles.
+
+### T11 follow-up: paper 1's Pi break-even with measured onboard times (`evaluation/pi_measured_break_even.py` -> `experiments/results/video_codecs/analysis_pi_measured.json`, 16 Nov 2026 ~15:35 IST)
+
+The rule scales all host processing by t_full / t_host = 63.5 on the Pi: JPEG Q50 encode becomes 50 ms (measured
+~2.3), x264 ultrafast CRF 23 86 ms (3.0), x265 medium 2,243 ms (67); the codes' Pi times come out lower than measured
+(k4 190 vs 226-228 ms, k2 115 vs 174). Both biases favour the codes. Re-run for the Pi with every measured option at
+its measured time (JPEG: T10 bench, other qualities × the median Pi/laptop ratio 4.54; video: T11 incl. CRF 38/43,
+measured for this; codes k4_c4, k4_c8, k2_c8: T10 bench; other codes keep the rule's time); also × 1.082 for the
+rule's throttled Pi (identical B_be to 2 decimals). B_be (Mbit/s), rule → measured:
+
+| code | JPEG family | video / both families |
+|---|---|---|
+| joint_k4_c4 (headline) | 1.88 → 1.72 | 1.06 → 0.27 |
+| learned_k4_c4 | 0.90 → 0.78 | 0.53 → 0.10 |
+| learned_k4_c8 | 1.15 → 1.00 | 0.53 → 0.10 |
+| ec_k4_c32_l0.3 | 0.56 → 0.51 | 0.19 → 0.04 |
+
+Winning cells on the Pi: 11 with the JPEG family alone; **0 with video or both**. 0 exceptions in every case.
+For paper 1: the Pi numbers in the video section become 1.72 (JPEG) → 0.27 Mbit/s (video) for the headline code, and
+with low-delay video no split wins on a Pi 5 at any goodput, the same as the live sweep (T10.1). The host-time
+scaling is stated as valid for network inference only; CPU encoding is measured on the device.

@@ -1,0 +1,8 @@
+{"setting": "x264_ultrafast_crf38", "frames": 150, "size": "640x360", "rtime_s": 0.288, "utime_s": 0.290, "ms_per_frame": 1.92}
+{"setting": "x265_ultrafast_crf38", "frames": 150, "size": "640x360", "rtime_s": 1.748, "utime_s": 1.738, "ms_per_frame": 11.653}
+{"setting": "x264_ultrafast_crf43", "frames": 150, "size": "640x360", "rtime_s": 0.265, "utime_s": 0.267, "ms_per_frame": 1.767}
+{"setting": "x265_ultrafast_crf43", "frames": 150, "size": "640x360", "rtime_s": 1.392, "utime_s": 1.414, "ms_per_frame": 9.28}
+{"setting": "x264_medium_crf38", "frames": 150, "size": "640x360", "rtime_s": 1.144, "utime_s": 1.152, "ms_per_frame": 7.627}
+{"setting": "x265_medium_crf38", "frames": 150, "size": "640x360", "rtime_s": 3.035, "utime_s": 3.033, "ms_per_frame": 20.233}
+{"setting": "x264_medium_crf43", "frames": 150, "size": "640x360", "rtime_s": 0.948, "utime_s": 0.956, "ms_per_frame": 6.32}
+{"setting": "x265_medium_crf43", "frames": 150, "size": "640x360", "rtime_s": 2.333, "utime_s": 2.333, "ms_per_frame": 15.553}
