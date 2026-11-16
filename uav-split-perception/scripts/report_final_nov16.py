@@ -139,7 +139,8 @@ TEAM_REPL = [
      "check the venue's limit.</li>",
      "<li>Both papers now include the board results (paper 1: 19 pages, paper 2: 10 pages, every number generated). "
      "Check each venue's page limit.</li>\n"
-     "      <li>Verify the full title of one new paper 2 reference (Sun 2026) against the publisher's record.</li>"),
+     "      <li><s>Verify the full title of one new paper 2 reference (Sun 2026) against the publisher's record.</s> "
+     "Done 16 Nov with Crossref; the title is corrected in the paper.</li>"),
     ("<li>Pick the board day and check the venue deadlines.</li>", "<li>Check the venue deadlines.</li>"),
 ]
 
@@ -299,7 +300,7 @@ NB_REPL += [
      "multihop until the late-path skip (16 Nov)</td>"),
 ]
 
-NB_SRC = """<!--nbsrc16-->    <li>Added 16 Nov (<code>docs/related_work_check_nov16.md</code>): Sun et al., AI Inference in the Heat, RTAS 2026, doi 10.1109/RTAS68450.2026.00031 (title to be verified with Crossref); Du, Xu &amp; Yu, multi-UAV sensing offload and edge inference <a href="https://arxiv.org/abs/2605.03898">arxiv 2605.03898</a>; NDP (SIGCOMM 2017) doi 10.1145/3098822.3098825; Homa (SIGCOMM 2018) doi 10.1145/3230543.3230564; BiSwift <a href="https://arxiv.org/abs/2312.15740">arxiv 2312.15740</a>; HECS-B <a href="https://arxiv.org/abs/2504.15295">arxiv 2504.15295</a>.</li>
+NB_SRC = """<!--nbsrc16-->    <li>Added 16 Nov (<code>docs/related_work_check_nov16.md</code>): Sun et al., AI Inference in the Heat: Thermal-Aware Strict Partitioning for Configurable Real-Time Gang Tasks, RTAS 2026, doi 10.1109/RTAS68450.2026.00031 (checked with Crossref); Du, Xu &amp; Yu, multi-UAV sensing offload and edge inference <a href="https://arxiv.org/abs/2605.03898">arxiv 2605.03898</a>; NDP (SIGCOMM 2017) doi 10.1145/3098822.3098825; Homa (SIGCOMM 2018) doi 10.1145/3230543.3230564; BiSwift <a href="https://arxiv.org/abs/2312.15740">arxiv 2312.15740</a>; HECS-B <a href="https://arxiv.org/abs/2504.15295">arxiv 2504.15295</a>.</li>
 <!--/nbsrc16-->
 """
 

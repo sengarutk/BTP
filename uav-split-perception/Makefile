@@ -8,12 +8,13 @@
 #   make validate-omnetpp  the same against OMNeT++/INET/Simu5G
 #   make paper       tables, figures, and the PDF from the result files
 #   make benchmark-check  the open benchmark's one-command check (replay, oracle, traces, theory; ~70 s; benchmark/)
+#   make repro-check  re-derive every board-session number and both papers from the committed results (REPRODUCE.md)
 #   make reproduce   clean-cache, data, test, results, generalization, paper (not validate or validate-omnetpp;
 #                    the hardware runs, VisDrone fine-tuning and learned bottleneck are separate steps, see README)
 PYTHON ?= python3
 RESULTS := experiments/results
 
-.PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help benchmark-check
+.PHONY: setup data test graph traces accuracy codecs pareto quant system results generalization scenarios validate validate-omnetpp tables figures paper reproduce clean-cache help benchmark-check repro-check
 
 help:
 	@sed -n '2,12p' Makefile
@@ -93,3 +94,6 @@ benchmark-check:
 
 clean-cache:
 	rm -rf experiments/cache
+
+repro-check:
+	bash scripts/repro_check.sh

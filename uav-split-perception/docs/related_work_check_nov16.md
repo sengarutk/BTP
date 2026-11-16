@@ -33,7 +33,7 @@ on a Pi 5). Web search, 16 Nov 2026 01:10-01:13 IST. Each entry: what it is, and
 2. Paper 2 swarm section: S6 written as "receiver-driven scheduling, measured on a drone mesh"; C.1-C.3 as a negative
    result; fairness not claimed.
 3. Paper 1: cite HECS-B and the embedded split-inference paper; state T10's link-type dependence.
-4. Verify every new citation's metadata with Crossref before submission (the crossref tool did not connect tonight).
+4. Verify every new citation's metadata with Crossref before submission. Done 16 Nov (api.crossref.org, arxiv.org): Sun_2026's full title is "AI Inference in the Heat: Thermal-Aware Strict Partitioning for Configurable Real-Time Gang Tasks" (corrected in paper2/references.bib); Handley_2017, Montazeri_2018 and Du_2026 match their records.
 
 Sources: https://dblp.org/db/conf/rtas/rtas2026.html ; https://arxiv.org/abs/2605.03898 ; https://arxiv.org/abs/2010.06291 ;
 https://arxiv.org/html/2504.15295 ; https://arxiv.org/pdf/2312.15740 ; https://arxiv.org/pdf/2406.14820 ;
