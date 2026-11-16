@@ -38,6 +38,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | F.2 | final ties AccuMO and LEAF | **did not hold**: AccuMO +0.016 in multihop (5/5), final +0.007 on the mission (5/5); LEAF +0.004 multihop | P1.1 was underpowered; "greedy ties planner" withdrawn for multihop |
 | F.3 | AccuMO/LEAF use ≥ 0.25 W less | held (0.36-0.60 W less, 10/10) | v4.1 fills its budget; state it |
 | F.4 | Theorem 1 and no throttling for the final | held (10/10; 536/536 runs) | — |
+| FH.1-FH.2 | the final controller on the 24-min blackout mission | held, held (peak 79.3 °C ×3, never throttled; sAP 0.1247) | the final configuration keeps G's heat result and adds a little accuracy |
 | T10.1-T10.4 | paper 1: break-even goodput of the learned codes, predicted from board benches | **held, held, partly (3/4), held** | no break-even on a Pi 5 camera (rate-limited link); with a shared-radio (token-bucket) link the 4 KB code wins at 0.5 Mbit/s: the advantage depends on how the link is slow |
 
 ## Fixes found and made during the sessions (all before the runs that test them)

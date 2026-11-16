@@ -515,6 +515,19 @@ multihop −0.0162 ± 0.0034 (0/5, Holm 0.0007); v41final − leaf mesh_mission 
   (planner +0.016 there, greedy +0.007 on the mission), and v4.1's budget-filling power stated. Candidate fix (not
   tested): the planner with the energy and freshness prices, or a lower budget where onboard adds nothing.
 
+### Results: Phase 4 heat (`vid_campaign_heat_final/`, 3 × 24-min mission, 16 Nov 2026 06:40-08:10 IST)
+
+| run | peak °C | ≥ 80 °C | ≥ 78 °C | mean °C | mean W | throttled | onboard frames (n480y11 / s320) |
+|---|---|---|---|---|---|---|---|
+| r1 | 79.3 | 0.00 % | 1.1 % | 69.6 | 2.99 | 0 | 611 / 320 |
+| r2 | 79.3 | 0.00 % | 1.1 % | 70.2 | 3.00 | 0 | 703 / 188 |
+| r3 | 79.3 | 0.00 % | 1.3 % | 70.3 | 3.00 | 0 | 669 / 227 |
+
+- **FH.1 held.** Never throttled, peak 79.3 °C in all 3 (≤ 80.4), 0 % at ≥ 80 °C (bound 0.1 %).
+- **FH.2 held.** sAP+fc 0.1247 ± 0.0031 against v41guard765's 0.1228 (G; unpaired): +0.0019, above the 0.1178 floor;
+  P(AoI ≤ 300 ms) 0.852 against 0.841. With G's 3 runs, 6 runs at the 76.5 °C thermal rules: one sample at 80.4 °C
+  (G r2), never throttled.
+
 ## Phase 5: the CPU clock as a third knob (written 16 Nov 2026 before any of these runs; see the commit time)
 
 `v41dvfs` = v41final + `--onboard-clocks 1800`: every onboard variant also runs capped at 1.8 GHz, priced at E(v) × the
