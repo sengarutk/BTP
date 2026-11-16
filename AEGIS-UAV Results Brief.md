@@ -1,4 +1,4 @@
-Full project report · state on 26 Oct 2026
+Full project report · state on 16 Nov 2026
 
 # AEGIS-UAV: the complete record of what was built, tested and found
 
@@ -37,6 +37,16 @@ Labels used throughout: Validated measured, repeated and cross-checked; Pending 
 ## PART 1Where things stand right now
 
 
+
+<!--state16-->
+**State on 16 Nov 2026 (mesh board sessions done; details in 19.24-19.31)**
+
+- **Paper 2's final controller**: v4.1 + capped hold and guard at 76.5 °C + YOLO11n-480 onboard + a 2.4 W budget + the late-path skip. On five boards it ties v4.1, never throttles on a 24-min blackout mission (peak 79.3 °C), matches the AccuMO-style planner in multihop after the fix (+0.0151 for the fix, 5/5 pairs) and beats it on the one-hop mission (+0.0067); Theorem 1 holds on all 593 recorded runs.
+- **Paper 1 on the boards**: predicted from board benches and then measured, no learned split beats JPEG on a Pi 5 camera at any goodput; with measured Pi times the model agrees (0 winning cells with video).
+- **Honest negatives**: the guard's peak bound needs a measured fast-mode term (δ_fast 3.9 °C); DVFS is neutral under a power budget; a second edge drone on one channel costs accuracy and a per-camera cap does not fix it; pull-one-ahead fairness not shown.
+- **Left**: laptop only — reproducibility package, the papers rewritten with every verdict, the Novelty Brief and Final Report, an independent audit.
+
+<!--/state16-->
 
 <!--state12-->
 **State on 12 Nov 2026: both papers hardened on the laptop (19.15–19.23); the board session is prepared, not yet run**
@@ -1788,7 +1798,7 @@ The counterparts of 18.7 for the mesh campaigns (18.8–18.10), all from measure
 
 **Clock speed against temperature on the mesh** (campaign 2, 4-minute runs, all three scenarios; 20-s windows; filled = throttled in at least half of the window). v4.1 keeps the Pi at 70 °C on average (62–73 °C), heat + freshness at 74 °C, both never throttled (0 % and 0 % of windows). Without prices the Pi averages 83 °C, crosses 80 °C and is throttled in 39 % of the windows, at 1719 MHz when throttled (2,400 MHz is the full clock). Below 80 °C the clock varies only because the frequency governor slows an idle CPU.
 
-## PART 19Every campaign rescored with the standard metrics and replayed with the VisDrone weights (22–26 Oct 2026; C1–C7 done; corrected 28 Oct); laptop additions to 12 Nov, including the hardening of both papers (19.15–19.23)
+## PART 19Every campaign rescored with the standard metrics and replayed with the VisDrone weights (22–26 Oct 2026; C1–C7 done; corrected 28 Oct); laptop additions to 12 Nov, including the hardening of both papers (19.15–19.23); mesh board sessions 14–16 Nov (19.24–19.31)
 
 Corrections to how the earlier hardware results (Parts 12–15, 776 runs in 8 campaigns, 6–13 Oct) are scored and reported, from the data already recorded: no new runs. Each run is scored without and with its forecaster (`validation/hardware/report_rescore.py`; numbers in `experiments/results/hardware/report_c_summary*.json`, tables in `report_c_tables*.md`). Validated Note added 26 Oct: until then the summaries of Parts 9–16 computed the 95 % interval of 11 or more pairs with the normal value 1.96 instead of Student's t, so those intervals are 6–12 % too narrow (for example ±0.0028 → ±0.0030 for v4 over v3 + forecasting). The headline values in Parts 1, 14–16 and 20 are corrected; Part 19 has always used t intervals with exact permutation p-values; the only verdict that changes is v2 against the fixed laptop in Part 14 (not significant). The code is fixed (`summarize_vid.py`, `report_rescore.py`).
 
@@ -2606,6 +2616,126 @@ Everything above that touches heat or the controller's settings is a replay or m
 - **Noisy relay** (`tools/campaign_relaynoise_nov.sh`): multihop with 2 % and 5 % loss and jitter.
 - **To add from 19.21:** the hold capped at 78 °C and the hard guard over 24-minute missions with blackouts (the heat claim of paper 2 depends on it); the room-following budget; a run with airflow over the Pi (in flight, propeller wash cools the board); and x264 encode times measured on the Pi, to replace the scaled ones of 19.19.
 
+### 19.24 The mesh board sessions of 14-16 November 2026: what ran and how
+
+Five boards on the batman-adv mesh (IBSS channel 6): pi-sender as the ground radio (cabled to the laptop), the camera Pis pi-relayyy and pi-receiver, the edge drones Nano1 (Orin Nano, 15 W) and Nano2 (Orin Nano Super, 25 W). Every campaign and bench had its predictions committed before its first run (`docs/mesh_predictions_nov14.md`, `docs/board_session_predictions_nov.md`); every verdict in one table: `docs/mesh_results_nov15.md`; session log: `docs/mesh_session_nov14.md`. Rules kept throughout: no change to the mesh configuration, temporary nft/tc rules removed after every run, every run started below a fixed camera temperature where heat was measured, runs made on laptop battery (weaker ground GPU) archived and re-run, results never deleted (archived in `_superseded/` with the reason). Faults met and fixed during the sessions: a charger that dropped three times (two sessions paused and resumed, one laptop shutdown; no result lost), three restart faults in the automation (PATH and environment of Windows-launched sessions, a leftover link logger), and four tool faults found by smoke tests before the T10 sweep. Removed by the user's decision (no equipment): airflow (T5) and flight (G1), stated as limitations; cut as redundant after the results below: joint fades, governor comparison, a cheaper camera-motion step, YOLO11m on the ground, the remaining board profiles, the BATMAN-adv overhead test and the bridge re-run (the tunnel's cost was measured instead, 19.31). Validated
+
+### 19.25 Heat: the capped hold, the guard, and Theorem 3 on the boards
+
+The 24-minute mission with its 4-minute total blackout, every run started below 55 °C:
+
+| strategy (24-min mission, 4-min total blackout) | runs | peak °C | time ≥ 80 °C | throttled samples | sAP+fc |
+| --- | --- | --- | --- | --- | --- |
+| v4.1 (hold always) | 5 | 85.9–87.0 | 16.0–25.6 % | 42–143 | 0.1281 |
+| capped hold (78 °C) | 5 | 80.4–81.5 | 0.2–0.7 % | 0 | 0.1267 |
+| capped hold + guard 78 °C | 5 | 80.4–81.5 | 0.16–0.75 % | 0 | 0.1263 |
+| hold + guard 76.5 °C | 3 | 79.3–80.4 | 0.00–0.02 % | 0 | 0.1228 |
+| final controller (guard 76.5 °C + YOLO11n-480) | 3 | 79.3 | 0.00 % | 0 | 0.1247 |
+
+- **The always-on blackout hold heats the board** (16.0–25.6 % of the time at ≥ 80 °C, throttled); capping it at 78 °C removes almost all of it at no accuracy cost (T4.1-T4.4).
+- **Theorem 3 (b), the guard's peak bound, needs a fast-mode term.** After the guard acts the Pi's die keeps heating: measured overshoot above the guard 2.4–3.9 °C over the 8 guarded runs. With the guard at 76.5 °C the peak stayed ≤ 80.4 °C (one sample at 80.4 in one run, G.1 narrowly not held), no run throttled, and accuracy was unchanged (G.2). The theorem is stated as peak ≤ guard + δ_fast with δ_fast measured on the board (3.9 °C here).
+- **Theorem 1 holds update by update on every recorded run** (593 runs, 143,999 price updates, 0 unexplained steps; T4.5), and the freshness price follows its rule on every update (price_rules_check, 0 unexplained).
+
+### 19.26 The final controller against v4.1 and the published-style schedulers
+
+Final controller: v4.1 + capped hold and guard at 76.5 °C + YOLO11n-480 onboard (timed at start-up, priced at its measured energy) + 10 ms contention term, then (below) a 2.4 W budget and the late-path skip. Five paired repetitions, every run below 60 °C at start:
+
+| scenario | final controller | v4.1 | AccuMO-style planner | LEAF-style weight |
+| --- | --- | --- | --- | --- |
+| mesh_mission | 0.1857 (2.81 W) | 0.1851 (2.81 W) | 0.1790 (2.45 W) | 0.1845 (2.41 W) |
+| multihop | 0.1339 (2.83 W) | 0.1371 (2.80 W) | 0.1501 (2.25 W) | 0.1381 (2.20 W) |
+
+| comparison (paired) | mesh_mission | multihop |
+| --- | --- | --- |
+| final − v4.1, sAP+fc | +0.0006 ± 0.0032 (3/5, p 0.645) | -0.0032 ± 0.0032 (0/5, p 0.049) |
+| final − AccuMO, sAP+fc | +0.0067 ± 0.0019 (5/5, p < 0.001) | -0.0162 ± 0.0034 (0/5, p < 0.001) |
+| final − LEAF, sAP+fc | +0.0012 ± 0.0044 (3/5, p 0.484) | -0.0042 ± 0.0028 (0/5, p 0.014) |
+| budget 2.4 − 2.8 W, sAP+fc | -0.0004 ± 0.0041 (1/3, p 0.696) | -0.0015 ± 0.0075 (1/3, p 0.488) |
+| budget 2.4 − 2.8 W, Pi W | -0.3147 ± 0.0745 (0/3, p 0.003) | -0.3765 ± 0.0261 (0/3, p < 0.001) |
+| late-path skip − none (2.4 W), sAP+fc | -0.0031 ± 0.0159 (3/5, p 0.614) | +0.0151 ± 0.0134 (5/5, p 0.036) |
+
+- **The final configuration costs nothing against v4.1** (F.1) and never throttles; Theorem 1 holds on all its runs (F.4); on the 24-min mission it keeps the peak at 79.3 °C, never throttled, at sAP 0.1247 (FH.1-FH.2).
+- **The AccuMO-style planner beat it in multihop** (F.2 not held): v4.1 kept sending ~21 % of its frames to the two-hop laptop, whose results arrived in a median 337 ms (past the deadline; the controller's own p_on for them was ~0), and that traffic shared the relay's radio with the Jetson path. The earlier "a greedy priced controller ties the planner" (2 repetitions, P1.1) was under-powered.
+- **AccuMO and LEAF drew 0.36-0.60 W less at the same accuracy** (F.3): v4.1 fills its 2.8 W budget with onboard work worth almost nothing in these scenarios. With a 2.4 W budget instead, the final controller's power changes by -0.31 W (mesh_mission) and -0.38 W (multihop), the camera runs about 3 °C cooler, and sAP changes by -0.0004 / -0.0015 (B.1-B.2): the power gap was the budget setting. The final controller's budget is 2.4 W.
+- **The fix for multihop:** while a timely path exists, a path predicted late (p_on < 0.5) gets only its own on-time options or no frame. Multihop +0.0151 (5/5 pairs; the planner's lead was +0.0162); the laptop's share fell from 24.0 % to 5.4 % (median 109 ms) and the Jetson path's median latency from 108 to 90 ms. On the one-hop mission -0.0031, not significant (FX.2 narrowly not held: in 2 of 5 pairs the skipped late path was missed as a backup). Adopted in the final controller with that caveat.
+
+### 19.27 v4.1+ re-tested, and the CPU clock as a third knob
+
+- **v4.1+ (15 Nov re-test, 3 repetitions):** YOLO11n-480 (192 ms on the Pi) replaced YOLOv8s-320 for most onboard frames and almost all blackout frames (T8R.4), and v4.1+ never throttled on the mission while v4.1 spent 20-22 % of it at ≥ 80 °C; but the room-following budget held its power (3.29-3.36 W) without reaching its temperature target under bursty load (T8R.1-T8R.2 partly). The room-following budget is dropped; the fixed budget stays.
+- **DVFS profile** (`dvfs_profile.py`, pi-receiver, two passes, the clock pinned):
+
+| clock | YOLOv8s-320: ms / W / J | YOLO11n-480: ms / W / J |
+| --- | --- | --- |
+| 1.5 GHz | 207 / 4.36 / 0.531 | 195 / 4.43 / 0.515 |
+| 1.8 GHz | 182 / 4.17 / 0.425 | 173 / 3.95 / 0.366 |
+| 2.1 GHz | 167 / 5.08 / 0.527 | 161 / 4.52 / 0.416 |
+| 2.4 GHz | 154 / 5.86 / 0.586 | 151 / 5.37 / 0.499 |
+
+- **1.8 GHz is the energy minimum** (−27 % J per inference against 2.4 GHz for both models, 1.4-1.7 W less while inferring, +22-28 ms); the curve is U-shaped (1.5 GHz costs more).
+- **As a priced knob it is used but neutral:** the controller ran 57–67 % of its onboard inferences at 1.8 GHz (D.1), yet power changed by -0.017 W on the 24-min mission (D.2 not held) and sAP by +0.0022 (heat) / -0.0047 (short) (D.3): under a power budget the price spends the saving on more onboard inferences (+16 %), not on lower power. At the 2.4 W budget the same (B.3). Reported as implemented, measured and neutral.
+
+### 19.28 Two camera drones on one channel
+
+- **A second edge drone costs accuracy on one shared channel** (T6.2 not held): per camera, static_good 0.1813 with one Jetson against 0.1436 with two; mesh_mission 0.1667 against 0.1294. More paths in flight make every result later.
+- **A per-camera cap on paths in flight does not fix it** (C.1-C.3 not held): +0.0061 ± 0.0266 (2/4, p 0.515) (static_good), -0.0018 ± 0.0499 (1/4, p 0.915) (mesh_mission); a camera cannot see the other camera's traffic.
+- **A swarm-wide pull-one-ahead coordinator holds the channel at capacity** (S6, two camera Pis, 8 streams; receiver-driven scheduling as in datacentre transport, measured here on a drone mesh):
+
+| streams (2 camera Pis) | v4.1 rule: on-time/s (median ms) | pull one ahead: on-time/s (median ms) |
+| --- | --- | --- |
+| 1 | 13.3 / 13.7 (98–100) | 22.1 / 22.1 (100–101) |
+| 2 | 20.4 / 21.4 (124–126) | 20.9 / 21.0 (113–114) |
+| 4 | 18.1 / 21.1 (214–227) | 21.5 / 22.0 (111–114) |
+| 6 | 10.1 / 11.1 (310–315) | 21.6 / 21.5 (112–113) |
+| 8 | 2.9 / 3.7 (389–408) | 19.9 / 21.6 (113–117) |
+
+- Fairness across the two hosts with several streams each did not hold (S6.5; one host's streams starved, cause not found): no fairness claim.
+
+### 19.29 Topology, frame rate, noisy relay, energy price
+
+- **Topology decides where the decision belongs** (T9, 5 repetitions, one campaign): hier − v4.1 (sAP+fc, paired): multihop +0.0142 ± 0.0013 (hier ahead in 5/5), static_good -0.0515 ± 0.0024 (v4.1 ahead in 5/5): deciding at the relay pays only when the camera is two hops from the ground.
+- **Frame rate** (T7): on-time results per second (3 runs each) 15 fps 14.9, 30 fps 25.6, 60 fps 31.0, 30 fps with encode-ahead 28.3: v4.1 leaves the radio idle between 30-fps ticks, and encoding the next frame while the radio is busy recovers part of it.
+- **Noisy relay** (T3, 2 % / 5 % loss): sAP+fc hier 0.1177 / 0.0814, v4.1 0.0996 / 0.0842, fixed laptop 0.0436 / 0.0243.
+- **Energy price** (T2): Pi power v4.1 at 2.8 W 2.82 W, at 3.6 W 3.58 W, freshness price only 4.71 W; Theorem 1 confirmed; the one-fit budget-to-temperature rule needs a per-board intercept (pi-relayyy 29.72 + 11.66 °C/W).
+
+### 19.30 Paper 1 on the boards: the break-even goodput predicted, then measured
+
+- **T10** (pi-receiver → Nano2, the link serialised at each goodput by netem, codes started below 60 °C): the best measured option at every goodput from 0.5 to 8 Mbit/s was a JPEG (0.5: jpeg_q20, 0.75: jpeg_q20, 1: jpeg_q20, 2: jpeg_q20, 4: jpeg_q20, 8: jpeg_q35); no learned code wins on a Pi 5 camera, as paper 1's model predicted from the board benches (T10.1-T10.2, T10.4 held; T10.3 3 of 4). With a token-bucket link (low average goodput from a shared fast radio) the 4 KB code wins at 0.5 Mbit/s: the result depends on how the link is slow.
+- **T11: CPU encoding on the Pi** (same frames and encoder arguments as paper 1): x264 ultrafast CRF 23 3.0 ms, x265 medium CRF 23 66.9 ms per frame; Pi/laptop 1.55-3.08. The rule scales host processing by the full-model ratio (63.5 on the throttled Pi): right for network inference (the YOLO11s codes measured within 2 % of it, Y.1), 20-30x too slow for CPU encoding; the YOLOv8s codes' Pi times were 19-51 % above the rule's.
+- **Re-analysis with measured Pi times** (`evaluation/pi_measured_break_even.py`, `pi_measured_second_detector.py`):
+
+| Pi break-even goodput (Mbit/s) | image family | rule (scaled host times) | measured Pi times |
+| --- | --- | --- | --- |
+| YOLOv8s joint_k4_c4 (paper 1's headline code) | JPEG | 1.88 | 1.72 |
+|  | JPEG + low-delay video | 1.06 | 0.27 |
+| YOLOv8s learned_k4_c4 | JPEG + video | 0.53 | 0.10 |
+| YOLO11s k4_c16_w128_d2 | JPEG | 1.40 | 1.22 |
+| YOLO11s k4_c32_w128_d2 | JPEG | 1.77 | 1.53 |
+| YOLO11s k4_c4_w128_d2 | JPEG | 0.78 | 0.68 |
+| YOLO11s k4_c8_w128_d2 | JPEG | 1.12 | 0.97 |
+
+- With low-delay video in the image family and measured Pi times, no split code has a winning cell on the Pi (0 cells, 0 exceptions): the model and the live sweep agree. Paper 1's Pi numbers are replaced by these.
+
+### 19.31 The deadline model on the hardware, and the checks
+
+Every offloaded frame of the 241 runs of 14-16 Nov, the controller's logged p_on against arrival within 300 ms (`calib_hw.py`; ECE 0.055, Brier 0.045):
+
+| predicted chance of meeting 300 ms | frames | mean predicted | observed on time |
+| --- | --- | --- | --- |
+| 0.0-0.1 | 66,650 | 0.003 | 0.641 |
+| 0.1-0.2 | 2,646 | 0.148 | 0.866 |
+| 0.2-0.3 | 2,240 | 0.249 | 0.877 |
+| 0.3-0.4 | 1,870 | 0.349 | 0.856 |
+| 0.4-0.5 | 1,937 | 0.451 | 0.811 |
+| 0.5-0.6 | 3,289 | 0.555 | 0.782 |
+| 0.6-0.7 | 5,226 | 0.652 | 0.817 |
+| 0.7-0.8 | 15,221 | 0.760 | 0.880 |
+| 0.8-0.9 | 102,249 | 0.867 | 0.958 |
+| 0.9-1.0 | 1,281,164 | 0.975 | 0.992 |
+
+- **Never over-confident, strongly pessimistic at the low end**: observed ≥ predicted in every bin; frames predicted at ~0 % arrived on time 64 % of the time. The late-path skip acts on this estimate, which fits its small mission-side cost; a recalibrated p_on is a direction for paper 2, not tested.
+- **The SSH tunnel on the laptop path** (`tunnel_bench.py`): 1 KB round trip 7.6–7.7 ms through it against 5.1–5.5 ms over the direct mesh hop; an 83 KB frame 20.0–20.3 against 16.0–16.3 ms, goodput 32.7–33.3 against 40.7–41.6 Mbit/s: a small measured artefact (+2-4 ms per frame).
+- Theorem 1 holds update by update on all 593 recorded runs; the freshness price follows its rule on every update.
+
 ## PART 20What it all means: the argument for the paper
 
 This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.
@@ -2684,6 +2814,10 @@ Mean power stays below the budget plus named terms on every logged run (Theorem 
 
 ### Honest negatives, also part of the paper
 
+<!--neg16-->
+- **Mesh sessions 14-16 Nov (19.24-19.31).** The guard's peak bound held only with a measured fast-mode term (δ_fast 3.9 °C; G.1 narrowly not held at 76.5 °C). The room-following budget missed its temperature target under bursty load. DVFS was used but neutral under a power budget. A second edge drone on one shared channel cost accuracy, and a per-camera cap did not fix it. The AccuMO-style planner beat the greedy controller in multihop until the late-path skip; the skip costs a little where the late path was a useful backup. Pull-one-ahead fairness across hosts was not shown. The deadline probabilities are pessimistic at the low end.
+<!--/neg16-->
+
 - The original staleness-aware v3 did not beat v2.
 - Feedback learning in the coordinator did not pay off overall.
 - On a clean link, a fixed strong server is as good as any adaptive policy.
@@ -2696,9 +2830,7 @@ Mean power stays below the budget plus named terms on every logged run (Theorem 
 - Region-of-interest JPEG with feedback saved nothing; learned image codecs are too expensive for either board; the YOLO11s codes never win on the Pi (19.19).
 - The priced controller left the board hot 19–27 % of the time on 24-minute missions with blackouts, through its hold; at +10 °C the 2.8 W budget is too high, and a higher cap alone does not fix it (19.21).
 - The constrained deep-RL baseline trails v4.1, and its first two training attempts failed (19.21).
-
 ## PART 21Faults found and fixed
-
 | Fault | Effect | Fix |
 | --- | --- | --- |
 | Ultralytics caps PyTorch at 1 thread | Pi 65 % slower | Threads reset after import |
@@ -2749,7 +2881,6 @@ Mean power stays below the budget plus named terms on every logged run (Theorem 
 | IST times written in two prediction notes ran ahead of the clock | Notes up to 45 min later than their commits | Corrected from the git commit times |
 | RL baseline intervals used 1.96 instead of Student's t (`paper2/make_metrics.py`) | Intervals of 5–10 pairs 13–30 % too narrow | t quantiles; all three differences still exclude zero |
 | Paper 2 stated the caps on λ_F and μ_e without saying they were added on 13 Oct | 36 runs of 11–12 Oct read as if capped | Found by `price_rules_check.py`; stated in paper 2 |
-
 ## PART 22Code status and reproducibility
 
 **State on 26 October 2026** (checked that day): nothing is running; all 118 project tests pass (`python -m pytest`, 14 s); every script written or changed since 23 October compiles and every campaign shell script passes a syntax check; the three report documents parse without markup errors. Git: the last commit is `08bc5a28` on `main`; the work since (mesh campaigns, VisDrone replay, YOLO11, analyses, reports) is not yet committed. 28 Oct: full audit (`docs/audit_2026-10-28.md`), re-runnable checks in `scripts/audit_2026-10-28/`.
@@ -2780,6 +2911,10 @@ State on 6 October 2026, 15:25 (kept for the record):
 | A hardware campaign | `OUTDIR=… REPS=3 ONLY="A_stream_fc A_full A_stream" validation/hardware/tools/campaign_vid.sh` (board passwords from environment variables only) |
 
 ## PART 23What is left
+
+<!--left16-->
+**Update 16 Nov 2026:** every board test is done (19.24-19.31); nothing more is planned on the mesh. Left, laptop only: the reproducibility package, both papers rewritten with every verdict (failures included), the Novelty Brief and Final Report, and an independent audit of every number.
+<!--/left16-->
 
 | Task | Needs | Time |
 | --- | --- | --- |
