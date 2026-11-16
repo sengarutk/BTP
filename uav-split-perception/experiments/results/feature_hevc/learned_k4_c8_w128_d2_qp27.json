@@ -1,0 +1,20 @@
+{
+ "option": "learned_k4_c8_w128_d2_qp27",
+ "kind": "learned",
+ "code": "k4_c8_w128_d2",
+ "qp": 27,
+ "n": 548,
+ "payload_bytes_mean": 5661.209854014599,
+ "payload_bytes_p95": 5982.799999999999,
+ "picture": [
+  48,
+  168
+ ],
+ "encode_ms_single_thread": 5.331300049999754,
+ "decode_ms_single_thread": 3.5124571249980363,
+ "timed_pictures": 40,
+ "map50_95": 0.1801398150509856,
+ "map50": 0.3376774846789819,
+ "base_map50_95": null,
+ "num_images": 548
+}
