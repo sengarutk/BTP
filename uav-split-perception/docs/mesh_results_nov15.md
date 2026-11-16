@@ -34,6 +34,10 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | G.1 | guard 76.5 °C keeps the peak ≤ 80.0 °C | **did not hold** (79.3 / 80.4 / 79.8 °C; ≥ 80 °C 0.02 % in r2; never throttled) | δ_fast is 3.9 °C, not 3.5: Theorem 3 (b) with the measured δ_fast, no fixed-guard claim |
 | G.2 | the 76.5 °C guard costs no accuracy | held (sAP 0.1228 vs 0.1263; freshness 0.841 vs 0.854) | the lower guard is free |
 | C.1-C.3 | a per-camera cap on paths in flight recovers T6's loss | **none held** (sAP +0.002; −2.5 deadline-met/s; paths 5-19 ms faster) | per-camera rule cannot see the other camera; swarm-wide coordination (as S6's pull) is the open fix |
+| F.1 | final controller ties v4.1 (5 reps) | held (+0.0006 / −0.0032) | the final configuration costs nothing on mesh scenarios |
+| F.2 | final ties AccuMO and LEAF | **did not hold**: AccuMO +0.016 in multihop (5/5), final +0.007 on the mission (5/5); LEAF +0.004 multihop | P1.1 was underpowered; "greedy ties planner" withdrawn for multihop |
+| F.3 | AccuMO/LEAF use ≥ 0.25 W less | held (0.36-0.60 W less, 10/10) | v4.1 fills its budget; state it |
+| F.4 | Theorem 1 and no throttling for the final | held (10/10; 536/536 runs) | — |
 | T10.1-T10.4 | paper 1: break-even goodput of the learned codes, predicted from board benches | **held, held, partly (3/4), held** | no break-even on a Pi 5 camera (rate-limited link); with a shared-radio (token-bucket) link the 4 KB code wins at 0.5 Mbit/s: the advantage depends on how the link is slow |
 
 ## Fixes found and made during the sessions (all before the runs that test them)

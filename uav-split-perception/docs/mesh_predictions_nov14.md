@@ -483,6 +483,37 @@ accumo 2.23-2.54 W, leaf 2.14-2.49 W.
 - **FH.2** v41final's sAP+fc on the 24-min mission is at least v41guard765's 0.1228 − 0.005 (G, 3 runs; unpaired): the
   better onboard model costs nothing and, with the blackout, should add a little.
 
+### Results: Phase 4 short campaign (`vid_campaign_final_nov/`, 40 runs, 16 Nov 2026 01:10-06:38 IST; `vid_campaign_final_nov_summary.md`)
+
+35 runs 01:10-04:38; charger drop 04:40 (mesh_mission__leaf__r5 stopped and archived, re-run 06:09 from a 48.8 °C start;
+its sAP 0.1818 against 0.1851 for leaf's other reps: the cooler start did not help it). Means of 5, sAP with forecaster
+(Pi power):
+
+| scenario | v41final | v41 | accumo | leaf |
+|---|---|---|---|---|
+| mesh_mission | 0.1857 (2.81 W) | 0.1851 (2.81 W) | 0.1790 (2.45 W) | 0.1845 (2.41 W) |
+| multihop | 0.1339 (2.83 W) | 0.1371 (2.80 W) | **0.1501** (2.25 W) | 0.1381 (2.20 W) |
+
+Paired (5 reps; t-test, Holm over the 4 F.2 tests): v41final − accumo mesh_mission +0.0067 ± 0.0019 (5/5, Holm 0.002),
+multihop −0.0162 ± 0.0034 (0/5, Holm 0.0007); v41final − leaf mesh_mission +0.0012 ± 0.0044 (p 0.48), multihop −0.0042
+± 0.0028 (0/5, Holm 0.029). accumo − v41 multihop +0.0130 ± 0.0037 (5/5).
+
+- **F.1 held.** v41final − v41: mesh_mission +0.0006 ± 0.0032, multihop −0.0032 ± 0.0032; both within ±0.005.
+- **F.2 did not hold.** The AccuMO-style planner is ahead in multihop by 0.016 (5/5 pairs) and behind on mesh_mission
+  by 0.007 (5/5); LEAF ahead in multihop by 0.004 (Holm 0.029). P1.1's "planner ties greedy" (mesh4, 2 reps: multihop
+  +0.0093 ± 0.1224) was underpowered: with 5 reps the planner's multihop lead is real. Mechanism (processed-at shares):
+  in multihop the laptop is two hops away (median latency 233-253 ms); v4.1 and v41final still send it 21 % of frames
+  and 5-6 % onboard, the planner sends 100 % to the one-hop Jetson. A per-frame greedy value scores each frame alone;
+  the 30-frame plan sees that a slow path's frames arrive stale across the whole horizon.
+- **F.3 held.** accumo and leaf draw 0.36-0.60 W less than v41 in every scenario (paired, 0/10 above); v41final − v41
+  +0.009 ± 0.028 W. v4.1's 2.8 W is set by its budget, not by a better use of energy: in these scenarios the energy
+  price spends the budget on onboard work worth ≤ 0.003 sAP.
+- **F.4 held.** 10/10 v41final runs pass Theorem 1 update by update (0 unexplained; 536/536 recorded runs); none
+  throttled (peaks 67.2-76.5 °C).
+- For paper 2: the claim "greedy priced control ties a planner" is withdrawn for multihop; reported as measured
+  (planner +0.016 there, greedy +0.007 on the mission), and v4.1's budget-filling power stated. Candidate fix (not
+  tested): the planner with the energy and freshness prices, or a lower budget where onboard adds nothing.
+
 ## Phase 5: the CPU clock as a third knob (written 16 Nov 2026 before any of these runs; see the commit time)
 
 `v41dvfs` = v41final + `--onboard-clocks 1800`: every onboard variant also runs capped at 1.8 GHz, priced at E(v) × the
