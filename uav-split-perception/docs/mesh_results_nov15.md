@@ -40,6 +40,7 @@ Boards: camera pi-relayyy (and pi-receiver in T6/S6), Nano1 (and Nano2 in T6/S6)
 | F.4 | Theorem 1 and no throttling for the final | held (10/10; 536/536 runs) | — |
 | FH.1-FH.2 | the final controller on the 24-min blackout mission | held, held (peak 79.3 °C ×3, never throttled; sAP 0.1247) | the final configuration keeps G's heat result and adds a little accuracy |
 | D.1-D.4 | DVFS as a third knob (1.8 GHz option, priced) | held, **not**, held, held | used for ~60 % of onboard work, but the budget price spends the saving on more onboard work: no power, heat or accuracy change |
+| B.1-B.4 | a 2.4 W budget instead of 2.8 W | **all held** (−0.31 / −0.38 W, −3 °C, sAP −0.0004 / −0.0015; DVFS still neutral) | the power gap to AccuMO/LEAF closes: the final controller's budget is 2.4 W |
 | T10.1-T10.4 | paper 1: break-even goodput of the learned codes, predicted from board benches | **held, held, partly (3/4), held** | no break-even on a Pi 5 camera (rate-limited link); with a shared-radio (token-bucket) link the 4 KB code wins at 0.5 Mbit/s: the advantage depends on how the link is slow |
 
 ## Fixes found and made during the sessions (all before the runs that test them)

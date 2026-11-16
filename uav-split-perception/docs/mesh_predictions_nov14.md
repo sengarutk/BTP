@@ -576,3 +576,18 @@ FINAL_STRATS="v41final v41final24 v41dvfs24" FINAL_REPS=3 campaign_final_nov.sh`
 - **B.3** v41dvfs24 runs at least 25 % of its onboard inferences at 1.8 GHz and its sAP is within 0.005 of
   v41final24's (onboard serves only 2-6 % of frames here, so DVFS cannot add much).
 - **B.4** Theorem 1 holds update by update on all 18 runs; no run throttles.
+
+### Results: budget follow-up (`vid_campaign_budget_nov/`, 18 runs, 16 Nov 2026 12:22-14:10 IST)
+
+Means of 3 (sAP+fc, Pi W): mesh_mission v41final 0.1819 / 2.81, v41final24 0.1815 / 2.50, v41dvfs24 0.1839 / 2.52;
+multihop 0.1359 / 2.79, 0.1344 / 2.42, 0.1325 / 2.44. Paired (t-test, 3 reps):
+
+- **B.1 held.** v41final24 − v41final: −0.315 ± 0.075 W (mesh_mission, p 0.003), −0.377 ± 0.026 W (multihop, p < 0.001);
+  Pi temperature −3.4 / −2.8 °C (p 0.04 / 0.02).
+- **B.2 held.** sAP −0.0004 ± 0.0041 and −0.0015 ± 0.0075 (p 0.70 / 0.49).
+- **B.3 held.** v41dvfs24 ran 90-97 % of its (41-120) onboard inferences at 1.8 GHz; sAP +0.0024 / −0.0019 against
+  v41final24 (n.s.); power +0.017 W (multihop 3/3, p 0.02: the extra onboard work again).
+- **B.4 held.** Theorem 1 on all 18 runs (573/573 recorded); 0 throttled samples.
+- For paper 2: at 2.4 W the final controller draws 2.42-2.50 W, AccuMO's and LEAF's level (2.20-2.45 W, F.3), at the
+  same accuracy: F.3's power gap was the budget setting, not the method. The final controller's budget is 2.4 W. DVFS
+  adds nothing on these scenarios at either budget (onboard serves 1-3 % of frames at 2.4 W).
