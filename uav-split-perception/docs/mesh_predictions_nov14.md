@@ -726,3 +726,14 @@ frame) with a 1-byte reply.
 - For both papers: the SSH tunnel and cable add 2-4 ms per frame to the laptop path and take ~20 % of its peak goodput;
   against the 300 ms deadline and the laptop path's 50-100 ms latency this is a small, measured artefact, stated with
   these numbers instead of a bridge re-run (plan A8 replaced; G2 cut, stated as a limitation).
+
+## T11 (last part): YOLO11s split codes on the Pi (paper 1's second detector, P1-4; written 16 Nov 2026 before the bench, see the commit time)
+
+Paper 1's second-detector analysis times the YOLO11s codes on the Pi by scaling (`experiments/results/second_detector/
+yolo11s/break_even.json`: onboard 250-256 ms for k4_c4/c8/c16/c32, the Pi device scaled ×1.01 from YOLOv8s). For the
+YOLOv8s codes the scaled Pi times were 19-51 % below the measured ones (k4: 190 vs 226-228 ms; k2: 115 vs 174, T10).
+Bench: `split_live.py bench --weights yolo11s_visdrone.pt` on pi-receiver (idle, < 55 °C), the four YOLO11s codes
+(prefix layers 0-4 + bottleneck encoder + uint8 + zstd), 60 frames, and JPEG Q50 for reference.
+- **Y.1** The measured Pi onboard time of every YOLO11s code is 15-60 % above the rule's (≈ 290-410 ms).
+- **Y.2** With the measured times, the YOLO11s codes still have no winning cell on the Pi (the rule already finds
+  none); if any code's measured time exceeds the 300 ms deadline, it cannot meet it at any goodput.
