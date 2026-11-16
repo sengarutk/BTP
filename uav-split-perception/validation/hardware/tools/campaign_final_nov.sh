@@ -8,12 +8,12 @@
 #   (Phase 4, committed before the first run). Results: ${FINAL_OUT:-vid_campaign_final_nov}/.
 # First: push_code_mesh.sh, mesh_tunnel.sh, the keep-awake ping. Passwords: env PI2_PW PI3_PW NANO_PW N2_PW.
 D=$(cd "$(dirname "$0")" && pwd); H=$(cd $D/../../.. && pwd)/experiments/results/hardware
-R=$H/${FINAL_OUT:-vid_campaign_final_nov}; PS=40; COOL=${COOL:-60}; mkdir -p $R
+R=$H/${FINAL_OUT:-vid_campaign_final_nov}; PS=40; COOL=${COOL:-60}; mkdir -p $R   # FINAL_OUT / FINAL_STRATS / FINAL_REPS: the 16 Nov budget follow-up
 $D/mesh_ssh.sh camera "grep -q guard-hard-c ~/hwbench/adaptive2.py && grep -q contention-ms ~/hwbench/adaptive2.py && test -f ~/hwbench/yolo11n_visdrone.pt && test -f ~/hwbench/variant_accuracy_visdrone_ft11.json && test -f ~/hwbench/decay_context_train.json" 2>/dev/null \
   || { echo "camera lacks the final controller's options, YOLO11n, the _ft11 table or the planner's decay context: push first"; exit 1; }
 jobs() {
   for rep in $(seq ${FINAL_REPS:-5}); do for sc in mesh_mission multihop; do
-    for m in $(python3 -c "import random;p=['v41final','v41','accumo','leaf'];random.Random($rep*1009+len('$sc')).shuffle(p);print(' '.join(p))"); do echo "$rep $sc $m"; done
+    for m in $(python3 -c "import random;p='${FINAL_STRATS:-v41final v41 accumo leaf}'.split();random.Random($rep*1009+len('$sc')).shuffle(p);print(' '.join(p))"); do echo "$rep $sc $m"; done
   done; done
 }
 for pass in 1 2; do

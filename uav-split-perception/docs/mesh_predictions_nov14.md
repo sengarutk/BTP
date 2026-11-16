@@ -563,3 +563,16 @@ Paired v41dvfs − v41final (t-test):
 - For paper 2: with a fixed power budget the clock knob changes how the budget is spent, not how much is spent; here
   that buys nothing. DVFS is reported as implemented, measured (1.8 GHz −27 % J per inference) and neutral under the
   budget price. It could only pay where the budget binds on accuracy (a lower budget), which is not tested.
+
+## Budget follow-up: is 2.8 W too generous? (written 16 Nov 2026 before any of these runs; see the commit time)
+
+From F.3: AccuMO and LEAF reach v4.1's accuracy on 0.36-0.60 W less; v4.1 fills its 2.8 W budget with onboard work worth
+≤ 0.003 sAP. From D.2: at 2.8 W the DVFS saving is spent on more onboard work. `FINAL_OUT=vid_campaign_budget_nov
+FINAL_STRATS="v41final v41final24 v41dvfs24" FINAL_REPS=3 campaign_final_nov.sh`: mesh_mission, multihop × 3 paired reps
+(18 runs, start below 60 °C). v41final24 / v41dvfs24 = v41final / v41dvfs with `--power-budget 2.4`.
+
+- **B.1** v41final24 draws at least 0.25 W less Pi power than v41final in each scenario (mean of 3 pairs).
+- **B.2** v41final24's sAP with forecaster is within 0.005 of v41final's in each scenario (the 0.4 W buys nothing).
+- **B.3** v41dvfs24 runs at least 25 % of its onboard inferences at 1.8 GHz and its sAP is within 0.005 of
+  v41final24's (onboard serves only 2-6 % of frames here, so DVFS cannot add much).
+- **B.4** Theorem 1 holds update by update on all 18 runs; no run throttles.
