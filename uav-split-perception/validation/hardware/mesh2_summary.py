@@ -67,10 +67,11 @@ def main():
     # than 30 fps cannot be scored by stream_ap (it assumes the dataset's 30-fps timeline): its timeline-dependent
     # scores are withheld here; their estimate is validation/hardware/fps_sap_estimate.py's.
     order = list(ORDER) + sorted({k[1] for k in runs} - set(ORDER))
+    WITHHELD = ("sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300")
     bad = {m for m in order if re.search(r"_f(\d+)$", m) and not m.endswith("_f30")}
     for k_, v_ in runs.items():
         if k_[1] in bad:
-            for key in ("sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300"):
+            for key in WITHHELD:
                 v_[key] = None
     cells = {}
     for sc in scen + ["ALL"]:
@@ -78,8 +79,7 @@ def main():
             ms = [v for (s, p, _), v in runs.items() if p == m and (sc == "ALL" or s == sc)]
             if not ms or (sc == "ALL" and m == "hier"):     # hier ran in multihop only: no ALL row
                 continue
-            c = {k: tci([x[k] for x in ms if x.get(k) is not None]) if any(x.get(k) is not None for x in ms) else None
-                 for k in KEYS}
+            c = {k: None if (m in bad and k in WITHHELD) else tci([x[k] for x in ms if x.get(k) is not None]) for k in KEYS}
             c["n"] = len(ms)
             tot = collections.Counter()
             for x in ms:
