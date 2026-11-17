@@ -30,15 +30,15 @@ board throttled most of the time, and throttling alone costs onboard streaming A
 against the same runs at the full clock. A controller that prices the camera drone's measured power inside a
 streaming-accuracy objective, with online dual variables for power and freshness, removes most of this cost without
 losing accuracy: on Wi-Fi it raised streaming AP by \EnGain{}$\pm$\EnGainCi{} (\EnGainPct\,\%, \EnPairs{} pairs) and \EnRepGain{}
-(\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy almost unchanged but cost \MeshNoPriceW{}~W and
+(\EnRepGainPct\,\%) in a second campaign; on the mesh, removing the prices left accuracy equivalent (within $\pm$\EqMargin~sAP, TOST $p=\EqNoPriceP$) but cost \MeshNoPriceW{}~W and
 \MeshNoPriceC{}~$^\circ$C and kept the board throttled \MeshNoPriceThrottle{}\,\% of the time instead of
 \MeshVThrottle{}\,\%. On 24-minute missions with total blackouts its blackout hold still kept the board at or above
 80~$^\circ$C for \BdHoldHotMin--\BdHoldHotMax\,\% of the time; capping the hold and adding a hard guard at 76.5~$^\circ$C
-removes this on five mesh boards (peak \BdFinPeak~$^\circ$C, never throttled, no loss of accuracy). With five paired
-repetitions on the boards the final controller ties its predecessor; against an AccuMO-style 30-frame planner it was
+removes this on five mesh boards (peak \BdFinPeak~$^\circ$C, never throttled, accuracy equivalent, $p=\EqCapGuardP$). With five paired
+repetitions per scenario on the boards the final controller is equivalent to its predecessor ($p=\EqFinP$ over \EqFinPairs{} pairs); against an AccuMO-style 30-frame planner it was
 \BdFinVsAccMis~sAP on the one-hop mission and \BdFinVsAccMulti{} in multihop, a gap that a rule against sending frames
 to paths it predicts late closes (\BdFixMulti). A 2.4~W budget closes its
-power gap to the planner at the same accuracy. The price update carries a sample-path guarantee:
+power gap to the planner at equivalent accuracy. Recalibrated per path on two days of board logs, the deadline probability's calibration error on a third, held-out day falls from \RcEceRaw{} to \RcPathEceJet--\RcPathEceLap, which also removes most of that rule's cost on one hop. The price update carries a sample-path guarantee:
 mean power stays below the budget plus a price term and a hold-and-cap term. All \ThmUpdates{} logged updates of the
 \ThmRuns{} priced runs follow the coded rule, so the bound holds on every run (an excess of at most \ThmMeshExcess~W on
 the mesh and \ThmLongExcess~W over 24 minutes, where the price sat at its cap). Through a measured thermal model the
@@ -383,7 +383,10 @@ over \BdGuardedRuns{} guarded 24-minute runs, more than $\delta_i + \delta_n$: t
 as a rise that continues after the guard acts, which the model's single time constant omits. With the 78~$^\circ$C guard
 the peaks reached 80.4--81.5~$^\circ$C, just past the bound of (b); we therefore use (b) with the overshoot measured on
 the board, and set $\theta_g = 80 - 3.5$~$^\circ$C from the 78~$^\circ$C runs; over all \BdGuardedRuns{} runs the
-largest overshoot is $\delta_{\mathrm{fast}} = \BdDeltaFast$~$^\circ$C. With $\theta_g = 76.5$~$^\circ$C the peak
+largest overshoot is $\delta_{\mathrm{fast}} = \BdDeltaFast$~$^\circ$C. A two-time-constant model fitted to the logs
+(\TmTauF~s and \TmTauS~s) does not replace the measurement: its derived overshoot bound (\TmBound~$^\circ$C, with the
+guard's reading lag and the sensor's quantisation step) held in \TmHeld{} of \TmRuns{} guarded runs, and its simulated peaks
+were \TmLowMin--\TmLowMax~$^\circ$C below the measured ones, so $\delta_{\mathrm{fast}}$ must be measured on the board. With $\theta_g = 76.5$~$^\circ$C the peak
 stayed at \BdGuardPeakMin--\BdGuardPeakMax~$^\circ$C (at or above 80~$^\circ$C for at most \BdGuardHotMax\,\% of the
 time) and the board never throttled (Section~\ref{sec:board}). The replay check follows.
 
@@ -513,12 +516,21 @@ On Wi-Fi, the energy-priced controller (v4) against the same controller without 
 \EnGain{}$\pm$\EnGainCi{}~sAP, ahead in \EnWins{} of \EnPairs{} pairs; a second campaign gave
 \EnRepGain{}$\pm$\EnRepCi{} (ahead in \EnRepWins{} of 20). Re-scored with the standard metric and detections of the
 VisDrone-trained detector, the gains are \EnVdGain{} and \EnRepVdGain{} (Holm $p=\EnVdHolm{}$, \EnRepVdHolm{}). On the
-mesh (\MeshPairs{} pairs over three scenarios), removing the prices from v4.1 left streaming AP almost unchanged
-(v4.1 ahead by \MeshNoPriceSap{}, $p=\MeshNoPriceP{}$) but cost \MeshNoPriceW{}~W and \MeshNoPriceC{}~$^\circ$C on the
+mesh (\MeshPairs{} pairs over three scenarios), removing the prices from v4.1 left streaming AP equivalent within $\pm$\EqMargin~sAP
+(v4.1 ahead by \MeshNoPriceSap{}, $p=\MeshNoPriceP{}$; 90\,\% interval \EqNoPriceLo{} to \EqNoPriceHi, TOST $p=\EqNoPriceP$) but cost \MeshNoPriceW{}~W and \MeshNoPriceC{}~$^\circ$C on the
 camera drone ($p=\MeshNoPriceWp{}$, every pair), and the board throttled \MeshNoPriceThrottle{}\,\% of the time against
 \MeshVThrottle{}\,\% with prices. Over 24-minute mesh missions v4.1 held \MeshLongSap{}~sAP with the board throttled
 \MeshLongThrottle{}\,\% of the time (\MeshLongN{} runs). The mechanism, less low-value onboard inference and therefore
 less heat and CPU contention, is consistent with these measurements but was not isolated by an ablation.
+
+\textbf{Equal accuracy, tested.} Every claim of equal accuracy in this paper is a two one-sided $t$-test (TOST,
+$\alpha = 0.05$) of the paired differences against a margin of $\pm$\EqMargin~sAP, the replay's resolution. Of the
+\EqTotal{} comparisons, \EqShown{} are shown equivalent: no prices against v4.1, the heat price against the energy price
+(TOST $p=\EqHeatP$), the final controller against v4.1 over both board scenarios ($p=\EqFinP$), the capped hold with the
+guard against the hold ($p=\EqCapGuardP$, at \EqCapGuardHot{} points of time at or above 80~$^\circ$C) and the 2.4~W
+against the 2.8~W budget ($p=\EqBudgetP$). Not shown: the final controller in multihop alone ($p=\EqFinMultiP$), the
+capped hold alone ($p=\EqCapP$), the late-path rule on one hop ($p=\EqSkipOneP$) and the clock knob. The power and heat
+differences are the effect; the accuracy, where shown, is the same.
 
 \textbf{The whole system.} These gains are for the camera drone. Counting the power of every board, including the edge
 drone that carries the Jetson, fixed offloading of every frame to the ground is the most accuracy-per-watt efficient
@@ -550,6 +562,17 @@ arriving in a median \BdFixLapAfterMs~ms), the edge path's median latency from \
 and streaming AP rose by \BdFixMulti{} $\pm$ \BdFixMultiCi{} in multihop (\BdFixMultiWins{} of 5 pairs), the size of the
 planner's lead. On the one-hop mission it changed by \BdFixMis{} $\pm$ \BdFixMisCi{} (not significant): when a timely
 prediction fails, the skipped late path is no longer there as a backup.
+
+\textbf{Is the rule post hoc?} It was designed after the multihop result, so we checked it on board logs it was not
+designed on: every frame it would have acted on in the v4.1 runs of four other campaigns. In held-out multihop runs it
+acts on \SkHeldMultiShare\,\% of the network frames, and \SkHeldMultiOn\,\% of those arrived on time (\SkDesignMultiOn\,\%
+in the design data). The rule therefore gains mainly by freeing the relay's radio for the edge path, as the latencies
+above show, not only by dropping late frames. On one hop its cost has a cause in the deadline probability: frames
+predicted late arrived on time \RcJetLowOn\,\% of the time on the edge path but \RcLapLowOn\,\% on the ground path.
+Recalibrating $p_{\mathrm{on}}$ per path with an isotonic map fitted on the first two board days (calibration error
+on the held-out third day \RcPathEceJet{} and \RcPathEceLap, against \RcEceRaw{} logged) cuts the one-hop frames the
+rule acts on from \SkOneRaw{} to \SkOneRecal{}, \SkOneRecalLate\,\% of them late: a recalibrated rule keeps the useful
+backups. This is an offline counterfactual on the held-out day, not a board run.
 
 \textbf{Power.} The planner and a LEAF-style fixed weight drew \BdLessWMin--\BdLessWMax~W less than v4.1 at the same
 accuracy: v4.1 spends its 2.8~W budget on onboard work worth almost nothing in these scenarios. With a 2.4~W budget the
@@ -593,7 +616,10 @@ chance of meeting the deadline and \CalObs\,\% met it (expected calibration erro
 over-confident, so the controller is cautious rather than optimistic. On the hardware (\BdCalFrames{} offloaded frames
 of \BdCalRuns{} mesh runs) the same holds (expected calibration error \BdCalEce): no bin is over-confident, but frames
 predicted to have almost no chance arrived in time \BdCalLowObs\,\% of the time, so the estimate is safe but pessimistic
-where the goodput estimate is low.
+where the goodput estimate is low. A distribution-free (conformal) estimate from the link's recent estimate-to-achieved ratios fixes the calibration in the
+replay (expected calibration error \CfEceConf{} against \CfEceGauss; \CfMiss\,\% of the frames sent at $p_{\mathrm{on}} \ge 0.95$
+missed) at no change in accuracy (\CfSap{} $\pm$ \CfSapCi, \CfPairs{} pairs); on the board logs a per-path isotonic map does the
+same (Section~\ref{sec:board}).
 
 \subsection{The objective must match the forecaster}\label{sec:decay}
 With the decay curve after forecasting, the streaming objective beat the rate objective of v2 by
@@ -619,7 +645,10 @@ flight make every result later; limiting each camera to two paths in flight did 
 \BdCapStatCi{} and \BdCapMis{} $\pm$ \BdCapMisCi), since a camera cannot see the other's traffic. A swarm-wide
 coordinator in which the server pulls one frame ahead from each stream held \BdPullEightMin--\BdPullEightMax{} on-time
 results/s with 8 streams over the two Pis, against \BdRuleEightMin--\BdRuleEightMax{} under v4.1's per-camera rule; it
-was not fair across hosts with several streams each. In a swarm simulation calibrated with the measured
+was not fair across hosts with several streams each. The overload model, committed before this bench, reproduced its
+shape (the pull coordinator flat, v4.1's rule collapsing between 6 and 8 streams) but overstated the pull coordinator's
+rate by \PmErrMin--\PmErrMax\,\%; scaled by the measured ratio, it predicts \PmExtrap{} on-time results/s for 16 streams
+on four camera hosts (model only). In a swarm simulation calibrated with the measured
 boards and links, 20 Pi camera drones on one Wi-Fi access point each delivered \SwarmTwentyAlone{} detections/s when
 every drone adapted alone and \SwarmTwentyCoord{} with the coordinator; hardware swarms beyond two camera drones are future work.
 The same simulation tested relaying over an imperfect relay link. Each drone could send through a neighbour, chosen by
@@ -655,7 +684,8 @@ board comparisons have three to five repetitions. The throttling cost is measure
 the energy mechanism is not isolated by an ablation. The step-size and room-temperature results come from the replay,
 whose thermal plant is the model of Proposition~\ref{prop:temp}; the room temperature was not logged, and the thermal
 intercept is per board. The deadline probabilities are pessimistic where the goodput estimate is low, which the
-late-path rule inherits.
+late-path rule inherits; a per-path recalibration fixes this in an offline counterfactual on a held-out day
+(Section~\ref{sec:board}), not in a board run.
 
 \section{Conclusion}
 On a fanless drone computer heat is a hidden accuracy cost: onboard detection keeps the board throttled, and

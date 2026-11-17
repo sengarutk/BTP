@@ -25,3 +25,22 @@ Predictions:
    points.
 4. Conclusion expected: the guarantee can be had at no accuracy cost, but it does not raise accuracy, consistent with
    the oracle finding that better link prediction adds nothing.
+
+## Results (run 16–17 Nov 2026; replay_conformal.py -> replay/conformal_nov12/summary.json; 4 scenarios × 10 seeds)
+
+The driver had never run before 16 Nov. One import of a function that does not exist was removed; the method itself
+is unchanged.
+
+| | v4.1 (Gaussian p_on) | v41_conf (conformal p_on) |
+|---|---|---|
+| ECE | 0.040 | 0.017 |
+| mean predicted / observed on time | 0.943 / 0.982 | 0.965 / 0.983 |
+| miss rate among frames sent with p_on ≥ 0.95 | 0.7 % (54,300 frames) | 1.1 % (72,484 frames) |
+| sAP / freshness / Pi W | 0.0610 / 0.973 / 3.27 | 0.0611 / 0.975 / 3.25 |
+
+Paired sAP, conformal − v4.1: +0.00004 ± 0.00032 (40 pairs).
+
+- 1 held: ECE 0.017 ≤ 0.03.
+- 2 held: the miss rate is 1.1 % ≤ 5 %.
+- 3 held: |ΔsAP| < 0.003; freshness +0.2 points.
+- 4 held: the distribution-free guarantee comes at no accuracy cost and does not raise accuracy.

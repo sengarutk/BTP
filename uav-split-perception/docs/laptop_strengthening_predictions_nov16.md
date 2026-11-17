@@ -275,3 +275,8 @@ of paper 1, now with these reasons, and CompressAI-Vision is cited as the open r
 Also done (item 2): paper/generated_tables/published_splits.tex, generated from
 literature/published_splits.json. Four references were added to paper/references.bib, each checked that day against
 Crossref (Auto-Split KDD 2021, BottleFit WoWMoM 2022, Matsubara & Levorato EMDL 2020) or arXiv (HECS-B 2504.15295).
+
+## Item 8b: verdicts
+
+All four predictions of docs/conformal_predictions_nov12.md held; see that file's results section. ECE fell from 0.040
+to 0.017, the miss rate among frames sent with p_on ≥ 0.95 is 1.1 %, and ΔsAP = +0.00004 ± 0.00032 over 40 pairs.

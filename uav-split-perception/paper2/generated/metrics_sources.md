@@ -716,3 +716,78 @@ mesh, 14--16 Nov (17 campaigns) & 217 & 0.61 & 4.8 & 1.0 & 0.50 & 0.22 & 5.0 \\ 
 | `\BdCalLowObs` | 64 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): frames predicted 0-0.1, observed on time % |
 | `\BdTunnelSmall` | 2.4 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): tunnel - mesh hop, 1 KB RTT ms |
 | `\BdTunnelFrame` | 4.0 | scripts/report_mesh_nov16.py (Results Brief 19.24-19.31): tunnel - mesh hop, 83 KB RTT ms |
+| `\EqMargin` | 0.005 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): TOST margin, sAP |
+| `\EqNoPriceP` | 0.002 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): no prices vs v4.1, TOST p |
+| `\EqNoPriceLo` | −0.0035 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): no prices vs v4.1, 90 % CI low |
+| `\EqNoPriceHi` | −0.0008 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): no prices vs v4.1, 90 % CI high |
+| `\EqNoPricePairs` | 9 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): no prices vs v4.1, pairs |
+| `\EqNoPriceEquiv` | yes | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): no prices vs v4.1, equivalent within the margin |
+| `\EqHeatP` | 0.001 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): heat price vs Pi energy price, TOST p |
+| `\EqHeatLo` | −0.0020 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): heat price vs Pi energy price, 90 % CI low |
+| `\EqHeatHi` | +0.0015 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): heat price vs Pi energy price, 90 % CI high |
+| `\EqHeatPairs` | 9 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): heat price vs Pi energy price, pairs |
+| `\EqHeatEquiv` | yes | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): heat price vs Pi energy price, equivalent within the margin |
+| `\EqFinP` | 0.003 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, TOST p |
+| `\EqFinLo` | −0.0032 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, 90 % CI low |
+| `\EqFinHi` | +0.0005 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, 90 % CI high |
+| `\EqFinPairs` | 10 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, pairs |
+| `\EqFinEquiv` | yes | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, equivalent within the margin |
+| `\EqFinMultiP` | 0.100 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, multihop, TOST p |
+| `\EqFinMultiLo` | −0.0057 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, multihop, 90 % CI low |
+| `\EqFinMultiHi` | −0.0008 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, multihop, 90 % CI high |
+| `\EqFinMultiPairs` | 5 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, multihop, pairs |
+| `\EqFinMultiEquiv` | no | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): final controller vs v4.1, multihop, equivalent within the margin |
+| `\EqCapP` | 0.061 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold vs hold always, 24 min, TOST p |
+| `\EqCapLo` | −0.0053 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold vs hold always, 24 min, 90 % CI low |
+| `\EqCapHi` | +0.0025 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold vs hold always, 24 min, 90 % CI high |
+| `\EqCapPairs` | 5 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold vs hold always, 24 min, pairs |
+| `\EqCapEquiv` | no | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold vs hold always, 24 min, equivalent within the margin |
+| `\EqCapGuardP` | 0.022 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard vs hold always, 24 min, TOST p |
+| `\EqCapGuardLo` | −0.0041 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard vs hold always, 24 min, 90 % CI low |
+| `\EqCapGuardHi` | +0.0007 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard vs hold always, 24 min, 90 % CI high |
+| `\EqCapGuardPairs` | 5 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard vs hold always, 24 min, pairs |
+| `\EqCapGuardEquiv` | yes | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard vs hold always, 24 min, equivalent within the margin |
+| `\EqBudgetP` | 0.003 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): budget 2.4 vs 2.8 W, TOST p |
+| `\EqBudgetLo` | −0.0028 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): budget 2.4 vs 2.8 W, 90 % CI low |
+| `\EqBudgetHi` | +0.0009 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): budget 2.4 vs 2.8 W, 90 % CI high |
+| `\EqBudgetPairs` | 6 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): budget 2.4 vs 2.8 W, pairs |
+| `\EqBudgetEquiv` | yes | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): budget 2.4 vs 2.8 W, equivalent within the margin |
+| `\EqSkipOneP` | 0.380 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): late-path skip vs none, one hop, TOST p |
+| `\EqSkipOneLo` | −0.0153 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): late-path skip vs none, one hop, 90 % CI low |
+| `\EqSkipOneHi` | +0.0091 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): late-path skip vs none, one hop, 90 % CI high |
+| `\EqSkipOnePairs` | 5 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): late-path skip vs none, one hop, pairs |
+| `\EqSkipOneEquiv` | no | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): late-path skip vs none, one hop, equivalent within the margin |
+| `\EqShown` | 7 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): comparisons shown equivalent |
+| `\EqTotal` | 12 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): comparisons tested |
+| `\EqCapGuardHot` | −17.7 | equivalence/equivalence.json (validation/hardware/equivalence_tost.py): capped hold + guard - hold, time >= 80 C (points) |
+| `\RcTestFrames` | 387{,}075 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): held-out frames (16 Nov) |
+| `\RcEceRaw` | 0.057 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): held-out ECE, logged p_on |
+| `\RcEceIso` | 0.006 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): held-out ECE, isotonic map |
+| `\RcEcePlatt` | 0.003 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): held-out ECE, logistic map |
+| `\RcLowMap` | 0.65 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): isotonic map at p_on 0 |
+| `\RcJetLowOn` | 94 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): Jetson frames p_on<0.5, on time % |
+| `\RcLapLowOn` | 49 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): laptop frames p_on<0.5, on time % |
+| `\RcPathEceJet` | 0.004 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): per-path isotonic ECE, Jetson |
+| `\RcPathEceLap` | 0.007 | calibration/calib_recal_nov16.json (validation/hardware/calib_recal.py): per-path isotonic ECE, laptop |
+| `\SkHeldMultiShare` | 19 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): held-out multihop, share of network frames acted on |
+| `\SkHeldMultiOn` | 46 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): ... of those on time % |
+| `\SkDesignMultiOn` | 19 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): design data multihop, on time % |
+| `\SkOneRaw` | 877 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): 16 Nov one hop, frames acted on, raw p_on |
+| `\SkOneRecal` | 99 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): ... per-path recalibrated p_on |
+| `\SkOneRecalLate` | 85 | skip_counterfactual/skip_cf.json (validation/hardware/skip_counterfactual.py): ... of those late % |
+| `\PmErrMin` | 15 | overload_handling/pull_model_check.json (validation/hardware/pull_model_check.py): pull1 model over measured, min % |
+| `\PmErrMax` | 23 | overload_handling/pull_model_check.json (validation/hardware/pull_model_check.py): ... max % |
+| `\PmExtrap` | 21.5 | overload_handling/pull_model_check.json (validation/hardware/pull_model_check.py): pull1 at 16 streams, model x measured/model |
+| `\CfEceGauss` | 0.040 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): v4.1 ECE (replay) |
+| `\CfEceConf` | 0.017 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): conformal ECE (replay) |
+| `\CfMiss` | 1.1 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): conformal, miss rate of frames sent at p_on >= 0.95 % |
+| `\CfSap` | +0.0000 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): paired sAP conformal - v4.1 |
+| `\CfSapCi` | 0.0003 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): ... 95 % CI |
+| `\CfPairs` | 40 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): pairs |
+| `\TmTauF` | 5 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): fast time constant s |
+| `\TmTauS` | 100 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): slow time constant s |
+| `\TmBound` | 3.2 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): model-derived overshoot bound C |
+| `\TmHeld` | 8 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): runs within the model bound |
+| `\TmRuns` | 11 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): guarded runs |
+| `\TmLowMin` | 2 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): measured - model peak, min C |
+| `\TmLowMax` | 7 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): ... max C |
