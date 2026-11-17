@@ -318,3 +318,29 @@ cost of age. What grows is the Pi's power and heat: 2.13 → 3.18 W and 57 → 6
 - 7b.2 held, marginally: ≥ 0 with a shared radio.
 - On held-out replay settings the rule does no harm. It rarely acts there, because the replay has no two-hop relay,
   which is where it pays on the boards.
+
+## Item 6: verdicts (replay_airflow.py -> replay/airflow_nov16/airflow_summary.json; seeds 1–3, k = 1.0–0.6)
+
+24-minute mission with its 4-minute total blackout. Time at or above 80 °C (Pi W):
+
+| k (thermal resistance) | no prices | v4.1 (hold always) | capped hold (78 °C) | capped hold + guard (76.5 °C) |
+|---|---|---|---|---|
+| 1.0 | 80.1 % (4.80 W) | 18.0 % (3.41 W) | 0 % (3.11 W) | 0 % (3.08 W) |
+| 0.9 | 71.6 % (4.73) | 14.2 % (3.40) | 0 % | 0 % |
+| 0.8 | 46.5 % (4.56) | 7.7 % (3.36) | 0 % | 0 % |
+| 0.7 | 0 % (4.37) | 0 % (3.34) | 0 % | 0 % |
+| 0.6 | 0 % (4.37) | 0 % (3.34) | 0 % | 0 % |
+
+The 2-minute mission is hot only for the unpriced controller at k = 1 (7.5 %).
+
+- 6.1 not held: v4.1's hot time vanishes at k = 0.7, not 0.8. Airflow must lower the board's thermal resistance by
+  about 30 % (predicted 20 %).
+- 6.2 held: the unpriced controller's hot time vanishes at k = 0.7 (predicted ≤ 0.75).
+- 6.3 held approximately. The energy price saves 1.03–1.39 W at every k. The saving shrinks a little with airflow,
+  because the unpriced controller's own onboard runs get faster when the board is cooler.
+- Found: with airflow the capped hold and guard become identical to v4.1 (at k ≤ 0.7 the hold never reaches 78 °C).
+  The unpriced controller still trails v4.1 by 0.004 sAP at k ≤ 0.7 with no hot time: in the replay its cost is not
+  only heat. This difference is inside the replay's known bias of +0.005 towards less onboard work, so it is not a
+  claim.
+- Caveat, as for every replay heat result: the replay ranks hot time correctly (r 0.98) but its level is 16 points off
+  the hardware's, so the 30 % is an estimate from the measured plant, not a measurement.

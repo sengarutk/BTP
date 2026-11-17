@@ -99,7 +99,7 @@ SECS = f'''<h3>19.32 Laptop strengthening of both papers, 16-17 Nov 2026: what w
 <p>Airflow lowers the board's thermal resistance; in the validated replay the plant's slope and time constant were scaled by k (<code>replay_airflow.py</code>; 24-min mission with its total blackout; seeds {A24[f"af{KS[-1]:g}_v41"]["seeds"]}). Share of time at or above 80 °C:</p>
 <table><tr><th>thermal resistance k</th><th>no prices</th><th>v4.1 (hold always)</th><th>capped hold</th><th>capped hold + guard</th><th>Pi W: v4.1 / no prices</th></tr>{AF_ROWS}</table>
 <ul><li><b>Hot time vanishes</b> from k = {kz['noprice']} for the unpriced controller (thermal resistance {tr(kz['noprice'])} lower), from k = {kz['v41']} for v4.1 ({tr(kz['v41'])}), and the capped hold with the guard is cool at every k from {kz['guard']}.</li>
-<li><b>The energy price's saving does not depend on airflow</b>: v4.1 draws {W_spread['v41'][0]:.2f}–{W_spread['v41'][1]:.2f} W across k, the unpriced controller {W_spread['noprice'][0]:.2f}–{W_spread['noprice'][1]:.2f} W. Airflow removes the heat cost, not the power saving.</li>
+<li><b>The energy price's saving remains at every airflow level</b>: v4.1 draws {W_spread['v41'][0]:.2f}–{W_spread['v41'][1]:.2f} W across k, the unpriced controller {W_spread['noprice'][0]:.2f}–{W_spread['noprice'][1]:.2f} W (its onboard runs get faster on a cooler board, so the saving shrinks a little). Airflow removes the heat cost, not the power saving.</li>
 <li>Stated in paper 2 as the threshold a flight test would have to beat: the heat result holds unless airflow lowers the board's thermal resistance by more than the amount above.</li></ul>
 
 <h3>19.35 The deadline probability, recalibrated (paper 2)</h3>

@@ -1,4 +1,4 @@
-Full project report · state on 16 Nov 2026
+Full project report · state on 17 Nov 2026
 
 # AEGIS-UAV: the complete record of what was built, tested and found
 
@@ -37,6 +37,16 @@ Labels used throughout: Validated measured, repeated and cross-checked; Pending 
 ## PART 1Where things stand right now
 
 
+
+<!--state17-->
+**State on 17 Nov 2026 (laptop strengthening done; details in 19.32-19.38)**
+
+- **Paper 2**: equal accuracy tested (7 of 12 comparisons equivalent within ±0.005 sAP); the heat result holds unless airflow lowers the board's thermal resistance by more than 30 % (replay); the deadline probability recalibrated (held-out day) and its effect on the late-path rule explained.
+- **Paper 1**: the timing model within 8 % of the sweep; a fast camera keeps a real window on measured times; none of 5 published split results uses an accuracy-matched image baseline; a conference version exists.
+- **Negatives**: the late-path rule's multihop gain is mostly the radio it frees; a two-mode thermal model cannot replace the measured fast-mode term; the pull model is 15-23 % optimistic.
+- **Left**: the user's decisions (venues and page limits, authors, push).
+
+<!--/state17-->
 
 <!--state16-->
 **State on 16 Nov 2026 (mesh board sessions done; details in 19.24-19.31)**
@@ -1798,7 +1808,7 @@ The counterparts of 18.7 for the mesh campaigns (18.8–18.10), all from measure
 
 **Clock speed against temperature on the mesh** (campaign 2, 4-minute runs, all three scenarios; 20-s windows; filled = throttled in at least half of the window). v4.1 keeps the Pi at 70 °C on average (62–73 °C), heat + freshness at 74 °C, both never throttled (0 % and 0 % of windows). Without prices the Pi averages 83 °C, crosses 80 °C and is throttled in 39 % of the windows, at 1719 MHz when throttled (2,400 MHz is the full clock). Below 80 °C the clock varies only because the frequency governor slows an idle CPU.
 
-## PART 19Every campaign rescored with the standard metrics and replayed with the VisDrone weights (22–26 Oct 2026; C1–C7 done; corrected 28 Oct); laptop additions to 12 Nov, including the hardening of both papers (19.15–19.23); mesh board sessions 14–16 Nov (19.24–19.31)
+## PART 19Every campaign rescored with the standard metrics and replayed with the VisDrone weights (22–26 Oct 2026; C1–C7 done; corrected 28 Oct); laptop additions to 12 Nov, including the hardening of both papers (19.15–19.23); mesh board sessions 14–16 Nov (19.24–19.31); laptop strengthening 16–17 Nov (19.32–19.38)
 
 Corrections to how the earlier hardware results (Parts 12–15, 776 runs in 8 campaigns, 6–13 Oct) are scored and reported, from the data already recorded: no new runs. Each run is scored without and with its forecaster (`validation/hardware/report_rescore.py`; numbers in `experiments/results/hardware/report_c_summary*.json`, tables in `report_c_tables*.md`). Validated Note added 26 Oct: until then the summaries of Parts 9–16 computed the 95 % interval of 11 or more pairs with the normal value 1.96 instead of Student's t, so those intervals are 6–12 % too narrow (for example ±0.0028 → ±0.0030 for v4 over v3 + forecasting). The headline values in Parts 1, 14–16 and 20 are corrected; Part 19 has always used t intervals with exact permutation p-values; the only verdict that changes is v2 against the fixed laptop in Part 14 (not significant). The code is fixed (`summarize_vid.py`, `report_rescore.py`).
 
@@ -2736,6 +2746,49 @@ Every offloaded frame of the 241 runs of 14-16 Nov, the controller's logged p_on
 - **The SSH tunnel on the laptop path** (`tunnel_bench.py`): 1 KB round trip 7.6–7.7 ms through it against 5.1–5.5 ms over the direct mesh hop; an 83 KB frame 20.0–20.3 against 16.0–16.3 ms, goodput 32.7–33.3 against 40.7–41.6 Mbit/s: a small measured artefact (+2-4 ms per frame).
 - Theorem 1 holds update by update on all 593 recorded runs; the freshness price follows its rule on every update.
 
+### 19.32 Laptop strengthening of both papers, 16-17 Nov 2026: what was done and how
+
+The boards were not set up again (the user's decision). Every remaining weakness of the two papers was patched on the laptop from recorded data and the validated replay, with predictions committed first (`docs/laptop_strengthening_predictions_nov16.md`; verdicts in the same file). Order: equal accuracy as a tested equivalence, airflow, the deadline probability, published split results, the board-free versions of the planned board items (Jetson camera, held-out skip checks, more camera hosts), the thermal fast mode, the paper 1 conference version, the open feature-coding baseline. The laptop restarted twice when it slept on battery; every runner resumed from its finished rows. Validated
+
+### 19.33 "Same accuracy" as a tested equivalence (paper 2)
+
+Two one-sided t-tests (TOST, α 0.05) of the paired sAP differences against a margin of ±0.005 sAP (`equivalence_tost.py`): 7 of 12 comparisons are shown equivalent.
+
+- Paper 2 now says "equal accuracy" only where it is shown; the power and heat saved are the effect.
+
+### 19.34 How much airflow removes the heat cost (paper 2; replaces the airflow test)
+
+Airflow lowers the board's thermal resistance; in the validated replay the plant's slope and time constant were scaled by k (`replay_airflow.py`; 24-min mission with its total blackout; seeds [1, 2, 3]). Share of time at or above 80 °C:
+
+- **Hot time vanishes** from k = 0.7 for the unpriced controller (thermal resistance 30 % lower), from k = 0.7 for v4.1 (30 %), and the capped hold with the guard is cool at every k from 1.0.
+- **The energy price's saving remains at every airflow level**: v4.1 draws 3.34–3.41 W across k, the unpriced controller 4.37–4.80 W (its onboard runs get faster on a cooler board, so the saving shrinks a little). Airflow removes the heat cost, not the power saving.
+- Stated in paper 2 as the threshold a flight test would have to beat: the heat result holds unless airflow lowers the board's thermal resistance by more than the amount above.
+
+### 19.35 The deadline probability, recalibrated (paper 2)
+
+- **On the boards** (`calib_recal.py`; fit on 14-15 Nov, test on the held-out 16 Nov, 387,075 frames): ECE 0.057 → 0.0055 (isotonic), 0.0028 (logistic). Per path the miscalibration differs: frames predicted late arrived on time 94 % of the time on the Jetson path and 49 % on the laptop path; a per-path map gives ECE 0.0040 and 0.0066.
+- **In the replay**, a conformal (distribution-free) p_on (`replay_conformal.py`, predictions of 12 Nov, all held): ECE 0.040 → 0.017, miss rate of frames sent at p_on ≥ 0.95 1.1 %, sAP +0.0000 ± 0.0003 (40 pairs).
+
+### 19.36 The late-path rule checked where it was not designed (paper 2)
+
+- **Held-out board logs** (`skip_counterfactual.py`; v4.1 runs of mesh4, topology_nov, relaynoise_nov, energy_nov): in multihop the rule acts on 19 % of network frames, of which 46 % arrived on time (19 % in the design data): its multihop gain is mainly the relay radio it frees, not only late frames dropped (prediction 7a.1 not held).
+- **One hop**: with p_on recalibrated per path (maps from 14-15 Nov), the frames it acts on on 16 Nov fall from 877 to 99, 85 % of them late: the recalibrated rule keeps the useful backups (offline counterfactual).
+- **Held-out replay seeds** (`replay_skip.py`; seeds 11-20, random / mission_mirror / static_good): rule − v4.1 sAP +0.0000 ± 0.0001 with independent radios, +0.0002 ± 0.0002 with one shared radio (30 pairs each).
+
+### 19.37 Paper 1: the timing model, a fast camera, published wins
+
+- **The T10 timing model against the sweep** (`t10_model_check.py`): median error of the on-time rate 8 % over the 18 cells with ≥ 1 result/s (r 0.98); best option matched at 5 of 6 goodputs (both JPEG at the other).
+- **A Jetson as the camera, on measured times** (`jetson_measured_break_even.py`): the smallest joint code's B_be against JPEG 9.84 Mbit/s (as scaled times), 218 winning cells; with video 1.51–4.40 Mbit/s depending on the unmeasured Jetson video encode time; 0 exceptions. No live Jetson sweep.
+- **Published wins re-read** (5 papers, `literature/published_splits.json`): none compares with an accuracy-matched image; Auto-Split's 12.5× latency gain over the raw image is 1.9× against its own JPEG of equal mAP.
+- **Conference version** of paper 1: `paper/main_conf.tex` (IEEE conference format, every number generated).
+- **MPEG feature coding**: CompressAI-Vision is open but needs the VVC reference codec and supports other detector families; beyond the 2-hour limit, stated as a limitation.
+
+### 19.38 More camera hosts and the thermal fast mode (paper 2)
+
+- **Pull model against the bench** (`pull_model_check.py`; the model committed 13 Nov, the bench run 15 Nov): shape reproduced, rate overstated by 15–23 %; extrapolated (model × measured/model) 21.5 on-time results/s at 16 streams, v4.1's rule 0.
+- **Camera rate** (`fps_sap_estimate.py`; the T7 summary fixed, it had been committed empty): streaming AP at 15 / 30 / 60 fps estimated from the held result's real age (proxy r 0.992 on 50 runs at 30 fps): 0.189 / 0.191 / 0.192, flat; on-time results/s 14.9 / 25.6 / 31.0: v4.1's sending rule cannot be overloaded by a faster camera; the cost is power and heat.
+- **Two-time-constant thermal fit** (`thermal_two_mode.py`): τ 5 s and 100 s; its overshoot bound (3.2 °C) held in 8 of 11 guarded runs and its simulated peaks were too low: the fast-mode term must be measured (negative result).
+
 ## PART 20What it all means: the argument for the paper
 
 This part ties the results into one line of reasoning: what can be claimed, why the evidence supports it, and where it stops.
@@ -2814,6 +2867,9 @@ Mean power stays below the budget plus named terms on every logged run (Theorem 
 
 ### Honest negatives, also part of the paper
 
+<!--neg17-->
+- **Laptop strengthening 16-17 Nov (19.32-19.38).** Equal accuracy is not shown for the final controller in multihop alone, the capped hold alone (TOST p 0.061), the late-path rule on one hop and the clock knob. The late-path rule's held-out multihop frames were on time 46 % of the time. A fitted two-mode thermal model does not bound the guard's overshoot. The pull model overstates the coordinator's rate. Video encode on a Jetson camera was not measured.
+<!--/neg17-->
 <!--neg16-->
 - **Mesh sessions 14-16 Nov (19.24-19.31).** The guard's peak bound held only with a measured fast-mode term (δ_fast 3.9 °C; G.1 narrowly not held at 76.5 °C). The room-following budget missed its temperature target under bursty load. DVFS was used but neutral under a power budget. A second edge drone on one shared channel cost accuracy, and a per-camera cap did not fix it. The AccuMO-style planner beat the greedy controller in multihop until the late-path skip; the skip costs a little where the late path was a useful backup. Pull-one-ahead fairness across hosts was not shown. The deadline probabilities are pessimistic at the low end.
 <!--/neg16-->
@@ -2912,6 +2968,9 @@ State on 6 October 2026, 15:25 (kept for the record):
 
 ## PART 23What is left
 
+<!--left17-->
+**Update 17 Nov 2026:** the laptop strengthening is done (19.32-19.38); both papers and every report are updated. Left: the user's decisions only (venues, page limits, authors, push).
+<!--/left17-->
 <!--left16-->
 **Update 16 Nov 2026:** every board test is done (19.24-19.31); nothing more is planned on the mesh. Left, laptop only: the reproducibility package, both papers rewritten with every verdict (failures included), the Novelty Brief and Final Report, and an independent audit of every number.
 <!--/left16-->

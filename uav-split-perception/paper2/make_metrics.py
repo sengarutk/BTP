@@ -786,6 +786,18 @@ def laptop_strengthening(H):
     put("CfSap", signed(cf["paired_sAP_conf_minus_v41"]["mean"]), f"{src}: paired sAP conformal - v4.1")
     put("CfSapCi", cf["paired_sAP_conf_minus_v41"]["ci95"], f"{src}: ... 95 % CI")
     put("CfPairs", str(cf["paired_sAP_conf_minus_v41"]["n"]), f"{src}: pairs")
+    af = json.load(open(H / "replay" / "airflow_nov16" / "airflow_summary.json"))["mission_240s"]
+    src = "replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py)"
+    ks = sorted({float(p_[2:].split("_")[0]) for p_ in af}, reverse=True)
+    z = lambda b_: next(k for i, k in enumerate(ks) if all(af[f"af{kk:g}_{b_}"]["hot_share"] == 0 for kk in ks[i:]))  # noqa: E731
+    put("AfVZero", f"{100 * (1 - z('v41')):.0f}", f"{src}: v4.1 hot time 0 from this % lower thermal resistance")
+    put("AfNoZero", f"{100 * (1 - z('noprice')):.0f}", f"{src}: unpriced, same")
+    put("AfVHot", 100 * af["af1_v41"]["hot_share"], f"{src}: v4.1, still air, time >= 80 C %", "{:.0f}")
+    put("AfNoHot", 100 * af["af1_noprice"]["hot_share"], f"{src}: unpriced, still air, time >= 80 C %", "{:.0f}")
+    sv = [af[f"af{k:g}_noprice"]["pi_w"] - af[f"af{k:g}_v41"]["pi_w"] for k in ks]
+    put("AfSaveMin", min(sv), f"{src}: energy price's power saving over k, min W", "{:.1f}")
+    put("AfSaveMax", max(sv), f"{src}: ... max W", "{:.1f}")
+    put("AfSeeds", str(len(af["af1_noprice"]["seeds"])), f"{src}: seeds per setting")
     sr = json.load(open(H / "replay" / "skip_nov16" / "skip_summary.json"))
     src = "replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py)"
     for sh, nm in (("shared0", "Indep"), ("shared1", "Shared")):

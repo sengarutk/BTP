@@ -55,7 +55,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 
 <main>
 <header>
-  <div class="eyebrow">AEGIS-UAV · contribution and novelty, 26 Oct 2026, updated 16 Nov 2026</div>
+  <div class="eyebrow">AEGIS-UAV · contribution and novelty, 26 Oct 2026, updated 17 Nov 2026</div>
   <h1>Priced, freshness-aware offloading for a drone camera, measured on a real mesh</h1>
   <p class="lede">What the project contributes, what the measurements show, how it compares with the closest published work, and what a reviewer will ask for.</p>
   <p class="meta">Evidence: about 1,150 live hardware runs (Raspberry Pi 5 camera drones, Jetson Orin Nano edge drone, laptop ground station; Wi-Fi and a batman-adv mesh), VisDrone video, standard streaming accuracy (sAP). Full numbers: the AEGIS-UAV Results Brief. Updated 30 Oct 2026: a published scheduler re-implemented (AccuMO-style, Results Brief 19.10–19.11). Updated 12 Nov 2026: both papers hardened (Results Brief 19.15–19.23); see the section after the verdict. Updated 16 Nov 2026: the mesh board sessions (237 runs; Results Brief 19.24–19.31), in the first section after the verdict.</p>
@@ -66,6 +66,18 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   <p><b>Novel enough for a solid systems-and-measurement paper</b> at a UAV or edge-computing workshop or an IEEE networking conference: no published work we found combines drone offloading over a mesh with pricing of the camera drone's measured energy and heat (with freshness), measured on hardware and scored with streaming accuracy. Freshness × accuracy alone (AoPI) and streaming perception on UAV video alone (StreamFlow) are published, so the claim must stay this narrow.</p>
   <p><b>Not yet enough for a top venue</b> (MobiCom, MobiSys, SenSys): that would need two or more camera drones on the mesh, a published scheduler (AoPI- or AccuMO-style) re-implemented on the testbed (an AccuMO-style planner now runs in the trace replay and in the board code; its board campaign is scripted but not yet run), and ideally a flight or outdoor test. A learned feature-compression baseline is now measured (30 Oct; Results Brief 19.12). Since 12 Nov, the split result is a tested break-even rule, and the priced controller has guarantees checked on its logs (below). For a top venue paper 2 now most needs an airflow test (does the heat cost survive propeller wash?) and the capped hold on the board. <b>16 Nov:</b> the capped hold, two camera drones and the planner are now measured on the boards; airflow and flight are out of scope (no equipment).</p>
 </div>
+<!--nb17--><section>
+  <h2>Update 17 Nov 2026: what the laptop strengthening changed</h2>
+  <p>Without the boards, every weakness named on 16 Nov was patched from recorded data and the validated replay, predictions first (Results Brief 19.32–19.38).</p>
+  <div class="tbl"><table>
+    <tr><th>Claim</th><th>Change</th><th>Novelty now</th></tr>
+    <tr><td><b>Paper 1: the break-even rule</b></td><td>The timing model is within 8 % of the board sweep cell by cell; on a Jetson camera, measured times keep a real 9.8 Mbit/s window against JPEG; none of 5 published split results uses an accuracy-matched image (Auto-Split's 12.5× becomes 1.9× against one)</td><td><span class="chip yes">high</span>: a rule that re-reads the literature, not only our own results</td></tr>
+    <tr><td><b>Paper 2: heat priced at equal accuracy</b></td><td>Equal accuracy tested (7 of 12 comparisons equivalent within ±0.005 sAP); airflow bounded in the replay (heat cost gone once thermal resistance falls by 30 %; the power saving stays)</td><td><span class="chip yes">high</span>, now with a stated condition under which it holds</td></tr>
+    <tr><td><b>Paper 2: the deadline probability</b></td><td>Recalibrated per path on a held-out day (ECE 0.057 → 0.004–0.007); a conformal estimate fixes it in the replay at no accuracy cost</td><td><span class="chip part">medium</span>: a distribution-free guarantee checked on hardware logs</td></tr>
+    <tr><td><b>Paper 2: the late-path rule</b></td><td>Checked on held-out logs: its multihop gain is mostly the radio it frees; per-path recalibration removes its one-hop cost (counterfactual)</td><td><span class="chip part">medium</span>, no longer post hoc</td></tr>
+  </table></div>
+  <p><b>Venue view, 17 Nov.</b> Paper 1 has a 5-page conference version for IEEE ICC/Globecom/WoWMoM-class venues and the journal version for TMC/IoT-J. Paper 2 (11 pages) fits TMC; INFOCOM stays a stretch without flight. No venue is certain.</p>
+</section><!--/nb17-->
 <!--nb16--><section>
   <h2>Update 16 Nov 2026: what the mesh board sessions changed</h2>
   <p>On 14–16 November every board test was run on five boards of the mesh (237 controller runs in 17 campaigns, plus a live break-even sweep, an encoder bench and a pull bench), each with its prediction committed first (Results Brief 19.24–19.31; verdicts in <code>docs/mesh_results_nov15.md</code>). Claim by claim:</p>
@@ -250,4 +262,5 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   </ul>
 </section>
 <!-- novelty-update-nov16 -->
+<!-- novelty-update-nov17 -->
 </main>

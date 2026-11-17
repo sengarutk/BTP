@@ -94,7 +94,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 
 <main>
 <header>
-  <div class="eyebrow">AEGIS-UAV · final report · 26 October 2026, updated 16 November 2026</div>
+  <div class="eyebrow">AEGIS-UAV · final report · 26 October 2026, updated 17 November 2026</div>
   <h1>Perception for small camera drones: where to compute, how fresh, at what energy and heat</h1>
   <p class="lede">A camera drone has to detect objects in its video, live. This project built a three-tier drone testbed, a family of adaptive controllers that decide per frame where to run detection, and measured them over shared Wi-Fi and a real drone mesh network, with the standard streaming-accuracy metric on aerial video.</p>
   <p class="meta">Hardware: Raspberry Pi 5 camera drones · Jetson Orin Nano edge drone · laptop ground station (RTX 4050) · Wi-Fi and an ad-hoc batman-adv mesh (AegisSwarm). Data: VisDrone2019. Detailed lab record: the AEGIS-UAV Results Brief (25 parts); code: <code>uav-split-perception/</code>.</p>
@@ -295,6 +295,20 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
   <tr><td>The SSH tunnel on the laptop path</td><td>83 KB frame 20.0–20.3 ms through it against 16.0–16.3 ms over the direct hop</td><td>A small measured artefact (+2–4 ms)</td></tr>
 </table></div>
 <p><b>The final controller</b> (paper 2): v4.1 + the capped hold and guard at 76.5 °C + YOLO11n-480 onboard (timed at start-up, priced at its measured energy) + a 10 ms contention term + a 2.4 W budget + the late-path skip. Removed by decision (no equipment): airflow over the Pi and flight. Cut as redundant after these results: joint fades, a governor comparison, YOLO11m on the ground, the remaining board profiles, the batman-adv overhead test and the bridge re-run (the tunnel's cost was measured instead). Paper 2 builds at 10 pages and paper 1 at 19, every number generated.</p>
+<h3>4.17 Strengthened on the laptop: tested equivalence, airflow, calibration, a fast camera, published wins (16–17 Nov)</h3>
+<p>With the boards packed away, every weakness the 16 Nov review found was patched from recorded data and the validated replay, predictions first (Results Brief 19.32–19.38).</p>
+<div class="tbl"><table>
+  <tr><th>Weakness</th><th>What was done</th><th>Result</th></tr>
+  <tr><td>"Same accuracy" was not a test</td><td>Two one-sided t-tests, margin ±0.005 sAP</td><td>7 of 12 comparisons shown equivalent; the rest stated as not shown</td></tr>
+  <tr><td>No airflow test</td><td>Replay with the board's thermal resistance lowered step by step</td><td>v4.1's hot time vanishes once resistance falls by 30 %, the unpriced controller's by 30 %; the power saving stays</td></tr>
+  <tr><td>Pessimistic deadline probability</td><td>Recalibrated on two board days, tested on the third; conformal estimate in the replay</td><td>ECE 0.057 → 0.004–0.007 per path; conformal ECE 0.017 at no accuracy cost</td></tr>
+  <tr><td>The late-path rule looked post hoc</td><td>Checked on held-out logs and replay seeds</td><td>Multihop gain is mostly the radio it frees; per-path recalibration removes its one-hop cost (counterfactual)</td></tr>
+  <tr><td>Paper 1 had only "JPEG wins" on hardware</td><td>Model checked cell by cell; a Jetson camera on measured times</td><td>Model within 8 %; a Jetson camera keeps a 9.8 Mbit/s window against JPEG</td></tr>
+  <tr><td>"The rule is obvious"</td><td>5 published split results re-read</td><td>None uses an accuracy-matched image; Auto-Split's 12.5× becomes 1.9×</td></tr>
+  <tr><td>Two camera drones only</td><td>The pull model checked against the bench, then extrapolated</td><td>Shape right, rate 15–23 % high</td></tr>
+  <tr><td>Theorem 3's fast-mode term measured, not derived</td><td>Two-time-constant fit</td><td>Negative: the model cannot replace the measurement</td></tr>
+</table></div>
+<p>Paper 1 now has a 5-page conference version (<code>paper/main_conf.tex</code>); the MPEG feature-coding baseline stays a limitation (its open toolkit needs the VVC codec and other detectors).</p>
 </section>
 
 <section id="negative">
@@ -314,6 +328,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <li>The priced controller still left the board hot 19–27 % of the time on 24-minute missions with blackouts, through its blackout hold; at +10 °C the 2.8 W budget is too high and a higher price cap alone does not fix it.</li>
     <li>The constrained deep-RL baseline trails v4.1, and its first two training attempts failed (an under-charged radio; a multiplier that wound up until the policy only skipped).</li>
     <li>On the mesh boards (14–16 Nov): the guard's peak bound needs a measured fast-mode term (3.9 °C); the room-following budget missed its temperature target under bursty load; the CPU clock is neutral under a power budget; a second edge drone on one shared channel costs accuracy and a per-camera cap does not fix it; the AccuMO-style planner beat the greedy controller in multihop until the late-path skip, which costs a little on one hop; pull-one-ahead fairness across hosts was not shown; the deadline probabilities are pessimistic at the low end.</li>
+    <li>Laptop strengthening (16–17 Nov): Equal accuracy is not shown for the final controller in multihop alone, the capped hold alone (TOST p 0.061), the late-path rule on one hop and the clock knob. The late-path rule's held-out multihop frames were on time 46 % of the time. A fitted two-mode thermal model does not bound the guard's overshoot. The pull model overstates the coordinator's rate. Video encode on a Jetson camera was not measured.</li>
   </ul>
 </section>
 
@@ -350,6 +365,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
     <li>Learned feature compression is now tested (4.14), but the MPEG feature-coding standard was not run, a learned per-region quality model (AccMPEG) was not tried, and the YOLO11s Jetson times are scaled from YOLOv8s measurements (on the Pi they are measured within 2 % of the rule).</li>
     <li>The video options assume an error-free stream; their Pi encode times are now measured (4.16), their Jetson times are still scaled from the laptop.</li>
     <li>The capped hold and the hard guard are measured on the boards (4.16); the guard's bound needs a measured fast-mode term (3.9 °C). No airflow or flight test (no equipment). The deadline probabilities are pessimistic at the low end; a recalibrated estimate is untested.</li>
+    <li>Airflow is bounded in the replay, not measured: the heat result holds unless airflow lowers the board's thermal resistance by more than 30 %. The per-path recalibration of the deadline probability is an offline counterfactual, not a board run.</li>
   </ul>
 </section>
 
@@ -386,7 +402,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
       <li><s>Commit and push the work</s> Done 30 Oct: <code>main</code> is on GitHub (<code>bf77b3ca</code>); the 29 Oct commit was split in two to fit GitHub's 2 GiB push limit.</li>
       <li>Turn off energy-efficient Ethernet on the laptop.</li>
       <li>Paper 1's arXiv version is merged into <code>main</code>; it still needs the authors, the repository URL and your approval. Its journal version (the break-even rule) is drafted in <code>paper/drafts/design_rule.tex</code>.</li>
-      <li>Both papers now include the board results (paper 1: 19 pages, paper 2: 10 pages, every number generated). Check each venue's page limit.</li>
+      <li>Both papers now include the board results and the laptop strengthening of 16–17 Nov (4.17); paper 1 also has a 5-page conference version (<code>paper/main_conf.tex</code>). Check each venue's page limit.</li>
       <li><s>Verify the full title of one new paper 2 reference (Sun 2026) against the publisher's record.</s> Done 16 Nov with Crossref; the title is corrected in the paper.</li>
       <li>Check the venue deadlines.</li>
     </ul></div>
@@ -454,5 +470,6 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 </section>
 <!-- final-report-update-nov12 -->
 <!-- final-report-update-nov16 -->
+<!-- final-report-update-nov17 -->
 </main>
 </div>

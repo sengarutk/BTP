@@ -148,6 +148,18 @@ def main():
     # camera rate: the measured 30-fps value
     c = json.load(open(H / "vid_campaign_fps_nov" / "_eval_cache_mesh.json"))
     check("30 fps measured sAP_fc (3 runs)", np.mean([c[f"static_good__v41_f30__r{r}"]["sAP_fc"] for r in (1, 2, 3)]), M2.get("FrThirtyMeas"))
+    # airflow (paper 2): hot time and power from the replay's own rows, not the summary
+    rws = [json.load(open(f)) for f in glob.glob(str(H / "replay" / "airflow_nov16" / "rows" / "mission_240s__*.json"))]
+    def mean_of(pol, key):
+        v = [x[key] for x in rws if x["policy"] == pol and x["seed"] in (1, 2, 3)]
+        return float(np.mean(v)), len(v)
+    check("airflow: v4.1 still air, time >= 80 C %", 100 * mean_of("af1_v41", "hot_share")[0], M2.get("AfVHot"))
+    check("airflow: unpriced still air, time >= 80 C %", 100 * mean_of("af1_noprice", "hot_share")[0], M2.get("AfNoHot"))
+    zero = [k for k in (1.0, 0.9, 0.8, 0.7, 0.6) if mean_of(f"af{k:g}_v41", "hot_share")[0] == 0]
+    check("airflow: v4.1 hot time 0 from % lower resistance", 100 * (1 - max(zero)), M2.get("AfVZero"))
+    sav = [mean_of(f"af{k:g}_noprice", "pi_w")[0] - mean_of(f"af{k:g}_v41", "pi_w")[0] for k in (1.0, 0.9, 0.8, 0.7, 0.6)]
+    check("airflow: energy price saving, min W", min(sav), M2.get("AfSaveMin"))
+    check("airflow: energy price saving, max W", max(sav), M2.get("AfSaveMax"))
     out = ["# Independent audit of the laptop-strengthening numbers, 17 Nov 2026", "",
            "`scripts/audit_nov17.py`: own code from the raw result files (score caches, frame logs, sweep files); "
            "compared with paper 2's `generated/metrics.tex` and paper 1's `generated_tables/board_metrics.tex`.", "",

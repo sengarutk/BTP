@@ -689,7 +689,12 @@ guard at 76.5~$^\circ$C kept the peak at 80~$^\circ$C in two of three runs, not 
 
 \section{Limitations}
 The boards were on a table in still air, with recorded video replayed: nothing was flown, so propeller wash, real
-distances and vibration are untested, and every heat result is for a fanless board without forced airflow. The mesh
+distances and vibration are untested, and every heat result is for a fanless board without forced airflow. How much
+airflow would remove the heat cost we bound in the replay instead: scaling the board's thermal resistance (the plant's
+slope and time constant) down step by step, the unpriced controller's \AfNoHot\,\% and v4.1's \AfVHot\,\% of time at or above
+80~$^\circ$C on the 24-minute blackout mission vanish only once the resistance is \AfVZero\,\% lower (\AfSeeds{} seeds per
+setting), while the energy price still saves \AfSaveMin--\AfSaveMax~W. The heat result therefore holds unless airflow
+lowers the board's thermal resistance by about that much; the replay's heat level is a comparison, not a measurement. The mesh
 runs batman-adv as is, one of several routing protocols compared for UAV meshes~\cite{Diniz_2025}, and its own overhead
 was not characterised; the ground GPU was reached through an SSH tunnel, which adds \BdTunnelSmall~ms to a small round
 trip and \BdTunnelFrame~ms to a frame (measured). There were two camera drones and two edge drones on one channel; the

@@ -784,6 +784,13 @@ mesh, 14--16 Nov (17 campaigns) & 217 & 0.61 & 4.8 & 1.0 & 0.50 & 0.22 & 5.0 \\ 
 | `\CfSap` | +0.0000 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): paired sAP conformal - v4.1 |
 | `\CfSapCi` | 0.0003 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): ... 95 % CI |
 | `\CfPairs` | 40 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): pairs |
+| `\AfVZero` | 30 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): v4.1 hot time 0 from this % lower thermal resistance |
+| `\AfNoZero` | 30 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): unpriced, same |
+| `\AfVHot` | 18 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): v4.1, still air, time >= 80 C % |
+| `\AfNoHot` | 80 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): unpriced, still air, time >= 80 C % |
+| `\AfSaveMin` | 1.0 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): energy price's power saving over k, min W |
+| `\AfSaveMax` | 1.4 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): ... max W |
+| `\AfSeeds` | 3 | replay/airflow_nov16/airflow_summary.json (validation/hardware/replay_airflow.py): seeds per setting |
 | `\SkRepIndep` | +0.0000 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): shared0, rule - v4.1 sAP, all scenarios |
 | `\SkRepIndepCi` | 0.0001 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): ... 95 % CI |
 | `\SkRepShared` | +0.0002 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): shared1, rule - v4.1 sAP, all scenarios |

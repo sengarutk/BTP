@@ -46,5 +46,10 @@
 | Auto-Split advantage vs raw image (1.0 / 0.08) | 12.5 | 12.5 | ok |
 | Auto-Split advantage vs JPEG q60 (0.15 / 0.08) | 1.875 | 1.9 | ok |
 | 30 fps measured sAP_fc (3 runs) | 0.196553 | 0.197 | ok |
+| airflow: v4.1 still air, time >= 80 C % | 17.9938 | 18 | ok |
+| airflow: unpriced still air, time >= 80 C % | 80.0903 | 80 | ok |
+| airflow: v4.1 hot time 0 from % lower resistance | 30 | 30 | ok |
+| airflow: energy price saving, min W | 1.032 | 1.0 | ok |
+| airflow: energy price saving, max W | 1.38346 | 1.4 | ok |
 
-**0 mismatches** in 42 checks.
+**0 mismatches** in 47 checks.
