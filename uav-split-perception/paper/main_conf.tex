@@ -1,0 +1,316 @@
+% Conference version of paper 1 (17 Nov 2026, laptop strengthening item 3): the break-even rule, its tests and its
+% hardware check. Same metric files as main.tex; every number is a generated macro. Build: bash build_conf.sh
+\documentclass[conference,10pt]{IEEEtran}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+
+\input{generated_tables/autogen_metrics.tex}
+\input{generated_tables/gen_metrics.tex}
+\input{generated_tables/val_metrics.tex}
+\input{generated_tables/hw_metrics.tex}
+\input{generated_tables/lb_metrics.tex}
+\input{../experiments/results/break_even/be_metrics.tex}
+\input{../experiments/results/break_even/sim_metrics.tex}
+\input{../experiments/results/break_even/sim_tuned_metrics.tex}
+\input{../experiments/results/break_even/sim_entropy_metrics.tex}
+\input{../experiments/results/break_even/sim_entropy_tuned_metrics.tex}
+\input{../experiments/results/break_even/b_be_ci_metrics.tex}
+\input{../experiments/results/break_even/energy_be_metrics.tex}
+\input{../experiments/results/video_codecs/video_metrics.tex}
+\input{../experiments/results/learned_image_codecs/lic_metrics.tex}
+\input{../experiments/results/second_detector/yolo11s/sd_metrics.tex}
+\input{../experiments/results/video_codecs/video_inter_metrics.tex}
+\input{../experiments/results/break_even/sim_real_metrics.tex}
+\input{generated_tables/board_metrics.tex}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\begin{document}
+\title{When Can Any Split Beat the Image? A Break-Even Goodput for Split Computing on Camera Drones, Tested on Hardware}
+% PLACEHOLDER: the author list and affiliations are to be supplied before submission.
+\author{\IEEEauthorblockN{Author names withheld (to be supplied)}}
+\maketitle
+
+\begin{abstract}
+Split computing runs a detector's first layers on a drone and the rest on a server, and learned bottlenecks now code
+the crossing features in fewer bits than an image of equal accuracy. We ask when such a split can beat sending the
+image end to end, at a deadline. A short proposition gives a break-even goodput $B_{\mathrm{be}}$: a code can beat
+every setting of an image codec only below the payload rate of the cheapest setting that matches its accuracy, at the
+code's own frame time. Two corollaries follow. No better coder raises $B_{\mathrm{be}}$, even one at the
+rate--distortion limit, and switching codes does not help either. We test the rule with \BeCodes{} learned, jointly
+trained and entropy-coded codes, \BeJpegQualities{} JPEG qualities, a detector tuned on JPEG, low-delay video, learned
+and region-of-interest image codecs, a second detector and fading links: every model win lies below $B_{\mathrm{be}}$
+(\BeViolations{} exceptions in \BeCells{} cells). On hardware, predicted from board timings and then measured on a
+Raspberry Pi~5 camera sending to a Jetson over a mesh, JPEG was the best option at every goodput from 0.5 to
+8~Mbit/s, and the timing model was a median \BpModelErrPct\,\% from the measured on-time rate. With the Pi's measured
+encode times and video in the image family, no code wins on the Pi at all, while on a Jetson camera the rule predicts
+a real window (\BpJetHeadJpeg~Mbit/s against JPEG) that measured times keep. None of \BpLitPapers{} published split
+results we re-read compares with an accuracy-matched image; against one, a reported \BpLitAutoRaw$\times$ latency gain
+becomes \BpLitAutoMatched$\times$.
+\end{abstract}
+
+\section{Introduction}
+Camera drones must detect objects at video rate on small, power-limited computers. Offloading is the usual remedy,
+and \emph{split computing}, running the head of a network onboard and the tail on a server, is proposed as a middle
+ground between onboard inference and sending images~\cite{kang2017neurosurgeon,matsubara2022survey}. Post-hoc splits
+of unmodified detectors need more bits than a good JPEG frame. Learned bottlenecks fix that: trained at a cut, they
+code the crossing features in fewer bits than an image of equal
+accuracy~\cite{matsubara2022supervised,matsubara2023sc2,furutanpey2024frankensplit}. Fewer bits are not a faster
+system, however. The code costs onboard computation, and the image can be compressed until it matches the code's
+accuracy.
+
+We answer one question: given a code, a device and an image codec, \emph{below which goodput can the code win at
+all?} Our contributions:
+\begin{itemize}
+\item \textbf{A break-even goodput} (Proposition~\ref{prop:be}), with two corollaries: a code's payload does not enter
+it, so no coder raises it (Corollary~\ref{cor:coder}), and choosing among codes is bounded by the best of them
+(Corollary~\ref{cor:switch}). A fading version and an energy version follow.
+\item \textbf{A wide test} with stronger splits (jointly trained, entropy-coded, a second detector) and stronger images
+(a JPEG-tuned detector, low-delay video, learned and region-of-interest codecs), in the model and in a trace-driven
+simulator on synthetic and measured mesh links (Section~\ref{sec:tests}).
+\item \textbf{A hardware check, predicted then measured} on a Pi~5 camera and a Jetson over a batman-adv mesh. We also
+check the timing model cell by cell, measure CPU encoding on the Pi, and analyse a Jetson camera on measured times
+(Section~\ref{sec:boards}).
+\item \textbf{Published wins, re-read} against the rule (Section~\ref{sec:published}).
+\end{itemize}
+
+\section{Related Work}\label{sec:related}
+\textbf{Split computing.} Neurosurgeon~\cite{kang2017neurosurgeon} chose a partition point from per-layer latency and
+energy profiles; DADS~\cite{hu2019dads} extended partitioning to DAG-structured networks, JALAD~\cite{li2018jalad}
+compressed the transferred features, Edgent~\cite{li2020edgent} chose the split by bandwidth and SPINN~\cite{laskaridis2020spinn}
+added early exits. The early layers of vision models often produce more data than the input~\cite{matsubara2022survey},
+which limits naive splitting.
+
+\textbf{Learned bottlenecks.} BottleNet~\cite{eshratifar2019bottlenet} and BottleNet++~\cite{shao2020bottlenetpp} learn a
+bottleneck with the task; supervised compression~\cite{matsubara2022supervised}, the SC2 benchmark~\cite{matsubara2023sc2},
+BottleFit~\cite{matsubara2022bottlefit} and FrankenSplit~\cite{furutanpey2024frankensplit} show learned codes beating
+input-image coding at equal accuracy, and Matsubara and Levorato~\cite{matsubara2020complex,matsubara2021neural} add
+such bottlenecks to object detectors. These results are on the rate--accuracy plane, or end to end against one fixed
+image baseline (Section~\ref{sec:published}). Task-oriented coding bounds the rate a code
+needs~\cite{shao2022taskoriented,tosc2026limits}. We ask what any code can gain end to end, and show that the answer does
+not depend on the code's rate.
+
+\textbf{Image and video codecs.} JPEG~\cite{wallace1992jpeg}, low-delay H.264~\cite{wiegand2003h264} and learned image
+codecs~\cite{balle2018variational,minnen2018joint} set the image side. The fair comparison uses the strongest one the
+camera can run, at the quality that matches the code's accuracy.
+
+\section{Measurements}\label{sec:setup}
+\textbf{Detectors and data.} YOLOv8s~\cite{jocher2023yolo} and YOLO11s~\cite{jocher2024yolo11}, trained on
+VisDrone2019~\cite{zhu2022visdrone}, scored by mAP$_{50:95}$ on held-out DET frames; video codecs on the
+VisDrone-VID validation sequences. Codes and image settings are scored on the same frames with the same detector.
+
+\textbf{Post-hoc splits do not qualify.} Our toolkit splits YOLOv8s exactly at every layer boundary (the server's
+outputs are bit-identical to the unsplit model). Post-hoc INT8 quantisation of the crossing tensors is essentially
+lossless: at most \MaxAbsDeltaINT{} mAP points on COCO at any cut. Its payload is the obstacle: the smallest split,
+\MinSplitKiB~KiB after entropy coding, is \RatioMinSplitOverJPEGQNinetyFive$\times$ a Q95 JPEG that loses only
+\JPEGLossQNinetyFive{} points, and across \GenNModels{} detectors the smallest split is \GenRatioMin--\GenRatioMax$\times$ a
+Q90 JPEG. A split that needs more bits, more onboard work and more onboard-plus-server time than an image can beat
+it at most by their accuracy ratio, so only trained codes, which are smaller than the image, can win.
+
+\textbf{Learned codes.} A small encoder and decoder at a cut, trained by distilling the frozen detector's neck outputs
+(\LbTrainImages{} training images, no labels), code the cut in a few 8-bit channels compressed with zstd; joint training
+also updates the server-side layers on the detection loss, and an entropy-coded variant uses a learned factorised prior
+and a range coder (all decodes reproduce the encoder's symbols). Figure~\ref{fig:rate} shows the rate--accuracy plane:
+the codes need up to \LbKFourSavingMax\,\% fewer bytes than JPEG at equal accuracy.
+
+\textbf{Timing.} Onboard, encode and server times were measured on a laptop GPU, a Jetson Orin Nano and a throttled
+Raspberry Pi~5; the Pi needs \HwPiFullMs~ms and the Jetson \HwJetsonFullMs~ms per full inference.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{learned_bottleneck.pdf}
+\caption{Accuracy against payload on held-out VisDrone frames: JPEG at qualities 10--95, learned codes at two cuts
+(labels: channels) and the post-hoc INT8+zstd splits.}
+\label{fig:rate}
+\end{figure}
+
+\section{Model}\label{sec:model}
+A camera at $F$ frames/s offers each frame to one option $c$: onboard inference, an image setting $q$ (JPEG quality,
+video setting), or a split code $k$. Option $c$ has onboard time $e_c$, payload $b_c$ (bits), server time $s_c$ and
+accuracy $A_c$ (mAP$_{50:95}$ on held-out VisDrone frames, our VisDrone-trained YOLOv8s). With goodput $B$ and one-way
+delay $d$, it delivers $f_c(B) = F/\lceil F\max(e_c, b_c/B)\rceil$ frames/s. A frame is on time with probability
+$p_c(B) = Q\big((R_c - B)/\sigma(B)\big)$, where $R_c = b_c/(D - e_c - d - s_c)$ is the rate the deadline $D = 300$~ms
+needs, $Q$ the normal tail and $\sigma(B) \le sB$ the goodput spread. Its value is the accurate on-time rate
+$U_c(B) = f_c(B)\,p_c(B)\,A_c$. Onboard times scale with the device's full-model time $t_{\mathrm{full}}$: a code that
+runs a fraction $\phi_k$ of the detector's MACs onboard, plus encoder and quantiser work $\rho_k$, needs
+$e_k = t_{\mathrm{full}}(\phi_k + \rho_k)$.
+
+\section{The Break-Even Goodput}\label{sec:rule}
+\begin{proposition}[Break-even goodput]\label{prop:be}
+Let $m_k = \max(e_k, 1/F)$ for a code $k$, and fix $P<1$ with normal quantile $z_P$ and $z_P s < 1$. An image
+setting $q$ with $P A_q \ge A_k$ and $e_q \le m_k$ gives $U_q(B) \ge U_k(B)$ whenever
+$B \ge \max\big(b_q/m_k,\; R_q/(1 - z_P s)\big)$. Hence $k$ can beat every image setting only below
+\begin{equation*}
+B_{\mathrm{be}}(k) = \min_{q:\,P A_q \ge A_k,\; e_q \le m_k} \max\Big(\frac{b_q}{m_k},\; \frac{R_q}{1 - z_P s}\Big),
+\end{equation*}
+with $B_{\mathrm{be}} = \infty$ if no setting qualifies.
+\end{proposition}
+\begin{proof}
+From $b_q \le B m_k$ and $e_q \le m_k$:
+$\lceil F\max(e_q, b_q/B)\rceil \le \lceil F m_k\rceil = \max(1, \lceil F e_k\rceil) \le \lceil F\max(e_k, b_k/B)\rceil$,
+so $f_q \ge f_k$. Since $\sigma(B) \le sB$, $B \ge R_q/(1 - z_P s)$ gives $p_q \ge P$. Hence
+$U_q \ge P f_q A_q \ge f_k A_k \ge U_k$.
+\end{proof}
+\begin{corollary}[No coder raises the bound]\label{cor:coder}
+$B_{\mathrm{be}}(k)$ depends on the code only through $A_k$ and $m_k$, not its payload $b_k$. It is non-decreasing in
+$A_k$ and non-increasing in $m_k$. A better coder, even one at the task's rate--distortion limit, adds wins only below
+$B_{\mathrm{be}}$.
+\end{corollary}
+\begin{proof}
+$b_k$ does not appear in $B_{\mathrm{be}}(k)$. Raising $A_k$ shrinks the set of qualifying settings, so the minimum
+cannot fall; raising $m_k$ lowers $b_q/m_k$ and enlarges the set, so it cannot rise.
+\end{proof}
+\begin{corollary}[Switching codes]\label{cor:switch}
+A split that chooses among codes $k \in \mathcal K$ slot by slot can beat every image setting in a slot of goodput $B$
+only if $B < \max_{k} B_{\mathrm{be}}(k)$.
+\end{corollary}
+\noindent Information-theoretic work bounds the rate a code needs for an accuracy and finds learned codes far from
+it~\cite{shao2022taskoriented,tosc2026limits}. Corollary~\ref{cor:coder} is the system-level complement: closing that gap
+shrinks $b_k$ but leaves $B_{\mathrm{be}}$ in place. A faster device shortens $m_k$ and raises the first term, until the
+camera rate or the deadline term binds.
+
+\textbf{Fading version.} Discounting both terms by the same low quantile of the goodput gives
+$B_{\mathrm{be,f}}(k) = \min_P \min_{q} \max(b_q/m_k, R_q)/(1 - z_P s)$ with $s$ the link's measured relative spread. It
+is an empirical rule; we test it below.
+
+\textbf{Energy version.} With the radio's power $a + bB$, the image's encode energy $e_{\mathrm{enc}}$, the code's
+onboard energy $e_c(k)$ and $S = b_{q^\ast} - b_k$ the bits saved against the matching setting $q^\ast$, the split uses
+less energy per frame exactly when $B < B_E(k) = aS/(e_c(k) - e_{\mathrm{enc}} - bS)$.
+
+\section{Tests}\label{sec:tests}
+\textbf{Setup.} \BeCodes{} learned codes at the stride-4 and stride-8 cuts of the VisDrone YOLOv8s (frozen-detector
+distillation, joint training of the server side, and a learned entropy model with a range coder), against
+\BeJpegQualities{} JPEG qualities (every 5 from 10 to 95) on the same frames with the same detector, on
+\BeMeasuredDevices{} measured devices (laptop GPU, Jetson Orin Nano, throttled Pi~5) and \BeSweepSpeeds{} swept speeds,
+at goodputs in steps of \BeGridStepPct\,\%. Table~\ref{tab:tests} lists every test.
+
+\begin{table*}[t]
+\centering
+\caption{Every test of the break-even goodput. Exceptions: model wins at or above $B_{\mathrm{be}}$ (or
+$B_{\mathrm{be,f}}$ for fading links).}
+\label{tab:tests}
+\small
+\begin{tabular}{@{}p{0.2\textwidth}p{0.6\textwidth}p{0.14\textwidth}@{}}
+\toprule
+Test & What it showed & Exceptions \\
+\midrule
+Model check & A code beats every JPEG setting in \BeCells{} cells; with only \BeJpegQualitiesCoarse{} qualities, in
+\BeCellsCoarse{}: a coarse JPEG grid overstates the split. The largest winning goodput is a median \BeTightFastMedian\,\%
+below $B_{\mathrm{be}}$ on the fast devices. & \BeViolations \\
+Jointly trained codes & +\BeJointGainMin{} to +\BeJointGainMax{} mAP, significant for \BeJointPairedSig{} of
+\BeJointPairedN{} codes; the smallest code's Pi $B_{\mathrm{be}}$ rises from \BePiBe{} to \BeJointPiBe~Mbit/s
+(bootstrap 95\,\%: \BeCiJointPiLo--\BeCiJointPiHi) & \BeViolations \\
+Detector tuned on JPEG & Split wins fall from \BeCells{} to \BeTunedCells{} cells; the smallest joint code's Pi
+$B_{\mathrm{be}}$ falls to \BeTunedJointPiBe~Mbit/s & \BeTunedViolations \\
+Learned entropy coder & \BeEcSaveZstdMin--\BeEcSaveZstdMax\,\% smaller than the zstd codes at equal accuracy, the same
+$B_{\mathrm{be}}$ (\BeEcPairEcBe~Mbit/s on the Jetson for both), as Corollary~\ref{cor:coder} says & \BeEcViol \\
+Low-delay video (x264/x265) & \VcSaveHtfUltra--\VcSaveHtfMedium\,\% fewer bytes than JPEG; the smallest joint code's
+$B_{\mathrm{be}}$ falls from \VcJpegJointFastBe{} to \VcVideoJointFastBe~Mbit/s (Jetson); winning cells
+\VcJpegWins{} $\to$ \VcBothWins & \VcBothExc \\
+Inter-frame coded codes & \ViSaveMin--\ViSaveMax\,\% fewer code bytes; $B_{\mathrm{be}}$ unchanged, wins only added
+below it (\ViBothWins{} cells) & \ViBothExc \\
+Learned image codecs & \LicSaveMedian\,\% fewer bytes than JPEG, but encoders at \LicEncFracMin--\LicEncFracMax\,\% of
+the detector's MACs: they never fit a code's frame time & \LicBothExc \\
+Region-of-interest JPEG & Regions cover \VcRoiArea\,\% of the frame; median saving \VcSaveRoi\,\% at equal accuracy &
+\VcBothExc \\
+A second detector (YOLO11s) & $B_{\mathrm{be}}$ \SdPiBeMin--\SdPiBeMax~Mbit/s on the Pi, but no win: the onboard layers
+take \SdPiOnboardMs{} of the \SdDeadlineMs~ms deadline & \SdExc \\
+Fading links (simulator) & The constant bound fails for \BeSimModExcPct\,\% / \BeSimVehExcPct\,\% of simulated wins,
+only on devices of $\le$\BeSimExcTfullMax~ms, by a median \BeSimModMargin\,\% / \BeSimVehMargin\,\%; the fading version
+holds & \BeSimModFadingExc{} / \BeSimVehFadingExc \\
+Measured mesh links (simulator) & Spread \BeSimMeshSpread; the constant bound fails for \BeSimMeshExcPct\,\% of wins; the
+fading version holds & \BeSimMeshFadingExc \\
+Energy (Pi constants) & A split saves energy only below \BeEnMax~kbit/s for any code; at 1~Mbit/s the smallest joint
+code costs \BeEnJointRatio$\times$ its JPEG setting's energy & --- \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{break_even_map.pdf}
+\caption{Break-even goodput of each learned code against the measured JPEG settings (lines, $P = \BePOn$) and the
+largest goodput at which the model has the code beat all of them (dots), against the onboard full-model time.}
+\label{fig:map}
+\end{figure}
+
+The check uses the model the proposition is derived in, so it confirms the derivation and its implementation, not
+the model; the simulator and the boards test the model. Figure~\ref{fig:map} shows the bound and the largest winning
+goodput of every code: on a Pi a code can win only below about 2~Mbit/s, on a fast device up to the camera rate.
+Joint training raises $B_{\mathrm{be}}$ (better accuracy needs a better matching image), but part of its gain comes from
+training only one side: with a detector tuned on JPEG the window narrows again. Stronger image codecs remove most of
+the room a split had, which is Corollary~\ref{cor:coder} applied to the image side.
+
+\section{On the Boards: Predicted, Then Measured}\label{sec:boards}
+\textbf{The sweep.} A Raspberry Pi~5 camera sent to a Jetson Orin Nano over a batman-adv mesh. The codes and JPEG
+were timed on each board (the codes take \BpCodeMsMin--\BpCodeMsMax~ms onboard on the Pi, JPEG \BpJpegOnb~ms), and the
+link was serialised by netem at \BpRates~Mbit/s, every run started with the Pi below 60~$^\circ$C. The model,
+from the board timings alone and committed before the sweep, predicted that no code beats JPEG at these goodputs,
+because the code's onboard part caps it at about 4--5 frames/s. That held: the best option measured at every goodput
+was a JPEG, no code exceeded \BpCodeFpsMax{} on-time results/s, and JPEG reached \BpJpegFpsEight{} at 8~Mbit/s. Cell
+by cell, the model's on-time rate was a median \BpModelErrPct\,\% from the measured one over the \BpModelCellsBig{}
+cells with at least one result per second ($r = \BpModelR$ over all \BpModelCells), and its best option was the
+measured one at \BpModelBestMatch{} of \BpModelRates{} goodputs (at the other, both are JPEG). With a token-bucket link
+instead, a low average goodput from a shared fast radio, the smallest code delivered \BpHtbCode{} on-time results/s at
+0.5~Mbit/s against JPEG's \BpHtbJpeg: how the link is slow matters, which $t_{\mathrm{tx}} = b/B$ does not separate.
+
+\textbf{CPU encoding on the Pi.} Scaling every onboard time by the full-model ratio (\BpScale{} on the throttled Pi)
+is right for neural layers but not for CPU encoding: measured on the Pi, video encodes only \BpRatioMin--\BpRatioMax{}
+times slower than on the host and JPEG \BpJpegRatio{} times. With every option at its measured Pi time, the smallest
+joint code's $B_{\mathrm{be}}$ is \BpHeadJpegMeas~Mbit/s against JPEG (scaled: \BpHeadJpegRule) and
+\BpHeadVideoMeas~Mbit/s with video (scaled: \BpHeadVideoRule); with video, no code has a winning cell on the Pi
+(\BpWinsVideoMeas{} cells, \BpExc{} exceptions), as the sweep found. YOLO11s codes timed on the Pi are within
+\BpYelevenDev\,\% of the scaled times.
+
+\textbf{A fast camera.} The same benches timed the codes on a Jetson used as the camera: \BpJetCodeMsMin--\BpJetCodeMsMax~ms
+onboard, while its CPU encodes JPEG \BpJetJpegRatio{} times slower than the host. On these measured times the smallest
+joint code's $B_{\mathrm{be}}$ against JPEG is \BpJetHeadJpeg~Mbit/s, as scaled times give, and codes win in
+\BpJetWinsJpeg{} cells: on a fast camera the rule predicts a real window. With video it is
+\BpJetHeadVideoLo--\BpJetHeadVideoHi~Mbit/s, depending on the Jetson's video encode time, which we did not measure
+(\BpJetExc{} exceptions). We did not sweep a Jetson camera live.
+
+\section{Published Wins, Re-Read}\label{sec:published}
+The rule says a split must be compared with the cheapest image of \emph{equal accuracy}. We re-read \BpLitPapers{}
+published results with the numbers they report (Table~\ref{tab:published}). None of them makes that comparison.
+Auto-Split's own ablation shows what it changes: its \BpLitAutoRaw$\times$ latency advantage over the raw image is
+\BpLitAutoMatched$\times$ against its JPEG setting of equal mAP. Our own model shows the same effect on the image grid:
+\BeCellsCoarse{} winning cells with \BeJpegQualitiesCoarse{} qualities against \BeCells{} with \BeJpegQualities. The
+one result whose split path computes faster than its image path, before any transfer, wins everywhere, which the rule
+allows ($B_{\mathrm{be}} = \infty$).
+\begin{table*}[t]
+\centering
+\caption{Published split-computing results read against the break-even rule (numbers as each paper reports them).}
+\label{tab:published}
+\small
+\input{generated_tables/published_splits.tex}
+\end{table*}
+
+\section{Design Rule and Limitations}
+\textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from the code's accuracy and onboard time, the
+image codec's rate--accuracy curve on the same frames (with the best detector the server can run for it) and the
+device's measured onboard times. If the link's goodput is mostly above $B_{\mathrm{be}}$, send the image; on a fading
+link use $B_{\mathrm{be,f}}$ with the measured spread.
+
+\textbf{Limitations.} One onboard computer was swept live (a fanless Pi~5); a Jetson was timed as a camera, not swept,
+and its video encode time was not measured. The live link was a netem-serialised rate limit; a shared fast radio can
+favour a small code. All accuracies are for VisDrone with YOLOv8s and YOLO11s. The fading version is empirical. The MPEG
+feature-coding standard was not run: its reference software is hosted for MPEG members, and the open CompressAI-Vision
+pipelines need the VVC reference codec and other detector families; Corollary~\ref{cor:coder} bounds what any feature
+coder could add.
+
+\section{Conclusion}
+A learned split code pays off only below a goodput that its accuracy, the device's onboard time and the image codec's
+rate curve fix in advance, and that no coder can raise. In \BeCells{} model cells and every stress test the rule had
+no exception where it is proved, and its fading version none where it is empirical. On real boards its prediction held
+before it was measured: on a Pi~5 camera JPEG wins at every goodput, and with low-delay video a split never wins; on a
+fast camera, a window below a few Mbit/s remains. Published wins measured against weaker image baselines overstate
+that window.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

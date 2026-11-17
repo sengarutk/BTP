@@ -324,6 +324,39 @@ time, the smallest jointly trained code's $B_{\mathrm{be}}$ on the Pi is \BpHead
 \BpHeadJpegRule) and \BpHeadVideoMeas~Mbit/s with video (scaled: \BpHeadVideoRule); with video in the image family no
 code has a winning cell on the Pi (\BpWinsVideoMeas{} cells, \BpExc{} exceptions), as the live sweep found.
 
+The timing model behind these predictions is itself close to the boards. Over the \BpModelCellsBig{} of the
+\BpModelCells{} measured cells with at least one on-time result per second, its predicted on-time rate is a median
+\BpModelErrPct\,\% from the measured one ($r = \BpModelR$ over all cells). Its predicted best option is the measured one
+at \BpModelBestMatch{} of the \BpModelRates{} goodputs; at the other, both are JPEG settings. The large errors are at
+the deadline's edge, where a few milliseconds decide whether a frame is on time.
+
+\textbf{A fast camera, on measured times.} The same benches timed the codes and JPEG on a Jetson Orin Nano used as
+the camera: \BpJetCodeMsMin--\BpJetCodeMsMax~ms onboard for the codes, and JPEG \BpJetJpegRatio{} times the host's
+time (its CPU encodes slowly). With these times the smallest jointly trained code's $B_{\mathrm{be}}$ against JPEG
+is \BpJetHeadJpeg~Mbit/s, the value the scaled times give (\BpJetHeadJpegRule), and codes win in \BpJetWinsJpeg{}
+cells: on a fast camera the rule predicts a real window, and measured times keep it. With video in the image family the
+window depends on the Jetson's video encode time, which we did not measure. It is \BpJetHeadVideoLo~Mbit/s if video
+is as much slower than on the host as the Pi's measurements imply, and \BpJetHeadVideoHi~Mbit/s if it is as slow
+as the Jetson's JPEG (\BpJetWinsVideoMin--\BpJetWinsVideoMax{} winning cells; \BpJetExc{} exceptions in every case).
+No live sweep with a Jetson camera was run.
+
+\textbf{Published wins, re-read.} We re-read \BpLitPapers{} published split-computing results against the rule, using
+only the numbers they report (Table~\ref{tab:published}). None of them compares the split with an image setting of
+the same accuracy. Some compare with an uncompressed image or input tensor, others with one fixed image quality while
+the split loses accuracy. Corollary~\ref{cor:coder} says the comparison that matters is with the cheapest image of equal
+accuracy, and one paper's own appendix shows how much this changes. Auto-Split's latency advantage is
+\BpLitAutoRaw$\times$ against the raw image, but \BpLitAutoMatched$\times$ against its own JPEG setting of equal mAP.
+The one result whose split path is faster than its image path, even before transfer, wins at every goodput, as the
+rule allows (no finite $B_{\mathrm{be}}$).
+\begin{table*}[t]
+\centering
+\caption{Published split-computing results read against the break-even rule (numbers as reported by each paper; arXiv
+versions read in November 2026).}
+\label{tab:published}
+\small
+\input{generated_tables/published_splits.tex}
+\end{table*}
+
 \textbf{Design rule.} Before building a split, compute $B_{\mathrm{be}}$ from:
 \begin{itemize}
 \item the code's size and accuracy;

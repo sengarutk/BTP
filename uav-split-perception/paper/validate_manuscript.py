@@ -7,10 +7,11 @@ from collections import Counter
 from pathlib import Path
 
 PAPER = Path(__file__).resolve().parent
-tex = (PAPER / "main.tex").read_text(encoding="utf-8")
-# expand included sections (\input{drafts/...}): their labels, citations and macros belong to the manuscript (16 Nov 2026)
+MAIN = sys.argv[1] if len(sys.argv) > 1 else "main.tex"   # main_conf.tex: the conference version (17 Nov 2026)
+tex = (PAPER / MAIN).read_text(encoding="utf-8")
+# expand included sections and generated tables (\input{drafts/...}, \input{generated_tables/...}; 17 Nov 2026): their labels, citations and macros belong to the manuscript (16 Nov 2026)
 while True:
-    m = re.search(r"\\input\{(drafts/[^}]+?)(\.tex)?\}", tex)
+    m = re.search(r"\\input\{((?:drafts|generated_tables)/[^}]+?)(\.tex)?\}", tex)
     if not m:
         break
     tex = tex[:m.start()] + (PAPER / (m.group(1) + ".tex")).read_text(encoding="utf-8") + tex[m.end():]
