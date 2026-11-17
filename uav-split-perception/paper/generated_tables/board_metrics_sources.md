@@ -31,3 +31,25 @@
 | `\BpYelevenBeMin` | 0.68 | break_even_pi_measured.json: YOLO11s B_be measured, min |
 | `\BpYelevenBeMax` | 1.53 | ... max |
 | `\BpYelevenWins` | 0 | ... winning cells |
+| `\BpModelErrPct` | 8 | t10_model_check.json: median |pred - meas| / meas, cells >= 1/s (%) |
+| `\BpModelCells` | 30 | t10_model_check.json: measured cells |
+| `\BpModelCellsBig` | 18 | ... cells with >= 1 on-time result/s |
+| `\BpModelR` | 0.98 | t10_model_check.json: Pearson r predicted vs measured on-time rate |
+| `\BpModelBestMatch` | 5 | t10_model_check.json: goodputs where the predicted best option was the measured best |
+| `\BpModelRates` | 6 | ... goodputs |
+| `\BpJetCodeMsMin` | 6.6 | t10_bench_jetson2.json: codes' onboard ms on the Jetson, min |
+| `\BpJetCodeMsMax` | 9.5 | ... max |
+| `\BpJetJpegRatio` | 7.5 | analysis_jetson_measured.json: JPEG encode Jetson/laptop |
+| `\BpJetHeadJpeg` | 9.84 | analysis_jetson_measured.json: joint_k4_c4 B_be, JPEG, measured Jetson times |
+| `\BpJetHeadJpegRule` | 9.84 | ... the rule's scaled Jetson times |
+| `\BpJetHeadVideoHi` | 4.40 | ... JPEG + video, video at the JPEG ratio (upper end) |
+| `\BpJetHeadVideoLo` | 1.51 | ... JPEG + video, video at the Pi's lowest video/JPEG ratio |
+| `\BpJetHeadVideoRule` | 1.51 | ... JPEG + video, the rule's scaled times |
+| `\BpJetWinsJpeg` | 218 | analysis_jetson_measured.json: winning cells, JPEG |
+| `\BpJetWinsVideoMin` | 39 | ... winning cells with video, min over the video-cost versions |
+| `\BpJetWinsVideoMax` | 75 | ... max |
+| `\BpJetExc` | 0 | ... exceptions, every family and version |
+| `\BpLitPapers` | 5 | literature/published_splits.json: papers re-read |
+| `\BpLitNotMatched` | 5 | ... papers without an accuracy-matched image baseline |
+| `\BpLitAutoRaw` | 12.5 | published_splits.json autosplit: latency advantage vs raw image (Table 8 / 7) |
+| `\BpLitAutoMatched` | 1.9 | ... vs accuracy-matched JPEG q60 (Table 7) |

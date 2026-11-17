@@ -1,0 +1,129 @@
+{
+ "reading_lag_s": 0.2400000000000091,
+ "quantisation_c": 0.5499999999999972,
+ "fit": {
+  "tau_f": 5,
+  "tau_s": 100,
+  "a": 28.012401246578406,
+  "b_s": 9.27713281905923,
+  "b_f": 3.8550327621510263,
+  "rmse": 2.2553407139160346
+ },
+ "p_max_w_p99": 9.484689999999999,
+ "p_off_w_p10": 1.859,
+ "inference_s_p95": 0.231879295,
+ "delta_fast_c": 3.197499225800536,
+ "steady_slope_c_per_w": 13.132165581210256,
+ "runs": {
+  "vid_campaign_heat_final/a2_mission__v41final__r1": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 79.3,
+   "overshoot": 2.799999999999997,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": true,
+   "model_peak": 74.42426684045823,
+   "model_rmse": 6.666226238360967
+  },
+  "vid_campaign_heat_final/a2_mission__v41final__r2": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 79.3,
+   "overshoot": 2.799999999999997,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": true,
+   "model_peak": 75.30617835747975,
+   "model_rmse": 5.62157892315705
+  },
+  "vid_campaign_heat_final/a2_mission__v41final__r3": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 79.3,
+   "overshoot": 2.799999999999997,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": true,
+   "model_peak": 74.41951983333189,
+   "model_rmse": 6.297710103359333
+  },
+  "vid_campaign_heat_nov2/a2_mission__v41guard765__r1": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 79.3,
+   "overshoot": 2.799999999999997,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": true,
+   "model_peak": 74.0370728207063,
+   "model_rmse": 6.30012902731396
+  },
+  "vid_campaign_heat_nov2/a2_mission__v41guard765__r2": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 80.4,
+   "overshoot": 3.9000000000000057,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": false,
+   "model_peak": 73.80660873518606,
+   "model_rmse": 6.24085708997297
+  },
+  "vid_campaign_heat_nov2/a2_mission__v41guard765__r3": {
+   "guard_c": 76.5,
+   "held_out": true,
+   "measured_peak": 79.85,
+   "overshoot": 3.3499999999999943,
+   "bound_peak": 79.69749922580054,
+   "bound_holds": false,
+   "model_peak": 72.91849792823731,
+   "model_rmse": 6.246547637811434
+  },
+  "vid_campaign_heat_nov/a2_mission__v41guard__r1": {
+   "guard_c": 78.0,
+   "held_out": false,
+   "measured_peak": 81.5,
+   "overshoot": 3.5,
+   "bound_peak": 81.19749922580054,
+   "bound_holds": false,
+   "model_peak": 75.7643796054486,
+   "model_rmse": 5.471015396606595
+  },
+  "vid_campaign_heat_nov/a2_mission__v41guard__r2": {
+   "guard_c": 78.0,
+   "held_out": false,
+   "measured_peak": 80.95,
+   "overshoot": 2.950000000000003,
+   "bound_peak": 81.19749922580054,
+   "bound_holds": true,
+   "model_peak": 77.78888295961505,
+   "model_rmse": 4.974820511642397
+  },
+  "vid_campaign_heat_nov/a2_mission__v41guard__r3": {
+   "guard_c": 78.0,
+   "held_out": false,
+   "measured_peak": 80.95,
+   "overshoot": 2.950000000000003,
+   "bound_peak": 81.19749922580054,
+   "bound_holds": true,
+   "model_peak": 78.6200944736573,
+   "model_rmse": 5.018990597618621
+  },
+  "vid_campaign_heat_nov/a2_mission__v41guard__r4": {
+   "guard_c": 78.0,
+   "held_out": false,
+   "measured_peak": 80.4,
+   "overshoot": 2.4000000000000057,
+   "bound_peak": 81.19749922580054,
+   "bound_holds": true,
+   "model_peak": 75.85636498927354,
+   "model_rmse": 5.827843711806113
+  },
+  "vid_campaign_heat_nov/a2_mission__v41guard__r5": {
+   "guard_c": 78.0,
+   "held_out": false,
+   "measured_peak": 80.4,
+   "overshoot": 2.4000000000000057,
+   "bound_peak": 81.19749922580054,
+   "bound_holds": true,
+   "model_peak": 78.18232198904849,
+   "model_rmse": 4.893824275907891
+  }
+ }
+}

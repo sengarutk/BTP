@@ -1,0 +1,89 @@
+{
+ "purpose": "Item 2 of the laptop strengthening (16 Nov 2026): published split-computing results re-read against paper 1's break-even rule. Every value is quoted from the paper at the location given (arXiv versions read 16 Nov 2026); nothing is estimated.",
+ "papers": [
+  {
+   "key": "autosplit",
+   "cite": "Banitalebi-Dehkordi et al., Auto-Split, KDD 2021, arXiv 2108.13041",
+   "task": "detection (YOLOv3, 416 px)",
+   "edge": "simulated Eyeriss (headline); Raspberry Pi 3 (JPEG timing)",
+   "headline_image_baseline": "uncompressed image (Table 8: Cloud-Only normalized latency 1, mAP 0.39)",
+   "headline_claim": "Table 8, 1 Mbps: Auto-Split normalized latency 0.26 vs 1 (mAP 0.37 vs 0.39); 3 Mbps 0.37 vs 1",
+   "own_ablation": "Table 7 (Appendix): Cloud-Only JPEG q60 mAP 0.35, normalized latency 0.15; q80 mAP 0.38, 0.23; Auto-Split lossless mAP 0.35, 0.08; JPEG on a Raspberry Pi 3 costs 28 ms (Cloud-Only) and 9 ms (Auto-Split features)",
+   "accuracy_matched_baseline": false,
+   "rule_reading": "Against the accuracy-matched JPEG of its own ablation (q60, mAP 0.35) the split's latency advantage falls from 12.5x (0.08 vs 1.0, raw image) to 1.9x (0.08 vs 0.15)",
+   "advantage_raw": 12.5,
+   "advantage_matched": 1.875,
+   "table": {
+    "cite": "Auto-Split~\\cite{banitalebi2021autosplit}",
+    "setting": "YOLOv3, simulated edge",
+    "baseline": "uncompressed image",
+    "reading": "12.5$\\times$ faster than raw; 1.9$\\times$ against its own JPEG Q60 at equal mAP"
+   }
+  },
+  {
+   "key": "ml2020",
+   "cite": "Matsubara and Levorato, Neural compression and filtering for edge-assisted real-time object detection in challenged networks, ICPR 2020, arXiv 2007.15818",
+   "task": "detection (Faster/Mask/Keypoint R-CNN, 800 px)",
+   "edge": "Jetson TX2",
+   "headline_image_baseline": "JPEG of the resized COCO image at its stored quality (Sec. VI), with the unmodified teacher (Faster R-CNN 0.370 bbox mAP, Table III)",
+   "headline_claim": "Sec. VI, Fig. 5b: gain over pure offloading up to 1.5 for poor channels; threshold 1 hit at about 8 Mbps",
+   "own_numbers": "Table IV: 8-bit bottleneck is 0.643 x the JPEG size; Table III: Faster R-CNN with 8-bit bottleneck 0.355 bbox mAP vs 0.370 teacher",
+   "accuracy_matched_baseline": false,
+   "rule_reading": "The code (0.355 mAP) is compared with a JPEG that keeps the teacher's 0.370; an accuracy-matched JPEG would be smaller, which lowers the 8 Mbps crossover (paper 1, Corollary: B_be depends only on the matching image setting's size)",
+   "table": {
+    "cite": "Matsubara \\& Levorato~\\cite{matsubara2021neural}",
+    "setting": "Faster R-CNN, Jetson TX2",
+    "baseline": "JPEG at stored quality, unsplit detector",
+    "reading": "code at 0.355 mAP against an image at 0.370: not accuracy-matched"
+   }
+  },
+  {
+   "key": "complexdet",
+   "cite": "Matsubara and Levorato, Split computing for complex object detectors: challenges and preliminary results, EMDL 2020, arXiv 2007.13312",
+   "task": "detection (Faster/Mask R-CNN)",
+   "edge": "Raspberry Pi 4, Jetson TX2 (timing tables)",
+   "headline_image_baseline": "the raw input tensor (Sec. 4: bottlenecks save 80.3-93.4 % of tensor size compared to edge computing)",
+   "accuracy_matched_baseline": false,
+   "rule_reading": "No compressed image baseline: the saving is against the uncompressed input tensor",
+   "table": {
+    "cite": "Matsubara \\& Levorato~\\cite{matsubara2020complex}",
+    "setting": "R-CNN, Pi~4 / TX2",
+    "baseline": "raw input tensor",
+    "reading": "no compressed image baseline"
+   }
+  },
+  {
+   "key": "bottlefit",
+   "cite": "Matsubara et al., BottleFit, WoWMoM 2022, arXiv 2201.02693",
+   "task": "classification (ImageNet, 224 px)",
+   "edge": "Jetson Nano, Raspberry Pi 4",
+   "headline_image_baseline": "the average JPEG file of ImageNet, resized and center-cropped to 224x224 (Sec. on SP1), one quality",
+   "headline_claim": "Fig. 9: BottleFit offers lower delay than edge offloading when the Wi-Fi link quality decreases; the quantized bottleneck saves up to 93 % (SP1) / 98 % (SP2) of the JPEG input size",
+   "accuracy_matched_baseline": false,
+   "rule_reading": "Fixed JPEG quality: the image is not lowered to the bottleneck's (lower) accuracy",
+   "table": {
+    "cite": "BottleFit~\\cite{matsubara2022bottlefit}",
+    "setting": "classification, Jetson Nano",
+    "baseline": "one JPEG quality",
+    "reading": "image not lowered to the code's accuracy"
+   }
+  },
+  {
+   "key": "hecsb",
+   "cite": "Zhong and Chen, High-Efficiency Split Computing for Cooperative Edge Systems (HECS-B), arXiv 2504.15295",
+   "task": "classification (ResNet-50, 224 px)",
+   "edge": "Jetson Nano, Jetson Xavier NX",
+   "headline_image_baseline": "WebP and PNG (Table 2), one setting each",
+   "headline_claim": "Table 2, Nano, 4G 12 Mbps: HECS-B total 20.20 ms (transfer 10.90) vs WebP 62.63 ms (transfer 40.48)",
+   "own_numbers": "Table 2: non-transfer time 9.30 ms for HECS-B vs 22.15 ms for WebP on the Nano at every data rate",
+   "accuracy_matched_baseline": false,
+   "rule_reading": "Its split path takes less non-transfer time than the image path (9.30 vs 22.15 ms), so the rule gives no finite break-even: the code wins at every goodput, as the table shows. A fast-device case, consistent with the rule",
+   "table": {
+    "cite": "HECS-B~\\cite{zhong2025hecsb}",
+    "setting": "classification, Jetson Nano",
+    "baseline": "WebP, PNG",
+    "reading": "split path faster than the image path: no finite $B_{\\mathrm{be}}$, wins everywhere"
+   }
+  }
+ ]
+}

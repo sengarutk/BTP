@@ -1,0 +1,172 @@
+{
+ "threshold": 0.5,
+ "window_frames": 15,
+ "held_out": {
+  "multihop|raw": {
+   "runs": 11,
+   "network_frames": 30784,
+   "affected": 5908,
+   "affected_share": 0.1919178794178794,
+   "laptop": {
+    "n": 5908,
+    "on_time_share": 0.4588693297224103,
+    "lat_median_ms": 314.94105,
+    "no_result_share": 0.00033852403520649965
+   },
+   "all": {
+    "n": 5908,
+    "on_time_share": 0.4588693297224103,
+    "lat_median_ms": 314.94105,
+    "no_result_share": 0.00033852403520649965
+   }
+  },
+  "one_hop|raw": {
+   "runs": 13,
+   "network_frames": 90426,
+   "affected": 311,
+   "affected_share": 0.003439276314334373,
+   "laptop": {
+    "n": 177,
+    "on_time_share": 0.6610169491525424,
+    "lat_median_ms": 280.0765,
+    "no_result_share": 0.022598870056497175
+   },
+   "jetson": {
+    "n": 134,
+    "on_time_share": 0.31343283582089554,
+    "lat_median_ms": 368.4271,
+    "no_result_share": 0.0
+   },
+   "all": {
+    "n": 311,
+    "on_time_share": 0.5112540192926045,
+    "lat_median_ms": 293.2459,
+    "no_result_share": 0.012861736334405145
+   }
+  }
+ },
+ "design": {
+  "multihop|raw": {
+   "runs": 5,
+   "network_frames": 15002,
+   "affected": 2464,
+   "affected_share": 0.16424476736435142,
+   "laptop": {
+    "n": 2464,
+    "on_time_share": 0.19480519480519481,
+    "lat_median_ms": 380.10355000000004,
+    "no_result_share": 0.0
+   },
+   "all": {
+    "n": 2464,
+    "on_time_share": 0.19480519480519481,
+    "lat_median_ms": 380.10355000000004,
+    "no_result_share": 0.0
+   }
+  },
+  "one_hop|raw": {
+   "runs": 5,
+   "network_frames": 25583,
+   "affected": 731,
+   "affected_share": 0.028573662197553064,
+   "laptop": {
+    "n": 427,
+    "on_time_share": 0.6252927400468384,
+    "lat_median_ms": 278.5333,
+    "no_result_share": 0.01873536299765808
+   },
+   "jetson": {
+    "n": 304,
+    "on_time_share": 0.3190789473684211,
+    "lat_median_ms": 367.9112,
+    "no_result_share": 0.0
+   },
+   "all": {
+    "n": 731,
+    "on_time_share": 0.49794801641586867,
+    "lat_median_ms": 297.5035,
+    "no_result_share": 0.01094391244870041
+   }
+  }
+ },
+ "recal_16nov": {
+  "multihop|raw": {
+   "runs": 5,
+   "network_frames": 13998,
+   "affected": 2958,
+   "affected_share": 0.21131590227175312,
+   "laptop": {
+    "n": 2958,
+    "on_time_share": 0.4847870182555781,
+    "lat_median_ms": 303.6407,
+    "no_result_share": 0.0003380662609871535
+   },
+   "all": {
+    "n": 2958,
+    "on_time_share": 0.4847870182555781,
+    "lat_median_ms": 303.6407,
+    "no_result_share": 0.0003380662609871535
+   }
+  },
+  "multihop|recalibrated_per_path": {
+   "runs": 5,
+   "network_frames": 13998,
+   "affected": 2951,
+   "affected_share": 0.21081583083297614,
+   "laptop": {
+    "n": 2951,
+    "on_time_share": 0.4835648932565232,
+    "lat_median_ms": 303.8082,
+    "no_result_share": 0.00033886818027787193
+   },
+   "all": {
+    "n": 2951,
+    "on_time_share": 0.4835648932565232,
+    "lat_median_ms": 303.8082,
+    "no_result_share": 0.00033886818027787193
+   }
+  },
+  "one_hop|raw": {
+   "runs": 5,
+   "network_frames": 22339,
+   "affected": 877,
+   "affected_share": 0.03925869555485922,
+   "laptop": {
+    "n": 300,
+    "on_time_share": 0.5866666666666667,
+    "lat_median_ms": 286.58325,
+    "no_result_share": 0.013333333333333334
+   },
+   "jetson": {
+    "n": 577,
+    "on_time_share": 0.707105719237435,
+    "lat_median_ms": 214.1261,
+    "no_result_share": 0.0
+   },
+   "all": {
+    "n": 877,
+    "on_time_share": 0.6659064994298746,
+    "lat_median_ms": 273.2373,
+    "no_result_share": 0.004561003420752566
+   }
+  },
+  "one_hop|recalibrated_per_path": {
+   "runs": 5,
+   "network_frames": 22339,
+   "affected": 99,
+   "affected_share": 0.004431711356819912,
+   "laptop": {
+    "n": 99,
+    "on_time_share": 0.15151515151515152,
+    "lat_median_ms": 325.868,
+    "no_result_share": 0.04040404040404041
+   },
+   "all": {
+    "n": 99,
+    "on_time_share": 0.15151515151515152,
+    "lat_median_ms": 325.868,
+    "no_result_share": 0.04040404040404041
+   }
+  }
+ }
+}

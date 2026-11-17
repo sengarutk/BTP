@@ -401,8 +401,11 @@ class Replay:
             p_meas = p + self.rng.gauss(0.0, P_SD)
             th = c["pi"]["thermal_steady"]              # the controller's model (v5's heat price, as on the Pi)
             pl = c["pi"]["thermal_plant"]               # the board itself (full-range fit, see load_all)
-            t_ss = pl["intercept_c"] + amb + pl["c_per_w"] * p
-            tau = TAU_HEAT if t_ss > self.temp else TAU_COOL
+            # plant_k: airflow over the board (laptop strengthening item 6, 16 Nov 2026) scales its thermal resistance,
+            # so both the steady slope (C/W) and the time constant (R*C) by k; default 1 = the measured still-air board
+            kp = float(cf.get("plant_k", 1.0))
+            t_ss = pl["intercept_c"] + amb + kp * pl["c_per_w"] * p
+            tau = (TAU_HEAT if t_ss > self.temp else TAU_COOL) * kp
             self.temp += (t_ss - self.temp) * (1 - math.exp(-PERIOD / tau))
             if ONB_POWER == "power":                   # the firmware holds the board at its throttle limit (85 C):
                 self.temp = min(self.temp, c["pi"]["thermal"]["throttle_c"])   # with full power kept it would run on
@@ -472,6 +475,19 @@ class Replay:
                     props["onboard"] = (bv, vals[bv][0], vals[bv][1])
                 if "guard_hard_c" in cf and self.temp >= cf["guard_hard_c"]:   # hard thermal guard (paper 2,
                     props["onboard"] = (props["onboard"][0], 0.0, 0.0)         # Theorem 3): no onboard inference while hot
+                if cf.get("late_skip"):          # the late-path skip (adaptive2 --late-path-skip; item 7b, 16 Nov 2026):
+                    th = cf["late_skip"]         # while a timely path exists, a path predicted late gets only its own
+                    if any(props[s_][2] >= th and props[s_][1] > 0 for s_ in self.links):   # on-time settings, or none
+                        for s_ in self.links:
+                            if props[s_][2] < th:
+                                vv = dict(PATH_VARIANTS, **(LAPTOP_EXTRA if s_ == "laptop" else {}))
+                                ok = {v_: x for v_, x in ((v_, self.path_value(s_, v_, t)) for v_ in vv)
+                                      if x[1] >= th and x[0] > 0}
+                                if ok:
+                                    bv = max(ok, key=lambda k_: ok[k_][0])
+                                    props[s_] = (bv, ok[bv][0], ok[bv][1])
+                                else:
+                                    props[s_] = (props[s_][0], 0.0, 0.0)
                 cand = [s for s in props if props[s][1] > 0 and
                         (self.onb_free <= t if s == "onboard" else self.links[s].idle(t))]
                 if cand:

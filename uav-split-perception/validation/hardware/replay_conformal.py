@@ -19,7 +19,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import replay as R  # noqa: E402
 from replay_oracle import OracleReplay, calib_table  # noqa: E402
-from stream_ap import evaluate, load_labels  # noqa: E402
+
 
 OUT = R.HW / "replay" / "conformal_nov12"
 SCEN = ("mission", "mission_mirror", "random", "static_good")
@@ -41,8 +41,8 @@ def main():
         jobs = [(sc, s, p) for sc in SCEN for s in range(lo, hi + 1) for p in POLS][k::n]
         gp = R.load_goodput()
         c, decays, accs, vd = R.load_all()
-        labels = load_labels()
-        fp = R.FORECAST_PARAMS if hasattr(R, "FORECAST_PARAMS") else None
+
+
         for sc, seed, pol in jobs:
             row_f = rows_d / f"{sc}__{pol}__{seed}.json"
             if row_f.exists():

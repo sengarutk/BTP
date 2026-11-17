@@ -116,3 +116,162 @@ The rule, the hardware check (T10, T11, item 1) and the stress tests as one tabl
 
 Check whether CompressAI-Vision (open source) or an open FCTM build can serve as the MPEG feature-coding baseline on
 the laptop. If neither builds and runs within about 2 hours, it stays a stated limitation.
+
+---
+# Results (written after each analysis)
+
+## Item 5: verdicts (validation/hardware/equivalence_tost.py -> experiments/results/hardware/equivalence/equivalence.json)
+
+| comparison (pairs) | ΔsAP, 90 % CI | equivalent within ±0.005? | ΔPi W (95 % CI) | Δ time ≥ 80 °C (points) |
+|---|---|---|---|---|
+| no prices − v4.1, mesh2 (9) | −0.0021 [−0.0035, −0.0008] | yes (TOST p 0.002) | +1.47 ± 0.09 | +92.5 |
+| heat − Pi energy price, mesh2 (9) | −0.0002 [−0.0020, +0.0015] | yes (p 0.001) | +0.46 ± 0.08 | +1.8 |
+| same, 24 min (5) | −0.0008 [−0.0021, +0.0004] | yes (p 0.001) | +0.34 ± 0.20 | +0.3 |
+| final − v4.1, both scenarios (10) | −0.0013 [−0.0032, +0.0005] | yes (p 0.003) | +0.01 ± 0.03 | 0 |
+| final − v4.1, one hop (5) | +0.0006 [−0.0019, +0.0030] | yes (p 0.009) | −0.00 | 0 |
+| final − v4.1, multihop (5) | −0.0032 [−0.0057, −0.0008] | not shown (p 0.100) | +0.02 | 0 |
+| capped hold − hold always, 24 min (5) | −0.0014 [−0.0053, +0.0025] | not shown (p 0.061) | −0.11 ± 0.08 | −17.6 ± 5.3 |
+| capped hold + guard − hold always (5) | −0.0017 [−0.0041, +0.0007] | yes (p 0.022) | −0.12 ± 0.08 | −17.7 ± 5.4 |
+| budget 2.4 − 2.8 W, both scenarios (6) | −0.0009 [−0.0028, +0.0009] | yes (p 0.003) | −0.35 ± 0.04 | 0 |
+| late-path skip − none, one hop (5) | −0.0031 [−0.0153, +0.0091] | not shown (p 0.380) | +0.02 | 0 |
+| clock knob − none, 24 min (3) / short (5) | +0.0022 / −0.0047 | not shown (p 0.072 / 0.460) | −0.02 / +0.02 | 0 |
+
+- 5.1 held: equivalent on one hop and on both scenarios pooled; not shown on multihop alone.
+- 5.2 held.
+- 5.3 narrowly not held: the capped hold alone has TOST p 0.061. The capped hold with the guard is equivalent.
+- 5.4 not held, in the better direction: pooled over both scenarios (6 pairs), the 2.4 W budget is shown equivalent.
+- 5.5 held: every price or budget change moves power significantly. The clock knob and the skip do not.
+
+Paper 2 now states "same accuracy" only where it is shown, and "not shown" elsewhere.
+
+## Item 8a: verdicts (validation/hardware/calib_recal.py -> calibration/calib_recal_nov16.json)
+
+Fit on 14–15 Nov, tested on the held-out 16 Nov frames (387,075).
+
+- 8a.1 held. ECE on the held-out day falls from 0.057 to 0.0055 (isotonic), 0.0028 (logistic, Platt) and 0.0046
+  (10-bin). The second mapping planned as "split-conformal" became logistic (Platt) scaling; the conformal estimate is
+  tested in the replay (8b).
+- 8a.2 held: the lowest bin maps to 0.645.
+- Found: the miscalibration differs by path. Held-out frames predicted late (p_on < 0.5) arrived on time 94 % of the
+  time on the Jetson path but 49 % on the laptop path. A per-path isotonic map (ECE 0.0040 Jetson, 0.0066 laptop)
+  lifts every such Jetson frame to ≥ 0.5 and 24 % of the laptop's. With a per-path recalibrated p_on, the late-path
+  skip would keep the Jetson frames it wrongly skipped on one hop (item 7).
+
+## Item 2: verdicts (experiments/results/literature/published_splits.json; 5 papers, arXiv versions read 16 Nov)
+
+- 2.1 is consistent in all 5 papers, but it is close to a tautology for papers whose latency model is additive. It is
+  reported as consistency, not as evidence.
+- 2.2 held in all 5: none uses an accuracy-matched image baseline.
+  - Uncompressed image: Auto-Split (headline Table 8); raw input tensor: Matsubara & Levorato EMDL 2020.
+  - One fixed JPEG quality while the split loses accuracy: Matsubara & Levorato ICPR 2020, whose code reaches 0.355
+    against the teacher's 0.370; BottleFit.
+  - WebP or PNG at one setting: HECS-B.
+- Auto-Split's own appendix quantifies the effect. Against the accuracy-matched JPEG (q60, mAP 0.35) its latency
+  advantage falls from 12.5× (against the raw image) to 1.9×.
+- HECS-B's split path takes less non-transfer time than its image path (9.30 against 22.15 ms). That is the
+  fast-device case where the rule gives no finite break-even, consistent with its table.
+
+## Item 1: verdicts (evaluation/t10_model_check.py, evaluation/jetson_measured_break_even.py)
+
+### 1a. The timing model against the 30 measured cells of the Pi sweep (t10/t10_model_check.json)
+
+- 1a.1 held. Over the 18 cells with ≥ 1 on-time result/s, the median absolute error of the predicted on-time rate is
+  7.8 % (r = 0.98 over all 30 cells, median absolute error 0.20 results/s). The large errors are at the deadline edge:
+  for example k4_c8 at 2 Mbit/s, predicted 4.16 and measured 0.63 (p90 relative error 198 %).
+- 1a.2 held at 5 of 6 goodputs. At 4 Mbit/s the model picked jpeg_q35 and the measurement jpeg_q20. The best family,
+  JPEG, was right at all 6 goodputs.
+
+### 1b. A Jetson as the camera, with measured times (video_codecs/analysis_jetson_measured.json)
+
+Measured on the Jetson: codes take 6.6–9.5 ms onboard, against 227 ms on the Pi. JPEG is 7.5× the laptop's time.
+
+- 1b.1, against JPEG: held. The smallest joint code wins below a positive B_be of 9.84 Mbit/s, the rule's scaled
+  value, and below 4.8–23.5 Mbit/s for the other codes. There are 218 winning cells. The rule's prediction for a fast
+  camera holds on measured times.
+- 1b.1, with video in the family: partly held. The window is 1.51–4.40 Mbit/s for the smallest joint code, depending
+  on the Jetson's video encode cost, which was not measured. The upper value assumes video is as slow as JPEG
+  relative to the laptop (7.5×); the lower one uses the Pi's measured video/JPEG ratio (×0.34). The prediction
+  (≤ 2 Mbit/s) held only at the lower end.
+- 1b.2 held: 0 exceptions in every family and version (39–75 winning cells with video, 218 without).
+- Limit, stated in paper 1: no live sweep with a Jetson camera; video encode times on the Jetson not measured.
+
+## Item 7a: verdicts (validation/hardware/skip_counterfactual.py -> skip_counterfactual/skip_cf.json)
+
+Frames the skip would act on (a network frame with p_on < 0.5 while the other path's latest decision ≤ 0.5 s earlier
+had p_on ≥ 0.5), in runs without the skip:
+
+| data | frames acted on (share of network frames) | observed on time |
+|---|---|---|
+| held out, multihop (mesh4, topology_nov, relaynoise_nov; 11 runs) | 5,908 (19.2 %), all laptop | 46 % (median 315 ms) |
+| held out, one hop (13 runs) | 311 (0.3 %) | laptop 66 %, Jetson 31 % |
+| design data (final_nov), multihop | 2,464 (16.4 %) | 19 % (median 380 ms) |
+| 16 Nov, fix_nov without the skip, one hop: raw p_on | 877 (3.9 %) | laptop 59 %, Jetson 71 % |
+| same, p_on recalibrated per path (maps fitted on 14–15 Nov) | 99 (0.4 %) | 15 % |
+
+- 7a.1 not held. In held-out multihop runs only 54 % of the frames the skip acts on missed 300 ms (predicted ≥ 70 %);
+  the design data (81 %) overstated it.
+  - The skip's measured multihop gain (+0.0151, fix_nov) is therefore not explained by skipping late frames alone.
+  - The other measured effect is the relay radio it frees: the Jetson path's median latency fell from 108 to 90 ms.
+  - Paper 2 states the mechanism as both, and says the late-frame part is weaker on held-out data.
+- 7a.2 partly held. On one hop the skip rarely acts (0.3–3.9 % of frames), and the frames it acts on were often on
+  time: Jetson 31–71 %, laptop 59–66 %. This is the measured one-hop cost.
+- With a per-path recalibrated p_on (item 8a), the one-hop frames the skip acts on fall from 877 to 99, and 85 % of
+  those were late: the recalibration removes almost all wrong skips on one hop, on a day held out from its fit.
+  Multihop is unchanged (2,958 → 2,951). This is an offline counterfactual from logs, not a board run.
+
+## Item 10: verdicts (validation/hardware/pull_model_check.py -> overload_handling/pull_model_check.json)
+
+The model's grid (mesh_jetson case) was committed on 13 Nov, before the two-host pull bench of 15 Nov: a genuine
+predict-then-measure.
+
+| streams | v4.1 rule: model / measured on-time/s | pull one ahead: model / measured |
+|---|---|---|
+| 1 | 22.1 / 13.5 | 25.5 / 22.1 |
+| 2 | 26.3 / 20.9 | 25.6 / 21.0 |
+| 4 | 26.3 / 19.6 | 25.6 / 21.7 |
+| 6 | 19.7 / 10.6 | 25.6 / 21.6 |
+| 8 | 1.6 / 3.3 | 25.5 / 20.8 |
+
+- 10.1 not held: the model overstates the pull coordinator's capacity by 15–23 % (measured/model 0.84).
+- 10.2 held: the shape is reproduced. The pull coordinator stays flat at capacity; the v4.1 rule degrades from 6
+  streams and collapses at 8.
+- Extrapolation, model only: at 12 and 16 streams (3–4 camera hosts with 4 streams each), the pull coordinator stays
+  at 25.6 in the model (about 21.5 scaled by 0.84), and the v4.1 rule delivers 0.
+
+**Change of scope, item 6 (17 Nov, before any result).** The laptop restarted at about 21:35 IST on 16 Nov, during the
+sweep, probably from memory pressure with 6 replay processes running. The sweep is resumed with 3 processes,
+seeds 1–3 (seeds 1–5 already exist for v4.1 and the capped hold at k = 1) and k ∈ {1.0, 0.9, 0.8, 0.7, 0.6}.
+k = 0.5 is dropped: predictions 6.1–6.2 put the threshold at 0.75–0.8.
+
+## Item 9: verdicts (paper2/thermal_two_mode.py -> theory_check/thermal_two_mode.json)
+
+The fit is on the five 78 °C-guard runs (each run with its own intercept): τ_fast = 5 s, τ_slow = 100 s,
+b_f = 3.86 and b_s = 9.28 °C/W (steady 13.1 °C/W, against the one-mode fit's 12.7). RMSE 2.3 °C.
+The derived bound adds the fast-mode swing of one inference to the guard's reading lag (0.24 s) and one
+quantisation step (0.55 °C): δ = 3.2 °C.
+
+- 9.2 held: the fast time constant is 5 s (≤ 20 s).
+- 9.1 not held. From each run's logged power, the model's simulated peaks are 2–7 °C below the measured peaks.
+  - The derived bound held in 8 of 11 runs.
+  - It was exceeded in 3: two of the six held-out 76.5 °C runs (by 0.1 and 0.7 °C) and one fit run.
+  - The die swings 5–10 °C within seconds (for example 68.3 → 78.8 → 71.1 °C in 10 s), faster than the 0.24 s power
+    log and a linear two-mode model capture.
+- Conclusion for paper 2: Theorem 3 (b)'s fast-mode term must be measured on the board (3.9 °C over 8 guarded runs),
+  as the paper already states. A model-derived term is not safe. This is reported as a negative result.
+
+## Item 4: verdict
+
+CompressAI-Vision (InterDigital, BSD-3-Clause-Clear; GitHub page read on 17 Nov) is open. It provides MPEG FCM-style
+split-inference pipelines.
+- It needs the VVC reference codec (VTM, built separately from Fraunhofer HHI's repository) and a Python 3.10
+  environment (ours is 3.12).
+- Its pipelines support Detectron2 Faster/Mask R-CNN, YOLOX, JDE and SAM, not Ultralytics YOLOv8. Running our
+  YOLOv8s split through it would need a model wrapper and a VTM build.
+- The FCTM reference software itself is not included.
+
+This is beyond the 2-hour limit set before the check, so the MPEG feature-coding baseline stays a stated limitation
+of paper 1, now with these reasons, and CompressAI-Vision is cited as the open route.
+
+Also done (item 2): paper/generated_tables/published_splits.tex, generated from
+literature/published_splits.json. Four references were added to paper/references.bib, each checked that day against
+Crossref (Auto-Split KDD 2021, BottleFit WoWMoM 2022, Matsubara & Levorato EMDL 2020) or arXiv (HECS-B 2504.15295).

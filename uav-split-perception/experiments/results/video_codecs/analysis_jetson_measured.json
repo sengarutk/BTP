@@ -1,0 +1,1304 @@
+{
+ "device_full_ms": 22.693572500429582,
+ "scale_rule": 1.9018607058513097,
+ "jpeg_jetson_over_laptop": 7.474426522526463,
+ "versions": {
+  "measured": {
+   "jpeg": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "jpeg_q15",
+      "b_be_mbps": 3.108739046129789,
+      "max_win_mbps": 2.963
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "jpeg_q40",
+      "b_be_mbps": 5.661211946833463,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "jpeg_q30",
+      "b_be_mbps": 4.7619942455043,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "jpeg_q45",
+      "b_be_mbps": 6.114980359655981,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     }
+    ],
+    "violations": 0,
+    "wins_total": 218
+   },
+   "video": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_ultrafast_crf33",
+      "b_be_mbps": 0.8342294917904612,
+      "max_win_mbps": 0.721
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     }
+    ],
+    "violations": 0,
+    "wins_total": 85
+   },
+   "both": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_ultrafast_crf33",
+      "b_be_mbps": 0.8342294917904612,
+      "max_win_mbps": 0.721
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_ultrafast_crf28",
+      "b_be_mbps": 2.0788376856919464,
+      "max_win_mbps": 1.744
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     }
+    ],
+    "violations": 0,
+    "wins_total": 75
+   }
+  },
+  "video_pi_like_hi": {
+   "jpeg": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "jpeg_q15",
+      "b_be_mbps": 3.108739046129789,
+      "max_win_mbps": 2.963
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "jpeg_q40",
+      "b_be_mbps": 5.661211946833463,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "jpeg_q30",
+      "b_be_mbps": 4.7619942455043,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "jpeg_q45",
+      "b_be_mbps": 6.114980359655981,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     }
+    ],
+    "violations": 0,
+    "wins_total": 218
+   },
+   "video": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_medium_crf33",
+      "b_be_mbps": 0.2409296012509773,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     }
+    ],
+    "violations": 0,
+    "wins_total": 63
+   },
+   "both": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_medium_crf33",
+      "b_be_mbps": 0.2409296012509773,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_ultrafast_crf23",
+      "b_be_mbps": 4.398032369038311,
+      "max_win_mbps": 4.218
+     }
+    ],
+    "violations": 0,
+    "wins_total": 53
+   }
+  },
+  "video_pi_like_lo": {
+   "jpeg": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "jpeg_q15",
+      "b_be_mbps": 3.108739046129789,
+      "max_win_mbps": 2.963
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "jpeg_q40",
+      "b_be_mbps": 5.661211946833463,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "jpeg_q30",
+      "b_be_mbps": 4.7619942455043,
+      "max_win_mbps": 4.218
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "jpeg_q45",
+      "b_be_mbps": 6.114980359655981,
+      "max_win_mbps": 5.033
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "jpeg_q85",
+      "b_be_mbps": 13.277342392494134,
+      "max_win_mbps": 12.172
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "jpeg_q75",
+      "b_be_mbps": 9.835637967161844,
+      "max_win_mbps": 8.55
+     }
+    ],
+    "violations": 0,
+    "wins_total": 218
+   },
+   "video": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_medium_crf33",
+      "b_be_mbps": 0.2409296012509773,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": 1.462
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": 1.462
+     }
+    ],
+    "violations": 0,
+    "wins_total": 49
+   },
+   "both": {
+    "rows": [
+     {
+      "code": "joint_k2_c8_w128_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 20.676
+     },
+     {
+      "code": "joint_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": 50.0
+     },
+     {
+      "code": "ec_k4_c32_l0.3",
+      "q_star": "x264_medium_crf33",
+      "b_be_mbps": 0.2409296012509773,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c64_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": null
+     },
+     {
+      "code": "ec_k4_c32_l0.1",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "joint_k4_c16_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "joint_k4_c4_w128_d2",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": 1.462
+     },
+     {
+      "code": "learned_k4_c32_w128_s1_d2",
+      "q_star": null,
+      "b_be_mbps": null,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_s1_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.01",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.003",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "learned_k4_c16_w128_d2",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c8_w128_d2",
+      "q_star": "x264_medium_crf28",
+      "b_be_mbps": 0.5594779046129787,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c16_w128_s1_d2",
+      "q_star": "jpeg_q95",
+      "b_be_mbps": 23.5230510398749,
+      "max_win_mbps": null
+     },
+     {
+      "code": "learned_k4_c32_w128_d2",
+      "q_star": "x264_ultrafast_crf18",
+      "b_be_mbps": 8.314097357310397,
+      "max_win_mbps": 7.166
+     },
+     {
+      "code": "ec_k4_c32_l0.03",
+      "q_star": "x264_medium_crf23",
+      "b_be_mbps": 1.5146599843627833,
+      "max_win_mbps": 1.462
+     }
+    ],
+    "violations": 0,
+    "wins_total": 39
+   }
+  }
+ },
+ "video_scale": {
+  "measured": 1.0,
+  "video_pi_like_hi": 0.6784547044360917,
+  "video_pi_like_lo": 0.34198235977154423
+ },
+ "rule_scaled_jetson": {
+  "jpeg": [
+   {
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 20.676
+   },
+   {
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 50.0
+   },
+   {
+    "code": "ec_k4_c32_l0.3",
+    "q_star": "jpeg_q15",
+    "b_be_mbps": 3.108739046129789,
+    "max_win_mbps": 2.963
+   },
+   {
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.1",
+    "q_star": "jpeg_q40",
+    "b_be_mbps": 5.661211946833463,
+    "max_win_mbps": 5.033
+   },
+   {
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "jpeg_q30",
+    "b_be_mbps": 4.7619942455043,
+    "max_win_mbps": 4.218
+   },
+   {
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": 12.172
+   },
+   {
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 9.835637967161844,
+    "max_win_mbps": 8.55
+   },
+   {
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": 12.172
+   },
+   {
+    "code": "ec_k4_c32_l0.01",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": 12.172
+   },
+   {
+    "code": "ec_k4_c32_l0.003",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": 12.172
+   },
+   {
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 9.835637967161844,
+    "max_win_mbps": 8.55
+   },
+   {
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "jpeg_q45",
+    "b_be_mbps": 6.114980359655981,
+    "max_win_mbps": 5.033
+   },
+   {
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "jpeg_q95",
+    "b_be_mbps": 23.5230510398749,
+    "max_win_mbps": 20.676
+   },
+   {
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "jpeg_q85",
+    "b_be_mbps": 13.277342392494134,
+    "max_win_mbps": 12.172
+   },
+   {
+    "code": "ec_k4_c32_l0.03",
+    "q_star": "jpeg_q75",
+    "b_be_mbps": 9.835637967161844,
+    "max_win_mbps": 8.55
+   }
+  ],
+  "video": [
+   {
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 50.0
+   },
+   {
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 50.0
+   },
+   {
+    "code": "ec_k4_c32_l0.3",
+    "q_star": "x265_medium_crf33",
+    "b_be_mbps": 0.23427987490226737,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.1",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": 1.462
+   },
+   {
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.01",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "ec_k4_c32_l0.003",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.03",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": 1.462
+   }
+  ],
+  "both": [
+   {
+    "code": "joint_k2_c8_w128_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 20.676
+   },
+   {
+    "code": "joint_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": 50.0
+   },
+   {
+    "code": "ec_k4_c32_l0.3",
+    "q_star": "x265_medium_crf33",
+    "b_be_mbps": 0.23427987490226737,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c64_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.1",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c4_w128_d2",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "joint_k4_c16_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "joint_k4_c4_w128_d2",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": 1.462
+   },
+   {
+    "code": "learned_k4_c32_w128_s1_d2",
+    "q_star": null,
+    "b_be_mbps": null,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c8_w128_s1_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.01",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "ec_k4_c32_l0.003",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": 3.536
+   },
+   {
+    "code": "learned_k4_c16_w128_d2",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c8_w128_d2",
+    "q_star": "x264_medium_crf28",
+    "b_be_mbps": 0.5594779046129787,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c16_w128_s1_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "learned_k4_c32_w128_d2",
+    "q_star": "x264_medium_crf18",
+    "b_be_mbps": 4.079796591086786,
+    "max_win_mbps": null
+   },
+   {
+    "code": "ec_k4_c32_l0.03",
+    "q_star": "x264_medium_crf23",
+    "b_be_mbps": 1.5146599843627833,
+    "max_win_mbps": 1.462
+   }
+  ]
+ }
+}

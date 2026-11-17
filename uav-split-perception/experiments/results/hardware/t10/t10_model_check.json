@@ -1,0 +1,255 @@
+{
+ "cells": [
+  {
+   "rate": 0.5,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 0.0201,
+   "meas_on_time_fps": 0.24444444444444444,
+   "runs": 1
+  },
+  {
+   "rate": 0.5,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 1
+  },
+  {
+   "rate": 0.5,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 1
+  },
+  {
+   "rate": 0.5,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 1
+  },
+  {
+   "rate": 0.5,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 1
+  },
+  {
+   "rate": 0.75,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 4.0885578,
+   "meas_on_time_fps": 3.488888888888889,
+   "runs": 2
+  },
+  {
+   "rate": 0.75,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 0.29833034999999997,
+   "meas_on_time_fps": 0.9777777777777779,
+   "runs": 2
+  },
+  {
+   "rate": 0.75,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 0.75,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 0.9072826900000001,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 0.75,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 1.0,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 5.9994,
+   "meas_on_time_fps": 5.5777777777777775,
+   "runs": 2
+  },
+  {
+   "rate": 1.0,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 3.99512954,
+   "meas_on_time_fps": 3.4444444444444446,
+   "runs": 2
+  },
+  {
+   "rate": 1.0,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 1.0,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 4.16270041,
+   "meas_on_time_fps": 0.4222222222222222,
+   "runs": 2
+  },
+  {
+   "rate": 1.0,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 0.0,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 2.0,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 10.0,
+   "meas_on_time_fps": 9.6,
+   "runs": 2
+  },
+  {
+   "rate": 2.0,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 7.5,
+   "meas_on_time_fps": 7.666666666666667,
+   "runs": 2
+  },
+  {
+   "rate": 2.0,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 0.11050000000000001,
+   "meas_on_time_fps": 0.0,
+   "runs": 2
+  },
+  {
+   "rate": 2.0,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 4.2857,
+   "meas_on_time_fps": 3.966666666666667,
+   "runs": 2
+  },
+  {
+   "rate": 2.0,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 4.15584329,
+   "meas_on_time_fps": 0.6333333333333333,
+   "runs": 2
+  },
+  {
+   "rate": 4.0,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 15.0,
+   "meas_on_time_fps": 15.822222222222223,
+   "runs": 1
+  },
+  {
+   "rate": 4.0,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 15.0,
+   "meas_on_time_fps": 12.755555555555556,
+   "runs": 1
+  },
+  {
+   "rate": 4.0,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 5.0,
+   "meas_on_time_fps": 5.0,
+   "runs": 1
+  },
+  {
+   "rate": 4.0,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 4.2857,
+   "meas_on_time_fps": 4.266666666666667,
+   "runs": 1
+  },
+  {
+   "rate": 4.0,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 4.2857,
+   "meas_on_time_fps": 3.9555555555555557,
+   "runs": 1
+  },
+  {
+   "rate": 8.0,
+   "option": "jpeg_q20",
+   "pred_on_time_fps": 30.0,
+   "meas_on_time_fps": 24.11111111111111,
+   "runs": 1
+  },
+  {
+   "rate": 8.0,
+   "option": "jpeg_q35",
+   "pred_on_time_fps": 30.0,
+   "meas_on_time_fps": 20.844444444444445,
+   "runs": 1
+  },
+  {
+   "rate": 8.0,
+   "option": "k2_c8_w128_d2",
+   "pred_on_time_fps": 5.0,
+   "meas_on_time_fps": 4.933333333333334,
+   "runs": 1
+  },
+  {
+   "rate": 8.0,
+   "option": "k4_c4_w128_d2",
+   "pred_on_time_fps": 4.2857,
+   "meas_on_time_fps": 4.177777777777778,
+   "runs": 1
+  },
+  {
+   "rate": 8.0,
+   "option": "k4_c8_w128_d2",
+   "pred_on_time_fps": 4.2857,
+   "meas_on_time_fps": 4.111111111111111,
+   "runs": 1
+  }
+ ],
+ "best": {
+  "0.5": {
+   "predicted": "jpeg_q20",
+   "measured": "jpeg_q20",
+   "match": true
+  },
+  "0.75": {
+   "predicted": "jpeg_q20",
+   "measured": "jpeg_q20",
+   "match": true
+  },
+  "1": {
+   "predicted": "jpeg_q20",
+   "measured": "jpeg_q20",
+   "match": true
+  },
+  "2": {
+   "predicted": "jpeg_q20",
+   "measured": "jpeg_q20",
+   "match": true
+  },
+  "4": {
+   "predicted": "jpeg_q35",
+   "measured": "jpeg_q20",
+   "match": false
+  },
+  "8": {
+   "predicted": "jpeg_q35",
+   "measured": "jpeg_q35",
+   "match": true
+  }
+ },
+ "n_cells": 30,
+ "n_cells_ge1": 18,
+ "median_abs_rel_err_ge1": 0.0780091064314172,
+ "p90_abs_rel_err_ge1": 1.9760200344619048,
+ "median_abs_err_fps": 0.19946666666666701,
+ "max_abs_err_fps": 9.155555555555555,
+ "pearson_r": 0.9777072406078088,
+ "best_match": 5,
+ "rates": 6
+}
