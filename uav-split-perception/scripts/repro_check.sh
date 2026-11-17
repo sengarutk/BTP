@@ -33,6 +33,16 @@ EOF
   step "4. paper 1: break-even goodput with measured Pi times"
   "$PY" evaluation/pi_measured_break_even.py > /dev/null
   "$PY" evaluation/pi_measured_second_detector.py > /dev/null
+  step "4b. laptop strengthening (17 Nov): equivalence, recalibration, skip counterfactual, models, a Jetson camera"
+  "$PY" validation/hardware/equivalence_tost.py > /dev/null
+  "$PY" validation/hardware/calib_recal.py > /dev/null
+  "$PY" validation/hardware/skip_counterfactual.py > /dev/null
+  "$PY" validation/hardware/pull_model_check.py > /dev/null
+  "$PY" evaluation/t10_model_check.py > /dev/null
+  "$PY" evaluation/jetson_measured_break_even.py > /dev/null
+  "$PY" paper2/thermal_two_mode.py > /dev/null
+  (cd validation/hardware && "$PY" replay_conformal.py --analyse > /dev/null && "$PY" replay_skip.py analyze > /dev/null \
+     && "$PY" replay_airflow.py analyze > /dev/null)
 fi
 step "5. derived numbers: paper 1 board macros, Results Brief 19.24-19.31, Final Report and Novelty Brief (idempotent)"
 "$PY" evaluation/board_metrics_paper1.py > /dev/null
@@ -41,6 +51,7 @@ step "5. derived numbers: paper 1 board macros, Results Brief 19.24-19.31, Final
 step "6. both papers (every number a generated macro; the builds fail on an undefined macro, citation or reference)"
 bash paper2/build.sh
 bash paper/build_paper.sh
+bash paper/build_conf.sh
 step "7. nothing derived may have changed"
 changed=$( { git status --porcelain --untracked-files=no -- . ../"AEGIS-UAV Results Brief.md" ../"AEGIS-UAV Results Brief.html" \
               ../"AEGIS-UAV Final Report.html" ../"AEGIS-UAV Novelty Brief.html";

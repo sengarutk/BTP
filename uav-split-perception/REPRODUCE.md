@@ -148,6 +148,30 @@ All three reports take their numbers from `scripts/report_mesh_nov16.py`:
 Both builders are idempotent. Each archives the version it replaces in
 `experiments/results/hardware/_superseded/report_before_*`.
 
+## 4b. Laptop strengthening (16–17 Nov 2026, no boards)
+
+Predictions and verdicts are in `docs/laptop_strengthening_predictions_nov16.md`. Every script reads recorded board
+data or runs the validated trace replay.
+
+| Item | Script | Output |
+| --- | --- | --- |
+| 5: equal accuracy as a tested equivalence (TOST) | `validation/hardware/equivalence_tost.py` | `hardware/equivalence/equivalence.json` |
+| 6: airflow sensitivity (replay) | `scripts/airflow_sweep_nov16.sh`, then `replay_airflow.py analyze` | `replay/airflow_nov16/airflow_summary.json` |
+| 8a: deadline probability recalibrated (held-out day) | `validation/hardware/calib_recal.py` | `calibration/calib_recal_nov16.json` |
+| 8b: conformal deadline probability (replay) | `replay_conformal.py` (`scripts/conformal_then_skip_nov16.sh`), then `--analyse` | `replay/conformal_nov12/summary.json` |
+| 2: published split results re-read | data file, quoted from the papers | `results/literature/published_splits.json` |
+| 1a: T10 timing model against the sweep | `evaluation/t10_model_check.py` | `hardware/t10/t10_model_check.json` |
+| 1b: a Jetson camera on measured times | `evaluation/jetson_measured_break_even.py` | `video_codecs/analysis_jetson_measured.json` |
+| 7a: the late-path rule on held-out logs | `validation/hardware/skip_counterfactual.py` | `hardware/skip_counterfactual/skip_cf.json` |
+| 7b: the late-path rule on held-out replay seeds | `replay_skip.py run --shared 0/1`, then `analyze` | `replay/skip_nov16/skip_summary.json` |
+| 10: pull model against the bench | `validation/hardware/pull_model_check.py` | `overload_handling/pull_model_check.json` |
+| 9: two-time-constant thermal fit | `paper2/thermal_two_mode.py` | `theory_check/thermal_two_mode.json` |
+| 3: paper 1 conference version | `bash paper/build_conf.sh` | `paper/main_conf.pdf` |
+
+The replay runs are long: about 10 min per 24-minute mission with 3 processes. Run them on mains power, with at most
+4 replay processes at a time. The laptop restarted twice when it slept on battery; every runner resumes from its
+finished rows.
+
 ## 5. Rules kept for every result
 
 - Predictions are committed before the first run, and failed predictions are reported as failed.

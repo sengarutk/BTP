@@ -14,6 +14,7 @@ usage: mesh2_summary.py [--long] [--workers 6]  -> vid_campaign_mesh2[_long]_sum
 import argparse
 import collections
 import glob
+import re
 import json
 
 import numpy as np
@@ -62,13 +63,23 @@ def main():
                 json.dump(cache, open(cf, "w"))
     runs = {tuple(k.split("__")): v for k, v in cache.items()}
     scen = sorted({k[0] for k in runs})
+    # strategies not in ORDER (17 Nov 2026: the T7 frame rates, fps_nov) are appended. A run at another camera rate
+    # than 30 fps cannot be scored by stream_ap (it assumes the dataset's 30-fps timeline): its timeline-dependent
+    # scores are withheld here; their estimate is validation/hardware/fps_sap_estimate.py's.
+    order = list(ORDER) + sorted({k[1] for k in runs} - set(ORDER))
+    bad = {m for m in order if re.search(r"_f(\d+)$", m) and not m.endswith("_f30")}
+    for k_, v_ in runs.items():
+        if k_[1] in bad:
+            for key in ("sAP", "sAP_fc", "sAP50_fc", "mAP", "aoi_mean_ms", "aoi_p95_ms", "aoi_peak_ms", "p_aoi300"):
+                v_[key] = None
     cells = {}
     for sc in scen + ["ALL"]:
-        for m in ORDER:
+        for m in order:
             ms = [v for (s, p, _), v in runs.items() if p == m and (sc == "ALL" or s == sc)]
             if not ms or (sc == "ALL" and m == "hier"):     # hier ran in multihop only: no ALL row
                 continue
-            c = {k: tci([x[k] for x in ms if x.get(k) is not None]) for k in KEYS}
+            c = {k: tci([x[k] for x in ms if x.get(k) is not None]) if any(x.get(k) is not None for x in ms) else None
+                 for k in KEYS}
             c["n"] = len(ms)
             tot = collections.Counter()
             for x in ms:
@@ -102,6 +113,9 @@ def main():
             if res:
                 paired[f"{x}-{y}|{sc}"] = res
     out = {"campaign": name, "cells": cells, "mission_phases_fc": phases, "paired": paired}
+    if bad:
+        out["note"] = (f"{sorted(bad)}: camera rates other than 30 fps; sAP, mAP and AoI scores withheld (stream_ap "
+                       "assumes the 30-fps timeline); estimates in fps_sap_estimate.json")
     json.dump(out, open(HW / f"{name}_summary.json", "w"), indent=1)
     md = [f"# {name}: strategies on the AegisSwarm mesh, VisDrone weights, standard sAP with live forecaster v2\n",
           "| scenario | strategy | n | sAP | sAP + fc | mAP | P(AoI ≤ 300 ms) | 95th-pct AoI (ms) | deadline-met /s | "
@@ -111,8 +125,10 @@ def main():
         pa = ", ".join(f"{p} {100 * v:.0f} %" for p, v in sorted(c["processed_at"].items(), key=lambda x: -x[1]))
         th = c["pi_throttled"][0]
         jw = "" if c["jetson_w"][0] != c["jetson_w"][0] else f"{c['jetson_w'][0]:.2f}"
-        md.append(f"| {sc} | {m} | {c['n']} | {c['sAP'][0]:.4f} | **{c['sAP_fc'][0]:.4f} ± {c['sAP_fc'][1]:.4f}** | "
-                  f"{c['mAP'][0]:.3f} | {c['p_aoi300'][0]:.3f} | {c['aoi_p95_ms'][0]:.0f} | {c['deadline_met_fps'][0]:.1f} | "
+        g = lambda key, fmt: "—" if c[key] is None else format(c[key][0], fmt)  # noqa: E731  (withheld: see note)
+        sfc = "—" if c["sAP_fc"] is None else f"**{c['sAP_fc'][0]:.4f} ± {c['sAP_fc'][1]:.4f}**"
+        md.append(f"| {sc} | {m} | {c['n']} | {g('sAP', '.4f')} | {sfc} | "
+                  f"{g('mAP', '.3f')} | {g('p_aoi300', '.3f')} | {g('aoi_p95_ms', '.0f')} | {c['deadline_met_fps'][0]:.1f} | "
                   f"{c['lat_median_ms'][0]:.0f} | {c['pi_w'][0]:.2f} | {c['pi_temp_c'][0]:.1f} | "
                   f"{'' if th is None or th != th else f'{th:.2f}'} | {jw} | {pa} |")
     md += ["", "## Paired differences (same scenario and repetition)",

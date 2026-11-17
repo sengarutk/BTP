@@ -280,3 +280,29 @@ Crossref (Auto-Split KDD 2021, BottleFit WoWMoM 2022, Matsubara & Levorato EMDL 
 
 All four predictions of docs/conformal_predictions_nov12.md held; see that file's results section. ECE fell from 0.040
 to 0.017, the miss rate among frames sent with p_on ≥ 0.95 is 1.1 %, and ΔsAP = +0.00004 ± 0.00032 over 40 pairs.
+
+## Added 17 Nov (user's question): streaming AP at 15 and 60 fps, and a fix
+
+**The fault.** The T7 summary (vid_campaign_fps_nov_summary.*) had been committed empty. mesh2_summary.py made cells
+only for strategies in its fixed ORDER list.
+- Fixed: other strategies are appended. Only fps_nov is affected; the final_nov and two_nov summaries regenerate
+  byte-identical.
+- At 15 and 60 fps the camera plays one clip frame per tick, while stream_ap assumes the dataset's 30-fps timeline.
+  Their sAP, mAP and AoI scores (about 0, a negative AoI) are therefore artefacts. The summary now withholds them and
+  says so.
+
+**The estimate** (validation/hardware/fps_sap_estimate.py -> hardware/fps_sap_estimate.json). The held result's age is
+reconstructed in real time from each run's log, at its own frame period. Its value is acc(variant) × r(age), with r
+the measured accuracy-vs-age curve after forecasting. The time average is calibrated on 50 runs at 30 fps from 6
+campaigns: r = 0.992, median error 2.8 %, p90 13.9 %.
+
+| camera rate | estimated sAP_fc | held age (median) | fresh | on-time/s |
+|---|---|---|---|---|
+| 15 fps | 0.189 | 100 ms | 100 % | 14.9 |
+| 30 fps | 0.191 (measured 0.197) | 67 ms | 99.3 % | 25.6 |
+| 30 fps + encode-ahead | 0.191 (measured 0.196) | 67 ms | 99.1 % | 28.3 |
+| 60 fps | 0.192 | 83 ms | 100 % | 31.0 |
+
+With v4.1, streaming AP is flat in the camera rate (within about 1 %, inside the estimate's error). The extra frames
+are not sent, and the delivered ones are not fresher: latency rises from 50 to 61 ms. The forecaster flattens the
+cost of age. What grows is the Pi's power and heat: 2.13 → 3.18 W and 57 → 67 °C from 15 to 60 fps.

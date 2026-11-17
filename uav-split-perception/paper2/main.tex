@@ -57,7 +57,8 @@ separately from where each frame should go. A small camera drone carries a fanle
 the board until its firmware lowers the clock: the onboard server slows down, and every other task on the board with it.
 
 \textbf{Thesis.} On a fanless drone computer, heat is a hidden accuracy cost, and a scheduler that prices the board's
-measured power inside its accuracy objective removes most of it without giving up accuracy. We support this on real
+measured power inside its accuracy objective removes most of it at equal accuracy: equal in a stated, tested sense
+(two one-sided tests within $\pm$\EqMargin~sAP), with the power and heat saved as the effect. We support this on real
 hardware, and we report where it falls short:
 \begin{itemize}
 \item \emph{Heat costs accuracy.} Running YOLOv8s onboard kept the Pi throttled \ThrottleShareCool\,\% of short runs that
@@ -66,7 +67,7 @@ onboard streaming AP against an emulated full clock (Section~\ref{sec:heat}).
 \item \emph{Pricing measured power removes the cost.} A dual-ascent price on the board's measured power, inside a
 streaming-accuracy objective, raised streaming AP on Wi-Fi (\EnGain{} and \EnRepGain{} in two campaigns of \EnPairs{}
 pairs; \EnVdGain{} and \EnRepVdGain{} with the standard metric, Holm $p=\EnVdHolm{}$ and \EnRepVdHolm{}) and on the mesh
-removed throttling at the same accuracy (Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
+removed throttling at equivalent accuracy (TOST $p=\EqNoPriceP$; Section~\ref{sec:energy}); relative to the unpriced controller the Wi-Fi gains are
 \EnGainPct\,\% and \EnRepGainPct\,\%. On 24-minute Wi-Fi missions with total blackouts the board was still at or
 above 80~$^\circ$C \HwLongWifiHotMin--\HwLongWifiHotMax\,\% of the time (Section~\ref{sec:theory}); on the mesh boards a
 hold capped at the guard's temperature and a hard guard remove that (Section~\ref{sec:board}).
@@ -77,7 +78,8 @@ temperature, and an idealised version is within a small, stated gap of the best 
 \item \emph{The greedy priced choice is near the best schedule we can construct}: in a trace replay it reaches
 \OracleShareMin--\OracleShareMax\,\% of a per-phase hindsight oracle with no gain from a clairvoyant link; on hardware
 it is \LitBehindMin--\LitBehindMax~sAP ahead of re-implemented literature schedulers, and on five mesh boards it ties an
-AccuMO-style planner~\cite{Kong_2023} once it stops sending frames to paths it predicts late (Sections~\ref{sec:best}
+AccuMO-style planner~\cite{Kong_2023} once it stops sending frames to paths it predicts late, a rule we check on
+held-out logs and whose one-hop cost a per-path recalibration of its deadline probability removes (Sections~\ref{sec:best}
 and~\ref{sec:board}).
 \item \emph{The objective must match the forecaster}: valuing a result by the decay measured \emph{after} motion
 forecasting beats the curve without forecasting and a flat one (Section~\ref{sec:decay}).
