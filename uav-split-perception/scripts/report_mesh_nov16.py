@@ -330,10 +330,12 @@ def main():
         shutil.copy2(MD, ARCH / MD.name)
     # sections 19.24-19.31: before Part 20, replacing any earlier version
     j = h.index('<h2 id="argument">')
+    j = h.find("<h3>19.32 ") if 0 <= h.find("<h3>19.32 ") < j else j   # later sections (report_laptop_nov17.py) kept
     assert 0 <= h.find("<h3>19.23 ") < j, "19.23 missing"
     i = h.find("<h3>19.24 ")
     h = h[:i if 0 <= i < j else j] + SECS + h[j:]
     j = m.index("## PART 20")
+    j = m.find("### 19.32 ") if 0 <= m.find("### 19.32 ") < j else j
     i = m.find("### 19.24 ")
     m = m[:i if 0 <= i < j else j] + html_to_md(SECS) + m[j:]
     old19 = "laptop additions to 12 Nov, including the hardening of both papers (19.15–19.23)"

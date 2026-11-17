@@ -44,10 +44,11 @@ EOF
   (cd validation/hardware && "$PY" replay_conformal.py --analyse > /dev/null && "$PY" replay_skip.py analyze > /dev/null \
      && "$PY" replay_airflow.py analyze > /dev/null)
 fi
-step "5. derived numbers: paper 1 board macros, Results Brief 19.24-19.31, Final Report and Novelty Brief (idempotent)"
+step "5. derived numbers: paper 1 board macros, Results Brief 19.24-19.38, Final Report and Novelty Brief (idempotent)"
 "$PY" evaluation/board_metrics_paper1.py > /dev/null
 "$PY" scripts/report_mesh_nov16.py > /dev/null
 "$PY" scripts/report_final_nov16.py > /dev/null
+"$PY" scripts/report_laptop_nov17.py > /dev/null
 step "6. both papers (every number a generated macro; the builds fail on an undefined macro, citation or reference)"
 bash paper2/build.sh
 bash paper/build_paper.sh
