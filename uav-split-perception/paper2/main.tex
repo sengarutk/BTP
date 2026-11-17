@@ -574,13 +574,24 @@ predicted late arrived on time \RcJetLowOn\,\% of the time on the edge path but 
 Recalibrating $p_{\mathrm{on}}$ per path with an isotonic map fitted on the first two board days (calibration error
 on the held-out third day \RcPathEceJet{} and \RcPathEceLap, against \RcEceRaw{} logged) cuts the one-hop frames the
 rule acts on from \SkOneRaw{} to \SkOneRecal{}, \SkOneRecalLate\,\% of them late: a recalibrated rule keeps the useful
-backups. This is an offline counterfactual on the held-out day, not a board run.
+backups. This is an offline counterfactual on the held-out day, not a board run. On held-out replay seeds and scenarios the rule costs
+nothing (\SkRepIndep{} $\pm$ \SkRepIndepCi{} with independent radios, \SkRepShared{} $\pm$ \SkRepSharedCi{} with one shared
+radio, \SkRepPairs{} pairs each).
 
 \textbf{Power.} The planner and a LEAF-style fixed weight drew \BdLessWMin--\BdLessWMax~W less than v4.1 at the same
 accuracy: v4.1 spends its 2.8~W budget on onboard work worth almost nothing in these scenarios. With a 2.4~W budget the
 final controller's power changed by \BdBudgetWMis{} and \BdBudgetWMulti~W, the board ran about 3~$^\circ$C cooler, and
 streaming AP changed by \BdBudgetSapMis{} and \BdBudgetSapMulti{} (three pairs each): the gap was the budget, not the
 method.
+
+\textbf{Camera rate.} The sending rule (the newest frame once the previous one has left the radio) means a faster camera
+cannot overload a path: at 15, 30 and 60~frames/s v4.1 delivered \FrFifteenOn, \FrThirtyOn{} and \FrSixtyOn{} on-time
+results/s, and encoding the next frame while the radio is busy gave \FrAheadOn{} at 30~frames/s. Streaming AP barely
+moves: estimated from the held result's measured age and the decay curve (a proxy within \FrProxyErr\,\% of the
+measured sAP on \FrProxyRuns{} runs at 30~frames/s, $r = \FrProxyR$; the scorer cannot score other rates), it is
+\FrFifteenSap, \FrThirtySap{} (measured \FrThirtyMeas) and \FrSixtySap: the extra frames are not sent, the delivered
+ones are not fresher (median held age \FrFifteenAge, \FrThirtyAge{} and \FrSixtyAge~ms), and the forecaster flattens
+the cost of age. A faster camera costs power and heat instead.
 
 \subsection{Near the best schedule}\label{sec:best}\label{sec:planner}
 \textbf{Distance from the best schedule (trace replay).} Knowing the exact goodput of every next transfer in advance

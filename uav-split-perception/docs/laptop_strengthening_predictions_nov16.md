@@ -306,3 +306,15 @@ campaigns: r = 0.992, median error 2.8 %, p90 13.9 %.
 With v4.1, streaming AP is flat in the camera rate (within about 1 %, inside the estimate's error). The extra frames
 are not sent, and the delivered ones are not fresher: latency rises from 50 to 61 ms. The forecaster flattens the
 cost of age. What grows is the Pi's power and heat: 2.13 → 3.18 W and 57 → 67 °C from 15 to 60 fps.
+
+## Item 7b: verdicts (replay_skip.py -> replay/skip_nov16/skip_summary.json; seeds 11–20, 3 scenarios)
+
+| radios | late-path rule − v4.1, sAP (30 pairs) | per scenario |
+|---|---|---|
+| independent | +0.0000 ± 0.0001 | random +0.0001, mission_mirror −0.0001, static_good +0.0000 |
+| one shared radio | +0.0002 ± 0.0002 | random +0.0001, mission_mirror +0.0004, static_good +0.0000 |
+
+- 7b.1 held: |ΔsAP| < 0.003 with independent radios.
+- 7b.2 held, marginally: ≥ 0 with a shared radio.
+- On held-out replay settings the rule does no harm. It rarely acts there, because the replay has no two-hop relay,
+  which is where it pays on the boards.

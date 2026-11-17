@@ -784,6 +784,27 @@ mesh, 14--16 Nov (17 campaigns) & 217 & 0.61 & 4.8 & 1.0 & 0.50 & 0.22 & 5.0 \\ 
 | `\CfSap` | +0.0000 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): paired sAP conformal - v4.1 |
 | `\CfSapCi` | 0.0003 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): ... 95 % CI |
 | `\CfPairs` | 40 | replay/conformal_nov12/summary.json (validation/hardware/replay_conformal.py): pairs |
+| `\SkRepIndep` | +0.0000 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): shared0, rule - v4.1 sAP, all scenarios |
+| `\SkRepIndepCi` | 0.0001 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): ... 95 % CI |
+| `\SkRepShared` | +0.0002 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): shared1, rule - v4.1 sAP, all scenarios |
+| `\SkRepSharedCi` | 0.0002 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): ... 95 % CI |
+| `\SkRepPairs` | 30 | replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py): pairs per radio setting |
+| `\FrProxyR` | 0.992 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): proxy vs sAP_fc on 30-fps runs, r |
+| `\FrProxyRuns` | 50 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): calibration runs |
+| `\FrProxyErr` | 2.8 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): proxy median |error| % |
+| `\FrFifteenSap` | 0.189 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f15 estimated sAP_fc |
+| `\FrFifteenOn` | 14.9 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f15 on-time results/s |
+| `\FrFifteenAge` | 100 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f15 median age of the held result ms |
+| `\FrThirtySap` | 0.191 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f30 estimated sAP_fc |
+| `\FrThirtyOn` | 25.6 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f30 on-time results/s |
+| `\FrThirtyAge` | 67 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f30 median age of the held result ms |
+| `\FrSixtySap` | 0.192 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f60 estimated sAP_fc |
+| `\FrSixtyOn` | 31.0 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f60 on-time results/s |
+| `\FrSixtyAge` | 83 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f60 median age of the held result ms |
+| `\FrAheadSap` | 0.191 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41ea_f30 estimated sAP_fc |
+| `\FrAheadOn` | 28.3 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41ea_f30 on-time results/s |
+| `\FrAheadAge` | 67 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41ea_f30 median age of the held result ms |
+| `\FrThirtyMeas` | 0.197 | fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py): v41_f30 measured sAP_fc |
 | `\TmTauF` | 5 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): fast time constant s |
 | `\TmTauS` | 100 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): slow time constant s |
 | `\TmBound` | 3.2 | theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py): model-derived overshoot bound C |

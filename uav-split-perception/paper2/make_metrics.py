@@ -786,6 +786,23 @@ def laptop_strengthening(H):
     put("CfSap", signed(cf["paired_sAP_conf_minus_v41"]["mean"]), f"{src}: paired sAP conformal - v4.1")
     put("CfSapCi", cf["paired_sAP_conf_minus_v41"]["ci95"], f"{src}: ... 95 % CI")
     put("CfPairs", str(cf["paired_sAP_conf_minus_v41"]["n"]), f"{src}: pairs")
+    sr = json.load(open(H / "replay" / "skip_nov16" / "skip_summary.json"))
+    src = "replay/skip_nov16/skip_summary.json (validation/hardware/replay_skip.py)"
+    for sh, nm in (("shared0", "Indep"), ("shared1", "Shared")):
+        put(f"SkRep{nm}", signed(sr[sh]["all"]["sAP"]["mean"]), f"{src}: {sh}, rule - v4.1 sAP, all scenarios")
+        put(f"SkRep{nm}Ci", sr[sh]["all"]["sAP"]["ci95"], f"{src}: ... 95 % CI")
+    put("SkRepPairs", str(sr["shared0"]["all"]["sAP"]["n"]), f"{src}: pairs per radio setting")
+    fr = json.load(open(H / "fps_sap_estimate.json"))
+    src = "fps_sap_estimate.json (validation/hardware/fps_sap_estimate.py)"
+    bs = fr["by_strategy"]
+    put("FrProxyR", fr["pearson_r"], f"{src}: proxy vs sAP_fc on 30-fps runs, r", "{:.3f}")
+    put("FrProxyRuns", str(fr["calibration_runs"]), f"{src}: calibration runs")
+    put("FrProxyErr", fr["rel_err_median_pct"], f"{src}: proxy median |error| %", "{:.1f}")
+    for st, nm in (("v41_f15", "Fifteen"), ("v41_f30", "Thirty"), ("v41_f60", "Sixty"), ("v41ea_f30", "Ahead")):
+        put(f"Fr{nm}Sap", bs[st]["sAP_fc_est"], f"{src}: {st} estimated sAP_fc", "{:.3f}")
+        put(f"Fr{nm}On", bs[st]["on_time_fps"], f"{src}: {st} on-time results/s", "{:.1f}")
+        put(f"Fr{nm}Age", bs[st]["age_median_ms"], f"{src}: {st} median age of the held result ms", "{:.0f}")
+    put("FrThirtyMeas", bs["v41_f30"]["sAP_fc_scored"], f"{src}: v41_f30 measured sAP_fc", "{:.3f}")
     tm = json.load(open(H / "theory_check" / "thermal_two_mode.json"))
     src = "theory_check/thermal_two_mode.json (paper2/thermal_two_mode.py)"
     put("TmTauF", str(tm["fit"]["tau_f"]), f"{src}: fast time constant s")
