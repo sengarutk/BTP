@@ -1,0 +1,16 @@
+# 18 Nov 2026 demo: the mesh reached through pi-receiver on the laptop's cable (mesh_hosts.sh, MESH_MAP=nov18).
+# Its own known_hosts: the addresses were reused by other boards since 14 Nov.
+Host aegis-gw
+  HostName 10.230.3.10
+  User sengar
+Host aegis-cam
+  HostName 10.1.0.11
+  User sengar
+  ProxyJump aegis-gw
+Host aegis-jet
+  HostName 10.1.0.13
+  User nano
+  ProxyJump aegis-gw
+Host aegis-*
+  UserKnownHostsFile /home/sengar/BTP/uav-split-perception/experiments/results/hardware/demo_nov18/known_hosts
+  ServerAliveInterval 30

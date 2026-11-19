@@ -5,5 +5,5 @@ D=$(cd "$(dirname "$0")" && pwd)
 . $D/mesh_hosts.sh
 mesh_target "$1" || exit 2
 S=${2/REMOTE:/$H:}; T=${3/REMOTE:/$H:}
-SSH_ASKPASS=$D/mesh_askpass.sh SSH_ASKPASS_REQUIRE=force DISPLAY=:0 setsid -w scp -q -o StrictHostKeyChecking=yes \
+SSH_ASKPASS=$D/mesh_askpass.sh SSH_ASKPASS_REQUIRE=force DISPLAY=:0 setsid -w scp -q ${MESH_SSH_CFG:+-F $MESH_SSH_CFG} -o StrictHostKeyChecking=yes \
   -o ConnectTimeout=15 $J "$S" "$T" < /dev/null

@@ -70,7 +70,7 @@ NFT_OFF() { echo "PW='$1'; $S nft delete table netdev aegis_mh 2>/dev/null; true
 cleanup() {
   $D/mesh_ssh.sh camera "PW='$PI2_PW'; P=\$(pgrep -f '^$PY -W ignore [a]daptive2.py'); [ -n \"\$P\" ] && $S kill \$P; P=\$(pgrep -f '[l]inklog.sh'); [ -n \"\$P\" ] && kill \$P; sleep 1; $S /usr/sbin/tc qdisc del dev bat0 root 2>/dev/null; true"
   $D/mesh_ssh.sh jetson "PW='$NANO_PW'; P=\$(pgrep -f '[e]dge_node.py'); [ -n \"\$P\" ] && $S kill \$P; P=\$(pgrep -f '^python -W ignore [a]daptive.py worker'); [ -n \"\$P\" ] && kill \$P; sleep 1; $S /usr/sbin/tc qdisc del dev bat0 root 2>/dev/null; true"
-  $D/mesh_ssh.sh camera "$(NFT_OFF "$PI2_PW")"; $D/mesh_ssh.sh sender "$(NFT_OFF "$PI3_PW")"
+  $D/mesh_ssh.sh camera "$(NFT_OFF "$PI2_PW")"; $D/mesh_ssh.sh sender "$(NFT_OFF "${!SENDER_PW_VAR}")"
   $D/mesh_ssh.sh camera2 "$(NFT_OFF "$PI2_PW")" 2>/dev/null; $D/mesh_ssh.sh jetson2 "$(NFT_OFF "$N2_PW")" 2>/dev/null
   for P in $(ps -eo pid,args | awk '/^ *[0-9]+ python -W ignore adaptive.py worker --camera 127.0.0.1:4810[14]/ {print $1}'); do kill $P; done
 }
@@ -86,7 +86,7 @@ fetch() {       # copy with up to 6 attempts (a mesh/jump-host blip can last a m
 }
 # the laptop's own link to pi-sender (Windows -> cable) drops packets at times (24 Oct): a 1 s ping log runs beside the
 # campaign; start only after 60 s with at most 1 lost ping, and discard a run with >5 % lost or a >= 5 s outage
-PINGLOG=$(cd $HW/../../experiments/results/hardware && pwd)/vid_campaign_mesh2_laptop_ping.txt
+PINGLOG=${PINGLOG:-$(cd $HW/../../experiments/results/hardware && pwd)/vid_campaign_mesh2_laptop_ping.txt}
 link_ok() { [ -f $PINGLOG ] || return 0; [ $(tail -60 $PINGLOG | grep -c 'no answer') -le 1 ]; }
 if ! link_ok; then
   echo "laptop link to pi-sender degraded: waiting"
@@ -97,7 +97,7 @@ fi
 T_RUN0=$(date +%s.%N)
 cleanup
 if [[ $SC == multihop* ]]; then     # block the direct camera <-> ground-radio link; wait until batman-adv routes via the Jetson
-  $D/mesh_ssh.sh camera "$(NFT_ON "$PI2_PW" "$GND_MAC $CAM2_MAC $JET2_MAC")"; $D/mesh_ssh.sh sender "$(NFT_ON "$PI3_PW" $CAM_MAC)"
+  $D/mesh_ssh.sh camera "$(NFT_ON "$PI2_PW" "$GND_MAC $CAM2_MAC $JET2_MAC")"; $D/mesh_ssh.sh sender "$(NFT_ON "${!SENDER_PW_VAR}" $CAM_MAC)"
   $D/mesh_ssh.sh camera2 "$(NFT_ON "$PI2_PW" $CAM_MAC)"; $D/mesh_ssh.sh jetson2 "$(NFT_ON "$N2_PW" $CAM_MAC wlP1p1s0)"
   ok=0
   for i in $(seq 30); do

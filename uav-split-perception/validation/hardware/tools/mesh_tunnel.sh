@@ -6,9 +6,10 @@
 # Traffic still crosses the mesh to pi-sender and then the cable. Runs until killed; restarts itself if dropped.
 D=$(cd "$(dirname "$0")" && pwd)
 . $D/mesh_hosts.sh
+GW_LOGIN=dubey@$SENDER_CABLE; [ -n "${MESH_SSH_CFG:-}" ] && GW_LOGIN=aegis-gw   # 18 Nov map: pi-receiver via the demo ssh config
 while true; do
   SSH_ASKPASS=$D/mesh_askpass.sh SSH_ASKPASS_REQUIRE=force DISPLAY=:0 setsid -w ssh -N -o StrictHostKeyChecking=yes \
     -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes \
-    -L 48101:$CAM_IP:48101 -L 48104:$JET_IP:48104 dubey@$SENDER_CABLE < /dev/null
+    -L 48101:$CAM_IP:48101 -L 48104:$JET_IP:48104 $GW_LOGIN < /dev/null
   sleep 3
 done

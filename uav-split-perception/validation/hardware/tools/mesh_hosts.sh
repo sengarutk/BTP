@@ -28,3 +28,21 @@ mesh_target() {   # sets H (user@address) and J (jump option) for a target name;
     *) echo "unknown target '$1' (sender|camera|camera2|jetson|jetson2)" >&2; return 2;;
   esac
 }
+# 18 Nov 2026 (demo): pi-sender and Nano2 are off the mesh; pi-receiver is the ground radio on the laptop's cable
+# (temporary 10.230.3.10 on its eth0) and the addresses moved. Verified from pi-receiver's batman-adv tables
+# (originators and translation table) on 18 Nov. Selected with MESH_MAP=nov18; without it the 14 Nov map above holds.
+if [ "${MESH_MAP:-}" = nov18 ]; then
+  SENDER_IP=10.1.0.12; SENDER_MAC=88:a2:9e:4c:94:40     # pi-receiver
+  CAM_IP=10.1.0.11;    CAM_MAC=88:a2:9e:4c:95:78        # pi-relayyy, the camera
+  JET_IP=10.1.0.13;    JET_MAC=58:02:05:de:50:ff        # Nano1
+  CAM2_MAC=88:a2:9e:4c:87:54                            # pi-sender's radio (absent; blocking it is harmless)
+  SENDER_PW_VAR=PI2_PW; SENDER_USER=sengar
+  MESH_SSH_CFG=${MESH_SSH_CFG:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../../experiments/results/hardware/demo_nov18/ssh_config}
+  mesh_target() {
+    case $1 in
+      sender) H=aegis-gw;; camera) H=aegis-cam;; jetson) H=aegis-jet;;
+      *) echo "target '$1' is not on the 18 Nov mesh (sender|camera|jetson)" >&2; return 2;;
+    esac; J=
+  }
+fi
+SENDER_PW_VAR=${SENDER_PW_VAR:-PI3_PW}; SENDER_USER=${SENDER_USER:-dubey}
